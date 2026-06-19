@@ -1,0 +1,13 @@
+year,file,path,rows_loaded,cols_loaded,columns
+2016,CONS,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/cons_2016.csv,1000,9,CNPJ | Anbima | Código | Nome | Tipo_Ativo | Data_Competência | Nome_Ativo | Valor_Ativo_mil | Participação_Ativo
+2016,SH,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/SH_2016.csv,1000,10,COD_FUNDO | CNPJ | NOME_FUNDO | GESTORA | CLASSIFICACAO_ANBIMA | DATA | APLICAÇÃO | COTA | NUMERO_DE_COTISTAS | PATRIMONIO_LIQUIDO_(MIL)
+2017,CONS,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/cons_2017.csv,1000,9,CNPJ | Anbima | Código | Nome | Tipo_Ativo | Data_Competência | Nome_Ativo | Valor_Ativo_mil | Participação_Ativo
+2017,SH,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/SH_2017.csv,1000,10,COD_FUNDO | CNPJ | NOME_FUNDO | GESTORA | CLASSIFICACAO_ANBIMA | DATA | APLICAÇÃO | COTA | NUMERO_DE_COTISTAS | PATRIMONIO_LIQUIDO_(MIL)
+2018,CONS,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/cons_2018.csv,1000,9,CNPJ | Anbima | Código | Nome | Tipo_Ativo | Data_Competência | Nome_Ativo | Valor_Ativo_mil | Participação_Ativo
+2018,SH,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/SH_2018.csv,1000,10,COD_FUNDO | CNPJ | NOME_FUNDO | GESTORA | CLASSIFICACAO_ANBIMA | DATA | APLICAÇÃO | COTA | NUMERO_DE_COTISTAS | PATRIMONIO_LIQUIDO_(MIL)
+2019,CONS,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/cons_2019.csv,1000,9,CNPJ | Anbima | Código | Nome | Tipo_Ativo | Data_Competência | Nome_Ativo | Valor_Ativo_mil | Participação_Ativo
+2019,SH,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/SH_2019.csv,1000,10,COD_FUNDO | CNPJ | NOME_FUNDO | GESTORA | CLASSIFICACAO_ANBIMA | DATA | APLICAÇÃO | COTA | NUMERO_DE_COTISTAS | PATRIMONIO_LIQUIDO_(MIL)
+2020,CONS,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/cons_2020.csv,1000,9,CNPJ | Anbima | Código | Nome | Tipo_Ativo | Data_Competência | Nome_Ativo | Valor_Ativo_mil | Participação_Ativo
+2020,SH,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/SH_2020.csv,1000,10,COD_FUNDO | CNPJ | NOME_FUNDO | GESTORA | CLASSIFICACAO_ANBIMA | DATA | APLICAÇÃO | COTA | NUMERO_DE_COTISTAS | PATRIMONIO_LIQUIDO_(MIL)
+2021,CONS,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/cons_2021.csv,1000,9,CNPJ | Anbima | Código | Nome | Tipo_Ativo | Data_Competência | Nome_Ativo | Valor_Ativo_mil | Participação_Ativo
+2021,SH,C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF/SH_2021.csv,1000,10,COD_FUNDO | CNPJ | NOME_FUNDO | GESTORA | CLASSIFICACAO_ANBIMA | DATA | APLICAÇÃO | COTA | NUMERO_DE_COTISTAS | PATRIMONIO_LIQUIDO_(MIL)

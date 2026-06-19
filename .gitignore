@@ -1,0 +1,18 @@
+# Dados brutos grandes ficam fora do repositório.
+data/raw/*
+!data/raw/README.md
+
+# Saídas regeneráveis.
+data/processed/*
+!data/processed/.gitkeep
+outputs/tables/*
+!outputs/tables/.gitkeep
+!outputs/tables/load_audit.csv
+
+# R / sistema.
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+Thumbs.db
+desktop.ini
