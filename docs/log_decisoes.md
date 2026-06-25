@@ -163,6 +163,15 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
     100% alinhadas. Beta verificado por 3 métodos (frollmean = cov/var = lm, dif 0).
   - Resultado coerente: VALE3 nominal R$13,03 (dez/2015) → R$28,06 (nov/2016);
     beta 1,5–1,77 (ação cíclica, alto beta). 0 NAs no painel.
+  - **VERIFICAÇÃO FORENSE (parsing/datas):** (a) timestamps crus do Yahoo decodificam
+    às 12:00/13:00 UTC (abertura B3 c/ horário de verão) → data atribuída via
+    `America/Sao_Paulo` correta: **0 datas em fim de semana**, estritamente
+    crescentes, 0 duplicadas, SEM off-by-one; (b) `data_ref` = último pregão do mês
+    anterior recalculado independentemente → **igual nos 12 meses**, e o preço casa
+    com o `close` da série naquele dia; (c) **CROSS-CHECK CONTRA A B3 OFICIAL**
+    (COTAHIST_A2015/2016, PREULT): o `preco_nominal` (Yahoo) = fechamento oficial
+    da B3 **EXATAMENTE nos 12 `data_ref`** (máx |dif| = **R$0,00**), 0 datas sem
+    match. → preço/datas certificados contra a fonte primária.
   - Yahoo JSON: sep próprio; `query1.finance.yahoo.com/v8/finance/chart/<sym>`;
     precisa de User-Agent no curl; parse com `jsonlite`. Cache em `data/raw/`
     (gitignored); `R/05` e `R_full` baixam sozinhos se faltar.
