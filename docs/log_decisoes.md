@@ -35,6 +35,8 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 | Merge SH×CONS | SH é diária, CONS mensal → casar pelo **dia EXATO** (`SH.DATA == CONS.Data_Competência`) |
 | Período (v1) | Apenas **2016** primeiro (rápido, menos custo); generalizar depois |
 | Entrega no GitHub | Scripts segmentados (`R/01`, `R/02`, …) **e** `R_full.R` (tudo num arquivo) |
+| Fluxo líquido | **Informe Diário CVM** (`CAPTC_DIA − RESG_DIA`), validado com a SH (passo 3b). Quebra a regra "só CONS+SH", mas é a base-mãe da SH e mais confiável |
+| Preço/beta da ação | Fonte **externa extremamente confiável** (autorizado); ainda não feito |
 
 ---
 
@@ -49,6 +51,15 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
   lida bem após remover separador de milhar.
 - Gestoras Itaú em 2016: Itaú DTVM (maioria), Itaú Unibanco, Itaú Asset Management;
   **535 fundos** distintos; **388** com VALE3 em algum mês.
+- **`SH.APLICAÇÃO` = captação bruta diária** (formato `"R$ x.xxx,xx"`, sempre ≥0);
+  a SH **não tem resgate**. Verificado que `SH.APLICAÇÃO == CAPTC_DIA` do Informe
+  Diário (fundo 779, jan/2016: R$46.597,54 nos dois). Por isso só a SH **engana**:
+  esse fundo teve captação +46k mas resgate 893k → fluxo líquido **−847k**.
+- **Informe Diário CVM** (`inf_diario_fi`) é **muito mais limpo** que a SH: sep `;`,
+  decimal `.`, sem `R$`; `fread` dá **0 NAs**. Colunas:
+  `CNPJ_FUNDO;DT_COMPTC;VL_TOTAL;VL_QUOTA;VL_PATRIM_LIQ;CAPTC_DIA;RESG_DIA;NR_COTST`.
+  2016 = `HIST/inf_diario_fi_2016.zip` (12 CSVs mensais). Join por **CNPJ + data**.
+  ⚠️ PL do Informe Diário em **reais cheios**; PL da SH em **mil** (fator 1000).
 
 ---
 
@@ -84,9 +95,18 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
   nos fundos Itaú, **ano 2016**. Aplicou tratamentos 1–4 acima.
   Resultado: **4.062 obs, 388 fundos, 12 meses**, peso ∈ [0; 0,151], 0 duplicados.
   Saída (regenerável, fora do git): `data/processed/painel_vale_itau_2016.csv`.
+- **Passo 3** — `R/03_add_fund_flows.R`: característica de **fluxo** (captação,
+  resgate, líquido) via Informe Diário CVM, agregada por fundo×mês e juntada ao
+  painel por CNPJ+ano+mês. **100% de match** (4.062/4.062), 0 duplicados, 0 NAs.
+  Saída: `data/processed/painel_vale_itau_2016_fluxos.csv` (cols novas:
+  `captacao`, `resgate`, `fluxo_liq`, `n_dias`).
 
-**Próximo passo (a combinar):** adicionar as **características** (lado direito da
-equação) — do fundo (AUM, aplicação−resgate, FIC/FI, nº de cotistas) e da ação
-(preço e beta da VALE no último dia do mês anterior). ⚠️ Preço/beta **não estão**
-em CONS/SH → decidir com o orientando como obter (possível exceção à regra
-"só CONS e SH").
+**Características — situação (lado direito da equação):**
+- ✅ **AUM** (`SH.PATRIMONIO_LIQUIDO_(MIL)`), **nº cotistas**
+  (`SH.NUMERO_DE_COTISTAS`), **FIC/FI** (de `NOME_FUNDO`/`CLASSIFICACAO_ANBIMA`).
+- ✅ **Fluxo** (captação/resgate/líquido) — FEITO no passo 3 (Informe Diário).
+- ⬜ **Preço e beta da VALE** — externo, autorizado, ainda não feito.
+
+**Próximos passos (a combinar):** (3b) validar o fluxo via derivação SH (PL+cota)
+— exige antes certificar o parsing da `COTA`; (4) adicionar AUM, cotistas, FIC/FI;
+(5) preço e beta da VALE de fonte externa; depois generalizar 2017–2021.

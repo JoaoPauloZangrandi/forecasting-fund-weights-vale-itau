@@ -147,3 +147,32 @@ print(summary(painel$peso_vale3))
 cat("\nExemplos:\n")
 print(head(painel, 10))
 cat("\nOK - painel salvo em data/processed/painel_vale_itau_2016.csv\n")
+
+# =============================================================================
+# PASSO 3 - fluxo (captacao, resgate, liquido) via Informe Diario CVM
+# Fonte oficial com CAPTC_DIA E RESG_DIA (a SH so tem captacao). Limpa:
+# sep ';', decimal '.', sem R$. Fluxo liquido mensal = soma diaria.
+# =============================================================================
+
+ZIP  <- sprintf("data/raw/inf_diario_fi_%d.zip", YEAR)
+csvs <- sprintf("data/raw/inf_diario_fi_%d%02d.csv", YEAR, 1:12)
+if (!all(file.exists(csvs))) unzip(ZIP, exdir = "data/raw")
+
+cnpjs_alvo <- unique(painel$cnpj)
+cols_id <- c("CNPJ_FUNDO", "DT_COMPTC", "CAPTC_DIA", "RESG_DIA")
+id <- rbindlist(lapply(csvs, function(f) {
+  d <- fread(f, sep = ";", encoding = "UTF-8", select = cols_id, showProgress = FALSE)
+  d[CNPJ_FUNDO %in% cnpjs_alvo]
+}))
+stopifnot(!anyNA(id$CAPTC_DIA), !anyNA(id$RESG_DIA))   # parsing critico
+id[, DT := as.Date(DT_COMPTC)][, ano := year(DT)][, mes := month(DT)]
+flow <- id[, .(captacao  = sum(CAPTC_DIA),
+               resgate   = sum(RESG_DIA),
+               fluxo_liq = sum(CAPTC_DIA - RESG_DIA),
+               n_dias    = .N),
+           by = .(cnpj = CNPJ_FUNDO, ano, mes)]
+painel_fluxos <- merge(painel, flow, by = c("cnpj", "ano", "mes"), all.x = TRUE)
+fwrite(painel_fluxos, "data/processed/painel_vale_itau_2016_fluxos.csv")
+cat("\nPASSO 3: fluxo casado em",
+    painel_fluxos[!is.na(fluxo_liq), .N], "de", nrow(painel_fluxos),
+    "fund-months. Salvo em data/processed/painel_vale_itau_2016_fluxos.csv\n")
