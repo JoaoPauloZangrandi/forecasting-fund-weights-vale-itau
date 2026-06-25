@@ -4,6 +4,10 @@ Registro vivo de **o que decidimos, por quê, e as regras permanentes** do proje
 Objetivo: nunca perder o fio da meada (mesmo trocando de ferramenta/sessão) e
 garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 
+> **Handoff:** o arquivo `prompt.md` (raiz do repo) é o **briefing completo** do
+> projeto para retomar em qualquer ferramenta (Claude/Codex). Manter `prompt.md`
+> **e** este log atualizados a cada passo.
+
 > Regra de trabalho: ir **um passo por vez**, explicar antes de fazer e esperar o
 > "ok". Nada de empilhar vários passos. Questionar cada decisão metodológica.
 
