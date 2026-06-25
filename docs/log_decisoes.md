@@ -93,6 +93,16 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
    *diferentes* (não é cópia exata), **parar e investigar** — não agregar no
    automático.
 
+5. **Validação cruzada SH × Informe Diário (parsing certificado):** a `APLICAÇÃO`
+   da SH deve igualar a `CAPTC_DIA` somada do Informe Diário (mesmo CNPJ×mês).
+   Verificado em 2016: **99,66%** dos fund-months Itaú batem **ao centavo**
+   (0 NAs) → parsing das duas bases está correto. Os ~0,3% que divergem são
+   **picos isolados de 1 dia** (a SH é série *revisada*; o Informe Diário é o
+   *bruto as-reported*) — diferença de DADO, não de parsing. **Decisão:** manter
+   o Informe Diário (única fonte com resgate) e marcar esses fund-months com a
+   flag **`div_captacao`** (+ guardar `captacao_sh`) para teste de robustez.
+   Em 2016: **17** fund-months marcados no painel-alvo.
+
 ---
 
 ## Histórico (passo a passo)
@@ -107,7 +117,8 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
   resgate, líquido) via Informe Diário CVM, agregada por fundo×mês e juntada ao
   painel por CNPJ+ano+mês. **100% de match** (4.062/4.062), 0 duplicados, 0 NAs.
   Saída: `data/processed/painel_vale_itau_2016_fluxos.csv` (cols novas:
-  `captacao`, `resgate`, `fluxo_liq`, `n_dias`).
+  `captacao`, `resgate`, `fluxo_liq`, `n_dias`, `captacao_sh`, `div_captacao`).
+  Validação cruzada com a SH feita (99,66% ao centavo; 17 fund-months marcados).
 
 **Características — situação (lado direito da equação):**
 - ✅ **AUM** (`SH.PATRIMONIO_LIQUIDO_(MIL)`), **nº cotistas**

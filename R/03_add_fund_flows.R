@@ -22,6 +22,16 @@ if (dir.exists(PROJ_DIR)) setwd(PROJ_DIR)
 YEAR <- 2016L
 ZIP  <- sprintf("data/raw/inf_diario_fi_%d.zip", YEAR)
 
+DATA_DIR <- Sys.getenv("CVM_DATA_DIR",
+  unset = "C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF")
+
+# parser para "R$ x.xxx,xx" (formato brasileiro da coluna APLICACAO da SH)
+parse_brl <- function(x) {
+  x <- trimws(as.character(x)); x <- gsub("R\\$", "", x)
+  x <- gsub("[[:space:]]", "", x); x <- gsub("\\.", "", x); x <- gsub(",", ".", x)
+  x[x == ""] <- NA; suppressWarnings(as.numeric(x))
+}
+
 # ---- 1) painel do passo 2 -> CNPJs dos fundos Itau-VALE3 -------------------
 
 painel <- fread("data/processed/painel_vale_itau_2016.csv")
@@ -67,6 +77,25 @@ flow <- id[, .(
   n_dias    = .N
 ), by = .(cnpj = CNPJ_FUNDO, ano, mes)]
 
+# ---- 4b) flag de divergencia: SH.APLICACAO vs Informe Diario CAPTC_DIA ------
+# Cross-check de robustez (ver docs/log_decisoes.md). A SH e serie revisada e o
+# Informe Diario e o "as-reported" bruto: ~99,7% batem ao centavo; marcamos os
+# ~0,3% que divergem (picos isolados de 1 dia). Mantemos o Informe Diario.
+sh <- fread(file.path(DATA_DIR, sprintf("SH_%d.csv", YEAR)), encoding = "UTF-8",
+            showProgress = FALSE, colClasses = list(character = "APLICAÇÃO"))
+sh <- sh[CNPJ %in% cnpjs_alvo]
+sh[, AP  := parse_brl(`APLICAÇÃO`)]
+sh[, DT  := as.Date(DATA, format = "%d/%m/%Y")]
+sh[, ano := year(DT)]
+sh[, mes := month(DT)]
+sh_capt <- sh[, .(captacao_sh = sum(AP, na.rm = TRUE)), by = .(cnpj = CNPJ, ano, mes)]
+
+flow <- merge(flow, sh_capt, by = c("cnpj", "ano", "mes"), all.x = TRUE)
+flow[, div_captacao := as.integer(!is.na(captacao_sh) &
+                                  abs(captacao - captacao_sh) >= 0.01)]
+cat("Fund-months com divergencia SH vs Informe Diario:",
+    flow[div_captacao == 1, .N], "de", nrow(flow), "\n")
+
 # ---- 5) merge no painel por CNPJ + ano + mes -------------------------------
 
 pan2 <- merge(painel, flow, by = c("cnpj", "ano", "mes"), all.x = TRUE)
@@ -84,7 +113,8 @@ cat("Fund-months do painel:", nrow(pan2),
 
 setcolorder(pan2, c("cod_fundo", "cnpj", "nome_fundo", "gestora",
                     "data", "ano", "mes", "peso_vale3", "valor_mil",
-                    "captacao", "resgate", "fluxo_liq", "n_dias"))
+                    "captacao", "resgate", "fluxo_liq", "n_dias",
+                    "captacao_sh", "div_captacao"))
 fwrite(pan2, "data/processed/painel_vale_itau_2016_fluxos.csv")
 
 cat("\n==== PAINEL 2016 + FLUXOS ====\n")

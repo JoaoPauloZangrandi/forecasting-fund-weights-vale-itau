@@ -43,6 +43,12 @@ parse_num_us <- function(x) {           # formato americano (decimal ".")
   suppressWarnings(as.numeric(x))
 }
 
+parse_brl <- function(x) {              # formato "R$ x.xxx,xx" (SH.APLICACAO)
+  x <- trimws(as.character(x)); x <- gsub("R\\$", "", x)
+  x <- gsub("[[:space:]]", "", x); x <- gsub("\\.", "", x); x <- gsub(",", ".", x)
+  x[x == ""] <- NA; suppressWarnings(as.numeric(x))
+}
+
 parse_date <- function(x) {
   x   <- trimws(as.character(x))
   out <- as.Date(rep(NA_character_, length(x)))
@@ -188,6 +194,19 @@ flow <- id[, .(captacao  = sum(CAPTC_DIA),
                fluxo_liq = sum(CAPTC_DIA - RESG_DIA),
                n_dias    = .N),
            by = .(cnpj = CNPJ_FUNDO, ano, mes)]
+
+# flag de divergencia: SH.APLICACAO (revisada) vs Informe Diario CAPTC (bruto).
+# ~99,7% batem ao centavo; marcamos os ~0,3% (picos de 1 dia). Mantemos o ID.
+shf <- fread(file.path(DATA_DIR, sprintf("SH_%d.csv", YEAR)), encoding = "UTF-8",
+             showProgress = FALSE, colClasses = list(character = "APLICAÇÃO"))
+shf <- shf[CNPJ %in% cnpjs_alvo]
+shf[, AP := parse_brl(`APLICAÇÃO`)]
+shf[, DT := as.Date(DATA, format = "%d/%m/%Y")][, ano := year(DT)][, mes := month(DT)]
+sh_capt <- shf[, .(captacao_sh = sum(AP, na.rm = TRUE)), by = .(cnpj = CNPJ, ano, mes)]
+flow <- merge(flow, sh_capt, by = c("cnpj", "ano", "mes"), all.x = TRUE)
+flow[, div_captacao := as.integer(!is.na(captacao_sh) &
+                                  abs(captacao - captacao_sh) >= 0.01)]
+
 painel_fluxos <- merge(painel, flow, by = c("cnpj", "ano", "mes"), all.x = TRUE)
 fwrite(painel_fluxos, "data/processed/painel_vale_itau_2016_fluxos.csv")
 cat("\nPASSO 3: fluxo casado em",
