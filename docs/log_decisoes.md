@@ -133,15 +133,31 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
   Validação cruzada com a SH feita (99,66% ao centavo; 16 fund-months marcados no
   painel). Forense das discrepâncias no **Apêndice A**.
 
+- **Passo 4** — `R/04_add_fund_features.R`: características de fundo da SH, snapshot
+  no dia da competência (merge dia-exato por `COD_FUNDO + data`, **0 sem match,
+  0 dup, 0 NAs**): `aum` (PL em **R$ cheios** = `PATRIMONIO_LIQUIDO_(MIL)`×1000),
+  `n_cotistas`, `is_fic`, `classif_anbima`. Saída:
+  `data/processed/painel_vale_itau_2016_features.csv`. FIC: 2.486 / FI: 1.576
+  fund-months. AUM de R$680 a R$2,6 bi.
+  - **FIC/FI:** a `CLASSIFICACAO_ANBIMA` é de **estratégia** (Multimercados Livre,
+    Ações Livre…) e **NÃO** distingue FIC/FI → FIC vem do **NOME** por **token**
+    `\bFIC\b`/`\bFICFI\b` (robusto a substring, p/ não pegar "FIC" embutido em
+    outra palavra/instituição). Validado em 2016: substring "FIC" (232) = token
+    (232), **0 falso positivo**; token sempre seguido de MULTIMERCADO/AÇÕES/RENDA.
+  - **`classif_anbima`** guardada como característica categórica extra (estratégia).
+  - ⚠️ **Observação p/ depois:** mediana de `n_cotistas` = **2** → há muitos
+    **fundos exclusivos** (1–2 cotistas). O orientador quer removê-los em algum
+    momento; mantidos por ora (decisão "manter simples"). Candidato a passo futuro.
+
 **Características — situação (lado direito da equação):**
-- ✅ **AUM** (`SH.PATRIMONIO_LIQUIDO_(MIL)`), **nº cotistas**
-  (`SH.NUMERO_DE_COTISTAS`), **FIC/FI** (de `NOME_FUNDO`/`CLASSIFICACAO_ANBIMA`).
+- ✅ **AUM, nº cotistas, FIC/FI** — FEITO no passo 4 (SH).
 - ✅ **Fluxo** (captação/resgate/líquido) — FEITO no passo 3 (Informe Diário).
 - ⬜ **Preço e beta da VALE** — externo, autorizado, ainda não feito.
 
-**Próximos passos (a combinar):** (3b) validar o fluxo via derivação SH (PL+cota)
-— exige antes certificar o parsing da `COTA`; (4) adicionar AUM, cotistas, FIC/FI;
-(5) preço e beta da VALE de fonte externa; depois generalizar 2017–2021.
+**Próximos passos (a combinar):** (5) preço e beta da VALE de fonte externa;
+opcional (3b) validar o fluxo via derivação SH (PL+cota, exige certificar parsing
+da `COTA`); remover fundos exclusivos; depois generalizar 2017–2021 e a regressão
+cross-section (peso ~ características → beta OLS = fator latente).
 
 ---
 

@@ -212,3 +212,24 @@ fwrite(painel_fluxos, "data/processed/painel_vale_itau_2016_fluxos.csv")
 cat("\nPASSO 3: fluxo casado em",
     painel_fluxos[!is.na(fluxo_liq), .N], "de", nrow(painel_fluxos),
     "fund-months. Salvo em data/processed/painel_vale_itau_2016_fluxos.csv\n")
+
+# =============================================================================
+# PASSO 4 - caracteristicas de fundo (SH): aum, n_cotistas, is_fic, classif_anbima
+# Snapshot no dia da competencia (merge dia-exato). ANBIMA nao distingue FIC/FI;
+# FIC vem do NOME por token (\bFIC\b). PL em MIL -> R$ cheios (x1000).
+# =============================================================================
+
+snap <- sh[COD_FUNDO %in% unique(painel_fluxos$cod_fundo)]
+snap[, DT     := as.Date(DATA, format = "%d/%m/%Y")]
+snap[, pl_mil := parse_brl(`PATRIMONIO_LIQUIDO_(MIL)`)]
+stopifnot(!anyNA(snap$pl_mil))
+snap <- snap[, .(cod_fundo = COD_FUNDO, data = DT,
+                 aum = pl_mil * 1000, n_cotistas = NUMERO_DE_COTISTAS,
+                 classif_anbima = CLASSIFICACAO_ANBIMA)]
+painel_features <- merge(painel_fluxos, snap, by = c("cod_fundo", "data"), all.x = TRUE)
+painel_features[, is_fic := as.integer(grepl("\\bFIC\\b|\\bFICFI\\b",
+                                             normalize_txt(nome_fundo)))]
+fwrite(painel_features, "data/processed/painel_vale_itau_2016_features.csv")
+cat("\nPASSO 4: features adicionadas (aum, n_cotistas, is_fic, classif_anbima).",
+    "FIC:", painel_features[is_fic == 1, .N], "FI:", painel_features[is_fic == 0, .N],
+    "| NAs aum:", painel_features[is.na(aum), .N], "\n")
