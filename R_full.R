@@ -13,6 +13,15 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
+# Raiz do projeto: caminhos relativos (data/raw, data/processed) dependem disso.
+# Se o working directory nao for a raiz do repo, fixa aqui (override por env).
+PROJ_DIR <- Sys.getenv(
+  "PROJ_DIR",
+  unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
+)
+if (dir.exists(PROJ_DIR)) setwd(PROJ_DIR)
+cat("Working dir:", getwd(), "\n")
+
 DATA_DIR <- Sys.getenv(
   "CVM_DATA_DIR",
   unset = "C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF"
@@ -156,7 +165,15 @@ cat("\nOK - painel salvo em data/processed/painel_vale_itau_2016.csv\n")
 
 ZIP  <- sprintf("data/raw/inf_diario_fi_%d.zip", YEAR)
 csvs <- sprintf("data/raw/inf_diario_fi_%d%02d.csv", YEAR, 1:12)
-if (!all(file.exists(csvs))) unzip(ZIP, exdir = "data/raw")
+if (!all(file.exists(csvs))) {
+  if (!file.exists(ZIP)) {
+    dir.create("data/raw", recursive = TRUE, showWarnings = FALSE)
+    url <- sprintf("https://dados.cvm.gov.br/dados/FI/DOC/INF_DIARIO/DADOS/HIST/inf_diario_fi_%d.zip", YEAR)
+    cat("Baixando Informe Diario", YEAR, "...\n")
+    download.file(url, ZIP, mode = "wb", quiet = TRUE)
+  }
+  unzip(ZIP, exdir = "data/raw")
+}
 
 cnpjs_alvo <- unique(painel$cnpj)
 cols_id <- c("CNPJ_FUNDO", "DT_COMPTC", "CAPTC_DIA", "RESG_DIA")

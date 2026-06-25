@@ -7,6 +7,14 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 > Regra de trabalho: ir **um passo por vez**, explicar antes de fazer e esperar o
 > "ok". Nada de empilhar vários passos. Questionar cada decisão metodológica.
 
+> ⚠️ **Como rodar (gotcha de diretório):** os scripts usam caminhos relativos
+> (`data/raw`, `data/processed`), então o working directory precisa ser a raiz do
+> repo. Os scripts já fazem `setwd(PROJ_DIR)` sozinhos (default
+> `C:/Users/joaoz/forecasting-fund-weights-vale-itau`, override por env `PROJ_DIR`).
+> Se rodar manualmente no RStudio fora do projeto, faça antes
+> `setwd("C:/Users/joaoz/forecasting-fund-weights-vale-itau")`. O `R_full.R` também
+> baixa o Informe Diário sozinho se o zip não estiver em `data/raw`.
+
 ---
 
 ## Contexto do projeto

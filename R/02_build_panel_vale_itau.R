@@ -14,6 +14,10 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
+PROJ_DIR <- Sys.getenv("PROJ_DIR",
+                       unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau")
+if (dir.exists(PROJ_DIR)) setwd(PROJ_DIR)
+
 DATA_DIR <- Sys.getenv(
   "CVM_DATA_DIR",
   unset = "C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF"

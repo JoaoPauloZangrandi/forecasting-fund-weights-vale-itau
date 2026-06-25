@@ -15,6 +15,10 @@ suppressPackageStartupMessages({
   library(data.table)
 })
 
+PROJ_DIR <- Sys.getenv("PROJ_DIR",
+                       unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau")
+if (dir.exists(PROJ_DIR)) setwd(PROJ_DIR)
+
 YEAR <- 2016L
 ZIP  <- sprintf("data/raw/inf_diario_fi_%d.zip", YEAR)
 
