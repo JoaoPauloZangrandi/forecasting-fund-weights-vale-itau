@@ -153,15 +153,30 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
     **fundos exclusivos** (1–2 cotistas). O orientador quer removê-los em algum
     momento; mantidos por ora (decisão "manter simples"). Candidato a passo futuro.
 
-**Características — situação (lado direito da equação):**
-- ✅ **AUM, nº cotistas, FIC/FI** — FEITO no passo 4 (SH).
-- ✅ **Fluxo** (captação/resgate/líquido) — FEITO no passo 3 (Informe Diário).
-- ⬜ **Preço e beta da VALE** — externo, autorizado, ainda não feito.
+- **Passo 5** — `R/05_add_stock_features.R`: características da AÇÃO (VALE3),
+  fonte **Yahoo Finance** (`VALE3.SA`, `^BVSP`). Colunas: `preco_nominal` (close),
+  `preco_ajust` (adjclose), `beta_vale` (cov/var móvel **252 pregões** vs Ibovespa,
+  retorno **simples**; VALE pelo adjclose, Ibov pelo close), `data_ref` (a data de
+  medição). Tudo medido no **último pregão do mês anterior** à competência (sem
+  look-ahead). Saída: **painel FINAL** `data/processed/painel_vale_itau_2016_full.csv`.
+  - Dados Yahoo validados: VALE3 e Ibov, 764 pregões 2014–2017, **0 NAs**, datas
+    100% alinhadas. Beta verificado por 3 métodos (frollmean = cov/var = lm, dif 0).
+  - Resultado coerente: VALE3 nominal R$13,03 (dez/2015) → R$28,06 (nov/2016);
+    beta 1,5–1,77 (ação cíclica, alto beta). 0 NAs no painel.
+  - Yahoo JSON: sep próprio; `query1.finance.yahoo.com/v8/finance/chart/<sym>`;
+    precisa de User-Agent no curl; parse com `jsonlite`. Cache em `data/raw/`
+    (gitignored); `R/05` e `R_full` baixam sozinhos se faltar.
 
-**Próximos passos (a combinar):** (5) preço e beta da VALE de fonte externa;
-opcional (3b) validar o fluxo via derivação SH (PL+cota, exige certificar parsing
-da `COTA`); remover fundos exclusivos; depois generalizar 2017–2021 e a regressão
-cross-section (peso ~ características → beta OLS = fator latente).
+**Características — situação (lado direito da equação): TODAS FEITAS (2016).**
+- ✅ **Fundo:** AUM, nº cotistas, FIC/FI (passo 4) + fluxo líquido (passo 3).
+- ✅ **Ação:** preço (nominal+ajustado) e beta (passo 5).
+
+**Próximos passos (a combinar):** remover fundos exclusivos; generalizar
+**2017–2021** (reaplicar TODOS os testes de parsing/validação — regras 5 e 6);
+e então a **regressão cross-section** (peso ~ características → beta OLS = fator
+latente), seguida do **modelo de fator dinâmico** (θ random walk / Kalman),
+previsão multi-horizonte e a **matriz de erros**. Opcional: (3b) validar o fluxo
+via derivação SH (PL+cota, exige certificar parsing da `COTA`).
 
 ---
 

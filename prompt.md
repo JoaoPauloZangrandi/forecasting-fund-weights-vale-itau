@@ -9,7 +9,8 @@
 >
 > **Repo:** https://github.com/JoaoPauloZangrandi/forecasting-fund-weights-vale-itau
 > **Local:** `C:\Users\joaoz\forecasting-fund-weights-vale-itau`
-> **Última atualização deste arquivo:** após o Passo 4 (features de fundo).
+> **Última atualização deste arquivo:** após o Passo 5 (preço/beta da VALE) —
+> características TODAS prontas para 2016; próximo é regressão / 2017–2021.
 
 ---
 
@@ -84,11 +85,11 @@ Depois generaliza para 2017–2021 e, possivelmente, outras ações/gestoras.
 | 2 | Painel fundo×mês do **peso** de VALE3 (Itaú, 2016) | ✅ feito |
 | 3 | Característica de **fluxo** (captação/resgate/líquido) | ✅ feito |
 | 4 | Características de fundo: **AUM, nº cotistas, FIC/FI** (+ANBIMA) | ✅ feito |
-| 5 | Características da ação: **preço e beta da VALE** (fonte externa) | ⬜ próximo |
-| — | Remover fundos exclusivos (1–2 cotistas) | ⬜ futuro |
-| — | Generalizar para **2017–2021** | ⬜ futuro |
-| — | **Regressão cross-section** (peso ~ características → beta = fator latente) | ⬜ futuro |
-| — | **Modelo de fator dinâmico** (θ random walk / Kalman) + previsão + matriz de erros | ⬜ futuro |
+| 5 | Características da ação: **preço e beta da VALE** (Yahoo) | ✅ feito |
+| 6 | Remover fundos exclusivos (1–2 cotistas) | ⬜ próximo/futuro |
+| 7 | Generalizar para **2017–2021** | ⬜ futuro |
+| 8 | **Regressão cross-section** (peso ~ características → beta = fator latente) | ⬜ futuro |
+| 9 | **Modelo de fator dinâmico** (θ random walk / Kalman) + previsão + matriz de erros | ⬜ futuro |
 
 ---
 
@@ -127,10 +128,15 @@ Fonte do **fluxo líquido verdadeiro** (tem captação E resgate).
 - PL (`VL_PATRIM_LIQ`) em **reais cheios** (a SH é em mil → fator 1000).
 - Join ao painel por **CNPJ + data**.
 
-### 4.4 Preço/beta da VALE — FONTE EXTERNA (passo 5, ainda não feito)
-Não está em CONS/SH. Orientando **autorizou** puxar de **fonte externa extremamente
-confiável**. Medir no **último dia do mês anterior** (testar variantes de data).
-Decidir a fonte com o orientando (ex.: B3, Yahoo Finance via R, etc.).
+### 4.4 Preço/beta da VALE — Yahoo Finance (passo 5, FEITO)
+Não está em CONS/SH. Fonte: **Yahoo Finance** via API chart v8
+(`https://query1.finance.yahoo.com/v8/finance/chart/<sym>?period1=..&period2=..&interval=1d`),
+símbolos `VALE3.SA` e `^BVSP` (Ibovespa). Precisa de **User-Agent** no curl; parse
+com `jsonlite`. JSON tem `timestamp`, `indicators.quote[0].close` e
+`indicators.adjclose[0].adjclose`. **Preço:** nominal (close) e ajustado (adjclose).
+**Beta:** cov/var móvel **252 pregões** vs Ibov, retorno **simples** (VALE pelo
+adjclose, Ibov pelo close). Medido no **último pregão do mês anterior**. Série
+2014–2017 (buffer p/ a janela). Cache em `data/raw/yahoo_*.json`.
 
 ### 4.5 Chave de join principal
 `CONS.Código == SH.COD_FUNDO` (validado). CNPJ idêntico (mascarado
@@ -156,9 +162,10 @@ Decidir a fonte com o orientando (ex.: B3, Yahoo Finance via R, etc.).
 
 ## 6. Estado atual — onde estamos
 
-**Passos 1 a 4 FEITOS, commitados e no GitHub.** O painel final atual é
-`data/processed/painel_vale_itau_2016_features.csv` (regenerável; `data/processed/`
-é gitignored). É um painel **fundo × mês** (2016), 4.062 obs, 388 fundos, 12 meses.
+**Passos 1 a 5 FEITOS, commitados e no GitHub.** O painel final atual é
+`data/processed/painel_vale_itau_2016_full.csv` (regenerável; `data/processed/`
+é gitignored). É um painel **fundo × mês** (2016), 4.062 obs, 388 fundos, 12 meses,
+com TODAS as características (lado direito) prontas.
 
 ### Colunas do painel final
 | Coluna | Significado |
@@ -175,10 +182,13 @@ Decidir a fonte com o orientando (ex.: B3, Yahoo Finance via R, etc.).
 | `n_dias` | nº de dias úteis somados no fluxo do mês |
 | `captacao_sh` | captação somada da SH (p/ comparação) |
 | `div_captacao` | flag 0/1: SH e Informe Diário discordam na captação |
+| `data_ref` | data de medição do preço/beta (último pregão do mês anterior) |
+| `preco_nominal`, `preco_ajust` | preço VALE3 (close e adjclose) no `data_ref` |
+| `beta_vale` | beta móvel 252 pregões vs Ibovespa, no `data_ref` |
 
-### Lado direito da equação (características)
+### Lado direito da equação (características) — TODAS PRONTAS (2016)
 - ✅ **Fundo:** AUM, nº cotistas, FIC/FI (passo 4) + fluxo líquido (passo 3).
-- ⬜ **Ação:** preço e beta da VALE (passo 5, externo) — ÚNICO que falta.
+- ✅ **Ação:** preço (nominal+ajustado) e beta (passo 5, Yahoo).
 
 ### Achados de qualidade de dados já tratados (resumo; detalhe no log)
 - Dedup de linhas exatas na CONS; remoção de pesos negativos (resíduos ~−1e-6).
@@ -196,19 +206,26 @@ Decidir a fonte com o orientando (ex.: B3, Yahoo Finance via R, etc.).
 
 ## 7. ONDE PARAMOS / próximo passo
 
-**Próximo = Passo 5: preço e beta da VALE.** Pendências a decidir com o orientando
-ANTES de codar:
-1. **Fonte** do preço/beta (externa, confiável) — qual? (B3 oficial, Yahoo via R…).
-2. **Data de medição:** "último dia do mês anterior" como default; testar variantes
-   (início do mês, último fechamento, etc.) → gerar versões.
-3. **Beta:** janela de estimação (ex.: 12/24/36 meses de retornos) e **índice de
-   mercado** (Ibovespa? IBX?). Definir.
-4. **Parsing/alinhamento:** certificar como sempre (0 NAs, datas casadas com a
-   competência do painel).
+**Passos 1–5 FEITOS.** O painel final de 2016 (`painel_vale_itau_2016_full.csv`)
+tem o ALVO (`peso_vale3`) e TODAS as características do lado direito: fundo (AUM,
+`n_cotistas`, `is_fic`, `fluxo_liq`/`captacao`/`resgate`) e ação (`preco_nominal`,
+`preco_ajust`, `beta_vale`). Pronto para modelar.
 
-Depois do passo 5: considerar remover exclusivos; generalizar 2017–2021 (reaplicar
-TODOS os testes de parsing/validação — ver regras do log, esp. regra 6); e então a
-**regressão cross-section** (passo 1 da metodologia do orientador).
+**Próximos passos (decidir com o orientando, um por vez):**
+1. **Remover fundos exclusivos** (mediana de cotistas = 2; muitos com 1–2). O
+   orientador quer isso em algum momento. Definir o critério (ex.: `n_cotistas`
+   abaixo de um corte; ou `< 5` por algum tempo no ano, à la Ferraresi 2025).
+2. **Generalizar para 2017–2021.** Reaplicar TODOS os testes de parsing/validação
+   (regras 5 e 6 do log; cruzar SH×Informe Diário; recomputo de fluxo; estender a
+   série Yahoo). Cuidado: os formatos podem mudar entre anos.
+3. **Regressão cross-section** (passo 1 da metodologia): para cada mês, regredir
+   `peso_vale3 ~ características` (fundo + ação); o **beta OLS** vira o fator
+   latente. Decidir specs (níveis/logs, padronização, com/sem ANBIMA, etc.).
+4. Depois: **modelo de fator dinâmico** (θ random walk / Kalman), previsão
+   multi-horizonte e a **matriz de erros**.
+
+Detalhe importante já registrado: a divergência SH×Informe Diário (`div_captacao`)
+fica como está (usar Informe Diário; sem teste de robustez, só registrado).
 
 ---
 
@@ -219,7 +236,8 @@ R/01_load_bases.R            # passo 1: carga/sanidade
 R/02_build_panel_vale_itau.R # passo 2: painel do peso de VALE3
 R/03_add_fund_flows.R        # passo 3: fluxo (Informe Diário) + flag div_captacao
 R/04_add_fund_features.R     # passo 4: aum, cotistas, FIC/FI, ANBIMA
-R_full.R                     # TODO o código num arquivo só (espelha R/01..04)
+R/05_add_stock_features.R    # passo 5: preco (nominal/ajust) e beta da VALE
+R_full.R                     # TODO o código num arquivo só (espelha R/01..05)
 docs/log_decisoes.md         # log vivo: decisões, achados, forense (Apêndice A)
 prompt.md                    # este arquivo (handoff)
 data/raw/                    # bruto (gitignored); Informe Diário baixado aqui

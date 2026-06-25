@@ -11,6 +11,7 @@
 
 suppressPackageStartupMessages({
   library(data.table)
+  library(jsonlite)
 })
 
 # Raiz do projeto: caminhos relativos (data/raw, data/processed) dependem disso.
@@ -233,3 +234,51 @@ fwrite(painel_features, "data/processed/painel_vale_itau_2016_features.csv")
 cat("\nPASSO 4: features adicionadas (aum, n_cotistas, is_fic, classif_anbima).",
     "FIC:", painel_features[is_fic == 1, .N], "FI:", painel_features[is_fic == 0, .N],
     "| NAs aum:", painel_features[is.na(aum), .N], "\n")
+
+# =============================================================================
+# PASSO 5 - caracteristicas da ACAO (VALE3): preco nominal/ajustado e beta 252d
+# Fonte Yahoo (VALE3.SA, ^BVSP). Retorno simples (VALE pelo adjclose, Ibov pelo
+# close). Beta = cov/var movel 252 pregoes, no ULTIMO PREGAO DO MES ANTERIOR.
+# =============================================================================
+
+P1 <- 1388534400L; P2 <- 1485907200L
+fetch_yahoo <- function(symbol, outfile) {
+  if (file.exists(outfile)) return(invisible())
+  url <- sprintf(paste0("https://query1.finance.yahoo.com/v8/finance/chart/%s",
+                        "?period1=%d&period2=%d&interval=1d"),
+                 utils::URLencode(symbol, reserved = TRUE), P1, P2)
+  dir.create("data/raw", recursive = TRUE, showWarnings = FALSE)
+  system2("curl", c("-s", "-m", "60", "-A", shQuote("Mozilla/5.0"),
+                    shQuote(url), "-o", shQuote(outfile)))
+}
+fetch_yahoo("VALE3.SA", "data/raw/yahoo_vale3.json")
+fetch_yahoo("^BVSP",    "data/raw/yahoo_ibov.json")
+
+getv <- function(lst) vapply(lst, function(x) if (is.null(x)) NA_real_ else as.numeric(x), numeric(1))
+parse_yahoo <- function(path) {
+  res <- fromJSON(path, simplifyVector = FALSE)$chart$result[[1]]
+  ts  <- vapply(res$timestamp, as.numeric, numeric(1))
+  adj <- if (!is.null(res$indicators$adjclose))
+           getv(res$indicators$adjclose[[1]]$adjclose) else NA_real_
+  data.table(date = as.Date(as.POSIXct(ts, origin = "1970-01-01", tz = "America/Sao_Paulo")),
+             close = getv(res$indicators$quote[[1]]$close), adjclose = adj)
+}
+vv <- parse_yahoo("data/raw/yahoo_vale3.json")
+ii <- parse_yahoo("data/raw/yahoo_ibov.json")
+stopifnot(!anyNA(vv$close), !anyNA(vv$adjclose), !anyNA(ii$close))
+stk <- merge(vv[, .(date, close, adjclose)], ii[, .(date, ibov = close)], by = "date")
+setorder(stk, date)
+stk[, r_vale := adjclose / shift(adjclose) - 1]
+stk[, r_ibov := ibov / shift(ibov) - 1]
+Wb <- 252L
+stk[, beta_vale := (frollmean(r_vale * r_ibov, Wb) - frollmean(r_vale, Wb) * frollmean(r_ibov, Wb)) /
+                   (frollmean(r_ibov * r_ibov, Wb) - frollmean(r_ibov, Wb)^2)]
+stk[, ymk := year(date) * 100L + month(date)]
+mlast <- stk[stk[, .I[which.max(date)], by = ymk]$V1,
+             .(ymk, data_ref = date, preco_nominal = close, preco_ajust = adjclose, beta_vale)]
+painel_features[, ymk_prev := ifelse(mes == 1L, (ano - 1L) * 100L + 12L, ano * 100L + (mes - 1L))]
+painel_full <- merge(painel_features, mlast, by.x = "ymk_prev", by.y = "ymk", all.x = TRUE)
+painel_full[, ymk_prev := NULL]
+fwrite(painel_full, "data/processed/painel_vale_itau_2016_full.csv")
+cat("\nPASSO 5: preco/beta da VALE adicionados (NAs beta:", painel_full[is.na(beta_vale), .N],
+    "). Painel FINAL: data/processed/painel_vale_itau_2016_full.csv\n")
