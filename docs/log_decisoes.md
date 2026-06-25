@@ -101,7 +101,17 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
    *bruto as-reported*) — diferença de DADO, não de parsing. **Decisão:** manter
    o Informe Diário (única fonte com resgate) e marcar esses fund-months com a
    flag **`div_captacao`** (+ guardar `captacao_sh`) para teste de robustez.
-   Em 2016: **17** fund-months marcados no painel-alvo.
+   Em 2016: **17** fund-months divergentes na tabela de fluxo, dos quais **16**
+   chegam ao painel final (1 é fund-month sem VALE3 na CONS).
+
+6. **Verificação da agregação de fluxo (recomputo independente):** o fluxo mensal
+   é `Σ(CAPTC_DIA − RESG_DIA)` sobre o **mês-calendário da competência**; junta ao
+   painel por `(cnpj, ano, mes)`. Provado (2016): identidade
+   `fluxo_liq == captacao − resgate` ao epsilon (1e-7); **0 NAs**; competência
+   sempre no mês `(ano,mes)` (0 desalinhamentos) e é o último dia útil do mês;
+   recomputo por **janela de data explícita** (1º→último dia) bate **exatamente**
+   (dif 0) numa amostra de 56 fund-months incl. todos os flagados. Aplicar o mesmo
+   teste ao estender para 2017–2021.
 
 ---
 
