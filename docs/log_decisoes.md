@@ -96,13 +96,15 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 5. **Validação cruzada SH × Informe Diário (parsing certificado):** a `APLICAÇÃO`
    da SH deve igualar a `CAPTC_DIA` somada do Informe Diário (mesmo CNPJ×mês).
    Verificado em 2016: **99,66%** dos fund-months Itaú batem **ao centavo**
-   (0 NAs) → parsing das duas bases está correto. Os ~0,3% que divergem são
-   **picos isolados de 1 dia** (a SH é série *revisada*; o Informe Diário é o
-   *bruto as-reported*) — diferença de DADO, não de parsing. **Decisão:** manter
-   o Informe Diário (única fonte com resgate) e marcar esses fund-months com a
-   flag **`div_captacao`** (+ guardar `captacao_sh`) para teste de robustez.
-   Em 2016: **17** fund-months divergentes na tabela de fluxo, dos quais **16**
-   chegam ao painel final (1 é fund-month sem VALE3 na CONS).
+   (0 NAs) → parsing das duas bases está correto. Os ~0,3% que divergem **não são
+   erro de parsing nem de agregação** — são diferença de DADO entre as duas séries
+   da CVM (detalhe forense no Apêndice A). **Decisão (do orientando):** usar o
+   **Informe Diário** como fonte do fluxo (única com resgate); **manter** as
+   colunas `captacao_sh` (valor da SH) e `div_captacao` (flag 0/1) no painel — não
+   apagar o que a SH traz; **NÃO** rodar teste de robustez com/sem flagados na
+   regressão — apenas deixar a discrepância **registrada** para eventual tratamento
+   futuro. Em 2016: **17** fund-months divergentes na tabela de fluxo, dos quais
+   **16** chegam ao painel final (1 é fund-month sem VALE3 na CONS).
 
 6. **Verificação da agregação de fluxo (recomputo independente):** o fluxo mensal
    é `Σ(CAPTC_DIA − RESG_DIA)` sobre o **mês-calendário da competência**; junta ao
@@ -128,7 +130,8 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
   painel por CNPJ+ano+mês. **100% de match** (4.062/4.062), 0 duplicados, 0 NAs.
   Saída: `data/processed/painel_vale_itau_2016_fluxos.csv` (cols novas:
   `captacao`, `resgate`, `fluxo_liq`, `n_dias`, `captacao_sh`, `div_captacao`).
-  Validação cruzada com a SH feita (99,66% ao centavo; 17 fund-months marcados).
+  Validação cruzada com a SH feita (99,66% ao centavo; 16 fund-months marcados no
+  painel). Forense das discrepâncias no **Apêndice A**.
 
 **Características — situação (lado direito da equação):**
 - ✅ **AUM** (`SH.PATRIMONIO_LIQUIDO_(MIL)`), **nº cotistas**
@@ -139,3 +142,58 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 **Próximos passos (a combinar):** (3b) validar o fluxo via derivação SH (PL+cota)
 — exige antes certificar o parsing da `COTA`; (4) adicionar AUM, cotistas, FIC/FI;
 (5) preço e beta da VALE de fonte externa; depois generalizar 2017–2021.
+
+---
+
+## Apêndice A — Forense das discrepâncias SH × Informe Diário (2016)
+
+Investigação completa dos fund-months onde `SH.APLICAÇÃO` (somada no mês) difere de
+`CAPTC_DIA` (somada no mês) do Informe Diário, para o mesmo `CNPJ × mês`.
+
+### A.0 — Contexto e conclusão geral
+- Cobertura do cruzamento (todos os fundos Itaú, 2016): SH = 5.819 fund-months,
+  Informe Diário = 5.824; em ambos = 5.806. (13 só na SH, 18 só no Informe — fundos
+  presentes numa base e não na outra.)
+- Dos 5.806 em comum: **5.786 batem ao centavo (99,66%)**; **20 divergem**.
+- No nosso painel-alvo (VALE3 × Itaú): **16** fund-months com `div_captacao = 1`
+  (de 4.062). O 17º divergente da tabela de fluxo não tem VALE3 na CONS, então não
+  entra no painel.
+- **Parsing e agregação estão certos** (regras 5 e 6). As divergências são
+  diferença de DADO entre duas séries da CVM: a SH é série histórica **revisada**;
+  o Informe Diário é o **bruto "as-reported"**.
+
+### A.1 — A coluna `div_captacao`
+- Tipo `integer`, binária (0/1), **máximo = 1**. NÃO é magnitude.
+- No painel: 4.046 zeros, **16 uns**.
+- Magnitude da divergência nos 16 (`captacao` do Informe − `captacao_sh` da SH):
+  |dif| mediana ≈ **R$ 1,6 mi**, máximo **R$ 13,57 mi**. Todos os 16 têm VALE3
+  (peso de 0,018% a 4,16%), ou seja, são observações reais do alvo.
+
+### A.2 — Padrão A: spike isolado de 1 dia
+- Exemplo: fundo **61395 = ITAÚ DIVIDENDOS FI AÇÕES** (CNPJ 02.887.290/0001-62),
+  jan/2016. Dos 20 dias úteis, **19 são idênticos ao centavo**; toda a diferença
+  está em **2016-01-15**: SH = R$ 108.275 vs Informe = R$ 13.677.136.
+- Interpretação: uma aplicação grande registrada no bruto e depois corrigida/
+  revisada na SH (evento pontual).
+
+### A.3 — Padrão B: razão constante (estrutural, FIC)
+- Caso: fundo **318231 = ITAÚ MOMENTO 30 FIC AÇÕES** (CNPJ 16.718.302/0001-30),
+  aparece em **8 dos 16** flagados (jan–ago/2016).
+- Drill diário do ano todo: 251 dias na SH e 251 no Informe; **0 dias com linha
+  duplicada** no Informe (não é bug de duplicação). **123 dos 251 dias divergem.**
+- Nos 123 dias divergentes, a razão `SH.APLICAÇÃO / CAPTC_DIA` é **exatamente
+  0,7631** em TODOS (desvio-padrão 2,4e-06). Nos 128 dias que batem, 25 são
+  zero-zero e os demais são iguais.
+- Interpretação: diferença **estrutural** entre as séries para esse FIC (a SH
+  guarda ~76,31% do que o Informe reporta como captação, em parte dos dias). A
+  causa-raiz (por que 0,7631 e por que só em parte dos dias) **não está documentada
+  pela CVM e não foi resolvida** — e não precisa ser, pois a fonte adotada é o
+  Informe Diário.
+
+### A.4 — Decisão e o que fica registrado
+- **Fonte do fluxo = Informe Diário** (`CAPTC_DIA`, `RESG_DIA`), inclusive nesses 16.
+- **Mantemos** `captacao_sh` e `div_captacao` no painel (não apagamos a SH).
+- **Não** haverá teste de robustez com/sem flagados na regressão; a discrepância
+  fica apenas **registrada** aqui para eventual tratamento futuro.
+- Ao estender para 2017–2021: rodar o mesmo cruzamento e drills; esperar mais casos
+  dos padrões A e B; manter a mesma política.
