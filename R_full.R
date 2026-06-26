@@ -422,3 +422,74 @@ cat("PARTE2 P14: regressao 72 meses (", nrow(coA), "meses). R2 medio cross-secti
     round(mean(coA$r2), 3), "| R2 pooled:", round(summary(fitpA)$r.squared, 3), "\n")
 cat("PARTE2: dinamica dos theta_t (R/16) e previsao+matriz de erros (R/17) nos",
     "scripts dedicados.\n")
+
+# =============================================================================
+# PARTE 3 - MODELAGEM (espelha R/16-R/23). Le dos arquivos salvos (data/processed)
+# para ficar independente do estado em memoria. RODAR R_full COM CAMINHO ABSOLUTO.
+# =============================================================================
+
+# ---- Passo 16: dinamica dos theta_t (AR1 + Dickey-Fuller) + Kalman local-level ----
+co3 <- fread("data/processed/reg14_coefs_2016_2021.csv"); setorder(co3, ym)
+sl3 <- c("b_l_aum","b_l_cot","b_is_fic","b_flow_aum")
+dyn3 <- rbindlist(lapply(c("intercepto", sl3), function(v) {
+  x <- co3[[v]]; n <- length(x); fit <- lm(x[-1] ~ x[-n]); dx <- diff(x); dff <- lm(dx ~ x[-n])
+  data.table(serie = v, ar1_phi = coef(fit)[2], df_t = summary(dff)$coefficients[2, "t value"])
+}))
+cat("\nPARTE3 P16 - dinamica theta_t (phi e Dickey-Fuller):\n"); print(dyn3[, lapply(.SD, function(z) if (is.double(z)) round(z, 3) else z)])
+
+nll3 <- function(par, y) { Q <- exp(par[1]); R <- exp(par[2]); a <- y[1]; P <- 1e7; ll <- 0
+  for (t in seq_along(y)) { F <- P + R; v <- y[t] - a; ll <- ll - 0.5*(log(2*pi*F)+v^2/F); K <- P/F; a <- a+K*v; P <- (1-K)*P+Q }; -ll }
+kalp3 <- function(y) { fit <- optim(c(log(var(diff(y))), log(var(y))), nll3, y = y, method = "Nelder-Mead")
+  Q <- exp(fit$par[1]); R <- exp(fit$par[2]); a <- y[1]; P <- 1e7; pr <- numeric(length(y))
+  for (t in seq_along(y)) { pr[t] <- a; F <- P+R; v <- y[t]-a; K <- P/F; a <- a+K*v; P <- (1-K)*P+Q }; pr }
+kal3 <- as.data.table(lapply(sl3, function(v) kalp3(co3[[v]]))); setnames(kal3, sl3); kal3[, ym := co3$ym]
+
+# ---- Passo 17/19: previsao do peso (M0-M3) a h=1 e h=3 (todos os holders) ----
+dm <- fread("data/processed/painel_vale_itau_2016_2021_filtrado.csv")
+dm[, an := as.numeric(aum)][, l_aum := log(an)][, l_cot := log(n_cotistas)]
+dm[, flow_aum := fluxo_liq/an][, ym := ano*100L+mes]; dm <- dm[!is.na(flow_aum)]
+dm[, monidx := frank(ym, ties.method = "dense")]
+kal3[, monidx := frank(ym, ties.method = "dense")]
+xv3 <- c("l_aum","l_cot","is_fic","flow_aum")
+fc3 <- function(h) {
+  tg <- dm[, .(cod_fundo, mi = monidx-h, ptgt = peso_vale3)]
+  base <- merge(dm, tg, by.x = c("cod_fundo","monidx"), by.y = c("cod_fundo","mi")); E <- list()
+  for (t in (h+6):(max(dm$monidx)-h)) {
+    tr <- dm[monidx <= t]; mu <- tr[, .(mu = mean(peso_vale3)), by = cod_fundo]
+    xb <- tr[, lapply(.SD, mean), by = cod_fundo, .SDcols = xv3]; setnames(xb, xv3, paste0(xv3, "_b"))
+    bt <- base[monidx == t]; if (!nrow(bt)) next
+    bt <- merge(bt, mu, by = "cod_fundo"); bt <- merge(bt, xb, by = "cod_fundo")
+    kt <- as.numeric(kal3[monidx == t, ..sl3])
+    bt[, pfek := mu + kt[1]*(l_aum-l_aum_b)+kt[2]*(l_cot-l_cot_b)+kt[3]*(is_fic-is_fic_b)+kt[4]*(flow_aum-flow_aum_b)]
+    trd <- base[monidx <= t-h]; trd[, chg := ptgt - peso_vale3]
+    fd <- lm(chg ~ l_aum+l_cot+is_fic+flow_aum, data = trd)
+    bt[, pdw := peso_vale3 + as.numeric(predict(fd, bt))]
+    E[[length(E)+1L]] <- bt[, .(e0 = ptgt-peso_vale3, e1 = ptgt-mu, e2 = ptgt-pfek, e3 = ptgt-pdw)]
+  }
+  E <- rbindlist(E); rm <- function(x) sqrt(mean(x^2, na.rm = TRUE))
+  data.table(h = h, M0_ingenuo = rm(E$e0), M1_FE = rm(E$e1), M2_FE_Kalman = rm(E$e2), M3_dw = rm(E$e3))
+}
+cat("\nPARTE3 P17/19 - RMSE da previsao do peso (h=1, h=3):\n")
+print(rbindlist(lapply(c(1,3), fc3))[, lapply(.SD, function(z) if (is.double(z)) round(z, 5) else z)])
+
+# ---- Passo 20/22: margem extensiva (logit) + previsao da posse h=1/h=3 ----
+if (file.exists("data/processed/painel_extensivo_acoes.csv")) {
+  U3 <- fread("data/processed/painel_extensivo_acoes.csv")
+  U3[, l_aum := log(aum)][, l_cot := log(as.numeric(n_cotistas))]
+  U3 <- U3[is.finite(l_aum) & is.finite(l_cot)]; U3[, monidx := frank(ym, ties.method = "dense")]; setorder(U3, cod_fundo, monidx)
+  lg3 <- glm(tem ~ l_aum + l_cot + is_fic, data = U3, family = binomial)
+  cat("\nPARTE3 P20 - logit P(tem VALE3) (coef):\n"); print(round(coef(lg3), 3))
+  hold3 <- function(h) {
+    tg <- U3[, .(cod_fundo, mi = monidx-h, ttgt = tem)]
+    base <- merge(U3, tg, by.x = c("cod_fundo","monidx"), by.y = c("cod_fundo","mi")); A <- list()
+    for (t in (h+6):(max(U3$monidx)-h)) {
+      trb <- base[monidx <= t-h]; te <- base[monidx == t]; if (!nrow(te) || nrow(trb) < 50) next
+      f <- glm(ttgt ~ l_aum+l_cot+is_fic, data = trb, family = binomial)
+      te[, pl := as.integer(predict(f, te, type = "response") > 0.5)]
+      A[[length(A)+1L]] <- te[, .(an = as.integer(ttgt == tem), al = as.integer(ttgt == pl))]
+    }
+    A <- rbindlist(A); data.table(h = h, acc_ingenuo = round(100*mean(A$an), 1), acc_logit = round(100*mean(A$al), 1))
+  }
+  cat("PARTE3 P22 - acuracia da previsao da POSSE (h=1, h=3):\n"); print(rbindlist(lapply(c(1,3), hold3)))
+}
+cat("\nPARTE3 concluida. (Detalhes e PDFs: docs/results.pdf, docs/explanation.pdf)\n")
