@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{caption}
+\usepackage{graphicx}
 
 \title{\textbf{Resultados — Determinantes do peso de VALE3 nos fundos Itaú (2016--2021)}}
 \author{TCC — FGV EESP \\ Orientador: Prof.\ Maurício Ferraresi Jr.}
@@ -141,11 +142,67 @@ da CVM em \textbf{99,4--99,8\% ao centavo} em todos os 6 anos; o beta confere po
 métodos independentes; o preço bate com o fechamento oficial da B3.
 \end{itemize}
 
+\section{Passo 2 — dinâmica dos fatores $\theta_t$ (descritivo)}
+
+Com os 72 coeficientes mensais $\theta_t$, caracterizamos como cada um evolui no
+tempo, para escolher o modelo dinâmico.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lrrrrl@{}}
+\toprule
+\textbf{Série ($\theta_t$)} & \textbf{média} & \textbf{autocorr.\ (1)} & \textbf{AR(1) $\phi$} & \textbf{DF $t$} & \textbf{Leitura} \\
+\midrule
+Intercepto      & $0{,}0894$  & $0{,}77$ & $0{,}77$ & $-3{,}07$ & reverte à média \\
+$\log$(AUM)     & $-0{,}0038$ & $0{,}76$ & $0{,}76$ & $-3{,}11$ & reverte à média \\
+$\log$(cotistas)& $0{,}0039$  & $0{,}84$ & $0{,}83$ & $-2{,}70$ & quase random walk \\
+FIC             & $-0{,}0170$ & $0{,}70$ & $0{,}70$ & $-3{,}57$ & reverte à média \\
+Fluxo/AUM       & $-0{,}0004$ & $0{,}37$ & $0{,}38$ & $-5{,}59$ & quase ruído \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent\footnotesize $\phi$ = coeficiente AR(1) ($\theta_t = c + \phi\,\theta_{t-1}$).
+DF $t$ = teste tipo Dickey--Fuller; $t < -2{,}9$ rejeita raiz unitária ($\approx$5\%)
+$\Rightarrow$ reversão à média (estacionário). \normalsize
+
+\medskip
+Os fatores estruturais são \textbf{persistentes mas estacionários} ($\phi
+\approx 0{,}7$--$0{,}84$, não $\approx 1$): não são passeios aleatórios puros, e sim
+processos de \textbf{reversão à média}. O coeficiente do fluxo tem baixa persistência
+(quase ruído).
+
+\paragraph{Previsão (RMSE pseudo-fora-da-amostra, janela expansiva).}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+\textbf{Série} & \textbf{Random walk} & \textbf{Média} & \textbf{AR(1)} & \textbf{Melhor} \\
+\midrule
+Intercepto      & $0{,}0220$  & $0{,}0360$  & $0{,}0215$  & AR(1) \\
+$\log$(AUM)     & $0{,}00108$ & $0{,}00170$ & $0{,}00105$ & AR(1) \\
+$\log$(cotistas)& $0{,}000882$& $0{,}00188$ & $0{,}000887$& RW \\
+FIC             & $0{,}00529$ & $0{,}00795$ & $0{,}00500$ & AR(1) \\
+Fluxo/AUM       & $0{,}0340$  & $0{,}0311$  & $0{,}0329$  & Média \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent\footnotesize Para os fatores estruturais, AR(1) $\approx$ random walk
+(ambos bons; AR(1) marginalmente melhor); para o fluxo (ruidoso), a média prevê
+melhor. \normalsize
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig_theta.pdf}
+\caption*{\footnotesize Séries dos coeficientes $\theta_t$ (2016--2021); linha
+tracejada = média. Os fatores estruturais oscilam em torno de um nível estável
+(reversão à média); o do fluxo é mais errático.}
+\end{figure}
+
 \section{Próximo passo}
 
-\emph{Passo~2}: modelar a dinâmica temporal dos coeficientes (os 72 vetores
-$\theta_t$) como processo que evolui no tempo (random walk / filtro de Kalman),
-ligando o nível médio a preço e beta, para previsão multi-horizonte e análise da
-matriz de erros (resíduos fundo $\times$ mês).
+Modelar a dinâmica via \textbf{estado-espaço / filtro de Kalman} com transição
+AR(1) (ou nível local), que estima o caminho dos $\theta_t$ suavizando o ruído
+amostral das estimativas mensais, liga o nível médio a preço e beta, e gera
+previsão multi-horizonte do peso. Em seguida, a análise da matriz de erros.
 
 \end{document}

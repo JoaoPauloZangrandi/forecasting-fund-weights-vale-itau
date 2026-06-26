@@ -149,12 +149,34 @@ centavo nos 6 anos; o preço bate com o fechamento oficial da B3; o beta confere
 três métodos independentes. O recorte de 2016 do painel de 6 anos é idêntico ao
 painel de 2016 validado isoladamente.
 
-\section{O que vem (Passo 2)}
+\section{Passo 2: a dinâmica dos fatores $\theta_t$}
 
-Com os 72 vetores $\theta_t$ em mãos, o Passo~2 modela a \emph{dinâmica} deles: como
-evoluem (random walk / Kalman), como o nível médio responde a preço e beta, e usa
-isso para \textbf{prever} a vários horizontes. O produto final é uma \emph{matriz de
-erros} (resíduos fundo $\times$ mês), cujas propriedades (média zero, estabilidade)
-dizem o quão bem o modelo captura as posições.
+Com os 72 vetores $\theta_t$ em mãos, perguntamos: \emph{como cada coeficiente se
+comporta no tempo?} Isso decide o modelo dinâmico.
+
+\textbf{O que achamos.} Os fatores estruturais (intercepto, tamanho, cotistas, FIC)
+são \textbf{persistentes mas estacionários}: o coeficiente AR(1) é $\phi \approx
+0{,}7$--$0{,}84$ (não $\approx 1$), e um teste tipo Dickey--Fuller rejeita a hipótese
+de passeio aleatório. Em palavras: eles \textbf{oscilam em torno de um nível estável
+e revertem à média}, em vez de vagar sem rumo. O coeficiente do fluxo é quase ruído
+(baixa persistência).
+
+\textbf{Random walk ou reversão à média?} O orientador sugeriu, como ponto de
+partida, o passeio aleatório ($\theta_t = \theta_{t-1} + \text{choque}$). Os dados
+refinam isso: a dinâmica é de \textbf{reversão à média} (AR(1) com $\phi$ moderado).
+Na prática, para prever os fatores estruturais, AR(1) e random walk dão erro
+parecido (ambos bons, AR(1) um pouco melhor); o fluxo, por ser ruidoso, é melhor
+previsto pela própria média. Ou seja: a posição não ``foge''; ela ancora.
+
+\textbf{Por que então um filtro de Kalman?} As estimativas mensais $\theta_t$ vêm de
+regressões com $\sim$130 fundos cada — têm \emph{ruído amostral}. O filtro de Kalman
+trata $\theta_t$ como um \emph{estado oculto} que evolui suavemente (AR(1)) e que
+``enxergamos'' com ruído a cada mês. Ele combina, de forma ótima, (i) a inércia do
+estado e (ii) a informação nova de cada mês, produzindo uma trajetória mais limpa e
+uma previsão dos $\theta_{t+1}$ — e, daí, do peso de cada fundo. É o passo seguinte.
+
+\textbf{O produto final} é uma \emph{matriz de erros} (resíduos fundo $\times$ mês),
+cujas propriedades (média zero, estabilidade, variância) dizem o quão bem o modelo
+captura as posições — exatamente o que o orientador descreveu.
 
 \end{document}
