@@ -195,9 +195,44 @@ seção transversal (quais características importam), mas não bate a inércia 
 fundo para \textbf{prever}.
 \item A matriz de erros tem média $\approx 0$ e é estacionária — propriedades que o
 orientador queria verificar.
-\item \textbf{Refino natural:} combinar os dois — adicionar um \emph{efeito-fixo de
-fundo} (o nível próprio de cada fundo) à dinâmica do fator, ou modelar a
-\emph{variação} do peso. É o próximo passo (filtro de Kalman em estado-espaço).
+\end{itemize}
+
+\section{Modelo 4 — Efeito-fixo de fundo e filtro de Kalman}
+
+Testamos o refino natural: somar ao fator um \textbf{efeito-fixo de fundo} $\mu_i$ (o
+nível próprio de cada fundo) e prever os fatores por \textbf{filtro de Kalman}
+(local-level, estado-espaço estimado por máxima verossimilhança). Comparamos também um
+modelo que prevê a \emph{variação} $\Delta w$ a partir das características (incl.\
+fluxo). Avaliação pseudo-fora-da-amostra (9.532 previsões):
+
+\begin{table}[h]\centering
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Método & RMSE & MAE \\
+\midrule
+\textbf{M0 Ingênuo (peso defasado)} & $\mathbf{0{,}0159}$ & $\mathbf{0{,}0083}$ \\
+M1 Efeito-fixo ($\mu_i$, média)     & $0{,}0247$ & $0{,}0153$ \\
+M2 FE $+$ Fator (Kalman)            & $0{,}0265$ & $0{,}0162$ \\
+M3 Variação $\Delta w$ (com fluxo)  & $0{,}0160$ & $0{,}0084$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{Conclusão (e o que ela ensina)}
+\begin{itemize}
+\item \textbf{O ingênuo continua vencendo} --- nem o efeito-fixo, nem o Kalman, nem o
+modelo da variação o superam.
+\item \textbf{O efeito-fixo (média) é pior que o lag:} logo, o peso \emph{não reverte à
+média no nível do fundo} --- ele é \textbf{persistente, quase um passeio aleatório} (o
+último valor prevê melhor que a média histórica).
+\item \textbf{O modelo da variação $\Delta w$ apenas empata com o ingênuo:} a
+\emph{mudança} do peso é \textbf{essencialmente imprevisível} um mês à frente (nem o
+fluxo a antecipa de forma útil).
+\item \textbf{Síntese:} o peso de VALE3 é, no nível do fundo, quase um martingale. O
+modelo de fator é uma ferramenta de \textbf{compreensão} (quais características
+explicam a seção transversal das posições), e não de previsão de curto prazo --- a
+inércia do próprio fundo é o teto prático. A matriz de erros do melhor modelo tem
+média $\approx 0$ ($0{,}0002$) e é estacionária (DF $t=-8{,}7$).
 \end{itemize}
 
 \end{document}
