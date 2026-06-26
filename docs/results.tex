@@ -266,4 +266,57 @@ média histórica e os fatores. A conclusão de que o peso é quase um martingal
 mantém.
 \end{itemize}
 
+\section{Modelo 6 — Margem extensiva (ter ou não ter VALE3)}
+
+Até aqui estudamos o peso \emph{dado que} o fundo tem VALE3 (margem intensiva). A
+\textbf{margem extensiva} é a decisão de \emph{ter ou não}. Construímos um painel que
+inclui os \textbf{zeros}: todos os fundo-meses de \textbf{Ações} da Itaú (vivos na SH),
+com peso $=$ participação na CONS ou $0$ se o fundo não tem VALE3 (não detém).
+
+\medskip
+\noindent\textbf{Universo:} \textbf{10.286} fundo-meses, \textbf{260} fundos de Ações.
+\textbf{86\%} têm VALE3 (subindo de 81\% em 2016 a 89\% em 2021); 75 entradas e 100
+saídas no período. A posse é \textbf{muito persistente}: muda em só $1{,}3\%$ dos meses.
+
+\paragraph{O que explica \emph{ter} VALE3 (logit).}
+\begin{equation}
+\Pr(\text{tem VALE3}_{i,t}=1) = \Lambda\!\big(\gamma_0 + \gamma_1\ln\text{AUM} + \gamma_2\ln\text{Cot} + \gamma_3\text{FIC}\big),
+\quad \Lambda(z)=\tfrac{1}{1+e^{-z}}.
+\end{equation}
+\begin{table}[h]\centering
+\begin{tabular}{@{}lrrrc@{}}
+\toprule
+Variável & Estimativa & $z$ & $p$ & Sig. \\
+\midrule
+Intercepto      & $-2{,}809$ & $-10{,}2$ & $<0{,}001$ & *** \\
+$\ln$(AUM)      & $0{,}232$  & $15{,}1$  & $<0{,}001$ & *** \\
+$\ln$(cotistas) & $-0{,}034$ & $-2{,}8$  & $0{,}005$  & ** \\
+FIC             & $1{,}311$  & $17{,}5$  & $<0{,}001$ & *** \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Achado central: as duas margens têm sinais opostos.}
+\begin{table}[h]\centering
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Característica & \textbf{Ter ou não} (extensiva) & \textbf{Quanto} (intensiva) \\
+\midrule
+Tamanho (AUM) & $+$ mais provável ter & $-$ peso menor \\
+FIC           & $+$ mais provável ter & $-$ peso menor \\
+Cotistas      & $-$ (fraco)           & $+$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent Fundos \textbf{maiores} e \textbf{FICs} são \emph{mais propensos a ter} VALE3,
+porém com \emph{peso menor} --- o padrão de \textbf{diversificação} (espalham por muitas
+ações, incluindo VALE3, cada uma com fatia pequena).
+
+\paragraph{Prever entrar/sair: a persistência de novo.} Prevendo a posse 1 mês à frente
+(fora da amostra): o \textbf{ingênuo} (repetir o estado do mês anterior) acerta
+\textbf{98,7\%}; o \textbf{logit} (características), \textbf{87,5\%}. Como na margem
+intensiva, as características \textbf{explicam} bem mas \textbf{não superam a
+persistência} para prever. Tanto \emph{ter ou não} quanto \emph{quanto} são quase
+martingales.
+
 \end{document}
