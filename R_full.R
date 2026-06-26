@@ -329,3 +329,96 @@ fitp7 <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + bet
 cat("\nPASSO 7: cross-section (12 meses) + pooled rodadas.",
     "R2 pooled:", round(summary(fitp7)$r.squared, 3),
     "| coefs em data/processed/reg07_cross_section_coefs_2016.csv\n")
+
+# =============================================================================
+# PARTE 2 - PIPELINE MULTI-ANO 2016-2021 + MODELAGEM (espelha R/10-R/17)
+# IMPORTANTE: rodar R_full COM CAMINHO ABSOLUTO (caminho relativo pode disparar
+# segfault do data.table neste build do R/Windows). Pre-requisito: zips do
+# Informe Diario 2017-2020 (HIST anual) e 2021 (mensal) baixados/extraidos em
+# data/raw (ver R/11). Series Yahoo (yahoo_*.json) com range ate 2022.
+# =============================================================================
+
+ASSET2 <- "VALE ON N1 - VALE3"; ITAU2 <- c("ITAU ASSET","ITAU DTVM","ITAU UNIBANCO")
+CCOLS  <- c("cnpj","anbima","codigo","nome","tipo_ativo","data_comp","nome_ativo","valor_mil","participacao")
+grep_vale3 <- function(path) { con <- file(path, "r"); on.exit(close(con)); k <- list()
+  repeat { ln <- readLines(con, n = 1e6, warn = FALSE); if (length(ln) == 0) break
+    h <- ln[grepl(ASSET2, ln, fixed = TRUE, useBytes = TRUE)]; if (length(h)) k[[length(k)+1L]] <- h }
+  unlist(k, use.names = FALSE) }
+
+# ---- Passo 10: painel do peso de VALE3, 2016-2021 ----
+res2 <- list()
+for (yy in 2016:2021) {
+  sh <- fread(file.path(DATA_DIR, sprintf("SH_%d.csv", yy)), encoding = "UTF-8", showProgress = FALSE,
+              select = c("COD_FUNDO","CNPJ","NOME_FUNDO","GESTORA","DATA"))
+  sh[, GN := normalize_txt(GESTORA)]; shi <- sh[grepl(paste(ITAU2, collapse = "|"), GN)]
+  shi[, DATA_D := parse_date(DATA)]; itf <- unique(shi$COD_FUNDO)
+  ln <- grep_vale3(file.path(DATA_DIR, sprintf("cons_%d.csv", yy)))
+  cv <- fread(text = ln, sep = ";", header = FALSE, col.names = CCOLS, showProgress = FALSE)
+  cv <- cv[trimws(nome_ativo) == ASSET2]; cv <- unique(cv)
+  cv[, PESO := parse_num_us(participacao)]; cv[, DATA_COMP := parse_date(data_comp)]
+  cv <- cv[is.na(PESO) | PESO >= 0]; cvi <- cv[codigo %in% itf]
+  m <- merge(cvi, shi[, .(COD_FUNDO, DATA_D, GESTORA, NOME_FUNDO)],
+             by.x = c("codigo","DATA_COMP"), by.y = c("COD_FUNDO","DATA_D"), all.x = TRUE)
+  res2[[length(res2)+1L]] <- m[, .(cod_fundo = codigo, cnpj = cnpj, nome_fundo = NOME_FUNDO,
+    gestora = GESTORA, data = DATA_COMP, ano = year(DATA_COMP), mes = month(DATA_COMP),
+    peso_vale3 = PESO, valor_mil = valor_mil)]
+}
+pA <- rbindlist(res2); pA[, data := as.Date(data)]
+cat("\nPARTE2 P10: painel 2016-2021 =", nrow(pA), "obs |", uniqueN(pA$cod_fundo), "fundos\n")
+
+# ---- Passo 11: fluxo (Informe Diario; le por NOME de coluna, robusto ao TP_FUNDO) ----
+cnpjsA <- unique(pA$cnpj); idl <- list()
+for (yy in 2016:2021) for (mm in sprintf("%02d", 1:12)) {
+  f <- sprintf("data/raw/inf_diario_fi_%d%s.csv", yy, mm); if (!file.exists(f)) next
+  d <- fread(f, sep = ";", select = c("CNPJ_FUNDO","DT_COMPTC","CAPTC_DIA","RESG_DIA"), showProgress = FALSE)
+  idl[[length(idl)+1L]] <- d[CNPJ_FUNDO %in% cnpjsA]
+}
+idA <- rbindlist(idl); idA[, DT := as.Date(DT_COMPTC)][, ano := year(DT)][, mes := month(DT)]
+flowA <- idA[, .(captacao = sum(CAPTC_DIA), resgate = sum(RESG_DIA),
+                 fluxo_liq = sum(CAPTC_DIA - RESG_DIA), n_dias = .N), by = .(cnpj = CNPJ_FUNDO, ano, mes)]
+pA <- merge(pA, flowA, by = c("cnpj","ano","mes"), all.x = TRUE)
+
+# ---- Passo 12: features de fundo (snapshot dia-exato) ----
+snl <- list()
+for (yy in 2016:2021) {
+  sh <- fread(file.path(DATA_DIR, sprintf("SH_%d.csv", yy)), encoding = "UTF-8", showProgress = FALSE,
+              select = c("COD_FUNDO","DATA","PATRIMONIO_LIQUIDO_(MIL)","NUMERO_DE_COTISTAS","CLASSIFICACAO_ANBIMA"),
+              colClasses = list(character = "PATRIMONIO_LIQUIDO_(MIL)"))
+  sh <- sh[COD_FUNDO %in% unique(pA$cod_fundo)]
+  sh[, DT := parse_date(DATA)]; sh[, pl := parse_brl(`PATRIMONIO_LIQUIDO_(MIL)`)]
+  snl[[length(snl)+1L]] <- sh[, .(cod_fundo = COD_FUNDO, data = DT, aum = pl*1000,
+                                  n_cotistas = NUMERO_DE_COTISTAS, classif_anbima = CLASSIFICACAO_ANBIMA)]
+}
+pA <- merge(pA, rbindlist(snl), by = c("cod_fundo","data"), all.x = TRUE)
+pA[, is_fic := as.integer(grepl("\bFIC\b|\bFICFI\b", normalize_txt(nome_fundo)))]
+
+# ---- Passo 13: preco/beta (Yahoo, janela 252 pregoes) ----
+vv2 <- parse_yahoo("data/raw/yahoo_vale3.json"); ii2 <- parse_yahoo("data/raw/yahoo_ibov.json")
+vv2 <- vv2[!is.na(close) & !is.na(adjclose)]; ii2 <- ii2[!is.na(close)]
+s2 <- merge(vv2[, .(date, close, adjclose)], ii2[, .(date, ibov = close)], by = "date"); setorder(s2, date)
+s2[, rx := adjclose/shift(adjclose) - 1][, ry := ibov/shift(ibov) - 1]
+s2[, beta_vale := (frollmean(rx*ry,252L) - frollmean(rx,252L)*frollmean(ry,252L)) /
+                  (frollmean(ry*ry,252L) - frollmean(ry,252L)^2)]
+s2[, ymk := year(date)*100L + month(date)]
+ml2 <- s2[s2[, .I[which.max(date)], by = ymk]$V1,
+          .(ymk, data_ref = date, preco_nominal = close, preco_ajust = adjclose, beta_vale)]
+pA[, ymk_prev := ifelse(mes == 1L, (ano-1L)*100L+12L, ano*100L+(mes-1L))]
+pA <- merge(pA, ml2, by.x = "ymk_prev", by.y = "ymk", all.x = TRUE); pA[, ymk_prev := NULL]
+fwrite(pA, "data/processed/painel_vale_itau_2016_2021_full.csv")
+cat("PARTE2 P11-13: painel FINAL multi-ano salvo |", nrow(pA), "obs | NAs fluxo:",
+    sum(is.na(pA$fluxo_liq)), "\n")
+
+# ---- Passo 14: filtro (>3 cotistas) + regressao cross-section 72 meses ----
+dA <- pA[n_cotistas > 3 & !is.na(fluxo_liq)]
+dA[, l_aum := log(as.numeric(aum))][, l_cot := log(n_cotistas)]
+dA[, flow_aum := fluxo_liq/as.numeric(aum)][, ym := ano*100L + mes]
+coA <- rbindlist(lapply(sort(unique(dA$ym)), function(mn) {
+  fit <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum, data = dA[ym == mn]); cf <- coef(fit)
+  data.table(ym = mn, intercepto = cf[[1]], b_l_aum = cf[[2]], b_l_cot = cf[[3]],
+             b_is_fic = cf[[4]], b_flow_aum = cf[[5]], r2 = summary(fit)$r.squared) }))
+fwrite(coA, "data/processed/reg14_coefs_2016_2021.csv")
+fitpA <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + beta_vale, data = dA)
+cat("PARTE2 P14: regressao 72 meses (", nrow(coA), "meses). R2 medio cross-section:",
+    round(mean(coA$r2), 3), "| R2 pooled:", round(summary(fitpA)$r.squared, 3), "\n")
+cat("PARTE2: dinamica dos theta_t (R/16) e previsao+matriz de erros (R/17) nos",
+    "scripts dedicados.\n")
