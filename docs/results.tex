@@ -266,6 +266,26 @@ média histórica e os fatores. A conclusão de que o peso é quase um martingal
 mantém.
 \end{itemize}
 
+\paragraph{Robustez --- só fundos de Ações.} A previsão acima usa todos os fundos que
+detêm VALE3 (Ações + multimercado). Restringindo ao universo de \textbf{fundos de Ações}
+(6.085 obs, 166 fundos; o mesmo da margem extensiva):
+
+\begin{table}[h]\centering
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Universo & Horizonte & M0 Ingênuo & M1 FE & M2 FE$+$Kalman & M3 $\Delta w$ \\
+\midrule
+Todos holders & $h=1$ & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+Todos holders & $h=3$ & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+Só Ações      & $h=1$ & $\mathbf{0{,}0197}$ & $0{,}0310$ & $0{,}0383$ & $0{,}0198$ \\
+Só Ações      & $h=3$ & $\mathbf{0{,}0266}$ & $0{,}0337$ & $0{,}0385$ & $0{,}0270$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent Os erros são \emph{maiores} nos fundos de Ações (posições de VALE3 maiores e
+mais variáveis), mas o \textbf{ingênuo vence com folga ainda maior}, em $h=1$ e $h=3$.
+Restringir a Ações não altera a conclusão --- só a torna mais nítida.
+
 \section{Modelo 6 — Margem extensiva (ter ou não ter VALE3)}
 
 Até aqui estudamos o peso \emph{dado que} o fundo tem VALE3 (margem intensiva). A
