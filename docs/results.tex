@@ -45,6 +45,56 @@ Beta & beta móvel 252 pregões vs.\ Ibovespa & nível \\
 \end{tabular}
 \end{table}
 
+\section{Estatísticas descritivas}
+
+Amostra de regressão (margem intensiva, $>3$ cotistas, com fluxo): \textbf{11.413}
+observações fundo-mês, \textbf{307} fundos, 2016--2021. \textbf{75,7\%} das observações
+são de FICs.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Variável & Média & DP & Mín & P25 & Mediana & P75 & Máx \\
+\midrule
+Peso VALE3 (\%)       & $2{,}87$ & $3{,}52$ & $0{,}00$ & $0{,}21$ & $1{,}22$ & $4{,}77$ & $23{,}55$ \\
+AUM (R\$ milhões)     & $399$    & $1.079$  & $0{,}04$ & $25{,}6$ & $68{,}3$ & $256$    & $17.866$ \\
+Nº de cotistas        & $10.202$ & $72.039$ & $4$      & $7$      & $105$    & $1.161$  & $696.013$ \\
+Fluxo líq.\ (R\$ mi)  & $5{,}7$  & $74{,}1$ & $-1.522$ & $-0{,}9$ & $0{,}0$  & $0{,}6$  & $1.636$ \\
+Fluxo/AUM (\%)        & $0{,}19$ & $89{,}9$ & $-6.399$ & $-1{,}44$& $0{,}00$ & $0{,}91$ & $144{,}6$ \\
+Preço VALE3 (R\$)     & $53{,}6$ & $26{,}9$ & $9{,}72$ & $32{,}7$ & $50{,}0$ & $60{,}7$ & $114{,}8$ \\
+Beta VALE3            & $1{,}04$ & $0{,}31$ & $0{,}67$ & $0{,}82$ & $0{,}97$ & $1{,}05$ & $1{,}77$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent\footnotesize AUM e nº de cotistas são fortemente assimétricos (média $\gg$
+mediana) --- daí o uso de $\log$. O Fluxo/AUM tem caudas extremas (fundos de AUM
+minúsculo); o peso vai de 0 a $\approx$23,6\%. \normalsize
+
+\paragraph{Correlações entre os regressores.}
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & $\ln$AUM & $\ln$Cot & FIC & Fluxo/AUM & Preço & Beta \\
+\midrule
+$\ln$AUM    & $1{,}00$ &          &          &          &          & \\
+$\ln$Cot    & $0{,}31$ & $1{,}00$ &          &          &          & \\
+FIC         & $-0{,}16$& $0{,}36$ & $1{,}00$ &          &          & \\
+Fluxo/AUM   & $0{,}03$ & $0{,}02$ & $0{,}00$ & $1{,}00$ &          & \\
+Preço       & $0{,}15$ & $0{,}13$ & $0{,}08$ & $0{,}01$ & $1{,}00$ & \\
+Beta        & $-0{,}15$& $-0{,}09$& $-0{,}04$& $-0{,}01$& $-0{,}72$& $1{,}00$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent\footnotesize Destaque: \textbf{preço e beta são fortemente correlacionados}
+($-0{,}72$) --- quando a VALE3 está cara, seu beta é baixo (na recuperação 2016--2021,
+o preço subiu e a volatilidade relativa caiu). As demais correlações são baixas.
+\normalsize
+
+\paragraph{Tamanhos dos painéis.} Painel completo (todos os holders): \textbf{26.123}
+obs, 623 fundos. Amostra filtrada ($>3$ cotistas): \textbf{11.532} obs (11.413 com
+fluxo). Painel extensivo (margem extensiva, fundos de Ações com zeros): \textbf{10.286}
+obs, 260 fundos, 85,7\% com VALE3.
+
 \section{Modelo 1 — Cross-section mês a mês (Fama--MacBeth)}
 
 Para \emph{cada mês} $t$, estimamos por MQO:

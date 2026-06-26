@@ -134,6 +134,37 @@ tamanho} --- comparável entre fundos grandes e pequenos, e que \emph{preserva o
 sinal} (entrada $+$, saída $-$). Não dá para usar logaritmo, pois o fluxo pode ser
 negativo.
 
+\section{Retrato dos dados (estatísticas descritivas)}
+
+Antes dos modelos, um retrato numérico da amostra de regressão (margem intensiva,
+fundos com mais de 3 cotistas, com fluxo): \textbf{11.413} observações fundo-mês,
+\textbf{307} fundos. \textbf{75,7\%} são FICs.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Variável & Média & DP & Mín & P25 & Mediana & P75 & Máx \\
+\midrule
+Peso VALE3 (\%)       & $2{,}87$ & $3{,}52$ & $0{,}00$ & $0{,}21$ & $1{,}22$ & $4{,}77$ & $23{,}55$ \\
+AUM (R\$ milhões)     & $399$    & $1.079$  & $0{,}04$ & $25{,}6$ & $68{,}3$ & $256$    & $17.866$ \\
+Nº de cotistas        & $10.202$ & $72.039$ & $4$      & $7$      & $105$    & $1.161$  & $696.013$ \\
+Fluxo líq.\ (R\$ mi)  & $5{,}7$  & $74{,}1$ & $-1.522$ & $-0{,}9$ & $0{,}0$  & $0{,}6$  & $1.636$ \\
+Fluxo/AUM (\%)        & $0{,}19$ & $89{,}9$ & $-6.399$ & $-1{,}44$& $0{,}00$ & $0{,}91$ & $144{,}6$ \\
+Preço VALE3 (R\$)     & $53{,}6$ & $26{,}9$ & $9{,}72$ & $32{,}7$ & $50{,}0$ & $60{,}7$ & $114{,}8$ \\
+Beta VALE3            & $1{,}04$ & $0{,}31$ & $0{,}67$ & $0{,}82$ & $0{,}97$ & $1{,}05$ & $1{,}77$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Leia assim: o fundo \emph{típico} tem $\approx$1,2\% em VALE3 (mediana), mas
+há fundos com até 23,6\%. O AUM e o nº de cotistas têm \textbf{média muito maior que a
+mediana} (poucos fundos gigantes) --- é o que justifica usar o $\log$. O preço da VALE3
+varia de R\$\,9,72 a R\$\,114,78 no período (a recuperação da ação), e o beta, de 0,67 a
+1,77. Um detalhe importante: \textbf{preço e beta são bem correlacionados} ($-0{,}72$)
+--- quando a ação está cara, seu beta tende a ser baixo. Para referência, o painel
+completo tem 26.123 observações (623 fundos) e o painel da margem extensiva (fundos de
+Ações, com zeros) tem 10.286.
+
 \section{Modelo 1 --- a ``fotografia'' de cada mês (cross-section)}
 
 Para \emph{cada mês} $t$, estimamos por mínimos quadrados ordinários (MQO):
