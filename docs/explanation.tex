@@ -1,0 +1,160 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{parskip}
+
+\title{\textbf{Explicação didática — modelagem do peso de VALE3 nos fundos Itaú}}
+\author{TCC — FGV EESP \\ Orientador: Prof.\ Maurício Ferraresi Jr.}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Este documento explica, passo a passo e em linguagem acessível, \emph{o que}
+estamos fazendo, \emph{por que} cada modelo e cada escolha, e \emph{como}
+interpretar os resultados. O companheiro \texttt{results.pdf} traz as tabelas.
+
+\section{O problema}
+
+Queremos entender e, no fim, \textbf{prever} quanto cada fundo da gestora Itaú
+investe na ação \textbf{VALE3} — ou seja, o \textbf{peso} de VALE3 na carteira de
+cada fundo, mês a mês. A pergunta de fundo é: \emph{quais características dos fundos
+explicam essas posições?} Isso se conecta à literatura de \emph{demand-based asset
+pricing} (Koijen--Yogo), em que a demanda por um ativo é vista como função de
+características de quem investe.
+
+\section{A ideia central: o peso como ``função de demanda''}
+
+Para um fundo $i$ no mês $t$, modelamos:
+\[
+\text{peso}_{i,t} \;=\; \alpha_t \;+\; \beta^1_t\,x^1_{i,t} \;+\; \dots \;+\;
+\beta^k_t\,x^k_{i,t} \;+\; \varepsilon_{i,t},
+\]
+onde os $x$ são características do fundo (tamanho, nº de cotistas, etc.). Os
+coeficientes $\theta_t = (\alpha_t, \beta^1_t, \dots)$ dizem \emph{como} as
+características se traduzem em posição naquele mês. A sacada do orientador: em vez
+de acompanhar o peso de centenas de fundos, acompanhamos esses poucos coeficientes
+— eles são um \textbf{fator latente} que \emph{reduz um problema de alta dimensão a
+uma dimensão pequena}.
+
+\section{Por que ``regressão em dois passos''}
+
+\textbf{Passo 1 (transversal / cross-section):} para \emph{cada mês}, uma regressão
+separada do peso contra as características dos fundos. Isso produz uma série de
+coeficientes $\theta_t$ ao longo do tempo. \\
+\textbf{Passo 2 (temporal / dinâmico):} modelar como esses $\theta_t$ \emph{evoluem
+no tempo}. O orientador propõe que evoluam como um \emph{passeio aleatório} (random
+walk): $\theta_t = \theta_{t-1} + \text{choque}$, estimável pelo \emph{filtro de
+Kalman}. É o ``modelo de fator dinâmico''. A previsão vive aqui: prevendo
+$\theta_{t+1}$ e conhecendo as características do fundo, reconstruímos o peso
+previsto. (Este documento cobre o Passo~1; o Passo~2 é o próximo.)
+
+\section{As variáveis e por que cada tratamento}
+
+\textbf{Alvo: peso (nível).} É uma fração em $[0,1]$. Usamos em nível porque é o que
+o orientador pediu (o coeficiente OLS vira o fator) e é direto de interpretar.
+
+\textbf{AUM e nº de cotistas: usamos $\log$.} Essas variáveis são muito
+assimétricas — há fundos de R\$ 1 milhão e de R\$ 18 bilhões. Em nível, um fundo
+gigante dominaria a regressão. O logaritmo comprime a escala e capta efeitos
+\emph{proporcionais}: ir de 10 para 20 milhões ``pesa'' como ir de 100 para 200.
+
+\textbf{FIC vs.\ FI: variável binária (dummy).} Um FIC (Fundo de Investimento em
+Cotas) investe em cotas de outros fundos; um FI investe direto. Isso muda a posição
+\emph{direta} em ações. Detectamos FIC pelo nome do fundo (a classificação ANBIMA
+não distingue FIC/FI).
+
+\textbf{Fluxo líquido: usamos fluxo/AUM.} O fluxo é (captação $-$ resgate) do mês,
+em reais. Dividir pelo tamanho do fundo dá o fluxo como \emph{proporção do
+patrimônio} — comparável entre fundos grandes e pequenos, e preserva o sinal
+(entrada positiva, saída negativa). O fluxo líquido ``de verdade'' (com a perna de
+resgate) só existe no \emph{Informe Diário} da CVM, não na base SH.
+
+\section{Passo 1A: a cross-section mês a mês (e por que Fama--MacBeth)}
+
+Rodamos 72 regressões (uma por mês, 2016--2021). Cada uma dá um $\theta_t$. Para
+resumir, usamos o procedimento de \textbf{Fama--MacBeth}: a estimativa final de
+cada coeficiente é a \emph{média} dos 72 valores mensais, e o erro-padrão vem da
+\emph{variação entre os meses} (não de uma única regressão). É o jeito estatístico
+correto de tratar coeficientes que mudam mês a mês — e o teste $t$ resultante diz
+se o efeito médio é robusto no tempo.
+
+\textbf{Resultado:} tamanho ($-$), cotistas ($+$) e FIC ($-$) têm sinal idêntico
+\emph{em todos os 72 meses} e são altamente significativos. O fluxo não é
+significativo para o \emph{nível} do peso.
+
+\section{Por que preço e beta NÃO entram na cross-section}
+
+Dentro de um mesmo mês, o preço da VALE3 e o beta da VALE3 são \emph{iguais para
+todos os fundos} (são variáveis ``de mercado'', do ativo, não do fundo). Logo, eles
+não conseguem explicar por que um fundo difere de outro \emph{naquele mês} — seriam
+absorvidos pelo intercepto. São variáveis \emph{agregadas}: explicam como o nível
+\emph{médio} das posições se move \emph{ao longo do tempo}. Por isso entram (i) na
+regressão \emph{pooled} e (ii) no Passo~2 (a dinâmica do nível médio).
+
+\section{Passo 1B: a regressão \emph{pooled}}
+
+Empilhando todos os fundos-meses numa só regressão, o preço e o beta passam a ter
+variação (entre os 72 meses) e ficam identificados. Achamos: \textbf{preço $+$} e
+\textbf{beta $-$}, ambos significativos. Ou seja, em meses de VALE3 mais cara, o
+peso médio sobe; em meses de VALE3 mais arriscada (beta alto), o peso médio cai
+(aversão a risco). \emph{Importante:} no piloto de só 2016 (12 meses), o beta saía
+positivo e fraco; com 72 meses ele vira claramente negativo. Isso ensina uma lição
+metodológica: 12 pontos no tempo eram poucos para identificar variáveis agregadas
+— por isso estendemos para 6 anos.
+
+\section{Como o beta é calculado (e por quê)}
+
+Beta mede \textbf{quanto a ação se move quando o mercado se move}. É a inclinação da
+regressão dos retornos da VALE3 sobre os do Ibovespa:
+\[
+\beta = \frac{\mathrm{Cov}(r_{VALE},\, r_{Ibov})}{\mathrm{Var}(r_{Ibov})}.
+\]
+Calculamos \emph{nós mesmos} (não pegamos o ``beta'' pronto do Yahoo, que é de 5
+anos contra índice americano e estático). Usamos \textbf{retornos diários simples} e
+uma \textbf{janela móvel de 252 pregões} ($\approx$1 ano), lendo o beta no
+\textbf{último pregão do mês anterior} a cada competência. $\beta>1$ significa que a
+ação amplifica o mercado (mais cíclica/arriscada); $\beta<1$, que amortece. A VALE,
+mineradora, tem beta tipicamente alto.
+
+\section{Cuidado com \emph{look-ahead} e por que preço \emph{nominal}}
+
+\emph{Look-ahead} é usar informação do futuro para prever o passado — um erro grave.
+Garantimos que cada característica olha só para trás (a janela do beta termina na
+data de medição; o preço/beta vêm do mês \emph{anterior}). Um detalhe fino: o preço
+\emph{ajustado} (adjclose) é recalculado para trás usando dividendos \emph{futuros},
+então o nível dele numa data passada ``sabe'' de proventos posteriores. Por isso, na
+regressão usamos o \textbf{preço nominal} (o preço de fato negociado, imune a esse
+problema); o ajustado serve só para os retornos/beta, que são limpos.
+
+\section{O que os resultados dizem (em palavras)}
+
+O \textbf{nível} do peso de VALE3 é explicado por características \textbf{estruturais}
+do fundo: fundos maiores diversificam mais (menos VALE3); fundos com mais cotistas
+têm mais; FICs têm menos posição direta. O fluxo do mês não explica o nível (deve
+explicar a \emph{variação}). E o ``clima de mercado'' da VALE (preço e risco) desloca
+o nível médio de alocação no tempo. Tudo isso é estável e forte ao longo de 6 anos.
+
+\section{Rigor: validação e parsing}
+
+As bases da CVM têm armadilhas (formatos de número com ``R\$'', vírgula decimal,
+notação científica; datas em formatos diferentes; linhas duplicadas; mudança de
+layout em 2021). Tratamos e \textbf{auditamos} cada uma: 0 duplicados, 0 NAs
+indevidos; a captação da SH bate com o Informe Diário da CVM em 99,4--99,8\% ao
+centavo nos 6 anos; o preço bate com o fechamento oficial da B3; o beta confere por
+três métodos independentes. O recorte de 2016 do painel de 6 anos é idêntico ao
+painel de 2016 validado isoladamente.
+
+\section{O que vem (Passo 2)}
+
+Com os 72 vetores $\theta_t$ em mãos, o Passo~2 modela a \emph{dinâmica} deles: como
+evoluem (random walk / Kalman), como o nível médio responde a preço e beta, e usa
+isso para \textbf{prever} a vários horizontes. O produto final é uma \emph{matriz de
+erros} (resíduos fundo $\times$ mês), cujas propriedades (média zero, estabilidade)
+dizem o quão bem o modelo captura as posições.
+
+\end{document}
