@@ -429,6 +429,70 @@ limpa e uma previsão causal $\theta_{t\mid t-1}$. Implementamos um Kalman local
 manual (sem depender de pacote) e o usamos no modelo M2 acima --- mas, como vimos, mesmo
 o $\theta$ suavizado não bate a inércia do próprio fundo para prever.
 
+\section{Exemplo resolvido --- como a previsão é montada}
+
+A previsão é \textbf{fora da amostra com janela expansiva}: a cada mês, fingimos estar
+parados no presente e prevemos o mês seguinte usando \emph{só o passado}. Para o
+mês-alvo, os dados se dividem em \textbf{treino} (tudo \emph{antes} do mês, onde
+\emph{calibramos} os parâmetros) e \textbf{alvo} (o mês, onde prevemos e comparamos com
+o real). Veja num caso concreto.
+
+\begin{quote}
+\textbf{Fundo 779, prevendo o peso de junho/2020.} No fim de maio/2020 esse fundo tinha
+\textbf{53 meses de histórico} (o treino). O peso real em jun/2020 foi $0{,}060$.
+\begin{itemize}[noitemsep]
+\item \textbf{M0 Ingênuo} --- não calibra nada; repete o último peso (maio/2020):
+$\widehat{w}=0{,}06268$.
+\item \textbf{M1 Efeito-fixo} --- calibra $\mu_i=$ a \emph{média histórica} do peso do
+fundo nos 53 meses $=0{,}06116$; prevê esse valor.
+\item \textbf{M2 FE\,$+$\,Kalman} --- parte de $\mu_i$ e corrige pelos desvios das
+características de hoje em relação à média histórica \emph{do próprio fundo}, com os
+slopes que o Kalman prevê para jun/2020 (a partir dos meses anteriores):
+\[
+\widehat{w}=\underbrace{0{,}06116}_{\mu_i}
++\underbrace{(-0{,}0021)}_{\text{slope AUM}}\cdot\underbrace{(+0{,}023)}_{\Delta\ln\text{AUM}}
++\underbrace{(+0{,}0035)}_{\text{slope cot.}}\cdot\underbrace{(-0{,}236)}_{\Delta\ln\text{cot.}}
++\dots=0{,}06027.
+\]
+(O nº de cotistas estava abaixo da média do fundo, e seu slope é positivo, então puxa a
+previsão um pouco para baixo.)
+\end{itemize}
+Neste fundo-mês, o M2 ficou mais perto ($0{,}06027$ vs.\ real $0{,}060$); mas, na
+\emph{média} dos 9.532 casos, é o M0 que tem o menor erro.
+\end{quote}
+
+\noindent\textbf{O que se calibra em cada janela:} as médias $\mu_i$ (por fundo); as
+médias das características $\bar x_i$; os parâmetros $Q,R$ do Kalman (por máxima
+verossimilhança), que geram os slopes suavizados; e, no modelo de variação, os
+coeficientes da regressão de $\Delta w$. Tudo só com dados \emph{anteriores} ao
+mês-alvo.
+
+\section{A opacidade de 90 dias --- prever a 3 meses}
+
+Os fundos divulgam a carteira (o peso) com \textbf{defasagem trimestral}: em $t$, o peso
+mais recente que se \emph{enxerga} é o de $\approx$90 dias atrás. Saber o peso
+\emph{atual} equivale, então, a \textbf{prever $t+3$ com informação de $t$} --- um
+horizonte de 3 meses, em vez de 1. Refizemos a comparação (a parte de \emph{explicação}
+não muda, pois é contemporânea):
+
+\begin{table}[h]\centering
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Horizonte & M0 Ingênuo & M1 FE & M2 FE$+$Kalman & M3 $\Delta w$ \\
+\midrule
+$h=1$ (prever $t+1$)            & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+$h=3$ (opacidade de 90 dias)    & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent A 3 meses, o \textbf{ingênuo piora bastante} ($0{,}0156\to0{,}0207$, $+33\%$),
+porque o peso ``velho'' de 3 meses é mais defasado --- e a \emph{distância} para os
+modelos estruturais \textbf{encolhe}. Mesmo assim, \textbf{o ingênuo ainda vence} a
+$h=3$ ($0{,}0207<0{,}0262$). Conclusão: o peso é \emph{tão persistente} que, mesmo sob a
+opacidade trimestral, o último valor divulgado bate a média histórica e os fatores. A
+contribuição segue sendo de \textbf{compreensão}, não de previsão.
+
 \section{Rigor: validação e parsing}\label{sec:valid}
 
 Como as bases têm armadilhas, \textbf{auditamos} tudo:

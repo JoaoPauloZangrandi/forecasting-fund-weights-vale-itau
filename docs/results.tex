@@ -235,4 +235,35 @@ inércia do próprio fundo é o teto prático. A matriz de erros do melhor model
 média $\approx 0$ ($0{,}0002$) e é estacionária (DF $t=-8{,}7$).
 \end{itemize}
 
+\section{Modelo 5 — Opacidade de 90 dias (horizonte de 3 meses)}
+
+Os fundos divulgam a carteira com \textbf{defasagem trimestral}: em $t$ só se enxerga o
+peso de $\approx$90 dias atrás. Saber o peso \emph{atual} equivale a \textbf{prever
+$t+3$ com informação de $t$}. Refizemos a comparação de previsão para os horizontes
+$h=1$ (o que fazíamos) e $h=3$ (opacidade), com os mesmos modelos. A parte de
+\emph{explicação} (Modelos 1--2) não muda, por ser contemporânea.
+
+\begin{table}[h]\centering
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Horizonte & M0 Ingênuo & M1 FE & M2 FE$+$Kalman & M3 $\Delta w$ \\
+\midrule
+$h=1$ (prever $t+1$)         & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+$h=3$ (opacidade de 90 dias) & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent\footnotesize RMSE da previsão fora da amostra (info até $t$). \normalsize
+
+\subsection*{Interpretação}
+\begin{itemize}
+\item A 3 meses, o \textbf{ingênuo piora} ($0{,}0156\to0{,}0207$, $+33\%$) --- o peso de
+3 meses atrás é um preditor mais defasado --- e a \emph{distância} para os modelos
+estruturais \textbf{encolhe}.
+\item Mesmo assim, \textbf{o ingênuo ainda vence} a $h=3$ ($0{,}0207<0{,}0262$). O peso é
+tão persistente que, sob a opacidade trimestral, o último valor divulgado ainda bate a
+média histórica e os fatores. A conclusão de que o peso é quase um martingale se
+mantém.
+\end{itemize}
+
 \end{document}
