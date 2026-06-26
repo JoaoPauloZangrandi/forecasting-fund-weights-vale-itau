@@ -134,6 +134,35 @@ tamanho} --- comparável entre fundos grandes e pequenos, e que \emph{preserva o
 sinal} (entrada $+$, saída $-$). Não dá para usar logaritmo, pois o fluxo pode ser
 negativo.
 
+\section{Alinhamento temporal --- quando cada variável é medida}
+
+Um ponto sutil e importante: as bases têm \emph{frequências diferentes} (CONS é mensal;
+SH e Informe Diário são diários; Yahoo é diário), então é preciso definir, para o peso
+do mês $t$, \emph{de quando} vem cada característica.
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Variável & Fonte & Frequência & Quando medimos (para o mês $t$) \\
+\midrule
+Peso de VALE3 (alvo) & CONS & mensal & fim do mês $t$ (competência = último dia útil) \\
+AUM, nº cotistas     & SH   & diária & \textbf{mesmo dia} da competência (fim de $t$) \\
+Fluxo líquido        & Inf.\ Diário & diária & \textbf{soma de todo o mês $t$} \\
+Preço, beta VALE3    & Yahoo & diária & \textbf{fim do mês $t-1$} (último pregão anterior) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent A escolha-chave: \textbf{preço e beta vêm do fim do mês \emph{anterior}}
+($t-1$), não do mês $t$. Por exemplo, para o peso de jan/2016 usamos o beta/preço de
+30/dez/2015. Por quê? Preço e beta são variáveis de \emph{mercado}; medidos no mês
+anterior, ficam \textbf{predeterminados} (refletem o estado do mercado que o fundo
+``viu'' ao entrar no mês), sem risco de \emph{look-ahead} --- foi o que o orientador
+pediu (``último dia do mês anterior''). Já o AUM e o nº de cotistas são características
+\emph{estruturais} do fundo, medidas no \emph{mesmo} retrato da carteira; e o fluxo,
+por ser um fluxo, é \emph{somado} ao longo do mês. Resumindo: o peso e as características
+do fundo são do mesmo dia; o \textbf{mercado (preço/beta) é defasado em um mês}.
+
 \section{Retrato dos dados (estatísticas descritivas)}
 
 Antes dos modelos, um retrato numérico da amostra de regressão (margem intensiva,
@@ -408,14 +437,32 @@ A matriz de erros (Fator+AR1) tem \textbf{média $\approx 0$} ($0{,}0024$) e é
 \textbf{estacionária} (Dickey--Fuller $t=-7{,}6$) --- exatamente as propriedades que o
 orientador queria checar (no cenário ideal, a média do erro é zero).
 
-\paragraph{O refino: efeito-fixo de fundo e Kalman.} Combinamos os dois mundos: somamos
-ao modelo de fator um \textbf{efeito-fixo de fundo} $\mu_i$ (o nível ``próprio'' de
-cada fundo) e modelamos os fatores por \textbf{filtro de Kalman} (ver abaixo):
-\[
-w_{i,t}=\mu_i+\theta_t'\,x_{i,t}+\varepsilon_{i,t}.
-\]
-Testamos também prever a \emph{variação} $\Delta w$ a partir das características (incl.\
-fluxo). Os resultados (9.532 previsões fora da amostra):
+\paragraph{Por que efeito-fixo e por que Kalman?} Dois reforços para dar ao modelo a
+\emph{melhor chance} contra o ingênuo.
+\begin{itemize}[noitemsep]
+\item \textbf{Efeito-fixo de fundo} $\mu_i$: o ingênuo vence porque carrega o
+\emph{nível próprio} de cada fundo (a posição ``ancorada''); o modelo de fator puro não
+tem intercepto por fundo. Adicionar $\mu_i$ (a média histórica do fundo) devolve essa
+âncora --- junta a \emph{inércia que prevê} com a \emph{estrutura que explica}.
+\item \textbf{Filtro de Kalman}: os $\theta_t$ mensais têm \emph{ruído amostral}
+($\sim$130 fundos cada). O Kalman trata o $\theta$ verdadeiro como estado oculto que
+evolui devagar e a estimativa mensal como medida ruidosa, devolvendo uma trajetória mais
+limpa e uma previsão (foi também a proposta do orientador).
+\end{itemize}
+O modelo combinado é $w_{i,t}=\mu_i+\theta_t'\,x_{i,t}+\varepsilon_{i,t}$.
+
+\paragraph{Os três modelos (contra o ingênuo M0).} Seja $x_{i,t}$ as características do
+fundo e $\bar x_i$ suas médias históricas:
+\begin{align}
+\text{M0 Ingênuo:}\quad        & \widehat{w}_{i,t}=w_{i,t-1};\\
+\text{M1 Efeito-fixo:}\quad    & \widehat{w}_{i,t}=\widehat{\mu}_i;\\
+\text{M2 FE + Fator/Kalman:}\quad & \widehat{w}_{i,t}=\widehat{\mu}_i+\widehat{\theta}_t^{\,\text{Kal}\,\prime}\,(x_{i,t}-\bar x_i);\\
+\text{M3 Variação }\Delta w:\quad & \widehat{w}_{i,t}=w_{i,t-1}+\widehat{\delta}'\,x_{i,t}.
+\end{align}
+$\widehat{\mu}_i$ = média do peso do fundo (treino); $\widehat{\theta}_t^{\text{Kal}}$ =
+coeficiente previsto pelo Kalman; $\widehat{\delta}$ = coeficientes de uma regressão da
+\emph{mudança} $\Delta w$ nas características. Os resultados (9.532 previsões fora da
+amostra):
 \begin{center}
 \begin{tabular}{@{}lrr@{}}
 \toprule

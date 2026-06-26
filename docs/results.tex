@@ -45,6 +45,28 @@ Beta & beta móvel 252 pregões vs.\ Ibovespa & nível \\
 \end{tabular}
 \end{table}
 
+\section{Alinhamento temporal das variáveis}
+
+As bases têm frequências diferentes; para o peso do mês $t$, cada característica vem de
+um momento específico:
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}llll@{}}
+\toprule
+Variável & Fonte & Frequência & Quando medimos (para o mês $t$) \\
+\midrule
+Peso de VALE3 (alvo) & CONS & mensal & fim do mês $t$ (competência) \\
+AUM, nº cotistas     & SH   & diária & \textbf{mesmo dia} da competência (fim de $t$) \\
+Fluxo líquido        & Inf.\ Diário & diária & \textbf{soma de todo o mês $t$} \\
+Preço, beta VALE3    & Yahoo & diária & \textbf{fim do mês $t-1$} (último pregão anterior) \\
+\bottomrule
+\end{tabular}
+\end{table}
+\noindent\footnotesize Preço e beta vêm do \textbf{mês anterior} ($t-1$), não de $t$:
+são variáveis de mercado, mantidas \emph{predeterminadas} (sem look-ahead), conforme o
+orientador (``último dia do mês anterior''). AUM/cotistas são contemporâneos ao peso
+(mesmo retrato); o fluxo é somado no mês. \normalsize
+
 \section{Estatísticas descritivas}
 
 Amostra de regressão (margem intensiva, $>3$ cotistas, com fluxo): \textbf{11.413}
@@ -251,9 +273,23 @@ orientador queria verificar.
 
 Testamos o refino natural: somar ao fator um \textbf{efeito-fixo de fundo} $\mu_i$ (o
 nível próprio de cada fundo) e prever os fatores por \textbf{filtro de Kalman}
-(local-level, estado-espaço estimado por máxima verossimilhança). Comparamos também um
-modelo que prevê a \emph{variação} $\Delta w$ a partir das características (incl.\
-fluxo). Avaliação pseudo-fora-da-amostra (9.532 previsões):
+(local-level, estado-espaço estimado por máxima verossimilhança). \textbf{Por quê?} O
+ingênuo vence porque carrega o nível próprio de cada fundo (a posição ``ancorada''), que
+o fator puro não tem; o $\mu_i$ devolve essa âncora. E o Kalman limpa o ruído amostral
+das estimativas mensais $\theta_t$ ($\sim$130 fundos cada), dando uma previsão mais
+estável (proposta do orientador).
+
+\paragraph{Os três modelos (contra o ingênuo M0).} Com $x_{i,t}$ = características e
+$\bar x_i$ = médias históricas do fundo:
+\begin{align*}
+\text{M0 Ingênuo:}\quad        & \widehat{w}_{i,t}=w_{i,t-1};\\
+\text{M1 Efeito-fixo:}\quad    & \widehat{w}_{i,t}=\widehat{\mu}_i;\\
+\text{M2 FE + Fator/Kalman:}\quad & \widehat{w}_{i,t}=\widehat{\mu}_i+\widehat{\theta}_t^{\,\text{Kal}\,\prime}\,(x_{i,t}-\bar x_i);\\
+\text{M3 Variação }\Delta w:\quad & \widehat{w}_{i,t}=w_{i,t-1}+\widehat{\delta}'\,x_{i,t}.
+\end{align*}
+\noindent ($\widehat{\mu}_i$ = média do peso do fundo no treino; $\widehat{\theta}_t^{\text{Kal}}$
+= coeficiente previsto pelo Kalman; $\widehat{\delta}$ = coeficientes de uma regressão de
+$\Delta w$ nas características.) Avaliação pseudo-fora-da-amostra (9.532 previsões):
 
 \begin{table}[h]\centering
 \begin{tabular}{@{}lrr@{}}
