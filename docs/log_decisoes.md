@@ -206,12 +206,31 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 - ✅ **Ação:** preço (nominal+ajustado) e beta (passo 5).
 - ✅ **Amostra principal simples:** painel filtrado com `n_cotistas > 3` (passo 6).
 
-**Próximos passos (a combinar):** generalizar **2017–2021** (reaplicar TODOS os
-testes de parsing/validação — regras 5 e 6); e então a **regressão cross-section**
-(peso ~ características → beta OLS = fator latente), seguida do **modelo de fator
-dinâmico** (θ random walk / Kalman), previsão multi-horizonte e a **matriz de
-erros**. Opcional: (3b) validar o fluxo via derivação SH (PL+cota, exige certificar
-parsing da `COTA`).
+- **Passo 7** — `R/07_cross_section_regression.R` (PASSO 1 da metodologia do
+  Maurício): regressão do peso de VALE3 nas características, amostra filtrada
+  (`n_cotistas > 3`). Tratamentos: `log(aum)`, `log(n_cotistas)`, `is_fic` dummy,
+  `fluxo_liq/aum`. **Duas versões:**
+  - **(A) Cross-section mês a mês** → coeficientes `θ_t` por mês (= o **fator
+    latente**) + **matriz de resíduos** fundo×mês. Preço/beta NÃO entram (constantes
+    no mês → vão para o Passo 2/dinâmica). Saídas: `reg07_cross_section_coefs_2016.csv`,
+    `reg07_cross_section_resid_2016.csv`. **Resultado:** sinais **estáveis nos 12
+    meses** — `log(aum)` **−** (fundo maior, menos VALE), `log(cotistas)` **+**,
+    `is_fic` **−** (FIC tem menos VALE direto); `fluxo/aum` fraco/instável. R² 0,16–0,27.
+    Resíduo médio 0/mês (OLS), sd 0,0118. A estabilidade de θ_t justifica o random
+    walk/Kalman do Passo 2.
+  - **(B) Pooled** (com preço e beta): `l_aum`, `l_cot`, `is_fic` muito significativos
+    (p<2e-16, mesmos sinais); `fluxo/aum` e `preço` não signif.; `beta` +marginal
+    (p=0,027). ⚠️ preço/beta têm só **12 valores distintos** → p-valor otimista
+    (pouca variação independente); pertencem ao Passo 2.
+  - **Insight:** o NÍVEL do peso é estrutural (tamanho/cotistas/FIC); o **fluxo não
+    explica o nível** → fluxo provavelmente explica a **variação** do peso (o "prever
+    amanhã"). Decisão de tratamento (do João): fluxo = `fluxo_liq/aum`.
+
+**Próximos passos (a combinar):** **(Passo 2) dinâmica de θ_t** (random walk /
+Kalman; ligar α_t/θ_t a preço e beta) + previsão multi-horizonte; estudar a **matriz
+de erros** (estacionariedade etc.); variantes da regressão (cortes de cotistas,
+peso em logit, fluxo defasado p/ explicar Δpeso); generalizar **2017–2021**
+(reaplicar regras 5 e 6). Opcional: (3b) validar fluxo via SH PL+cota; P2 dinâmico.
 
 ---
 

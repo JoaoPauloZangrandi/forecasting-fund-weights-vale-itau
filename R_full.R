@@ -299,3 +299,33 @@ cat("\nPASSO 6: filtro n_cotistas > 3 aplicado.",
     "| depois:", nrow(painel_filtrado),
     "| fundos depois:", uniqueN(painel_filtrado$cod_fundo),
     ". Saida: data/processed/painel_vale_itau_2016_filtrado_cotistas_gt3.csv\n")
+
+# =============================================================================
+# PASSO 7 - regressao (PASSO 1 do Maurico): cross-section mes a mes (fator
+# latente theta_t + residuos) e pooled (com preco/beta). Amostra: filtrada.
+# Tratamentos: log(aum), log(n_cotistas), is_fic, fluxo_liq/aum.
+# =============================================================================
+
+dr <- copy(painel_filtrado)
+dr[, aum_num := as.numeric(aum)][, l_aum := log(aum_num)]
+dr[, l_cot := log(n_cotistas)][, flow_aum := fluxo_liq / aum_num]
+fml_cs <- peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum
+
+coefs7 <- rbindlist(lapply(sort(unique(dr$mes)), function(mm) {
+  fit <- lm(fml_cs, data = dr[mes == mm]); cf <- coef(fit)
+  data.table(mes = mm, n = nrow(dr[mes == mm]), r2 = summary(fit)$r.squared,
+             intercepto = cf[[1]], b_l_aum = cf[[2]], b_l_cot = cf[[3]],
+             b_is_fic = cf[[4]], b_flow_aum = cf[[5]])
+}))
+resids7 <- rbindlist(lapply(sort(unique(dr$mes)), function(mm) {
+  dm <- dr[mes == mm]
+  data.table(cod_fundo = dm$cod_fundo, mes = mm,
+             resid = residuals(lm(fml_cs, data = dm)))
+}))
+fwrite(coefs7,  "data/processed/reg07_cross_section_coefs_2016.csv")
+fwrite(resids7, "data/processed/reg07_cross_section_resid_2016.csv")
+fitp7 <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + beta_vale,
+            data = dr)
+cat("\nPASSO 7: cross-section (12 meses) + pooled rodadas.",
+    "R2 pooled:", round(summary(fitp7)$r.squared, 3),
+    "| coefs em data/processed/reg07_cross_section_coefs_2016.csv\n")

@@ -9,10 +9,10 @@
 >
 > **Repo:** https://github.com/JoaoPauloZangrandi/forecasting-fund-weights-vale-itau
 > **Local:** `C:\Users\joaoz\forecasting-fund-weights-vale-itau`
-> **Última atualização deste arquivo:** após o Passo 6 (remoção simples de fundos
-> com `n_cotistas <= 3`). Dataset de 2016 pronto e certificado; existe painel
-> completo e painel filtrado para modelagem inicial. A pequena correção do P2
-> dinâmico segue pendente/adiada.
+> **Última atualização deste arquivo:** após o Passo 7 (regressão — PASSO 1 do
+> Maurício: cross-section mês a mês = fatores θ_t + matriz de erros, e pooled com
+> preço/beta). Ver detalhe e resultados em `docs/log_decisoes.md`. Próximo: PASSO 2
+> (dinâmica de θ_t, random walk/Kalman). A correção do P2 dinâmico segue pendente.
 
 ---
 
