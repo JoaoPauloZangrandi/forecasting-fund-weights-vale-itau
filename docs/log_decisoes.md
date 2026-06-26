@@ -50,6 +50,7 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 | Entrega no GitHub | Scripts segmentados (`R/01`, `R/02`, …) **e** `R_full.R` (tudo num arquivo) |
 | Fluxo líquido | **Informe Diário CVM** (`CAPTC_DIA − RESG_DIA`), validado com a SH (passo 3b). Quebra a regra "só CONS+SH", mas é a base-mãe da SH e mais confiável |
 | Preço/beta da ação | Fonte **Yahoo Finance**, validada contra B3 oficial; feito no passo 5 |
+| **Timing de preço/beta** | **Explicação** (cross-section/pooled): **média do mês `t`** (`preco_mes`, `beta_mes`) — contemporâneo, "o que o gestor observou ao longo do mês". **Previsão**: **último pregão de `t-1`** (`preco_nominal`, `beta_vale`) — predeterminado, sem look-ahead. As duas medições coexistem no painel. Decisão do João (26/06): para a explicação faz mais sentido o contemporâneo, pois o gestor decide ao longo do mês, não num único dia. ⚠️ Ressalva registrada: o preço contemporâneo capta em parte o efeito **mecânico** (preço sobe → fração na carteira sobe sozinha), não só decisão ativa |
 | Fundos com poucos cotistas | Critério simples inicial: remover observações com `n_cotistas <= 3`; manter o painel completo intacto |
 
 ---
@@ -159,8 +160,29 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
   fonte **Yahoo Finance** (`VALE3.SA`, `^BVSP`). Colunas: `preco_nominal` (close),
   `preco_ajust` (adjclose), `beta_vale` (cov/var móvel **252 pregões** vs Ibovespa,
   retorno **simples**; VALE pelo adjclose, Ibov pelo close), `data_ref` (a data de
-  medição). Tudo medido no **último pregão do mês anterior** à competência (sem
-  look-ahead). Saída: **painel FINAL** `data/processed/painel_vale_itau_2016_full.csv`.
+  medição). Medido em **duas convenções de timing** (decisão 26/06): (a) `preco_nominal`,
+  `preco_ajust`, `beta_vale` no **último pregão do mês anterior** (predeterminado, p/
+  previsão, sem look-ahead); (b) `preco_mes`, `beta_mes` = **média do mês `t`**
+  (contemporâneo, p/ a regressão de explicação). Saída: **painel FINAL**
+  `data/processed/painel_vale_itau_2016_full.csv`.
+  - ⚠️ **Fix 26/06 (parsing Yahoo):** o `^BVSP` traz `close = null` em ~8 feriados
+    (2017–2018, B3 fechada). O `stopifnot` estrito original de `R/05` quebrava ao reusar
+    o cache do range longo (2014–2021, gerado pelo passo allyears). Alinhado ao `R/13`:
+    **dropar** as linhas com `close` NA antes dos retornos, abortando só se aparecerem
+    **muitos** NAs (>15) — sinal de erro real de parsing. Não muda 2016 (os NAs são de
+    2017–2018, fora das janelas de 2016).
+  - **`R_full.R` — reconciliação (fix 26/06):** ao validar o `R_full.R` de ponta a ponta
+    (ele estava **quebrado** já antes da mudança de timing), achei 3 bugs **só na seção
+    allyears** (PARTE2/3), todos corrigidos p/ bater **exatamente** com os scripts
+    segmentados (R²: 2016 pooled **0,167**; 2016–2021 cross-section **0,152** e pooled
+    **0,166**): (a) `is_fic` usava `grepl("\bFIC\b", …)` — em R `"\b"` é *backspace*, não
+    borda de palavra → `is_fic≡0`; corrigido p/ `"\\bFIC\\b"`; (b) `n_cotistas` chegava
+    como **character** (o `rbindlist` entre anos coage o tipo) → o filtro `n_cotistas > 3`
+    comparava **string** ("10" < "3"); coagido p/ inteiro antes do filtro; (c) consequência
+    de (a): a cross-section mensal deixava `b_is_fic` **NA** nos 72 meses → o Passo 16
+    (`lm` sobre série toda-NA) dava "0 casos" e abortava. Também: `R_full` agora **escreve**
+    o painel filtrado (`…_2016_2021_filtrado.csv`) que a PARTE3 lê → autossuficiente.
+    **Nada disso afeta os PDFs** (números canônicos vêm dos segmentados, com `is_fic` correto).
   - Dados Yahoo validados: VALE3 e Ibov, 764 pregões 2014–2017, **0 NAs**, datas
     100% alinhadas. Beta verificado por 3 métodos (frollmean = cov/var = lm, dif 0).
   - Resultado coerente: VALE3 nominal R$13,03 (dez/2015) → R$28,06 (nov/2016);
@@ -219,10 +241,12 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
     `is_fic` **−** (FIC tem menos VALE direto); `fluxo/aum` fraco/instável. R² 0,16–0,27.
     Resíduo médio 0/mês (OLS), sd 0,0118. A estabilidade de θ_t justifica o random
     walk/Kalman do Passo 2.
-  - **(B) Pooled** (com preço e beta): `l_aum`, `l_cot`, `is_fic` muito significativos
-    (p<2e-16, mesmos sinais); `fluxo/aum` e `preço` não signif.; `beta` +marginal
-    (p=0,027). ⚠️ preço/beta têm só **12 valores distintos** → p-valor otimista
-    (pouca variação independente); pertencem ao Passo 2.
+  - **(B) Pooled** (com preço/beta = **média do mês `t`**, decisão 26/06): `l_aum`,
+    `l_cot`, `is_fic` muito significativos (p<2e-16, mesmos sinais); `fluxo/aum` não
+    signif.; `preco_mes` **+** e signif. (β=1,9e-4, p=0,002) — em parte o efeito
+    **mecânico** preço→peso; `beta_mes` +0,005 n.s. (p=0,30). ⚠️ em 2016 preço/beta têm
+    só **12 valores distintos** (1 por mês) → p-valor otimista; a identificação melhora
+    no painel 2016–2021 (passo 14), onde `beta_mes` vira **−0,021 e signif.** (p<2e-16).
   - **Insight:** o NÍVEL do peso é estrutural (tamanho/cotistas/FIC); o **fluxo não
     explica o nível** → fluxo provavelmente explica a **variação** do peso (o "prever
     amanhã"). Decisão de tratamento (do João): fluxo = `fluxo_liq/aum`.

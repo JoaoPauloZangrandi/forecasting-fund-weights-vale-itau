@@ -64,7 +64,8 @@ cat("residuo geral: media =", round(mean(resids$resid), 8),
 
 # ---- (B) POOLED (com preco e beta) -----------------------------------------
 cat("\n=========== (B) POOLED (fundo + preco + beta) ===========\n")
-fitp <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + beta_vale,
+# preco/beta da EXPLICACAO = media do mes t (contemporaneo); t-1 fica p/ previsao
+fitp <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_mes + beta_mes,
            data = d)
 print(summary(fitp))
 

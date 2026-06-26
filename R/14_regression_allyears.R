@@ -48,8 +48,10 @@ fm <- rbindlist(lapply(vars, function(v) {
 print(fm)
 cat("R2 medio:", round(mean(coefs$r2), 4), "| meses:", nrow(coefs), "\n")
 
-cat("\n==== (B) POOLED (com preco/beta) ====\n")
-fitp <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + beta_vale, data = d)
+cat("\n==== (B) POOLED (com preco/beta = MEDIA do mes t, p/ explicacao) ====\n")
+# preco/beta da EXPLICACAO usam a media do mes t (contemporaneo); o t-1 (preco_nominal/
+# beta_vale) fica predeterminado p/ a previsao. Ver docs e log_decisoes (timing).
+fitp <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_mes + beta_mes, data = d)
 print(round(summary(fitp)$coefficients, 6))
 cat("R2:", round(summary(fitp)$r.squared, 4), "| n:", nobs(fitp), "\n")
 

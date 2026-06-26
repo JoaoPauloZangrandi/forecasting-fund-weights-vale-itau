@@ -34,13 +34,19 @@ W <- 252L
 stk[, beta_vale := (frollmean(r_vale * r_ibov, W) - frollmean(r_vale, W) * frollmean(r_ibov, W)) /
                    (frollmean(r_ibov * r_ibov, W) - frollmean(r_ibov, W)^2)]
 stk[, ymk := year(date) * 100L + month(date)]
+# (a) timing PREDETERMINADO: ultimo pregao do mes ANTERIOR (p/ previsao, sem look-ahead)
 mlast <- stk[stk[, .I[which.max(date)], by = ymk]$V1,
              .(ymk, data_ref = date, preco_nominal = close, preco_ajust = adjclose, beta_vale)]
+# (b) timing CONTEMPORANEO: MEDIA do mes t (p/ explicacao - o que o fundo viu no mes)
+avgm <- stk[, .(preco_mes = mean(close), beta_mes = mean(beta_vale, na.rm = TRUE)), by = ymk]
 
 painel <- fread(file.path(REPO, "data/processed/painel_vale_itau_2016_2021_features.csv"))
 painel[, ymk_prev := ifelse(mes == 1L, (ano - 1L) * 100L + 12L, ano * 100L + (mes - 1L))]
 pan2 <- merge(painel, mlast, by.x = "ymk_prev", by.y = "ymk", all.x = TRUE)
 pan2[, ymk_prev := NULL]
+pan2[, ymk_cur := ano * 100L + mes]                         # media do proprio mes t
+pan2 <- merge(pan2, avgm, by.x = "ymk_cur", by.y = "ymk", all.x = TRUE)
+pan2[, ymk_cur := NULL]
 
 cat("==== STOCK FEATURES: medicao por mes ====\n")
 print(mlast[ymk >= 201512 & ymk <= 202111][order(ymk)][, .(ymk, data_ref,

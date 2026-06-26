@@ -80,6 +80,18 @@ fonte melhor. Decisão: usar o **Informe Diário da CVM** (captação E resgate)
 Yahoo, validado contra a B3). Gostou de medir preço/beta no **último pregão do mês
 anterior**.
 
+**Timing de preço/beta — refinamento (26/06).** O João questionou: faz sentido fixar
+preço/beta no último dia útil de `t-1`? O gestor decide **ao longo do mês**, olhando o
+preço e o beta evoluírem — não num único dia. Discussão concluiu que o uso muda a
+resposta: para **explicar** (cross-section/pooled) o melhor é o **contemporâneo (média
+do mês `t`)**; para **prever** é obrigatório o **predeterminado (`t-1`)**, senão há
+look-ahead. É exatamente o que o Maurício antecipou ("testar começo do mês ou último
+fechamento do mês passado, e talvez outras datas"). Decisão: usar **média do mês `t`**
+na regressão de explicação (`preco_mes`/`beta_mes`), mantendo `t-1` na previsão.
+⚠️ Alerta registrado: o preço contemporâneo capta em parte o efeito **mecânico** (preço
+sobe → fração na carteira sobe sozinha), não só decisão ativa — candidato a decompor
+peso passivo vs ativo no futuro.
+
 **Look-ahead.** Levantou a dúvida: definir o fim do download (`P2`) não seria
 look-ahead? (Levou à análise que mostrou: beta e preço nominal são limpos; o preço
 ajustado tem o nível retroajustado por proventos futuros → usar **preço nominal**.)

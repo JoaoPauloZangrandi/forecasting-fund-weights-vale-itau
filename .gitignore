@@ -9,6 +9,14 @@ outputs/tables/*
 !outputs/tables/.gitkeep
 !outputs/tables/load_audit.csv
 
+# LaTeX (artefatos de compilação) — mantém .tex e .pdf.
+docs/*.aux
+docs/*.log
+docs/*.out
+docs/*.toc
+docs/*.fls
+docs/*.fdb_latexmk
+
 # R / sistema.
 .Rhistory
 .RData

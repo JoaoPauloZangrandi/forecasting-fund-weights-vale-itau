@@ -50,7 +50,14 @@ parse_yahoo <- function(path) {
 }
 v  <- parse_yahoo("data/raw/yahoo_vale3.json")
 ib <- parse_yahoo("data/raw/yahoo_ibov.json")
-stopifnot(!anyNA(v$close), !anyNA(v$adjclose), !anyNA(ib$close))  # parsing critico
+# feriados em que o Yahoo retorna close = null (B3 fechada): poucos e legitimos.
+# remove-os antes de calcular retornos; se aparecerem MUITOS NAs e' sinal de
+# erro de parsing -> aborta (mantem o espirito do parsing critico).
+na_v <- sum(is.na(v$close) | is.na(v$adjclose)); na_ib <- sum(is.na(ib$close))
+cat("Dias com NA removidos -> VALE3:", na_v, "| Ibov:", na_ib, "\n")
+stopifnot(na_v <= 15L, na_ib <= 15L)
+v  <- v[!is.na(close) & !is.na(adjclose)]
+ib <- ib[!is.na(close)]
 
 # ---- retornos simples e beta movel 252 pregoes ------------------------------
 stock <- merge(v[, .(date, close, adjclose)], ib[, .(date, ibov = close)], by = "date")
@@ -65,17 +72,23 @@ stock[, mxy := frollmean(r_vale * r_ibov, W)]
 stock[, myy := frollmean(r_ibov * r_ibov, W)]
 stock[, beta_vale := (mxy - mx * my) / (myy - my * my)]  # cov/var (pop. cancela)
 
-# ---- ultimo pregao de cada mes ---------------------------------------------
+# ---- timing das variaveis de mercado ---------------------------------------
 stock[, ymk := year(date) * 100L + month(date)]
+# (a) predeterminado: ultimo pregao do mes ANTERIOR (p/ previsao)
 mlast <- stock[stock[, .I[which.max(date)], by = ymk]$V1,
                .(ymk, data_ref = date,
                  preco_nominal = close, preco_ajust = adjclose, beta_vale)]
+# (b) contemporaneo: MEDIA do mes t (p/ explicacao)
+avgm <- stock[, .(preco_mes = mean(close), beta_mes = mean(beta_vale, na.rm = TRUE)), by = ymk]
 
-# ---- painel: junta pelo MES ANTERIOR a competencia --------------------------
+# ---- painel: junta pelo MES ANTERIOR (predeterminado) e pela MEDIA do mes t -
 painel <- fread("data/processed/painel_vale_itau_2016_features.csv")
 painel[, ymk_prev := ifelse(mes == 1L, (ano - 1L) * 100L + 12L, ano * 100L + (mes - 1L))]
 pan2 <- merge(painel, mlast, by.x = "ymk_prev", by.y = "ymk", all.x = TRUE)
 pan2[, ymk_prev := NULL]
+pan2[, ymk_cur := ano * 100L + mes]
+pan2 <- merge(pan2, avgm, by.x = "ymk_cur", by.y = "ymk", all.x = TRUE)
+pan2[, ymk_cur := NULL]
 
 # ---- auditoria + salvar -----------------------------------------------------
 cat("Fund-months:", nrow(pan2),

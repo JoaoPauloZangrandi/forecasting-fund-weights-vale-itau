@@ -265,7 +265,10 @@ parse_yahoo <- function(path) {
 }
 vv <- parse_yahoo("data/raw/yahoo_vale3.json")
 ii <- parse_yahoo("data/raw/yahoo_ibov.json")
-stopifnot(!anyNA(vv$close), !anyNA(vv$adjclose), !anyNA(ii$close))
+# feriados com close = null (B3 fechada): poucos e legitimos; remove-os antes dos
+# retornos. Aborta so se aparecerem MUITOS NAs (sinal de erro real de parsing).
+stopifnot(sum(is.na(vv$close) | is.na(vv$adjclose)) <= 15L, sum(is.na(ii$close)) <= 15L)
+vv <- vv[!is.na(close) & !is.na(adjclose)]; ii <- ii[!is.na(close)]
 stk <- merge(vv[, .(date, close, adjclose)], ii[, .(date, ibov = close)], by = "date")
 setorder(stk, date)
 stk[, r_vale := adjclose / shift(adjclose) - 1]
@@ -274,11 +277,17 @@ Wb <- 252L
 stk[, beta_vale := (frollmean(r_vale * r_ibov, Wb) - frollmean(r_vale, Wb) * frollmean(r_ibov, Wb)) /
                    (frollmean(r_ibov * r_ibov, Wb) - frollmean(r_ibov, Wb)^2)]
 stk[, ymk := year(date) * 100L + month(date)]
+# (a) predeterminado: ultimo pregao do mes anterior (p/ previsao)
 mlast <- stk[stk[, .I[which.max(date)], by = ymk]$V1,
              .(ymk, data_ref = date, preco_nominal = close, preco_ajust = adjclose, beta_vale)]
+# (b) contemporaneo: media do mes t (p/ explicacao)
+avgm <- stk[, .(preco_mes = mean(close), beta_mes = mean(beta_vale, na.rm = TRUE)), by = ymk]
 painel_features[, ymk_prev := ifelse(mes == 1L, (ano - 1L) * 100L + 12L, ano * 100L + (mes - 1L))]
 painel_full <- merge(painel_features, mlast, by.x = "ymk_prev", by.y = "ymk", all.x = TRUE)
 painel_full[, ymk_prev := NULL]
+painel_full[, ymk_cur := ano * 100L + mes]
+painel_full <- merge(painel_full, avgm, by.x = "ymk_cur", by.y = "ymk", all.x = TRUE)
+painel_full[, ymk_cur := NULL]
 fwrite(painel_full, "data/processed/painel_vale_itau_2016_full.csv")
 cat("\nPASSO 5: preco/beta da VALE adicionados (NAs beta:", painel_full[is.na(beta_vale), .N],
     "). Painel FINAL: data/processed/painel_vale_itau_2016_full.csv\n")
@@ -324,7 +333,7 @@ resids7 <- rbindlist(lapply(sort(unique(dr$mes)), function(mm) {
 }))
 fwrite(coefs7,  "data/processed/reg07_cross_section_coefs_2016.csv")
 fwrite(resids7, "data/processed/reg07_cross_section_resid_2016.csv")
-fitp7 <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + beta_vale,
+fitp7 <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_mes + beta_mes,  # explicacao: media de t
             data = dr)
 cat("\nPASSO 7: cross-section (12 meses) + pooled rodadas.",
     "R2 pooled:", round(summary(fitp7)$r.squared, 3),
@@ -390,7 +399,10 @@ for (yy in 2016:2021) {
                                   n_cotistas = NUMERO_DE_COTISTAS, classif_anbima = CLASSIFICACAO_ANBIMA)]
 }
 pA <- merge(pA, rbindlist(snl), by = c("cod_fundo","data"), all.x = TRUE)
-pA[, is_fic := as.integer(grepl("\bFIC\b|\bFICFI\b", normalize_txt(nome_fundo)))]
+# n_cotistas pode vir como character (rbindlist coage entre anos) -> o filtro
+# `n_cotistas > 3` faria comparacao de STRING ("10" < "3"). Coage p/ inteiro.
+pA[, n_cotistas := as.integer(n_cotistas)]
+pA[, is_fic := as.integer(grepl("\\bFIC\\b|\\bFICFI\\b", normalize_txt(nome_fundo)))]
 
 # ---- Passo 13: preco/beta (Yahoo, janela 252 pregoes) ----
 vv2 <- parse_yahoo("data/raw/yahoo_vale3.json"); ii2 <- parse_yahoo("data/raw/yahoo_ibov.json")
@@ -400,24 +412,28 @@ s2[, rx := adjclose/shift(adjclose) - 1][, ry := ibov/shift(ibov) - 1]
 s2[, beta_vale := (frollmean(rx*ry,252L) - frollmean(rx,252L)*frollmean(ry,252L)) /
                   (frollmean(ry*ry,252L) - frollmean(ry,252L)^2)]
 s2[, ymk := year(date)*100L + month(date)]
-ml2 <- s2[s2[, .I[which.max(date)], by = ymk]$V1,
+ml2 <- s2[s2[, .I[which.max(date)], by = ymk]$V1,   # (a) t-1 predeterminado (previsao)
           .(ymk, data_ref = date, preco_nominal = close, preco_ajust = adjclose, beta_vale)]
+avg2 <- s2[, .(preco_mes = mean(close), beta_mes = mean(beta_vale, na.rm = TRUE)), by = ymk]  # (b) media de t (explicacao)
 pA[, ymk_prev := ifelse(mes == 1L, (ano-1L)*100L+12L, ano*100L+(mes-1L))]
 pA <- merge(pA, ml2, by.x = "ymk_prev", by.y = "ymk", all.x = TRUE); pA[, ymk_prev := NULL]
+pA[, ymk_cur := ano*100L+mes]; pA <- merge(pA, avg2, by.x = "ymk_cur", by.y = "ymk", all.x = TRUE); pA[, ymk_cur := NULL]
 fwrite(pA, "data/processed/painel_vale_itau_2016_2021_full.csv")
 cat("PARTE2 P11-13: painel FINAL multi-ano salvo |", nrow(pA), "obs | NAs fluxo:",
     sum(is.na(pA$fluxo_liq)), "\n")
 
 # ---- Passo 14: filtro (>3 cotistas) + regressao cross-section 72 meses ----
+# escreve o painel filtrado (espelha R/14) p/ a PARTE3 ler — mantem R_full autossuficiente
+fwrite(pA[n_cotistas > 3], "data/processed/painel_vale_itau_2016_2021_filtrado.csv")
 dA <- pA[n_cotistas > 3 & !is.na(fluxo_liq)]
-dA[, l_aum := log(as.numeric(aum))][, l_cot := log(n_cotistas)]
+dA[, l_aum := log(as.numeric(aum))][, l_cot := log(as.numeric(n_cotistas))]
 dA[, flow_aum := fluxo_liq/as.numeric(aum)][, ym := ano*100L + mes]
 coA <- rbindlist(lapply(sort(unique(dA$ym)), function(mn) {
   fit <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum, data = dA[ym == mn]); cf <- coef(fit)
   data.table(ym = mn, intercepto = cf[[1]], b_l_aum = cf[[2]], b_l_cot = cf[[3]],
              b_is_fic = cf[[4]], b_flow_aum = cf[[5]], r2 = summary(fit)$r.squared) }))
 fwrite(coA, "data/processed/reg14_coefs_2016_2021.csv")
-fitpA <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_nominal + beta_vale, data = dA)
+fitpA <- lm(peso_vale3 ~ l_aum + l_cot + is_fic + flow_aum + preco_mes + beta_mes, data = dA)  # explicacao: media de t
 cat("PARTE2 P14: regressao 72 meses (", nrow(coA), "meses). R2 medio cross-section:",
     round(mean(coA$r2), 3), "| R2 pooled:", round(summary(fitpA)$r.squared, 3), "\n")
 cat("PARTE2: dinamica dos theta_t (R/16) e previsao+matriz de erros (R/17) nos",
@@ -446,7 +462,7 @@ kal3 <- as.data.table(lapply(sl3, function(v) kalp3(co3[[v]]))); setnames(kal3, 
 
 # ---- Passo 17/19: previsao do peso (M0-M3) a h=1 e h=3 (todos os holders) ----
 dm <- fread("data/processed/painel_vale_itau_2016_2021_filtrado.csv")
-dm[, an := as.numeric(aum)][, l_aum := log(an)][, l_cot := log(n_cotistas)]
+dm[, an := as.numeric(aum)][, l_aum := log(an)][, l_cot := log(as.numeric(n_cotistas))]
 dm[, flow_aum := fluxo_liq/an][, ym := ano*100L+mes]; dm <- dm[!is.na(flow_aum)]
 dm[, monidx := frank(ym, ties.method = "dense")]
 kal3[, monidx := frank(ym, ties.method = "dense")]

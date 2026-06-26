@@ -58,14 +58,16 @@ Variável & Fonte & Frequência & Quando medimos (para o mês $t$) \\
 Peso de VALE3 (alvo) & CONS & mensal & fim do mês $t$ (competência) \\
 AUM, nº cotistas     & SH   & diária & \textbf{mesmo dia} da competência (fim de $t$) \\
 Fluxo líquido        & Inf.\ Diário & diária & \textbf{soma de todo o mês $t$} \\
-Preço, beta VALE3    & Yahoo & diária & \textbf{fim do mês $t-1$} (último pregão anterior) \\
+Preço, beta VALE3    & Yahoo & diária & \textbf{média do mês $t$} (explicação) / fim de $t{-}1$ (previsão) \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent\footnotesize Preço e beta vêm do \textbf{mês anterior} ($t-1$), não de $t$:
-são variáveis de mercado, mantidas \emph{predeterminadas} (sem look-ahead), conforme o
-orientador (``último dia do mês anterior''). AUM/cotistas são contemporâneos ao peso
-(mesmo retrato); o fluxo é somado no mês. \normalsize
+\noindent\footnotesize Preço e beta têm \textbf{dois papéis}: na \emph{explicação}
+(Modelos~1--2) usamos a \textbf{média do mês $t$} --- a melhor medida do que o gestor
+observou \emph{ao longo} do mês ao dimensionar a posição; na \emph{previsão} (Modelo~3)
+usamos o \textbf{fim do mês $t-1$} (predeterminado, sem \emph{look-ahead}), pois para
+prever o peso de $t$ só vale informação anterior a $t$. AUM/cotistas são contemporâneos
+ao peso (mesmo retrato); o fluxo é somado no mês. \normalsize
 
 \section{Estatísticas descritivas}
 
@@ -83,8 +85,8 @@ AUM (R\$ milhões)     & $399$    & $1.079$  & $0{,}04$ & $25{,}6$ & $68{,}3$ & 
 Nº de cotistas        & $10.202$ & $72.039$ & $4$      & $7$      & $105$    & $1.161$  & $696.013$ \\
 Fluxo líq.\ (R\$ mi)  & $5{,}7$  & $74{,}1$ & $-1.522$ & $-0{,}9$ & $0{,}0$  & $0{,}6$  & $1.636$ \\
 Fluxo/AUM (\%)        & $0{,}19$ & $89{,}9$ & $-6.399$ & $-1{,}44$& $0{,}00$ & $0{,}91$ & $144{,}6$ \\
-Preço VALE3 (R\$)     & $53{,}6$ & $26{,}9$ & $9{,}72$ & $32{,}7$ & $50{,}0$ & $60{,}7$ & $114{,}8$ \\
-Beta VALE3            & $1{,}04$ & $0{,}31$ & $0{,}67$ & $0{,}82$ & $0{,}97$ & $1{,}05$ & $1{,}77$ \\
+Preço VALE3 (R\$)     & $54{,}6$ & $27{,}2$ & $9{,}94$ & $33{,}7$ & $50{,}9$ & $67{,}5$ & $114{,}1$ \\
+Beta VALE3            & $1{,}04$ & $0{,}30$ & $0{,}68$ & $0{,}81$ & $0{,}97$ & $1{,}06$ & $1{,}73$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -103,12 +105,12 @@ $\ln$Cot    & $0{,}31$ & $1{,}00$ &          &          &          & \\
 FIC         & $-0{,}16$& $0{,}36$ & $1{,}00$ &          &          & \\
 Fluxo/AUM   & $0{,}03$ & $0{,}02$ & $0{,}00$ & $1{,}00$ &          & \\
 Preço       & $0{,}15$ & $0{,}13$ & $0{,}08$ & $0{,}01$ & $1{,}00$ & \\
-Beta        & $-0{,}15$& $-0{,}09$& $-0{,}04$& $-0{,}01$& $-0{,}72$& $1{,}00$ \\
+Beta        & $-0{,}15$& $-0{,}09$& $-0{,}04$& $-0{,}01$& $-0{,}71$& $1{,}00$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 \noindent\footnotesize Destaque: \textbf{preço e beta são fortemente correlacionados}
-($-0{,}72$) --- quando a VALE3 está cara, seu beta é baixo (na recuperação 2016--2021,
+($-0{,}71$) --- quando a VALE3 está cara, seu beta é baixo (na recuperação 2016--2021,
 o preço subiu e a volatilidade relativa caiu). As demais correlações são baixas.
 \normalsize
 
@@ -155,8 +157,8 @@ Sinais idênticos nos 72 meses $\Rightarrow$ fatores estáveis. \normalsize
 
 \section{Modelo 2 — Pooled (com preço e beta)}
 
-Empilhando os 72 meses, preço e beta (constantes \emph{dentro} de um mês) passam a
-ser identificados pela variação \emph{entre} meses:
+Empilhando os 72 meses, preço e beta (a \textbf{média do mês $t$}, constante
+\emph{dentro} de um mês) passam a ser identificados pela variação \emph{entre} meses:
 \begin{equation}
 w_{i,t} = \alpha + \beta^{1}\ln\text{AUM} + \beta^{2}\ln\text{Cot} + \beta^{3}\text{FIC}
         + \beta^{4}\tfrac{\text{Fluxo}}{\text{AUM}} + \beta^{5}\text{Preço}_t
@@ -169,18 +171,20 @@ w_{i,t} = \alpha + \beta^{1}\ln\text{AUM} + \beta^{2}\ln\text{Cot} + \beta^{3}\t
 \toprule
 \textbf{Variável} & \textbf{Estimativa} & \textbf{EP} & \textbf{$t$} & \textbf{$p$} & \textbf{Sig.} \\
 \midrule
-Intercepto       & $0{,}10361$  & $0{,}00407$ & $25{,}4$   & $<0{,}001$ & *** \\
-$\log$(AUM)      & $-0{,}00353$ & $0{,}00019$ & $-19{,}0$  & $<0{,}001$ & *** \\
-$\log$(cotistas) & $0{,}00390$  & $0{,}00013$ & $31{,}0$   & $<0{,}001$ & *** \\
-FIC (dummy)      & $-0{,}01674$ & $0{,}00079$ & $-21{,}1$  & $<0{,}001$ & *** \\
-Fluxo/AUM        & $-0{,}00033$ & $0{,}00034$ & $-0{,}99$  & $0{,}324$  & n.s. \\
-Preço VALE3      & $0{,}000149$ & $0{,}000016$& $9{,}2$    & $<0{,}001$ & *** \\
-Beta VALE3       & $-0{,}02368$ & $0{,}00142$ & $-16{,}7$  & $<0{,}001$ & *** \\
+Intercepto       & $0{,}09937$  & $0{,}00406$ & $24{,}5$   & $<0{,}001$ & *** \\
+$\log$(AUM)      & $-0{,}00354$ & $0{,}00019$ & $-19{,}0$  & $<0{,}001$ & *** \\
+$\log$(cotistas) & $0{,}00388$  & $0{,}00013$ & $30{,}9$   & $<0{,}001$ & *** \\
+FIC (dummy)      & $-0{,}01682$ & $0{,}00079$ & $-21{,}3$  & $<0{,}001$ & *** \\
+Fluxo/AUM        & $-0{,}00030$ & $0{,}00034$ & $-0{,}91$  & $0{,}365$  & n.s. \\
+Preço VALE3      & $0{,}000182$ & $0{,}000016$& $11{,}5$   & $<0{,}001$ & *** \\
+Beta VALE3       & $-0{,}02141$ & $0{,}00142$ & $-15{,}1$  & $<0{,}001$ & *** \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent\footnotesize $R^2=0{,}164$; $n=11.413$.\; Preço $+$ (VALE3 cara $\to$ peso
-médio maior); Beta $-$ (VALE3 mais arriscada $\to$ peso menor, aversão a risco).
+\noindent\footnotesize $R^2=0{,}166$; $n=11.413$. Preço e beta aqui são a \textbf{média
+do mês $t$} (contemporâneos). Preço $+$ (VALE3 cara $\to$ peso médio maior) --- parte
+disso é \emph{mecânica} (se a ação sobe, sua fração na carteira cresce sozinha, sem o
+gestor negociar); Beta $-$ (VALE3 mais arriscada $\to$ peso menor, aversão a risco).
 Com 72 meses o beta é claramente negativo; no piloto de 12 meses (2016) saía positivo
 e fraco — confirmando que 12 pontos eram poucos. \normalsize
 

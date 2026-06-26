@@ -148,20 +148,21 @@ Variável & Fonte & Frequência & Quando medimos (para o mês $t$) \\
 Peso de VALE3 (alvo) & CONS & mensal & fim do mês $t$ (competência = último dia útil) \\
 AUM, nº cotistas     & SH   & diária & \textbf{mesmo dia} da competência (fim de $t$) \\
 Fluxo líquido        & Inf.\ Diário & diária & \textbf{soma de todo o mês $t$} \\
-Preço, beta VALE3    & Yahoo & diária & \textbf{fim do mês $t-1$} (último pregão anterior) \\
+Preço, beta VALE3    & Yahoo & diária & \textbf{média do mês $t$} (explicação); fim de $t-1$ (previsão) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\noindent A escolha-chave: \textbf{preço e beta vêm do fim do mês \emph{anterior}}
-($t-1$), não do mês $t$. Por exemplo, para o peso de jan/2016 usamos o beta/preço de
-30/dez/2015. Por quê? Preço e beta são variáveis de \emph{mercado}; medidos no mês
-anterior, ficam \textbf{predeterminados} (refletem o estado do mercado que o fundo
-``viu'' ao entrar no mês), sem risco de \emph{look-ahead} --- foi o que o orientador
+\noindent A escolha-chave de timing: preço e beta são variáveis de \emph{mercado} e
+têm \textbf{dois papéis distintos}. Na \textbf{explicação} (Modelos 1--2) usamos a
+\textbf{média do mês $t$} --- é a melhor medida do que o gestor \emph{observou ao longo
+do mês} ao dimensionar a posição; afinal ele não olha um único dia, acompanha o preço e
+o risco da ação durante o mês inteiro. Já na \textbf{previsão} (Modelo 3) usamos o
+\textbf{fim do mês $t-1$} (último pregão anterior): para prever o peso de $t$ sem
+\emph{look-ahead}, só vale informação \emph{anterior} a $t$ --- foi o que o orientador
 pediu (``último dia do mês anterior''). Já o AUM e o nº de cotistas são características
-\emph{estruturais} do fundo, medidas no \emph{mesmo} retrato da carteira; e o fluxo,
-por ser um fluxo, é \emph{somado} ao longo do mês. Resumindo: o peso e as características
-do fundo são do mesmo dia; o \textbf{mercado (preço/beta) é defasado em um mês}.
+\emph{estruturais} do fundo, medidas no \emph{mesmo} retrato da carteira (fim de $t$); e
+o fluxo, por ser um fluxo, é \emph{somado} ao longo do mês.
 
 \section{Retrato dos dados (estatísticas descritivas)}
 
@@ -179,8 +180,8 @@ AUM (R\$ milhões)     & $399$    & $1.079$  & $0{,}04$ & $25{,}6$ & $68{,}3$ & 
 Nº de cotistas        & $10.202$ & $72.039$ & $4$      & $7$      & $105$    & $1.161$  & $696.013$ \\
 Fluxo líq.\ (R\$ mi)  & $5{,}7$  & $74{,}1$ & $-1.522$ & $-0{,}9$ & $0{,}0$  & $0{,}6$  & $1.636$ \\
 Fluxo/AUM (\%)        & $0{,}19$ & $89{,}9$ & $-6.399$ & $-1{,}44$& $0{,}00$ & $0{,}91$ & $144{,}6$ \\
-Preço VALE3 (R\$)     & $53{,}6$ & $26{,}9$ & $9{,}72$ & $32{,}7$ & $50{,}0$ & $60{,}7$ & $114{,}8$ \\
-Beta VALE3            & $1{,}04$ & $0{,}31$ & $0{,}67$ & $0{,}82$ & $0{,}97$ & $1{,}05$ & $1{,}77$ \\
+Preço VALE3 (R\$)     & $54{,}6$ & $27{,}2$ & $9{,}94$ & $33{,}7$ & $50{,}9$ & $67{,}5$ & $114{,}1$ \\
+Beta VALE3            & $1{,}04$ & $0{,}30$ & $0{,}68$ & $0{,}81$ & $0{,}97$ & $1{,}06$ & $1{,}73$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -188,9 +189,9 @@ Beta VALE3            & $1{,}04$ & $0{,}31$ & $0{,}67$ & $0{,}82$ & $0{,}97$ & $
 \noindent Leia assim: o fundo \emph{típico} tem $\approx$1,2\% em VALE3 (mediana), mas
 há fundos com até 23,6\%. O AUM e o nº de cotistas têm \textbf{média muito maior que a
 mediana} (poucos fundos gigantes) --- é o que justifica usar o $\log$. O preço da VALE3
-varia de R\$\,9,72 a R\$\,114,78 no período (a recuperação da ação), e o beta, de 0,67 a
-1,77. Um detalhe importante: \textbf{preço e beta são bem correlacionados} ($-0{,}72$)
---- quando a ação está cara, seu beta tende a ser baixo. Para referência, o painel
+(média do mês) varia de R\$\,9,94 a R\$\,114,06 no período (a recuperação da ação), e o
+beta, de 0,68 a 1,73. Um detalhe importante: \textbf{preço e beta são bem correlacionados}
+($-0{,}71$) --- quando a ação está cara, seu beta tende a ser baixo. Para referência, o painel
 completo tem 26.123 observações (623 fundos) e o painel da margem extensiva (fundos de
 Ações, com zeros) tem 10.286.
 
@@ -274,8 +275,8 @@ nível \emph{médio} se move \emph{ao longo dos meses}. Por isso vão para a reg
 
 \section{Modelo 2 --- juntando tudo (pooled)}
 
-Empilhando os 72 meses numa só regressão, o preço e o beta passam a variar (entre os
-meses) e ficam identificados:
+Empilhando os 72 meses numa só regressão, o preço e o beta (aqui, a \textbf{média de
+cada mês $t$}) passam a variar entre os meses e ficam identificados:
 \begin{equation}
 w_{i,t} = \alpha + \beta^{1}\ln\text{AUM} + \beta^{2}\ln\text{Cot}
 + \beta^{3}\text{FIC} + \beta^{4}\tfrac{\text{Fluxo}}{\text{AUM}}
@@ -288,19 +289,21 @@ w_{i,t} = \alpha + \beta^{1}\ln\text{AUM} + \beta^{2}\ln\text{Cot}
 \toprule
 Variável & Estimativa & $t$ & $p$ & Sig. \\
 \midrule
-Intercepto       & $0{,}10361$  & $25{,}4$   & $<0{,}001$ & *** \\
-$\ln$(AUM)       & $-0{,}00353$ & $-19{,}0$  & $<0{,}001$ & *** \\
-$\ln$(cotistas)  & $0{,}00390$  & $31{,}0$   & $<0{,}001$ & *** \\
-FIC              & $-0{,}01674$ & $-21{,}1$  & $<0{,}001$ & *** \\
-Fluxo/AUM        & $-0{,}00033$ & $-0{,}99$  & $0{,}324$  & n.s. \\
-Preço VALE3      & $0{,}000149$ & $9{,}2$    & $<0{,}001$ & *** \\
-Beta VALE3       & $-0{,}02368$ & $-16{,}7$  & $<0{,}001$ & *** \\
+Intercepto       & $0{,}09937$  & $24{,}5$   & $<0{,}001$ & *** \\
+$\ln$(AUM)       & $-0{,}00354$ & $-19{,}0$  & $<0{,}001$ & *** \\
+$\ln$(cotistas)  & $0{,}00388$  & $30{,}9$   & $<0{,}001$ & *** \\
+FIC              & $-0{,}01682$ & $-21{,}3$  & $<0{,}001$ & *** \\
+Fluxo/AUM        & $-0{,}00030$ & $-0{,}91$  & $0{,}365$  & n.s. \\
+Preço VALE3      & $0{,}000182$ & $11{,}5$   & $<0{,}001$ & *** \\
+Beta VALE3       & $-0{,}02141$ & $-15{,}1$  & $<0{,}001$ & *** \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent ($R^2=0{,}164$; $n=11.413$.) \textbf{Preço $+$:} em meses de VALE3 mais
-cara, o peso médio sobe. \textbf{Beta $-$:} em meses de VALE3 mais arriscada (beta
-alto), o peso médio cai (aversão a risco).
+\noindent ($R^2=0{,}166$; $n=11.413$. Preço e beta são a \textbf{média do mês $t$}.)
+\textbf{Preço $+$:} em meses de VALE3 mais cara, o peso médio sobe --- mas atenção: parte
+disso é \emph{mecânica} (se o preço da ação sobe, sua fração na carteira cresce sozinha,
+mesmo sem o gestor negociar), não só decisão ativa. \textbf{Beta $-$:} em meses de VALE3
+mais arriscada (beta alto), o peso médio cai (aversão a risco).
 
 \paragraph{Uma lição metodológica importante.} No piloto de só 2016 (12 meses), o
 beta saía \emph{positivo e fraco}; com os 72 meses, ele é claramente \emph{negativo}
@@ -335,8 +338,9 @@ Ou seja: naquele período, para cada $+1\%$ do Ibovespa a VALE3 andava $\approx 
 
 \paragraph{Detalhes do cálculo.} Usamos retornos diários \emph{simples}
 $r_s=P_s/P_{s-1}-1$ (VALE3 pelo preço \emph{ajustado}; Ibovespa pelo fechamento), em
-\textbf{janela móvel de 252 pregões} ($\approx$1 ano), e lemos o beta no
-\textbf{último pregão do mês anterior} a cada competência. Não usamos o ``beta''
+\textbf{janela móvel de 252 pregões} ($\approx$1 ano). Para a \emph{explicação} lemos o
+beta como \textbf{média do mês $t$}; para a \emph{previsão}, no \textbf{último pregão do
+mês anterior} (predeterminado). Não usamos o ``beta''
 pronto do Yahoo (que é de 5 anos, contra índice americano, e estático). A média do
 beta por ano: $1{,}66$ (2016), $1{,}23$ (2017), $0{,}86$ (2018), $0{,}85$ (2019),
 $1{,}00$ (2020), $0{,}82$ (2021) --- coerente com a recuperação da ação no período (o
@@ -345,9 +349,11 @@ preço subiu de $\approx$\,R\$\,17 para $\approx$\,R\$\,94).
 \section{Cuidado com \emph{look-ahead} e por que ``preço nominal''}
 
 \emph{Look-ahead} (viés de antecipação) é usar informação do \emph{futuro} para
-``prever'' o passado --- um erro grave. Garantimos que cada característica olha só
-para trás: a janela do beta termina na data de medição, e preço/beta vêm do mês
-\emph{anterior} à competência.
+``prever'' o passado --- um erro grave. Na \textbf{previsão} (Modelo 3) garantimos que
+cada característica olha só para trás: a janela do beta termina na data de medição, e
+preço/beta vêm do mês \emph{anterior} à competência (predeterminados). Já na
+\emph{explicação} (Modelos 1--2), que é contemporânea por construção --- descreve, não
+prevê ---, usamos a média do próprio mês $t$.
 
 Há um detalhe fino. O \textbf{preço ajustado} (que corrige por dividendos e
 desdobramentos) é recalculado ``para trás'': o nível dele numa data passada depende de

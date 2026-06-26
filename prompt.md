@@ -169,8 +169,12 @@ símbolos `VALE3.SA` e `^BVSP` (Ibovespa). Precisa de **User-Agent** no curl; pa
 com `jsonlite`. JSON tem `timestamp`, `indicators.quote[0].close` e
 `indicators.adjclose[0].adjclose`. **Preço:** nominal (close) e ajustado (adjclose).
 **Beta:** cov/var móvel **252 pregões** vs Ibov, retorno **simples** (VALE pelo
-adjclose, Ibov pelo close). Medido no **último pregão do mês anterior**. Série
-2014–2017 (buffer p/ a janela). Cache em `data/raw/yahoo_*.json`.
+adjclose, Ibov pelo close). **Duas convenções de timing (decisão 26/06):**
+`preco_nominal`/`preco_ajust`/`beta_vale` = **último pregão do mês anterior**
+(predeterminado → previsão, sem look-ahead); `preco_mes`/`beta_mes` = **média do mês
+`t`** (contemporâneo → regressão de explicação). Série 2014–2021 (buffer p/ a janela);
+o `^BVSP` tem `close = null` em ~8 feriados → **dropados** antes dos retornos (aborta
+só se houver >15 NAs). Cache em `data/raw/yahoo_*.json`.
 
 ### 4.5 Chave de join principal
 `CONS.Código == SH.COD_FUNDO` (validado). CNPJ idêntico (mascarado
@@ -218,9 +222,10 @@ com 1.609 obs e 155 fundos, mantendo apenas `n_cotistas > 3`.
 | `n_dias` | nº de dias úteis somados no fluxo do mês |
 | `captacao_sh` | captação somada da SH (p/ comparação) |
 | `div_captacao` | flag 0/1: SH e Informe Diário discordam na captação |
-| `data_ref` | data de medição do preço/beta (último pregão do mês anterior) |
-| `preco_nominal`, `preco_ajust` | preço VALE3 (close e adjclose) no `data_ref` |
-| `beta_vale` | beta móvel 252 pregões vs Ibovespa, no `data_ref` |
+| `data_ref` | data de medição predeterminada (último pregão do mês anterior) |
+| `preco_nominal`, `preco_ajust` | preço VALE3 (close e adjclose) no `data_ref` (t-1, p/ previsão) |
+| `beta_vale` | beta móvel 252 pregões vs Ibovespa, no `data_ref` (t-1, p/ previsão) |
+| `preco_mes`, `beta_mes` | preço/beta = **média do mês `t`** (contemporâneo, p/ explicação) |
 
 ### Lado direito da equação (características) — TODAS PRONTAS (2016)
 - ✅ **Fundo:** AUM, nº cotistas, FIC/FI (passo 4) + fluxo líquido (passo 3).
