@@ -1,0 +1,147 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{caption}
+
+\title{\textbf{Resultados — Determinantes do peso de VALE3 nos fundos Itaú (2016)}}
+\author{TCC — FGV EESP \\ Orientador: Prof. Maurício Ferraresi Jr.}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Objetivo e amostra}
+
+Estimamos como o \textbf{peso de VALE3} (participação na carteira, em fração de
+0 a 1) em cada fundo da gestora Itaú é explicado por características do fundo e da
+ação. É o \emph{Passo~1} da metodologia proposta pelo orientador: uma regressão
+em que os coeficientes funcionam como um \textbf{fator latente} que resume, em
+poucos números, como as posições dependem das características.
+
+\medskip
+\noindent\textbf{Amostra:} painel fundo $\times$ mês de 2016, restrito a
+observações com mais de 3 cotistas (remoção de fundos exclusivos). São
+\textbf{1.609 observações}, \textbf{155 fundos}, \textbf{12 meses} (média de
+$\approx$134 fundos por mês).
+
+\section{Variáveis e tratamentos}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Variável} & \textbf{Definição} & \textbf{Tratamento} \\
+\midrule
+peso\_vale3 (alvo) & participação de VALE3 na carteira (fração) & nível \\
+AUM & patrimônio líquido do fundo (R\$) & $\log$ \\
+nº cotistas & número de cotistas & $\log$ \\
+FIC & 1 se Fundo de Inv.\ em Cotas, 0 se FI & dummy \\
+Fluxo/AUM & (captação $-$ resgate) do mês / AUM & razão \\
+Preço VALE3 & fechamento no último pregão do mês anterior & nível (R\$) \\
+Beta VALE3 & beta móvel 252 pregões vs.\ Ibovespa & nível \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Preço e beta são constantes entre fundos dentro de um mês
+(variáveis agregadas); por isso entram apenas na regressão \emph{pooled}, não na
+cross-section mês a mês.}
+\end{table}
+
+\section{Tabela 1 — Cross-section mês a mês (Fama--MacBeth)}
+
+Para cada mês roda-se uma regressão separada; reporta-se a \textbf{média dos 12
+coeficientes mensais}, com erro-padrão calculado pela variação entre os meses
+(Fama--MacBeth). ``Meses +'' indica em quantos dos 12 meses o coeficiente teve
+sinal positivo (estabilidade).
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lrrrrcc@{}}
+\toprule
+\textbf{Variável} & \textbf{Coef.\ médio} & \textbf{EP (FM)} & \textbf{$t$} & \textbf{$p$} & \textbf{Meses +} & \textbf{Sig.} \\
+\midrule
+Intercepto        & $0{,}04620$  & $0{,}00468$ & $9{,}87$  & $<0{,}001$ & 12/12 & *** \\
+$\log$(AUM)       & $-0{,}00232$ & $0{,}00024$ & $-9{,}79$ & $<0{,}001$ & 0/12  & *** \\
+$\log$(cotistas)  & $0{,}00179$  & $0{,}00017$ & $10{,}26$ & $<0{,}001$ & 12/12 & *** \\
+FIC (dummy)       & $-0{,}00876$ & $0{,}00104$ & $-8{,}42$ & $<0{,}001$ & 0/12  & *** \\
+Fluxo/AUM         & $0{,}00295$  & $0{,}00246$ & $1{,}20$  & $0{,}256$  & 8/12  & n.s. \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize $R^2$ médio por mês $= 0{,}206$. \quad
+*** $p<0{,}001$; n.s.\ = não significativo.}
+\end{table}
+
+\subsection*{Interpretação}
+\begin{itemize}
+\item \textbf{$\log$(AUM) negativo (sinal estável nos 12 meses):} fundos
+\emph{maiores} carregam \emph{menor} peso em VALE3. Faz sentido — fundos grandes
+são mais diversificados, então qualquer ação isolada pesa menos.
+\item \textbf{$\log$(cotistas) positivo (12/12):} fundos com mais cotistas têm
+\emph{maior} peso em VALE3.
+\item \textbf{FIC negativo (0/12 positivo):} Fundos de Investimento em Cotas têm
+\emph{menos} VALE3 \emph{direto} que os FI — coerente, pois um FIC investe via
+cotas de outros fundos, diluindo a posição direta em ações.
+\item \textbf{Fluxo/AUM não significativo ($p=0{,}26$):} o fluxo do mês
+\emph{não explica o nível} do peso. Isso sugere que o fluxo deve explicar a
+\emph{variação} do peso (o ``prever amanhã''), e não o nível --- ponto a explorar
+no Passo~2.
+\item \textbf{Estabilidade:} os três coeficientes estruturais (tamanho, cotistas,
+FIC) têm sinal idêntico nos 12 meses. Essa estabilidade é o que justifica modelar
+o coeficiente como um fator que evolui devagar (random walk / Kalman) no Passo~2.
+\end{itemize}
+
+\section{Tabela 2 — Regressão \emph{pooled} (painel empilhado)}
+
+Aqui todas as 1.609 observações entram juntas, permitindo incluir preço e beta
+(identificados pela variação ao longo dos meses).
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lrrrrc@{}}
+\toprule
+\textbf{Variável} & \textbf{Estimativa} & \textbf{EP} & \textbf{$t$} & \textbf{$p$} & \textbf{Sig.} \\
+\midrule
+Intercepto       & $0{,}03009$  & $0{,}00762$ & $3{,}95$   & $<0{,}001$ & *** \\
+$\log$(AUM)      & $-0{,}00232$ & $0{,}00021$ & $-11{,}21$ & $<0{,}001$ & *** \\
+$\log$(cotistas) & $0{,}00179$  & $0{,}00012$ & $14{,}64$  & $<0{,}001$ & *** \\
+FIC (dummy)      & $-0{,}00882$ & $0{,}00074$ & $-12{,}00$ & $<0{,}001$ & *** \\
+Fluxo/AUM        & $0{,}00014$  & $0{,}00038$ & $0{,}38$   & $0{,}705$  & n.s. \\
+Preço VALE3      & $0{,}000047$ & $0{,}000067$& $0{,}71$   & $0{,}479$  & n.s. \\
+Beta VALE3       & $0{,}00928$  & $0{,}00420$ & $2{,}21$   & $0{,}027$  & * \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize $R^2 = 0{,}165$; $R^2$ ajustado $= 0{,}162$; $n=1.609$.
+\quad *** $p<0{,}001$; * $p<0{,}05$; n.s.\ = não significativo.}
+\end{table}
+
+\subsection*{Interpretação}
+\begin{itemize}
+\item As características de \textbf{fundo} (AUM, cotistas, FIC) repetem os sinais
+da cross-section e são \textbf{altamente significativas} ($p<0{,}001$).
+\item \textbf{Preço} não é significativo; \textbf{beta} é positivo e marginalmente
+significativo ($p=0{,}027$).
+\item \textbf{Ressalva importante:} preço e beta assumem apenas \textbf{12 valores
+distintos} (um por mês), então têm pouquíssima variação independente --- seus
+$p$-valores na \emph{pooled} são \emph{otimistas} (os graus de liberdade da
+regressão superestimam a informação). A leitura correta é que preço e beta são
+variáveis \emph{agregadas} e pertencem ao \textbf{Passo~2} (dinâmica temporal do
+nível médio), não à explicação das diferenças entre fundos.
+\end{itemize}
+
+\section{Síntese}
+
+O \textbf{nível} do peso de VALE3 é explicado por características
+\textbf{estruturais} do fundo: tamanho (--), base de cotistas (+) e estrutura
+FIC/FI (FIC --). O fluxo não explica o nível. Preço e beta são variáveis de tempo
+e serão tratados no Passo~2, modelando a dinâmica dos coeficientes (fator latente)
+como um processo que evolui no tempo (random walk / filtro de Kalman), com preço e
+beta como possíveis condutores. Os resíduos da cross-section (matriz fundo
+$\times$ mês, média zero por construção) formam a base para os testes seguintes
+(estacionariedade, etc.).
+
+\end{document}
