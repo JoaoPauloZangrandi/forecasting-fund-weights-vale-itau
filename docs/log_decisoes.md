@@ -48,7 +48,8 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
 | Período (v1) | Apenas **2016** primeiro (rápido, menos custo); generalizar depois |
 | Entrega no GitHub | Scripts segmentados (`R/01`, `R/02`, …) **e** `R_full.R` (tudo num arquivo) |
 | Fluxo líquido | **Informe Diário CVM** (`CAPTC_DIA − RESG_DIA`), validado com a SH (passo 3b). Quebra a regra "só CONS+SH", mas é a base-mãe da SH e mais confiável |
-| Preço/beta da ação | Fonte **externa extremamente confiável** (autorizado); ainda não feito |
+| Preço/beta da ação | Fonte **Yahoo Finance**, validada contra B3 oficial; feito no passo 5 |
+| Fundos com poucos cotistas | Critério simples inicial: remover observações com `n_cotistas <= 3`; manter o painel completo intacto |
 
 ---
 
@@ -187,16 +188,30 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
     precisa de User-Agent no curl; parse com `jsonlite`. Cache em `data/raw/`
     (gitignored); `R/05` e `R_full` baixam sozinhos se faltar.
 
+- **Passo 6** — `R/06_remove_exclusive_funds.R`: remoção simples de fundos com
+  poucos cotistas. Decisão do João: por enquanto **não** criar várias variantes;
+  usar apenas o critério `n_cotistas > 3`. O painel completo
+  `data/processed/painel_vale_itau_2016_full.csv` permanece intacto. Saída:
+  `data/processed/painel_vale_itau_2016_filtrado_cotistas_gt3.csv`.
+  - Diagnóstico antes do filtro: 4.062 obs fundo-mês, 388 fundos; mediana de
+    `n_cotistas` = 2. O corte remove 2.453 obs (60,4%) e deixa 1.609 obs.
+    Restam 155 fundos com pelo menos uma observação após o filtro.
+  - Interpretação metodológica: o filtro é por **observação fundo-mês**, não por
+    exclusão permanente do fundo, porque `n_cotistas` é característica mensal e a
+    regressão planejada é cross-section mês a mês. Critérios alternativos
+    (`<= 2`, `<= 5`, remover fundo inteiro etc.) ficam para depois, se necessário.
+
 **Características — situação (lado direito da equação): TODAS FEITAS (2016).**
 - ✅ **Fundo:** AUM, nº cotistas, FIC/FI (passo 4) + fluxo líquido (passo 3).
 - ✅ **Ação:** preço (nominal+ajustado) e beta (passo 5).
+- ✅ **Amostra principal simples:** painel filtrado com `n_cotistas > 3` (passo 6).
 
-**Próximos passos (a combinar):** remover fundos exclusivos; generalizar
-**2017–2021** (reaplicar TODOS os testes de parsing/validação — regras 5 e 6);
-e então a **regressão cross-section** (peso ~ características → beta OLS = fator
-latente), seguida do **modelo de fator dinâmico** (θ random walk / Kalman),
-previsão multi-horizonte e a **matriz de erros**. Opcional: (3b) validar o fluxo
-via derivação SH (PL+cota, exige certificar parsing da `COTA`).
+**Próximos passos (a combinar):** generalizar **2017–2021** (reaplicar TODOS os
+testes de parsing/validação — regras 5 e 6); e então a **regressão cross-section**
+(peso ~ características → beta OLS = fator latente), seguida do **modelo de fator
+dinâmico** (θ random walk / Kalman), previsão multi-horizonte e a **matriz de
+erros**. Opcional: (3b) validar o fluxo via derivação SH (PL+cota, exige certificar
+parsing da `COTA`).
 
 ---
 

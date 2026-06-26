@@ -9,9 +9,10 @@
 >
 > **Repo:** https://github.com/JoaoPauloZangrandi/forecasting-fund-weights-vale-itau
 > **Local:** `C:\Users\joaoz\forecasting-fund-weights-vale-itau`
-> **Última atualização deste arquivo:** após o Passo 5 (preço/beta da VALE) +
-> verificação forense contra a B3 + análise de look-ahead. Dataset de 2016 pronto
-> e certificado; falta uma pequena correção (P2 dinâmico) e depois modelar/estender.
+> **Última atualização deste arquivo:** após o Passo 6 (remoção simples de fundos
+> com `n_cotistas <= 3`). Dataset de 2016 pronto e certificado; existe painel
+> completo e painel filtrado para modelagem inicial. A pequena correção do P2
+> dinâmico segue pendente/adiada.
 
 ---
 
@@ -35,10 +36,15 @@ look-ahead (ver §6 e log): `preco_nominal` (close) e `beta_vale` são **limpos*
 proventos futuros → usar **`preco_nominal`** como regressor de preço; `preco_ajust`
 serve só para retornos/beta. Deixar isso explícito quando montar a regressão.
 
-**Depois (modelagem), na ordem da §7:** (6) remover fundos exclusivos; (7)
-generalizar 2017–2021 (reaplicando TODOS os testes de parsing/validação); (8)
-regressão cross-section (peso ~ características → beta OLS = fator latente); (9)
-modelo de fator dinâmico (θ random walk / Kalman) + previsão + matriz de erros.
+**Tarefa 0.3 — remoção simples de fundos com poucos cotistas (FEITA).** Por decisão
+do João, aplicar por enquanto só o critério simples `n_cotistas > 3`, sem criar
+múltiplas variantes. Saída:
+`data/processed/painel_vale_itau_2016_filtrado_cotistas_gt3.csv`.
+
+**Depois (modelagem), na ordem da §7:** (7) generalizar 2017–2021 (reaplicando
+TODOS os testes de parsing/validação); (8) regressão cross-section (peso ~
+características → beta OLS = fator latente); (9) modelo de fator dinâmico
+(θ random walk / Kalman) + previsão + matriz de erros.
 
 ---
 
@@ -114,7 +120,7 @@ Depois generaliza para 2017–2021 e, possivelmente, outras ações/gestoras.
 | 3 | Característica de **fluxo** (captação/resgate/líquido) | ✅ feito |
 | 4 | Características de fundo: **AUM, nº cotistas, FIC/FI** (+ANBIMA) | ✅ feito |
 | 5 | Características da ação: **preço e beta da VALE** (Yahoo) | ✅ feito |
-| 6 | Remover fundos exclusivos (1–2 cotistas) | ⬜ próximo/futuro |
+| 6 | Remover fundos com poucos cotistas (`n_cotistas <= 3`) | ✅ feito |
 | 7 | Generalizar para **2017–2021** | ⬜ futuro |
 | 8 | **Regressão cross-section** (peso ~ características → beta = fator latente) | ⬜ futuro |
 | 9 | **Modelo de fator dinâmico** (θ random walk / Kalman) + previsão + matriz de erros | ⬜ futuro |
@@ -190,10 +196,12 @@ adjclose, Ibov pelo close). Medido no **último pregão do mês anterior**. Sér
 
 ## 6. Estado atual — onde estamos
 
-**Passos 1 a 5 FEITOS, commitados e no GitHub.** O painel final atual é
+**Passos 1 a 6 FEITOS.** O painel completo atual é
 `data/processed/painel_vale_itau_2016_full.csv` (regenerável; `data/processed/`
 é gitignored). É um painel **fundo × mês** (2016), 4.062 obs, 388 fundos, 12 meses,
-com TODAS as características (lado direito) prontas.
+com TODAS as características (lado direito) prontas. O painel filtrado para a
+modelagem inicial é `data/processed/painel_vale_itau_2016_filtrado_cotistas_gt3.csv`,
+com 1.609 obs e 155 fundos, mantendo apenas `n_cotistas > 3`.
 
 ### Colunas do painel final
 | Coluna | Significado |
@@ -228,7 +236,9 @@ com TODAS as características (lado direito) prontas.
 - Agregação de fluxo verificada por recomputo independente (janela de data): bate
   exato; 0 desalinhamento de mês.
 - FIC por token validado (substring==token, 0 falso positivo em 2016).
-- ⚠️ Mediana de cotistas = 2 → muitos fundos exclusivos (remoção futura).
+- Mediana de cotistas no painel completo = 2 → muitos fundos exclusivos/restritos.
+  Passo 6 criou versão filtrada simples, removendo observações com
+  `n_cotistas <= 3`.
 - **Preço/beta (passo 5) certificados:** datas Yahoo sem off-by-one; `data_ref` =
   último pregão do mês anterior (recalculado independente, igual nos 12 meses);
   `preco_nominal` == fechamento **oficial da B3 (COTAHIST)** EXATAMENTE (dif R$0,00)
@@ -242,22 +252,21 @@ com TODAS as características (lado direito) prontas.
 
 ## 7. ONDE PARAMOS / próximo passo
 
-**Passos 1–5 FEITOS.** O painel final de 2016 (`painel_vale_itau_2016_full.csv`)
+**Passos 1–6 FEITOS.** O painel completo de 2016 (`painel_vale_itau_2016_full.csv`)
 tem o ALVO (`peso_vale3`) e TODAS as características do lado direito: fundo (AUM,
 `n_cotistas`, `is_fic`, `fluxo_liq`/`captacao`/`resgate`) e ação (`preco_nominal`,
-`preco_ajust`, `beta_vale`). Pronto para modelar.
+`preco_ajust`, `beta_vale`). O painel filtrado
+(`painel_vale_itau_2016_filtrado_cotistas_gt3.csv`) remove `n_cotistas <= 3` e é
+a base simples proposta para modelagem inicial.
 
 **Próximos passos (decidir com o orientando, um por vez):**
-1. **Remover fundos exclusivos** (mediana de cotistas = 2; muitos com 1–2). O
-   orientador quer isso em algum momento. Definir o critério (ex.: `n_cotistas`
-   abaixo de um corte; ou `< 5` por algum tempo no ano, à la Ferraresi 2025).
-2. **Generalizar para 2017–2021.** Reaplicar TODOS os testes de parsing/validação
+1. **Generalizar para 2017–2021.** Reaplicar TODOS os testes de parsing/validação
    (regras 5 e 6 do log; cruzar SH×Informe Diário; recomputo de fluxo; estender a
    série Yahoo). Cuidado: os formatos podem mudar entre anos.
-3. **Regressão cross-section** (passo 1 da metodologia): para cada mês, regredir
+2. **Regressão cross-section** (passo 1 da metodologia): para cada mês, regredir
    `peso_vale3 ~ características` (fundo + ação); o **beta OLS** vira o fator
    latente. Decidir specs (níveis/logs, padronização, com/sem ANBIMA, etc.).
-4. Depois: **modelo de fator dinâmico** (θ random walk / Kalman), previsão
+3. Depois: **modelo de fator dinâmico** (θ random walk / Kalman), previsão
    multi-horizonte e a **matriz de erros**.
 
 Detalhe importante já registrado: a divergência SH×Informe Diário (`div_captacao`)
@@ -273,7 +282,8 @@ R/02_build_panel_vale_itau.R # passo 2: painel do peso de VALE3
 R/03_add_fund_flows.R        # passo 3: fluxo (Informe Diário) + flag div_captacao
 R/04_add_fund_features.R     # passo 4: aum, cotistas, FIC/FI, ANBIMA
 R/05_add_stock_features.R    # passo 5: preco (nominal/ajust) e beta da VALE
-R_full.R                     # TODO o código num arquivo só (espelha R/01..05)
+R/06_remove_exclusive_funds.R # passo 6: filtro simples n_cotistas > 3
+R_full.R                     # TODO o código num arquivo só (espelha R/01..06)
 docs/log_decisoes.md         # log vivo: decisões, achados, forense (Apêndice A)
 prompt.md                    # este arquivo (handoff)
 data/raw/                    # bruto (gitignored); Informe Diário baixado aqui

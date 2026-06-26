@@ -5,8 +5,8 @@
 # Espelha os scripts modulares em R/ (01, 02, ...). A cada passo aprovado,
 # este arquivo cresce com o bloco novo. Usa SOMENTE as bases CONS e SH.
 #
-# Estado atual: Passo 1 (carga/sanidade das bases) + Passo 2 (painel de pesos
-# de VALE3 nos fundos Itau, ano 2016).
+# Estado atual: Passos 1 a 6, do painel de pesos de VALE3 ate a amostra filtrada
+# com n_cotistas > 3 para modelagem inicial.
 # =============================================================================
 
 suppressPackageStartupMessages({
@@ -282,3 +282,20 @@ painel_full[, ymk_prev := NULL]
 fwrite(painel_full, "data/processed/painel_vale_itau_2016_full.csv")
 cat("\nPASSO 5: preco/beta da VALE adicionados (NAs beta:", painel_full[is.na(beta_vale), .N],
     "). Painel FINAL: data/processed/painel_vale_itau_2016_full.csv\n")
+
+# =============================================================================
+# PASSO 6 - remover fundos com poucos cotistas
+# Criterio simples aprovado: manter apenas observacoes com n_cotistas > 3.
+# O painel completo continua salvo e intacto; esta versao filtrada sera usada
+# como base principal para modelagem inicial.
+# =============================================================================
+
+stopifnot(!anyNA(painel_full$n_cotistas))
+painel_filtrado <- painel_full[n_cotistas > 3]
+fwrite(painel_filtrado,
+       "data/processed/painel_vale_itau_2016_filtrado_cotistas_gt3.csv")
+cat("\nPASSO 6: filtro n_cotistas > 3 aplicado.",
+    "Obs antes:", nrow(painel_full),
+    "| depois:", nrow(painel_filtrado),
+    "| fundos depois:", uniqueN(painel_filtrado$cod_fundo),
+    ". Saida: data/processed/painel_vale_itau_2016_filtrado_cotistas_gt3.csv\n")
