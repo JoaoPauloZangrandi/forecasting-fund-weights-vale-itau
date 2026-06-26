@@ -9,8 +9,36 @@
 >
 > **Repo:** https://github.com/JoaoPauloZangrandi/forecasting-fund-weights-vale-itau
 > **Local:** `C:\Users\joaoz\forecasting-fund-weights-vale-itau`
-> **Última atualização deste arquivo:** após o Passo 5 (preço/beta da VALE) —
-> características TODAS prontas para 2016; próximo é regressão / 2017–2021.
+> **Última atualização deste arquivo:** após o Passo 5 (preço/beta da VALE) +
+> verificação forense contra a B3 + análise de look-ahead. Dataset de 2016 pronto
+> e certificado; falta uma pequena correção (P2 dinâmico) e depois modelar/estender.
+
+---
+
+## 0. TAREFAS IMEDIATAS (Codex, comece por aqui)
+
+> Pegue UMA por vez, explique antes de fazer e espere o "ok" do orientando
+> (João). Não empilhe passos. Veja `docs/log_decisoes.md` para o detalhe de tudo.
+
+**Tarefa 0.1 — `P2` dinâmico (correção pendente, combinada).** Em `R/05_add_stock_features.R`
+e no bloco do Passo 5 do `R_full.R`, `P2 = 1485907200L` (2017-02-01) é uma margem
+supérflua: para 2016, a última data usada é **30/11/2016** (último `data_ref`).
+Trocar `P2` fixo por um **cálculo dinâmico**: último mês do painel → último
+`data_ref` necessário + pequena folga (ex.: +5 dias úteis). Assim o download não
+contém pregões fora da amostra, e se ajusta sozinho quando estendermos para
+2017–2021. **Não muda nenhum resultado** (beta é invariante, já provado), é só
+higiene metodológica. Reaplicar as verificações depois.
+
+**Tarefa 0.2 — Fixar `preco_nominal` como a característica de preço.** Análise de
+look-ahead (ver §6 e log): `preco_nominal` (close) e `beta_vale` são **limpos**
+(sem look-ahead). O `preco_ajust` (adjclose) tem o *nível* retroajustado por
+proventos futuros → usar **`preco_nominal`** como regressor de preço; `preco_ajust`
+serve só para retornos/beta. Deixar isso explícito quando montar a regressão.
+
+**Depois (modelagem), na ordem da §7:** (6) remover fundos exclusivos; (7)
+generalizar 2017–2021 (reaplicando TODOS os testes de parsing/validação); (8)
+regressão cross-section (peso ~ características → beta OLS = fator latente); (9)
+modelo de fator dinâmico (θ random walk / Kalman) + previsão + matriz de erros.
 
 ---
 
@@ -201,6 +229,14 @@ com TODAS as características (lado direito) prontas.
   exato; 0 desalinhamento de mês.
 - FIC por token validado (substring==token, 0 falso positivo em 2016).
 - ⚠️ Mediana de cotistas = 2 → muitos fundos exclusivos (remoção futura).
+- **Preço/beta (passo 5) certificados:** datas Yahoo sem off-by-one; `data_ref` =
+  último pregão do mês anterior (recalculado independente, igual nos 12 meses);
+  `preco_nominal` == fechamento **oficial da B3 (COTAHIST)** EXATAMENTE (dif R$0,00)
+  nos 12 `data_ref`; beta verificado por 3 métodos (frollmean=cov/var=lm, dif 0).
+- **Look-ahead:** `P2`/buffer NÃO contamina (beta usa janela "para trás", provado
+  invariante). `preco_nominal` e `beta` são limpos. SÓ o `preco_ajust` (adjclose)
+  tem nível retroajustado por proventos futuros → usar `preco_nominal` como feature.
+- **R_full.R == pipeline segmentada** (painel byte-idêntico, `identical()=TRUE`).
 
 ---
 

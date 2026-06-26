@@ -172,6 +172,17 @@ garantir que os tratamentos de base sejam sempre aplicados do mesmo jeito.
     (COTAHIST_A2015/2016, PREULT): o `preco_nominal` (Yahoo) = fechamento oficial
     da B3 **EXATAMENTE nos 12 `data_ref`** (máx |dif| = **R$0,00**), 0 datas sem
     match. → preço/datas certificados contra a fonte primária.
+  - **LOOK-AHEAD (análise):** `P2` (fim do download) NÃO é look-ahead — o beta usa
+    janela móvel "para trás" (252 retornos terminando na data); o buffer nunca
+    entra. Provado: beta baixando até 2017 == baixando até 30/11/2016 (dif < 5e-7);
+    `preco_nominal` (close) **idêntico** (dif 0). ⚠️ ÚNICA sutileza: o `preco_ajust`
+    (adjclose) é retroajustado por proventos FUTUROS → seu *nível* numa data passada
+    depende de dividendos posteriores (efeito empírico aqui desprezível). **DECISÃO:
+    usar `preco_nominal` como a característica de preço na regressão** (look-ahead
+    zero); `preco_ajust` fica só para os retornos/beta (que são limpos).
+  - ⚠️ **PENDÊNCIA:** `P2 = 2017-02-01` é margem supérflua p/ 2016 (último uso =
+    30/11/2016). Tornar `P2` **dinâmico** (último `data_ref` do painel + pequena
+    folga) p/ não conter pregões fora da amostra. Tarefa para a próxima sessão.
   - Yahoo JSON: sep próprio; `query1.finance.yahoo.com/v8/finance/chart/<sym>`;
     precisa de User-Agent no curl; parse com `jsonlite`. Cache em `data/raw/`
     (gitignored); `R/05` e `R_full` baixam sozinhos se faltar.
