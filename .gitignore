@@ -10,12 +10,13 @@ outputs/tables/*
 !outputs/tables/load_audit.csv
 
 # LaTeX (artefatos de compilação) — mantém .tex e .pdf.
-docs/*.aux
-docs/*.log
-docs/*.out
-docs/*.toc
-docs/*.fls
-docs/*.fdb_latexmk
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 
 # R / sistema.
 .Rhistory
