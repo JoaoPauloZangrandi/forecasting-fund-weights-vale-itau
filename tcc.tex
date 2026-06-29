@@ -9,40 +9,40 @@
 \usepackage{graphicx}
 \usepackage{setspace}
 \usepackage[hidelinks]{hyperref}
+\usepackage{indentfirst}
 \graphicspath{{docs/}}
 
-\captionsetup{font=small,labelfont=bf}
+\captionsetup{font=small}
+\onehalfspacing
 
 \begin{document}
 
 %==================== CAPA ====================
 \begin{titlepage}
 \centering
-{\large \textbf{FUNDAÇÃO GETULIO VARGAS}}\\[2pt]
-{\large \textbf{ESCOLA DE ECONOMIA DE SÃO PAULO}}\\[2pt]
+{\large FUNDAÇÃO GETULIO VARGAS}\\[2pt]
+{\large ESCOLA DE ECONOMIA DE SÃO PAULO}\\[2pt]
 {\normalsize Graduação em Economia}
 
 \vfill
 
-{\large \textbf{João Paulo Zangrandi}}
+{\large João Paulo Zangrandi}
 
 \vspace{2.5cm}
 
-{\LARGE \textbf{Previsão de Pesos de Fundos:}}\\[6pt]
-{\LARGE \textbf{VALE3 nos Fundos do Itaú}}\\[14pt]
-{\large uma abordagem de demanda baseada em características de fundos e da ação}\\[10pt]
-{\small (\emph{forecasting-fund-weights-vale-itau} --- entrega parcial)}
+{\LARGE Previsão de pesos de fundos:}\\[6pt]
+{\LARGE VALE3 nas carteiras dos fundos do Itaú}\\[14pt]
+{\large uma abordagem de demanda a partir de características dos fundos e da ação}\\[10pt]
+{\small (versão preliminar --- Monografia I)}
 
 \vspace{2.0cm}
 
 \begin{flushright}
-\begin{minipage}{0.55\textwidth}
+\begin{minipage}{0.6\textwidth}
 \small\setstretch{1.15}
 Trabalho de Conclusão de Curso apresentado à Escola de Economia de São Paulo
 da Fundação Getulio Vargas como requisito parcial para a obtenção do título de
 Bacharel em Economia.
-\\[10pt]
-\textbf{Entrega parcial} (versão preliminar).
 \\[10pt]
 Orientador: Prof.\ Maurício Ferraresi Jr.
 \end{minipage}
@@ -55,477 +55,415 @@ Orientador: Prof.\ Maurício Ferraresi Jr.
 \end{titlepage}
 
 %==================== RESUMO ====================
-\setstretch{1.15}
-
-\begin{center}\textbf{\large Resumo}\end{center}
+\begin{center}{\large Resumo}\end{center}
 \noindent
-Estudamos os \textbf{determinantes} e a \textbf{previsibilidade} do peso da ação VALE3
-nas carteiras dos fundos da gestora Itaú, no painel mensal 2016--2021. A abordagem segue
-um \emph{sistema de demanda} no espírito de Koijen e Yogo (2019): o peso de cada ação em
-cada fundo é explicado por um vetor de características do fundo (\emph{investor embeddings})
-ponderado por fatores latentes específicos da ação (\emph{asset embeddings}), estimados
-mês a mês por uma regressão transversal cujos coeficientes formam um \textbf{fator dinâmico}
-$\theta_t$. Documentamos que o peso é estruturalmente explicado por \textbf{tamanho do
-fundo}, \textbf{número de cotistas} e por ser \textbf{Fundo de Investimento em Cotas (FIC)},
-com sinais estáveis nos 72 meses; e que a margem \emph{extensiva} (ter ou não a ação) tem
-sinais \textbf{opostos} à intensiva (quanto), um padrão de diversificação. Em previsão,
-porém, nenhum modelo estrutural (fator dinâmico, efeito-fixo, filtro de Kalman) supera o
-\textbf{benchmark ingênuo} (o peso defasado): o peso é, no nível do fundo, quase um
-\textbf{martingale}, mesmo sob a opacidade trimestral de 90 dias. O trabalho fecha com o
-desenho dos próximos passos --- o modelo de \emph{ajuste parcial da carteira} com
-velocidade de ajuste estimada (possivelmente \emph{ridge}) e a regra de decisão dado o
-\emph{lag} de divulgação --- conforme as anotações do orientador.
+Neste trabalho eu estudo o peso da ação VALE3 nas carteiras dos fundos da gestora
+Itaú, mês a mês, entre 2016 e 2021. A pergunta que me guia é se o quanto cada fundo
+carrega de uma ação pode ser explicado por características observáveis do fundo e da
+própria ação, e se esse peso é previsível de um mês para o outro. Sigo uma ideia de
+sistema de demanda: para cada mês, estimo por mínimos quadrados como o peso depende
+das características dos fundos, e os coeficientes dessa regressão funcionam como um
+fator latente que resume essa relação e que eu deixo variar ao longo do tempo. Encontro
+que o peso é bem explicado pelo tamanho do fundo, pelo número de cotistas e pelo fato
+de o fundo ser um fundo de cotas, com sinais estáveis nos 72 meses. Para prever, porém,
+nenhum modelo que testei supera a regra ingênua de repetir o último peso observado: no
+nível de cada fundo, o peso é muito persistente e se comporta quase como um passeio
+aleatório, mesmo quando levo em conta que as carteiras só são divulgadas com cerca de
+três meses de atraso. Encerro descrevendo os próximos passos, que formalizam um modelo
+de ajuste parcial da carteira.
 
 \smallskip
-\noindent\textbf{Palavras-chave:} sistema de demanda; fundos de investimento; pesos de
-carteira; fator dinâmico; previsão; CVM; VALE3.
-
-\bigskip
-\begin{center}\textbf{\large Abstract}\end{center}
-\noindent
-We study the \textbf{determinants} and \textbf{predictability} of the portfolio weight of
-the stock VALE3 across mutual funds managed by Itaú, on a monthly 2016--2021 panel.
-Following a demand-system approach à la Koijen and Yogo (2019), each stock's weight in each
-fund is explained by a vector of fund characteristics (\emph{investor embeddings}) loaded on
-stock-specific latent factors (\emph{asset embeddings}), estimated month by month through a
-cross-sectional regression whose coefficients form a \textbf{dynamic factor} $\theta_t$.
-Weights are structurally driven by \textbf{fund size}, \textbf{number of shareholders} and a
-\textbf{fund-of-funds (FIC)} dummy, with stable signs across all 72 months; the
-\emph{extensive} margin (holding the stock at all) carries signs \textbf{opposite} to the
-intensive one (how much), a diversification pattern. Yet, for forecasting, no structural
-model (dynamic factor, fixed effects, Kalman filter) beats the \textbf{naïve benchmark}
-(the lagged weight): the weight behaves almost as a \textbf{martingale} at the fund level,
-even under the 90-day disclosure opacity. We close with the design of the next steps --- the
-\emph{partial portfolio adjustment} model with an estimated adjustment speed (possibly
-\emph{ridge}) and the decision rule given the disclosure lag.
-
-\smallskip
-\noindent\textbf{Keywords:} demand system; mutual funds; portfolio weights; dynamic factor;
-forecasting; CVM; VALE3.
+\noindent Palavras-chave: sistema de demanda; fundos de investimento; pesos de carteira;
+fator latente; previsão; VALE3.
 
 \newpage
 
 %==================== 1. INTRODUÇÃO ====================
 \section{Introdução}
 
-A composição das carteiras dos fundos de investimento é uma das informações mais ricas e
-menos exploradas do mercado de capitais brasileiro. Cada fundo, ao escolher \emph{quanto}
-de cada ação carregar, revela uma demanda --- e o conjunto dos fundos de uma mesma gestora
-forma um painel natural para perguntar: \textbf{quais características de um fundo explicam o
-peso que ele dá a uma ação, e esse peso é previsível?}
+A composição das carteiras dos fundos de investimento é, na minha opinião, uma das
+informações mais ricas e menos exploradas do mercado brasileiro. Quando um fundo decide
+quanto de cada ação vai carregar, ele revela algo sobre a sua demanda por aquele papel.
+Olhando para todos os fundos de uma mesma gestora ao mesmo tempo, eu tenho um conjunto
+grande de decisões parecidas, e isso me permite perguntar de forma organizada: quais
+características de um fundo explicam o peso que ele dá a uma ação, e esse peso pode ser
+previsto?
 
-Este trabalho responde a essa pergunta para um caso concreto e tratável: o peso da ação
-\textbf{VALE3} (posição direta) nas carteiras dos fundos da gestora \textbf{Itaú} (Itaú Asset
-Management, Itaú DTVM e Itaú Unibanco), no período \textbf{2016--2021}. A escolha do peso
-como alvo --- em vez do valor financeiro ou do número de ações --- é deliberada: o peso é
-\emph{limitado} em $[0,1]$, comparável entre fundos de tamanhos muito diferentes, e mapeia
-diretamente para a noção de \emph{demanda relativa} dos sistemas de demanda por ativos.
+Para tornar a pergunta tratável, escolhi um caso concreto. Estudo o peso da ação VALE3,
+considerada apenas como posição direta, dentro das carteiras dos fundos das três
+gestoras do grupo Itaú (Itaú Asset Management, Itaú DTVM e Itaú Unibanco), no período de
+2016 a 2021. Decidi trabalhar com o peso, e não com o valor financeiro ou o número de
+ações, por dois motivos. Primeiro, o peso é limitado entre zero e um, o que o torna mais
+simples de modelar. Segundo, ele é comparável entre fundos de tamanhos muito diferentes
+e corresponde diretamente à ideia de demanda relativa que aparece nos modelos de demanda
+por ativos.
 
-A estratégia empírica tem dois passos, sugeridos pelo orientador. No primeiro, uma
-\textbf{regressão transversal} mês a mês do peso contra características de fundo e de ação;
-seus coeficientes resumem, em baixa dimensão, como as posições dependem das características
---- são um \textbf{fator latente} $\theta_t$. No segundo, esse fator é tratado como uma
-série \textbf{dinâmica no tempo} (passeio aleatório / AR(1) / filtro de Kalman), e o objetivo
-passa a ser \textbf{prever} o peso de meses futuros, comparando o previsto com o realizado e
-estudando a resultante \textbf{matriz de erros}.
+A estratégia que sigo tem dois passos, que foram sugeridos pelo meu orientador. No
+primeiro passo eu rodo, para cada mês, uma regressão do peso da ação contra um conjunto
+de características de fundo e de ação. Os coeficientes dessa regressão resumem, em poucas
+dimensões, como as posições dependem dessas características; eu os interpreto como um
+fator latente. No segundo passo eu trato esse fator como uma série que evolui no tempo e
+tento prever o peso de meses seguintes, comparando o que o modelo prevê com o que de fato
+aconteceu e olhando para o conjunto dos erros de previsão.
 
-Os achados são nítidos e, em parte, contra-intuitivos. \emph{Para explicar}, as
-características funcionam bem: fundos maiores têm \emph{menos} VALE3 em peso, fundos com mais
-cotistas têm \emph{mais}, e FICs têm \emph{menos} posição direta --- com sinais idênticos nos
-72 meses. \emph{Para prever}, porém, nenhum modelo estrutural supera o \textbf{ingênuo}
-(repetir o último peso observado): o peso de VALE3 é, no nível do fundo, quase um
-\textbf{martingale}. A conclusão sobrevive ao refino por efeito-fixo e Kalman, à restrição
-aos fundos de Ações, e à \textbf{opacidade trimestral} (prever três meses à frente). Esse
-contraste --- forte poder \emph{explicativo}, baixo poder \emph{preditivo} de curto prazo ---
-é o resultado central da entrega parcial.
+O resultado principal que encontrei tem dois lados. Para explicar o peso, as
+características funcionam bem: fundos maiores carregam menos VALE3 em peso, fundos com mais
+cotistas carregam mais, e os fundos de cotas têm posição direta menor, com sinais que se
+repetem em todos os meses da amostra. Para prever, no entanto, nenhum dos modelos que
+testei conseguiu superar a regra simples de repetir o último peso observado. Em outras
+palavras, no nível de cada fundo o peso é muito persistente e se comporta quase como um
+passeio aleatório. Esse contraste, entre um bom poder de explicação e um fraco poder de
+previsão no curto prazo, é o que eu considero o achado central desta entrega parcial.
 
-O restante do texto está organizado assim: a Seção~\ref{sec:rev} situa o trabalho na
-literatura; a Seção~\ref{sec:met} descreve a metodologia; a Seção~\ref{sec:dados} apresenta
-os dados, os tratamentos e os resultados; e a Seção~\ref{sec:prox} desenha os próximos passos
---- a formalização do modelo de demanda com \emph{investor/asset embeddings} e o ajuste
-parcial da carteira, conforme as anotações do orientador.
+O texto está organizado em cinco seções. Na Seção 2 eu situo o trabalho na literatura.
+Na Seção 3 descrevo a metodologia. Na Seção 4 apresento os dados, os tratamentos que
+apliquei e os resultados. Na Seção 5 descrevo os próximos passos, em particular o modelo
+de ajuste parcial da carteira que pretendo estimar na continuação do trabalho.
 
 %==================== 2. REVISÃO BIBLIOGRÁFICA ====================
 \section{Revisão bibliográfica}
-\label{sec:rev}
 
-\paragraph{Sistemas de demanda por ativos.} O arcabouço de referência é o de Koijen e Yogo
-(2019), que tratam preços de ativos como o equilíbrio de um \textbf{sistema de demanda}: cada
-investidor escolhe pesos de carteira como função das \textbf{características} dos ativos, e o
-mercado agrega essas demandas. A demanda baseada em características reduz um problema de
-altíssima dimensão (milhares de ativos $\times$ milhares de investidores) a um número pequeno
-de \emph{loadings}. Gabaix e Koijen (2021), na \emph{hipótese de mercados inelásticos},
-mostram que fluxos de demanda têm efeito de preço grande, reforçando o interesse em medir
-diretamente a demanda dos investidores institucionais. Nossa abordagem é o ``lado da
-quantidade'' desse programa: em vez de estimar elasticidades de preço, estimamos como o
-\textbf{peso} de uma ação responde às características dos fundos que a detêm.
+A referência mais próxima do que eu faço é o trabalho de Koijen e Yogo (2019), que
+propõem enxergar os preços dos ativos como o resultado de um sistema de demanda. Na visão
+deles, cada investidor escolhe os pesos da sua carteira em função de características dos
+ativos, e o mercado agrega essas demandas. A vantagem dessa abordagem é reduzir um problema
+de dimensão muito alta, com milhares de ativos e investidores, a um número pequeno de
+parâmetros associados às características. O que faço aqui é olhar para o lado das
+quantidades desse mesmo problema: em vez de estimar como a demanda reage a preços, estimo
+como o peso de uma ação reage às características dos fundos que a carregam.
 
-\paragraph{Embeddings de investidor e de ativo.} A linguagem que adotamos --- \emph{investor
-embeddings} (o vetor de características de cada fundo) e \emph{asset embeddings} (o vetor de
-fatores latentes de cada ação) --- traduz a estrutura bilinear do peso: $w_{in}\approx
-x_i'\theta_n$. É a mesma ideia de fatorar uma matriz grande (fundos $\times$ ações) em dois
-conjuntos de vetores de baixa dimensão, comum em modelos de fatores latentes e em
-recomendação; aqui os \emph{embeddings} do investidor são \emph{observáveis} (características)
-e os do ativo são \emph{estimados} pela regressão transversal.
+Numa linha parecida, Gabaix e Koijen (2021) defendem que os mercados são pouco elásticos,
+de modo que fluxos de compra e venda têm efeito grande sobre os preços. Isso reforça o
+interesse em medir diretamente a demanda dos investidores institucionais, que é justamente
+o que as carteiras dos fundos permitem observar.
 
-\paragraph{Regressão transversal e fatores dinâmicos.} O método de estimar coeficientes
-\textbf{mês a mês} e resumir sua média e variabilidade temporal é o de Fama e MacBeth (1973),
-padrão em \emph{asset pricing} empírico. Tratar a sequência de coeficientes como um processo
-\textbf{dinâmico} e filtrá-lo recai nos modelos de \textbf{fator dinâmico} e no \textbf{filtro
-de Kalman} (Harvey, 1989), que separam o sinal persistente do ruído amostral das estimativas
-mensais.
+Do ponto de vista do método, a ideia de estimar coeficientes mês a mês e depois resumir a
+média e a variação desses coeficientes ao longo do tempo vem de Fama e MacBeth (1973), que
+é um procedimento padrão na literatura empírica de apreçamento de ativos. Quando passo a
+tratar a sequência de coeficientes como uma série temporal e tento separar o sinal
+persistente do ruído de estimação, recorro à ideia de modelos de espaço de estados e ao
+filtro de Kalman, apresentados de forma didática em Harvey (1989).
 
-\paragraph{Fluxos, demanda e negociação de fundos.} A relevância dos \textbf{fluxos} (captação
-menos resgate) para a negociação dos fundos é documentada por Coval e Stafford (2007), que
-mostram vendas/compras forçadas por fluxos, e por Lou (2012), que liga fluxos à
-previsibilidade de retornos via demanda. Incluímos o fluxo líquido como característica
-justamente para testar se ele antecipa a \emph{variação} do peso.
-
-\paragraph{Previsibilidade e persistência.} Por fim, a comparação contra um \textbf{benchmark
-ingênuo} (passeio aleatório / último valor) é a disciplina padrão da literatura de previsão:
-modelos só ``valem'' se superam a persistência. Nosso resultado --- a difícil superação do
-ingênuo --- dialoga com a vasta evidência de que muitas séries financeiras de alta frequência
-de divulgação são próximas de martingales no curto prazo.
+Por fim, como uma das minhas características é o fluxo líquido dos fundos, vale citar a
+literatura que liga fluxos à negociação. Coval e Stafford (2007) mostram que fundos
+pressionados por resgates são forçados a vender, e que entradas levam a compras, com
+efeito sobre preços. Lou (2012) liga os fluxos à previsibilidade de retornos. Eu incluo o
+fluxo justamente para testar se ele ajuda a antecipar a variação do peso da ação na
+carteira. A comparação dos meus modelos contra uma previsão ingênua, que apenas repete o
+último valor, segue a prática usual nessa literatura: um modelo só interessa se conseguir
+superar essa regra simples.
 
 %==================== 3. METODOLOGIA ====================
 \section{Metodologia}
-\label{sec:met}
 
-\paragraph{Objeto.} Sejam $i$ os fundos de uma gestora $M$ (Itaú) e $n$ uma ação (VALE3).
-Para cada fundo $i$ e mês $t$, o alvo é o \textbf{peso} $w_{i,t}\in[0,1]$ de VALE3 na
-carteira. A leitura estrutural é que o peso observado é um \emph{peso-alvo} $w^{*}$ mais um
-componente estocástico:
+Começo definindo o objeto. Sejam os fundos de uma gestora, indexados por $i$, e uma ação,
+indexada por $n$. Para cada fundo $i$ e cada mês $t$, o que eu quero explicar é o peso
+$w_{i,t}$ da ação na carteira, que está entre zero e um. A leitura que adoto é a de que o
+peso observado é um peso desejado mais um componente aleatório,
 \begin{equation}
-w_{i,t} = w^{*}_{i,t} + \varepsilon_{i,t}, \qquad
-w^{*}_{i,t} = x_{i,t}'\,\theta_{n,t},
+w_{i,t} = w^{*}_{i,t} + \varepsilon_{i,t}, \qquad w^{*}_{i,t} = x_{i,t}'\,\theta_{n,t},
 \label{eq:target}
 \end{equation}
-em que $x_{i,t}$ é o vetor de $K$ \textbf{características do fundo} (\emph{investor embeddings})
-e $\theta_{n,t}$ é o vetor de $K$ \textbf{fatores latentes da ação} (\emph{asset embeddings}).
+em que $x_{i,t}$ é o vetor de características do fundo e $\theta_{n,t}$ é um vetor de
+fatores latentes associados à ação, que mede o quanto cada característica importa para a
+posição naquele papel.
 
-\paragraph{Passo 1 --- regressão transversal (o fator latente).} Empilhando os fundos vivos no
-mês $t$, $w_t = X_t\,\theta_{n,t} + \varepsilon_t$, o vetor de \emph{loadings} é estimado por
-mínimos quadrados,
+O primeiro passo é estimar esse vetor de fatores. Empilhando os fundos vivos em cada mês
+$t$, escrevo $w_t = X_t\,\theta_{n,t} + \varepsilon_t$ e estimo por mínimos quadrados,
 \begin{equation}
-\widehat{\theta}_{n,t} = (X_t'X_t)^{-1} X_t'\,w_t ,
+\widehat{\theta}_{n,t} = (X_t'X_t)^{-1} X_t'\,w_t,
 \label{eq:ols}
 \end{equation}
-com as características em \textbf{z-score} (média 0, variância 1) para comparabilidade. Na
-prática estimamos
+com as características padronizadas, isto é, com média zero e variância um, para que sejam
+comparáveis entre si. Na prática, a regressão que rodo em cada mês é
 \begin{equation}
-w_{i,t} = \alpha_t + \beta^{1}_t \ln\text{AUM}_{i,t} + \beta^{2}_t \ln\text{Cot}_{i,t}
-        + \beta^{3}_t \text{FIC}_i + \beta^{4}_t \big(\tfrac{\text{Fluxo}}{\text{AUM}}\big)_{i,t}
+w_{i,t} = \alpha_t + \beta^{1}_t \ln(\text{PL}_{i,t}) + \beta^{2}_t \ln(\text{Cot}_{i,t})
+        + \beta^{3}_t \text{FIC}_i + \beta^{4}_t \Big(\tfrac{\text{Fluxo}}{\text{PL}}\Big)_{i,t}
         + \varepsilon_{i,t},
 \label{eq:cs}
 \end{equation}
-gerando $T=72$ vetores $\theta_t$, resumidos no estilo \textbf{Fama--MacBeth} (média no tempo;
-erro-padrão pela dispersão entre meses). Preço e \emph{beta} da ação são constantes dentro de
-um mês, então entram numa versão \emph{pooled} (Modelo~2), que os identifica pela variação
-\emph{entre} meses. Como o peso é limitado em $[0,1]$, a forma correta é \textbf{não-linear},
-$w = g(X\theta)+\varepsilon$ com $g$ logística --- o que motiva a versão \emph{logit} usada na
-margem extensiva e prevista para os próximos passos.
+em que PL é o patrimônio líquido, Cot é o número de cotistas, FIC indica se o fundo é um
+fundo de investimento em cotas e Fluxo é a captação líquida do mês. Rodando essa regressão
+nos 72 meses, obtenho 72 vetores de coeficientes, que resumo pela média no tempo e pelo
+erro padrão calculado a partir da variação desses coeficientes entre os meses, no espírito
+de Fama e MacBeth. O preço e o beta da ação são constantes dentro de um mesmo mês, então
+eles não entram na regressão mês a mês; eu os incluo numa versão com todos os meses
+empilhados, em que passam a ser identificados pela variação entre meses. Como o peso é
+limitado entre zero e um, a forma mais correta seria não linear, com uma função logística,
+o que eu uso mais adiante para estudar a decisão de ter ou não a ação.
 
-\paragraph{Passo 2 --- dinâmica do fator e previsão.} Cada coeficiente $\theta_{k,t}$ é tratado
-como série temporal (passeio aleatório, AR(1) ou estado-espaço com \textbf{filtro de Kalman}).
-A previsão do peso aplica o \emph{vetor de coeficientes previsto} às características do fundo,
-$\widehat{w}_{i,t} = \widehat{\theta}_t'\,x_{i,t}$, e é comparada ao \textbf{benchmark ingênuo}
-$\widehat{w}_{i,t}=w_{i,t-1}$. A diferença forma a \textbf{matriz de erros} $e_{i,t}=w_{i,t}-
-\widehat{w}_{i,t}$, cujas propriedades (média $\approx 0$, estacionariedade) são objeto de
-análise. Avaliamos a previsão \textbf{fora da amostra} (treino expandido) nos horizontes $h=1$
-e $h=3$ --- este último motivado pela \textbf{opacidade trimestral}: as carteiras só são
-divulgadas com $\approx$90 dias de defasagem, de modo que conhecer o peso \emph{atual} equivale
-a prever $t+3$ com informação de $t$.
+O segundo passo é dar dinâmica ao fator e usar isso para prever. Trato cada coeficiente
+$\theta_{k,t}$ como uma série temporal, seja como passeio aleatório, seja como um processo
+autorregressivo, seja por um modelo de espaço de estados estimado pelo filtro de Kalman. A
+previsão do peso aplica o vetor de coeficientes previsto às características do fundo,
+$\widehat{w}_{i,t} = \widehat{\theta}_t'\,x_{i,t}$, e eu a comparo com a previsão ingênua
+que simplesmente repete o peso do mês anterior, $\widehat{w}_{i,t}=w_{i,t-1}$. A diferença
+entre o realizado e o previsto forma o conjunto de erros $e_{i,t}=w_{i,t}-\widehat{w}_{i,t}$,
+cujas propriedades eu analiso, em especial se a média é próxima de zero e se a série é
+estacionária. Faço a avaliação fora da amostra para os horizontes de um e de três meses.
+O horizonte de três meses tem uma motivação econômica: como as carteiras só são divulgadas
+com cerca de noventa dias de atraso, conhecer o peso de hoje equivale, na prática, a prever
+o peso de três meses à frente usando apenas a informação de hoje.
 
-\paragraph{Identificação temporal (sem \emph{look-ahead}).} Cada característica é medida num
-momento explícito relativo ao peso de $t$ (Tabela~\ref{tab:timing}). Preço e \emph{beta} de
-VALE3 têm \textbf{dois papéis}: na \emph{explicação} usamos a \textbf{média do mês $t$} (o que o
-gestor observou \emph{ao longo} do mês ao dimensionar a posição); na \emph{previsão} usamos o
-\textbf{fim do mês $t-1$} (predeterminado, sem \emph{look-ahead}).
-
-\begin{table}[h]\centering\small
-\caption{Alinhamento temporal das variáveis.}
-\label{tab:timing}
-\begin{tabular}{@{}llll@{}}
-\toprule
-Variável & Fonte & Frequência & Quando medimos (para o mês $t$) \\
-\midrule
-Peso de VALE3 (alvo) & CONS & mensal & fim do mês $t$ (competência) \\
-AUM, nº cotistas     & SH   & diária & mesmo dia da competência (fim de $t$) \\
-Fluxo líquido        & Inf.\ Diário CVM & diária & soma de todo o mês $t$ \\
-Preço, beta VALE3    & Yahoo Finance & diária & média do mês $t$ (explicação) / fim de $t{-}1$ (previsão) \\
-\bottomrule
-\end{tabular}
-\end{table}
+Por fim, um cuidado importante é não usar informação do futuro ao prever. Cada
+característica é medida num momento bem definido em relação ao peso do mês $t$: o peso e as
+características de fundo (patrimônio, cotistas, classificação) são medidos no fim do mês $t$;
+o fluxo é somado ao longo do mês $t$; e o preço e o beta da ação têm dois usos. Para
+explicar o peso, uso a média do mês $t$, que representa melhor o que o gestor observou ao
+longo do mês ao montar a posição. Para prever, uso o valor do fim do mês anterior, que é
+conhecido antes de $t$ e portanto não embute informação futura.
 
 %==================== 4. DADOS E RESULTADOS ====================
 \section{Dados e resultados}
-\label{sec:dados}
 
-\subsection{Fontes, amostra e tratamentos}
+Trabalho com duas bases principais da Comissão de Valores Mobiliários. A primeira é a
+composição consolidada das carteiras, de frequência mensal, de onde tiro o peso de VALE3
+em cada fundo, sempre como posição direta. A segunda é a série histórica diária dos fundos,
+de onde tiro o patrimônio líquido, o número de cotistas e a informação de o fundo ser ou
+não um fundo de cotas. A captação líquida, isto é, a captação menos os resgates, eu retiro
+do Informe Diário da mesma Comissão, que é a base que dá origem à série histórica e a única
+que traz os resgates; validei essa informação contra a série histórica e a coincidência é
+quase perfeita. O preço e o beta de VALE3 vêm de uma fonte de mercado e foram conferidos
+contra o fechamento oficial da bolsa, sem diferença relevante nas datas que uso.
 
-As bases primárias são duas séries da CVM: a \textbf{CONS} (composição consolidada das
-carteiras, mensal), de onde vem o peso de VALE3 (\emph{posição direta},
-\texttt{VALE ON N1 - VALE3}), e a \textbf{SH} (série histórica, diária), de onde vêm AUM
-(patrimônio líquido), número de cotistas e a classificação FIC/FI. O \textbf{fluxo líquido}
-(captação $-$ resgate) vem do \textbf{Informe Diário} da CVM --- a base-mãe da SH, única com
-resgate, validada contra a SH (99,7\% dos fundo-meses batem ao centavo). Preço e \emph{beta}
-de VALE3 vêm do \textbf{Yahoo Finance}, certificados contra o fechamento oficial da B3
-(diferença máxima de R\$\,0,00 nas datas de referência).
-
-Os tratamentos permanentes são: normalização do nome da gestora (acento/caixa/sufixos);
-\emph{dedup} de linhas exatamente duplicadas da CONS; remoção de pesos negativos residuais
-($\sim -10^{-6}$); auditoria de unicidade de $(fundo, t)$; e remoção de \textbf{fundos
-exclusivos} (filtro $\text{cotistas}>3$). O \emph{merge} SH$\times$CONS é feito pelo
-\textbf{dia exato} da competência, com 100\% de \emph{match}.
-
-\medskip
-\noindent\textbf{Amostra.} Painel fundo $\times$ mês, 2016--2021 (72 meses), gestoras Itaú,
-com $>3$ cotistas: \textbf{11.532} observações (11.413 com fluxo) e centenas de fundos. A
-margem intensiva (com VALE3) tem \textbf{11.413} fundo-meses; o painel \emph{extensivo} (fundos
-de Ações, incluindo zeros) tem \textbf{10.286} fundo-meses, 86\% com VALE3.
+Antes de montar o painel, apliquei alguns tratamentos que considero essenciais. Padronizei
+o nome da gestora para juntar corretamente as três variações do grupo Itaú; removi linhas
+exatamente duplicadas da base de composição; descartei pesos negativos, que são apenas
+resíduos contábeis muito pequenos; conferi que não há fundo repetido no mesmo mês; e
+retirei os fundos exclusivos, mantendo apenas observações com mais de três cotistas. O
+casamento entre a base diária e a mensal é feito pelo dia exato da competência, sem perdas.
+Depois desses tratamentos, o painel cobre os 72 meses entre 2016 e 2021 e tem cerca de
+onze mil e quinhentas observações de fundo por mês. A Tabela~\ref{tab:desc} resume as
+variáveis na amostra que efetivamente entra nas regressões.
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas descritivas (margem intensiva, $>3$ cotistas, com fluxo; $n=11.413$).}
+\caption{Estatísticas descritivas da amostra de regressão ($n = 11.413$ observações).}
 \label{tab:desc}
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-Variável & Média & DP & Mediana & Mín & Máx \\
+Variável & Média & Desvio-padrão & Mediana & Mínimo & Máximo \\
 \midrule
-Peso VALE3 (\%)       & $2{,}87$ & $3{,}52$ & $1{,}22$ & $0{,}00$ & $23{,}55$ \\
-AUM (R\$ milhões)     & $399$    & $1.079$  & $68{,}3$ & $0{,}04$ & $17.866$ \\
-Nº de cotistas        & $10.202$ & $72.039$ & $105$    & $4$      & $696.013$ \\
-Fluxo líq.\ (R\$ mi)  & $5{,}7$  & $74{,}1$ & $0{,}0$  & $-1.522$ & $1.636$ \\
-Preço VALE3 (R\$)     & $54{,}6$ & $27{,}2$ & $50{,}9$ & $9{,}94$ & $114{,}1$ \\
-Beta VALE3            & $1{,}04$ & $0{,}30$ & $0{,}97$ & $0{,}68$ & $1{,}73$ \\
+Peso de VALE3 (\%)            & $2{,}87$ & $3{,}52$ & $1{,}22$ & $0{,}00$ & $23{,}55$ \\
+Patrimônio líquido (R\$ mi)   & $399$    & $1.079$  & $68{,}3$ & $0{,}04$ & $17.866$ \\
+Número de cotistas            & $10.202$ & $72.039$ & $105$    & $4$      & $696.013$ \\
+Captação líquida (R\$ mi)     & $5{,}7$  & $74{,}1$ & $0{,}0$  & $-1.522$ & $1.636$ \\
+Preço de VALE3 (R\$)          & $54{,}6$ & $27{,}2$ & $50{,}9$ & $9{,}94$ & $114{,}1$ \\
+Beta de VALE3                 & $1{,}04$ & $0{,}30$ & $0{,}97$ & $0{,}68$ & $1{,}73$ \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent\footnotesize AUM e cotistas são fortemente assimétricos (média $\gg$ mediana) --- daí
-o $\log$. \textbf{75,7\%} das observações são de FICs. Preço e beta de VALE3 são fortemente
-correlacionados ($-0{,}71$): na recuperação 2016--2021 o preço subiu e o beta caiu. \normalsize
 
-\subsection{Modelo 1 --- determinantes do peso (Fama--MacBeth)}
+O patrimônio e o número de cotistas são muito assimétricos, com média bem acima da mediana,
+o que me levou a usar o logaritmo dessas variáveis. Cerca de três quartos das observações
+são de fundos de cotas. Vale notar também que o preço e o beta de VALE3 são bastante
+correlacionados de forma negativa no período: na recuperação que vai de 2016 a 2021 o preço
+subiu e o beta caiu.
 
-A regressão transversal~\eqref{eq:cs}, resumida à Fama--MacBeth, dá os determinantes do
-\emph{nível} do peso (Tabela~\ref{tab:fm}).
+O primeiro resultado vem da regressão mês a mês, resumida na Tabela~\ref{tab:fm}. A leitura
+é direta. Fundos maiores carregam menos VALE3 em peso; fundos com mais cotistas carregam
+mais; e os fundos de cotas têm posição direta menor. A captação líquida não ajuda a
+explicar o nível do peso. O ponto que mais me chamou a atenção é que esses sinais são os
+mesmos em todos os 72 meses, o que sugere que a relação entre características e peso é
+estável no tempo.
 
 \begin{table}[h]\centering\small
-\caption{Modelo 1 --- cross-section mês a mês (Fama--MacBeth, $T=72$).}
+\caption{Regressão do peso mês a mês, resumo no estilo Fama--MacBeth ($T = 72$ meses).}
 \label{tab:fm}
-\begin{tabular}{@{}lrrrcc@{}}
+\begin{tabular}{@{}lrrrc@{}}
 \toprule
-\textbf{Variável} & \textbf{Coef.\ médio} & \textbf{EP (FM)} & \textbf{$t$} & \textbf{Meses +} & \textbf{Sig.} \\
+Variável & Coeficiente médio & Erro padrão & Estatística $t$ & Significância \\
 \midrule
-Intercepto        & $0{,}08939$  & $0{,}00413$ & $21{,}6$  & 72/72 & *** \\
-$\log$(AUM)       & $-0{,}00376$ & $0{,}00019$ & $-19{,}3$ & 0/72  & *** \\
-$\log$(cotistas)  & $0{,}00387$  & $0{,}00020$ & $19{,}8$  & 72/72 & *** \\
-FIC (dummy)       & $-0{,}01697$ & $0{,}00089$ & $-19{,}2$ & 0/72  & *** \\
-Fluxo/AUM         & $-0{,}00044$ & $0{,}00309$ & $-0{,}14$ & 39/72 & n.s. \\
+Intercepto              & $0{,}08939$  & $0{,}00413$ & $21{,}6$  & *** \\
+$\ln$(patrimônio)       & $-0{,}00376$ & $0{,}00019$ & $-19{,}3$ & *** \\
+$\ln$(cotistas)         & $0{,}00387$  & $0{,}00020$ & $19{,}8$  & *** \\
+Fundo de cotas          & $-0{,}01697$ & $0{,}00089$ & $-19{,}2$ & *** \\
+Captação / patrimônio   & $-0{,}00044$ & $0{,}00309$ & $-0{,}14$ & não signif. \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent\footnotesize $R^2$ médio por mês $=0{,}152$. *** $p<0{,}001$. Leitura: fundo
-\textbf{maior} $\to$ menos VALE3 em peso; \textbf{mais cotistas} $\to$ mais; \textbf{FIC} $\to$
-menos posição direta; o \textbf{fluxo não explica o nível}. Sinais idênticos nos 72 meses
-$\Rightarrow$ fatores estáveis. \normalsize
+\noindent\footnotesize O ajuste médio por mês, medido pelo $R^2$, é de $0{,}152$. Os três
+asteriscos indicam significância a $0{,}1\%$. \normalsize
 
-\subsection{Modelo 2 --- versão \emph{pooled} (preço e beta da ação)}
-
-Empilhando os 72 meses, preço e \emph{beta} (média do mês $t$) passam a ser identificados pela
-variação entre meses (Tabela~\ref{tab:pool}).
+Quando empilho todos os meses e acrescento o preço e o beta da ação, obtenho a
+Tabela~\ref{tab:pool}. Os sinais das características de fundo se mantêm. O preço entra com
+sinal positivo, mas parte disso é apenas mecânico, porque quando a ação se valoriza a sua
+fração na carteira cresce sozinha, sem o gestor negociar. O beta entra com sinal negativo,
+o que interpreto como aversão a risco: quando a ação fica mais arriscada em relação ao
+mercado, os fundos reduzem o peso. Num teste anterior, só com o ano de 2016, o beta saía
+positivo e pouco significativo; com os 72 meses ele fica claramente negativo, o que me
+convenceu de que poucos pontos no tempo não eram suficientes para identificar esse efeito.
 
 \begin{table}[h]\centering\small
-\caption{Modelo 2 --- pooled com preço e beta ($n=11.413$, $R^2=0{,}166$).}
+\caption{Regressão com todos os meses empilhados, incluindo preço e beta ($n = 11.413$).}
 \label{tab:pool}
 \begin{tabular}{@{}lrrrc@{}}
 \toprule
-\textbf{Variável} & \textbf{Estimativa} & \textbf{EP} & \textbf{$t$} & \textbf{Sig.} \\
+Variável & Estimativa & Erro padrão & Estatística $t$ & Significância \\
 \midrule
-Intercepto       & $0{,}09937$  & $0{,}00406$ & $24{,}5$   & *** \\
-$\log$(AUM)      & $-0{,}00354$ & $0{,}00019$ & $-19{,}0$  & *** \\
-$\log$(cotistas) & $0{,}00388$  & $0{,}00013$ & $30{,}9$   & *** \\
-FIC (dummy)      & $-0{,}01682$ & $0{,}00079$ & $-21{,}3$  & *** \\
-Fluxo/AUM        & $-0{,}00030$ & $0{,}00034$ & $-0{,}91$  & n.s. \\
-Preço VALE3      & $0{,}000182$ & $0{,}000016$& $11{,}5$   & *** \\
-Beta VALE3       & $-0{,}02141$ & $0{,}00142$ & $-15{,}1$  & *** \\
+Intercepto              & $0{,}09937$  & $0{,}00406$ & $24{,}5$   & *** \\
+$\ln$(patrimônio)       & $-0{,}00354$ & $0{,}00019$ & $-19{,}0$  & *** \\
+$\ln$(cotistas)         & $0{,}00388$  & $0{,}00013$ & $30{,}9$   & *** \\
+Fundo de cotas          & $-0{,}01682$ & $0{,}00079$ & $-21{,}3$  & *** \\
+Captação / patrimônio   & $-0{,}00030$ & $0{,}00034$ & $-0{,}91$  & não signif. \\
+Preço de VALE3          & $0{,}000182$ & $0{,}000016$& $11{,}5$   & *** \\
+Beta de VALE3           & $-0{,}02141$ & $0{,}00142$ & $-15{,}1$  & *** \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent\footnotesize Preço $+$ (parte é \emph{mecânica}: se a ação sobe, sua fração cresce
-sozinha); \textbf{Beta $-$} (VALE3 mais arriscada $\to$ peso menor). No piloto de 12 meses
-(2016) o beta saía positivo e fraco --- confirmando que poucos pontos no tempo o
-desidentificam. \normalsize
+\noindent\footnotesize O ajuste, medido pelo $R^2$, é de $0{,}166$. \normalsize
 
-\subsection{Dinâmica do fator $\theta_t$}
-
-Cada coeficiente é persistente mas \textbf{reverte à média} (autocorrelação $\approx
-0{,}7$--$0{,}84$; Dickey--Fuller rejeita raiz unitária): não são passeios aleatórios puros
-(Figura~\ref{fig:theta}). Isso justifica modelá-los por AR(1)/Kalman em vez de um
-\emph{random walk} ingênuo nos coeficientes.
+Antes de prever, olhei para como os coeficientes da regressão mês a mês evoluem no tempo,
+o que mostro na Figura~\ref{fig:theta}. Eles são persistentes, mas revertem para a média:
+a autocorrelação de um mês fica em torno de $0{,}7$ a $0{,}8$ e o teste de raiz unitária
+rejeita a hipótese de passeio aleatório puro nos coeficientes. Por isso achei razoável
+modelá-los por um processo autorregressivo ou pelo filtro de Kalman, e não simplesmente
+repetir o último valor do coeficiente.
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.86\textwidth]{fig_theta.pdf}
-\caption{Coeficientes $\theta_t$ da regressão transversal (2016--2021); tracejado $=$ média.}
+\includegraphics[width=0.82\textwidth]{fig_theta.pdf}
+\caption{Coeficientes da regressão mês a mês, de 2016 a 2021. A linha tracejada marca a
+média de cada série.}
 \label{fig:theta}
 \end{figure}
 
-\subsection{Modelo 3 --- previsão e a matriz de erros}
-
-Avaliando fora da amostra, \textbf{nenhum} modelo estrutural supera o \textbf{ingênuo}
-(Tabela~\ref{tab:fc}). Acrescentar efeito-fixo de fundo ($\widehat\mu_i$) ou prever os fatores
-por Kalman \textbf{piora}; modelar a \emph{variação} $\Delta w$ apenas empata. O efeito-fixo
-(média histórica) ser pior que o \emph{lag} mostra que o peso \textbf{não reverte à média no
-nível do fundo} --- é quase um \textbf{martingale}. A matriz de erros do melhor modelo tem
-média $\approx 0$ e é estacionária (Dickey--Fuller $t=-8{,}7$), como o orientador queria
-verificar.
+O resultado de previsão é o que considero mais surpreendente, e está na
+Tabela~\ref{tab:fc}. Avaliando fora da amostra, nenhum modelo estrutural que testei supera
+a previsão ingênua de repetir o último peso. Somar um nível próprio de cada fundo, ou
+prever os coeficientes pelo filtro de Kalman, piora a previsão; modelar diretamente a
+variação do peso apenas empata com a regra ingênua. O fato de a média histórica do próprio
+fundo prever pior do que o último valor me diz que o peso não reverte para uma média no
+nível do fundo, e sim que ele é muito persistente, próximo de um passeio aleatório. Os
+erros do melhor modelo têm média praticamente nula e formam uma série estacionária, que
+eram as propriedades que o meu orientador queria que eu verificasse.
 
 \begin{table}[h]\centering\small
-\caption{Previsão fora da amostra (RMSE). $h=1$ e $h=3$ (opacidade de 90 dias).}
+\caption{Erro de previsão fora da amostra (raiz do erro quadrático médio) para os
+horizontes de um e de três meses.}
 \label{tab:fc}
 \begin{tabular}{@{}llrrrr@{}}
 \toprule
-Universo & Horizonte & M0 Ingênuo & M1 Efeito-fixo & M2 FE$+$Kalman & M3 $\Delta w$ \\
+Universo & Horizonte & Ingênua & Nível do fundo & Fator (Kalman) & Variação do peso \\
 \midrule
-Todos holders & $h=1$ & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
-Todos holders & $h=3$ & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
-Só Ações      & $h=1$ & $\mathbf{0{,}0197}$ & $0{,}0310$ & $0{,}0383$ & $0{,}0198$ \\
-Só Ações      & $h=3$ & $\mathbf{0{,}0266}$ & $0{,}0337$ & $0{,}0385$ & $0{,}0270$ \\
+Todos os fundos & 1 mês  & $0{,}0156$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+Todos os fundos & 3 meses& $0{,}0207$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+Só fundos de ações & 1 mês  & $0{,}0197$ & $0{,}0310$ & $0{,}0383$ & $0{,}0198$ \\
+Só fundos de ações & 3 meses& $0{,}0266$ & $0{,}0337$ & $0{,}0385$ & $0{,}0270$ \\
 \bottomrule
 \end{tabular}
 \end{table}
-\noindent\footnotesize A $h=3$ o ingênuo \emph{piora} ($+33\%$) e a distância aos modelos
-estruturais encolhe, mas ele \textbf{ainda vence}. Restringir a Ações torna a conclusão mais
-nítida, não a inverte. \normalsize
 
-\subsection{Modelo 4 --- margem extensiva (ter ou não ter VALE3)}
+A três meses a previsão ingênua piora, como era de esperar, e a distância para os modelos
+estruturais diminui, mas ela ainda vence. Restringir a amostra apenas aos fundos de ações
+não muda essa conclusão, só a deixa mais nítida, porque nesses fundos as posições em VALE3
+são maiores e mais variáveis.
 
-Incluindo os \textbf{zeros} (fundos de Ações que não detêm VALE3), um \emph{logit} da \emph{posse}
-sobre $\ln$AUM, $\ln$Cot e FIC revela o achado mais interessante: as duas margens têm
-\textbf{sinais opostos} (Tabela~\ref{tab:margens}). Fundos maiores e FICs são \emph{mais
-propensos a ter} VALE3, mas com \emph{peso menor} --- o padrão clássico de
-\textbf{diversificação}. A posse é ainda mais persistente que o peso (muda em $1{,}3\%$ dos
-meses); prevê-la fora da amostra, o ingênuo acerta $98{,}7\%$ contra $87{,}2\%$ do logit.
+Por último, separei a decisão de ter ou não a ação da decisão de quanto carregar. Montei
+um painel que inclui também os fundos de ações que não têm VALE3, com peso igual a zero, e
+estimei um modelo logístico para a probabilidade de o fundo ter a ação. O achado que mais
+me interessou é que as duas decisões têm sinais opostos, como resumo na
+Tabela~\ref{tab:margens}. Fundos maiores e fundos de cotas são mais propensos a ter VALE3,
+mas, quando a têm, carregam um peso menor. Isso é coerente com diversificação: esses fundos
+espalham a carteira por muitas ações, incluindo VALE3, cada uma com uma fatia pequena. A
+posse, por sua vez, é ainda mais persistente que o peso, e de novo a previsão ingênua de
+repetir o estado anterior acerta muito mais do que o modelo com características.
 
 \begin{table}[h]\centering\small
-\caption{Sinais opostos entre as duas margens.}
+\caption{Sinais opostos entre a decisão de ter a ação e a decisão de quanto carregar.}
 \label{tab:margens}
 \begin{tabular}{@{}lcc@{}}
 \toprule
-Característica & \textbf{Ter ou não} (extensiva, logit) & \textbf{Quanto} (intensiva) \\
+Característica & Ter ou não a ação & Quanto carregar \\
 \midrule
-Tamanho (AUM) & $+$ mais provável ter & $-$ peso menor \\
-FIC           & $+$ mais provável ter & $-$ peso menor \\
-Cotistas      & $-$ (fraco)           & $+$ \\
+Tamanho do fundo & mais provável ter & peso menor \\
+Fundo de cotas   & mais provável ter & peso menor \\
+Número de cotistas & menos provável (efeito fraco) & peso maior \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Síntese dos resultados}
-
-O peso de VALE3 nos fundos Itaú é \textbf{bem explicado} pela seção transversal (tamanho,
-cotistas, FIC, beta) e \textbf{mal previsto} no curto prazo: é quase um martingale no nível do
-fundo, com inércia que nenhum modelo estrutural bate, mesmo sob a opacidade trimestral. O
-modelo de fator é, por ora, uma ferramenta de \emph{compreensão}, não de previsão --- o que
-motiva os próximos passos.
+Resumindo, o peso de VALE3 nos fundos do Itaú é bem explicado pela seção transversal, ou
+seja, por tamanho, cotistas, classificação e beta, mas é difícil de prever no curto prazo,
+porque a inércia do próprio fundo é muito forte. Por isso vejo o modelo de fator, por
+enquanto, como uma ferramenta para entender quais características importam, e não como um
+modelo de previsão. É essa limitação que motiva os próximos passos.
 
 %==================== 5. PRÓXIMOS PASSOS ====================
 \section{Próximos passos}
-\label{sec:prox}
 
-A continuação do trabalho formaliza a abordagem de \textbf{sistema de demanda} esboçada pelo
-orientador, em duas frentes: o \emph{ajuste parcial} da carteira e a \emph{regra de decisão}
-sob o \emph{lag} de divulgação.
+A continuação do trabalho parte da mesma especificação de demanda, mas a torna mais
+completa em dois pontos: explicito a relação entre o peso e as características como uma
+relação não linear, e ligo um mês ao outro por meio de um modelo de ajuste parcial da
+carteira. Como o peso é limitado entre zero e um, escrevo o peso desejado como uma função
+logística do produto entre as características do fundo e os fatores latentes da ação,
+$w_{i,n} = g(x_i'\,\theta_n) + \varepsilon_{i,n}$, e continuo estimando o vetor de fatores
+$\theta_n$ mês a mês, como já fiz nesta entrega.
 
-\subsection{O peso-alvo e os \emph{embeddings} (revisão da especificação)}
-
-Voltamos à especificação~\eqref{eq:target}--\eqref{eq:ols}, mas tornando-a explicitamente
-\textbf{não-linear} (o peso é limitado):
-\begin{equation}
-w_{i,n} = g\!\left(x_i'\,\theta_n\right) + \varepsilon_{i,n}, \qquad
-\widehat{\theta}_n = (X'X)^{-1}X'\,w_n,
-\label{eq:emb}
-\end{equation}
-em que $x_i$ (z-score) são os \textbf{investor embeddings} (características dos fundos) e
-$\theta_n$ são os \textbf{asset embeddings} (fatores latentes da ação), e $g$ é uma função
-logística. A cada mês $t$ obtém-se um $\widehat\theta_{n,t}$ --- a base do fator dinâmico já
-estimado nesta entrega.
-
-\subsection{Ajuste parcial da carteira}
-
-O elo dinâmico entre meses é um modelo de \textbf{ajuste parcial}: o fundo move o peso atual em
-direção ao alvo, mas só parcialmente, a uma \textbf{velocidade de ajuste} $\lambda_n\in(0,1)$:
+A novidade é a forma como o fundo ajusta a posição de um mês para o outro. A ideia é que o
+fundo não pula de uma vez para o peso desejado, mas se move parcialmente em direção a ele,
+a uma velocidade $\lambda_n$ entre zero e um,
 \begin{equation}
 w_{i,t+1} = (1-\lambda_n)\,w_{i,t} + \lambda_n\,w^{*}_{i,t} + u_{i,t+1}.
 \label{eq:pa1}
 \end{equation}
-Reescrevendo em termos da variação do peso e usando $\varepsilon_{i,t}=w^{*}_{i,t}-w_{i,t}$
-(a distância ao alvo), obtém-se uma relação linear estimável:
+Reescrevendo essa relação em termos da variação do peso, e chamando de $\varepsilon_{i,t}$
+a distância entre o peso desejado e o peso atual, chego a uma forma simples de estimar,
 \begin{equation}
-\underbrace{w_{i,t+1}-w_{i,t}}_{d_{i,t+1}} = \lambda_n\,\varepsilon_{i,t} + u_{i,t+1}.
+w_{i,t+1}-w_{i,t} = \lambda_n\,\varepsilon_{i,t} + u_{i,t+1}.
 \label{eq:pa2}
 \end{equation}
-Ou seja, a \textbf{variação} do peso de um mês para o outro deve ser proporcional à
-\textbf{distância ao alvo} no mês anterior, com a constante de proporcionalidade $\lambda_n$
-medindo a \emph{velocidade} com que o fundo persegue o alvo. A velocidade de ajuste é estimada
-regredindo a variação observada sobre a distância estimada:
+Em palavras, a variação do peso de um mês para o outro deve ser proporcional à distância
+que faltava para o peso desejado no mês anterior, e a constante de proporcionalidade
+$\lambda_n$ mede a velocidade com que o fundo persegue esse alvo. Estimo essa velocidade
+regredindo a variação observada sobre a distância estimada,
 \begin{equation}
-\widehat{\lambda}_n = \left(\widehat{\varepsilon}_{n,t}'\,\widehat{\varepsilon}_{n,t}\right)^{-1}
-\widehat{\varepsilon}_{n,t}'\,d_{n,t+1}.
+\widehat{\lambda}_n = \big(\widehat{\varepsilon}_{n,t}'\,\widehat{\varepsilon}_{n,t}\big)^{-1}
+\widehat{\varepsilon}_{n,t}'\,(w_{n,t+1}-w_{n,t}).
 \label{eq:lambda}
 \end{equation}
-Como $\widehat\varepsilon$ é um regressor estimado (logo, ruidoso e possivelmente
-multicolinear), o orientador anota que essa etapa será feita \textbf{provavelmente por
-\emph{ridge regression}} --- regularizando $\widehat\lambda_n$ para estabilizá-lo. O
-\textbf{erro de previsão do peso} fica, então,
+Como a distância $\widehat{\varepsilon}$ é, ela mesma, uma estimativa e portanto carrega
+ruído, pretendo fazer essa etapa com uma regressão regularizada, que penaliza coeficientes
+grandes e estabiliza a estimativa. Com a velocidade estimada, o erro de previsão do peso
+fica
 \begin{equation}
-\widehat{u}_{n,t+1} = d_{n,t+1} - \widehat{\lambda}_n\,\widehat{\varepsilon}_{n,t}
-= \big(w_{n,t+1}-w_{n,t}\big) - \widehat{\lambda}_n\big(X_t\widehat{\theta}_n - w_{n,t}\big).
+\widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) - \widehat{\lambda}_n\big(X_t\widehat{\theta}_n - w_{n,t}\big),
 \label{eq:u}
 \end{equation}
-Empilhando no tempo, a série $\{\widehat u_{n,t}\}$ é exatamente a \textbf{matriz de erros}
-preditivos que queremos caracterizar (média, variância, estacionariedade). A intuição que liga
-isto à entrega atual: se $\widehat\lambda_n\approx 0$, o ajuste parcial \textbf{degenera no
-benchmark ingênuo} ($w_{t+1}\approx w_t$) --- coerente com o que já encontramos, e o teste
-formal será justamente \emph{se $\lambda_n$ é estatisticamente distinto de zero}.
+e a coleção desses erros ao longo do tempo é exatamente o conjunto de erros de previsão que
+eu quero caracterizar. Acho importante notar a ligação com o que já encontrei: se a
+velocidade de ajuste for próxima de zero, o modelo se reduz à previsão ingênua, em que o
+peso de amanhã é quase igual ao de hoje. Isso é coerente com a forte persistência que medi,
+e o teste central passa a ser verificar se essa velocidade é, de fato, diferente de zero.
 
-\subsection{Série temporal e a regra de decisão (opacidade de 90 dias)}
+A estimação seria feita de forma recursiva. Uso os primeiros meses para estimar os
+parâmetros e, a partir daí, gero a série de erros de previsão. A regra de decisão incorpora
+o atraso de divulgação das carteiras: como elas só ficam visíveis cerca de noventa dias
+depois, qualquer decisão tomada hoje usa apenas a informação disponível até agora e mira
+três meses à frente. Na prática, comparo os erros de previsão de três passos e só depois
+desse intervalo o modelo estaria em condições de embasar uma decisão de carteira. É essa a
+pergunta econômica para a qual o trabalho caminha: conhecendo as características dos fundos
+e a dinâmica do peso desejado, é possível antecipar as posições antes que elas sejam
+divulgadas?
 
-A estimação é \textbf{recursiva}: usam-se $t=1$ e $t=2$ para estimar os parâmetros
-($\theta_n$ e $\lambda_n$) e, de $t=3$ em diante, gera-se a série de \textbf{erros preditivos}.
-A regra de decisão incorpora a \textbf{opacidade trimestral}: como as carteiras só ficam
-visíveis $\approx$90 dias depois, qualquer decisão em $t$ usa apenas a informação de $t$ e
-$t+1$ e mira três passos à frente. Concretamente, comparam-se os erros de previsão de
-\textbf{três passos} ($t{+}2$, $t{+}3$, $t{+}4$), e só a partir de \textbf{$t+5$} o modelo
-estaria em condição de \textbf{tomar uma decisão} de carteira fundamentada. Esse desenho
-operacionaliza a pergunta econômica final: \emph{conhecendo as características dos fundos e a
-dinâmica do alvo, é possível antecipar as posições antes de elas serem divulgadas?}
-
-\subsection{Agenda complementar}
-
-Além do modelo acima, ficam encaminhados: (i) generalizar para \textbf{outras ações e
-gestoras} (o \emph{pipeline} já é parametrizável); (ii) \emph{winsorizar} o Fluxo/AUM (caudas
-extremas de fundos minúsculos); (iii) decompor o peso em parte \textbf{passiva} (efeito
-mecânico do preço) e \textbf{ativa} (decisão do gestor); e (iv) tratar formalmente a margem
-extensiva por um modelo \emph{hurdle} (duas partes). O código, os dados e as decisões
-metodológicas estão versionados no repositório
-\texttt{forecasting-fund-weights-vale-itau}.
+Além desse modelo, pretendo estender a análise para outras ações e gestoras, já que o
+código que escrevi é facilmente adaptável; tratar as caudas extremas da variável de
+captação sobre patrimônio; e separar a parte do peso que muda apenas por causa da variação
+do preço da parte que reflete decisão ativa do gestor. Todo o código, os dados e o registro
+das decisões metodológicas estão organizados no repositório do projeto.
 
 %==================== REFERÊNCIAS ====================
 \begin{thebibliography}{9}\small
-\bibitem{coval2007} Coval, J.; Stafford, E. (2007). Asset Fire Sales (and Purchases) in Equity
-Markets. \emph{Journal of Financial Economics}, 86(2), 479--512.
-\bibitem{fm1973} Fama, E. F.; MacBeth, J. D. (1973). Risk, Return, and Equilibrium: Empirical
-Tests. \emph{Journal of Political Economy}, 81(3), 607--636.
-\bibitem{gk2021} Gabaix, X.; Koijen, R. S. J. (2021). In Search of the Origins of Financial
-Fluctuations: The Inelastic Markets Hypothesis. \emph{NBER Working Paper} 28967.
-\bibitem{harvey1989} Harvey, A. C. (1989). \emph{Forecasting, Structural Time Series Models and
-the Kalman Filter}. Cambridge University Press.
-\bibitem{hk1970} Hoerl, A. E.; Kennard, R. W. (1970). Ridge Regression: Biased Estimation for
-Nonorthogonal Problems. \emph{Technometrics}, 12(1), 55--67.
-\bibitem{ky2019} Koijen, R. S. J.; Yogo, M. (2019). A Demand System Approach to Asset Pricing.
-\emph{Journal of Political Economy}, 127(4), 1475--1515.
-\bibitem{lou2012} Lou, D. (2012). A Flow-Based Explanation for Return Predictability.
-\emph{Review of Financial Studies}, 25(12), 3457--3489.
+\bibitem{coval2007} COVAL, J.; STAFFORD, E. Asset fire sales (and purchases) in equity
+markets. \emph{Journal of Financial Economics}, v.\ 86, n.\ 2, p.\ 479--512, 2007.
+\bibitem{fm1973} FAMA, E. F.; MACBETH, J. D. Risk, return, and equilibrium: empirical
+tests. \emph{Journal of Political Economy}, v.\ 81, n.\ 3, p.\ 607--636, 1973.
+\bibitem{gk2021} GABAIX, X.; KOIJEN, R. S. J. \emph{In search of the origins of financial
+fluctuations}: the inelastic markets hypothesis. NBER Working Paper 28967, 2021.
+\bibitem{harvey1989} HARVEY, A. C. \emph{Forecasting, structural time series models and the
+Kalman filter}. Cambridge: Cambridge University Press, 1989.
+\bibitem{ky2019} KOIJEN, R. S. J.; YOGO, M. A demand system approach to asset pricing.
+\emph{Journal of Political Economy}, v.\ 127, n.\ 4, p.\ 1475--1515, 2019.
+\bibitem{lou2012} LOU, D. A flow-based explanation for return predictability. \emph{Review
+of Financial Studies}, v.\ 25, n.\ 12, p.\ 3457--3489, 2012.
 \end{thebibliography}
 
 \end{document}
