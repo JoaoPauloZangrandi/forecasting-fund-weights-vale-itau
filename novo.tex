@@ -434,6 +434,52 @@ Fundos maiores e fundos de cotas são \emph{mais propensos a ter} VALE3, mas com
 quando a têm --- sinais opostos entre a margem extensiva (ter) e a intensiva (quanto), padrão de
 diversificação. A posse também é muito persistente, e de novo a ingênua bate o modelo.
 
+\subsection{Ajuste parcial: estimando a velocidade $\lambda$ \feito}
+Este é o passo dinâmico central. Construímos o peso desejado $w^{*}_{i,t}=g(x_{i,t}'\widehat{\theta}_t)$
+(o ajustado do logit do passo 2), a distância $d_{i,t}=w^{*}_{i,t}-w_{i,t}$, e estimamos a
+\eqref{eq:pa2} por mínimos quadrados (MQO) e por variável instrumental (VI), usando a distância
+defasada $d_{i,t-1}$ como instrumento. O instrumento é fortíssimo (primeiro estágio
+$d_t\sim d_{t-1}$: coeficiente $0{,}895$, $F\approx 39.800$).
+
+\begin{table}[h]\centering\small
+\caption{Velocidade de ajuste $\lambda$ na equação $\Delta w_{i,t+1}=\lambda\,d_{i,t}+u$.
+Erro-padrão agrupado por fundo. $N=10.570$ fundo-meses, 295 fundos, 70 meses.}
+\label{tab:lambda}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Estimador & $\widehat{\lambda}$ & Erro padrão & $t$ & $p$ \\
+\midrule
+MQO (enviesado)                 & $0{,}0976$ & $0{,}0096$ & $10{,}2$ & $<0{,}001$ \\
+VI (instrumento $d_{i,t-1}$)    & $0{,}0413$ & $0{,}0063$ & $6{,}6$  & $<0{,}001$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: \texttt{R/26\_partial\_adjustment.R}.}
+\end{table}
+
+\noindent Três leituras, todas importantes:
+\begin{enumerate}[topsep=2pt,itemsep=1pt]
+\item \textbf{O viés do MQO foi para cima, não para baixo.} O orientador antecipou
+\emph{atenuação} (MQO puxado para zero) por causa do $\widehat{\theta}_t$ estimado. Mas há um
+segundo viés: como $w_{i,t}$ aparece em $d_{i,t}$ \emph{e} em $\Delta w_{i,t+1}$, o ruído
+transitório do peso cria uma \textbf{reversão à média mecânica} que puxa o MQO \emph{para cima}.
+Aqui o efeito mecânico dominou ($0{,}098$ no MQO vs $0{,}041$ na VI). O instrumento $d_{i,t-1}$
+corrige os \emph{dois} vieses de uma vez, porque não compartilha $w_{i,t}$ com o lado esquerdo nem
+o erro de estimação de $\widehat{\theta}_t$; por isso $0{,}041$ é a estimativa limpa, qualquer que
+fosse o viés dominante.
+\item \textbf{$\lambda$ é diferente de zero, mas minúsculo.} A VI dá $\widehat{\lambda}=0{,}041$
+($t=6{,}6$, $p<0{,}001$): o fundo fecha só $\approx4\%$ da distância ao alvo por mês, uma
+\textbf{meia-vida de $\approx16$ meses}. O ajuste existe, mas é lentíssimo.
+\item \textbf{Isso reconcilia toda a história.} Como $\lambda$ é próximo de zero, mês a mês o peso
+quase não se move em direção ao alvo --- por isso a previsão ingênua vence em $h=1$
+(Tabela~\ref{tab:fc}). Mas $\lambda\neq0$ mostra que \emph{existe} uma reversão real, porém lenta,
+ao alvo estrutural definido pelas características. O modelo de fator não é vazio: ele descreve a
+\textbf{âncora de longo prazo} do peso, não o seu movimento de curto prazo.
+\end{enumerate}
+\emph{Hipótese de identificação:} a VI supõe que $d_{i,t-1}$ não se correlaciona com a inovação
+$u_{i,t+1}$, o que vale se o ruído transitório do peso não for serialmente correlacionado ao longo
+do intervalo $t{-}1\to t{+}1$. Robustez futura: efeito-fixo de fundo, instrumento alternativo
+(características exógenas), e a versão a três meses (opacidade).
+
 % ======================================================================
 \section{Agenda: o que falta, passo a passo}
 
@@ -447,12 +493,12 @@ linear; efeitos parciais médios praticamente idênticos (o linear era boa aprox
 mas o linear viola $[0,1]$ em $2{,}51\%$ dos casos enquanto o logit não, o que o torna a forma
 correta e habilita o passo 3.
 
-\paragraph{Passo 3 --- modelo de ajuste parcial via variável instrumental. \fazer} Construir o
-peso desejado $w^*=g(x'\widehat{\theta})$, a distância $d_{i,t}$, e estimar $\lambda$ pela
-\eqref{eq:pa2} com \textbf{variável instrumental} (corrigindo o viés de atenuação). O teste
-central é \textbf{$\lambda$ é diferente de zero?} Se $\lambda\approx0$, confirma-se que o peso é
-quase um passeio aleatório (coerente com a Tabela~\ref{tab:fc}); se $\lambda>0$, há ajuste parcial
-detectável e o modelo passa a ter conteúdo preditivo.
+\paragraph{Passo 3 --- modelo de ajuste parcial via variável instrumental. \feito} Feito nesta
+rodada (Seção~\ref{sec:res1}, script \texttt{R/26}). Resultado: $\widehat{\lambda}_{\text{VI}}=0{,}041$,
+diferente de zero ($t=6{,}6$) mas minúsculo (meia-vida $\approx16$ meses). O viés do MQO foi para
+\emph{cima} (reversão mecânica dominou a atenuação); a VI com $d_{t-1}$ corrige ambos. Conclusão:
+há reversão lenta e real ao alvo estrutural, coerente com o peso ser quase um passeio aleatório no
+curto prazo.
 
 \paragraph{Passo futuro --- ridge na estimação dos fatores. \futuro} Quando o número de
 características crescer ou ao escalar para muitas ações, usar \textbf{regularização ridge} no
@@ -468,10 +514,14 @@ partes para as margens; estender a outras ações e gestoras.
 O projeto tem hoje uma resposta sólida para a \textbf{explicação}: o peso de VALE3 nos fundos do
 Itaú depende, de forma estável, de tamanho, cotistas, tipo de fundo e beta. Para a
 \textbf{previsão}, a inércia do próprio fundo é um teto difícil: o peso é quase um passeio
-aleatório, e nenhum modelo estrutural a supera no curto prazo. A agenda agora torna a modelagem
-mais rigorosa (forma logística, inferência Newey-West --- já feita) e ataca diretamente a
-pergunta dinâmica com o modelo de ajuste parcial estimado por variável instrumental, cujo teste de
-$\lambda\neq0$ dirá se há, de fato, um ajuste gradual e previsível por trás da forte persistência.
+aleatório, e nenhum modelo estrutural a supera no curto prazo. Os três primeiros passos da agenda
+estão feitos: a inferência ficou mais honesta (Newey-West), a forma funcional virou logística
+(respeitando o suporte), e o modelo de ajuste parcial foi estimado por variável instrumental. O
+veredito do passo 3 amarra tudo: a velocidade de ajuste $\lambda=0{,}041$ é estatisticamente
+diferente de zero, mas tão pequena (meia-vida $\approx16$ meses) que, no curto prazo, repetir o
+último peso continua sendo a melhor previsão. Em uma frase: as características definem \emph{para
+onde} o peso tende no longo prazo, mas o fundo caminha até lá tão devagar que, mês a mês, o peso
+parece um passeio aleatório.
 
 % ======================================================================
 \section*{Referências}
