@@ -333,6 +333,45 @@ desvio-padrão são maiores, e o de \emph{cotistas} ($+1{,}09$) supera o de \emp
 ($-0{,}68$) --- não são ``semelhantes''. Isso reforça que dispersão de cotistas é o traço mais
 associado a peso direto maior.
 
+\subsection{Forma logística (resposta fracionária) \feito}
+Reestimamos a mesma cross-section, agora com a ligação logística da \eqref{eq:logit} (em R,
+\texttt{glm} família \texttt{quasibinomial}), mês a mês. A Tabela~\ref{tab:logit} traz os
+coeficientes no resumo Fama-MacBeth com Newey-West.
+
+\begin{table}[h]\centering\small
+\caption{Cross-section logística (resposta fracionária), Fama-MacBeth + Newey-West. Coeficientes
+na escala de \emph{log-odds}; características de escala padronizadas.}
+\label{tab:logit}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Variável & Coef.\ (log-odds) & EP Newey-West & $t$ Newey-West & Meses com sinal $+$ \\
+\midrule
+Intercepto              & $-3{,}380$ & $0{,}150$ & $-22{,}5$ & 0/72 \\
+$\ln$(patrimônio) [d.p.]& $-0{,}339$ & $0{,}043$ & $-7{,}9$  & 0/72 \\
+$\ln$(cotistas) [d.p.]  & $+0{,}469$ & $0{,}035$ & $13{,}3$  & 72/72 \\
+Fundo de cotas          & $-0{,}732$ & $0{,}062$ & $-11{,}7$ & 0/72 \\
+Captação / patrimônio   & $+0{,}078$ & $0{,}183$ & $0{,}43$  & 37/72 \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: \texttt{R/25\_fractional\_logit.R}.}
+\end{table}
+
+\noindent Três pontos resumem o passo:
+\begin{enumerate}[topsep=2pt,itemsep=1pt]
+\item \textbf{Sinais e significância são idênticos ao linear:} patrimônio e FIC negativos,
+cotistas positivo, captação não significativa, todos estáveis nos 72 meses.
+\item \textbf{As magnitudes coincidem no centro.} O coeficiente de \emph{log-odds} não é
+comparável direto ao linear, mas o \textbf{efeito parcial médio} (a derivada média de $g$, em
+pontos de peso) é: dá $-0{,}68$ p.p.\ (patrimônio), $+1{,}06$ p.p.\ (cotistas) e $-1{,}60$ p.p.\
+(FIC), praticamente iguais aos coeficientes lineares ($-0{,}68$, $+1{,}09$, $-1{,}70$). Ou seja,
+\emph{o linear era uma boa aproximação no centro} --- a conclusão econômica não muda.
+\item \textbf{O ganho do logit é respeitar o suporte.} O modelo linear gera previsões
+\emph{fora} de $[0,1]$ em $287$ de $11.413$ casos ($2{,}51\%$) --- pesos negativos, sem sentido;
+o logit, por construção, nunca. O ajuste também melhora de leve (pseudo-$R^2$ $0{,}165$ vs
+$0{,}152$). Isso é exatamente o que o orientador antecipou, e é \textbf{pré-requisito do passo 3},
+em que o peso desejado $w^{*}=g(x'\theta)$ precisa estar em $[0,1]$.
+\end{enumerate}
+
 \subsection{Versão com preço e beta (dados empilhados) \feito}
 Empilhando os 72 meses e acrescentando preço e beta (média do mês), os sinais de fundo se mantêm.
 Preço entra positivo (parte é \emph{mecânica}: se a ação sobe, sua fração cresce sozinha); beta
@@ -402,10 +441,11 @@ diversificação. A posse também é muito persistente, e de novo a ingênua bat
 script \texttt{R/24}). Resultado: a inferência fica mais honesta; conclusões qualitativas
 intactas; magnitudes por desvio-padrão corrigidas.
 
-\paragraph{Passo 2 --- regressão logística (resposta fracionária) do peso. \fazer} Reestimar
-\eqref{eq:cs} com a ligação logística da \eqref{eq:logit} (em R, \texttt{glm} com família
-\texttt{quasibinomial}). Objetivo: respeitar o suporte $[0,1]$ e comparar com a versão linear; em
-geral muda pouco no centro da distribuição, mas evita previsões fora de $[0,1]$.
+\paragraph{Passo 2 --- regressão logística (resposta fracionária) do peso. \feito} Feito nesta
+rodada (Seção~\ref{sec:res1}, script \texttt{R/25}). Confirmado: sinais e significância iguais ao
+linear; efeitos parciais médios praticamente idênticos (o linear era boa aproximação no centro);
+mas o linear viola $[0,1]$ em $2{,}51\%$ dos casos enquanto o logit não, o que o torna a forma
+correta e habilita o passo 3.
 
 \paragraph{Passo 3 --- modelo de ajuste parcial via variável instrumental. \fazer} Construir o
 peso desejado $w^*=g(x'\widehat{\theta})$, a distância $d_{i,t}$, e estimar $\lambda$ pela
