@@ -78,10 +78,11 @@ no nível do fundo, o peso é quase um \textbf{passeio aleatório}. Esse contras
 trabalho.
 
 \paragraph{Para onde vamos.} A agenda combinada com o orientador refina a parte de modelagem em
-quatro frentes: padronização e \textbf{erros-padrão Newey-West} (passo 1, já feito); forma
-funcional \textbf{logística} para o peso (passo 2); o \textbf{modelo de ajuste parcial} com
-estimação por \textbf{variável instrumental} (passo 3); e, mais à frente, \textbf{regularização
-(ridge)} para a estimação dos fatores em alta dimensão (passo futuro).
+quatro frentes: padronização e \textbf{erros-padrão Newey-West} (passo 1); forma funcional
+\textbf{logística} para o peso (passo 2); o \textbf{modelo de ajuste parcial} com estimação por
+\textbf{variável instrumental} (passo 3) --- \emph{os três já implementados e rodados} --- e,
+mais à frente, \textbf{regularização (ridge)} para a estimação dos fatores em alta dimensão (passo
+futuro). A Seção~\ref{sec:logica} explica por que cada uma dessas escolhas é a correta.
 
 % ======================================================================
 \section{Conceitos-chave, em linguagem simples}
@@ -154,6 +155,79 @@ algo é zero. Por isso o ridge é um \textbf{passo futuro}, não descartado.
 \end{conceito}
 
 % ======================================================================
+\section{Por que estas escolhas fazem sentido (a lógica do orientador)}
+\label{sec:logica}
+
+Esta seção reúne, em um só lugar, a \emph{teoria} por trás do projeto e o \emph{porquê} de cada
+decisão metodológica que o orientador introduziu --- e em que ela difere da primeira versão do
+trabalho. Nenhuma das mudanças é um detalhe técnico: cada uma conserta um problema concreto.
+
+\subsection{A teoria econômica de fundo}
+
+\paragraph{Por que modelar o peso como demanda?} Um fundo não escolhe quanto de VALE3 carregar ao
+acaso. Ele responde ao \textbf{mandato} (um fundo de ações precisa ter ações; um fundo de cotas
+acessa ativos por meio de outros fundos), a \textbf{restrições de liquidez e de tamanho} (um fundo
+gigante não concentra numa única ação sem mover o preço contra si) e à \textbf{diversificação}.
+Essas forças ligam o peso às características observáveis do fundo --- e é essa ligação que a
+regressão transversal mede. Em vez de modelar o canal preço $\to$ demanda (como em Koijen-Yogo),
+observamos diretamente a \emph{quantidade} escolhida (o peso) e perguntamos de que perfil de fundo
+ela depende: é um sistema de demanda institucional ``na forma reduzida''.
+
+\paragraph{O que é o fator latente $\theta_t$?} É o vetor de coeficientes da regressão de um mês.
+Economicamente, ele resume \emph{quanto cada característica importa} para a demanda por VALE3
+naquele mês: o sinal e o tamanho com que tamanho, número de cotistas e tipo de fundo ``puxam'' o
+peso. Chamamos de ``latente'' porque não é observado diretamente --- é \emph{inferido} da seção
+transversal. E ele \textbf{varia no tempo} porque as condições que governam a demanda (preço e
+risco da ação, ambiente de mercado, apetite das gestoras) mudam mês a mês; por isso tratamos
+$\theta_t$ como uma série temporal e, no limite, como um estado a ser filtrado (Kalman).
+
+\paragraph{Por que um modelo \emph{dinâmico} de ajuste parcial?} Porque rebalancear custa: há
+custos de transação, de impacto de mercado e de coordenação interna da gestora. Um fundo que esteja
+longe do seu peso ``ideal'' não salta para ele de uma vez --- fecha a distância aos poucos. A
+velocidade $\lambda$ mede o \emph{inverso} dessa fricção: $\lambda$ alto significa ajuste rápido
+(pouca fricção); $\lambda\approx0$ significa que a posição quase ``gruda'' no valor de ontem.
+Estimar $\lambda$ é, no fundo, medir empiricamente o atrito de rebalanceamento das carteiras --- e
+ligar a parte estática (a demanda-alvo da seção transversal) à parte dinâmica (como o fundo caminha
+até ela).
+
+\subsection{As quatro mudanças, e por que cada uma é correta}
+
+A Tabela~\ref{tab:logica} confronta a versão inicial do projeto com a mudança do orientador e a
+justificativa de cada uma.
+
+\begin{table}[h]\centering\footnotesize
+\caption{O que mudou em relação à nossa versão, e por que a mudança é a escolha certa.}
+\label{tab:logica}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}p{2.5cm}p{3.0cm}p{3.2cm}p{4.6cm}@{}}
+\toprule
+Tema & Versão inicial & Mudança do orientador & Por que é a escolha certa \\
+\midrule
+Forma funcional do peso & Regressão linear, $w=x'\theta+\varepsilon$ & Ligação logística,
+$w=g(x'\theta)+\varepsilon$ & O peso é fração em $[0,1]$; o linear prevê valores impossíveis
+(negativos) em $2{,}5\%$ dos casos; o logit respeita o suporte e é exigido pelo passo~3. \\
+Erros-padrão na Fama-MacBeth & Clássico $\mathrm{sd}/\sqrt{T}$ (supõe meses independentes) &
+Newey-West (HAC) & Os coeficientes mensais são autocorrelacionados ($0{,}7$--$0{,}8$); ignorar isso
+subestima a incerteza e infla os $t$. \\
+Estimar a velocidade $\lambda$ & \emph{Ridge} (na anotação manuscrita) & Variável instrumental /
+erros nas variáveis & A distância ao alvo é medida com erro e o teste central é $\lambda\neq0$;
+\emph{ridge} encolhe para zero e sabotaria justamente esse teste --- a VI corrige sem esse viés. \\
+Papel do \emph{ridge} & Seria usado já no $\lambda$ & Reservado ao passo futuro (estimar $\theta$
+em alta dimensão) & Lá os regressores são observados e o objetivo é estabilizar, não testar se algo
+é zero --- uso legítimo da regularização. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent Em todas as quatro, a direção apontada pelo orientador estava certa. Nossos números
+acrescentam a \emph{magnitude} e, em dois pontos, uma \emph{nuance honesta} que detalhamos nos
+resultados: (i) os $t$ depois do Newey-West são $\approx11$--$12{,}5$, não os $\approx19$--$22$ que
+a versão preliminar do texto citava (aqueles eram os clássicos); e (ii) no passo~3 o viés do
+mínimos quadrados foi para \emph{cima} (reversão mecânica), não a atenuação para baixo que se
+antecipava --- mas a variável instrumental corrige os dois casos, então a recomendação continua
+correta.
+
+% ======================================================================
 \section{Os dados \feito}
 
 Duas bases da Comissão de Valores Mobiliários e uma fonte de mercado:
@@ -191,9 +265,15 @@ Beta de VALE3                 & $1{,}04$ & $0{,}30$ & $0{,}97$ & $0{,}68$ & $1{,
 \end{tabular}
 \end{table}
 
-\noindent Patrimônio e cotistas são muito assimétricos (média $\gg$ mediana) $\Rightarrow$ usamos
-o logaritmo. Preço e beta têm correlação de $\approx-0{,}71$ (na alta de 2016--2021 o preço subiu
-e o beta caiu), o que dificulta separar os dois efeitos mais adiante.
+\noindent A própria tabela já orienta as escolhas de modelagem. O \textbf{peso} tem média
+$2{,}87\%$ mas mediana $1{,}22\%$ e máximo $23{,}55\%$: é fortemente assimétrico à direita e
+ancorado perto de zero --- distribuição típica de uma fração, que motiva a forma logística do
+passo~2 (e torna a hipótese de normalidade do resíduo inadequada). \textbf{Patrimônio e cotistas}
+são ainda mais assimétricos (média $\gg$ mediana), por isso entram em \textbf{logaritmo}. A
+\textbf{captação} tem mediana exatamente zero e caudas enormes ($-1{,}5$ a $+1{,}6$ bi), o que, ao
+dividir pelo patrimônio de fundos pequenos, gera valores extremos (daí a winsorização ficar na
+agenda). E \textbf{preço e beta} têm correlação $\approx-0{,}71$ (na alta de 2016--2021 o preço
+subiu e o beta caiu), o que dificultará separar os dois efeitos mais adiante.
 
 % ======================================================================
 \section{A metodologia, com todas as equações}
@@ -254,7 +334,7 @@ causa da \textbf{opacidade}: as carteiras só são divulgadas com $\approx$90 di
 Além de ``quanto'' (margem intensiva), estudamos ``ter ou não'' (margem extensiva) com um painel
 que inclui os zeros e uma regressão logística da probabilidade de o fundo deter VALE3.
 
-\subsection{Extensão dinâmica: o modelo de ajuste parcial \fazer}
+\subsection{Extensão dinâmica: o modelo de ajuste parcial \feito}
 \label{sec:pa}
 O fundo move o peso parcialmente em direção ao desejado, à velocidade $\lambda_n\in(0,1)$:
 \begin{equation}
@@ -268,9 +348,9 @@ w_{i,t+1}-w_{i,t} = \lambda_n\,d_{i,t} + u_{i,t+1}.
 \end{equation}
 A estimativa direta por mínimos quadrados, $\widehat{\lambda}^{\text{MQO}}_n=(d_n'd_n)^{-1}d_n'(\Delta w)$,
 sofre \textbf{viés de atenuação}, porque $d_{i,t}=g(x_{i,t}'\widehat{\theta}_n)-w_{i,t}$ usa
-$\widehat{\theta}_n$ estimado (erro de medida). Por isso $\lambda$ será estimado por
-\textbf{variável instrumental / correção de erros nas variáveis}, e \emph{não} por ridge. O erro
-de previsão correspondente é
+$\widehat{\theta}_n$ estimado (erro de medida). Por isso $\lambda$ é estimado por
+\textbf{variável instrumental / correção de erros nas variáveis}, e \emph{não} por ridge (ver o
+resultado na Seção~\ref{sec:res1}). O erro de previsão correspondente é
 \begin{equation}
 \widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) - \widehat{\lambda}_n\!\left(g(X_t\widehat{\theta}_n)-w_{n,t}\right).
 \label{eq:u}
@@ -410,9 +490,22 @@ A Figura~\ref{fig:theta} mostra os cinco coeficientes; note a reconfiguração c
 \end{figure}
 
 \subsection{Previsão e a matriz de erros \feito}
-Fora da amostra, \textbf{nenhum} modelo estrutural supera a previsão ingênua (Tabela~\ref{tab:fc}).
-O efeito-fixo (média histórica) perde para o último valor $\Rightarrow$ o peso \emph{não} reverte a
-uma média de fundo; é quase um passeio aleatório. A 3 meses a ingênua piora, mas ainda vence.
+Aqui muda a pergunta: não é mais ``o que explica o peso'', e sim ``o que \emph{prevê} o peso do
+próximo mês''. Comparamos quatro previsões fora da amostra (Tabela~\ref{tab:fc}): a ingênua
+($w_{i,t-1}$), o nível médio do fundo (efeito-fixo), o fator previsto por Kalman, e a variação
+$\Delta w$. \textbf{Nenhum modelo estrutural supera a ingênua}: a 1 mês eles erram $54$ a $63\%$
+mais (RMSE $0{,}024$--$0{,}026$ contra $0{,}0156$).
+
+\paragraph{Por que o ingênuo vence (a intuição).} Duas coisas se somam. Primeiro, o \emph{alvo} se
+move pouco de um mês para o outro --- o fator $\theta_t$ é persistente (autocorrelação
+$0{,}7$--$0{,}8$), então o peso desejado de amanhã é quase o de hoje. Segundo, o fundo \emph{caminha
+devagar} em direção ao alvo (é o $\lambda$ pequeno do passo~3). Com alvo quase parado e caminhada
+lenta, a melhor aposta para o mês que vem é simplesmente o valor de agora. Um detalhe revelador:
+o \textbf{efeito-fixo (média histórica do fundo) perde para o último valor}; se o peso revertesse a
+uma média, a média ganharia --- o que se vê é o oposto, a marca de um processo próximo do passeio
+aleatório. A 3 meses (a opacidade de divulgação) a ingênua piora, mas ainda vence, e a distância
+para os modelos estruturais encolhe --- coerente com o ajuste parcial acumular um pouco mais de
+reversão em horizontes mais longos.
 
 \begin{table}[h]\centering\small
 \caption{Erro de previsão fora da amostra (raiz do erro quadrático médio), por horizonte.}
