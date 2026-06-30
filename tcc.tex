@@ -80,9 +80,10 @@ opostos aos da decisão de quanto carregar, um padrão compatível com diversifi
 previsão, contudo, nenhum dos modelos estruturais testados, incluindo efeito fixo de fundo
 e filtro de Kalman, supera a previsão ingênua de repetir o último peso observado, mesmo sob
 a defasagem trimestral de divulgação das carteiras. O peso comporta-se, no nível do fundo,
-de forma muito persistente, próxima de um passeio aleatório. O trabalho encerra com a
-especificação do passo seguinte, um modelo de ajuste parcial da carteira a ser estimado na
-continuação.
+de forma muito persistente, próxima de um passeio aleatório. Um modelo de ajuste parcial da
+carteira, estimado por variável instrumental, mostra que a velocidade de ajuste é positiva,
+porém pequena, com meia-vida em torno de dezesseis meses: há uma reversão lenta ao peso-alvo
+definido pelas características, que convive com a quase imprevisibilidade do peso no curto prazo.
 
 \smallskip
 \noindent Palavras-chave: sistema de demanda; fundos de investimento; pesos de carteira;
@@ -105,9 +106,11 @@ stock carries signs opposite to the decision of how much to hold, a pattern cons
 diversification. For forecasting, however, none of the structural models tested, including a
 fund fixed effect and a Kalman filter, beats the naïve forecast of repeating the last
 observed weight, even under the quarterly disclosure lag of portfolios. The weight behaves,
-at the fund level, very persistently, close to a random walk. The paper closes with the
-specification of the next step, a partial portfolio adjustment model to be estimated in the
-sequel.
+at the fund level, very persistently, close to a random walk. A partial portfolio adjustment
+model, estimated by instrumental variables, shows that the adjustment speed is positive but
+small, with a half-life of about sixteen months: there is a slow reversion to the
+characteristics-implied target weight, consistent with the near-unpredictability of the weight
+at short horizons.
 
 \smallskip
 \noindent Keywords: demand system; mutual funds; portfolio weights; dynamic factor;
@@ -182,8 +185,9 @@ poder de explicação e um fraco poder de previsão de curto prazo, é o que se 
 achado principal desta entrega.
 
 O restante do texto está organizado da seguinte forma. A Seção 2 descreve os dados e seu
-tratamento. A Seção 3 detalha a metodologia, incluindo a especificação do modelo de ajuste
-parcial que será estimado na continuação do trabalho. A Seção 4 apresenta e interpreta os
+tratamento. A Seção 3 detalha a metodologia, incluindo a forma funcional
+logística do peso, a correção dos erros-padrão para autocorrelação e o modelo de ajuste parcial
+estimado por variável instrumental. A Seção 4 apresenta e interpreta os
 resultados. A Seção 5 conclui e aponta a agenda futura.
 
 %==================== 2. DADOS ====================
@@ -261,15 +265,19 @@ recuou.
 Sejam os fundos de uma gestora, indexados por $i$, e uma ação, indexada por $n$. Para cada
 fundo $i$ e cada mês $t$, a variável de interesse é o peso $w_{i,t}$ da ação na carteira,
 limitado ao intervalo entre zero e um. A leitura adotada é a de que o peso observado é um
-peso desejado mais um componente aleatório,
+peso desejado mais um componente aleatório. Como o peso é uma fração limitada entre zero e um,
+o peso desejado é escrito por meio de uma função de ligação logística, que mantém os valores
+ajustados dentro desse intervalo,
 \begin{equation}
-w_{i,t} = w^{*}_{i,t} + \varepsilon_{i,t}, \qquad w^{*}_{i,t} = x_{i,t}'\,\theta_{n,t},
+w_{i,t} = g\!\left(x_{i,t}'\,\theta_{n,t}\right) + \varepsilon_{i,t}, \qquad g(z)=\frac{1}{1+e^{-z}},
 \label{eq:target}
 \end{equation}
 em que $x_{i,t}$ é o vetor de características do fundo e $\theta_{n,t}$ é um vetor de fatores
 latentes associados à ação, que mede o quanto cada característica importa para a posição
-naquele papel. As características desempenham, nessa leitura, o papel de descrever o perfil de
-cada fundo, e os fatores latentes resumem como a ação é demandada em função desse perfil.
+naquele papel. As características descrevem o perfil de cada fundo, e os fatores latentes
+resumem como a ação é demandada em função desse perfil. A versão linear, que aproxima a
+logística em torno de pesos pequenos, é usada na etapa transversal a seguir; a forma logística
+plena é empregada na decisão de ter ou não a ação e no modelo de ajuste parcial.
 
 \subsection{Primeiro passo: a regressão transversal e o fator latente}
 
@@ -279,8 +287,8 @@ escreve-se $w_t = X_t\,\theta_{n,t} + \varepsilon_t$ e estima-se por mínimos qu
 \widehat{\theta}_{n,t} = (X_t'X_t)^{-1} X_t'\,w_t,
 \label{eq:ols}
 \end{equation}
-com as características padronizadas, isto é, com média zero e variância um, para que sejam
-comparáveis entre si. Na prática, a regressão estimada em cada mês é
+com as características de escala, patrimônio e número de cotistas, em logaritmo. Na prática, a
+regressão estimada em cada mês é
 \begin{equation}
 w_{i,t} = \alpha_t + \beta^{1}_t \ln(\text{PL}_{i,t}) + \beta^{2}_t \ln(\text{Cot}_{i,t})
         + \beta^{3}_t \text{FIC}_i + \beta^{4}_t \Big(\tfrac{\text{Fluxo}}{\text{PL}}\Big)_{i,t}
@@ -291,7 +299,10 @@ em que PL é o patrimônio líquido, Cot é o número de cotistas, FIC indica se
 fundo de investimento em cotas e Fluxo é a captação líquida do mês. Estimada nos 72 meses,
 essa regressão gera 72 vetores de coeficientes, resumidos pela média no tempo e por um erro
 padrão calculado a partir da variação dos coeficientes entre os meses, no espírito de Fama e
-MacBeth (1973). O preço e o beta da ação são constantes dentro de um mesmo mês e, por isso,
+MacBeth (1973). Como os coeficientes mensais são fortemente autocorrelacionados, o erro-padrão
+clássico de Fama-MacBeth, que supõe independência entre os meses, subestima a incerteza; por
+isso os erros-padrão reportados na Seção 4 são corrigidos para autocorrelação pelo estimador de
+Newey e West (1987). O preço e o beta da ação são constantes dentro de um mesmo mês e, por isso,
 não entram na regressão mês a mês; eles são incluídos em uma versão com todos os meses
 empilhados, na qual passam a ser identificados pela variação entre meses. Como o peso é
 limitado entre zero e um, a forma mais adequada seria não linear, com uma função logística, o
@@ -333,7 +344,7 @@ explicam quanto dela carregar.
 
 \subsection{Extensão dinâmica: o modelo de ajuste parcial}
 
-A continuação natural do trabalho, a ser estimada na sequência, parte da mesma especificação
+O passo dinâmico do trabalho parte da mesma especificação
 de demanda e a torna mais completa em dois pontos. Primeiro, escreve-se o peso desejado como
 uma função logística do produto entre as características do fundo e os fatores latentes da
 ação, $w_{i,n} = g(x_i'\,\theta_n) + \varepsilon_{i,n}$, mantendo a estimação do vetor de
@@ -346,39 +357,39 @@ parcialmente em sua direção, a uma velocidade de ajuste $\lambda_n$ situada en
 w_{i,t+1} = (1-\lambda_n)\,w_{i,t} + \lambda_n\,w^{*}_{i,t} + u_{i,t+1}.
 \label{eq:pa1}
 \end{equation}
-Reescrevendo essa relação em termos da variação do peso, e definindo $\varepsilon_{i,t}=
-w^{*}_{i,t}-w_{i,t}$ como a distância entre o peso desejado e o peso atual, obtém-se uma forma
-simples de estimar,
+Reescrevendo essa relação em termos da variação do peso, e definindo a distância ao alvo
+$d_{i,t}\equiv w^{*}_{i,t}-w_{i,t}$, obtém-se uma forma simples de estimar,
 \begin{equation}
-w_{i,t+1}-w_{i,t} = \lambda_n\,\varepsilon_{i,t} + u_{i,t+1}.
+w_{i,t+1}-w_{i,t} = \lambda_n\,d_{i,t} + u_{i,t+1}.
 \label{eq:pa2}
 \end{equation}
 Em palavras, a variação do peso de um mês para o outro deve ser proporcional à distância que
 faltava para o peso desejado no mês anterior, e a constante de proporcionalidade $\lambda_n$
-mede a velocidade com que o fundo persegue esse alvo. A velocidade é estimada regredindo a
-variação observada sobre a distância estimada,
+mede a velocidade com que o fundo persegue esse alvo. A estimativa direta por mínimos quadrados,
 \begin{equation}
-\widehat{\lambda}_n = \big(\widehat{\varepsilon}_{n,t}'\,\widehat{\varepsilon}_{n,t}\big)^{-1}
-\widehat{\varepsilon}_{n,t}'\,(w_{n,t+1}-w_{n,t}).
+\widehat{\lambda}^{\,\text{MQO}}_n = \big(d_{n,t}'\,d_{n,t}\big)^{-1} d_{n,t}'\,(w_{n,t+1}-w_{n,t}),
 \label{eq:lambda}
 \end{equation}
-Como a distância $\widehat{\varepsilon}$ é, ela própria, uma estimativa e, portanto, contém
-ruído, essa etapa será conduzida por uma regressão regularizada, que penaliza coeficientes
-grandes e estabiliza a estimativa. Com a velocidade estimada, o erro de previsão do peso
-torna-se
+é, porém, enviesada por dois motivos. Primeiro, a distância
+$d_{i,t}=g(x_{i,t}'\widehat{\theta}_t)-w_{i,t}$ é construída a partir de coeficientes estimados e,
+portanto, contém erro de medida; sob erro nas variáveis, o mínimos quadrados é atenuado em
+direção a zero. Segundo, o peso $w_{i,t}$ aparece tanto na distância quanto na variação
+$w_{i,t+1}-w_{i,t}$, o que cria uma reversão à média mecânica. Por isso a velocidade é estimada
+por variável instrumental, usando a distância defasada $d_{i,t-1}$ como instrumento: ela é
+fortemente correlacionada com a distância corrente, mas não compartilha o ruído do peso do mês
+corrente nem o erro de estimação dos fatores daquele mês, de modo que corrige os dois vieses de
+uma vez. Uma regularização que encolhesse os coeficientes em direção a zero seria inadequada
+aqui, pois agravaria a atenuação justamente contra a hipótese que se quer testar; esse tipo de
+regularização fica reservado a um passo futuro, a estimação dos fatores em dimensão alta. Com a
+velocidade estimada, o erro de previsão do peso é
 \begin{equation}
-\widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) - \widehat{\lambda}_n\big(X_t\widehat{\theta}_n - w_{n,t}\big),
+\widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) - \widehat{\lambda}_n\big(g(X_t\widehat{\theta}_t) - w_{n,t}\big),
 \label{eq:u}
 \end{equation}
-e a coleção desses erros ao longo do tempo é exatamente o conjunto de erros de previsão a ser
-caracterizado. Há uma ligação direta com os resultados desta entrega: se a velocidade de
-ajuste for próxima de zero, o modelo reduz-se à previsão ingênua, em que o peso de amanhã é
-quase igual ao de hoje, o que é coerente com a forte persistência documentada adiante. O teste
-central passa a ser, portanto, verificar se essa velocidade é estatisticamente diferente de
-zero. A estimação seria feita de forma recursiva, usando os primeiros meses para estimar os
-parâmetros e gerando, a partir daí, a série de erros de previsão; a regra de decisão
-incorporaria a defasagem de divulgação, comparando os erros de previsão de três meses e
-admitindo uma decisão de carteira somente após esse intervalo.
+e a coleção desses erros ao longo do tempo é o conjunto de erros de previsão a ser caracterizado.
+O teste central é verificar se a velocidade de ajuste é estatisticamente diferente de zero: se
+for próxima de zero, o modelo reduz-se à previsão ingênua, em que o peso de amanhã é quase igual
+ao de hoje.
 
 %==================== 4. RESULTADOS ====================
 \section{Resultados}
@@ -398,22 +409,32 @@ ao longo do tempo, e dá sentido a tratar os coeficientes como um fator que evol
 suave.
 
 \begin{table}[h]\centering\small
-\caption{Regressão do peso mês a mês, resumo no estilo Fama--MacBeth (72 meses).}
+\caption{Regressão do peso mês a mês, resumo no estilo Fama--MacBeth (72 meses), com erros-padrão
+corrigidos para autocorrelação.}
 \label{tab:fm}
 \begin{tabular}{@{}lrrrc@{}}
 \toprule
-Variável & Coeficiente médio & Erro padrão & Estatística $t$ & Significância \\
+Variável & Coeficiente médio & Erro padrão (Newey-West) & Estatística $t$ & Significância \\
 \midrule
-Intercepto              & $0{,}08939$  & $0{,}00413$ & $21{,}6$  & *** \\
-$\ln$(patrimônio)       & $-0{,}00376$ & $0{,}00019$ & $-19{,}3$ & *** \\
-$\ln$(cotistas)         & $0{,}00387$  & $0{,}00020$ & $19{,}8$  & *** \\
-Fundo de cotas          & $-0{,}01697$ & $0{,}00089$ & $-19{,}2$ & *** \\
-Captação / patrimônio   & $-0{,}00044$ & $0{,}00309$ & $-0{,}14$ & não signif. \\
+Intercepto              & $0{,}08939$  & $0{,}00718$ & $12{,}5$  & *** \\
+$\ln$(patrimônio)       & $-0{,}00376$ & $0{,}00034$ & $-11{,}2$ & *** \\
+$\ln$(cotistas)         & $0{,}00387$  & $0{,}00035$ & $10{,}9$  & *** \\
+Fundo de cotas          & $-0{,}01697$ & $0{,}00151$ & $-11{,}3$ & *** \\
+Captação / patrimônio   & $-0{,}00044$ & $0{,}00412$ & $-0{,}11$ & não signif. \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize O ajuste médio por mês, medido pelo coeficiente de determinação, é de
-$0{,}152$. Três asteriscos indicam significância a um por mil. Fonte: elaboração própria.}
+$0{,}152$. Os erros-padrão são corrigidos para autocorrelação pelo método de Newey-West; o
+cálculo clássico, que supõe meses independentes, daria erros cerca de uma vez e três quartos a
+uma vez e quatro quintos menores, e estatísticas $t$ correspondentemente maiores. Três asteriscos
+indicam significância a um por mil. Fonte: elaboração própria.}
 \end{table}
+
+Para dar magnitude aos efeitos, convém lê-los por desvio-padrão das características. Um
+desvio-padrão a mais no logaritmo do patrimônio reduz o peso em cerca de sete décimos de ponto
+percentual; um desvio-padrão a mais no logaritmo do número de cotistas eleva o peso em cerca de
+um ponto percentual; e ser fundo de cotas subtrai cerca de um ponto e sete décimos do peso, o
+maior efeito entre as características de fundo.
 
 Quando todos os meses são empilhados e se acrescentam o preço e o beta da ação, obtém-se a
 Tabela~\ref{tab:pool}. Os sinais das características de fundo se mantêm. O preço entra com
@@ -444,6 +465,18 @@ Beta de VALE3           & $-0{,}02141$ & $0{,}00142$ & $-15{,}1$  & *** \\
 \caption*{\footnotesize O ajuste, medido pelo coeficiente de determinação, é de $0{,}166$.
 Fonte: elaboração própria.}
 \end{table}
+
+\subsection{Forma funcional logística}
+
+A regressão transversal foi também reestimada com a ligação logística da equação~\eqref{eq:target},
+um modelo de resposta fracionária apropriado a uma variável limitada (Papke e Wooldridge, 1996).
+Os resultados confirmam a robustez da leitura anterior: os sinais e a significância das
+características são idênticos aos da versão linear, e os efeitos no centro da distribuição
+praticamente coincidem. A diferença prática aparece nos extremos. A regressão linear gera pesos
+ajustados fora do intervalo entre zero e um em cerca de dois e meio por cento das observações,
+valores sem sentido para uma participação, ao passo que a logística os respeita por construção.
+Por isso a forma logística é adotada como a especificação correta do peso desejado, e é ela que
+alimenta o modelo de ajuste parcial.
 
 \subsection{Dinâmica do fator}
 
@@ -524,6 +557,63 @@ Número de cotistas & menos provável (efeito fraco) & peso maior \\
 \caption*{\footnotesize Fonte: elaboração própria.}
 \end{table}
 
+\subsection{Ajuste parcial: a velocidade de ajuste}
+
+Construído o peso desejado pela regressão logística e a distância ao alvo, estima-se a
+equação~\eqref{eq:pa2} por mínimos quadrados e por variável instrumental, com a distância
+defasada como instrumento e erros-padrão agrupados por fundo. O instrumento é forte: na regressão
+de primeiro estágio, a distância defasada explica a distância corrente com coeficiente próximo de
+nove décimos. A Tabela~\ref{tab:lambda} traz as duas estimativas.
+
+\begin{table}[h]\centering\small
+\caption{Velocidade de ajuste na equação da variação do peso. Erro-padrão agrupado por fundo;
+10.570 observações de fundo-mês.}
+\label{tab:lambda}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Estimador & $\widehat{\lambda}$ & Erro padrão & Estatística $t$ \\
+\midrule
+Mínimos quadrados                          & $0{,}0976$ & $0{,}0096$ & $10{,}2$ \\
+Variável instrumental (distância defasada) & $0{,}0413$ & $0{,}0063$ & $6{,}6$  \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria.}
+\end{table}
+
+Três pontos se destacam. Primeiro, o mínimos quadrados produz uma estimativa maior do que a
+variável instrumental, e não menor: o viés dominante foi para cima, pela reversão mecânica, e não
+a atenuação para baixo; a variável instrumental corrige os dois efeitos de uma vez. Segundo, a
+velocidade de ajuste é estatisticamente diferente de zero, mas pequena: o fundo fecha cerca de
+quatro por cento da distância ao alvo a cada mês, o que corresponde a uma meia-vida em torno de
+dezesseis meses. Terceiro, esse resultado reconcilia os achados anteriores. Como a velocidade é
+próxima de zero, o peso quase não se move de um mês para o outro, e a previsão ingênua vence; mas,
+por ser positiva, ela mostra que existe uma reversão real, ainda que lenta, ao alvo definido pelas
+características. O fator latente descreve, portanto, a âncora de longo prazo do peso, não o seu
+movimento de curto prazo.
+
+A conclusão é robusta a variações da especificação, como mostra a Tabela~\ref{tab:rob}. Com efeito
+fixo de fundo, com um instrumento alternativo e no horizonte de três meses, a velocidade permanece
+positiva e significativa. A magnitude varia --- o efeito fixo de fundo, que usa apenas a variação
+dentro de cada fundo, indica a reversão mais rápida ---, mas em todas as versões o ajuste é
+incompleto dentro de um trimestre, o que sustenta a leitura de que, no curto prazo, o peso é quase
+um passeio aleatório.
+
+\begin{table}[h]\centering\small
+\caption{Robustez da velocidade de ajuste. Variável instrumental, erro-padrão agrupado por fundo.}
+\label{tab:rob}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Especificação & $\widehat{\lambda}$ & Erro padrão & Estatística $t$ & Meia-vida \\
+\midrule
+Base (instrumento: distância defasada)      & $0{,}041$ & $0{,}006$ & $6{,}6$ & cerca de 16 meses \\
+Com efeito fixo de fundo                     & $0{,}185$ & $0{,}019$ & $9{,}5$ & cerca de 3 meses \\
+Instrumento alternativo (segunda defasagem)  & $0{,}021$ & $0{,}005$ & $4{,}3$ & cerca de 33 meses \\
+Horizonte de três meses                      & $0{,}086$ & $0{,}011$ & $7{,}5$ & (acumulada) \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria.}
+\end{table}
+
 %==================== 5. CONCLUSÃO ====================
 \section{Conclusão}
 
@@ -538,7 +628,10 @@ período, e a decisão de ter a ação carrega sinais opostos aos da decisão de
 um padrão compatível com diversificação. Para previsão, contudo, nenhum dos modelos
 estruturais testados supera a previsão ingênua de repetir o último peso, mesmo sob a
 defasagem trimestral de divulgação das carteiras, de modo que o peso se comporta, no nível do
-fundo, de forma muito persistente, próxima de um passeio aleatório.
+fundo, de forma muito persistente, próxima de um passeio aleatório. Um modelo de ajuste parcial
+estimado por variável instrumental matiza esse quadro: a velocidade de ajuste é positiva e
+significativa, mas pequena, com meia-vida em torno de dezesseis meses, o que indica uma reversão
+lenta ao alvo estrutural por trás da forte persistência de curto prazo.
 
 A interpretação que se extrai é que o modelo de fator é, antes de tudo, uma ferramenta de
 compreensão, capaz de revelar quais características importam para as posições, e não um modelo
@@ -549,17 +642,15 @@ variável de captação sobre patrimônio apresenta caudas extremas em fundos de
 muito pequeno, ainda não tratadas. E o efeito mecânico do preço sobre o peso, separado apenas
 de forma parcial do efeito de decisão ativa do gestor, merece tratamento mais cuidadoso.
 
-As limitações apontam diretamente para a agenda futura, centrada no modelo de ajuste parcial
-da carteira especificado na Seção 3. O passo seguinte é estimar a velocidade de ajuste pela
-regressão regularizada da variação do peso sobre a distância ao peso desejado, verificar se
-essa velocidade é estatisticamente diferente de zero e caracterizar a série de erros de
-previsão sob a defasagem de divulgação. De forma complementar, pretende-se estender a análise
-a outras ações e gestoras, aproveitando que o código construído é facilmente adaptável; tratar
-as caudas extremas da variável de captação; decompor a parte do peso que muda apenas em razão
-da variação do preço daquela que reflete decisão ativa; e modelar de forma mais formal a
-margem extensiva por meio de um modelo em duas partes. Todo o código, os dados e o registro
-das decisões metodológicas estão organizados no repositório do projeto, de modo a tornar os
-resultados reprodutíveis.
+O modelo de ajuste parcial, estimado nesta entrega, já indica uma reversão lenta e significativa
+ao alvo; a agenda futura concentra-se em refiná-lo e generalizá-lo. Pretende-se estender a
+análise a outras ações e gestoras, aproveitando que o código construído é facilmente adaptável;
+tratar as caudas extremas da variável de captação; decompor a parte do peso que muda apenas em
+razão da variação do preço daquela que reflete decisão ativa; modelar de forma mais formal a
+margem extensiva por meio de um modelo em duas partes; e, ao escalar a estimação dos fatores
+para muitas ações, recorrer à regularização, apropriada nesse passo de dimensão alta. Todo o
+código, os dados e o registro das decisões metodológicas estão organizados no repositório do
+projeto, de modo a tornar os resultados reprodutíveis.
 
 %==================== REFERÊNCIAS ====================
 \newpage
@@ -581,6 +672,11 @@ nonorthogonal problems. \emph{Technometrics}, 12(1):55--67, 1970.
 \emph{Journal of Political Economy}, 127(4):1475--1515, 2019.
 \item Lou, Dong. A flow-based explanation for return predictability. \emph{Review of
 Financial Studies}, 25(12):3457--3489, 2012.
+\item Newey, Whitney K. and Kenneth D. West. A simple, positive semi-definite, heteroskedasticity
+and autocorrelation consistent covariance matrix. \emph{Econometrica}, 55(3):703--708, 1987.
+\item Papke, Leslie E. and Jeffrey M. Wooldridge. Econometric methods for fractional response
+variables with an application to 401(k) plan participation rates. \emph{Journal of Applied
+Econometrics}, 11(6):619--632, 1996.
 \end{description}
 
 \end{document}
