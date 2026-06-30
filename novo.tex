@@ -477,8 +477,45 @@ ao alvo estrutural definido pelas características. O modelo de fator não é va
 \end{enumerate}
 \emph{Hipótese de identificação:} a VI supõe que $d_{i,t-1}$ não se correlaciona com a inovação
 $u_{i,t+1}$, o que vale se o ruído transitório do peso não for serialmente correlacionado ao longo
-do intervalo $t{-}1\to t{+}1$. Robustez futura: efeito-fixo de fundo, instrumento alternativo
-(características exógenas), e a versão a três meses (opacidade).
+do intervalo $t{-}1\to t{+}1$. A robustez é examinada na Seção~\ref{sec:rob}.
+
+\subsection{Robustez do ajuste parcial \feito}
+\label{sec:rob}
+Reestimamos $\lambda$ em quatro especificações (Tabela~\ref{tab:rob}): a baseline; com
+\textbf{efeito-fixo de fundo} (identificação só pela variação \emph{dentro} de cada fundo); com um
+\textbf{instrumento alternativo}, a segunda defasagem $d_{i,t-2}$; e no \textbf{horizonte de três
+meses} (a opacidade de divulgação).
+
+\begin{table}[h]\centering\small
+\caption{Robustez da velocidade de ajuste $\lambda$ (VI, erro-padrão agrupado por fundo).}
+\label{tab:rob}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Especificação & $\widehat{\lambda}$ & Erro padrão & $t$ & Meia-vida \\
+\midrule
+Baseline ($h{=}1$, instrumento $d_{t-1}$) & $0{,}041$ & $0{,}006$ & $6{,}6$ & $\approx16$ meses \\
+$+$ Efeito-fixo de fundo                  & $0{,}185$ & $0{,}019$ & $9{,}5$ & $\approx3{,}4$ meses \\
+Instrumento alternativo $d_{t-2}$         & $0{,}021$ & $0{,}005$ & $4{,}3$ & $\approx33$ meses \\
+Horizonte 3 meses ($w_{t+3}-w_t$)         & $0{,}086$ & $0{,}011$ & $7{,}5$ & (acumulado) \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: \texttt{R/27\_pa\_robustness.R}.}
+\end{table}
+
+\noindent O que é robusto e o que é sensível:
+\begin{enumerate}[topsep=2pt,itemsep=1pt]
+\item \textbf{O sinal e a significância são robustos.} $\lambda>0$ com $t$ entre $4{,}3$ e $9{,}5$
+($p$ minúsculo) em \emph{todas} as especificações: a existência de uma reversão ao alvo estrutural
+não depende das escolhas de estimação.
+\item \textbf{A magnitude é sensível.} $\lambda$ vai de $0{,}02$ a $0{,}19$ por mês (meia-vida de
+$\approx3$ a $\approx33$ meses). O efeito-fixo de fundo dá o maior $\lambda$: \emph{dentro} de um
+mesmo fundo, os desvios da própria trajetória revertem mais rápido ($\approx3{,}4$ meses); a versão
+agregada e o instrumento $d_{t-2}$ apontam reversão mais lenta. A 3 meses, $\lambda=0{,}086$ é
+coerente com a acumulação de um ajuste mensal pequeno.
+\item \textbf{Em todas, o ajuste é incompleto dentro de um trimestre.} Mesmo no caso mais rápido
+(efeito-fixo), boa parte da distância ao alvo ainda persiste a três meses --- o que continua
+coerente com a previsão ingênua vencer no curto prazo (Tabela~\ref{tab:fc}).
+\end{enumerate}
 
 % ======================================================================
 \section{Agenda: o que falta, passo a passo}
@@ -499,6 +536,11 @@ diferente de zero ($t=6{,}6$) mas minúsculo (meia-vida $\approx16$ meses). O vi
 \emph{cima} (reversão mecânica dominou a atenuação); a VI com $d_{t-1}$ corrige ambos. Conclusão:
 há reversão lenta e real ao alvo estrutural, coerente com o peso ser quase um passeio aleatório no
 curto prazo.
+
+\paragraph{Robustez do passo 3. \feito} Verificada (Seção~\ref{sec:rob}, script \texttt{R/27}):
+$\lambda>0$ e significativo com efeito-fixo de fundo, com instrumento alternativo $d_{t-2}$ e no
+horizonte de três meses. O sinal é robusto; a magnitude varia ($\lambda$ de $0{,}02$ a $0{,}19$ por
+mês), mas o ajuste é sempre incompleto dentro de um trimestre.
 
 \paragraph{Passo futuro --- ridge na estimação dos fatores. \futuro} Quando o número de
 características crescer ou ao escalar para muitas ações, usar \textbf{regularização ridge} no
