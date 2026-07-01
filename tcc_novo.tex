@@ -478,27 +478,26 @@ dá sentido a tratar os coeficientes como um fator que evolui de forma suave.
 \toprule
 Variável & Coeficiente médio & Erro padrão & Estatística $t$ & Significância \\
 \midrule
-Intercepto              & $0{,}08939$  & $0{,}00718$ & $12{,}5$  & *** \\
-$\ln$(patrimônio)       & $-0{,}00376$ & $0{,}00034$ & $-11{,}2$ & *** \\
-$\ln$(cotistas)         & $0{,}00387$  & $0{,}00035$ & $10{,}9$  & *** \\
-Fundo de cotas          & $-0{,}01697$ & $0{,}00151$ & $-11{,}3$ & *** \\
-Captação / patrimônio   & $-0{,}00044$ & $0{,}00412$ & $-0{,}11$ & não signif. \\
+Intercepto                    & $0{,}03956$ & $0{,}00377$ & $10{,}5$  & *** \\
+$\ln$(patrimônio) por d.p.    & $-0{,}00681$ & $0{,}00061$ & $-11{,}2$ & *** \\
+$\ln$(cotistas) por d.p.      & $0{,}01087$  & $0{,}00099$ & $10{,}9$  & *** \\
+Fundo de cotas                & $-0{,}01697$ & $0{,}00151$ & $-11{,}3$ & *** \\
+Captação / patrimônio         & $-0{,}00044$ & $0{,}00412$ & $-0{,}1$  & não signif. \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize O ajuste médio por mês, medido pelo coeficiente de determinação, é de
-$0{,}152$. Os erros padrão estão corrigidos para autocorrelação pelo método de Newey-West
-(defasagem $L=3$), conforme a Seção~\ref{sec:nw}; o cálculo clássico daria erros cerca de $1{,}7$
-a $1{,}8$ vez menores. Três asteriscos indicam significância a um por mil. Fonte: elaboração
-própria (script \texttt{R/24}).}
+$0{,}152$. As características de escala entram padronizadas, de modo que os coeficientes de
+patrimônio e cotistas são o efeito de um desvio padrão, e o intercepto (centrado) é o nível médio
+do peso; o fundo de cotas é uma variável binária. Os erros padrão estão corrigidos para
+autocorrelação pelo método de Newey-West (defasagem $L=3$), conforme a Seção~\ref{sec:nw}; o cálculo
+clássico daria erros cerca de $1{,}7$ a $1{,}8$ vez menores. Três asteriscos indicam significância a
+um por mil. Fonte: elaboração própria (script \texttt{R/24}).}
 \end{table}
 
-Convém quantificar a magnitude dos efeitos, e não apenas seus sinais, lendo-os por desvio padrão
-das características de escala.\footnote{As magnitudes por desvio padrão vêm de reestimar a regressão
-com o logaritmo do patrimônio e o logaritmo do número de cotistas padronizados; os coeficientes da
-Tabela~\ref{tab:fmtab} permanecem na escala original de log. Execução no script \texttt{R/24}.}
-Com as características de escala centradas, o intercepto passa a cerca de $0{,}040$, isto é, um peso
-de referência em torno de 4 por cento para um fundo de tamanho médio que não seja de cotas ---
-recuperando, como observado na Seção~\ref{sec:cs}, o nível médio do peso. Um aumento de um desvio
+Como as características de escala entram padronizadas, os coeficientes da Tabela~\ref{tab:fmtab} já
+são o efeito de um desvio padrão, e o intercepto, de cerca de $0{,}040$, é o nível médio do peso ---
+em torno de 4 por cento para um fundo de tamanho médio que não seja de cotas, como observado na
+Seção~\ref{sec:cs}. Um aumento de um desvio
 padrão no logaritmo do patrimônio reduz o peso em cerca de $0{,}68$ ponto percentual, e um aumento
 de um desvio padrão no logaritmo do número de cotistas eleva o peso em cerca de $1{,}09$ ponto
 percentual: o efeito do número de cotistas é o maior entre as duas características de escala, e os
@@ -515,7 +514,7 @@ Os erros padrão da Tabela~\ref{tab:fmtab} já são os corrigidos para autocorre
 coeficientes mensais exibem autocorrelação de primeira ordem entre 0,7 e 0,8, a correção amplia os
 erros padrão e, portanto, reduz as estatísticas $t$ em relação ao cálculo clássico de
 Fama-MacBeth; ainda assim, as características de fundo permanecem fortemente significativas, com
-estatísticas em torno de 11 a 12,5 em valor absoluto após a correção (contra 19 a 22 no cálculo
+estatísticas em torno de 11 em valor absoluto após a correção (contra cerca de 19 a 20 no cálculo
 clássico), enquanto a captação permanece não significativa. A conclusão qualitativa é robusta à correção, mas a magnitude das estatísticas não
 deve ser lida como a do cálculo ingênuo, que as superestimaria.
 
@@ -533,17 +532,18 @@ arriscada em relação ao mercado, os fundos reduzem o peso.
 \toprule
 Variável & Estimativa & Erro padrão & Estatística $t$ & Significância \\
 \midrule
-Intercepto              & $0{,}09937$  & $0{,}00406$ & $24{,}5$   & *** \\
-$\ln$(patrimônio)       & $-0{,}00354$ & $0{,}00019$ & $-19{,}0$  & *** \\
-$\ln$(cotistas)         & $0{,}00388$  & $0{,}00013$ & $30{,}9$   & *** \\
-Fundo de cotas          & $-0{,}01682$ & $0{,}00079$ & $-21{,}3$  & *** \\
-Captação / patrimônio   & $-0{,}00030$ & $0{,}00034$ & $-0{,}91$  & não signif. \\
-Preço de VALE3          & $0{,}000182$ & $0{,}000016$& $11{,}5$   & *** \\
-Beta de VALE3           & $-0{,}02141$ & $0{,}00142$ & $-15{,}1$  & *** \\
+Intercepto                 & $0{,}04146$  & $0{,}00067$ & $61{,}9$  & *** \\
+$\ln$(patrimônio) por d.p. & $-0{,}00640$ & $0{,}00034$ & $-19{,}0$ & *** \\
+$\ln$(cotistas) por d.p.   & $0{,}01090$  & $0{,}00035$ & $30{,}9$  & *** \\
+Fundo de cotas             & $-0{,}01682$ & $0{,}00079$ & $-21{,}3$ & *** \\
+Captação / patrimônio      & $-0{,}00030$ & $0{,}00034$ & $-0{,}9$  & não signif. \\
+Preço de VALE3 por d.p.    & $0{,}00496$  & $0{,}00043$ & $11{,}5$  & *** \\
+Beta de VALE3 por d.p.     & $-0{,}00649$ & $0{,}00043$ & $-15{,}1$ & *** \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize O ajuste, medido pelo coeficiente de determinação, é de $0{,}166$.
-Fonte: elaboração própria.}
+\caption*{\footnotesize O ajuste, medido pelo coeficiente de determinação, é de $0{,}166$. As
+características contínuas entram padronizadas por desvio padrão, comparáveis às da
+Tabela~\ref{tab:fmtab}. Fonte: elaboração própria.}
 \end{table}
 
 A interpretação do beta exige, contudo, uma ressalva que decorre dos próprios dados. Como
@@ -555,8 +555,8 @@ ligado ao preço, e não apenas aversão a risco. Em um exercício preliminar re
 claramente negativo, o que indica que poucos pontos no tempo eram insuficientes para identificar
 esse efeito. A leitura prudente é a de que o sinal negativo do beta é consistente com aversão a
 risco, mas que separar esse canal do efeito mecânico do preço requer a decomposição prevista na
-agenda futura; até lá, a magnitude de $-0{,}0214$ deve ser tratada como uma estimativa
-contaminada por colinearidade.
+agenda futura; até lá, a magnitude, de $-0{,}0065$ por desvio padrão, deve ser tratada como uma
+estimativa contaminada por colinearidade.
 
 Quanto ao poder explicativo, o coeficiente de determinação médio por mês é de 0,152 na
 Tabela~\ref{tab:fmtab} e de 0,166 no empilhamento da Tabela~\ref{tab:pool}. Esses valores são
@@ -585,25 +585,29 @@ tamanho não é diretamente comparável ao da regressão linear.
 \caption{Regressão transversal logística (resposta fracionária), resumo Fama--MacBeth com
 erros-padrão Newey-West.}
 \label{tab:logit}
-\begin{tabular}{@{}lrrrc@{}}
+\begin{tabular}{@{}lrrrrc@{}}
 \toprule
-Variável & Coeficiente médio & Erro padrão (Newey-West) & Estatística $t$ & Significância \\
+Variável & Coef.\ (chances log.) & Erro padrão (NW) & Est.\ $t$ & Efeito parcial médio (p.p.) & Sig. \\
 \midrule
-Intercepto              & $-3{,}380$ & $0{,}150$ & $-22{,}5$ & *** \\
-$\ln$(patrimônio)       & $-0{,}339$ & $0{,}043$ & $-7{,}9$  & *** \\
-$\ln$(cotistas)         & $0{,}469$  & $0{,}035$ & $13{,}3$  & *** \\
-Fundo de cotas          & $-0{,}732$ & $0{,}062$ & $-11{,}7$ & *** \\
-Captação / patrimônio   & $0{,}078$  & $0{,}183$ & $0{,}4$   & não signif. \\
+Intercepto              & $-3{,}380$ & $0{,}150$ & $-22{,}5$ & --- & *** \\
+$\ln$(patrimônio)       & $-0{,}339$ & $0{,}043$ & $-7{,}9$  & $-0{,}68$ & *** \\
+$\ln$(cotistas)         & $0{,}469$  & $0{,}035$ & $13{,}3$  & $+1{,}06$ & *** \\
+Fundo de cotas          & $-0{,}732$ & $0{,}062$ & $-11{,}7$ & $-1{,}60$ & *** \\
+Captação / patrimônio   & $0{,}078$  & $0{,}183$ & $0{,}4$   & $\approx 0$ & não signif. \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Três asteriscos indicam significância a um por mil. Fonte: elaboração
-própria (script \texttt{R/25}).}
+\caption*{\footnotesize O coeficiente está na escala das chances logarítmicas; o efeito parcial
+médio é a resposta do peso, em pontos percentuais por desvio padrão, comparável ao coeficiente
+linear. Três asteriscos indicam significância a um por mil. Fonte: elaboração própria (script
+\texttt{R/25}).}
 \end{table}
 
-Os resultados confirmam a leitura linear: os sinais e a significância das características são
-idênticos, e os efeitos parciais médios --- a resposta em pontos de peso, comparável aos
-coeficientes lineares --- praticamente coincidem, com cerca de $-0{,}68$ ponto percentual para o
-patrimônio, $+1{,}06$ para o número de cotistas e $-1{,}60$ para fundo de cotas, por desvio padrão.
+Os resultados confirmam a leitura linear: os sinais e a significância são idênticos. Como o
+coeficiente na escala das chances logarítmicas não é comparável ao linear, a última coluna da
+Tabela~\ref{tab:logit} traz o efeito parcial médio, em pontos de peso por desvio padrão: $-0{,}68$
+para o patrimônio, $+1{,}06$ para o número de cotistas e $-1{,}60$ para fundo de cotas,
+praticamente iguais aos efeitos por desvio padrão da regressão linear ($-0{,}68$, $+1{,}09$ e
+$-1{,}70$ na Tabela~\ref{tab:fmtab}).
 A vantagem da forma logística aparece nos extremos: a regressão linear gera pesos ajustados fora do
 intervalo entre zero e um em $2{,}51$ por cento das observações, valores sem sentido para uma
 participação, ao passo que a logística os respeita por construção, e o ajuste melhora ligeiramente
@@ -655,9 +659,9 @@ cinco séries, a exceção sendo a de cotistas, no limite ($-2{,}70$). A série 
 persistente, praticamente ruído.
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.86\textwidth]{fig_theta.pdf}
-\caption{Coeficientes da regressão mês a mês, de 2016 a 2021. A linha tracejada marca a média de
-cada série.}
+\includegraphics[width=0.86\textwidth]{fig_theta_padr.pdf}
+\caption{Coeficientes padronizados da regressão mês a mês, de 2016 a 2021. A linha tracejada marca
+a média de cada série.}
 \label{fig:theta}
 \caption*{\footnotesize Fonte: elaboração própria.}
 \end{figure}
