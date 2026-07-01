@@ -70,7 +70,7 @@ run_oos <- function(h){
   e_naive <- e_ols <- e_iv <- numeric(0)
   for (oi in t0:(length(meses)-h)) {
     t <- meses[oi]; tgt <- addm(t, h)
-    tr <- d[ym <= t & is.finite(dw1) & is.finite(dist) & is.finite(dist_l1)]  # pares ate t
+    tr <- d[ym < t & is.finite(dw1) & is.finite(dist) & is.finite(dist_l1)]   # pares que POUSAM ate t (sem look-ahead)
     if (nrow(tr) < 50) next
     lo <- lam_ols(tr$dw1, tr$dist); li <- lam_iv(tr$dw1, tr$dist, tr$dist_l1)
     cur <- d[ym==t & is.finite(dist)]
