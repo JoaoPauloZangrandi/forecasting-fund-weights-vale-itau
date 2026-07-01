@@ -569,16 +569,46 @@ maior parte da variação explicável já está nas características de fundo.
 \label{sec:est}
 
 A especificação logística da equação~\eqref{eq:logit} foi efetivamente estimada, mês a mês, como
-um modelo de resposta fracionária. Os resultados confirmam a leitura linear: os sinais e a
-significância das características são idênticos, e os efeitos parciais médios --- a resposta em
-pontos de peso, comparável aos coeficientes lineares --- praticamente coincidem, com cerca de
-$-0{,}68$ ponto percentual para o patrimônio, $+1{,}06$ para o número de cotistas e $-1{,}60$ para
-fundo de cotas, por desvio padrão. A vantagem da forma logística aparece nos extremos: a regressão
-linear gera pesos ajustados fora do intervalo entre zero e um em $2{,}51$ por cento das
-observações, valores sem sentido para uma participação, ao passo que a logística os respeita por
-construção, e o ajuste melhora ligeiramente (pseudo-coeficiente de determinação de $0{,}165$
-contra $0{,}152$). É essa forma que fornece o peso desejado usado no modelo de ajuste parcial. A
-estimação está no script \texttt{R/25}.
+um modelo de resposta fracionária. Em cada mês estima-se
+\begin{equation}
+w_{i,t} = g\!\left(\gamma_t + \gamma^{1}_t z(\ln\text{PL})_{i,t} + \gamma^{2}_t z(\ln\text{Cot})_{i,t}
+        + \gamma^{3}_t \text{FIC}_i + \gamma^{4}_t \big(\tfrac{\text{Fluxo}}{\text{PL}}\big)_{i,t}\right)
+        + \varepsilon_{i,t},
+\label{eq:logitcs}
+\end{equation}
+com $g$ logística e as características de escala padronizadas; os coeficientes são resumidos como
+antes, com erros-padrão Newey-West. A Tabela~\ref{tab:logit} traz o resultado, na escala das
+chances logarítmicas, em que um coeficiente positivo eleva a probabilidade logística, mas cujo
+tamanho não é diretamente comparável ao da regressão linear.
+
+\begin{table}[h]\centering\small
+\caption{Regressão transversal logística (resposta fracionária), resumo Fama--MacBeth com
+erros-padrão Newey-West.}
+\label{tab:logit}
+\begin{tabular}{@{}lrrrc@{}}
+\toprule
+Variável & Coeficiente médio & Erro padrão (Newey-West) & Estatística $t$ & Significância \\
+\midrule
+Intercepto              & $-3{,}380$ & $0{,}150$ & $-22{,}5$ & *** \\
+$\ln$(patrimônio)       & $-0{,}339$ & $0{,}043$ & $-7{,}9$  & *** \\
+$\ln$(cotistas)         & $0{,}469$  & $0{,}035$ & $13{,}3$  & *** \\
+Fundo de cotas          & $-0{,}732$ & $0{,}062$ & $-11{,}7$ & *** \\
+Captação / patrimônio   & $0{,}078$  & $0{,}183$ & $0{,}4$   & não signif. \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Três asteriscos indicam significância a um por mil. Fonte: elaboração
+própria (script \texttt{R/25}).}
+\end{table}
+
+Os resultados confirmam a leitura linear: os sinais e a significância das características são
+idênticos, e os efeitos parciais médios --- a resposta em pontos de peso, comparável aos
+coeficientes lineares --- praticamente coincidem, com cerca de $-0{,}68$ ponto percentual para o
+patrimônio, $+1{,}06$ para o número de cotistas e $-1{,}60$ para fundo de cotas, por desvio padrão.
+A vantagem da forma logística aparece nos extremos: a regressão linear gera pesos ajustados fora do
+intervalo entre zero e um em $2{,}51$ por cento das observações, valores sem sentido para uma
+participação, ao passo que a logística os respeita por construção, e o ajuste melhora ligeiramente
+(pseudo-coeficiente de determinação de $0{,}165$ contra $0{,}152$). É essa forma que fornece o peso
+desejado usado no modelo de ajuste parcial.
 
 \subsection{Dinâmica do fator}
 \label{sec:dyn}
@@ -589,6 +619,40 @@ de um mês situa-se em torno de zero vírgula sete a zero vírgula oito, e o tes
 rejeita a hipótese de passeio aleatório puro nos coeficientes. Por isso é razoável modelá-los por
 um processo autorregressivo ou pelo filtro de Kalman, em vez de simplesmente repetir o último
 valor do coeficiente.
+
+Os dois modelos de referência para essa dinâmica são o passeio aleatório e o processo
+autorregressivo de primeira ordem,
+\begin{equation}
+\text{passeio aleatório: } \theta_{k,t} = \theta_{k,t-1} + \eta_{k,t};
+\qquad
+\text{autorregressivo: } \theta_{k,t} = c_k + \phi_k\,\theta_{k,t-1} + \eta_{k,t},
+\label{eq:dyn}
+\end{equation}
+e a raiz unitária é testada por Dickey-Fuller. A Tabela~\ref{tab:dyn} resume, para cada série de
+coeficientes, a autocorrelação de primeira ordem, o parâmetro $\phi$ e a estatística do teste.
+
+\begin{table}[h]\centering\small
+\caption{Dinâmica dos coeficientes da regressão transversal (72 meses).}
+\label{tab:dyn}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Série (coeficiente) & Autocorrelação & $\phi$ (autorregressivo) & Dickey-Fuller & Leitura \\
+\midrule
+Intercepto            & $0{,}77$ & $0{,}77$ & $-3{,}07$ & reverte à média \\
+$\ln$(patrimônio)     & $0{,}76$ & $0{,}76$ & $-3{,}11$ & reverte à média \\
+$\ln$(cotistas)       & $0{,}84$ & $0{,}83$ & $-2{,}70$ & quase passeio aleatório \\
+Fundo de cotas        & $0{,}70$ & $0{,}70$ & $-3{,}57$ & reverte à média \\
+Captação / patrimônio & $0{,}37$ & $0{,}38$ & $-5{,}59$ & quase ruído \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize O valor crítico aproximado do teste de Dickey-Fuller a cinco por cento é de
+$-2{,}9$; abaixo dele, rejeita-se a raiz unitária. Fonte: elaboração própria (script \texttt{R/16}).}
+\end{table}
+
+Os coeficientes ficam com autocorrelação entre $0{,}37$ e $0{,}84$ e $\phi$ entre $0{,}38$ e
+$0{,}83$, claramente abaixo de um; o teste de Dickey-Fuller rejeita a raiz unitária em quatro das
+cinco séries, a exceção sendo a de cotistas, no limite ($-2{,}70$). A série de fluxo é a menos
+persistente, praticamente ruído.
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.86\textwidth]{fig_theta.pdf}
@@ -628,6 +692,22 @@ se há um fator comum por trás da variação simultânea dos coeficientes.
 
 \subsection{Previsão e a matriz de erros}
 
+Comparam-se quatro previsões do peso, todas avaliadas fora da amostra com janela de estimação
+expandida. A previsão ingênua repete o último peso; o efeito fixo usa a média histórica do próprio
+fundo; o modelo de fator soma a esse efeito fixo o vetor de coeficientes previsto pelo filtro de
+Kalman aplicado às características; e o modelo da variação prevê diretamente a mudança do peso,
+\begin{align*}
+\text{ingênua:}\ \ \widehat{w}_{i,t}=w_{i,t-1};
+&\qquad
+\text{efeito fixo:}\ \ \widehat{w}_{i,t}=\widehat{\mu}_i;\\
+\text{fator com Kalman:}\ \ \widehat{w}_{i,t}=\widehat{\mu}_i+\widehat{\theta}_t^{\,\prime}(x_{i,t}-\bar{x}_i);
+&\qquad
+\text{variação:}\ \ \widehat{w}_{i,t}=w_{i,t-1}+\widehat{\delta}'x_{i,t},
+\end{align*}
+em que $\widehat{\mu}_i$ é a média do peso do fundo no período de treino, $\bar{x}_i$ as médias
+históricas das características e $\widehat{\delta}$ os coeficientes de uma regressão da variação do
+peso nas características.
+
 O resultado de previsão é o mais surpreendente e está na Tabela~\ref{tab:fc}. Avaliando fora da
 amostra, nenhum modelo estrutural supera a previsão ingênua de repetir o último peso. Acrescentar
 um nível próprio de cada fundo, por meio de um efeito fixo, ou prever os coeficientes pelo filtro
@@ -635,7 +715,9 @@ de Kalman, piora a previsão; modelar diretamente a variação do peso apenas em
 ingênua. O fato de a média histórica do próprio fundo prever pior do que o último valor indica que
 o peso não reverte a uma média no nível do fundo, e sim que é muito persistente, próximo de um
 passeio aleatório. Os erros do melhor modelo têm média praticamente nula e formam uma série
-estacionária, propriedades que se desejava verificar.
+estacionária, propriedades que se desejava verificar: concretamente, a média do erro é de $0{,}0002$
+e a média mensal do erro rejeita a raiz unitária no teste de Dickey-Fuller, com estatística de
+$-8{,}7$.
 
 A leitura quantitativa da Tabela~\ref{tab:fc} torna o contraste nítido. No universo de todos os
 fundos e horizonte de um mês, a raiz do erro quadrático médio da previsão ingênua é 0,0156, contra
@@ -688,6 +770,35 @@ carteira por muitas ações, incluindo VALE3, cada uma com uma fatia pequena. A 
 é ainda mais persistente que o peso, e novamente a previsão ingênua de repetir o estado anterior
 acerta muito mais do que o modelo com características.
 
+A margem extensiva é estimada em um painel que inclui os fundos de ações que não detêm VALE3, com
+peso zero: 10.286 observações de 260 fundos de ações, das quais 86 por cento têm a ação, com 75
+entradas e 100 saídas no período. O modelo logístico da probabilidade de posse é
+\begin{equation}
+\Pr(\text{tem VALE3}_{i,t}=1) = \Lambda\!\big(\gamma_0 + \gamma_1\ln\text{PL}_{i,t}
+      + \gamma_2\ln\text{Cot}_{i,t} + \gamma_3\text{FIC}_i\big),
+\qquad \Lambda(z)=\tfrac{1}{1+e^{-z}},
+\label{eq:posse}
+\end{equation}
+com coeficientes na Tabela~\ref{tab:posse}.
+
+\begin{table}[h]\centering\small
+\caption{Modelo logístico da probabilidade de o fundo deter VALE3 (painel extensivo de fundos de
+ações, 10.286 observações).}
+\label{tab:posse}
+\begin{tabular}{@{}lrrrc@{}}
+\toprule
+Variável & Estimativa & Erro padrão & Estatística $z$ & Significância \\
+\midrule
+Intercepto        & $-2{,}809$ & $0{,}275$ & $-10{,}2$ & *** \\
+$\ln$(patrimônio) & $0{,}232$  & $0{,}015$ & $15{,}1$  & *** \\
+$\ln$(cotistas)   & $-0{,}034$ & $0{,}012$ & $-2{,}8$  & ** \\
+Fundo de cotas    & $1{,}311$  & $0{,}075$ & $17{,}5$  & *** \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Três asteriscos indicam significância a um por mil e dois a um por cento.
+Fonte: elaboração própria (script \texttt{R/20}).}
+\end{table}
+
 \begin{table}[h]\centering\small
 \caption{Sinais opostos entre a decisão de ter a ação e a decisão de quanto carregar.}
 \label{tab:margens}
@@ -711,7 +822,10 @@ cotas, a probabilidade de incluir VALE3 cresce, enquanto o peso, condicional à 
 acessa o ativo de forma indireta, ele tende a incluir mais ativos, cada um com participação menor.
 O número de cotistas exibe o sentido oposto nas duas margens, com efeito fraco na decisão de ter e
 efeito positivo no peso, o que sugere que a dispersão de cotistas se associa a posições diretas
-maiores quando elas existem. Como advertência metodológica, a separação formal dessas duas margens
+maiores quando elas existem. Quanto à previsão, a posse muda em apenas $1{,}3$ por cento dos meses,
+e a regra ingênua de repetir o estado anterior acerta $98{,}7$ por cento das vezes, contra $87{,}5$
+por cento do modelo logístico, de modo que, como na margem intensiva, as características explicam
+bem, mas não superam a persistência. Como advertência metodológica, a separação formal dessas duas margens
 pede, na continuação, um modelo em duas partes que trate de forma conjunta a decisão de posse e a
 de peso, em vez de dois exercícios independentes.
 
