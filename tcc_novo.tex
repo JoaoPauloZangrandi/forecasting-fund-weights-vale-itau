@@ -434,10 +434,32 @@ o teste central da continuação é exatamente verificar se $\lambda_n$ é difer
 método que empurra a estimativa para zero trabalharia contra a hipótese de interesse. Por essa
 razão, a regularização do tipo \emph{ridge}, que também encolhe coeficientes em direção a zero,
 não é apropriada aqui, pois agravaria a atenuação em vez de corrigi-la. A estratégia adequada é
-tratar $d_{i,t}$ como regressor medido com erro e estimar $\lambda_n$ por variável instrumental
-ou por correção explícita de erros nas variáveis, usando como instrumento, por exemplo,
-componentes da distância defasada ou características exógenas que afetam o alvo mas não o erro de
-medida do mês corrente. Com a velocidade estimada por esse caminho, o erro de previsão do peso
+tratar $d_{i,t}$ como regressor medido com erro e estimar $\lambda_n$ por variável instrumental,
+usando como instrumento a distância defasada $d_{i,t-1}$, que afeta a distância corrente mas não o
+erro de medida do mês corrente.
+
+Vale detalhar como essa estimação funciona, pois é o cerne da correção. A variável instrumental
+opera em dois estágios. No primeiro, projeta-se a distância corrente sobre o instrumento,
+\begin{equation}
+d_{i,t} = \pi\,d_{i,t-1} + v_{i,t},
+\label{eq:1estagio}
+\end{equation}
+e retém-se apenas a parte ajustada $\widehat{d}_{i,t}=\widehat{\pi}\,d_{i,t-1}$: a componente da
+distância que já era \emph{previsível} pelo mês anterior, isto é, a sua parcela persistente e
+sistemática, livre do ruído do mês corrente. No segundo estágio, regride-se a variação do peso
+sobre essa parte limpa, o que, no caso exatamente identificado, equivale à razão
+\begin{equation}
+\widehat{\lambda}^{\,\text{VI}}_n =
+\frac{\sum_{i,t} d_{i,t-1}\,(w_{i,t+1}-w_{i,t})}{\sum_{i,t} d_{i,t-1}\,d_{i,t}}.
+\label{eq:lambdaiv}
+\end{equation}
+A intuição é direta: usa-se apenas a variação da distância que o mês anterior já anunciava,
+descartando o ruído de medida --- o erro de estimação de $\widehat{\theta}$ e a flutuação
+transitória de $w_{i,t}$ --- que enviesava os mínimos quadrados. Como o instrumento é fortemente
+correlacionado com a distância verdadeira, mas não com esse ruído, ele identifica a velocidade de
+ajuste sem a atenuação. É a força do instrumento, ou seja, o quanto a distância defasada explica a
+corrente no primeiro estágio, que garante uma estimativa precisa; essa força é verificada junto aos
+resultados. Com a velocidade estimada por esse caminho, o erro de previsão do peso
 torna-se
 \begin{equation}
 \widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) - \widehat{\lambda}_n\!\left(g(X_t\widehat{\theta}_n)-w_{n,t}\right),
@@ -841,7 +863,9 @@ continuação, foi estimado. Construído o peso desejado pela regressão logíst
 alvo $d_{i,t}$, estimou-se a equação~\eqref{eq:pa2} por mínimos quadrados e por variável
 instrumental, com a distância defasada $d_{i,t-1}$ como instrumento e erro-padrão agrupado por
 fundo. O instrumento é forte: no primeiro estágio, a distância defasada explica a corrente com
-coeficiente próximo de $0{,}9$. A Tabela~\ref{tab:lambda} traz as estimativas.
+coeficiente próximo de $0{,}9$ --- o $\pi$ da equação~\eqref{eq:1estagio} ---, o que confirma a
+relevância do instrumento discutida na Seção~\ref{sec:pa}. A Tabela~\ref{tab:lambda} traz as
+estimativas.
 
 \begin{table}[h]\centering\small
 \caption{Velocidade de ajuste na equação da variação do peso. Erro-padrão agrupado por fundo;
