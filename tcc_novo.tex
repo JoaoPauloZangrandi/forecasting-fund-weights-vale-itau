@@ -892,6 +892,76 @@ Horizonte de três meses                      & $0{,}086$ & $0{,}011$ & $7{,}5$ 
 \caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/27}).}
 \end{table}
 
+\subsection{Série do erro de previsão e regra de decisão}
+\label{sec:decis}
+
+Resta caracterizar a série temporal do erro de previsão $\widehat{u}_{n,t+1}$ da
+equação~\eqref{eq:u} e formalizar a regra de decisão sob a opacidade de divulgação. O erro é a
+diferença entre a variação de peso realizada e a prevista pelo ajuste parcial,
+$\widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) - \widehat{\lambda}\,(w^{*}_{n,t}-w_{n,t})$; como há duas
+estimativas da velocidade, ele é calculado com as duas, por mínimos quadrados e por variável
+instrumental. A Tabela~\ref{tab:userie} traz suas propriedades, tomando a média do erro entre os
+fundos a cada mês.
+
+\begin{table}[h]\centering\small
+\caption{Propriedades da série do erro de previsão $\widehat{u}_{n,t+1}$ (média por mês).}
+\label{tab:userie}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Estimativa de $\lambda$ & Média & Desvio-padrão & Autocorrelação & Dickey-Fuller \\
+\midrule
+$\lambda$ por mínimos quadrados ($0{,}098$)   & $0{,}0002$ & $0{,}0151$ & $-0{,}16$ & $-9{,}6$ \\
+$\lambda$ por variável instrumental ($0{,}041$) & $0{,}0002$ & $0{,}0152$ & $-0{,}16$ & $-9{,}6$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize O valor crítico do teste de Dickey-Fuller a cinco por cento é de $-2{,}9$.
+Fonte: elaboração própria (script \texttt{R/30}).}
+\end{table}
+
+A média do erro é praticamente nula, de $0{,}0002$; o desvio-padrão é pequeno, de $0{,}015$, ou um
+ponto e meio percentual; a autocorrelação é levemente negativa, de $-0{,}16$; e o teste de
+Dickey-Fuller rejeita fortemente a raiz unitária, com estatística de $-9{,}6$. A série é, portanto,
+estacionária, de média nula e variância pequena, próxima de um ruído branco --- exatamente as
+propriedades que o orientador queria verificar. As duas estimativas de $\lambda$ dão o mesmo
+quadro, pois o erro difere apenas pelo termo $(\widehat{\lambda}_{\text{MQO}}-\widehat{\lambda}_{\text{VI}})\,d$,
+que é pequeno.
+
+A regra de decisão parte da estimação recursiva: usam-se os primeiros meses para estimar os
+parâmetros e, expandindo a janela, geram-se os erros preditivos dos meses seguintes; como as
+carteiras ficam ocultas por cerca de noventa dias, a decisão relevante mira três meses à frente.
+Implementamos essa previsão fora da amostra: a cada mês reestima-se $\lambda$ com todos os dados
+até ali e projeta-se o peso $h$ meses à frente pelo ajuste parcial,
+$\widehat{w}_{t+h}=w_t+[1-(1-\lambda)^h]\,d_t$, comparando com a regra ingênua. A
+Tabela~\ref{tab:udecis} traz o erro quadrático médio nos horizontes de um e de três meses, com
+$\lambda$ pelas duas estimativas.
+
+\begin{table}[h]\centering\small
+\caption{Previsão recursiva fora da amostra pelo ajuste parcial (raiz do erro quadrático médio).}
+\label{tab:udecis}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Horizonte & Ingênua & Ajuste parcial ($\lambda$ MQO) & Ajuste parcial ($\lambda$ VI) \\
+\midrule
+$h=1$ (um mês)          & $0{,}0164$ & $0{,}0160$ & $0{,}0161$ \\
+$h=3$ (opacidade)       & $0{,}0220$ & $0{,}0216$ & $0{,}0215$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Janela de estimação expandida; $\lambda$ reestimado a cada origem. Fonte:
+elaboração própria (script \texttt{R/30}).}
+\end{table}
+
+O resultado é o mais interessante desta etapa. Diferentemente dos modelos estruturais da
+Tabela~\ref{tab:fc} --- o efeito fixo e o filtro de Kalman ---, que substituíam a âncora do peso e
+por isso perdiam para a ingênua, o ajuste parcial mantém o último peso como âncora e apenas soma um
+empurrão pequeno em direção ao alvo. Com isso, ele supera a previsão ingênua nos dois horizontes e
+com as duas estimativas de $\lambda$, por margem pequena mas consistente, de cerca de um a dois por
+cento no erro. A vantagem é maior no horizonte de três meses, justamente o da opacidade, em que a
+versão com $\lambda$ por variável instrumental é a melhor, com $0{,}0215$ contra $0{,}0220$ da
+ingênua. Ou seja, a reversão ao alvo, embora minúscula mês a mês, acumula o suficiente em três
+meses para render uma melhora de previsão, o que dá conteúdo operacional à regra de decisão: com os
+parâmetros estimados de forma recursiva, o modelo passa a antecipar as posições três meses à frente
+melhor do que a simples repetição do último peso divulgado.
+
 %==================== 5. DISCUSSÃO ====================
 \section{Discussão}
 
@@ -907,7 +977,10 @@ carrega sinais opostos aos da decisão de quanto carregar, um padrão compatíve
 Para previsão, contudo, nenhum dos modelos estruturais testados supera a previsão ingênua de
 repetir o último peso, mesmo sob a defasagem trimestral de divulgação das carteiras, de modo que o
 peso se comporta, no nível do fundo, de forma muito persistente, próxima de um passeio aleatório,
-como evidencia a Tabela~\ref{tab:fc}.
+como evidencia a Tabela~\ref{tab:fc}. Uma exceção importante é o próprio modelo de ajuste parcial:
+por manter o último peso como âncora e apenas corrigi-lo levemente em direção ao alvo, ele supera a
+previsão ingênua por margem pequena mas consistente, sobretudo no horizonte de três meses da
+opacidade (Seção~\ref{sec:decis}).
 
 A interpretação que se extrai é que o fator latente é, antes de tudo, uma ferramenta de
 compreensão, capaz de revelar quais características importam para as posições, e não um modelo de
