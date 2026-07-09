@@ -1,0 +1,1134 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\definecolor{azul}{RGB}{25,60,110}
+\definecolor{cinza}{RGB}{100,100,100}
+\newcommand{\porque}[0]{\paragraph{Por que usamos isso aqui?}}
+\newcommand{\oquee}[0]{\paragraph{O que é.}}
+\newcommand{\comofunciona}[0]{\paragraph{Como funciona, em detalhe.}}
+\newcommand{\resultados}[0]{\paragraph{Resultados no nosso projeto.}}
+\newcommand{\limitacoes}[0]{\paragraph{Limitações e como tratamos (ou ainda vamos tratar).}}
+\newcommand{\scriptref}[1]{{\footnotesize\color{cinza}[\texttt{#1}]}}
+\emergencystretch=2.5em
+\setstretch{1.13}
+\captionsetup{font=small,labelsep=colon}
+\setcounter{tocdepth}{2}
+
+\title{\textbf{Tudo Explicado}\\[6pt]
+\large O TCC inteiro, método por método, número por número:\\
+o que cada coisa é, por que ela está aqui, como funciona por dentro,\\
+o que encontramos, o que ainda está frágil e como corrigimos\\[6pt]
+\normalsize Peso de VALE3 nos fundos do grupo Itaú, 2016--2021}
+\author{João Paulo Zangrandi (FGV--EESP) \\ \small documento didático de apoio; números reproduzidos por reexecução dos scripts em 06/07/2026}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Este documento explica, com profundidade deliberadamente exagerada, tudo o que acontece
+no projeto: a pergunta econômica, cada base de dados e cada tratamento, cada método econométrico
+(regressão transversal, Fama--MacBeth, Newey--West, logit fracionário de Papke--Wooldridge, testes
+de Dickey--Fuller, filtro de Kalman, ajuste parcial, variáveis instrumentais, erros-padrão
+agrupados, avaliação de previsão fora da amostra e teste de Diebold--Mariano), sempre no mesmo
+formato: \emph{o que é} $\to$ \emph{por que faz sentido usar aqui} $\to$ \emph{como funciona por
+dentro} $\to$ \emph{o que deu no nosso caso} $\to$ \emph{limitações e correções}. Todos os números
+citados foram reproduzidos rodando os scripts \texttt{R/14}--\texttt{R/30} do repositório; onde um
+resultado tem fragilidade conhecida (apontada na revisão \texttt{correções\_fable.pdf}), ela é
+explicada aqui em vez de escondida.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ======================================================================
+\section{O mapa do projeto em uma página}
+\label{sec:mapa}
+
+O projeto responde a duas perguntas sobre os fundos de investimento do grupo Itaú entre 2016 e
+2021, olhando para uma única ação, VALE3:
+
+\begin{enumerate}[topsep=2pt,itemsep=1pt]
+\item \textbf{Explicação}: quais características de um fundo explicam o \emph{peso} que ele dá a
+VALE3 na carteira?
+\item \textbf{Previsão}: esse peso pode ser previsto de um mês (ou de um trimestre) para o outro?
+\end{enumerate}
+
+A arquitetura tem \textbf{dois passos}, no espírito de um sistema de demanda por ativos:
+
+\begin{itemize}[topsep=2pt,itemsep=1pt]
+\item \textbf{Passo 1 (transversal)}: a cada mês $t$, regredimos o peso $w_{i,t}$ de cada fundo
+$i$ sobre características do fundo (tamanho, cotistas, tipo, fluxo). O vetor de coeficientes
+$\widehat\theta_t$ desse mês é lido como um \emph{fator latente}: ele resume ``o quanto cada
+característica puxa a posição em VALE3 naquele mês''. São 72 meses, logo 72 vetores
+$\widehat\theta_t$. O resumo estatístico dos 72 vetores é feito no estilo \textbf{Fama--MacBeth}
+(Seção~\ref{sec:fm}), com erros-padrão corrigidos por \textbf{Newey--West}
+(Seção~\ref{sec:nw}), e a forma funcional correta para uma fração usa o \textbf{logit
+fracionário} (Seção~\ref{sec:fraclogit}).
+\item \textbf{Passo 2 (dinâmico)}: os $\widehat\theta_t$ viram séries temporais, cuja persistência
+examinamos com autocorrelações, modelos \textbf{AR(1)} e testes de \textbf{Dickey--Fuller}
+(Seção~\ref{sec:dyn}); tentamos prever o peso com \textbf{filtro de Kalman} e efeitos fixos
+(Seções~\ref{sec:kalman}--\ref{sec:oos}); e, por fim, modelamos a transição de um mês para o
+outro com o \textbf{ajuste parcial} $\Delta w_{t+1}=\lambda d_t + u_{t+1}$, estimado por
+\textbf{variável instrumental} (Seção~\ref{sec:pa}), gerando a série de erros $\widehat u$ e uma
+regra de decisão recursiva sob a opacidade de 90 dias (Seção~\ref{sec:decisao}).
+\end{itemize}
+
+O resultado, em uma frase: \emph{as características explicam bem o nível do peso (sinais estáveis
+nos 72 meses), mas o peso de cada fundo é tão persistente --- quase um passeio aleatório --- que
+no curto prazo nada supera com clareza a previsão ingênua de repetir o último valor; existe uma
+reversão real ao ``peso-alvo'' definido pelas características, mas ela é lenta (a estimativa
+central fecha $\approx4\%$ da distância por mês) e a evidência de que isso gera ganho de previsão
+é, por ora, estatisticamente fraca.}
+
+% ======================================================================
+\section{O arcabouço econômico}
+\label{sec:eco}
+
+\subsection{Sistemas de demanda por ativos (Koijen--Yogo, 2019)}
+
+\oquee A visão tradicional de apreçamento parte de condições de não-arbitragem e fatores de
+desconto. Koijen e Yogo (2019) propõem o caminho inverso, mais próximo de organização industrial:
+tratar o preço de cada ativo como o resultado do \emph{equilíbrio entre demandas} de investidores
+heterogêneos. Cada investidor $i$ tem uma função de demanda pelo ativo $n$ que depende das
+\emph{características} do ativo (tamanho, book-to-market, beta, etc.): $w_{i,n} =
+f(x_n;\theta_i)$. Com as carteiras observadas (nos EUA, via formulários 13F), estimam-se os
+$\theta_i$ e, agregando as demandas e impondo que o mercado limpa (oferta $=$ demanda), o modelo
+apreça os ativos e permite contrafactuais (ex.: o que acontece com os preços se um grande fundo
+vende tudo?).
+
+\oquee[] A grande sacada é de \textbf{redução de dimensão}: em vez de estimar uma demanda por
+cada par (investidor, ativo) --- milhões de parâmetros ---, as demandas dependem de poucas
+características, e o problema vira estimar poucos coeficientes por investidor.
+
+\porque O nosso projeto usa a \emph{lógica} de Koijen--Yogo, mas invertida em três pontos, e é
+importante ser preciso sobre isso porque a banca vai perguntar:
+\begin{enumerate}[topsep=2pt,itemsep=1pt]
+\item \textbf{Fixamos o ativo} (VALE3) e variamos o \emph{investidor}: a demanda depende das
+características do \emph{fundo} ($x_{i,t}$), não do ativo. O vetor $\theta_{n,t}$ é o ``fator
+latente da ação'': quanto cada característica de fundo puxa a posição naquele papel.
+\item \textbf{O coeficiente é comum a todos os fundos} em cada mês (varia no tempo, não no
+investidor).
+\item \textbf{Não estimamos elasticidade-preço nem impomos equilíbrio}: trabalhamos só do lado
+das quantidades (forma reduzida). Não há o instrumento de Koijen--Yogo (baseado nas carteiras dos
+demais investidores) porque não estimamos o canal preço$\to$demanda.
+\end{enumerate}
+Ou seja: é um \emph{sistema de demanda institucional na forma reduzida, em quantidades}. A
+justificativa econômica para o peso depender do perfil do fundo está em restrições de mandato,
+liquidez e diversificação: um fundo de R\$~10 bilhões não pode ter a mesma carteira de um fundo de
+R\$~10 milhões; um fundo de cotas (FIC) acessa ações via outros fundos e tende a ter pouca posição
+direta; um fundo com muitos cotistas tem perfil de produto de varejo.
+
+\paragraph{Literatura de apoio.} Gabaix e Koijen (2021) (``mercados inelásticos'') argumentam que
+fluxos de demanda movem preços de forma expressiva --- motivação para \emph{medir} demanda
+institucional, embora não estimemos esse canal. Coval e Stafford (2007) mostram que fundos sob
+resgate são vendedores forçados (e captações geram compras); Lou (2012) liga fluxos a
+previsibilidade de retornos --- é por isso que o \emph{fluxo líquido} entra como característica: se
+fluxos forçam negociação, poderiam antecipar variações de peso.
+
+\subsection{Por que o \emph{peso}, e não o valor em reais ou o número de ações?}
+
+Três razões. (i) O peso $w_{i,t}\in[0,1]$ é \textbf{comparável entre fundos} de tamanhos
+completamente diferentes --- R\$~1 milhão em VALE3 é enorme para um fundo pequeno e nada para um
+grande; o peso normaliza isso automaticamente. (ii) O peso é a variável natural de um sistema de
+demanda (a carteira é um vetor de pesos que soma um). (iii) O peso é \emph{limitado}, o que
+disciplina a modelagem --- e é exatamente essa limitação que vai exigir a forma logística
+(Seção~\ref{sec:fraclogit}).
+
+\paragraph{O custo dessa escolha: o efeito mecânico do preço.} O peso muda mesmo sem o gestor
+negociar. Se VALE3 rende $r_v$ no mês e o resto da carteira rende $r_o$, o peso novo é
+\begin{equation}
+w' \;=\; \frac{w\,(1+r_v)}{1 + w\,r_v + (1-w)\,r_o}
+\;\;\approx\;\; w + w(1-w)\,(r_v - r_o)
+\quad\text{para retornos pequenos.}
+\label{eq:mecanico}
+\end{equation}
+Ou seja: quando a ação sobe mais que o resto, o peso de \emph{todos} os detentores sobe
+``sozinho''. Isso contamina (a) o coeficiente do preço na regressão empilhada
+(Seção~\ref{sec:pooled}), (b) a variação $\Delta w$ usada no ajuste parcial
+(Seção~\ref{sec:pa}) e (c) a inferência, porque cria um \emph{choque comum} a todos os fundos
+dentro do mês (Seção~\ref{sec:cluster}). A decomposição formal entre variação mecânica e decisão
+ativa está na agenda; hoje o texto trata o tema como ressalva de interpretação.
+
+\subsection{A opacidade de 90 dias}
+
+As carteiras dos fundos brasileiros são divulgadas pela CVM com defasagem de até $\approx90$ dias.
+Consequência prática: no fim do mês $t$, o público \emph{não} conhece $w_t$ dos fundos; conhece
+$w_{t-3}$. Então ``prever o peso atual'' com informação pública equivale a prever \emph{três meses
+à frente} a partir do último peso divulgado. É por isso que todos os exercícios de previsão são
+reportados nos horizontes $h=1$ (referência acadêmica) \emph{e} $h=3$ (o horizonte operacional
+realista). Vale registrar desde já uma sutileza que a revisão apontou: a rigor, $h=1$ é
+\emph{infactível} em tempo real (usa $w_t$, que ninguém vê em $t$), então conclusões operacionais
+devem se apoiar em $h=3$.
+
+% ======================================================================
+\section{Os dados, variável por variável}
+\label{sec:dados}
+
+\subsection{As quatro fontes}
+
+\begin{enumerate}[topsep=2pt,itemsep=2pt]
+\item \textbf{CONS (CVM)} --- composição consolidada mensal das carteiras. É de onde vem a
+variável-alvo: a linha \texttt{Nome\_Ativo == "VALE ON N1 - VALE3"} de cada fundo em cada
+competência, com \texttt{Participação\_Ativo} (o peso, já em \emph{fração}: verificamos que o
+campo varia de 0 a 0{,}236, nunca acima de 1) e \texttt{Valor\_Ativo\_mil}. Usamos só a posição
+direta (o rótulo é estável nos 6 anos --- a migração da VALE ao Novo Mercado não mudou o nome na
+base, fato verificado). \scriptref{R/10}
+\item \textbf{SH (CVM)} --- série histórica diária dos fundos: patrimônio líquido
+(coluna em milhares, formato brasileiro ``R\$ 17.842,83''), número de cotistas,
+gestora, classificação ANBIMA, nome. É de onde vêm as características de fundo. \scriptref{R/12}
+\item \textbf{Informe Diário (CVM)} --- captação e resgate \emph{diários} por fundo
+(\texttt{CAPTC\_DIA}, \texttt{RESG\_DIA}). É a única base que registra resgates; a SH só traz a
+captação bruta. Fluxo líquido mensal $=\sum_{\text{dias do mês}}(\text{CAPTC}-\text{RESG})$.
+\scriptref{R/11}
+\item \textbf{Yahoo Finance} --- preços de VALE3.SA e do Ibovespa ($\hat{}$BVSP), 2014--2022, para
+construir preço e beta. O preço de fechamento foi conferido contra o COTAHIST oficial da B3 nas
+datas usadas: diferença de R\$~0{,}00. \scriptref{R/13}
+\end{enumerate}
+
+\subsection{Construção do painel e tratamentos (com o porquê de cada um)}
+
+\begin{itemize}[topsep=2pt,itemsep=2pt]
+\item \textbf{Identificação do Itaú}: normalizamos o campo \texttt{GESTORA} (maiúsculas, sem
+acento) e mantemos os fundos de \emph{Itaú Asset Management, Itaú DTVM e Itaú Unibanco}. Motivo: o
+mesmo grupo aparece com três grafias/entidades.
+\item \textbf{Merge SH$\times$CONS pelo dia exato}: a SH é diária e a CONS mensal; casamos a linha
+da SH cuja \texttt{DATA} coincide com a \texttt{Data\_Competência} da CONS. Não houve perda de
+observações. Motivo: evita misturar o PL de um dia qualquer com a carteira de outro.
+\item \textbf{Deduplicação de linhas exatas} da CONS (a CVM ocasionalmente repete a mesma linha) e
+\textbf{remoção de pesos negativos} (resíduos contábeis da ordem de $-10^{-6}$, sem interpretação
+de participação).
+\item \textbf{Zero duplicatas}: verificado que não existe par (fundo, mês) repetido em nenhum dos
+painéis --- é o teste mais importante de integridade de um painel, porque duplicata silenciosa
+enviesa tudo.
+\item \textbf{Filtro de fundos exclusivos}: mantemos só observações com \texttt{n\_cotistas}~$>3$.
+Motivo: um fundo com 1--2 cotistas é o veículo de \emph{um} investidor (a mediana de cotistas
+antes do filtro era 2!); o que queremos é demanda difusa. O limiar 3 é convenção; a sensibilidade
+a ele está prometida e ainda não foi rodada (limitação aberta).
+\item \textbf{Fluxo líquido}: por que não usar a SH? Porque a SH não tem resgate. Validação: a
+captação da SH bate com a do Informe Diário \emph{ao centavo} em 99{,}4--99{,}8\% dos pares
+fundo-mês em todos os anos; as divergências são revisões entre séries da própria CVM (dois padrões
+forenses documentados no \texttt{log\_decisoes.md}), não erro nosso. 119 fundo-meses ficam sem
+fluxo (NA) e saem da amostra de regressão.
+\item \textbf{Preço e beta com dois \emph{timings}}: para \emph{explicar} o peso do mês $t$ usamos
+a \textbf{média do mês $t$} (\texttt{preco\_mes}, \texttt{beta\_mes}) --- é o que o gestor via
+enquanto montava a posição; para \emph{prever} usamos o \textbf{último pregão do mês $t-1$}
+(predeterminado, sem olhar o futuro). O beta é $\mathrm{Cov}(r_{\text{VALE}},
+r_{\text{Ibov}})/\mathrm{Var}(r_{\text{Ibov}})$ em janela móvel de 252 pregões, com retornos
+simples e preço ajustado por proventos \emph{apenas} para calcular retornos (o nível de preço
+usado como característica é o nominal, porque o ajustado reescreve o passado a cada provento
+futuro --- seria \emph{look-ahead}).
+\end{itemize}
+
+\subsection{Os números da amostra}
+
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Painel & Observações & Fundos \\
+\midrule
+Fundos Itaú que detêm VALE3 (2016--2021, 72 meses) & 26.123 & 623 \\
+Após filtro de cotistas ($>3$) & 11.532 & 308 \\
+Amostra de regressão (com fluxo disponível) & 11.413 & 307 \\
+Painel extensivo (fundos de Ações, com zeros) & 10.286 & 260 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Descritivas da amostra de regressão \scriptref{R/23}: peso médio $2{,}87\%$, mediana $1{,}22\%$,
+máximo $23{,}55\%$, com 54 zeros --- distribuição fortemente assimétrica, colada em zero (motivo
+central para a forma logística); PL mediano R\$~68 milhões contra média de R\$~399 milhões
+(assimetria que motiva o logaritmo); cotistas de 4 a 696 mil (idem); fluxo/PL com caudas
+\emph{extremas} (mínimo $-6.399\%$ do PL --- ver Seção~\ref{sec:winsor}); $75{,}7\%$ das
+observações são FICs; preço e beta de VALE3 (na convenção contemporânea, média do mês) com
+correlação $-0{,}71$ no período --- o preço subiu de $\approx$R\$~10 para $\approx$R\$~114
+enquanto o beta caiu de $\approx1{,}7$ para $\approx0{,}8$, e essa colinearidade vai importar na
+Seção~\ref{sec:pooled}.
+
+\paragraph{Por que logaritmo de PL e de cotistas?} (i) As duas variáveis são assimétricas em
+ordens de grandeza (PL de R\$~35 mil a R\$~17,9 bilhões): em nível, meia dúzia de fundos gigantes
+dominariam a regressão. (ii) O log torna o coeficiente uma \emph{semi-elasticidade}: efeito de
+variações \emph{proporcionais} de tamanho, que é a noção econômica certa (dobrar de tamanho, não
+somar R\$~1 milhão). (iii) Resíduos mais bem-comportados.
+
+\paragraph{Por que padronizar (z-score) as variáveis de escala?} Escrevemos $z(\ln PL) =
+(\ln PL - \overline{\ln PL})/\widehat\sigma_{\ln PL}$, idem cotistas. Dois motivos: (i)
+\textbf{comparabilidade} --- ``o efeito de +1 desvio-padrão de tamanho'' e ``+1 d.p.\ de
+cotistas'' ficam na mesma régua; (ii) \textbf{intercepto interpretável} --- com regressores
+centrados, o intercepto vira o peso previsto do fundo \emph{médio} (não-FIC, fluxo zero), cerca
+de $4\%$, em vez do peso previsto de um absurdo ``fundo com PL de R\$~1 e um cotista''. Ponto
+técnico importante: a padronização é uma transformação \emph{afim} dos regressores; ela não muda
+$R^2$, estatísticas $t$, valores ajustados nem resíduos --- só muda a unidade em que o coeficiente
+é lido. (A \emph{dummy} FIC e o fluxo ficam em escala natural: dummy padronizada não tem leitura.)
+Um erro clássico --- que já aconteceu numa versão anterior dos documentos e foi corrigido --- é
+reportar o coeficiente por \emph{unidade de log} e lê-lo como ``por desvio-padrão'': como
+$\widehat\sigma_{\ln PL}\approx1{,}8$, isso subestimaria o efeito por quase metade.
+
+% ======================================================================
+\section{Passo 1(a): a regressão transversal mês a mês}
+\label{sec:cs}
+
+\oquee Em cada mês $t$ ($t=1,\dots,72$), com os $N_t$ fundos vivos naquele mês, estimamos por
+mínimos quadrados ordinários (MQO)
+\begin{equation}
+w_{i,t} = \alpha_t + \beta^1_t\, z(\ln PL)_{i,t} + \beta^2_t\, z(\ln Cot)_{i,t}
+ + \beta^3_t\, \mathrm{FIC}_i + \beta^4_t \Big(\tfrac{\text{Fluxo}}{\text{PL}}\Big)_{i,t}
+ + \varepsilon_{i,t},
+\label{eq:cs}
+\end{equation}
+ou, em matriz, $\widehat\theta_t = (X_t'X_t)^{-1}X_t'w_t$. O MQO escolhe o vetor que minimiza a
+soma dos quadrados dos resíduos; geometricamente, projeta $w_t$ no espaço gerado pelas colunas de
+$X_t$.
+
+\porque Três razões para rodar \emph{uma regressão por mês} em vez de empilhar tudo: (i) permite
+que a relação característica$\to$peso \textbf{varie no tempo} --- é justamente essa variação que o
+``fator dinâmico'' quer capturar; (ii) prepara o resumo de Fama--MacBeth
+(Seção~\ref{sec:fm}), que resolve elegantemente a correlação entre fundos dentro do mês; (iii) o
+preço e o beta da ação são \emph{constantes dentro do mês} (todo fundo vê o mesmo preço), logo não
+são identificáveis na cross-section --- eles só entram na versão empilhada
+(Seção~\ref{sec:pooled}), identificados pela variação \emph{entre} meses.
+
+\resultados Os sinais são de uma estabilidade rara: em \emph{todos} os 72 meses, $\ln PL$ é
+negativo (0/72 meses positivos), $\ln Cot$ é positivo (72/72), FIC é negativo (0/72); o fluxo
+alterna (39/72). O $R^2$ médio por mês é $0{,}152$ --- modesto, como esperado para pesos
+individuais, mas sistemático. A leitura econômica: \emph{fundos maiores diluem VALE3 (carteiras
+mais espalhadas); fundos com mais cotistas (produtos de varejo, muitas vezes fundos setoriais ou
+de dividendos) concentram mais; FICs quase não têm posição direta} (eles têm a ação via fundos
+investidos --- a posição direta é residual).
+
+% ======================================================================
+\section{Fama--MacBeth}
+\label{sec:fm}
+
+\oquee Fama e MacBeth (1973) enfrentavam o problema de testar se o beta de mercado é remunerado:
+regressões transversais de retornos sobre betas, repetidas período a período. A inovação
+metodológica que ficou para a posteridade é o \textbf{estimador em duas etapas com inferência pela
+série temporal dos coeficientes}: (1) para cada período $t$, estime a cross-section e guarde
+$\widehat\theta_t$; (2) o estimador final é a média temporal
+\begin{equation}
+\bar\theta = \frac{1}{T}\sum_{t=1}^{T}\widehat\theta_t,
+\qquad
+\widehat{\mathrm{se}}(\bar\theta_k) = \frac{s_k}{\sqrt{T}},
+\quad s_k^2=\frac{1}{T-1}\sum_t(\widehat\theta_{k,t}-\bar\theta_k)^2 .
+\label{eq:fmse}
+\end{equation}
+A estatística $t$ é $\bar\theta_k/\widehat{\mathrm{se}}(\bar\theta_k)$, comparada à distribuição
+$t$ com $T-1$ graus de liberdade.
+
+\comofunciona O truque está no que a variância amostral dos $\widehat\theta_{k,t}$ \emph{absorve}.
+Cada $\widehat\theta_t$ é uma função dos dados do mês $t$ inteiro. Se os fundos são
+correlacionados \emph{entre si dentro do mês} (e são: choques comuns de mercado, decisões da mesma
+mesa de gestão), essa correlação transversal infla a variância de $\widehat\theta_t$ --- mas ela
+está \emph{dentro} de cada observação da série $\{\widehat\theta_t\}$, então a dispersão observada
+dos $\widehat\theta_t$ ao longo dos meses já a contém. Em outras palavras: Fama--MacBeth converte
+um problema de correlação transversal intratável (matriz $N\times N$ desconhecida) em um problema
+de série temporal com $T$ observações. É por isso que o método é o padrão em finanças empíricas,
+onde a correlação dentro do período é a regra.
+
+A \textbf{hipótese que sobra} é explícita na fórmula \eqref{eq:fmse}: os $\widehat\theta_{k,t}$
+precisam ser \emph{serialmente não correlacionados}. Se $\theta_{k,t}$ é persistente
+(autocorrelação positiva), a série ``se repete'', a variância amostral subestima a incerteza da
+média e os $t$ saem inflados. Não é um detalhe: é a falha documentada no nosso caso.
+
+\porque É exatamente o nosso desenho: 72 cross-sections, correlação entre fundos dentro do mês
+quase certa (mesma gestora!), e interesse na média e na evolução dos coeficientes. A alternativa
+(painel empilhado com erro agrupado) esconderia a dinâmica de $\theta_t$, que é objeto de
+interesse do Passo 2.
+
+\resultados Com as variáveis de escala padronizadas \scriptref{R/24}:
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+ & Coef.\ médio & EP clássico & $t$ clássico & EP Newey--West & $t$ NW \\
+\midrule
+Intercepto (nível médio) & $0{,}0396$ & $0{,}0020$ & $19{,}4$ & $0{,}0038$ & $10{,}5$ \\
+$\ln$(PL) por d.p. & $-0{,}0068$ & $0{,}0004$ & $-19{,}3$ & $0{,}0006$ & $-11{,}2$ \\
+$\ln$(cotistas) por d.p. & $0{,}0109$ & $0{,}0005$ & $19{,}8$ & $0{,}0010$ & $10{,}9$ \\
+Fundo de cotas (FIC) & $-0{,}0170$ & $0{,}0009$ & $-19{,}2$ & $0{,}0015$ & $-11{,}3$ \\
+Captação/PL & $-0{,}0004$ & $0{,}0031$ & $-0{,}1$ & $0{,}0041$ & $-0{,}1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Leitura das magnitudes: $+1$ d.p.\ de tamanho $\Rightarrow-0{,}68$ ponto percentual de peso; $+1$
+d.p.\ de cotistas $\Rightarrow+1{,}09$ p.p.; ser FIC $\Rightarrow-1{,}70$ p.p.\ (o maior efeito);
+fluxo $\approx$ zero. Como o peso médio é $2{,}87\%$, esses efeitos são economicamente grandes.
+
+\limitacoes A autocorrelação de primeira ordem dos $\widehat\theta_{k,t}$ é de $0{,}70$ a $0{,}84$
+(Seção~\ref{sec:dyn}) --- a hipótese de independência serial de \eqref{eq:fmse} falha com folga.
+\textbf{Correção adotada}: erro-padrão de longo prazo no estilo Newey--West, próxima seção (é a
+coluna já mostrada acima; os $t$ caem de $\approx19$--$21$ para $\approx11$). Segunda limitação,
+menor: cada $\widehat\theta_t$ é estimado com erro, e a média temporal não pondera pela precisão
+de cada mês (meses com poucos fundos pesam igual); com $N_t$ entre $\approx120$ e $190$, o efeito
+é pequeno.
+
+% ======================================================================
+\section{Newey--West (erros-padrão HAC)}
+\label{sec:nw}
+
+\oquee Newey e West (1987) propuseram um estimador de variância \emph{consistente sob
+heterocedasticidade e autocorrelação} (HAC) que é, por construção, sempre não negativo. No nosso
+uso, o alvo é a variância da \emph{média} de uma série temporal $\{x_t\}_{t=1}^T$ (cada série de
+coeficiente $\widehat\theta_{k,t}$).
+
+\comofunciona Para uma série estacionária, a variância da média amostral não é
+$\gamma_0/T$ (só valeria sob independência), e sim
+\begin{equation}
+\mathrm{Var}(\bar x) \;=\; \frac{1}{T}\Big(\gamma_0 + 2\sum_{\ell=1}^{T-1}\big(1-\tfrac{\ell}{T}\big)\gamma_\ell\Big)
+\;\xrightarrow{T\to\infty}\; \frac{1}{T}\underbrace{\Big(\gamma_0+2\sum_{\ell=1}^{\infty}\gamma_\ell\Big)}_{\text{variância de longo prazo (LRV)}},
+\end{equation}
+em que $\gamma_\ell=\mathrm{Cov}(x_t,x_{t-\ell})$. Com autocorrelação positiva, todos os
+$\gamma_\ell>0$ \emph{somam}: a série ``conta a mesma informação várias vezes'' e a média é bem
+menos precisa do que $T$ observações independentes sugeririam. O estimador de Newey--West trunca a
+soma em $L$ defasagens e aplica os pesos de Bartlett $k(\ell)=1-\ell/(L+1)$, decrescentes:
+\begin{equation}
+\widehat{\mathrm{Var}}_{NW}(\bar x) = \frac{1}{T^2}\Big[\sum_t \widehat u_t^2
++ 2\sum_{\ell=1}^{L}\Big(1-\frac{\ell}{L+1}\Big)\sum_{t=\ell+1}^{T}\widehat u_t\,\widehat u_{t-\ell}\Big],
+\qquad \widehat u_t = x_t-\bar x .
+\label{eq:nwvar}
+\end{equation}
+Os pesos de Bartlett têm dupla função: (i) garantem que a estimativa é \emph{sempre
+$\geq0$} (a soma ponderada equivale a uma forma quadrática com kernel positivo-definido --- sem os
+pesos, autocovariâncias amostrais negativas em defasagens altas podem produzir ``variância
+negativa''); (ii) reduzem o ruído das autocovariâncias de ordem alta, estimadas com poucos pares.
+O preço é \textbf{viés para baixo}: os pesos $<1$ encolhem a contribuição verdadeira das
+defasagens, e tudo além de $L$ é ignorado. A defasagem foi escolhida pela regra automática de
+Newey--West (1994), $L=\lfloor 4(T/100)^{2/9}\rfloor$, que com $T=72$ dá $L=3$.
+
+\porque A Seção~\ref{sec:fm} terminou com a hipótese de independência serial violada
+(autocorrelações de $0{,}7$--$0{,}8$). O NW é a correção padrão: mantém o estimador pontual de
+Fama--MacBeth intacto e conserta só a variância.
+
+\resultados O efeito prático foi multiplicar os erros-padrão por $1{,}7$--$1{,}8$ (fluxo:
+$1{,}3$), derrubando os $t$ de $\approx19$--$21{,}6$ para $\approx11$. Nada muda de sinal nem de
+significância qualitativa --- mas os $t$ ``bonitos'' de 20 eram, sim, uma ilusão de precisão.
+
+\limitacoes Sejamos honestos sobre o que $L=3$ compra. Se a série fosse um AR(1) com
+$\rho=0{,}77$ (o que os dados sugerem), a razão correta entre o EP de longo prazo e o clássico
+seria $\sqrt{(1+\rho)/(1-\rho)}\approx2{,}8$ --- e o Bartlett com $L=3$ entrega $1{,}7$--$1{,}8$.
+Sensibilidade calculada na revisão: com $L=6$ os $t$ ficam em $8$--$9$; com $L=12$, em $7$--$8$.
+\textbf{Estado}: as conclusões (tudo significativo a 1\%, fluxo nulo) sobrevivem com folga a
+qualquer $L$ razoável, mas o texto final deve citar essa sensibilidade (correção barata, uma
+frase) ou usar a correção paramétrica AR(1) $\widehat{\mathrm{Var}}\cdot\frac{1+\widehat\rho}{1-\widehat\rho}$.
+
+% ======================================================================
+\section{Logit fracionário (Papke--Wooldridge)}
+\label{sec:fraclogit}
+
+\oquee O peso é uma \emph{fração}: $w\in[0,1]$, com massa perto de zero (mediana $1{,}2\%$, 54
+zeros exatos). O modelo linear ignora o suporte: nada impede $\widehat w<0$ ou $>1$. Papke e
+Wooldridge (1996) propuseram o \textbf{modelo de resposta fracionária}: especificar apenas a média
+condicional
+\begin{equation}
+E[w_i\,|\,x_i] = g(x_i'\theta), \qquad g(z)=\frac{1}{1+e^{-z}} \in (0,1),
+\end{equation}
+e estimar $\theta$ por \textbf{quase-máxima verossimilhança (QMV) de Bernoulli}: maximizar
+\begin{equation}
+\sum_i \Big[\, w_i \log g(x_i'\theta) + (1-w_i)\log\big(1-g(x_i'\theta)\big) \Big],
+\label{eq:qmle}
+\end{equation}
+exatamente a log-verossimilhança de um logit binário, só que avaliada em $w_i$ \emph{fracionário}.
+
+\comofunciona Por que isso funciona se $w$ não é 0/1? Porque a Bernoulli pertence à família
+exponencial linear, e para essa família a QMV é \textbf{consistente sempre que a média condicional
+estiver certa}, seja qual for a verdadeira distribuição de $w$ em $[0,1]$. A condição de primeira
+ordem de \eqref{eq:qmle} é
+$\sum_i x_i\,(w_i - g(x_i'\theta))=0$ --- um ``MQO ponderado'' na escala certa: o método só exige
+que os resíduos $w-g$ sejam ortogonais aos regressores, nada sobre a distribuição. Zeros e uns
+exatos entram sem qualquer ajuste (ao contrário de, por exemplo, aplicar
+$\log(w/(1-w))$, que explode em $w=0$ --- por isso NÃO transformamos a variável, modelamos a
+média). Em R, \texttt{glm(..., family=quasibinomial(link="logit"))} implementa exatamente isso; a
+parte ``quasi'' desliga a suposição de variância Bernoulli, que seria absurda aqui.
+
+\paragraph{Efeitos parciais médios (APE).} O coeficiente logístico vive na escala das chances
+logarítmicas (\emph{log-odds}); para compará-lo ao modelo linear, calculamos o efeito na escala do
+peso. Como $g'(z) = g(z)(1-g(z))$, o efeito marginal da característica $k$ para o fundo $i$ é
+$\theta_k\, g_i(1-g_i)$, e o APE é a média
+\begin{equation}
+\mathrm{APE}_k = \theta_k \cdot \frac{1}{N}\sum_i \widehat g_i\,(1-\widehat g_i).
+\end{equation}
+Intuição: perto de $w\approx3\%$, $g(1-g)\approx0{,}029$, então um coeficiente logístico de
+$0{,}47$ vira $\approx1{,}4$ p.p.\ --- o logit ``aperta'' as respostas perto das bordas e as
+espalha no meio, como a fração exige.
+
+\porque (i) Respeita o suporte: o modelo linear produziu previsões fora de $[0,1]$ em 287 de
+11.413 observações ($2{,}51\%$) --- pesos negativos, sem sentido; o logit, nunca. (ii) É o insumo
+correto para o \textbf{peso desejado} $w^*$ do ajuste parcial (Seção~\ref{sec:pa}), que precisa
+viver em $(0,1)$. (iii) Custa pouco: estimamos o logit \emph{mês a mês}, como o linear, e
+resumimos por Fama--MacBeth + Newey--West, mantendo toda a arquitetura.
+
+\resultados \scriptref{R/25}
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+ & Coef.\ (log-odds) & EP (NW) & $t$ & APE (p.p.\ por d.p.) \\
+\midrule
+Intercepto & $-3{,}380$ & $0{,}150$ & $-22{,}5$ & --- \\
+$\ln$(PL) & $-0{,}339$ & $0{,}043$ & $-7{,}9$ & $-0{,}68$ \\
+$\ln$(cotistas) & $0{,}469$ & $0{,}035$ & $13{,}3$ & $+1{,}06$ \\
+FIC & $-0{,}732$ & $0{,}062$ & $-11{,}7$ & $-1{,}60$ \\
+Captação/PL & $0{,}078$ & $0{,}183$ & $0{,}4$ & $\approx0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Os APEs ($-0{,}68$; $+1{,}06$; $-1{,}60$) praticamente coincidem com os coeficientes lineares
+($-0{,}68$; $+1{,}09$; $-1{,}70$): no ``miolo'' da distribuição o linear era uma boa aproximação
+--- o que valida os resultados lineares --- e o pseudo-$R^2$ sobe um pouco ($0{,}165$ vs
+$0{,}152$). A vantagem do logit é conceitual (suporte) e operacional ($w^*$ para o passo
+dinâmico).
+
+\limitacoes (i) Para a \emph{dummy} FIC, o APE correto é a \textbf{diferença discreta}
+$\overline{g(x'\theta)|_{\mathrm{FIC}=1} - g(x'\theta)|_{\mathrm{FIC}=0}}$, não a derivada; usamos a
+derivada (a diferença prática é pequena aqui, mas é o cálculo canônico --- correção pendente,
+trivial). (ii) A inferência é a de Fama--MacBeth sobre os coeficientes mensais, herdando as
+ressalvas da Seção~\ref{sec:nw}. (iii) O logit fracionário modela $E[w|x]$ \emph{incondicional à
+posse}; a separação ``ter vs.\ quanto ter'' é tratada à parte (Seção~\ref{sec:margens}) --- um
+modelo em duas partes (\emph{hurdle}) unificado está na agenda.
+
+% ======================================================================
+\section{A regressão empilhada com preço e beta}
+\label{sec:pooled}
+
+\oquee Empilhamos os 72 meses ($N=11.413$) e acrescentamos duas características da \emph{ação},
+constantes dentro do mês: o preço médio do mês e o beta médio do mês (padronizados). Identificação
+vem da variação \emph{temporal}: meses de preço alto vs.\ baixo.
+
+\resultados \scriptref{R/28} Sinais de fundo idênticos aos mensais. Preço: $+0{,}0050$ por d.p.\
+($t=11{,}5$); beta: $-0{,}0065$ por d.p.\ ($t=-15{,}1$); $R^2=0{,}166$ (vs $0{,}152$ sem
+preço/beta --- o ganho é pequeno: quase toda a variação explicável já está nas características de
+fundo).
+
+\limitacoes Três, importantes. (i) \textbf{Parte do coeficiente do preço é mecânica}
+(eq.~\ref{eq:mecanico}): preço alto $\Rightarrow$ peso alto sem ninguém negociar. (ii)
+\textbf{Colinearidade preço--beta} ($-0{,}71$): difícil separar um do outro; o beta negativo
+(``aversão a risco'') pode estar absorvendo o componente mecânico residual do preço. Registro
+honesto: num exercício preliminar só com 2016, o beta saía \emph{positivo} e fraco --- 12 meses
+não identificam; com 72 ele fica claramente negativo, mas a leitura causal continua contaminada.
+(iii) Os EPs do empilhado \emph{não} corrigem a dependência temporal/transversal (é a mesma razão
+de existir o Fama--MacBeth); os $t$ enormes dessa tabela não devem ser levados ao pé da letra ---
+tratamos essa tabela como descritiva. \textbf{Correção estrutural na agenda}: decompor
+$\Delta w$ em componente mecânico e ativo antes de atribuir qualquer coisa a preço/beta.
+
+% ======================================================================
+\section{Passo 2(a): a dinâmica do fator $\theta_t$}
+\label{sec:dyn}
+
+\subsection{Autocorrelação e AR(1)}
+
+\oquee Cada série de coeficientes $\{\widehat\theta_{k,t}\}_{t=1}^{72}$ é tratada como série
+temporal. Dois descritores: a autocorrelação de ordem 1, $\widehat\rho_1 =
+\mathrm{corr}(\theta_t,\theta_{t-1})$, e o modelo autorregressivo de primeira ordem
+\begin{equation}
+\theta_{k,t} = c_k + \phi_k\,\theta_{k,t-1} + \eta_{k,t},
+\end{equation}
+em que $\phi_k$ mede a persistência: $\phi=1$ é o passeio aleatório (choques permanentes, a série
+não tem nível de equilíbrio); $|\phi|<1$ é reversão à média com meia-vida
+$\ln(0{,}5)/\ln|\phi|$; $\phi=0$ é ruído.
+
+\porque A escolha do modelo de previsão do fator depende disso: se $\theta$ é passeio aleatório, a
+melhor previsão é o último valor; se reverte à média, vale usar AR(1)/Kalman. Além disso, a
+persistência dos $\theta_t$ é exatamente o que quebra o erro-padrão clássico de Fama--MacBeth ---
+os números desta seção são a \emph{evidência} que justificou o Newey--West.
+
+\subsection{O teste de Dickey--Fuller, por dentro}
+
+\oquee Queremos distinguir ``$\phi$ perto de 1 mas $<1$'' (reversão lenta) de ``$\phi=1$'' (raiz
+unitária). O teste de Dickey--Fuller (DF) reescreve o AR(1) subtraindo $\theta_{t-1}$ dos dois
+lados:
+\begin{equation}
+\Delta\theta_t = c + \pi\,\theta_{t-1} + \eta_t, \qquad \pi = \phi-1 .
+\end{equation}
+$H_0$: $\pi=0$ (raiz unitária); $H_1$: $\pi<0$ (reversão). O teste é a estatística $t$ de
+$\widehat\pi$.
+
+\comofunciona A sutileza que faz o DF ser ``um teste especial'' e não um $t$ comum: \emph{sob}
+$H_0$, o regressor $\theta_{t-1}$ é um passeio aleatório --- não é estacionário, sua variância
+cresce com $t$ --- e o Teorema Central do Limite usual não se aplica. A distribuição assintótica
+da estatística é um funcional de movimento browniano (a ``distribuição de Dickey--Fuller''),
+deslocada para a esquerda: com constante e $T\approx70$, o valor crítico de 5\% é
+$\approx-2{,}90$ (contra $-1{,}65$ de um $t$ unilateral normal). Usar a tabela normal aqui
+rejeitaria raiz unitária com enorme frequência mesmo quando ela existe. Regra prática usada no
+projeto: $t<-2{,}9$ $\Rightarrow$ rejeita raiz unitária $\Rightarrow$ série estacionária/reversora.
+
+\resultados \scriptref{R/16}
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Série & $\widehat\rho_1$ & $\widehat\phi$ & DF ($t$) & leitura \\
+\midrule
+Intercepto & $0{,}77$ & $0{,}77$ & $-3{,}07$ & reverte à média \\
+$\ln$(PL) & $0{,}76$ & $0{,}76$ & $-3{,}11$ & reverte à média \\
+$\ln$(cotistas) & $0{,}84$ & $0{,}83$ & $-2{,}70$ & no limite (não rejeita a 5\%) \\
+FIC & $0{,}70$ & $0{,}70$ & $-3{,}57$ & reverte à média \\
+Captação/PL & $0{,}37$ & $0{,}38$ & $-5{,}59$ & quase ruído \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Síntese: os fatores estruturais são \textbf{persistentes mas estacionários} --- variam suavemente
+(com uma reconfiguração visível em torno de 2018, quando preço e beta da VALE também se moveram
+muito), sem nunca trocar de sinal. Isso legitima tratá-los como ``estado latente'' que evolui
+devagar. O coeficiente do fluxo é quase ruído --- coerente com fluxo não explicar o nível do peso.
+
+\limitacoes (i) Usamos o DF \emph{simples}, sem defasagens de $\Delta\theta$ (o ``A'' do ADF, que
+branqueia autocorrelação residual do erro do teste); com $T=72$ e resíduos pouco
+autocorrelacionados o risco de distorção é baixo, mas um ADF(1--2) é a versão canônica --- correção
+pendente e barata. (ii) Poder: com 72 observações, DF tem pouco poder para distinguir $\phi=0{,}95$
+de $\phi=1$; por isso a série de cotistas ($-2{,}70$) fica ``no limite'' e é honesto dizer que não
+sabemos. (iii) O teste é feito sobre coeficientes \emph{estimados} (com erro de estimação mensal),
+o que adiciona um componente tipo erro de medida --- o ruído de estimação empurra $\widehat\rho_1$
+para \emph{baixo}, então a persistência verdadeira dos fatores pode ser ainda maior que a medida.
+
+% ======================================================================
+\section{O filtro de Kalman}
+\label{sec:kalman}
+
+\oquee Cada $\widehat\theta_{k,t}$ que observamos é ``sinal + ruído'': o fator verdadeiro do mês
+mais o erro de estimação da cross-section daquele mês. O modelo de \textbf{nível local}
+formaliza isso:
+\begin{equation}
+\underbrace{y_t = \mu_t + \varepsilon_t}_{\text{equação de medida, } \varepsilon_t\sim(0,R)}
+\qquad
+\underbrace{\mu_t = \mu_{t-1} + \eta_t}_{\text{equação de estado, } \eta_t\sim(0,Q)},
+\end{equation}
+em que $y_t$ é o coeficiente estimado e $\mu_t$ é o fator ``verdadeiro'', que caminha como passeio
+aleatório. O filtro de Kalman é o algoritmo recursivo que, a cada mês, produz a melhor estimativa
+linear do estado dado o passado.
+
+\comofunciona Duas fases por período, partindo de $a_{t-1}$ (estimativa do estado) e $P_{t-1}$
+(variância dessa estimativa):
+\begin{align}
+\text{(previsão)}\quad & a_{t|t-1}=a_{t-1}, \qquad P_{t|t-1}=P_{t-1}+Q;\\
+\text{(atualização)}\quad & v_t = y_t - a_{t|t-1}, \quad F_t = P_{t|t-1}+R, \quad
+K_t = \frac{P_{t|t-1}}{F_t},\notag\\
+& a_t = a_{t|t-1} + K_t\,v_t, \qquad P_t = (1-K_t)\,P_{t|t-1}.
+\end{align}
+O \textbf{ganho de Kalman} $K_t\in(0,1)$ é o coração: ele diz quanto acreditar na observação nova
+($v_t$ é a ``surpresa''). Se o ruído de medida domina ($R\gg Q$), $K\to0$ e o filtro quase ignora
+o mês novo --- vira uma média longa; se o estado se move muito ($Q\gg R$), $K\to1$ e o filtro vira
+o passeio aleatório (``repita o último valor''). No regime estacionário, a previsão um passo à
+frente do nível local é exatamente uma \textbf{média móvel exponencialmente ponderada} do passado
+--- o filtro interpola de forma ótima entre os dois extremos que já testamos (média e último
+valor). Os hiperparâmetros $Q$ e $R$ são estimados por máxima verossimilhança usando a
+\emph{decomposição do erro de predição}: as inovações $v_t$ são independentes com variância
+$F_t$, então $\log L = -\tfrac12\sum_t\big(\log 2\pi F_t + v_t^2/F_t\big)$, maximizada
+numericamente (Nelder--Mead). \scriptref{R/18, R/19}
+
+\porque É a resposta natural ao diagnóstico da Seção~\ref{sec:dyn}: fatores persistentes,
+observados com ruído mensal. O filtro separa o sinal do ruído \emph{de forma causal} (a previsão
+de $t$ usa apenas $y_1,\dots,y_{t-1}$), que é o que uma previsão honesta exige. Referência
+didática: Harvey (1989).
+
+\resultados A previsão de peso com fator filtrado (modelo M2 da Seção~\ref{sec:oos}) \emph{não}
+supera nem o efeito fixo simples nem, muito menos, a previsão ingênua. O filtro faz bem o seu
+trabalho --- suaviza $\theta_t$ ---, mas o problema é outro: a variação de curto prazo do peso de
+cada fundo simplesmente não é explicada pelas características, então prever melhor o $\theta$
+não ajuda.
+
+\limitacoes Apontada na revisão: $Q$ e $R$ são estimados por MV \textbf{na série completa} (72
+meses) e depois o filtro roda causalmente. Isso é um vazamento leve de informação futura (os
+hiperparâmetros ``viram'' a amostra toda) num exercício anunciado como estritamente fora da
+amostra. Como o M2 \emph{perde mesmo com essa vantagem}, a conclusão qualitativa está a salvo ---
+mas a correção limpa (reestimar $Q,R$ recursivamente a cada origem, ou nota de rodapé) está
+pendente.
+
+% ======================================================================
+\section{Previsão fora da amostra: desenho e resultados}
+\label{sec:oos}
+
+\subsection{O desenho experimental}
+
+\oquee ``Fora da amostra com janela expansiva'' significa: para cada mês de origem $t$ (a partir
+do 13\textsuperscript{o} mês, para haver histórico), estimar \emph{tudo} só com dados até $t$,
+prever o alvo em $t+h$, gravar o erro, expandir a janela e repetir. Os erros acumulados de todas
+as origens formam a avaliação. A métrica é a raiz do erro quadrático médio,
+$\mathrm{RMSE}=\sqrt{\overline{e^2}}$ (penaliza erros grandes; mesma unidade do peso), com o MAE
+como companheiro robusto.
+
+\porque Comparar modelos \emph{dentro} da amostra premia sobreajuste. O padrão-ouro em previsão é
+imitar o uso real: só informação disponível na origem. E a régua contra a qual todo modelo é
+comparado é a \textbf{previsão ingênua} $\widehat w_{i,t+h}=w_{i,t}$ --- na literatura de
+previsão, um modelo só ``existe'' se bate essa regra, porque para variáveis persistentes ela é
+terrivelmente difícil de superar (para um passeio aleatório puro, ela é \emph{ótima}).
+
+\subsection{Os quatro modelos comparados}
+
+\begin{itemize}[topsep=2pt,itemsep=1pt]
+\item \textbf{M0 ingênuo}: $\widehat w_{i,t+h} = w_{i,t}$ (repete o último peso).
+\item \textbf{M1 efeito fixo}: $\widehat w_{i,t+h} = \widehat\mu_i$ (média histórica do próprio
+fundo até $t$). Se o peso revertesse a um nível próprio de cada fundo, M1 venceria M0.
+\item \textbf{M2 efeito fixo + fator/Kalman}: $\widehat w_{i,t+h} = \widehat\mu_i +
+\widehat\theta_t^{Kal\,\prime}(x_{i,t}-\bar x_i)$ --- soma ao nível do fundo o desvio previsto
+pelas características, com o fator filtrado (causal).
+\item \textbf{M3 variação}: $\widehat w_{i,t+h} = w_{i,t} + \widehat\delta'x_{i,t}$, em que
+$\delta$ vem de regredir, no treino, a variação $w_{s+h}-w_s$ nas características --- testa se as
+características (fluxo, sobretudo) anteciparam \emph{mudanças}.
+\end{itemize}
+
+\subsection{Resultados}
+
+RMSE fora da amostra \scriptref{R/19, R/21}:
+
+\begin{center}\small
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Universo & Horizonte & M0 ingênuo & M1 EF & M2 EF+Kalman & M3 variação \\
+\midrule
+Todos os fundos & $h=1$ & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+Todos os fundos & $h=3$ & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+Só fundos de ações & $h=1$ & $\mathbf{0{,}0197}$ & $0{,}0310$ & $0{,}0383$ & $0{,}0198$ \\
+Só fundos de ações & $h=3$ & $\mathbf{0{,}0266}$ & $0{,}0337$ & $0{,}0385$ & $0{,}0270$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Leitura, ponto a ponto. (i) \textbf{O ingênuo vence em todas as linhas}; os modelos estruturais
+erram 54--63\% mais em $h=1$. (ii) O resultado mais informativo é \textbf{M1 perder de M0}: se o
+peso revertesse à média do fundo, a média venceria o último valor; perder significa que \emph{não
+há} reversão detectável ao nível do fundo no curto prazo --- é a assinatura de um processo próximo
+do \textbf{martingale} ($E[w_{t+1}|,\mathcal F_t]=w_t$). (iii) M3 empatar com M0 diz que as
+características não anteciparam mudanças (prever variação zero $=$ repetir o peso). (iv) Em $h=3$
+todo mundo piora e o \emph{gap} encolhe (a inércia se dilui com o horizonte), mas a ordem não
+muda. (v) Restringir a fundos de ações (posições maiores e mais ativas) só amplia as diferenças.
+A média dos erros do melhor modelo é $\approx0$ e a série mensal desses erros é estacionária
+(DF $-8{,}7$) --- o erro não tem viés nem deriva.
+
+\paragraph{A ponte para o ajuste parcial.} Esse quadro (explica bem, não prevê) é exatamente o
+que um ajuste parcial com velocidade pequena produz: se o fundo fecha só uma fração $\lambda$
+minúscula da distância ao alvo por mês, o peso é \emph{quase} martingale e o alvo estrutural quase
+não aparece no curto prazo. O passo seguinte estima esse $\lambda$ diretamente.
+
+% ======================================================================
+\section{As duas margens: ter vs.\ quanto ter}
+\label{sec:margens}
+
+\oquee A amostra principal condiciona em \emph{deter} VALE3 (margem intensiva). A decisão de
+\emph{ter ou não} (margem extensiva) é estudada num painel à parte: todos os fundos de
+\emph{ações} do Itaú vivos no mês (universo em que ``não ter VALE3'' é uma escolha real, não uma
+característica de mandato), com peso zero imputado a quem não tem: 10.286 observações, 260
+fundos, $86\%$ têm a ação; 75 entradas e 100 saídas em 6 anos --- a posse muda em só $1{,}3\%$
+dos fundo-meses.
+
+\paragraph{O logit binário, por dentro.} Modelamos $\Pr(\text{tem}_{i,t}=1)=\Lambda(\gamma_0 +
+\gamma_1\ln PL + \gamma_2\ln Cot + \gamma_3 FIC)$, com $\Lambda$ a mesma logística, agora por
+máxima verossimilhança de verdade (a variável é 0/1). O coeficiente é o efeito nas
+\emph{log-odds}: $e^{\gamma}$ multiplica a razão de chances. Resultados \scriptref{R/20}:
+$\gamma_{\ln PL}=0{,}232$ ($z=15{,}1$) --- cada unidade de $\ln$PL ($\approx$ multiplicar o PL por
+$2{,}7$) multiplica as chances de ter VALE3 por $e^{0{,}232}\approx1{,}26$;
+$\gamma_{FIC}=1{,}311$ ($z=17{,}5$) --- ser FIC multiplica as chances por $\approx3{,}7$;
+$\gamma_{\ln Cot}=-0{,}034$ ($z=-2{,}8$), efeito pequeno e negativo.
+
+\resultados O achado que consideramos o mais bonito do trabalho: \textbf{as duas margens têm
+sinais opostos}. Tamanho e FIC \emph{aumentam} a probabilidade de ter a ação, mas \emph{diminuem}
+o peso condicional; cotistas, o contrário. É a assinatura clássica de \textbf{diversificação}:
+fundos grandes e FICs espalham a carteira por muitos papéis --- é fácil ``ter um pouco de tudo''
+(margem extensiva alta) com fatias pequenas (margem intensiva baixa). E a posse é ainda mais
+persistente que o peso: prever ``continua como está'' acerta $98{,}7\%$ em $h=1$ (e $98{,}3\%$ em
+$h=3$), contra $\approx87\%$ do logit com características --- de novo, características explicam,
+inércia prevê.
+
+\limitacoes (i) Os dois exercícios (nível e posse) são independentes; o tratamento conjunto
+canônico é um modelo em duas partes (\emph{hurdle}: logit de posse $\times$ fracionário do peso
+condicional), na agenda. (ii) 12 fundo-meses têm linha de VALE3 com participação exatamente zero
+e contam como ``tem'' --- convenção a documentar. (iii) A acurácia $87{,}5\%$ vs $87{,}2\%$ em
+textos diferentes vem de duas variantes do exercício (uma exige estado anterior conhecido, outra
+prevê $t+h$ direto); citar a fonte exata em cada menção.
+
+% ======================================================================
+\section{O modelo de ajuste parcial}
+\label{sec:pa}
+
+\subsection{A equação e sua lógica}
+
+\oquee A hipótese econômica: o fundo tem um peso \emph{desejado} $w^*_{i,t}=g(x_{i,t}'\theta_t)$
+(o valor ajustado do logit fracionário --- é para isso que ele existia), mas não salta para ele de
+uma vez; por custos de transação, liquidez e governança, move-se \emph{parcialmente}:
+\begin{equation}
+w_{i,t+1} = (1-\lambda)\,w_{i,t} + \lambda\,w^*_{i,t} + u_{i,t+1}
+\quad\Longleftrightarrow\quad
+\Delta w_{i,t+1} = \lambda\,d_{i,t} + u_{i,t+1},
+\qquad d_{i,t}\equiv w^*_{i,t}-w_{i,t}.
+\label{eq:pa}
+\end{equation}
+$\lambda\in[0,1]$ é a \textbf{velocidade de ajuste}: fração da distância ao alvo fechada por mês.
+$\lambda=1$: ajuste instantâneo. $\lambda=0$: o peso ignora o alvo (e a melhor previsão é a
+ingênua). O teste central do trabalho é $\lambda\neq0$.
+
+\paragraph{Meia-vida.} Iterando \eqref{eq:pa} com alvo fixo, a distância decai geometricamente:
+$d_{t+h}=(1-\lambda)^h d_t$. A meia-vida resolve $(1-\lambda)^h=\tfrac12$:
+\begin{equation}
+h_{1/2} = \frac{\ln(0{,}5)}{\ln(1-\lambda)}.
+\end{equation}
+Com $\lambda=0{,}041$: $h_{1/2}\approx16{,}4$ meses. Com $\lambda=0{,}185$: $\approx3{,}4$ meses.
+
+\paragraph{Previsão a $h$ passos.} Pela mesma iteração (alvo congelado em $t$, choques de média
+zero),
+\begin{equation}
+\widehat w_{t+h} = w_t + \big[1-(1-\lambda)^h\big]\,d_t .
+\label{eq:hstep}
+\end{equation}
+Hipóteses embutidas (importante declará-las): $w^*$ não se move entre $t$ e $t+h$, e
+$E_t[u_{t+j}]=0$ para todo $j$. É uma aproximação --- e os dados sugerem que ela custa algo: o
+$\lambda$ estimado \emph{diretamente} no horizonte de 3 meses é $0{,}086$, \emph{menor} que o
+implicado pela iteração do mensal, $1-(1-0{,}041)^3=0{,}119$.
+
+\subsection{Por que o MQO é enviesado aqui --- os \emph{dois} vieses, derivados}
+
+O regressor $d_{i,t}=\widehat w^*_{i,t}-w_{i,t}$ tem dois problemas, que puxam em direções
+opostas.
+
+\paragraph{(a) Erro de medida no alvo $\Rightarrow$ atenuação (viés para baixo).} O alvo usa
+$\widehat\theta_t$ \emph{estimado}: $\widehat w^* = w^* + (\text{erro de estimação})$. É o
+problema clássico de erro nas variáveis: se o regressor observado é $d = d^* + e$ com ruído $e$
+não correlacionado com $d^*$, então
+\begin{equation}
+\mathrm{plim}\ \widehat\lambda^{MQO}
+= \lambda\cdot\frac{\sigma^2_{d^*}}{\sigma^2_{d^*}+\sigma^2_{e}} \;<\;\lambda .
+\end{equation}
+A fração é a razão sinal/(sinal+ruído): o coeficiente é ``diluído'' na direção de zero. Isso é
+letal para o nosso teste, porque empurra a estimativa exatamente para o valor da hipótese nula
+($\lambda=0$). Nota registrada nos manuscritos do orientador: uma regularização \emph{ridge}
+(que também encolhe coeficientes para zero) \textbf{agravaria} esse problema em vez de
+corrigi-lo --- ridge é para estabilizar regressores observados em alta dimensão (útil num passo
+futuro, ao estimar $\theta$ com muitas características), não para regressor medido com erro.
+
+\paragraph{(b) $w_{i,t}$ aparece nos dois lados $\Rightarrow$ reversão mecânica (viés para
+cima).} Suponha que o peso observado tenha um componente transitório: $w_t = \tilde w_t + \eta_t$
+(ruído de marcação, arredondamento de data de competência, oscilação de mercado intra-mês). Então
+$d_t = w^* - w_t$ contém $-\eta_t$, e $\Delta w_{t+1}=w_{t+1}-w_t$ \emph{também} contém $-\eta_t$.
+O termo comum gera $\mathrm{Cov}(d_t,\Delta w_{t+1}) \supset \mathrm{Var}(\eta_t)>0$: um peso
+``momentaneamente alto'' faz a distância parecer negativa \emph{e} o peso cair no mês seguinte
+--- reversão puramente mecânica que o MQO lê como velocidade de ajuste. Viés para \emph{cima}.
+
+\paragraph{Quem ganha?} Teoria não decide; os dados decidiram: $\widehat\lambda^{MQO}=0{,}098 >
+\widehat\lambda^{VI}=0{,}041$, logo o viés dominante foi o mecânico (para cima). Registro honesto:
+a expectativa \emph{a priori} do projeto era a atenuação dominar; o resultado veio ao contrário, e
+os textos foram corrigidos para apresentar os dois vieses \emph{ex ante} em vez de só um.
+
+\subsection{Variável instrumental, por dentro}
+\label{sec:iv}
+
+\oquee A solução para regressor correlacionado com o erro é achar um \textbf{instrumento} $z$:
+uma variável (i) correlacionada com o regressor problemático (\emph{relevância},
+$\mathrm{Cov}(z,d)\neq0$) e (ii) não correlacionada com o erro da equação (\emph{exclusão},
+$\mathrm{Cov}(z,u)=0$). Usamos a \textbf{distância defasada} $z_{i,t}=d_{i,t-1}$: a distância é
+persistente (relevância quase garantida), e o ruído de medida do mês corrente ($\eta_t$, erro de
+$\widehat\theta_t$) não está nela.
+
+\comofunciona Em dois estágios (2SLS). Primeiro estágio: projetar o regressor no instrumento,
+$d_{i,t}=\pi\,d_{i,t-1}+v_{i,t}$, e reter $\widehat d = \widehat\pi\,d_{t-1}$ --- a parte de
+$d_t$ que o mês anterior \emph{já anunciava}, limpa do ruído corrente. Segundo estágio: regredir
+$\Delta w_{t+1}$ em $\widehat d$. No caso \textbf{exatamente identificado} (um instrumento para um
+regressor), o 2SLS colapsa numa razão de covariâncias (estimador de Wald):
+\begin{equation}
+\widehat\lambda^{VI}
+= \frac{\sum_{i,t} d_{i,t-1}\,\Delta w_{i,t+1}}{\sum_{i,t} d_{i,t-1}\,d_{i,t}}
+= \frac{\widehat{\mathrm{Cov}}(z,\Delta w)}{\widehat{\mathrm{Cov}}(z,d)} ,
+\end{equation}
+consistente porque, sob exclusão, o ruído que contamina o MQO não entra em
+$\mathrm{Cov}(z,\Delta w)$: o instrumento ``não vê'' $\eta_t$ nem o erro de $\widehat\theta_t$ ---
+por isso a VI corrige \emph{os dois} vieses de uma vez, qualquer que fosse o dominante.
+
+\paragraph{Relevância (verificada).} Primeiro estágio: $\widehat\pi=0{,}895$, $R^2=0{,}79$;
+estatística $t$ do instrumento com cluster por fundo $=89{,}5$, ou seja, $F$ efetivo
+$\approx8.000$ --- ordens de magnitude acima de qualquer limiar de instrumento fraco (a regra de
+bolso clássica é $F>10$; os limiares modernos de Olea--Pflueger ficam em dezenas). Instrumento
+fraco não é a nossa preocupação. (Nota da revisão: o $F=39.793$ impresso pelo script vem da
+regressão sem cluster; o número correto a citar é o clusterizado.)
+
+\paragraph{Exclusão (a parte frágil --- discussão completa).} $\mathrm{Cov}(d_{t-1},u_{t+1})=0$
+exige que nada \emph{persistente} fique fora do modelo. O contraexemplo relevante: suponha que o
+fundo $i$ tenha um gosto \emph{permanente} por VALE3 acima do que suas características explicam
+(um $\alpha_i$ de fundo). Então $d_{i,t}\approx-\alpha_i$ \emph{todo mês} (o alvo medido fica
+sistematicamente abaixo do peso), enquanto $\Delta w\approx0$; logo $u_{t+1}=\Delta w - \lambda
+d_t \approx \lambda\alpha_i$ é correlacionado com $d_{t-1}\approx-\alpha_i$ --- exclusão violada,
+com viés de $\widehat\lambda^{VI}$ para \emph{baixo} (o componente permanente entra no denominador
+mas não no numerador). E os dados gritam exatamente esse padrão:
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Especificação (todas VI, EP por fundo) & $\widehat\lambda$ & EP & $t$ & meia-vida \\
+\midrule
+Baseline, instrumento $d_{t-1}$ & $0{,}041$ & $0{,}006$ & $6{,}6$ & $\approx16$ meses \\
+Com efeito fixo de fundo (\emph{within}) & $0{,}185$ & $0{,}019$ & $9{,}5$ & $\approx3{,}4$ meses \\
+Instrumento alternativo $d_{t-2}$ & $0{,}021$ & $0{,}005$ & $4{,}3$ & $\approx33$ meses \\
+Horizonte de 3 meses ($\Delta_3 w$) & $0{,}086$ & $0{,}011$ & $7{,}5$ & (acumulada) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O efeito fixo \emph{remove} o componente permanente $\alpha_i$ --- e $\lambda$ mais que
+quadruplica ($0{,}185$). O instrumento mais defasado $d_{t-2}$ carrega proporcionalmente
+\emph{mais} componente permanente --- e $\lambda$ cai pela metade ($0{,}021$). O padrão monotônico
+$0{,}021 \to 0{,}041 \to 0{,}185$ é exatamente a assinatura da heterogeneidade persistente. A
+leitura defensável, portanto, não é ``a magnitude é sensível'' e sim: \emph{o $\lambda$ agregado
+mistura dois regimes --- entre fundos, desvios quase permanentes que nunca se fecham; dentro do
+fundo, desvios da própria trajetória que se fecham com meia-vida de $\approx3$--$4$ meses}. A
+especificação com efeito fixo é a mais crível para ``velocidade de ajuste'' no sentido econômico.
+
+\subsection{Erros-padrão agrupados (cluster) --- e o problema do choque comum}
+\label{sec:cluster}
+
+\oquee Os resíduos $u_{i,t+1}$ do mesmo fundo são autocorrelacionados (decisões graduais), então
+os EPs usam o estimador sanduíche agrupado por fundo:
+\begin{equation}
+\widehat V = (X'X)^{-1}\Big[\tfrac{G}{G-1}\sum_{g=1}^{G} s_g^{\vphantom{\prime}} s_g'\Big](X'X)^{-1},
+\qquad s_g = \sum_{i,t\,\in\,\text{fundo }g} x_{it}\,\widehat u_{it},
+\end{equation}
+(na versão VI, com $Z$ no lugar de $X$ nos ``pães'' do sanduíche). A soma \emph{dentro} do cluster
+antes de elevar ao quadrado permite qualquer padrão de correlação dentro do fundo; a hipótese
+restante é independência \emph{entre} clusters.
+
+\limitacoes E aqui mora o problema apontado na revisão: fundos \textbf{não} são independentes
+dentro do mês. O retorno de VALE3 move \emph{mecanicamente} (eq.~\ref{eq:mecanico}) o $\Delta w$
+de todos os detentores ao mesmo tempo --- um choque comum que o cluster por fundo ignora.
+Recalculando o \emph{mesmo} $\widehat\lambda^{VI}=0{,}0413$ com outros agrupamentos: EP por fundo
+$0{,}0063$ ($t=6{,}6$); EP por \emph{mês} $0{,}0226$ ($t=1{,}8$); EP \emph{two-way} (fundo e mês,
+fórmula de Cameron--Gelbach--Miller $V_{\text{fundo}}+V_{\text{mês}}-V_{\text{fundo}\times\text{mês}}$)
+$0{,}0220$ ($t=1{,}9$, $p\approx0{,}06$). Ou seja: \textbf{a significância ``forte'' do teste
+central depende da escolha de cluster}. Correções possíveis (pendentes): reportar two-way como
+principal; e/ou incluir efeito de tempo $\delta_{t+1}$ na equação \eqref{eq:pa}, que absorve o
+choque comum (inclusive o mecânico) e ataca a causa em vez do sintoma; e/ou reestimar sobre a
+variação \emph{ativa} (descontado o termo mecânico).
+
+\subsection{Resultados principais do ajuste parcial}
+
+\scriptref{R/26} Amostra: 10.570 observações (fundo precisa existir em $t-1$, $t$, $t+1$ --- leve
+seleção de sobreviventes, limitação documentada), 295 fundos, 70 meses.
+
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Estimador & $\widehat\lambda$ & EP (cluster fundo) & $t$ \\
+\midrule
+MQO & $0{,}0976$ & $0{,}0096$ & $10{,}2$ \\
+VI ($d_{t-1}$) & $0{,}0413$ & $0{,}0063$ & $6{,}6$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Síntese interpretativa: existe reversão ao alvo estrutural, ela é \emph{lenta} (4\% da distância
+por mês na leitura agregada; $\approx18\%$ na leitura \emph{within}), e isso \textbf{reconcilia
+todo o resto do trabalho} --- com $\lambda$ pequeno, o peso é quase martingale, a ingênua vence no
+curto prazo, e o fator estrutural descreve o \emph{destino} de longo prazo, não o movimento de
+curto prazo.
+
+% ======================================================================
+\section{A série do erro $\widehat u$ e a regra de decisão recursiva}
+\label{sec:decisao}
+
+\subsection{A série do erro de previsão}
+
+Com $\lambda$ estimado, o erro de previsão do ajuste parcial é
+$\widehat u_{t+1} = \Delta w_{t+1} - \widehat\lambda\,d_t$. Caracterizamos a série (média entre
+fundos, mês a mês) \scriptref{R/30}: média do painel $0{,}0002$ (das médias mensais, $0{,}0004$)
+--- sem viés; desvio-padrão do painel $0{,}015$; autocorrelação da série mensal $-0{,}16$
+(levemente negativa, típica de sobre-reação/microestrutura); Dickey--Fuller $-9{,}6$ ---
+estacionariedade rejeitada com folga enorme. É o que se exige de um erro de previsão saudável:
+centrado, estável, sem memória explorável óbvia. As duas versões ($\lambda$ MQO e VI) dão o mesmo
+quadro, porque diferem só por $(\lambda^{MQO}-\lambda^{VI})\,d_t$, que é pequeno.
+
+\subsection{A regra de decisão sob opacidade}
+
+\oquee O exercício operacional: a cada origem $t$ (a partir do mês 24), reestimar $\lambda$
+\emph{só com dados até} $t$ (MQO e VI), prever $\widehat w_{t+h}$ pela fórmula \eqref{eq:hstep}
+nos horizontes $h=1$ e $h=3$ (o da opacidade), e comparar com a ingênua. Sem \emph{look-ahead}:
+verificamos linha a linha que o treino usa apenas pares concluídos até a origem (a padronização
+global das características não vaza porque transformação afim não muda valores ajustados de
+regressão com intercepto).
+
+\resultados RMSE fora da amostra \scriptref{R/30}:
+
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Horizonte & Ingênua & Aj.\ parcial ($\lambda$ MQO) & Aj.\ parcial ($\lambda$ VI) \\
+\midrule
+$h=1$ ($n=8.002$) & $0{,}01635$ & $0{,}01607$ & $0{,}01624$ \\
+$h=3$ ($n=7.456$) & $0{,}02196$ & $0{,}02177$ & $0{,}02163$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Diferente dos modelos M1/M2 (que \emph{substituíam} a âncora $w_t$ e perdiam feio), o ajuste
+parcial \emph{mantém} a âncora e soma um empurrão pequeno na direção do alvo --- e os números
+ficam do lado certo em todas as células (melhora de $0{,}7\%$ a $1{,}8\%$ no RMSE).
+
+\subsection{Diebold--Mariano: o teste que disciplina essa conclusão}
+
+\oquee Dois RMSEs diferentes podem ser sorte amostral. O teste de Diebold--Mariano (1995)
+formaliza: defina o \emph{diferencial de perda} $\delta_t = e^2_{A,t} - e^2_{B,t}$ (aqui, média
+por origem $t$ dos quadrados dos erros da ingênua menos os do ajuste parcial); sob $H_0$ de igual
+capacidade preditiva, $E[\delta_t]=0$; a estatística é $\bar\delta/\widehat{\mathrm{se}}_{HAC}(\bar\delta)
+\to N(0,1)$, com EP de longo prazo (Newey--West na série dos $\delta_t$ --- necessário porque
+previsões de $h$ passos com janelas sobrepostas geram $\delta_t$ autocorrelacionados até a ordem
+$h-1$).
+
+\resultados Calculado na revisão sobre exatamente as mesmas janelas do \texttt{R/30}: em $h=1$,
+$t_{DM}=1{,}78$ (MQO) e $2{,}04$ (VI) --- marginalmente significativo; em $h=3$, $t_{DM}=0{,}04$
+(MQO) e $0{,}92$ (VI) --- \textbf{indistinguível de zero}.
+
+\limitacoes A conclusão honesta, portanto, é mais modesta do que ``supera a ingênua'': \emph{o
+ajuste parcial nunca perde da ingênua e aponta na direção certa em todas as células, mas a única
+vantagem estatisticamente detectável está em $h=1$ --- que é justamente o horizonte infactível sob
+opacidade ---, enquanto em $h=3$, o horizonte operacional, a diferença não é significativa}. A
+redação dos documentos que afirmam superação ``pequena mas consistente, sobretudo a três meses''
+precisa ser recalibrada para isso (correção pendente; o teste já está pronto para entrar no
+\texttt{R/30}). Duas rotas para fortalecer o resultado de verdade: usar o $\lambda$ \emph{within}
+(efeito fixo) na regra de decisão, e remover o componente mecânico do preço do alvo e do erro.
+
+% ======================================================================
+\section{Fragilidades transversais e o mapa de correções}
+\label{sec:winsor}
+
+\subsection{O outlier de fluxo e a winsorização}
+
+\oquee A razão fluxo/PL tem mínimo $-63{,}99$ --- um fundo minúsculo com resgate de 64 vezes o PL
+de fim de mês (artefato de denominador: PL pequeno no dia da foto). \textbf{Winsorizar} é truncar
+os extremos nos percentis (aqui 1\% e 99\%): valores abaixo do P1 viram P1, acima do P99 viram
+P99 --- mantém a observação, remove a alavanca. Recalculando o Fama--MacBeth com fluxo
+winsorizado: o coeficiente do fluxo muda de $-0{,}0004$ para $+0{,}0018$ (continua
+não-significativo, $t=0{,}4$); os demais coeficientes não se movem na terceira casa. Ou seja: a
+conclusão ``fluxo não explica o nível'' é robusta, mas o \emph{número} reportado para o fluxo é
+refém de meia dúzia de observações extremas --- e o painel do fluxo na figura dos $\theta_t$
+(o ``vale'' isolado de 2018) é o retrato disso. \textbf{Status}: winsorização prometida nos
+textos, ainda não aplicada como padrão --- correção pendente e barata.
+
+\subsection{Mapa geral: limitação $\to$ correção $\to$ status}
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}p{5.4cm}p{5.9cm}l@{}}
+\toprule
+Limitação & Correção & Status \\
+\midrule
+EP de Fama--MacBeth assume coefs.\ independentes; autocorr.\ $0{,}7$--$0{,}8$ & Newey--West ($L=3$) em todas as tabelas & \textbf{feita} (R/24) \\
+Escala: coef.\ bruto lido como ``por d.p.''\ em versão antiga & padronização z-score + tabelas/texto refeitos & \textbf{feita} (R/24/28/29) \\
+Linear viola suporte $[0,1]$ ($2{,}5\%$ das previsões) & logit fracionário Papke--Wooldridge & \textbf{feita} (R/25) \\
+MQO enviesado no ajuste parcial (2 vieses) & VI com $d_{t-1}$, 1º estágio verificado & \textbf{feita} (R/26) \\
+Sensibilidade da VI à especificação & FE, $d_{t-2}$, $h=3$ & \textbf{feita} (R/27) \\
+NW com $L=3$ subcorrige sob $\rho\approx0{,}77$ & reportar $L=6/12$ (t caem p/ 7--9, conclusões idem) & pendente (já calculada) \\
+``Supera a ingênua'' sem teste formal & Diebold--Mariano no R/30 ($h=3$: n.s.) + reescrever & pendente (já calculada) \\
+Cluster só por fundo ignora choque comum do mês & two-way / efeito de tempo $\delta_t$ ($t\approx1{,}9$) & pendente (já calculada) \\
+Exclusão de $d_{t-1}$ frágil (heterog.\ persistente) & adotar FE+VI como baseline; reinterpretar meia-vida & pendente \\
+Kalman: $Q,R$ estimados na amostra cheia & reestimar recursivamente ou nota de rodapé & pendente \\
+Fluxo/PL com caudas extremas ($-6.399\%$) & winsorizar 1\%/99\% (testada: nada muda) & pendente \\
+Efeito mecânico do preço em $\Delta w$ e no pooled & decompor variação mecânica vs.\ ativa & agenda \\
+Margens tratadas separadamente & modelo em duas partes (\emph{hurdle}) & agenda \\
+Corte de $>3$ cotistas é convenção & sensibilidade com $>1$, $>5$, $>10$ & agenda \\
+DF sem aumentação; APE de dummy como derivada & ADF(1--2); diferença discreta & pendentes (menores) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+% ======================================================================
+\section{Síntese final: a história completa}
+
+O ponto de partida foi uma pergunta de sistema de demanda: \emph{o que explica quanto de VALE3
+cada fundo do Itaú carrega, e isso prevê alguma coisa?} A resposta veio em camadas.
+
+\begin{enumerate}[topsep=2pt,itemsep=2pt]
+\item \textbf{A demanda tem estrutura estável.} Mês após mês, por 72 meses, sem exceção: fundos
+maiores diluem, fundos com mais cotistas concentram, FICs não têm posição direta relevante. Isso
+sobrevive à forma funcional (linear vs.\ logística dão efeitos quase idênticos: $-0{,}68$,
+$+1{,}06$/$1{,}09$, $-1{,}60$/$-1{,}70$ p.p.\ por d.p.), à correção de inferência (Newey--West:
+$t\approx11$; com $L$ grande, $7$--$9$ --- sempre significativo) e à winsorização do fluxo.
+\item \textbf{As duas margens se opõem} --- quem tende a \emph{ter} (grandes, FICs) tende a ter
+\emph{pouco} --- a assinatura de diversificação, e o achado descritivo mais interessante.
+\item \textbf{Nada prevê o curto prazo.} O peso individual é quase martingale: a ingênua vence
+efeito fixo, fator e Kalman em todos os universos e horizontes, e a média histórica do próprio
+fundo perde do último valor (não há reversão ao nível do fundo detectável).
+\item \textbf{Mas existe um alvo, e o peso caminha para ele --- devagar.} O ajuste parcial
+estimado por VI dá $\lambda\approx0{,}04$/mês no agregado (meia-vida $\approx16$ meses) e
+$\approx0{,}19$/mês dentro do fundo (meia-vida $\approx3$--$4$ meses) --- a leitura \emph{within}
+é a mais defensável, dado o padrão que indica heterogeneidade persistente entre fundos. O erro de
+previsão resultante é centrado, estável e estacionário.
+\item \textbf{O ganho de previsão do ajuste parcial ainda não está demonstrado.} Ele nunca perde
+da ingênua, mas a vantagem só é estatisticamente detectável no horizonte que a opacidade torna
+infactível ($h=1$); em $h=3$ o Diebold--Mariano não rejeita igualdade. Com o teste formal, o
+cluster correto e a decomposição mecânica/ativa, essa fronteira é o próximo passo natural do
+trabalho.
+\end{enumerate}
+
+Em uma frase final: \emph{as características dizem para onde o peso vai; a inércia diz onde ele
+está; e a distância entre as duas coisas se fecha tão lentamente que explicá-la é fácil e
+lucrá-la é difícil.}
+
+% ======================================================================
+\appendix
+\section{O que cada script faz}
+
+\begin{center}\small
+\begin{tabular}{@{}lp{11.6cm}@{}}
+\toprule
+Script & Função \\
+\midrule
+R/01 & Carga e sanidade das bases CONS e SH (auditoria de colunas/linhas). \\
+R/02--R/07 & Piloto 2016: painel, fluxos, características, preço/beta, filtro de cotistas, primeira cross-section. \\
+R/10 & Painel 2016--2021 do peso (26.123 obs, 623 fundos; dedup, negativos, merge dia exato). \\
+R/11 & Fluxo líquido mensal via Informe Diário (validado ao centavo vs.\ SH em 99{,}4--99{,}8\%). \\
+R/12 & Características de fundo da SH (PL, cotistas, FIC, classificação). \\
+R/13 & Preço e beta de VALE3 (Yahoo, validado vs.\ B3; beta móvel 252 pregões; dois \emph{timings}). \\
+R/14 & Filtro $>3$ cotistas + 72 cross-sections + pooled; salva os $\theta_t$. \\
+R/15 & Validação global do painel multi-ano (zero erros). \\
+R/16 & Dinâmica dos $\theta_t$: autocorrelação, AR(1), Dickey--Fuller, pseudo-OOS, figura. \\
+R/17--R/18 & Previsão do peso: fator+RW/AR1; efeito fixo; FE+Kalman; modelo de variação. \\
+R/19 & Horizontes $h=1$ e $h=3$ (opacidade). \\
+R/20 & Margem extensiva (painel com zeros, logit de posse, entradas/saídas). \\
+R/21--R/22 & Previsão restrita a fundos de ações; previsão da posse em $h=1,3$. \\
+R/23 & Estatísticas descritivas (Tabela 1) e correlações. \\
+R/24 & Padronização + Fama--MacBeth com Newey--West (clássico vs.\ corrigido). \\
+R/25 & Logit fracionário mês a mês + APEs + comparação com o linear. \\
+R/26 & Ajuste parcial: MQO vs.\ VI ($d_{t-1}$), 1º estágio, cluster por fundo. \\
+R/27 & Robustez do $\lambda$: efeito fixo, $d_{t-2}$, horizonte 3 meses. \\
+R/28 & Conferência de escala (tabelas padronizadas exatas). \\
+R/29 & Figura dos $\theta_t$ padronizados. \\
+R/30 & Série do erro $\widehat u$ (média, DP, autocorrelação, DF) + decisão recursiva OOS. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Referências}
+\small
+\begin{description}[topsep=2pt,itemsep=1pt]
+\item Cameron, A.\ C.; Gelbach, J.; Miller, D. Robust inference with multiway clustering.
+\emph{Journal of Business \& Economic Statistics}, 29(2):238--249, 2011.
+\item Coval, J.; Stafford, E. Asset fire sales (and purchases) in equity markets.
+\emph{Journal of Financial Economics}, 86(2):479--512, 2007.
+\item Dickey, D.; Fuller, W. Distribution of the estimators for autoregressive time series with a
+unit root. \emph{Journal of the American Statistical Association}, 74:427--431, 1979.
+\item Diebold, F.; Mariano, R. Comparing predictive accuracy. \emph{Journal of Business \&
+Economic Statistics}, 13(3):253--263, 1995.
+\item Fama, E.; MacBeth, J. Risk, return, and equilibrium: empirical tests. \emph{Journal of
+Political Economy}, 81(3):607--636, 1973.
+\item Gabaix, X.; Koijen, R. In search of the origins of financial fluctuations: the inelastic
+markets hypothesis. \emph{NBER WP} 28967, 2021.
+\item Harvey, A. \emph{Forecasting, Structural Time Series Models and the Kalman Filter}.
+Cambridge University Press, 1989.
+\item Koijen, R.; Yogo, M. A demand system approach to asset pricing. \emph{Journal of Political
+Economy}, 127(4):1475--1515, 2019.
+\item Lou, D. A flow-based explanation for return predictability. \emph{Review of Financial
+Studies}, 25(12):3457--3489, 2012.
+\item Newey, W.; West, K. A simple, positive semi-definite, heteroskedasticity and autocorrelation
+consistent covariance matrix. \emph{Econometrica}, 55(3):703--708, 1987; e Automatic lag selection
+in covariance matrix estimation. \emph{Review of Economic Studies}, 61(4):631--653, 1994.
+\item Papke, L.; Wooldridge, J. Econometric methods for fractional response variables with an
+application to 401(k) plan participation rates. \emph{Journal of Applied Econometrics},
+11(6):619--632, 1996.
+\end{description}
+
+\end{document}
