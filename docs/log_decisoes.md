@@ -311,3 +311,72 @@ Investigação completa dos fund-months onde `SH.APLICAÇÃO` (somada no mês) d
   fica apenas **registrada** aqui para eventual tratamento futuro.
 - Ao estender para 2017–2021: rodar o mesmo cruzamento e drills; esperar mais casos
   dos padrões A e B; manter a mesma política.
+
+---
+
+## Apêndice B — Revisão crítica (06/07/2026) e implementação das correções (09/07/2026)
+
+### B.0 — A revisão
+Pedido ao Claude (Fable 5): revisão crítica independente do projeto, reexecutando
+todo o pipeline R/14–R/30 e recompilando os 5 documentos LaTeX (não confiar só na
+leitura). Saída: `correções_fable.pdf` na raiz do repo. Reprodutibilidade: 100% dos
+números batem. Achados críticos (C1–C3), importantes (I1–I6) e menores (M1–M15)
+catalogados com file:linha e correção concreta. Veredito: sólido em dados/pipeline,
+frágil em inferência/retórica do resultado-título (ajuste parcial "supera a
+ingênua").
+
+### B.1 — Implementação (09/07/2026)
+Decisão do João: implementar TODAS as correções do Fable + os pontos de uma nova
+folha manuscrita do Maurício (ver `anotacoes_orientador_e_ideias.md`, seção 4), num
+único documento novo `tcc I.pdf`, tudo de uma vez (não passo a passo, exceção à
+regra de ouro do projeto — decisão explícita do João nesta rodada). Antes de
+implementar, o Claude usou `AskUserQuestion` para confirmar 4 pontos caros/ambíguos
+da nota manuscrita (ampliar p/ multiativo? qual a fonte "NEFIM"? elasticidade
+agora ou agenda? ritmo de execução?) — todos confirmados pelo João.
+
+**Scripts novos: R/31 a R/36.** Ver `anotacoes_orientador_e_ideias.md` seção 4 para
+o resumo de cada um. Detalhe técnico descoberto nesta rodada: `cons_YYYY.csv` (a
+base bruta da CVM usada pelo projeto) JÁ VEM pré-filtrada para `Tipo_Ativo=="Ações"`
+— não é a composição completa dos fundos (que teria renda fixa, derivativos, cotas
+de outros fundos etc.). Isso foi verificado (`stopifnot(all(cv$Tipo_Ativo=="Ações"))`
+no R/31) e simplifica a expansão multiativo: não precisa do truque de leitura em
+blocos do R/10 (que só existia para isolar um ativo por grepl de texto); `fread`
+direto funciona (2,8 milhões de linhas em 0,8s).
+
+**Achado de qualidade de dados (R/31):** 3.303 linhas de 6,13 milhões (0,05%) são
+posições em "Ação de Companhia Fechada" (empresas de capital fechado) — nomes com
+vírgula corrompem o parsing CSV bruto da CVM (derrama campo), e mesmo quando
+parseiam corretamente são um tipo de ativo fora do escopo do projeto (sem preço de
+mercado). Descartadas, com auditoria.
+
+**Correções do Fable implementadas (R/36), resumo dos números finais:**
+- C1 (Diebold-Mariano): h=1 marginalmente significativo (t=1,78–2,04); h=3 (o
+  horizonte da opacidade) NÃO significativo (t=0,04–0,92). Mantido como achado
+  honesto — não escondido.
+- C2 (cluster): cluster por fundo dá t=6,6; cluster por mês ou two-way derruba p/
+  t≈1,8–1,9. MAS a correção estrutural (efeito de tempo δ_t, que absorve o choque
+  comum em vez de só alargar o EP) RECUPERA t=6,9 — achado novo desta rodada, mais
+  forte que o diagnóstico da revisão original.
+- I1 (FE+VI): reapresentado como especificação co-principal (λ=0,185, t=9,5).
+- I2 (NW sensib.): t caem de ~11 (L=3) para ~7-8 (L=12); conclusões qualitativas
+  intactas.
+- I5 (winsor): fluxo winsorizado 1%/99% agora é a especificação principal; muda o
+  sinal do coef. de fluxo (ainda não significativo) e nada mais.
+- I6 (F efetivo clusterizado): F=39.793 (OLS) → F efetivo=8.012 (cluster) — ainda
+  muito acima de qualquer limiar de instrumento fraco.
+- M1 (APE discreto do FIC): -0,0160 (derivada, usado até agora) → -0,0194
+  (diferença discreta, correto) — diferença de ~20%.
+
+**Extensões novas (não estavam na revisão do Fable, vieram da nota do orientador):**
+Arellano-Bond (R/35), beta de fundo (R/33), fatores NEFIN (R/34), multiativo
+(R/31-32) — ver seção 4 do `anotacoes_orientador_e_ideias.md` para os números.
+
+**Documento final desta rodada:** `tcc I.pdf` (+ `.tex`) na raiz do repo, 22
+páginas, substitui as versões anteriores como documento corrente. Compila limpo
+(1 overfull de 3,66pt, imperceptível; 0 referências indefinidas). Achado que só
+apareceu DEPOIS de eu já ter escrito a primeira versão deste log: o Arellano-Bond
+colapsado inverte o sinal de λ (ver seção 4 acima) — o `tcc I.pdf` reporta isso
+com honestidade (Seção 4.7 "oito especificações, sete confiáveis") em vez de
+esconder ou escolher só o número que "dá certo". Console verificado numericamente
+contra os CSVs salvos antes de escrever cada número no `.tex` (nenhum número foi
+copiado sem conferência).

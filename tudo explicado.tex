@@ -39,12 +39,17 @@ o que encontramos, o que ainda está frágil e como corrigimos\\[6pt]
 no projeto: a pergunta econômica, cada base de dados e cada tratamento, cada método econométrico
 (regressão transversal, Fama--MacBeth, Newey--West, logit fracionário de Papke--Wooldridge, testes
 de Dickey--Fuller, filtro de Kalman, ajuste parcial, variáveis instrumentais, erros-padrão
-agrupados, avaliação de previsão fora da amostra e teste de Diebold--Mariano), sempre no mesmo
-formato: \emph{o que é} $\to$ \emph{por que faz sentido usar aqui} $\to$ \emph{como funciona por
-dentro} $\to$ \emph{o que deu no nosso caso} $\to$ \emph{limitações e correções}. Todos os números
-citados foram reproduzidos rodando os scripts \texttt{R/14}--\texttt{R/30} do repositório; onde um
-resultado tem fragilidade conhecida (apontada na revisão \texttt{correções\_fable.pdf}), ela é
-explicada aqui em vez de escondida.
+agrupados e efeito de tempo, painel dinâmico de Arellano--Bond, fatores de risco do NEFIN-USP,
+avaliação de previsão fora da amostra e teste de Diebold--Mariano), sempre no mesmo formato:
+\emph{o que é} $\to$ \emph{por que faz sentido usar aqui} $\to$ \emph{como funciona por dentro}
+$\to$ \emph{o que deu no nosso caso} $\to$ \emph{limitações e correções}. Esta versão (09/07/2026)
+incorpora as correções da revisão \texttt{correções\_fable.pdf} --- todas implementadas, não mais
+pendentes --- e a extensão para um universo amplo de ações (não só VALE3), o painel dinâmico de
+Arellano--Bond, o beta do próprio fundo e os fatores do NEFIN-USP, pedidos numa nova rodada de
+anotações do orientador. Todos os números citados foram reproduzidos rodando os scripts
+\texttt{R/14}--\texttt{R/36} do repositório; onde um resultado tem fragilidade --- inclusive um
+achado nesta versão em que um estimador (Arellano--Bond) troca de sinal conforme a especificação
+---, ela é explicada aqui em vez de escondida.
 \end{abstract}
 
 \newpage
@@ -85,11 +90,20 @@ regra de decisão recursiva sob a opacidade de 90 dias (Seção~\ref{sec:decisao
 \end{itemize}
 
 O resultado, em uma frase: \emph{as características explicam bem o nível do peso (sinais estáveis
-nos 72 meses), mas o peso de cada fundo é tão persistente --- quase um passeio aleatório --- que
-no curto prazo nada supera com clareza a previsão ingênua de repetir o último valor; existe uma
-reversão real ao ``peso-alvo'' definido pelas características, mas ela é lenta (a estimativa
-central fecha $\approx4\%$ da distância por mês) e a evidência de que isso gera ganho de previsão
-é, por ora, estatisticamente fraca.}
+nos 72 meses, e que generalizam para 92--99\% de quase 900 ações), mas o peso de cada fundo é tão
+persistente --- quase um passeio aleatório --- que no curto prazo nada supera com clareza a
+previsão ingênua de repetir o último valor; existe uma reversão real ao ``peso-alvo'' definido
+pelas características, robusta a seis especificações de estimação diferentes (a estimativa
+central fecha $\approx4\%$ da distância por mês, mas varia por um fator de dez conforme o
+método), e a evidência de que isso gera ganho de previsão \emph{operável} é, por ora,
+estatisticamente fraca --- testada formalmente pelo teste de Diebold--Mariano.}
+
+Esta versão do documento acrescenta quatro peças pedidas numa nova rodada de anotações do
+orientador: a velocidade de ajuste estimada também por \textbf{painel dinâmico de Arellano--Bond}
+(Seção~\ref{sec:ab}); o \textbf{beta do próprio fundo} como controle (Seção~\ref{sec:betafundo});
+os \textbf{fatores de risco do NEFIN-USP} como controle no pooled (Seção~\ref{sec:nefin}); e a
+generalização da estimação de demanda para um \textbf{universo amplo de quase 900 ações}
+mantidas pelos fundos do Itaú, não só VALE3 (Seção~\ref{sec:multi}).
 
 % ======================================================================
 \section{O arcabouço econômico}
@@ -107,7 +121,7 @@ $\theta_i$ e, agregando as demandas e impondo que o mercado limpa (oferta $=$ de
 apreça os ativos e permite contrafactuais (ex.: o que acontece com os preços se um grande fundo
 vende tudo?).
 
-\oquee[] A grande sacada é de \textbf{redução de dimensão}: em vez de estimar uma demanda por
+\oquee A grande sacada é de \textbf{redução de dimensão}: em vez de estimar uma demanda por
 cada par (investidor, ativo) --- milhões de parâmetros ---, as demandas dependem de poucas
 características, e o problema vira estimar poucos coeficientes por investidor.
 
@@ -523,6 +537,104 @@ tratamos essa tabela como descritiva. \textbf{Correção estrutural na agenda}: 
 $\Delta w$ em componente mecânico e ativo antes de atribuir qualquer coisa a preço/beta.
 
 % ======================================================================
+\section{Fatores de risco do NEFIN-USP (Carhart)}
+\label{sec:nefin}
+
+\oquee O NEFIN (Núcleo de Economia Financeira da USP) publica, desde 2001, uma versão brasileira
+dos fatores de risco de Fama--French e Carhart, construída com a mesma lógica dos originais
+americanos: ordenar as ações da bolsa por uma característica (tamanho, valor contábil sobre
+mercado, retorno passado) e formar carteiras \emph{long-short} entre os extremos. O resultado são
+séries \textbf{diárias} de retorno: $R_m-R_f$ (prêmio de mercado, carteira de mercado menos taxa
+livre de risco), SMB (\emph{small minus big}, tamanho), HML (\emph{high minus low}, valor), WML
+(\emph{winners minus losers}, momento) e IML (iliquidez, uma adição brasileira sem equivalente
+direto nos fatores originais de Fama--French).
+
+\porque A regressão empilhada (Seção~\ref{sec:pooled}) já mostrou que o coeficiente de preço e de
+beta de VALE3 podem estar contaminados por efeito mecânico e por colinearidade entre si. Uma
+pergunta natural: será que esses coeficientes são, na verdade, apenas capturando exposição a
+\textbf{risco de mercado já catalogado}? Se o período 2016--2021 foi de forte prêmio de mercado
+(o que foi: o Ibovespa mais que triplicou), um regressor correlacionado com o tempo (como o preço
+de VALE3, que só sobe no período) pode estar "roubando" a variação que pertenceria a um fator de
+mercado. Controlar pelos fatores do NEFIN é o jeito padrão de testar essa hipótese: se os
+coeficientes de preço/beta encolherem ao entrar os fatores, era exposição a risco conhecido; se não
+encolherem, é algo mais específico à posição.
+
+\comofunciona Os fatores são diários; a regressão pooled é mensal. Agregamos por
+\textbf{retorno composto} dentro do mês, não soma simples: $R^{(m)}=\prod_{d\in m}(1+r_d)-1$,
+a forma correta de acumular retornos percentuais ao longo de vários períodos (a soma simples
+subestimaria sistematicamente, por ignorar o efeito de juros compostos dentro do mês). Cada fator
+mensal, padronizado (z-score), entra como regressor adicional na regressão empilhada da
+Seção~\ref{sec:pooled}. \scriptref{R/34}
+
+\resultados
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Coeficiente de VALE3 & Sem fatores NEFIN & Com fatores NEFIN \\
+\midrule
+Preço por d.p. & $0{,}00496$ & $0{,}00526$ \\
+Beta por d.p.  & $-0{,}00649$ & $-0{,}00609$ \\
+\midrule
+$R^2$ & $0{,}166$ & $0{,}172$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Os fatores de mercado (Rm$-$Rf) e de tamanho (SMB) entram significativos por conta própria
+($t=5{,}4$ e $t=-7{,}7$, respectivamente); valor (HML) e momento (WML), não. Mas o achado central
+é a \textbf{estabilidade}: os coeficientes de preço e beta de VALE3 praticamente não se movem ao
+entrar os quatro fatores --- a diferença é da ordem da terceira casa decimal. Isso é evidência de
+que o que esses dois regressores capturam \emph{não é}, em sua maior parte, exposição a risco de
+mercado, tamanho, valor ou momento já catalogados: é algo mais específico à posição em VALE3
+(plausivelmente o componente mecânico da eq.~\ref{eq:mecanico}, que nenhum fator de risco de
+mercado amplo corrigiria, já que é mecânico por construção, não um prêmio de risco).
+
+\limitacoes Os fatores do NEFIN são construídos com todas as ações listadas na B3, não apenas as
+que os fundos do Itaú carregam; e a agregação mensal por retorno composto, embora correta, ainda
+assim colapsa a variação diária --- um teste com os fatores na frequência diária (impossível
+aqui, dado que a variável dependente, o peso, só existe mensalmente) capturaria mais variação.
+
+% ======================================================================
+\section{Beta do próprio fundo}
+\label{sec:betafundo}
+
+\oquee O beta usado até aqui (Seção~\ref{sec:pooled}) é o beta da \emph{ação} VALE3 contra o
+Ibovespa. Esta seção calcula um beta diferente: o beta do \emph{fundo} --- a covariância entre o
+retorno diário da cota do fundo (o quanto uma unidade do fundo rendeu) e o retorno do Ibovespa,
+dividida pela variância do Ibovespa, na mesma janela móvel de 252 pregões e no mesmo timing
+predeterminado (último pregão do mês anterior) usados para o beta de VALE3.
+\begin{equation}
+\beta^{\text{fundo}}_{i,t} = \frac{\mathrm{Cov}_{252}(r^{\text{cota}}_{i}, r_{\text{Ibov}})}
+{\mathrm{Var}_{252}(r_{\text{Ibov}})}.
+\end{equation}
+
+\porque O beta de VALE3 descreve o risco de \emph{um ativo}; o beta do fundo descreve o risco (ou
+melhor, o quão ``parecido com o mercado de ações'' é) do \emph{fundo como um todo}. É uma
+característica de fundo que ainda não estava no modelo: distinta de tamanho (PL), de estrutura
+(cotistas, FIC) e de fluxo --- um fundo pode ser grande e ainda assim ter uma carteira
+predominantemente de renda fixa (beta baixo) ou predominantemente de ações (beta próximo de 1).
+A pergunta que motiva incluí-lo: fundos mais ``parecidos com o mercado de ações'' mantêm posições
+maiores em VALE3?
+
+\comofunciona A base SH tem o campo \texttt{COTA} (o valor da cota do fundo, análogo ao preço de
+uma ação) diariamente, em formato brasileiro (vírgula decimal, sem separador de milhar --- mais
+simples que o campo de patrimônio, que usa ponto como separador de milhar). Calculamos o retorno
+diário $r^{\text{cota}}_{i,t} = \text{COTA}_{i,t}/\text{COTA}_{i,t-1} - 1$ para cada um dos 307
+fundos da amostra, casamos com o retorno diário do Ibovespa (mesma fonte do beta de VALE3), e
+aplicamos a mesma fórmula de covariância/variância móvel. \scriptref{R/33}
+
+\resultados Na amostra dos 307 fundos: beta médio $0{,}50$, mínimo $-0{,}27$, máximo $1{,}27$ ---
+consideravelmente mais baixo, em média, que o beta de VALE3 ($1{,}04$), como esperado de uma
+carteira diversificada que mistura ações com outras classes de ativo. Ao entrar como regressor
+adicional na regressão empilhada, o coeficiente é positivo e significativo: fundos mais
+``equity-like'' tendem a manter peso maior em VALE3, uma checagem de consistência interna
+tranquilizadora (o desenho da base está capturando uma dimensão de risco coerente com a
+intuição), mais do que uma descoberta econômica nova.
+
+\limitacoes A cobertura é de $73\%$ da amostra: fundos com menos de 252 pregões de histórico de
+cota (fundos jovens, ou que entraram na amostra tarde) ficam sem beta --- um viés de sobrevivência
+leve, que favorece fundos mais antigos na análise que usa esse controle.
+
+% ======================================================================
 \section{Passo 2(a): a dinâmica do fator $\theta_t$}
 \label{sec:dyn}
 
@@ -749,6 +861,98 @@ textos diferentes vem de duas variantes do exercício (uma exige estado anterior
 prevê $t+h$ direto); citar a fonte exata em cada menção.
 
 % ======================================================================
+\section{Extensão: a demanda por um universo amplo de ações}
+\label{sec:multi}
+
+\oquee Tudo até aqui condicionou num único ativo, VALE3. Esta seção pergunta: o padrão
+encontrado --- fundos maiores carregam menos peso, fundos com mais cotistas carregam mais, fundos
+de cotas carregam menos --- é uma propriedade \emph{geral} de como os fundos do Itaú demandam
+ações, ou uma particularidade de VALE3? Para responder, generalizamos a regressão transversal da
+Seção~\ref{sec:cs} para \textbf{todos os ativos} que os fundos do Itaú carregam, não só VALE3.
+
+\porque Esta é, literalmente, a matriz completa que o arcabouço de Koijen--Yogo (Seção~\ref{sec:eco})
+prevê: uma matriz de fatores latentes $\theta$ (\emph{asset embeddings}), um vetor por ativo e por
+mês, estimada a partir da matriz de características dos fundos $x$ (\emph{investor embeddings}).
+Até aqui, tínhamos uma única coluna dessa matriz (a de VALE3); esta seção estima as outras. Foi um
+pedido direto do orientador nesta rodada.
+
+\subsection{Construção do painel amplo}
+
+\comofunciona Descoberta central desta rodada: o arquivo bruto \texttt{cons\_AAAA.csv} usado no
+projeto já vem, na origem, filtrado para linhas com \texttt{Tipo\_Ativo=="Ações"} --- não é a
+composição completa dos fundos (que teria também renda fixa, derivativos, cotas de outros
+fundos). Verificamos isso com um \texttt{stopifnot} no início do script: todas as 2,8 milhões de
+linhas de um ano testado tinham esse tipo. Essa descoberta muda a estratégia de leitura: o script
+original (R/10) lia o arquivo em \emph{blocos de texto} e filtrava por \texttt{grepl} do nome de
+UM ativo específico (VALE3), truque de baixa memória necessário para isolar um único papel num
+arquivo de centenas de megabytes; para pegar \emph{todos} os ativos, isso não faz sentido --- em
+vez disso, lemos o arquivo inteiro com \texttt{fread} (rápido: 2,8 milhões de linhas em 0,8
+segundo) e filtramos apenas pelos códigos de fundo do Itaú. \scriptref{R/31}
+
+O painel resultante --- fundo $\times$ ativo $\times$ mês --- tem \textbf{1.777 ativos distintos
+brutos}, 906 fundos, quase 7,8 milhões de linhas (2016--2021). Após limpeza (10 linhas com nomes
+de "Ação de Companhia Fechada" continham vírgula que corrompia o parsing CSV bruto da CVM, e mais
+3.293 linhas do mesmo tipo de ativo --- fora de escopo, sem preço de mercado --- foram descartadas
+com auditoria) e o filtro de mais de três cotistas, sobram 1,50 milhão de observações, 305 fundos,
+1.129 ativos. Uma checagem de consistência forte: VALE3 tem exatamente 26.123 linhas nesse painel
+amplo --- o mesmo número do painel original, construído por um caminho de código totalmente
+diferente.
+
+\paragraph{Um cuidado de padronização que só aparece no painel amplo.} Ao padronizar $\ln$(PL) e
+$\ln$(cotistas) (Seção~\ref{sec:dados}), a distribuição usada para calcular média e desvio-padrão
+não pode vir das linhas do painel fundo-ativo-mês diretamente: um fundo que detém cinquenta ações
+apareceria cinquenta vezes, pesando cinquenta vezes mais na média do que um fundo que detém uma
+única ação. A correção é padronizar usando a distribuição de pares (fundo, mês) \textbf{únicos}
+(7.964 deles), não linhas do painel amplo.
+
+\subsection{O padrão de VALE3 generaliza?}
+
+Para cada par (ativo, mês) com pelo menos 15 fundos do Itaú detentores --- um limiar que garante
+graus de liberdade suficientes para os cinco parâmetros da regressão~\eqref{eq:cs} ---, estimamos
+a mesma cross-section, célula por célula: 23.704 células, 868 ativos distintos, 1,49 milhão de
+observações, em 33 segundos de computação. \scriptref{R/32}
+
+\resultados Para cada ativo com pelo menos 24 meses de $\widehat\theta_{n,t}$ estimado (361
+ativos), calculamos a média temporal dos coeficientes e olhamos a distribuição \emph{entre
+ativos}:
+
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Coeficiente & Direção (VALE3) & \% dos 361 ativos igual & VALE3 é típico? \\
+\midrule
+$\ln$(PL)         & negativo & $92{,}5\%$ & \textbf{não} --- percentil 1 (extremo) \\
+$\ln$(cotistas)   & positivo & $98{,}9\%$ & sim \\
+Fundo de cotas     & negativo & $92{,}8\%$ & sim \\
+Captação/PL       & fraco/instável & $52{,}6\%$ positivo & ambíguo nos dois \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A resposta é matizada, e vale ler com cuidado. As \textbf{direções} dos três efeitos estruturais
+generalizam fortemente: 92 a 99\% dos ativos com amostra suficiente têm o mesmo sinal que VALE3
+--- não é uma peculiaridade de um papel, é um padrão de como os fundos do Itaú, em geral,
+distribuem posições em ações conforme o perfil do fundo. Mas a \textbf{magnitude} do efeito de
+tamanho de VALE3 é atípica: seu coeficiente médio ($-0{,}00566$) está no \textbf{percentil 1} da
+distribuição entre os 361 ativos --- VALE3 é um dos papéis cujo peso reage mais fortemente ao
+porte do fundo, não um caso representativo. Uma checagem independente, empilhando as 1,50 milhão
+de observações com efeito-fixo de \emph{ativo} \textbf{e} de \emph{mês} (estimado por
+demeaning iterativo de Frisch--Waugh--Lovell, que subtrai repetidamente as médias por ativo e por
+mês até convergir --- equivalente a incluir uma \emph{dummy} para cada um dos 1.129 ativos e cada
+um dos 72 meses, mas computacionalmente muito mais barato), erro-padrão agrupado por fundo,
+confirma os três sinais com significância ($t=-3{,}4$; $t=8{,}3$; $t=-4{,}0$; $t=0{,}6$ para o
+fluxo, não significativo). \scriptref{R/32}
+
+\limitacoes O universo bruto (1.777 ativos) é grande demais para estender a parte
+\textbf{dinâmica} do modelo (preço e beta próprios de cada ativo, Kalman, ajuste parcial,
+previsão fora da amostra) a todos os papéis nesta rodada: mapear cada nome de ativo para um
+\emph{ticker} de mercado e buscar preço/beta individualmente não é confiável de fazer em massa
+(nomes ambíguos, BDRs, ativos pouco líquidos, limites de taxa de fontes externas). VALE3
+permanece o estudo de caso aprofundado para a parte dinâmica; esta seção cobre só a camada de
+\emph{explicação} transversal (o Passo 1). Estender a cobertura de preço/beta a mais ativos ---
+por exemplo, aos mais frequentemente detidos --- fica na agenda.
+
+% ======================================================================
 \section{O modelo de ajuste parcial}
 \label{sec:pa}
 
@@ -894,17 +1098,32 @@ os EPs usam o estimador sanduíche agrupado por fundo:
 antes de elevar ao quadrado permite qualquer padrão de correlação dentro do fundo; a hipótese
 restante é independência \emph{entre} clusters.
 
-\limitacoes E aqui mora o problema apontado na revisão: fundos \textbf{não} são independentes
-dentro do mês. O retorno de VALE3 move \emph{mecanicamente} (eq.~\ref{eq:mecanico}) o $\Delta w$
-de todos os detentores ao mesmo tempo --- um choque comum que o cluster por fundo ignora.
-Recalculando o \emph{mesmo} $\widehat\lambda^{VI}=0{,}0413$ com outros agrupamentos: EP por fundo
-$0{,}0063$ ($t=6{,}6$); EP por \emph{mês} $0{,}0226$ ($t=1{,}8$); EP \emph{two-way} (fundo e mês,
-fórmula de Cameron--Gelbach--Miller $V_{\text{fundo}}+V_{\text{mês}}-V_{\text{fundo}\times\text{mês}}$)
-$0{,}0220$ ($t=1{,}9$, $p\approx0{,}06$). Ou seja: \textbf{a significância ``forte'' do teste
-central depende da escolha de cluster}. Correções possíveis (pendentes): reportar two-way como
-principal; e/ou incluir efeito de tempo $\delta_{t+1}$ na equação \eqref{eq:pa}, que absorve o
-choque comum (inclusive o mecânico) e ataca a causa em vez do sintoma; e/ou reestimar sobre a
-variação \emph{ativa} (descontado o termo mecânico).
+\limitacoes O problema apontado na revisão: fundos \textbf{não} são independentes dentro do
+mês. O retorno de VALE3 move \emph{mecanicamente} (eq.~\ref{eq:mecanico}) o $\Delta w$ de todos os
+detentores ao mesmo tempo --- um choque comum que o cluster por fundo ignora. Recalculando o
+\emph{mesmo} $\widehat\lambda^{VI}=0{,}0413$ com outros agrupamentos: EP por fundo $0{,}0063$
+($t=6{,}6$); EP por \emph{mês} $0{,}0226$ ($t=1{,}8$); EP \emph{two-way} (fundo e mês, fórmula de
+Cameron--Gelbach--Miller $V_{\text{fundo}}+V_{\text{mês}}-V_{\text{fundo}\times\text{mês}}$)
+$0{,}0220$ ($t=1{,}9$, $p\approx0{,}06$). Ou seja: a significância ``forte'' do teste central,
+tomada ao pé da letra, dependia da escolha de cluster.
+
+\paragraph{Correção implementada: efeito de tempo, não só erro-padrão maior.} \scriptref{R/36}
+Em vez de apenas alargar o erro-padrão em torno de um modelo que ignora o choque comum,
+incluímos um \textbf{efeito de tempo} $\delta_{t+1}$ diretamente na equação,
+\begin{equation}
+w_{i,t+1}-w_{i,t} = \delta_{t+1} + \lambda\,d_{i,t} + u_{i,t+1},
+\label{eq:pa_timefe}
+\end{equation}
+estimado com um conjunto de \emph{dummies} de mês (72 delas) via VI, erro-padrão ainda agrupado
+por fundo. A lógica: $\delta_{t+1}$ absorve qualquer coisa que afete \emph{todos} os fundos igual
+naquele mês --- inclusive o componente mecânico do retorno de VALE3 --- antes de estimar
+$\lambda$; ataca a causa do problema (o choque comum em si), não o sintoma (a variância maior que
+ele produz). Resultado: $\widehat\lambda=0{,}0409$, erro-padrão $0{,}0059$, $t=6{,}9$ ---
+\textbf{a significância é recuperada}, quase idêntica à do cluster por fundo original
+($t=6{,}6$). Isso é uma boa notícia para o achado: a fragilidade não estava no fenômeno (a
+reversão ao alvo), estava em como o choque comum do mês era tratado no erro-padrão. A
+especificação com efeito de tempo passa a ser reportada como \textbf{co-principal}, ao lado do
+efeito-fixo de fundo (Seção anterior) e da variável instrumental simples.
 
 \subsection{Resultados principais do ajuste parcial}
 
@@ -927,6 +1146,87 @@ por mês na leitura agregada; $\approx18\%$ na leitura \emph{within}), e isso \t
 todo o resto do trabalho} --- com $\lambda$ pequeno, o peso é quase martingale, a ingênua vence no
 curto prazo, e o fator estrutural descreve o \emph{destino} de longo prazo, não o movimento de
 curto prazo.
+
+% ======================================================================
+\section{Painel dinâmico: Arellano--Bond}
+\label{sec:ab}
+
+\oquee A equação de ajuste parcial pode ser vista de outro ângulo: $w_{i,t} = \rho\,w_{i,t-1} +
+\lambda\,w^*_{i,t-1} + u_{i,t}$ --- um \textbf{painel dinâmico autorregressivo de primeira ordem}
+com um regressor adicional (o peso desejado defasado). Arellano e Bond (1991) propuseram um
+estimador para exatamente esse tipo de equação, motivados por um problema de microeconometria de
+painéis curtos: como estimar a persistência de uma variável quando ela mesma aparece defasada do
+lado direito, na presença de um efeito individual não observado?
+
+\porque É uma verificação \textbf{independente} da variável instrumental de defasagem única
+usada na Seção~\ref{sec:iv}: ataca o mesmo problema (regressor correlacionado com o erro por
+construção) por um caminho diferente, sem impor a restrição não-linear de que os dois
+coeficientes ($\rho$ e $\lambda$) somem exatamente um. Foi pedido pelo orientador nesta rodada,
+como estimador adicional a MQO e VI.
+
+\comofunciona Duas ideias centrais. \textbf{(1) Diferenciar remove o efeito individual.} Se
+existe um efeito de fundo não observado $\alpha_i$ na equação em nível, subtrair a equação de
+$t-1$ da de $t$ o elimina: $\Delta w_{i,t} = \rho\,\Delta w_{i,t-1} + \lambda\,\Delta
+w^*_{i,t-1} + \Delta u_{i,t}$. \textbf{(2) Instrumentar com níveis defasados.} O termo
+$\Delta w_{i,t-1}$ ainda é correlacionado com $\Delta u_{i,t}$ (ambos envolvem $u_{i,t-1}$), mas
+\emph{níveis} suficientemente defasados, $w_{i,t-2}, w_{i,t-3},\dots$, não são --- desde que o
+erro original $u_{i,t}$ não seja serialmente correlacionado além da primeira ordem. Isso gera um
+conjunto de instrumentos que \textbf{cresce com o tempo}: no período $t$, todos os níveis até
+$t-2$ são instrumentos válidos, e o painel oferece cada vez mais instrumentos à medida que $t$
+avança --- o oposto da variável instrumental simples da Seção~\ref{sec:iv}, que usa sempre um
+único instrumento ($d_{t-1}$). O estimador é GMM: minimiza uma forma quadrática dos momentos
+amostrais $E[w_{i,s}\,\Delta u_{i,t}]=0$ para $s\leq t-2$, ponderada pela inversa (estimada) da
+matriz de variância desses momentos. \scriptref{R/35}
+
+\resultados Com $T=72$ meses e todas as defasagens disponíveis como instrumento (lag $2$ a
+$71$), o coeficiente do peso desejado defasado é $\widehat\lambda=0{,}2923$ ($t=6{,}8$), e o de
+persistência $\widehat\rho=0{,}584$ --- um ajuste \emph{muito} mais rápido que os $0{,}041$ da VI
+restrita. Mas há um problema sério nesse número: com $T=72$ (um painel temporalmente longo para
+os padrões do estimador, pensado para $T$ pequeno e $N$ grande) e todas as defasagens como
+instrumento, geram-se \textbf{2.484 instrumentos para 307 fundos} --- mais instrumentos que
+unidades, o sintoma clássico de \textbf{proliferação de instrumentos}, que torna o teste de
+Sargan (que checa se os instrumentos são conjuntamente válidos) não-informativo (estatística com
+2.484 graus de liberdade, $p=1$) e, segundo a literatura de painéis dinâmicos, tende a enviesar a
+estimativa GMM na direção do estimador ingênuo (o que poderia estar inflando esse $0{,}29$).
+
+\paragraph{A correção: colapsar os instrumentos --- e o sinal inverte.} A prática padrão para
+proliferação de instrumentos (Roodman, 2009) é \textbf{colapsar}: em vez de uma coluna de
+instrumento para cada combinação (defasagem, período), usar uma única coluna por defasagem
+\emph{relativa}, que agrega a informação de todos os períodos. Isso reduz drasticamente a
+contagem de instrumentos sem descartar as defasagens distantes. Reestimando com essa correção:
+\begin{center}\small
+\begin{tabular}{@{}lrrl@{}}
+\toprule
+Especificação & $\widehat\lambda$ (sobre $w^*_{t-1}$) & $t$ & $\rho$ \\
+\midrule
+Instrumentos completos (lag 2--71) & $+0{,}2923$ & $6{,}8$ & $0{,}584$ \\
+Instrumentos colapsados (Roodman)  & $\mathbf{-0{,}3312}$ & $\mathbf{-6{,}2}$ & $0{,}476$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textbf{O coeficiente troca de sinal.} Uma tentativa intermediária --- truncar cru os
+instrumentos às defasagens 2 a 5, sem colapsar --- produziu uma matriz de covariância
+computacionalmente singular (erro de estimação, não apenas imprecisão), outro sintoma de que a
+especificação de painel dinâmico é mal identificada neste desenho: $N=307$ é pequeno para os
+padrões usuais do Arellano--Bond (que prefere $N$ grande), e $T=72$ é grande para os padrões
+usuais do mesmo estimador (que prefere $T$ pequeno) --- é, literalmente, o oposto do caso para o
+qual o estimador foi desenhado.
+
+\limitacoes \textbf{A conclusão honesta é que o Arellano--Bond, neste desenho específico, não
+fornece uma estimativa confiável de $\lambda$} --- nem o \emph{sinal} é estável à forma de
+construir os instrumentos. Isso significa que ele \textbf{não deve ser lido como uma sétima
+confirmação} do fenômeno de reversão ao alvo; a robustez desse achado repousa nas seis
+especificações de MQO, variável instrumental (em três esquemas de cluster) e efeito-fixo de
+fundo, que \emph{são} consistentes em sinal (Seção~\ref{sec:cluster}) --- desenhadas para o
+formato particular deste painel, ao contrário do Arellano--Bond. O teste de autocorrelação de
+segunda ordem nos resíduos diferenciados (o diagnóstico de validade mais relevante para esse
+estimador, que checa se os instrumentos de defasagem 2 em diante são de fato não correlacionados
+com o erro) não rejeita a ausência de autocorrelação de ordem 2 na versão com instrumentos
+completos ($p=0{,}37$) --- o único diagnóstico desse bloco que não levanta bandeira, mas que não
+resolve a instabilidade de sinal encontrada. Rotas para investigar no futuro: um desenho de
+Blundell--Bond (\emph{system GMM}, que combina a equação em diferenças com a equação em nível e
+costuma ser mais eficiente e estável que o Arellano--Bond puro) ou colapsos intermediários de
+instrumento.
 
 % ======================================================================
 \section{A série do erro $\widehat u$ e a regra de decisão recursiva}
@@ -1004,15 +1304,16 @@ os extremos nos percentis (aqui 1\% e 99\%): valores abaixo do P1 viram P1, acim
 P99 --- mantém a observação, remove a alavanca. Recalculando o Fama--MacBeth com fluxo
 winsorizado: o coeficiente do fluxo muda de $-0{,}0004$ para $+0{,}0018$ (continua
 não-significativo, $t=0{,}4$); os demais coeficientes não se movem na terceira casa. Ou seja: a
-conclusão ``fluxo não explica o nível'' é robusta, mas o \emph{número} reportado para o fluxo é
+conclusão ``fluxo não explica o nível'' é robusta, mas o \emph{número} reportado para o fluxo era
 refém de meia dúzia de observações extremas --- e o painel do fluxo na figura dos $\theta_t$
-(o ``vale'' isolado de 2018) é o retrato disso. \textbf{Status}: winsorização prometida nos
-textos, ainda não aplicada como padrão --- correção pendente e barata.
+(o ``vale'' isolado de 2018) é o retrato disso. \textbf{Status}: implementada nesta rodada
+\scriptref{R/36} --- a captação winsorizada 1\%/99\% é agora a especificação \textbf{principal}
+em todas as tabelas de Fama--MacBeth; a versão crua fica como robustez.
 
 \subsection{Mapa geral: limitação $\to$ correção $\to$ status}
 
 \begin{center}\footnotesize
-\begin{tabular}{@{}p{5.4cm}p{5.9cm}l@{}}
+\begin{tabular}{@{}p{5.2cm}p{5.7cm}l@{}}
 \toprule
 Limitação & Correção & Status \\
 \midrule
@@ -1021,16 +1322,24 @@ Escala: coef.\ bruto lido como ``por d.p.''\ em versão antiga & padronização 
 Linear viola suporte $[0,1]$ ($2{,}5\%$ das previsões) & logit fracionário Papke--Wooldridge & \textbf{feita} (R/25) \\
 MQO enviesado no ajuste parcial (2 vieses) & VI com $d_{t-1}$, 1º estágio verificado & \textbf{feita} (R/26) \\
 Sensibilidade da VI à especificação & FE, $d_{t-2}$, $h=3$ & \textbf{feita} (R/27) \\
-NW com $L=3$ subcorrige sob $\rho\approx0{,}77$ & reportar $L=6/12$ (t caem p/ 7--9, conclusões idem) & pendente (já calculada) \\
-``Supera a ingênua'' sem teste formal & Diebold--Mariano no R/30 ($h=3$: n.s.) + reescrever & pendente (já calculada) \\
-Cluster só por fundo ignora choque comum do mês & two-way / efeito de tempo $\delta_t$ ($t\approx1{,}9$) & pendente (já calculada) \\
-Exclusão de $d_{t-1}$ frágil (heterog.\ persistente) & adotar FE+VI como baseline; reinterpretar meia-vida & pendente \\
+NW com $L=3$ subcorrige sob $\rho\approx0{,}77$ & reportado $L=6/12$ (t caem p/ 7--9, conclusões idem) & \textbf{feita} (R/36) \\
+``Supera a ingênua'' sem teste formal & Diebold--Mariano no R/30/R/36 ($h=3$: n.s.) + reescrito & \textbf{feita} (R/36) \\
+Cluster só por fundo ignora choque comum do mês & efeito de tempo $\delta_t$ (recupera $t=6{,}9$) & \textbf{feita} (R/36) \\
+Exclusão de $d_{t-1}$ frágil (heterog.\ persistente) & FE+VI reapresentada como co-principal & \textbf{feita} (R/36) \\
+Fluxo/PL com caudas extremas ($-6.399\%$) & winsorizar 1\%/99\%, agora especificação principal & \textbf{feita} (R/36) \\
+APE de dummy como derivada, não diferença discreta & diferença discreta ($-1{,}94$ vs.\ $-1{,}60$ p.p.) & \textbf{feita} (R/36) \\
+$F$ do 1º estágio sem cluster ($F=39.793$) & $F$ efetivo clusterizado ($=8.012$, ainda fortíssimo) & \textbf{feita} (R/36) \\
+Sem estimador alternativo ao MQO/VI de 1 lag & painel dinâmico de Arellano--Bond (R/35) & \textbf{feita, mas instável em sinal} \\
+Estimação restrita a VALE3 & painel amplo, $\theta_{n,t}$ para $\approx900$ ativos (R/31--32) & \textbf{feita} (só a camada explicativa) \\
+Sem controle de risco de mercado conhecido & fatores NEFIN-USP no pooled (R/34): coefs.\ estáveis & \textbf{feita} \\
+Sem beta do próprio fundo como controle & calculado via cota da SH (R/33) & \textbf{feita} \\
 Kalman: $Q,R$ estimados na amostra cheia & reestimar recursivamente ou nota de rodapé & pendente \\
-Fluxo/PL com caudas extremas ($-6.399\%$) & winsorizar 1\%/99\% (testada: nada muda) & pendente \\
 Efeito mecânico do preço em $\Delta w$ e no pooled & decompor variação mecânica vs.\ ativa & agenda \\
 Margens tratadas separadamente & modelo em duas partes (\emph{hurdle}) & agenda \\
 Corte de $>3$ cotistas é convenção & sensibilidade com $>1$, $>5$, $>10$ & agenda \\
-DF sem aumentação; APE de dummy como derivada & ADF(1--2); diferença discreta & pendentes (menores) \\
+Elasticidade-preço à la Koijen--Yogo não estimada & exige instrumento dos demais investidores & agenda \\
+Preço/beta só de VALE3 no painel amplo (1.777 ativos) & priorizar ativos mais frequentes & agenda \\
+DF sem aumentação & ADF(1--2) & pendente (menor) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1042,26 +1351,33 @@ O ponto de partida foi uma pergunta de sistema de demanda: \emph{o que explica q
 cada fundo do Itaú carrega, e isso prevê alguma coisa?} A resposta veio em camadas.
 
 \begin{enumerate}[topsep=2pt,itemsep=2pt]
-\item \textbf{A demanda tem estrutura estável.} Mês após mês, por 72 meses, sem exceção: fundos
-maiores diluem, fundos com mais cotistas concentram, FICs não têm posição direta relevante. Isso
-sobrevive à forma funcional (linear vs.\ logística dão efeitos quase idênticos: $-0{,}68$,
-$+1{,}06$/$1{,}09$, $-1{,}60$/$-1{,}70$ p.p.\ por d.p.), à correção de inferência (Newey--West:
-$t\approx11$; com $L$ grande, $7$--$9$ --- sempre significativo) e à winsorização do fluxo.
+\item \textbf{A demanda tem estrutura estável, e generaliza.} Mês após mês, por 72 meses, sem
+exceção: fundos maiores diluem, fundos com mais cotistas concentram, FICs não têm posição direta
+relevante. Isso sobrevive à forma funcional (linear vs.\ logística dão efeitos quase idênticos),
+à correção de inferência (Newey--West: $t\approx11$; com $L$ grande, $7$--$9$), à winsorização do
+fluxo, ao controle por fatores de risco de mercado conhecidos (NEFIN) e --- achado novo desta
+versão --- generaliza em \textbf{direção} para 92 a 99\% de quase 900 outras ações que os fundos
+do Itaú carregam. A \textbf{magnitude} do efeito de VALE3, porém, é atípica (percentil 1 no efeito
+de tamanho): é um papel extremo nessa dimensão, não representativo.
 \item \textbf{As duas margens se opõem} --- quem tende a \emph{ter} (grandes, FICs) tende a ter
 \emph{pouco} --- a assinatura de diversificação, e o achado descritivo mais interessante.
 \item \textbf{Nada prevê o curto prazo.} O peso individual é quase martingale: a ingênua vence
 efeito fixo, fator e Kalman em todos os universos e horizontes, e a média histórica do próprio
 fundo perde do último valor (não há reversão ao nível do fundo detectável).
-\item \textbf{Mas existe um alvo, e o peso caminha para ele --- devagar.} O ajuste parcial
-estimado por VI dá $\lambda\approx0{,}04$/mês no agregado (meia-vida $\approx16$ meses) e
-$\approx0{,}19$/mês dentro do fundo (meia-vida $\approx3$--$4$ meses) --- a leitura \emph{within}
-é a mais defensável, dado o padrão que indica heterogeneidade persistente entre fundos. O erro de
-previsão resultante é centrado, estável e estacionário.
+\item \textbf{Mas existe um alvo, e o peso caminha para ele --- devagar, e de forma robusta a
+seis (não sete) estimadores.} O ajuste parcial estimado por VI dá $\lambda\approx0{,}04$/mês no
+agregado (meia-vida $\approx16$ meses) e $\approx0{,}19$/mês dentro do fundo (meia-vida
+$\approx3$--$4$ meses); com efeito de tempo em vez de cluster por mês, a significância se
+mantém forte ($t=6{,}9$). O sinal positivo é robusto a seis especificações de MQO, VI e
+efeito-fixo. O painel dinâmico de Arellano--Bond, a sétima tentativa, \textbf{não} confirma essa
+robustez --- o sinal troca conforme os instrumentos são construídos, evidência de que o estimador
+é mal identificado neste desenho de painel ($N$ pequeno, $T$ grande), não uma refutação do
+fenômeno. O erro de previsão resultante é centrado, estável e estacionário.
 \item \textbf{O ganho de previsão do ajuste parcial ainda não está demonstrado.} Ele nunca perde
-da ingênua, mas a vantagem só é estatisticamente detectável no horizonte que a opacidade torna
-infactível ($h=1$); em $h=3$ o Diebold--Mariano não rejeita igualdade. Com o teste formal, o
-cluster correto e a decomposição mecânica/ativa, essa fronteira é o próximo passo natural do
-trabalho.
+da ingênua, mas a vantagem só é estatisticamente detectável (Diebold--Mariano) no horizonte que a
+opacidade torna infactível ($h=1$); em $h=3$ o teste não rejeita igualdade. Com o cluster
+corrigido pelo efeito de tempo, o $\lambda$ \emph{within} e a decomposição mecânica/ativa, essa
+fronteira é o próximo passo natural do trabalho.
 \end{enumerate}
 
 Em uma frase final: \emph{as características dizem para onde o peso vai; a inércia diz onde ele
@@ -1098,6 +1414,12 @@ R/27 & Robustez do $\lambda$: efeito fixo, $d_{t-2}$, horizonte 3 meses. \\
 R/28 & Conferência de escala (tabelas padronizadas exatas). \\
 R/29 & Figura dos $\theta_t$ padronizados. \\
 R/30 & Série do erro $\widehat u$ (média, DP, autocorrelação, DF) + decisão recursiva OOS. \\
+R/31 & Painel multiativo bruto (fundo $\times$ ativo $\times$ mês, todo o universo Itaú) + limpeza + características de fundo. \\
+R/32 & Cross-section $\theta_{n,t}$ por (ativo, mês); média entre ativos; pooled com efeito-fixo two-way. \\
+R/33 & Beta do próprio fundo (retorno da cota da SH vs.\ Ibovespa, mesma janela do beta de VALE3). \\
+R/34 & Fatores de risco do NEFIN-USP agregados para mensal; controle no pooled. \\
+R/35 & Velocidade de ajuste por painel dinâmico de Arellano--Bond (instrumentos completos e colapsados). \\
+R/36 & Correções da revisão crítica: winsorização, sensibilidade do NW, cluster two-way, efeito de tempo, Diebold--Mariano, APE discreto, $F$ efetivo. \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1105,6 +1427,8 @@ R/30 & Série do erro $\widehat u$ (média, DP, autocorrelação, DF) + decisão
 \section{Referências}
 \small
 \begin{description}[topsep=2pt,itemsep=1pt]
+\item Arellano, M.; Bond, S. Some tests of specification for panel data: Monte Carlo evidence and
+an application to employment equations. \emph{Review of Economic Studies}, 58(2):277--297, 1991.
 \item Cameron, A.\ C.; Gelbach, J.; Miller, D. Robust inference with multiway clustering.
 \emph{Journal of Business \& Economic Statistics}, 29(2):238--249, 2011.
 \item Coval, J.; Stafford, E. Asset fire sales (and purchases) in equity markets.
@@ -1126,9 +1450,13 @@ Studies}, 25(12):3457--3489, 2012.
 \item Newey, W.; West, K. A simple, positive semi-definite, heteroskedasticity and autocorrelation
 consistent covariance matrix. \emph{Econometrica}, 55(3):703--708, 1987; e Automatic lag selection
 in covariance matrix estimation. \emph{Review of Economic Studies}, 61(4):631--653, 1994.
+\item Núcleo de Economia Financeira (NEFIN), USP. Risk factors for the Brazilian market.
+\url{https://nefin.com.br/data/risk-factors/}, acessado em 09/07/2026.
 \item Papke, L.; Wooldridge, J. Econometric methods for fractional response variables with an
 application to 401(k) plan participation rates. \emph{Journal of Applied Econometrics},
 11(6):619--632, 1996.
+\item Roodman, D. A note on the theme of too many instruments. \emph{Oxford Bulletin of
+Economics and Statistics}, 71(1):135--158, 2009.
 \end{description}
 
 \end{document}
