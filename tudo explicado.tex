@@ -9,6 +9,8 @@
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{graphicx}
+\graphicspath{{docs/}}
 \usepackage[hidelinks]{hyperref}
 \definecolor{azul}{RGB}{25,60,110}
 \definecolor{cinza}{RGB}{100,100,100}
@@ -919,23 +921,38 @@ ativos}:
 \begin{center}\small
 \begin{tabular}{@{}lccc@{}}
 \toprule
-Coeficiente & Direção (VALE3) & \% dos 361 ativos igual & VALE3 é típico? \\
+Coeficiente & Direção (VALE3) e \% igual & Posição de VALE3 entre os 361 & Percentil \\
 \midrule
-$\ln$(PL)         & negativo & $92{,}5\%$ & \textbf{não} --- percentil 1 (extremo) \\
-$\ln$(cotistas)   & positivo & $98{,}9\%$ & sim \\
-Fundo de cotas     & negativo & $92{,}8\%$ & sim \\
-Captação/PL       & fraco/instável & $52{,}6\%$ positivo & ambíguo nos dois \\
+$\ln$(PL)         & negativo, $92{,}5\%$ & \textbf{3º mais negativo} & $0{,}8$ \\
+$\ln$(cotistas)   & positivo, $98{,}9\%$ & \textbf{2º mais positivo} & $99{,}7$ \\
+Fundo de cotas     & negativo, $92{,}8\%$ & \textbf{2º mais negativo} & $0{,}6$ \\
+Captação/PL       & fraco/instável, $52{,}6\%$ positivo & comum, sem destaque & $76{,}2$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.9\textwidth]{fig_multiativo_dist.pdf}
+\caption{Distribuição, entre os 361 ativos com amostra suficiente, do coeficiente médio de cada
+característica. Linha vermelha: VALE3; linha tracejada cinza: mediana entre ativos.}
+\label{fig:multiativo}
+\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/37}).}
+\end{figure}
+
 A resposta é matizada, e vale ler com cuidado. As \textbf{direções} dos três efeitos estruturais
 generalizam fortemente: 92 a 99\% dos ativos com amostra suficiente têm o mesmo sinal que VALE3
 --- não é uma peculiaridade de um papel, é um padrão de como os fundos do Itaú, em geral,
-distribuem posições em ações conforme o perfil do fundo. Mas a \textbf{magnitude} do efeito de
-tamanho de VALE3 é atípica: seu coeficiente médio ($-0{,}00566$) está no \textbf{percentil 1} da
-distribuição entre os 361 ativos --- VALE3 é um dos papéis cujo peso reage mais fortemente ao
-porte do fundo, não um caso representativo. Uma checagem independente, empilhando as 1,50 milhão
+distribuem posições em ações conforme o perfil do fundo. Mas a \textbf{magnitude} desses efeitos
+para VALE3 é extrema em \textbf{três} das quatro dimensões, não só na de tamanho, como uma
+primeira checagem sugeria: o coeficiente de tamanho é o 3º mais negativo entre 361 ativos
+(percentil $0{,}8$), o de cotistas é o 2º mais positivo (percentil $99{,}7$), e o de fundo de
+cotas é o 2º mais negativo (percentil $0{,}6$) --- visíveis na Figura~\ref{fig:multiativo} como a
+linha vermelha na cauda extrema de três dos quatro histogramas. Só o coeficiente de fluxo é comum
+(percentil $76$). VALE3, portanto, não é um caso representativo do universo de ações que os
+fundos do Itaú carregam --- é um papel grande, líquido e historicamente volátil que puxa para o
+extremo em quase toda dimensão medida, e os números de \emph{magnitude} estimados para ele ao
+longo deste documento não devem ser lidos como ``o efeito típico de uma ação qualquer''. Uma
+checagem independente, empilhando as 1,50 milhão
 de observações com efeito-fixo de \emph{ativo} \textbf{e} de \emph{mês} (estimado por
 demeaning iterativo de Frisch--Waugh--Lovell, que subtrai repetidamente as médias por ativo e por
 mês até convergir --- equivalente a incluir uma \emph{dummy} para cada um dos 1.129 ativos e cada
@@ -1357,8 +1374,9 @@ relevante. Isso sobrevive à forma funcional (linear vs.\ logística dão efeito
 à correção de inferência (Newey--West: $t\approx11$; com $L$ grande, $7$--$9$), à winsorização do
 fluxo, ao controle por fatores de risco de mercado conhecidos (NEFIN) e --- achado novo desta
 versão --- generaliza em \textbf{direção} para 92 a 99\% de quase 900 outras ações que os fundos
-do Itaú carregam. A \textbf{magnitude} do efeito de VALE3, porém, é atípica (percentil 1 no efeito
-de tamanho): é um papel extremo nessa dimensão, não representativo.
+do Itaú carregam. A \textbf{magnitude} dos efeitos de VALE3, porém, é atípica em três das quatro
+dimensões (tamanho, cotistas e FIC, todas no 1--2\% mais extremo da distribuição entre ativos):
+é um papel extremo nessas dimensões, não representativo.
 \item \textbf{As duas margens se opõem} --- quem tende a \emph{ter} (grandes, FICs) tende a ter
 \emph{pouco} --- a assinatura de diversificação, e o achado descritivo mais interessante.
 \item \textbf{Nada prevê o curto prazo.} O peso individual é quase martingale: a ingênua vence

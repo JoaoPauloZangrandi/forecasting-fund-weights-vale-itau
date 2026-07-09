@@ -579,17 +579,131 @@ o coeficiente entra positivo e significativo, consistente com a leitura de que f
 ``equity-like'' tendem a manter maior peso em VALE3 --- uma checagem de consistência interna do
 desenho da base, mais do que um resultado novo de interpretação econômica ampla.
 
-\subsection{Dinâmica do fator, previsão e as duas margens}
+\subsection{Dinâmica do fator}
 \label{sec:dyn}
 
-Estes três blocos --- dinâmica de $\theta_t$ (autocorrelação $0{,}70$ a $0{,}84$, Dickey-Fuller
-rejeitando raiz unitária em quatro das cinco séries), a matriz de erros de previsão (a ingênua
-vence todos os modelos estruturais testados, em todos os horizontes e universos) e as duas
-margens (sinais opostos entre deter e quanto deter) --- são reproduzidos integralmente desta
-versão em relação à anterior; nenhuma correção do Fable nem apontamento do orientador os afeta.
-Os números, tabelas e figuras seguem idênticos aos documentos anteriores e não são repetidos
-aqui por economia de espaço; ver \texttt{tudo explicado.pdf} para a explicação completa de cada
-método envolvido.
+Antes de prever, examina-se como os coeficientes da regressão mês a mês evoluem no tempo. A
+Tabela~\ref{tab:dyn} resume, para cada série de coeficientes, a autocorrelação de primeira ordem,
+o parâmetro $\phi$ do processo autorregressivo e a estatística do teste de Dickey--Fuller.
+
+\begin{table}[h]\centering\small
+\caption{Dinâmica dos coeficientes da regressão transversal (72 meses).}
+\label{tab:dyn}
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Série (coeficiente) & Autocorrelação & $\phi$ (AR) & Dickey--Fuller & Leitura \\
+\midrule
+Intercepto            & $0{,}77$ & $0{,}77$ & $-3{,}07$ & reverte à média \\
+$\ln$(patrimônio)      & $0{,}76$ & $0{,}76$ & $-3{,}11$ & reverte à média \\
+$\ln$(cotistas)        & $0{,}84$ & $0{,}83$ & $-2{,}70$ & quase passeio aleatório \\
+Fundo de cotas          & $0{,}70$ & $0{,}70$ & $-3{,}57$ & reverte à média \\
+Captação / patrimônio  & $0{,}37$ & $0{,}38$ & $-5{,}59$ & quase ruído \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Valor crítico do teste de Dickey--Fuller a 5\% $\approx-2{,}9$; abaixo
+dele, rejeita-se a raiz unitária. Fonte: elaboração própria (script \texttt{R/16}).}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.9\textwidth]{fig_theta_padr.pdf}
+\caption{Coeficientes padronizados da regressão mês a mês, 2016--2021. A linha tracejada marca a
+média de cada série.}
+\label{fig:theta}
+\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/29}).}
+\end{figure}
+
+Os coeficientes ficam com autocorrelação entre $0{,}37$ e $0{,}84$, claramente abaixo de um; o
+teste de Dickey--Fuller rejeita a raiz unitária em quatro das cinco séries, a exceção sendo a de
+cotistas, no limite ($-2{,}70$). A Figura~\ref{fig:theta} mostra o porquê visualmente: os painéis
+de tamanho, cotistas e fundo de cotas nunca trocam de sinal ao longo dos 72 meses, mas oscilam
+com uma reconfiguração visível em torno de 2018, período em que o preço e o beta de VALE3 também
+se moveram de forma acentuada. O painel de fluxo, o menos persistente, oscila em torno de zero
+com um único movimento extremo isolado --- coerente com sua não significância na
+Seção~\ref{sec:det}. Essa persistência-com-reversão é o que legitima tratar os coeficientes como
+um ``estado latente'' que evolui devagar, e é a evidência que justificou a correção de
+Newey--West (Seção~\ref{sec:nw}).
+
+\subsection{Previsão e a matriz de erros}
+
+Comparam-se quatro previsões do peso, avaliadas fora da amostra com janela de estimação
+expandida: a ingênua (M0, repete o último peso), o efeito fixo (M1, média histórica do fundo), o
+fator com Kalman (M2, soma ao efeito fixo o desvio previsto pelas características) e a variação
+(M3, prevê diretamente a mudança do peso). A Tabela~\ref{tab:fc} traz o RMSE em dois universos
+(todos os fundos; só fundos de ações) e dois horizontes ($h=1$; $h=3$, o da opacidade).
+
+\begin{table}[h]\centering\small
+\caption{Erro de previsão fora da amostra (RMSE), por universo, horizonte e modelo.}
+\label{tab:fc}
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Universo & Horizonte & M0 ingênua & M1 EF & M2 EF+Kalman & M3 variação \\
+\midrule
+Todos os fundos    & $h=1$ & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+Todos os fundos    & $h=3$ & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+Só fundos de ações & $h=1$ & $\mathbf{0{,}0197}$ & $0{,}0310$ & $0{,}0383$ & $0{,}0198$ \\
+Só fundos de ações & $h=3$ & $\mathbf{0{,}0266}$ & $0{,}0337$ & $0{,}0385$ & $0{,}0270$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Menor RMSE em negrito por linha. Fonte: elaboração própria (scripts
+\texttt{R/19}, \texttt{R/21}).}
+\end{table}
+
+A leitura é nítida: \textbf{a previsão ingênua vence em todas as oito células}, com os modelos
+estruturais errando de 54\% a 63\% mais em $h=1$. O resultado mais informativo é o efeito fixo
+(M1) \emph{perder} da ingênua: se o peso revertesse à média histórica do próprio fundo, M1
+venceria; perder significa que não há reversão detectável ao nível do fundo no curto prazo --- a
+assinatura de um processo próximo do martingale. O modelo de variação (M3) empata com a ingênua,
+coerente: prever variação nula equivale a repetir o último peso. Restringir a fundos de ações
+(posições maiores e mais ativamente geridas) amplia as diferenças sem mudar a ordem. Essa
+persistência quase martingale é exatamente o que um $\lambda$ pequeno no ajuste parcial
+(Seção~\ref{sec:paest}) prediz no limite --- a ponte entre esta seção e a seguinte.
+
+\subsection{As duas margens}
+\label{sec:margens}
+
+Por fim, separa-se a decisão de ter a ação da decisão de quanto carregar. A margem extensiva é
+estimada num painel que inclui os fundos de ações que não detêm VALE3, com peso zero: 10.286
+observações de 260 fundos de ações, das quais $86\%$ têm a ação, com 75 entradas e 100 saídas no
+período. O modelo logístico $\Pr(\text{tem VALE3})=\Lambda(\gamma_0+\gamma_1\ln PL+\gamma_2\ln
+Cot+\gamma_3 FIC)$ dá os coeficientes da Tabela~\ref{tab:posse}.
+
+\begin{table}[h]\centering\small
+\caption{Modelo logístico da probabilidade de deter VALE3 (painel extensivo, 10.286 obs.).}
+\label{tab:posse}
+\begin{tabular}{@{}lrrrc@{}}
+\toprule
+Variável & Estimativa & Erro padrão & Estatística $z$ & Sig. \\
+\midrule
+Intercepto        & $-2{,}809$ & $0{,}275$ & $-10{,}2$ & *** \\
+$\ln$(patrimônio) & $0{,}232$  & $0{,}015$ & $15{,}1$  & *** \\
+$\ln$(cotistas)   & $-0{,}034$ & $0{,}012$ & $-2{,}8$  & ** \\
+Fundo de cotas    & $1{,}311$  & $0{,}075$ & $17{,}5$  & *** \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/20}).}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{Sinais opostos entre a decisão de ter a ação e a decisão de quanto carregar.}
+\label{tab:margens}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Característica & Ter ou não a ação & Quanto carregar \\
+\midrule
+Tamanho do fundo   & mais provável ter & peso menor \\
+Fundo de cotas     & mais provável ter & peso menor \\
+Número de cotistas & menos provável (fraco) & peso maior \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O achado descritivo mais interessante do trabalho: \textbf{as duas margens têm sinais opostos}.
+Fundos maiores e fundos de cotas são mais propensos a ter a ação, mas, quando a têm, carregam um
+peso menor --- a assinatura de diversificação: à medida que o fundo cresce ou acessa o ativo de
+forma indireta, tende a incluir mais ativos, cada um com fatia menor. Quanto à previsão, a posse
+muda em apenas $1{,}3\%$ dos meses, e a regra ingênua acerta $98{,}7\%$ das vezes ($h=1$) e
+$98{,}3\%$ ($h=3$), contra $\approx87\%$ do modelo logístico com características --- como na
+margem intensiva, as características explicam bem, mas não superam a persistência.
 
 \subsection{Ajuste parcial: oito especificações, sete confiáveis}
 \label{sec:paest}
@@ -632,7 +746,15 @@ registrado como sintoma de fragilidade). Fonte: elaboração própria (scripts \
 \texttt{R/27}, \texttt{R/35}, \texttt{R/36}).}
 \end{table}
 
-Quatro leituras. \textbf{Primeira}, o sinal e a existência de reversão ao alvo são robustos a
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_lambda_especificacoes.pdf}
+\caption{Velocidade de ajuste $\widehat\lambda$ por especificação (azul: sinal positivo robusto;
+cinza: MQO enviesado, referência; vermelho: Arellano--Bond, sinal instável).}
+\label{fig:lambda}
+\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/38}).}
+\end{figure}
+
+Quatro leituras, visíveis na Figura~\ref{fig:lambda}. \textbf{Primeira}, o sinal e a existência de reversão ao alvo são robustos a
 \emph{seis} das oito especificações --- todo o bloco de mínimos quadrados, variável instrumental
 (em qualquer cluster) e efeito-fixo dá velocidade positiva. \textbf{Segunda}, o diagnóstico da
 revisão crítica sobre o cluster por fundo --- de que a significância cairia para
@@ -697,30 +819,42 @@ teórico de Koijen--Yogo antecipa, estimada a partir da matriz de característic
 Para cada ativo com pelo menos 24 meses de $\widehat\theta_{n,t}$ estimado (361 ativos), calcula-se
 a média temporal dos coeficientes, e observa-se a distribuição \emph{entre ativos} dessa média.
 
-\begin{center}\footnotesize
+\begin{center}\scriptsize
 \begin{tabular}{@{}lccc@{}}
 \toprule
-Coeficiente & Direção (VALE3) & \% dos 361 na mesma direção & VALE3 é típico? \\
+Coeficiente & Direção (VALE3) e \% dos 361 igual & Posição de VALE3 entre os 361 & Percentil \\
 \midrule
-$\ln$(patrimônio) & negativo & $92{,}5\%$ & não --- percentil 1 (extremo) \\
-$\ln$(cotistas)   & positivo & $98{,}9\%$ & sim, dentro da maioria \\
-Fundo de cotas     & negativo & $92{,}8\%$ & sim, dentro da maioria \\
-Captação/PL       & fraco/instável & $52{,}6\%$ positivo & sim, ambíguo nos dois \\
+$\ln$(patrimônio) & negativo, $92{,}5\%$ & \textbf{3º mais negativo} & $0{,}8$ \\
+$\ln$(cotistas)   & positivo, $98{,}9\%$ & \textbf{2º mais positivo} & $99{,}7$ \\
+Fundo de cotas     & negativo, $92{,}8\%$ & \textbf{2º mais negativo} & $0{,}6$ \\
+Captação/PL       & fraco/instável, $52{,}6\%$ positivo & comum, sem destaque & $76{,}2$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-A resposta é matizada. As \emph{direções} dos três efeitos estruturais generalizam fortemente:
-92 a 99\% dos ativos com amostra suficiente têm o mesmo sinal que VALE3 para tamanho, cotistas e
-fundo de cotas --- não é uma peculiaridade de VALE3, é um padrão de como os fundos do Itaú, em
-geral, distribuem posições em ações conforme o perfil do fundo. Mas a \emph{magnitude} do efeito
-de tamanho de VALE3 é atípica: seu coeficiente médio ($-0{,}00566$) está no percentil 1 da
-distribuição entre os 361 ativos --- ou seja, VALE3 é um dos papéis cujo peso reage mais
-fortemente ao porte do fundo, não um caso representativo. Isso é uma qualificação importante para
-a leitura de todo o restante deste trabalho: os números de magnitude (não os sinais) estimados
-para VALE3 não devem ser extrapolados, sem ressalva, como ``o efeito típico de tamanho sobre
-posições em ações'' --- são o efeito para um papel específico, grande, líquido e historicamente
-volátil, que se encontra na cauda dessa distribuição.
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_multiativo_dist.pdf}
+\caption{Distribuição, entre os 361 ativos com amostra suficiente, do coeficiente médio de cada
+característica (linha vermelha: VALE3; linha tracejada cinza: mediana entre ativos).}
+\label{fig:multiativo}
+\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/37}).}
+\end{figure}
+
+A resposta é matizada, e mais rica do que uma primeira leitura sugere. As \emph{direções} dos
+três efeitos estruturais generalizam fortemente: 92 a 99\% dos ativos com amostra suficiente têm
+o mesmo sinal que VALE3 para tamanho, cotistas e fundo de cotas --- não é uma peculiaridade de
+VALE3, é um padrão de como os fundos do Itaú, em geral, distribuem posições em ações conforme o
+perfil do fundo. Mas a \emph{magnitude} desses efeitos para VALE3 é extrema em \textbf{três} das
+quatro dimensões, não apenas na de tamanho: o coeficiente de tamanho é o 3º mais negativo entre
+361 ativos (percentil $0{,}8$), o de cotistas é o 2º mais positivo (percentil $99{,}7$), e o de
+fundo de cotas é o 2º mais negativo (percentil $0{,}6$) --- visíveis na Figura~\ref{fig:multiativo}
+como a linha vermelha na cauda extrema de três dos quatro histogramas. Só o coeficiente de fluxo
+é comum (percentil $76$, sem destaque). Isso é uma qualificação importante para a leitura de todo
+o restante deste trabalho: os números de \emph{magnitude} estimados para VALE3 (os pontos
+percentuais específicos citados nas Seções~\ref{sec:det} e~\ref{sec:fraclogit}) não devem ser
+extrapolados, sem ressalva, como ``o efeito típico de uma ação qualquer'' --- são o efeito para um
+papel particular, grande, líquido e historicamente volátil, que se encontra reiteradamente nas
+caudas dessa distribuição. As \emph{direções} dos efeitos, essas sim, generalizam.
 
 \subsection{Regressão pooled com efeito-fixo de ativo e de mês}
 
