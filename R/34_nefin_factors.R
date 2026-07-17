@@ -58,7 +58,36 @@ cmp <- data.table(
   com_nefin = c(coef(f1)["z_preco"], coef(f1)["z_beta"]))
 print(cmp)
 
+# -----------------------------------------------------------------------------
+# CORRECAO: os t/asteriscos acima usam erro-padrao de MQO comum (nao agrupado),
+# inconsistente com o resto do trabalho (Newey-West na Secao 3.3, cluster por
+# fundo no ajuste parcial R/26-27, na margem extensiva R/20, e no beta do fundo
+# R/39). Observacoes do MESMO fundo em meses diferentes nao sao independentes;
+# a correcao correta e agrupar por fundo, como em todo o resto do documento.
+# -----------------------------------------------------------------------------
+cl_meat <- function(X,u,g){U<-X*u; Ug<-rowsum(U,g); crossprod(Ug)}
+fit_cluster <- function(fit, data, cluster_var) {
+  X <- model.matrix(fit); u <- residuals(fit)
+  g <- data[[cluster_var]][as.numeric(rownames(X))]
+  XtXinv <- solve(crossprod(X))
+  V <- XtXinv %*% cl_meat(X, u, g) %*% XtXinv
+  se <- sqrt(diag(V))
+  data.table(variavel = names(coef(fit)), coef = as.numeric(coef(fit)),
+             se_ols = summary(fit)$coefficients[,2], t_ols = summary(fit)$coefficients[,3],
+             se_cluster = se, t_cluster = as.numeric(coef(fit))/se)
+}
+
+cat("\n===== POOLED sem fatores NEFIN: MQO comum vs. cluster por fundo =====\n")
+r0c <- fit_cluster(f0, d, "cod_fundo")
+print(r0c[, .(variavel, coef=round(coef,6), t_ols=round(t_ols,2), t_cluster=round(t_cluster,2))])
+
+cat("\n===== POOLED com fatores NEFIN: MQO comum vs. cluster por fundo =====\n")
+r1c <- fit_cluster(f1, d, "cod_fundo")
+print(r1c[, .(variavel, coef=round(coef,6), t_ols=round(t_ols,2), t_cluster=round(t_cluster,2))])
+
 fwrite(as.data.table(round(summary(f1)$coefficients,6), keep.rownames="variavel"),
        file.path(REPO, "data/processed/reg34_pooled_nefin.csv"))
 fwrite(mret, file.path(REPO, "data/processed/reg34_nefin_mensal.csv"))
+fwrite(r0c, file.path(REPO, "data/processed/reg34_pooled_sem_nefin_cluster.csv"))
+fwrite(r1c, file.path(REPO, "data/processed/reg34_pooled_nefin_cluster.csv"))
 cat("\nOK - salvo em data/processed/reg34_*.csv\n")

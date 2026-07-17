@@ -1175,6 +1175,10 @@ literatura; é algo mais específico à posição em VALE3. A tabela completa (m
 \toprule
 Variável & Sem fatores NEFIN & Com fatores NEFIN \\
 \midrule
+$\ln$(patrimônio) por d.p. & $-0{,}00640^{**}$ & $-0{,}00642^{**}$ \\
+$\ln$(cotistas) por d.p.   & $0{,}01090^{***}$  & $0{,}01088^{***}$ \\
+Fundo de cotas              & $-0{,}01682^{***}$ & $-0{,}01678^{***}$ \\
+Captação/patrimônio        & $-0{,}00030$ (n.s.) & $-0{,}00036^{*}$ \\
 Preço de VALE3 por d.p.    & $0{,}00496^{***}$  & $0{,}00526^{***}$ \\
 Beta de VALE3 por d.p.     & $-0{,}00649^{***}$ & $-0{,}00609^{***}$ \\
 Mercado (Rm$-$Rf) por d.p. & --- & $0{,}00216^{***}$ \\
@@ -1186,6 +1190,18 @@ $R^2$ & $0{,}166$ & $0{,}172$ \\
 \bottomrule
 \end{tabular}
 \end{center}
+{\footnotesize $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$, com erro-padrão agrupado por fundo.}
+
+\aha{Correção desta versão: essa tabela usava, em versões anteriores, erro-padrão de MQO comum
+(não agrupado) --- inconsistente com o resto do trabalho, que agrupa por fundo em toda regressão
+com painel (Seção~\ref{sec:cluster}, mesma lógica de lá: observações do mesmo fundo em meses
+diferentes não são independentes). Agrupando por fundo, as estatísticas $t$ caem bastante (ex.:
+tamanho de $t=-19{,}0$ para $t=-3{,}1$; cotistas de $t=30{,}9$ para $t=5{,}8$) --- mas
+\textbf{todas as conclusões sobrevivem}: as quatro características clássicas continuam
+significativas, e preço/beta de VALE3 continuam estáveis com e sem os fatores NEFIN. A única
+mudança é a captação, que passa de não significativa para marginalmente significativa
+($p<5\%$) ao controlar pelos fatores NEFIN --- um resultado no limiar que não muda a leitura de
+que a captação tem papel secundário.}
 
 O fator de mercado e o de tamanho entram significativos por conta própria (fundos com mais VALE3
 também carregam, em algum grau, mais exposição a esses dois fatores conhecidos) --- mas isso não

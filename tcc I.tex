@@ -805,17 +805,18 @@ separadamente: os fatores de risco do NEFIN-USP (Seção~\ref{sec:nefin}) e o be
 fundo (Seção~\ref{sec:betafundo}).
 
 \begin{table}[h]\centering\small
-\caption{Regressão empilhada: especificação base e com fatores NEFIN-USP como controle.}
+\caption{Regressão empilhada: especificação base e com fatores NEFIN-USP como controle
+(erro-padrão agrupado por fundo).}
 \label{tab:pool}
 \begin{tabular}{@{}lrr@{}}
 \toprule
 Variável & Sem fatores NEFIN & Com fatores NEFIN \\
 \midrule
 Intercepto                 & $0{,}04146$  & $0{,}04143$ \\
-$\ln$(patrimônio) por d.p. & $-0{,}00640^{***}$ & $-0{,}00642^{***}$ \\
+$\ln$(patrimônio) por d.p. & $-0{,}00640^{**}$ & $-0{,}00642^{**}$ \\
 $\ln$(cotistas) por d.p.   & $0{,}01090^{***}$  & $0{,}01088^{***}$ \\
 Fundo de cotas             & $-0{,}01682^{***}$ & $-0{,}01678^{***}$ \\
-Captação / patrimônio      & $-0{,}00030$  & $-0{,}00036$ \\
+Captação / patrimônio      & $-0{,}00030$  & $-0{,}00036^{*}$ \\
 Preço de VALE3 por d.p.    & $0{,}00496^{***}$  & $0{,}00526^{***}$ \\
 Beta de VALE3 por d.p.     & $-0{,}00649^{***}$ & $-0{,}00609^{***}$ \\
 Mercado (Rm$-$Rf) por d.p. & --- & $0{,}00216^{***}$ \\
@@ -826,10 +827,13 @@ Momento (WML) por d.p.     & --- & $0{,}00019$ \\
 $R^2$ & $0{,}166$ & $0{,}172$ \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize *** significância a $0{,}1\%$. Fatores diários do NEFIN-USP (Núcleo de
-Economia Financeira, USP: mercado, tamanho, valor e momento, metodologia
-Fama-French/Carhart adaptada ao Brasil), agregados por retorno composto dentro do mês. Fonte:
-elaboração própria (script \texttt{R/34}); fatores de \url{https://nefin.com.br/data/risk-factors/}.}
+\caption*{\footnotesize $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$, com erro-padrão agrupado
+por fundo (\textbf{correção desta versão}: a versão anterior reportava significância de MQO
+comum, inconsistente com o restante do trabalho --- os $t$ agrupados são bem menores, mas as
+conclusões qualitativas sobrevivem; ver texto). Fatores diários do NEFIN-USP (Núcleo de Economia
+Financeira, USP: mercado, tamanho, valor e momento, metodologia Fama-French/Carhart adaptada ao
+Brasil), agregados por retorno composto dentro do mês. Fonte: elaboração própria (script
+\texttt{R/34}); fatores de \url{https://nefin.com.br/data/risk-factors/}.}
 \end{table}
 
 O achado central desta tabela é de \emph{estabilidade}: os coeficientes de preço e de beta de
@@ -840,6 +844,18 @@ catalogado na literatura --- é específico à posição em VALE3 (incluindo o c
 discutido na Seção~\ref{sec:disc}), não um proxy para o fator de mercado, de tamanho, de valor ou
 de momento. O fator de mercado (Rm$-$Rf) e o de tamanho (SMB) entram significativos por conta
 própria; valor e momento, não.
+
+\textbf{Correção desta versão:} os erros-padrão desta tabela eram, em versões anteriores, de MQO
+comum (não agrupado) --- inconsistentes com a convenção usada no resto do trabalho (Newey-West na
+Seção~\ref{sec:nw}, cluster por fundo no ajuste parcial e na margem extensiva), já que
+observações do mesmo fundo em meses diferentes não são independentes. Agrupando por fundo, as
+estatísticas $t$ caem bastante (ex.: tamanho de $t=-19{,}0$ para $t=-3{,}1$; cotistas de
+$t=30{,}9$ para $t=5{,}8$), mas \textbf{todas as conclusões qualitativas sobrevivem}: as quatro
+características clássicas continuam significativas, preço e beta de VALE3 continuam estáveis e
+significativos com e sem os fatores NEFIN, e valor/momento continuam não significativos. A única
+mudança de leitura é a captação, que passa de não significativa para marginalmente significativa
+($p<5\%$) na coluna com fatores NEFIN --- um resultado no limiar, que não muda a conclusão de que
+a captação tem papel secundário na explicação do peso (Seção~\ref{sec:det}).
 
 \subsection{Beta do próprio fundo}
 \label{sec:betafundo}
@@ -1050,8 +1066,11 @@ estatisticamente sólida é, por ora, fraca}.
 Limitações que seguem abertas: o efeito mecânico do preço sobre o peso não foi formalmente
 decomposto do efeito de decisão ativa; a cobertura de preço/beta próprios está restrita a VALE3
 dentro do universo amplo de ativos; o corte de mais de três cotistas para excluir fundos
-exclusivos é uma convenção cuja sensibilidade não foi testada; e a elasticidade-preço no sentido
-original de Koijen--Yogo não foi estimada.
+exclusivos é uma convenção cuja sensibilidade não foi testada; a elasticidade-preço no sentido
+original de Koijen--Yogo não foi estimada; e a comparação com/sem beta do fundo
+(Seção~\ref{sec:betafundo}) usa apenas os $73\%$ da amostra com histórico de cota suficiente para
+estimar esse beta ($\geq252$ pregões), uma restrição sistemática --- exclui fundos mais novos, não
+aleatoriamente --- cuja sensibilidade também não foi testada.
 
 %==================== 8. AGENDA FUTURA ====================
 \section{Agenda futura}
