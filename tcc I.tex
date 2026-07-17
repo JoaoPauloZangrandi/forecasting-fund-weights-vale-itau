@@ -856,12 +856,48 @@ porte (PL) ou da estrutura (cotistas, FIC).
 Na amostra dos 307 fundos, o beta do próprio fundo tem média $0{,}50$, com mínimo $-0{,}27$ e
 máximo $1{,}27$ --- consideravelmente mais baixo, em média, do que o beta de VALE3 ($1{,}04$),
 como esperado de uma carteira diversificada com componentes de renda fixa. A cobertura é de
-$73\%$ da amostra: fundos no início de sua vida (menos de 252 pregões de histórico de cota) ficam
-sem beta, uma limitação a registrar. Ao incluir o beta do fundo como regressor adicional na
-regressão empilhada (não reportado em tabela separada por redundância com a Tabela~\ref{tab:pool}),
-o coeficiente entra positivo e significativo, consistente com a leitura de que fundos mais
-``equity-like'' tendem a manter maior peso em VALE3 --- uma checagem de consistência interna do
-desenho da base, mais do que um resultado novo de interpretação econômica ampla.
+$73\%$ da amostra ($8.333$ de $11.413$ observações): fundos no início de sua vida (menos de 252
+pregões de histórico de cota) ficam sem beta, uma limitação a registrar.
+
+A Tabela~\ref{tab:betafundo} inclui o beta do fundo como regressor adicional na regressão
+empilhada, com erro-padrão agrupado por fundo. Para isolar o efeito de \emph{adicionar} a
+variável do efeito de \emph{restringir} a amostra, as duas colunas usam exatamente a mesma
+amostra de $8.333$ observações (só os fundo-meses com beta do fundo disponível).
+
+\begin{table}[h]\centering\small
+\caption{Regressão empilhada, mesma amostra ($n=8.333$), sem e com o beta do próprio fundo.}
+\label{tab:betafundo}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Variável & Sem beta do fundo & Com beta do fundo \\
+\midrule
+$\ln$(patrimônio) por d.p. & $-0{,}0067$ ($t=-2{,}5$) & $-0{,}0010$ ($t=-0{,}7$) \\
+$\ln$(cotistas) por d.p.   & $0{,}0125$ ($t=5{,}5$)   & $0{,}0015$ ($t=0{,}9$) \\
+Fundo de cotas              & $-0{,}0202$ ($t=-3{,}6$) & $-0{,}0060$ ($t=-1{,}7$) \\
+Captação/patrimônio        & $-0{,}0005$ ($t=-2{,}6$) & $-0{,}0001$ ($t=-0{,}5$) \\
+Preço de VALE3 por d.p.    & $0{,}0054$ ($t=5{,}2$)   & $0{,}0032$ ($t=3{,}4$) \\
+Beta de VALE3 por d.p.     & $-0{,}0038$ ($t=-3{,}8$) & $-0{,}0050$ ($t=-5{,}6$) \\
+Beta do próprio fundo por d.p. & --- & $0{,}0234$ ($t=17{,}8$) \\
+\midrule
+$R^2$ & $0{,}130$ & $0{,}469$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Erro-padrão agrupado por fundo. Fonte: elaboração própria (script
+\texttt{R/39}).}
+\end{table}
+
+O resultado é mais forte do que uma checagem de consistência: o coeficiente do beta do fundo é
+grande, positivo e fortemente significativo ($t=17{,}8$), o $R^2$ quase quadruplica
+($0{,}130\to0{,}469$), e --- o achado que merece destaque --- \textbf{tamanho, cotistas, fundo de
+cotas e captação perdem significância estatística} nessa amostra restrita ao serem controlados
+pelo beta do fundo. A leitura mais provável é que parte do que tamanho, cotistas e FIC pareciam
+explicar sobre o peso de VALE3 é, na verdade, um proxy indireto para o quão orientado a ações é o
+mandato do fundo --- e o beta do fundo mede essa dimensão diretamente, absorvendo boa parte do
+poder explicativo das outras características nesta subamostra. Preço e beta de VALE3 permanecem
+significativos nas duas colunas, sinal de que capturam algo adicional, não redundante com o perfil
+de risco geral do fundo. Essa qualificação --- válida apenas para os $73\%$ da amostra com
+histórico de cota suficiente --- não estava presente em versões anteriores deste trabalho, que
+citavam esse resultado sem reportar os números.
 
 \subsection{Extensão: a demanda por um universo amplo de ações}
 \label{sec:multi}
