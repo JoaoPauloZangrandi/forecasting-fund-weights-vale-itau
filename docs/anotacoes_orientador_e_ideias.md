@@ -144,8 +144,10 @@ e os números mais à mão nos dois PDFs.
   não estima, ver Introdução do tcc). Registrado como agenda futura, não
   implementado nesta rodada (decisão do João).
 - **Cobertura de preço/beta para todo o universo multiativo** (hoje só VALE3 tem
-  preço/beta próprios; o painel multiativo tem 1.777 ativos, inviável mapear todos
-  para tickers do Yahoo nesta rodada — ver seção 4).
+  preço/beta próprios; o painel multiativo, após a correção de custódia de
+  16/07 — ver seção 4 —, tem 444 ativos de posição direta com ticker padrão;
+  mapear todos para o Yahoo não foi feito nesta rodada, mas é bem mais
+  tratável agora do que quando o painel tinha rótulos ambíguos de custódia).
 
 ---
 
@@ -186,15 +188,23 @@ e os números mais à mão nos dois PDFs.
   principal). 27% de fundo-mês sem beta ainda (falta 1 ano de histórico) —
   limitação documentada.
 - **Manter gestora Itaú e ampliar para Ações.** `R/31`+`R/32`: painel
-  fundo×ativo×mês generalizado (1.777 ativos distintos brutos, 305 fundos, 1,50
-  milhão de linhas após filtro de cotistas). Escopo explícito decidido com o
-  João: a estimação de demanda (θ por ativo-mês) foi generalizada de verdade; a
-  parte dinâmica (Kalman, ajuste parcial, previsão OOS) continua com VALE3 como
-  estudo de caso aprofundado, porque preço/beta de mercado para 1.777 tickers é
-  inviável de mapear/buscar nesta rodada. Achado novo: os sinais de VALE3
-  generalizam para 92-99% dos ~868 ativos com amostra suficiente, MAS o efeito
-  de tamanho de VALE3 está no percentil 1 da distribuição entre ativos — VALE3
-  é um caso extremo nessa dimensão, não típico.
+  fundo×ativo×mês generalizado. **Correção 16/07/2026 (ver Apêndice C do
+  log_decisoes.md):** o número inicial de "1.777 ativos" contava a mesma ação
+  várias vezes sob rótulos de custódia diferentes (posição direta, cedida em
+  empréstimo, direito de subscrição, etc.) — o João perguntou por que não
+  batia com a B3 ter só ~350-450 empresas listadas, e a resposta era que não
+  batia mesmo. Corrigido por sufixo de ticker + palavra-chave: só **464
+  ativos** são posições diretas de verdade; painel filtrado final = 894.551
+  linhas, 305 fundos, **444 ativos**. Escopo explícito decidido com o João: a
+  estimação de demanda (θ por ativo-mês) foi generalizada de verdade; a parte
+  dinâmica (Kalman, ajuste parcial, previsão OOS) continua com VALE3 como
+  estudo de caso aprofundado — agora mais tratável de estender no futuro, já
+  que os 444 ativos têm ticker padrão identificável (antes da limpeza,
+  "VALE3" tinha 3 rótulos ambíguos diferentes). Achado (sobrevive à
+  correção): os sinais de VALE3 generalizam para 88-98% dos 375 ativos com
+  amostra suficiente (>=15 holders), MAS VALE3 é extremo em 3 das 4 dimensões
+  (tamanho: 3º mais negativo de 207; cotistas: 2º mais positivo; FIC: 2º mais
+  negativo) — não é um caso típico.
 - **NEFIN: pegar os prêmios (Carhart).** `R/34`: fatores diários do NEFIN-USP
   (Rm-Rf, SMB, HML, WML) agregados para mensal e adicionados como controle no
   pooled de VALE3. Achado: coeficientes de preço/beta praticamente não mudam ao

@@ -380,3 +380,47 @@ com honestidade (Seção 4.7 "oito especificações, sete confiáveis") em vez d
 esconder ou escolher só o número que "dá certo". Console verificado numericamente
 contra os CSVs salvos antes de escrever cada número no `.tex` (nenhum número foi
 copiado sem conferência).
+
+---
+
+## Apêndice C — Correção do universo multiativo: "quase 900 papéis" era 375 (16/07/2026)
+
+### C.0 — Como foi achado
+O João leu a introdução do `tcc I.pdf` ("quase 900 papéis com amostra suficiente") e perguntou
+como isso batia com a B3 tendo só ~350-450 empresas listadas. Pergunta certa: não batia. Investiguei
+os dados em vez de supor.
+
+### C.1 — O que estava errado
+O campo `Nome_Ativo` da base CONS da CVM **não é "1 ativo, 1 linha"**. A mesma ação pode aparecer
+em até 5 rótulos diferentes por mês, conforme o tipo de custódia da posição, não conforme o papel:
+posição direta; cedida em empréstimo (aluguel de ações); recebida em empréstimo; direito de
+subscrição; recibo de subscrição; certificado de depósito. Exemplo achado nos dados: VALE3 aparece
+em 3 linhas diferentes no painel bruto (direta, cedida, recebida). Dos 1.217 valores distintos de
+`Nome_Ativo` no painel multiativo (já sem "Companhia Fechada"), só **464 (38%)** eram posições
+diretas de verdade; as outras 753 (62% dos rótulos, 40,6% das observações) eram a mesma ação sob
+outro rótulo de custódia.
+
+### C.2 — Como foi corrigido
+Classificação pelo **sufixo numérico do ticker** (convenção B3: 3=ON, 4-8=PN/subclasses, 11=units
+→ posição direta; 1,2,9,10,12+ ou ausente → direito/recibo/bônus/certificado), combinada com
+exclusão por palavra-chave no nome (`cedid`, `recebid`, `subscri`, `certificado`, etc.). Testado
+contra tickers conhecidos (PETR4, VALE3, VALE5, ITUB4, BBAS3, USIM6, GGBR4) e contra os ~30 casos
+de sufixo atípico sem palavra-chave óbvia, um por um — **zero falso positivo/negativo** encontrado.
+**Erro de script no meio do caminho, também corrigido:** a primeira tentativa de checar isso usava
+`regmatches(x, regexpr(...))`, que descarta elementos sem match e desalinha o vetor silenciosamente
+(gerou contradições visíveis: um mesmo ticker aparecendo como normal E excluído ao mesmo tempo).
+Troquei para `sub()`, que preserva o tamanho do vetor sempre — e usei `stopifnot(length(x)==n0)`
+em cada etapa daí em diante. Lição: ao filtrar por regex em R, checar explicitamente que o vetor
+resultante tem o mesmo tamanho do de entrada, não assumir.
+
+### C.3 — Resultado
+Filtro incorporado permanentemente ao `R/31` (não é um script avulso — faz parte do pipeline).
+Números corrigidos em cascata: painel filtrado final 894.551 obs / 305 fundos / **444 ativos**
+diretos (era 1,50 milhão / 305 / 1.129); regressão por (ativo,mês) com ≥15 holders agora tem
+13.821 células / **375 ativos** (era 23.704 / 868); ativos com ≥24 meses estimados: **207** (era
+361). A checagem de sanidade `nvale2 == 26123L` (VALE3 continua com o mesmo número de linhas do
+painel original de VALE3, só as variantes emprestadas saíram) está agora como `stopifnot` no
+próprio `R/31`, então quebra o script se algum dia voltar a divergir. `tcc I.pdf` e
+`tudo explicado.pdf` atualizados e recompilados; a qualificação central do achado (VALE3 é extremo
+em 3 das 4 dimensões do multiativo, não representativo) sobreviveu à correção, só os números
+mudaram.

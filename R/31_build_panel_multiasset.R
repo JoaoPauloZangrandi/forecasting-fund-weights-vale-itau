@@ -68,6 +68,48 @@ cat("peso: min", min(painel$peso), "| max", max(painel$peso), "| NAs:", sum(is.n
 nvale <- painel[ativo == "VALE ON N1 - VALE3", .N]
 cat("linhas VALE3 no painel multiativo:", nvale, "(esperado: 26.123, do painel original R/10)\n")
 
+# =============================================================================
+# LIMPEZA CRITICA (achada apos o João perguntar por que "quase 900 papeis" nao
+# batia com os ~350-450 papeis listados na B3): o campo Nome_Ativo da CVM NAO
+# e "1 ativo = 1 linha". A MESMA acao aparece em ate 3 linhas diferentes
+# conforme o TIPO de posicao/custodia:
+#   - posicao direta normal            ("VALE ON N1 - VALE3")
+#   - cedida em emprestimo (aluguel)   ("Acoes...cedidos em emprestimo - VALE3")
+#   - recebida em emprestimo           ("Obrigacoes por acoes...recebidos - VALE3")
+# mais direitos/recibos/bonus de subscricao (instrumentos relacionados, mas
+# tecnicamente DIFERENTES da acao) e certificados de deposito. So a posicao
+# DIRETA e comparavel ao que o painel original de VALE3 usa (R/10 filtrava
+# Nome_Ativo == "VALE ON N1 - VALE3" exatamente, excluindo essas variantes).
+# Para a extensao multiativo ser metodologicamente consistente com o caso
+# VALE3, aplicamos o MESMO padrao: manter so posicoes diretas.
+#
+# Classificacao: o SUFIXO NUMERICO do ticker e mais confiavel que o texto (a
+# CVM as vezes rotula so "Bradesco - BBDC1" sem dizer "Direito de Subscricao",
+# mas o sufixo 1/2/9/10/12+ ja denuncia). Convencao B3: sufixo 3=ON, 4-8=PN
+# (subclasses A/B/C), 11=Units -> posicao direta padrao; sufixo 1,2,9,10,12+ ou
+# ausente -> direito/recibo/bonus/certificado, EXCLUIDO. Confirmado sem falso
+# positivo/negativo contra PETR4, VALE3, VALE5, ITUB4, BBAS3, USIM6, GGBR4.
+ticker <- trimws(sub(".*- ", "", painel$ativo))
+sufixo_chr <- sub(".*?([0-9]+)$", "\\1", ticker)
+tem_sufixo <- sufixo_chr != ticker
+sufixo_num <- rep(NA_integer_, nrow(painel))
+sufixo_num[tem_sufixo] <- suppressWarnings(as.integer(sufixo_chr[tem_sufixo]))
+kw_excluir <- "cedid|recebid|[Ss]ubscri|[Cc]ertificado ou recibo de dep|omitid|Outras Ações|IBOVESPA|IBOV11"
+classe_normal <- !is.na(sufixo_num) & sufixo_num %in% c(3,4,5,6,7,8,11) & !grepl(kw_excluir, painel$ativo)
+
+n_antes <- nrow(painel); ativos_antes <- uniqueN(painel$ativo)
+cat("\n== LIMPEZA: posicao direta vs. emprestimo/subscricao/certificado ==\n")
+cat("Ativos distintos ANTES:", ativos_antes, "| linhas ANTES:", n_antes, "\n")
+cat("Ativos distintos classificados como posicao DIRETA:", uniqueN(painel$ativo[classe_normal]), "\n")
+cat("Linhas removidas (emprestimo/subscricao/certificado/etc):", sum(!classe_normal),
+    sprintf("(%.1f%% das linhas)\n", 100*sum(!classe_normal)/n_antes))
+painel <- painel[classe_normal]
+cat("Ativos distintos DEPOIS:", uniqueN(painel$ativo), "| linhas DEPOIS:", nrow(painel), "\n")
+
+nvale2 <- painel[ativo == "VALE ON N1 - VALE3", .N]
+cat("linhas VALE3 apos limpeza:", nvale2, "(tem que continuar 26.123 -- so tirou variantes, nao a direta)\n")
+stopifnot(nvale2 == 26123L)
+
 fwrite(painel, file.path(REPO,"data/processed/painel_multiativo_2016_2021.csv"))
 cat("\nOK - salvo em data/processed/painel_multiativo_2016_2021.csv\n")
 

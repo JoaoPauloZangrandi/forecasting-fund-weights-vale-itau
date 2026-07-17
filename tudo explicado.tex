@@ -92,7 +92,7 @@ regra de decisão recursiva sob a opacidade de 90 dias (Seção~\ref{sec:decisao
 \end{itemize}
 
 O resultado, em uma frase: \emph{as características explicam bem o nível do peso (sinais estáveis
-nos 72 meses, e que generalizam para 92--99\% de quase 900 ações), mas o peso de cada fundo é tão
+nos 72 meses, e que generalizam para 88--98\% de 375 ações), mas o peso de cada fundo é tão
 persistente --- quase um passeio aleatório --- que no curto prazo nada supera com clareza a
 previsão ingênua de repetir o último valor; existe uma reversão real ao ``peso-alvo'' definido
 pelas características, robusta a seis especificações de estimação diferentes (a estimativa
@@ -104,7 +104,7 @@ Esta versão do documento acrescenta quatro peças pedidas numa nova rodada de a
 orientador: a velocidade de ajuste estimada também por \textbf{painel dinâmico de Arellano--Bond}
 (Seção~\ref{sec:ab}); o \textbf{beta do próprio fundo} como controle (Seção~\ref{sec:betafundo});
 os \textbf{fatores de risco do NEFIN-USP} como controle no pooled (Seção~\ref{sec:nefin}); e a
-generalização da estimação de demanda para um \textbf{universo amplo de quase 900 ações}
+generalização da estimação de demanda para um \textbf{universo amplo de 375 ações}
 mantidas pelos fundos do Itaú, não só VALE3 (Seção~\ref{sec:multi}).
 
 % ======================================================================
@@ -891,83 +891,116 @@ arquivo de centenas de megabytes; para pegar \emph{todos} os ativos, isso não f
 vez disso, lemos o arquivo inteiro com \texttt{fread} (rápido: 2,8 milhões de linhas em 0,8
 segundo) e filtramos apenas pelos códigos de fundo do Itaú. \scriptref{R/31}
 
-O painel resultante --- fundo $\times$ ativo $\times$ mês --- tem \textbf{1.777 ativos distintos
-brutos}, 906 fundos, quase 7,8 milhões de linhas (2016--2021). Após limpeza (10 linhas com nomes
-de "Ação de Companhia Fechada" continham vírgula que corrompia o parsing CSV bruto da CVM, e mais
-3.293 linhas do mesmo tipo de ativo --- fora de escopo, sem preço de mercado --- foram descartadas
-com auditoria) e o filtro de mais de três cotistas, sobram 1,50 milhão de observações, 305 fundos,
-1.129 ativos. Uma checagem de consistência forte: VALE3 tem exatamente 26.123 linhas nesse painel
-amplo --- o mesmo número do painel original, construído por um caminho de código totalmente
-diferente.
+O painel resultante --- fundo $\times$ ativo $\times$ mês --- tem, num primeiro corte,
+\textbf{1.217 valores distintos} do campo \texttt{Nome\_Ativo} (já sem as posições em empresas de
+capital fechado: 10 linhas com nomes contendo vírgula corrompiam o parsing CSV bruto da CVM, e
+mais 3.293 linhas do mesmo tipo de ativo --- fora de escopo, sem preço de mercado --- foram
+descartadas com auditoria), 906 fundos, quase 7,8 milhões de linhas (2016--2021).
+
+\paragraph{Uma segunda limpeza, mais sutil: nem todo \texttt{Nome\_Ativo} é um ativo diferente.}
+O campo \texttt{Nome\_Ativo} da CVM não segue a convenção ``uma linha, um ativo'': a mesma ação
+pode aparecer sob até cinco rótulos distintos no mesmo mês, conforme o \emph{tipo de custódia} da
+posição, não conforme o papel em si. Encontramos, por exemplo, três entradas diferentes para
+VALE3 no painel bruto: \texttt{"VALE ON N1 - VALE3"} (a posição direta, a única usada na análise
+de VALE3 desde o início do projeto), \texttt{"Ações e outros TVM cedidos em empréstimo -
+VALE3"} (a mesma ação, mas fisicamente emprestada a um terceiro num contrato de aluguel de
+ações --- o fundo mantém a exposição econômica, mas a CVM registra a posição numa linha à
+parte) e \texttt{"Obrigações por ações e outros TVM recebidos em empréstimo - VALE3"} (o
+inverso: ações recebidas via empréstimo). Some a isso direitos de subscrição, recibos de
+subscrição e certificados de depósito --- instrumentos \emph{relacionados} à ação, mas
+tecnicamente diferentes dela --- e o resultado é que tratar cada \texttt{Nome\_Ativo} como um
+ativo distinto infla artificialmente a contagem.
+
+A correção usa o \textbf{sufixo numérico do \emph{ticker}} como critério principal, mais
+confiável que o texto (a CVM às vezes rotula uma posição só como \texttt{"Bradesco - BBDC1"},
+sem dizer ``direito de subscrição'', mas o sufixo \texttt{1} já denuncia isso pela convenção da
+B3). Mantivemos apenas ativos cujo \emph{ticker} termina em 3 (ON), 4 a 8 (PN e subclasses) ou 11
+(\emph{units}) \textbf{e} cujo nome não contém palavras como ``cedido'', ``recebido'',
+``subscrição'' ou ``certificado''; testamos essa regra contra tickers conhecidos (PETR4, VALE3,
+VALE5, ITUB4, BBAS3, USIM6, GGBR4) e contra os 30 casos de sufixo atípico sem palavra-chave
+óbvia, um por um, sem nenhum falso positivo ou negativo. Resultado: dos 1.217 valores de
+\texttt{Nome\_Ativo}, apenas \textbf{464} são posições diretas padrão --- as outras 753 linhas
+(62\% dos rótulos, 40,6\% das observações fundo-ativo-mês) são variantes de custódia do mesmo
+conjunto menor de ações, não ações adicionais. \scriptref{R/31}
+
+Após esse filtro e o de mais de três cotistas, sobram 894.551 observações, 305 fundos, 444
+ativos. Uma checagem de consistência forte sobreviveu às duas limpezas: VALE3 continua com
+exatamente 26.123 linhas nesse painel amplo --- o mesmo número do painel original de VALE3,
+construído por um caminho de código totalmente diferente; só as variantes emprestadas de VALE3
+foram removidas, não a posição direta.
 
 \paragraph{Um cuidado de padronização que só aparece no painel amplo.} Ao padronizar $\ln$(PL) e
 $\ln$(cotistas) (Seção~\ref{sec:dados}), a distribuição usada para calcular média e desvio-padrão
 não pode vir das linhas do painel fundo-ativo-mês diretamente: um fundo que detém cinquenta ações
 apareceria cinquenta vezes, pesando cinquenta vezes mais na média do que um fundo que detém uma
 única ação. A correção é padronizar usando a distribuição de pares (fundo, mês) \textbf{únicos}
-(7.964 deles), não linhas do painel amplo.
+(7.958 deles), não linhas do painel amplo.
 
 \subsection{O padrão de VALE3 generaliza?}
 
 Para cada par (ativo, mês) com pelo menos 15 fundos do Itaú detentores --- um limiar que garante
 graus de liberdade suficientes para os cinco parâmetros da regressão~\eqref{eq:cs} ---, estimamos
-a mesma cross-section, célula por célula: 23.704 células, 868 ativos distintos, 1,49 milhão de
-observações, em 33 segundos de computação. \scriptref{R/32}
+a mesma cross-section, célula por célula, já no painel limpo (só posições diretas): 13.821
+células, 375 ativos distintos, 888.186 observações, em cerca de 20 segundos de computação.
+\scriptref{R/32}
 
-\resultados Para cada ativo com pelo menos 24 meses de $\widehat\theta_{n,t}$ estimado (361
+\resultados Para cada ativo com pelo menos 24 meses de $\widehat\theta_{n,t}$ estimado (207
 ativos), calculamos a média temporal dos coeficientes e olhamos a distribuição \emph{entre
 ativos}:
 
 \begin{center}\small
 \begin{tabular}{@{}lccc@{}}
 \toprule
-Coeficiente & Direção (VALE3) e \% igual & Posição de VALE3 entre os 361 & Percentil \\
+Coeficiente & Direção (VALE3) e \% igual & Posição de VALE3 entre os 207 & Percentil \\
 \midrule
-$\ln$(PL)         & negativo, $92{,}5\%$ & \textbf{3º mais negativo} & $0{,}8$ \\
-$\ln$(cotistas)   & positivo, $98{,}9\%$ & \textbf{2º mais positivo} & $99{,}7$ \\
-Fundo de cotas     & negativo, $92{,}8\%$ & \textbf{2º mais negativo} & $0{,}6$ \\
-Captação/PL       & fraco/instável, $52{,}6\%$ positivo & comum, sem destaque & $76{,}2$ \\
+$\ln$(PL)         & negativo, $93{,}7\%$ & \textbf{3º mais negativo} & $1{,}4$ \\
+$\ln$(cotistas)   & positivo, $98{,}1\%$ & \textbf{2º mais positivo} & $99{,}5$ \\
+Fundo de cotas     & negativo, $88{,}4\%$ & \textbf{2º mais negativo} & $1{,}0$ \\
+Captação/PL       & majoritariamente positivo, $70{,}5\%$ & comum, sem destaque & $60{,}9$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.9\textwidth]{fig_multiativo_dist.pdf}
-\caption{Distribuição, entre os 361 ativos com amostra suficiente, do coeficiente médio de cada
+\caption{Distribuição, entre os 207 ativos com amostra suficiente, do coeficiente médio de cada
 característica. Linha vermelha: VALE3; linha tracejada cinza: mediana entre ativos.}
 \label{fig:multiativo}
 \caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/37}).}
 \end{figure}
 
 A resposta é matizada, e vale ler com cuidado. As \textbf{direções} dos três efeitos estruturais
-generalizam fortemente: 92 a 99\% dos ativos com amostra suficiente têm o mesmo sinal que VALE3
+generalizam fortemente: 88 a 98\% dos ativos com amostra suficiente têm o mesmo sinal que VALE3
 --- não é uma peculiaridade de um papel, é um padrão de como os fundos do Itaú, em geral,
 distribuem posições em ações conforme o perfil do fundo. Mas a \textbf{magnitude} desses efeitos
 para VALE3 é extrema em \textbf{três} das quatro dimensões, não só na de tamanho, como uma
-primeira checagem sugeria: o coeficiente de tamanho é o 3º mais negativo entre 361 ativos
-(percentil $0{,}8$), o de cotistas é o 2º mais positivo (percentil $99{,}7$), e o de fundo de
-cotas é o 2º mais negativo (percentil $0{,}6$) --- visíveis na Figura~\ref{fig:multiativo} como a
-linha vermelha na cauda extrema de três dos quatro histogramas. Só o coeficiente de fluxo é comum
-(percentil $76$). VALE3, portanto, não é um caso representativo do universo de ações que os
-fundos do Itaú carregam --- é um papel grande, líquido e historicamente volátil que puxa para o
-extremo em quase toda dimensão medida, e os números de \emph{magnitude} estimados para ele ao
-longo deste documento não devem ser lidos como ``o efeito típico de uma ação qualquer''. Uma
-checagem independente, empilhando as 1,50 milhão
-de observações com efeito-fixo de \emph{ativo} \textbf{e} de \emph{mês} (estimado por
+primeira checagem (antes da limpeza de custódia) sugeria: o coeficiente de tamanho é o 3º mais
+negativo entre 207 ativos (percentil $1{,}4$), o de cotistas é o 2º mais positivo (percentil
+$99{,}5$), e o de fundo de cotas é o 2º mais negativo (percentil $1{,}0$) --- visíveis na
+Figura~\ref{fig:multiativo} como a linha vermelha na cauda extrema de três dos quatro
+histogramas. Só o coeficiente de fluxo é comum (percentil $61$). VALE3, portanto, não é um caso
+representativo do universo de ações que os fundos do Itaú carregam --- é um papel grande, líquido
+e historicamente volátil que puxa para o extremo em quase toda dimensão medida, e os números de
+\emph{magnitude} estimados para ele ao longo deste documento não devem ser lidos como ``o efeito
+típico de uma ação qualquer''. Uma checagem independente, empilhando as 894.551
+observações com efeito-fixo de \emph{ativo} \textbf{e} de \emph{mês} (estimado por
 demeaning iterativo de Frisch--Waugh--Lovell, que subtrai repetidamente as médias por ativo e por
-mês até convergir --- equivalente a incluir uma \emph{dummy} para cada um dos 1.129 ativos e cada
+mês até convergir --- equivalente a incluir uma \emph{dummy} para cada um dos 444 ativos e cada
 um dos 72 meses, mas computacionalmente muito mais barato), erro-padrão agrupado por fundo,
-confirma os três sinais com significância ($t=-3{,}4$; $t=8{,}3$; $t=-4{,}0$; $t=0{,}6$ para o
+confirma os três sinais com significância ($t=-3{,}3$; $t=8{,}1$; $t=-3{,}7$; $t=0{,}4$ para o
 fluxo, não significativo). \scriptref{R/32}
 
-\limitacoes O universo bruto (1.777 ativos) é grande demais para estender a parte
-\textbf{dinâmica} do modelo (preço e beta próprios de cada ativo, Kalman, ajuste parcial,
-previsão fora da amostra) a todos os papéis nesta rodada: mapear cada nome de ativo para um
-\emph{ticker} de mercado e buscar preço/beta individualmente não é confiável de fazer em massa
-(nomes ambíguos, BDRs, ativos pouco líquidos, limites de taxa de fontes externas). VALE3
-permanece o estudo de caso aprofundado para a parte dinâmica; esta seção cobre só a camada de
-\emph{explicação} transversal (o Passo 1). Estender a cobertura de preço/beta a mais ativos ---
-por exemplo, aos mais frequentemente detidos --- fica na agenda.
+\limitacoes Mesmo depois da limpeza de custódia, que reduziu o painel a 444 ativos de posição
+direta (todos com \emph{ticker} padrão da B3), a parte \textbf{dinâmica} do modelo (preço e beta
+próprios de cada ativo, Kalman, ajuste parcial, previsão fora da amostra) não foi estendida a
+todos os papéis nesta rodada: buscar preço e beta individualmente para 444 \emph{tickers} numa
+fonte de mercado é mecanicamente mais tratável agora que os nomes estão padronizados --- antes da
+limpeza, mapear ``VALE3'' para um \emph{ticker} do Yahoo Finance era ambíguo (havia três rótulos
+diferentes para o mesmo papel); agora cada ativo tem exatamente um \emph{ticker} identificável ---
+mas ainda não foi feito por tempo. VALE3 permanece o estudo de caso aprofundado para a parte
+dinâmica; esta seção cobre só a camada de \emph{explicação} transversal (o Passo 1). Estender a
+cobertura de preço/beta aos 444 ativos --- ou, para começar, aos mais frequentemente detidos ---
+fica na agenda, agora mais tratável do que antes da limpeza.
 
 % ======================================================================
 \section{O modelo de ajuste parcial}
@@ -1355,7 +1388,8 @@ Efeito mecânico do preço em $\Delta w$ e no pooled & decompor variação mecâ
 Margens tratadas separadamente & modelo em duas partes (\emph{hurdle}) & agenda \\
 Corte de $>3$ cotistas é convenção & sensibilidade com $>1$, $>5$, $>10$ & agenda \\
 Elasticidade-preço à la Koijen--Yogo não estimada & exige instrumento dos demais investidores & agenda \\
-Preço/beta só de VALE3 no painel amplo (1.777 ativos) & priorizar ativos mais frequentes & agenda \\
+Preço/beta só de VALE3 no painel amplo (444 ativos) & priorizar ativos mais frequentes & agenda \\
+``Nome\_Ativo'' não é ``1 ativo, 1 linha'' (a mesma ação aparecia sob até 5 rótulos de custódia; ``quase 900 papéis'' era 375) & filtro por sufixo de \emph{ticker} + palavra-chave, 464 posições diretas confirmadas & \textbf{feita} (R/31) \\
 DF sem aumentação & ADF(1--2) & pendente (menor) \\
 \bottomrule
 \end{tabular}
@@ -1373,10 +1407,12 @@ exceção: fundos maiores diluem, fundos com mais cotistas concentram, FICs não
 relevante. Isso sobrevive à forma funcional (linear vs.\ logística dão efeitos quase idênticos),
 à correção de inferência (Newey--West: $t\approx11$; com $L$ grande, $7$--$9$), à winsorização do
 fluxo, ao controle por fatores de risco de mercado conhecidos (NEFIN) e --- achado novo desta
-versão --- generaliza em \textbf{direção} para 92 a 99\% de quase 900 outras ações que os fundos
-do Itaú carregam. A \textbf{magnitude} dos efeitos de VALE3, porém, é atípica em três das quatro
-dimensões (tamanho, cotistas e FIC, todas no 1--2\% mais extremo da distribuição entre ativos):
-é um papel extremo nessas dimensões, não representativo.
+versão --- generaliza em \textbf{direção} para 88 a 98\% de outras 375 ações que os fundos
+do Itaú carregam como posição direta (o número inicial de ``quase 900'' incluía, por engano,
+posições emprestadas e direitos de subscrição da mesma ação sob outro rótulo -- corrigido nesta
+rodada, ver mapa acima). A \textbf{magnitude} dos efeitos de VALE3, porém, é atípica em três das
+quatro dimensões (tamanho, cotistas e FIC, todas no 1--2\% mais extremo da distribuição entre
+ativos): é um papel extremo nessas dimensões, não representativo.
 \item \textbf{As duas margens se opõem} --- quem tende a \emph{ter} (grandes, FICs) tende a ter
 \emph{pouco} --- a assinatura de diversificação, e o achado descritivo mais interessante.
 \item \textbf{Nada prevê o curto prazo.} O peso individual é quase martingale: a ingênua vence
