@@ -1195,10 +1195,50 @@ para risco de mercado já catalogado.
 
 \subsection{Beta do próprio fundo}
 
+\pergunta{Tamanho, cotistas e ser fundo de cotas explicam bem o peso. Mas nenhuma dessas três
+variáveis diz diretamente ``esse fundo é orientado a ações, ou é majoritariamente renda fixa com
+uma pontinha de ações?''. Um fundo pequeno pode ser 100\% ações; um fundo grande pode ser 90\%
+renda fixa. Falta uma variável para essa dimensão.}
+
 Diferente do beta de VALE3 (o risco da \emph{ação}), esse é o beta do \emph{fundo} --- calculado
-com a mesma metodologia (covariância do retorno da cota do fundo com o Ibovespa), mas aplicado
-ao retorno da cota, não da ação. Descreve o quão ``parecido com o mercado de ações'' é o fundo
-como um todo. $\Rightarrow$ \textbf{Seção 4.9.}
+com a mesma metodologia (covariância do retorno da cota do fundo com o Ibovespa, dividida pela
+variância do Ibovespa, janela de 252 pregões), mas aplicado ao retorno da cota, não da ação. Em
+vez de perguntar ``o que esse fundo diz que é'' (o rótulo FIC, por exemplo), mede-se ``como esse
+fundo se comporta'': se a cota sobe e desce forte junto com o Ibovespa, é sinal de mandato mais
+equity-like; se mal se move, é sinal de bastante renda fixa diluindo a exposição. Beta médio na
+amostra: $0{,}50$ (contra $1{,}04$ de VALE3 sozinha) --- esperado, já que um fundo é uma carteira
+diversificada. Cobertura de $73\%$ (fundos muito novos, com menos de 252 pregões de histórico de
+cota, ficam sem beta).
+
+\aha{Esse resultado nunca tinha sido verificado num script antes desta versão --- a afirmação
+``o coeficiente entra positivo e significativo'' foi conferida do zero (script \texttt{R/39}), e
+o achado é mais forte do que uma checagem de rotina. Comparando a \textbf{mesma} amostra
+restrita ($8.333$ observações) com e sem o beta do fundo:}
+
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Variável & Sem beta do fundo & Com beta do fundo \\
+\midrule
+$\ln$(patrimônio) & $t=-2{,}5$ & $t=\mathbf{-0{,}7}$ (não sig.) \\
+$\ln$(cotistas)   & $t=5{,}5$  & $t=\mathbf{0{,}9}$ (não sig.) \\
+Fundo de cotas     & $t=-3{,}6$ & $t=\mathbf{-1{,}7}$ (não sig.) \\
+Captação/PL       & $t=-2{,}6$ & $t=\mathbf{-0{,}5}$ (não sig.) \\
+Beta do fundo     & --- & $t=\mathbf{17{,}8}$ \\
+\midrule
+$R^2$ & $0{,}130$ & $\mathbf{0{,}469}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O $R^2$ quase quadruplica, e --- o achado que importa --- \textbf{tamanho, cotistas, fundo de
+cotas e captação perdem significância estatística} quando o beta do fundo entra na conta, nessa
+amostra restrita. A leitura mais provável: parte do que tamanho/cotistas/FIC pareciam explicar
+sobre o peso de VALE3 era, na verdade, um proxy indireto para o quão orientado a ações é o
+mandato do fundo --- o beta do fundo mede essa dimensão diretamente e absorve boa parte do poder
+explicativo das outras três. Preço e beta de VALE3 continuam significativos nas duas colunas
+(não são redundantes com o perfil geral de risco do fundo). $\Rightarrow$ \textbf{Tabela 11,
+Seção 4.9.}
 
 \subsection{O universo multiativo: o padrão de VALE3 generaliza?}
 \label{sec:multi}
