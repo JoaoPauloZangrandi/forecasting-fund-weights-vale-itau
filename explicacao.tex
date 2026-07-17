@@ -228,7 +228,7 @@ uma comparação estatística: ``fundos com esse perfil, naquele mês, costumava
 \textbf{Tabela 3, Seção 4.2}, a \emph{média} dos 72 meses desses mesmos coeficientes:
 Intercepto$=-3{,}380$, $\ln$(patrimônio)$=-0{,}339$, $\ln$(cotistas)$=0{,}469$, Fundo de
 cotas$=-0{,}732$ --- bem parecidos com os do exemplo, porque os coeficientes mensais são
-estáveis ao longo do tempo (Seção 4.5).
+estáveis ao longo do tempo (Seção 4.3).
 
 \subsection{Por que essa forma logística é melhor que uma reta, na prática}
 
@@ -236,6 +236,29 @@ estáveis ao longo do tempo (Seção 4.5).
 previsões de peso \textbf{fora do intervalo $[0,1]$ em 2,51\% das observações} --- pesos
 negativos, sem sentido. A versão logística nunca faz isso, por construção. Além disso, o ajuste
 melhora ligeiramente (um indicador parecido com $R^2$ sobe de $0{,}152$ para $0{,}165$).
+
+A tabela completa da regressão logística (a mesma Tabela 3, Seção 4.2, do \texttt{tcc I.pdf}),
+com os coeficientes de nota ($z$), o erro-padrão, a estatística $t$ e o efeito parcial já
+traduzido para pontos percentuais (explicado na próxima subseção):
+
+\begin{center}\footnotesize
+\begin{tabular}{@{}lrrrrc@{}}
+\toprule
+Variável & Coef.\ (nota $z$) & EP (NW) & $t$ & Ef.\ parcial (p.p.) & Sig. \\
+\midrule
+Intercepto              & $-3{,}380$ & $0{,}150$ & $-22{,}5$ & --- & *** \\
+$\ln$(patrimônio)       & $-0{,}339$ & $0{,}043$ & $-7{,}9$  & $-0{,}68$ & *** \\
+$\ln$(cotistas)         & $0{,}469$  & $0{,}035$ & $13{,}3$  & $+1{,}06$ & *** \\
+Fundo de cotas           & $-0{,}732$ & $0{,}062$ & $-11{,}7$ & $-1{,}94$ & *** \\
+Captação/patrimônio     & $0{,}078$  & $0{,}183$ & $0{,}4$   & $\approx 0$ & n.s. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Compare essa primeira coluna com a equação do $z$ da Seção~\ref{sec:curva} --- são exatamente os
+mesmos quatro números ($-3{,}18$, $-0{,}18$, $+0{,}30$, $-0{,}55$ no exemplo daquela seção eram os
+coeficientes de \emph{um mês} específico; aqui, a \textbf{média} dos 72 meses é ligeiramente
+diferente, $-3{,}380$, $-0{,}339$, $+0{,}469$, $-0{,}732$, mas a mesma lógica).
 
 \subsection{O efeito parcial médio: traduzindo a nota de volta para pontos percentuais}
 
@@ -315,17 +338,27 @@ zero. Isso é corrigido pelo Newey--West, explicado a seguir.
 
 \subsection{O resultado, no seu projeto}
 
+Esta é a tabela completa (a mesma Tabela 2, Seção 4.1, do \texttt{tcc I.pdf} --- reproduzida aqui
+por inteiro, não só um resumo, para você não precisar alternar entre os dois documentos):
+
 \begin{center}\small
 \begin{tabular}{@{}lrr@{}}
 \toprule
-Coeficiente & Média dos 72 meses & Est. $t$ (corrigida) \\
+Coeficiente & Média dos 72 meses ($\bar\beta_k$) & Est. $t$ (Newey--West, $L=3$) \\
 \midrule
+Intercepto                 & $+0{,}0396$ & $10{,}5$ \\
 $\ln$(patrimônio) por d.p. & $-0{,}0068$ & $-11{,}3$ \\
-$\ln$(cotistas) por d.p. & $+0{,}0109$ & $10{,}9$ \\
-Fundo de cotas & $-0{,}0170$ & $-11{,}1$ \\
+$\ln$(cotistas) por d.p.   & $+0{,}0109$ & $10{,}9$ \\
+Fundo de cotas              & $-0{,}0170$ & $-11{,}1$ \\
+Captação/patrimônio (wins.) & $+0{,}0018$ & $0{,}4$ \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+Repare que a captação é a única linha \textbf{não} significativa ($t=0{,}4$, muito menor que
+$1{,}96$) --- é o dado por trás da frase ``a captação não ajuda a explicar o peso'' que aparece
+várias vezes neste documento. Todas as outras quatro linhas têm $|t|>10$, folgadamente acima do
+limiar de significância a 1\%.
 
 $\Rightarrow$ \textbf{Tabela 2, Seção 4.1} do \texttt{tcc I.pdf}.
 
@@ -351,11 +384,38 @@ e as estatísticas $t$ saem grandes demais, dando uma falsa sensação de certez
 
 O Newey--West soma não só a variância de cada mês sozinho, mas também as ``covariâncias'' entre
 meses vizinhos (o quanto um mês se parece com o mês seguinte, dois meses depois, etc.), com um
-peso que diminui quanto mais distante a defasagem. \noprojeto\ o efeito prático foi multiplicar
-os erros-padrão por $1{,}7$ a $1{,}8$ --- as estatísticas $t$ caíram de valores em torno de $19$
-a $21$ para valores em torno de $11$. As conclusões (todas as características são
-significativas) sobrevivem, mas os números ``bonitos demais'' de antes eram uma ilusão de
-precisão. $\Rightarrow$ \textbf{Seção 3.3 e Tabela 2, Seção 4.1}.
+peso que diminui quanto mais distante a defasagem:
+$$\widehat{\mathrm{Var}}_{\text{NW}}(\bar{\beta}_k) = \frac{1}{T^{2}}\left[
+\sum_{t=1}^{T}\widehat{u}_{k,t}^{2}
++ 2\sum_{\ell=1}^{L}\left(1-\frac{\ell}{L+1}\right)\sum_{t=\ell+1}^{T}\widehat{u}_{k,t}\,\widehat{u}_{k,t-\ell}
+\right]$$
+em que $\widehat u_{k,t}=\beta_{k,t}-\bar\beta_k$ é o quanto o coeficiente daquele mês se afasta
+da média, e $L$ é quantos meses vizinhos entram na soma (aqui, $L=3$, pela regra automática). O
+primeiro pedaço da soma (o $\sum \widehat u_{k,t}^2$) é a fórmula clássica, ``ingênua''; o segundo
+pedaço --- que a fórmula clássica ignora --- é exatamente a parte que captura a semelhança entre
+meses vizinhos. Quando essa semelhança é forte (como é o caso aqui, autocorrelação de
+$0{,}70$--$0{,}84$), esse segundo pedaço é grande e \textbf{positivo}, então a variância
+corrigida sai maior --- o erro-padrão (raiz da variância) cresce, e a estatística $t$ (que divide
+o coeficiente pelo erro-padrão) cai.
+
+\noprojeto\ o efeito prático, coeficiente por coeficiente:
+
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Coeficiente & $t$ ingênuo (sem correção) & $t$ Newey--West ($L=3$) & Fator de aumento do EP \\
+\midrule
+$\ln$(patrimônio)  & $\approx -19$ & $-11{,}3$ & $\times\,1{,}7$ \\
+$\ln$(cotistas)    & $\approx +19$ & $+10{,}9$ & $\times\,1{,}7$ \\
+Fundo de cotas      & $\approx -19$ & $-11{,}1$ & $\times\,1{,}7$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+As conclusões (todas as características, exceto a captação, são significativas) sobrevivem, mas
+os números ``bonitos demais'' de antes ($|t|\approx19$--$21$) eram uma ilusão de precisão criada
+por ignorar que os 72 meses não são 72 informações independentes. $\Rightarrow$ \textbf{Seção 3.3
+e Tabela 2, Seção 4.1}.
 
 % ======================================================================
 \section{A dinâmica do fator: os coeficientes mudam de mês para mês, e o filtro de Kalman}
@@ -372,9 +432,36 @@ para essa sequência já resumida mês a mês.
 
 Cada coeficiente mensal $\widehat\theta_t$ não é o valor ``verdadeiro'' daquele mês --- é o
 valor verdadeiro mais um erro de amostragem (cada mês usa uma amostra diferente de
-$\sim$150 fundos, e amostra finita sempre erra um pouco):
+$\sim$150 fundos, e amostra finita sempre erra um pouco). O filtro de Kalman parte de duas
+equações, uma para o que \emph{observamos} e outra para o que \emph{achamos que existe por
+trás}:
 
-$$\widehat\theta_t = \underbrace{\mu_t}_{\text{fator verdadeiro}} + \underbrace{\varepsilon_t}_{\text{ruído daquele mês}}$$
+$$\underbrace{\widehat\theta_t = \mu_t + \varepsilon_t}_{\text{equação de medida: o que vemos}}
+\qquad\qquad
+\underbrace{\mu_t = \mu_{t-1} + \eta_t}_{\text{equação de estado: como o ``verdadeiro'' se move}}$$
+
+A primeira equação diz: o número que a regressão de FM devolve num mês ($\widehat\theta_t$) é o
+fator estrutural verdadeiro daquele mês ($\mu_t$, que nunca observamos diretamente) mais um erro
+de amostragem ($\varepsilon_t$, com variância $R$). A segunda equação diz como o próprio $\mu_t$
+se move de mês para mês: como um passeio aleatório, dando um passo aleatório $\eta_t$ (com
+variância $Q$) a cada mês, sem tendência de subir ou descer sistematicamente. É a combinação
+dessas duas equações --- uma quantidade real que se move devagar, escondida atrás de uma medição
+ruidosa --- que dá nome ao modelo: \textbf{nível local} (\emph{local level}).
+
+A Figura~\ref{fig:kalman-theta} mostra exatamente essa série barulhenta, uma por característica,
+ao longo dos 72 meses --- é o que entra no filtro, característica por característica, de forma
+totalmente independente (um filtro de Kalman diferente é rodado para cada uma das cinco séries).
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_theta_padr.pdf}
+\caption{As cinco séries de coeficientes, mês a mês, 2016--2021 --- exatamente os
+$\widehat\theta_t$ que alimentam o filtro de Kalman. Repare que nenhum painel é ruído puro em
+torno de zero: há uma trajetória visível, com uma reconfiguração perceptível por volta de 2018,
+sobretudo nos painéis de tamanho, cotistas e fundo de cotas.}
+\label{fig:kalman-theta}
+\caption*{\footnotesize Mesma figura que a Figura 1, Seção 4.3, do \texttt{tcc I.pdf}. Fonte:
+elaboração própria (script \texttt{R/29}).}
+\end{figure}
 
 \subsection{Antes do Kalman: como saber se a série ``sempre volta ao mesmo lugar'' ou ``pode se
 afastar para sempre''? O teste de Dickey--Fuller}
@@ -425,7 +512,7 @@ dá valores mais negativos que $-2{,}9$); cotistas fica bem no limite ($-2{,}70$
 tecnicamente não rejeita a 5\%); fluxo é a menos persistente de todas, quase ruído puro. Esse
 resultado --- as séries revertem, mas devagar --- é exatamente a evidência que justifica usar o
 filtro de Kalman em vez de tratar a série como puro ruído ou puro passeio aleatório.
-$\Rightarrow$ \textbf{Seção 4.5, Tabela 5, ``Dinâmica dos coeficientes''.}
+$\Rightarrow$ \textbf{Seção 4.3, Tabela 4, ``Dinâmica dos coeficientes''.}
 
 \subsection{Duas formas diferentes de lidar com essa série barulhenta}
 
@@ -445,21 +532,89 @@ embaçadas.}
 
 \subsection{Como o filtro decide quanto confiar em cada mês novo}
 
-O filtro estima duas variâncias separadas: $Q$ (o quanto o fator realmente se move de mês para
-mês) e $R$ (o quanto cada mês individual erra por causa da amostra). A partir delas, calcula um
-\textbf{ganho} $K_t \in (0,1)$ que decide, mês a mês, o quanto ``acreditar'' no valor novo:
+\pergunta{Toda vez que chega um novo $\widehat\theta_t$ (uma nova ``foto''), o filtro precisa
+decidir: confio nele, ou confio mais no que eu já sabia até o mês passado? Como essa decisão é
+tomada, de verdade, número por número?}
+
+O filtro faz exatamente dois passos, repetidos mês a mês. Chame de $a_{t}$ a melhor estimativa do
+estado $\mu_t$ e de $P_t$ a incerteza (variância) dessa estimativa.
+
+\textbf{Passo 1 --- Previsão (``o que eu esperava, antes de ver o mês novo'').} Como o estado
+segue passeio aleatório (equação de estado acima), a melhor previsão para o mês novo é
+simplesmente a estimativa que sobrou do mês anterior --- mas com um pouco mais de incerteza
+somada (porque o estado deu um passo aleatório $\eta_t$ desde então):
+$$a_{t|t-1} = a_{t-1}, \qquad P_{t|t-1} = P_{t-1} + Q$$
+
+\textbf{Passo 2 --- Atualização (``agora que vi o mês novo, o que eu acho?'').} Compara-se a
+previsão com o valor observado $\widehat\theta_t$; a diferença entre os dois, $v_t =
+\widehat\theta_t - a_{t|t-1}$, é o quanto o mês novo ``surpreendeu''. O \textbf{ganho de Kalman}
+$K_t$ decide que fração dessa surpresa vira correção:
+$$K_t = \frac{P_{t|t-1}}{P_{t|t-1}+R}, \qquad
+a_{t} = a_{t|t-1} + K_t\, v_t, \qquad
+P_{t} = (1-K_t)\,P_{t|t-1}$$
+
+$Q$ e $R$ são estimados, para cada uma das cinco séries, por máxima verossimilhança --- o
+programa procura os valores de $Q$ e $R$ que tornam a sequência observada de 72 valores a mais
+``provável'' possível, sob o modelo de nível local (mesma lógica de estimação usada, por
+exemplo, no MQO --- só que aqui em vez de minimizar erro ao quadrado, maximiza-se a
+verossimilhança da trajetória inteira).
 
 \begin{itemize}[topsep=2pt,itemsep=2pt]
-\item Se o ruído de medida domina ($R \gg Q$): $K \to 0$, o filtro quase ignora o mês novo ---
-vira uma média longa.
-\item Se o estado se move muito ($Q \gg R$): $K \to 1$, o filtro quase copia o valor novo --- vira
-``repetir o último valor''.
+\item Se o ruído de medida domina ($R \gg Q$): $K_t \to 0$, o filtro quase ignora o mês novo ---
+vira uma média longa, praticamente ``fica parado'' no que já sabia.
+\item Se o estado se move muito ($Q \gg R$): $K_t \to 1$, o filtro quase copia o valor novo ---
+vira ``repetir o último valor'', como se cada mês fosse informação inteiramente nova e confiável.
 \end{itemize}
+
+\analogia{É a mesma lógica de ajustar o volume de um rádio mal sintonizado: se você sabe que a
+estação (o sinal verdadeiro) muda de frequência devagar mas a estática é forte, você reage pouco
+a cada chiado novo (ganho baixo, $K\to0$). Se a estação pula de frequência com frequência mas o
+aparelho é preciso, você reage rápido a cada leitura nova (ganho alto, $K\to1$). O filtro de
+Kalman calcula, sozinho, o ponto de equilíbrio certo entre essas duas situações, a partir dos
+próprios dados.}
+
+\subsection{Um exemplo de verdade, passo a passo, com os números do seu projeto}
+
+\exemplo\ vamos seguir a série do coeficiente de \textbf{fundo de cotas} (a mesma variável FIC da
+Tabela 2) ao redor da ``reconfiguração de 2018'' que a Figura~\ref{fig:kalman-theta} mostra
+visualmente. O programa (script \texttt{R/18}) estima, por máxima verossimilhança, $Q =
+0{,}0000067$ e $R = 0{,}0000137$ para essa série --- ou seja, o \textbf{ruído de medida é cerca do
+dobro do tamanho do passo real do estado}, um sinal de que o filtro deve confiar de forma
+moderada em cada mês novo, nem ignorá-lo, nem copiá-lo cegamente.
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Mês & Previsão $a_{t|t-1}$ & Observado $\widehat\theta_t$ & Ganho $K_t$ & Estimativa $a_t$ \\
+\midrule
+jan/2018 & $-0{,}0262$ & $-0{,}0315$ & $0{,}496$ & $-0{,}0288$ \\
+fev/2018 & $-0{,}0288$ & $-0{,}0204$ & $0{,}496$ & $-0{,}0246$ \\
+mar/2018 & $-0{,}0246$ & $-0{,}0272$ & $0{,}496$ & $-0{,}0259$ \\
+abr/2018 & $-0{,}0259$ & $-0{,}0308$ & $0{,}496$ & $-0{,}0283$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Confira a conta de fevereiro, à mão, com a fórmula do Passo 2: a surpresa daquele mês é $v =
+\widehat\theta_t - a_{t|t-1} = -0{,}0204-(-0{,}0288) = 0{,}0084$. A correção aplicada é
+$K_t\times v = 0{,}496 \times 0{,}0084 \approx 0{,}0042$. A nova estimativa é
+$a_t = -0{,}0288 + 0{,}0042 = -0{,}0246$ --- exatamente o valor da tabela.
+
+\aha{O ganho $K_t\approx0{,}496$ significa que o filtro dá \textbf{quase o mesmo peso} ao que já
+sabia (a previsão) e ao que acabou de ver (o valor novo de fevereiro) --- nem ignora o mês novo,
+nem copia ele inteiro. Repare também que a \textbf{estimativa filtrada} ($a_t$, coluna da
+direita) é sempre mais suave que a série \textbf{observada} ($\widehat\theta_t$, coluna do meio):
+ela vai de $-0{,}0288$ a $-0{,}0283$ ao longo dos quatro meses, um movimento de $0{,}0005$;
+enquanto o observado pula de $-0{,}0315$ para $-0{,}0308$, passando por $-0{,}0204$ no meio do
+caminho --- uma oscilação bem mais violenta. É exatamente esse ``alisamento com memória'' que
+diferencia o Kalman de uma média simples (que ignoraria a ordem temporal) e de ``usar o valor
+cru de cada mês'' (que copiaria cada soluço da amostra).}
 
 \noprojeto\ por que faz sentido usar Kalman em vez de só a média: a autocorrelação de $0{,}70$ a
 $0{,}84$ (Seção~\ref{sec:fm}) mostra que a série \textbf{não é só ruído em torno de uma média
 fixa} --- ela realmente se move, com uma reconfiguração visível em torno de 2018. Se fosse só
-ruído, a média já seria a melhor descrição possível.
+ruído, a média já seria a melhor descrição possível; como não é, vale a pena reconstruir a
+trajetória, e é isso que o filtro faz.
 
 % ======================================================================
 \section{Previsão: os quatro modelos e por que a ingênua vence}
@@ -484,16 +639,25 @@ características.
 
 \subsection{O resultado, e por que ele é revelador}
 
+A tabela completa (mesma Tabela 5, Seção 4.4, do \texttt{tcc I.pdf}), com as oito células
+testadas --- dois universos de fundos, dois horizontes, quatro modelos --- em erro quadrático
+médio (RMSE; menor é melhor, e o menor de cada linha está em negrito):
+
 \begin{center}\small
-\begin{tabular}{@{}lrrrr@{}}
+\begin{tabular}{@{}llrrrr@{}}
 \toprule
-Universo & M0 ingênua & M1 efeito fixo & M2 EF+Kalman & M3 variação \\
+Universo & Horizonte & M0 ingênua & M1 EF & M2 EF+Kalman & M3 variação \\
 \midrule
-Todos, $h=1$ mês & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+Todos os fundos    & $h=1$ mês & $\mathbf{0{,}0156}$ & $0{,}0240$ & $0{,}0255$ & $0{,}0156$ \\
+Todos os fundos    & $h=3$ meses & $\mathbf{0{,}0207}$ & $0{,}0262$ & $0{,}0273$ & $0{,}0210$ \\
+Só fundos de ações & $h=1$ mês & $\mathbf{0{,}0197}$ & $0{,}0310$ & $0{,}0383$ & $0{,}0198$ \\
+Só fundos de ações & $h=3$ meses & $\mathbf{0{,}0266}$ & $0{,}0337$ & $0{,}0385$ & $0{,}0270$ \\
 \bottomrule
 \end{tabular}
 \end{center}
-$\Rightarrow$ \textbf{Tabela 6, Seção 4.6} (RMSE, menor é melhor).
+$\Rightarrow$ \textbf{Tabela 5, Seção 4.4} (RMSE, menor é melhor). Note que a ingênua vence
+\textbf{nas oito células}, e que restringir aos fundos de ações (posições maiores e mais ativas)
+amplia as diferenças sem mudar a ordem --- o padrão não é um acaso de um universo específico.
 
 \textbf{A ingênua vence todos.} O resultado mais revelador é \textbf{M1 perder de M0}: se
 existisse reversão à média histórica do próprio fundo, M1 venceria M0. Ele não vence ---
@@ -550,7 +714,41 @@ mês para o outro --- a posse muda em só $1{,}3\%$ dos casos. Prever ``continua
 $98{,}7\%$ das vezes, contra $\approx87\%$ de um modelo que usa as características --- de novo,
 características explicam bem, mas a inércia domina a previsão de curto prazo.
 
-$\Rightarrow$ \textbf{Seção 4.7 ``As duas margens'', Tabelas 7 e 8} do \texttt{tcc I.pdf}.
+O logit da margem extensiva (10.286 observações, 260 fundos de ações, dos quais $86\%$ têm
+VALE3) --- mesma Tabela 6, Seção 4.5:
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrc@{}}
+\toprule
+Variável & Estimativa & Erro padrão & Estatística $z$ & Sig. \\
+\midrule
+Intercepto        & $-2{,}809$ & $0{,}275$ & $-10{,}2$ & *** \\
+$\ln$(patrimônio) & $0{,}232$  & $0{,}015$ & $15{,}1$  & *** \\
+$\ln$(cotistas)   & $-0{,}034$ & $0{,}012$ & $-2{,}8$  & ** \\
+Fundo de cotas    & $1{,}311$  & $0{,}075$ & $17{,}5$  & *** \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Repare no \textbf{sinal do coeficiente de patrimônio}: $+0{,}232$, \textbf{positivo} --- fundos
+maiores são \emph{mais} propensos a ter VALE3. Compare com o sinal do mesmo tamanho na margem
+intensiva (Tabela 2, Seção 4.1): $-0{,}0068$, \textbf{negativo}. É o mesmo tamanho de fundo, duas
+perguntas diferentes, dois sinais opostos --- resumido na tabela a seguir (mesma Tabela 7, Seção
+4.5):
+
+\begin{center}\small
+\begin{tabular}{@{}lcc@{}}
+\toprule
+Característica & Ter ou não a ação & Quanto carregar \\
+\midrule
+Tamanho do fundo   & mais provável ter ($+$) & peso menor ($-$) \\
+Fundo de cotas     & mais provável ter ($+$) & peso menor ($-$) \\
+Número de cotistas & menos provável, fraco ($-$) & peso maior ($+$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$\Rightarrow$ \textbf{Seção 4.5 ``As duas margens'', Tabelas 6 e 7} do \texttt{tcc I.pdf}.
 
 % ======================================================================
 \section{O modelo de ajuste parcial: o alvo, a distância, e por que o cálculo direto engana}
@@ -657,7 +855,7 @@ sua maneira.
 Ele serve de \textbf{termômetro}: sozinho, o número não é confiável, mas comparado com os
 métodos seguintes, revela qual dos dois problemas pesou mais.
 
-$\Rightarrow$ \textbf{Resultado: $\widehat\lambda^{MQO}=0{,}0976$ --- Tabela 9, Seção 4.8, primeira linha.}
+$\Rightarrow$ \textbf{Resultado: $\widehat\lambda^{MQO}=0{,}0976$ --- Tabela 8, Seção 4.6, primeira linha.}
 Como saiu relativamente alto, isso sugere que o Problema 2 (vazamento mecânico) pesou mais que
 o Problema 1 (erro de medida) no seu caso.
 
@@ -670,20 +868,32 @@ ruído momentâneo), você pergunta ``para onde você estava indo no mês passad
 pergunta é uma pista um pouco desatualizada, mas mais limpa --- não carrega o soluço específico
 de hoje.}
 
-\textbf{Como funciona, em dois passos:}
+\textbf{Como funciona, em dois passos (2SLS --- mínimos quadrados em duas etapas):}
 \begin{enumerate}[topsep=2pt,itemsep=2pt]
-\item Você confere: a distância do mês passado ($d_{t-1}$) realmente prevê a distância de hoje
-($d_t$)? \noprojeto\ sim, muito bem --- um coeficiente de previsão $\approx 0{,}9$ (quase 90\% da
-distância de hoje já era esperada desde ontem). $\Rightarrow$ Isso é o ``primeiro estágio'', mencionado na
-Seção 4.8.
-\item Você usa só a parte de $d_t$ que já era previsível desde ontem para explicar a variação do
-peso --- descartando o resto (que carrega o ruído específico de hoje).
+\item \textbf{Primeiro estágio.} Regride-se a distância de hoje na distância de ontem,
+$$d_{i,t} = \pi_0 + \pi_1\, d_{i,t-1} + \text{erro},$$
+e guarda-se só a parte \textbf{prevista}, $\widehat d_{i,t} = \widehat\pi_0 + \widehat\pi_1\,
+d_{i,t-1}$ --- a parte de $d_t$ que já era conhecida desde ontem, sem nenhum ruído de hoje
+embutido. \noprojeto\ $\widehat\pi_1\approx 0{,}9$ (quase 90\% da distância de hoje já era
+esperada desde ontem) --- ``primeiro estágio'', mencionado na Seção 4.6.
+\item \textbf{Segundo estágio.} Regride-se a variação do peso \textbf{não} na distância bruta
+$d_{i,t}$, mas na sua versão ``limpa'' $\widehat d_{i,t}$:
+$$w_{i,t+1}-w_{i,t} = \lambda\,\widehat d_{i,t} + u_{i,t+1}$$
 \end{enumerate}
+
+\exemplo\ imagine um fundo com $d_{t-1}=0{,}40$ p.p.\ (distância de ontem). Pela reta do primeiro
+estágio ($\widehat\pi_0\approx0$, $\widehat\pi_1\approx0{,}9$ neste exemplo simplificado), a
+previsão é $\widehat d_t = 0{,}9\times0{,}40 = 0{,}36$ p.p. Suponha que a distância \emph{bruta}
+observada hoje seja $d_t = 0{,}55$ p.p.\ --- maior que o previsto, porque, digamos, um soluço de
+amostragem tornou o alvo daquele mês artificialmente distante (o Problema 1). O segundo estágio
+usa $0{,}36$, não $0{,}55$: o excesso de $0{,}19$ p.p.\ (o soluço) é descartado antes de estimar
+$\lambda$, exatamente porque ele não existia ainda ontem --- não pode ser coisa que o fundo já
+sabia e estava corrigindo.
 
 Como o mês passado não sabe nada sobre o erro de medida de hoje nem sobre a oscilação
 passageira do peso de hoje, os dois problemas somem juntos.
 
-$\Rightarrow$ \textbf{Resultado: $\widehat\lambda^{VI}=0{,}0413$, $t=6{,}6$ --- Tabela 9, segunda linha.}
+$\Rightarrow$ \textbf{Resultado: $\widehat\lambda^{VI}=0{,}0413$, $t=6{,}6$ --- Tabela 8, segunda linha.}
 Bem menor que o MQO, confirmando que boa parte do que o MQO media era vazamento mecânico
 (Problema 2), não velocidade real.
 
@@ -737,7 +947,7 @@ estimativa original por fundo. Isso é uma notícia boa: a fragilidade não esta
 si (a reversão ao alvo existe de verdade) --- estava em como o choque comum do mês era tratado
 no cálculo do erro-padrão.}
 
-$\Rightarrow$ \textbf{Tabela 9, linha ``VI + efeito de tempo $\delta_t$'', Seção 4.8} do
+$\Rightarrow$ \textbf{Tabela 8, linha ``VI + efeito de tempo $\delta_t$'', Seção 4.6} do
 \texttt{tcc I.pdf} --- essa linha está em destaque na tabela porque, junto com o teste de
 Diebold--Mariano (Seção~\ref{sec:dm} deste documento), é uma das duas correções mais importantes
 desta versão do trabalho.
@@ -759,10 +969,20 @@ e olhar só a variação dela mesma.}
 
 \textbf{A correção:} em vez de comparar fundos diferentes entre si, você compara \textbf{cada
 fundo com a própria história dele} --- subtrai a média histórica de cada fundo (tanto da
-distância quanto da variação) antes de aplicar o Método 2. Isso cancela o ``jeito de ser''
-permanente automaticamente.
+distância quanto da variação) antes de aplicar o Método 2:
+$$\big(w_{i,t+1}-w_{i,t}\big) - \overline{\Delta w_i} \;=\; \lambda\,\Big[\widehat d_{i,t} -
+\overline{\widehat d_i}\Big] + \text{erro}$$
+em que $\overline{\Delta w_i}$ e $\overline{\widehat d_i}$ são as médias, ao longo de todos os
+meses, \emph{daquele fundo específico}. Isso cancela o ``jeito de ser'' permanente
+automaticamente, porque um valor constante subtraído da própria média vira zero.
 
-$\Rightarrow$ \textbf{Resultado: $\widehat\lambda^{FE+VI}=0{,}1853$, $t=9{,}5$ --- Tabela 9, linha ``FE de
+\exemplo\ um fundo que, todo mês, carrega em média $0{,}30$ p.p.\ a mais de VALE3 do que o modelo
+prevê (seu ``jeito de ser'', $\overline{\widehat d_i}=0{,}30$). Num mês em que a distância prevista
+é $\widehat d_{i,t}=0{,}45$, o Método 2 (sem efeito-fixo) usaria $0{,}45$ inteiro. O Método 3 usa
+só $0{,}45-0{,}30=0{,}15$ --- a parte que é \emph{desvio daquele mês em particular}, não o
+``jeito de ser'' que já é constante em todos os meses e não representa ajuste algum.
+
+$\Rightarrow$ \textbf{Resultado: $\widehat\lambda^{FE+VI}=0{,}1853$, $t=9{,}5$ --- Tabela 8, linha ``FE de
 fundo + VI''.} Quase quatro vezes maior! Isso revela que o $0{,}041$ agregado misturava fundos
 com desvio \textbf{permanente} (que nunca fecham, puxando a média para baixo) com desvios
 \textbf{passageiros} (que se fecham bem mais rápido). Isolando só a segunda parte, a velocidade
@@ -791,8 +1011,8 @@ a \textbf{2.484 pistas para só 307 fundos}!), deixando a estimativa instável.
 
 $\Rightarrow$ \textbf{Resultado: instável.} Com todas as pistas, $\widehat\lambda=+0{,}2923$; com a correção
 padrão para excesso de pistas (usar menos, de um jeito mais eficiente), $\widehat\lambda=-0{,}3312$
---- o sinal \textbf{inverte}. $\Rightarrow$ \textbf{Tabela 9, duas últimas linhas; discussão no parágrafo
-``Quarta, e mais importante...'', Seção 4.8.} Isso não significa que o fenômeno seja falso ---
+--- o sinal \textbf{inverte}. $\Rightarrow$ \textbf{Tabela 8, duas últimas linhas; discussão no parágrafo
+``Quarta, e mais importante...'', Seção 4.6.} Isso não significa que o fenômeno seja falso ---
 significa que essa ferramenta específica não serve para esse formato de painel.
 
 \subsection{Resumo dos quatro métodos}
@@ -809,6 +1029,43 @@ Arellano-Bond & O mesmo, por outro caminho & $\begin{matrix}+0{,}29\\-0{,}33\end
 \bottomrule
 \end{tabular}
 \end{center}
+
+Essa é uma versão simplificada, para fixar a ideia central. A tabela cheia --- a mesma Tabela 8,
+Seção 4.6, do \texttt{tcc I.pdf} --- traz \textbf{todas} as dez especificações realmente
+estimadas, incluindo variações de robustez que não couberam no resumo acima (cluster por mês,
+cluster \emph{two-way}, instrumento mais defasado, horizonte de 3 meses):
+
+\begin{center}\scriptsize
+\begin{tabular}{@{}lrrrl@{}}
+\toprule
+Especificação & Estim.\ $\widehat\lambda$ & EP & $t$ & Nota \\
+\midrule
+MQO (enviesado)                     & $0{,}0976$ & $0{,}0096$ & $10{,}2$ & viés misto (Problemas 1+2) \\
+VI, cluster por fundo (original)    & $0{,}0413$ & $0{,}0063$ & $6{,}6$  & especificação-base \\
+VI, cluster por mês                 & $0{,}0413$ & $0{,}0226$ & $1{,}8$  & choque comum do mês \\
+VI, cluster \emph{two-way}          & $0{,}0413$ & $0{,}0220$ & $1{,}9$  & idem \\
+\textbf{VI + efeito de tempo $\delta_t$} & $\mathbf{0{,}0409}$ & $\mathbf{0{,}0059}$ & $\mathbf{6{,}9}$ & \textbf{corrige a causa} \\
+FE de fundo + VI                    & $0{,}1853$ & $0{,}0194$ & $9{,}5$  & dentro do fundo \\
+VI, instrumento $d_{t-2}$           & $0{,}0210$ & $0{,}0049$ & $4{,}3$  & robustez \\
+VI, horizonte 3 meses               & $0{,}0858$ & $0{,}0114$ & $7{,}5$  & robustez \\
+Arellano--Bond, instr.\ completos   & $0{,}2923$ & $0{,}0431$ & $6{,}8$ & Sargan não-informativo \\
+Arellano--Bond, instr.\ colapsados  & $-0{,}3312$ & $0{,}0535$ & $-6{,}2$ & sinal instável \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_lambda_especificacoes.pdf}
+\caption{Velocidade de ajuste $\widehat\lambda$ por especificação (azul: sinal positivo robusto;
+cinza: MQO enviesado, referência; vermelho: Arellano--Bond, sinal instável). Mesma Figura 2,
+Seção 4.6, do \texttt{tcc I.pdf}.}
+\end{figure}
+
+Olhando a tabela cheia, duas linhas de robustez merecem nota rápida: o instrumento mais defasado
+($d_{t-2}$ em vez de $d_{t-1}$) dá $\lambda=0{,}021$, menor ainda que a especificação central ---
+esperado, porque uma pista mais antiga carrega menos informação sobre o ajuste recente. O
+horizonte de 3 meses dá $\lambda=0{,}086$, maior --- também esperado, porque a variação de peso
+ao longo de 3 meses acumula mais ajuste do que a variação de 1 mês.
 
 % ======================================================================
 \section{Como interpretar os números}
@@ -848,9 +1105,32 @@ formal para separar ``diferença real'' de ``ruído de amostra pequena''.}
 
 Para cada ``origem'' de previsão (cada mês em que você reestima tudo e prevê o mês seguinte),
 calcula-se a diferença entre o erro ao quadrado da previsão ingênua e o erro ao quadrado do
-ajuste parcial. Se essa diferença for, \textbf{em média}, positiva --- e grande o suficiente em
-relação a quanto ela varia de origem para origem ---, você pode dizer que a vitória é
-estatisticamente real, não apenas sorte daquela amostra.
+ajuste parcial, $\delta_\tau = e^{2}_{\text{ingênua},\tau} - e^{2}_{\text{ajuste},\tau}$. A
+estatística do teste é essa diferença média dividida pelo seu próprio erro-padrão de longo prazo
+(de novo, Newey--West, o mesmo princípio da Seção~\ref{sec:nw} --- os $\delta_\tau$ de origens
+vizinhas também podem estar correlacionados):
+$$t_{DM} = \frac{\bar\delta}{\sqrt{\widehat{\mathrm{Var}}_{\text{NW}}(\bar\delta)}}$$
+Se essa diferença for, \textbf{em média}, positiva --- e grande o suficiente em relação a quanto
+ela varia de origem para origem (ou seja, $|t_{DM}|>1{,}96$ a 5\%) ---, você pode dizer que a
+vitória é estatisticamente real, não apenas sorte daquela amostra.
+
+\begin{center}\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Horizonte & RMSE ingênua & RMSE $\lambda$ MQO & RMSE $\lambda$ VI & $t_{DM}$ (MQO) & $t_{DM}$ (VI) \\
+\midrule
+$h=1$ (um mês)     & $0{,}0164$ & $0{,}0161$ & $0{,}0162$ & $1{,}78$ & $2{,}04$ \\
+$h=3$ (opacidade)  & $0{,}0220$ & $0{,}0218$ & $0{,}0216$ & $0{,}04$ & $0{,}92$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Mesma Tabela 9, Seção 4.7.1, do \texttt{tcc I.pdf}. Repare no padrão: em $h=1$, $t_{DM}$ passa de
+$1{,}96$ com a versão VI ($2{,}04$), mas fica abaixo com a versão MQO ($1{,}78$) --- no limiar. Em
+$h=3$, o horizonte que realmente importa (por causa da opacidade de até 90 dias na divulgação de
+carteiras), ambos ficam bem abaixo de $1{,}96$ ($0{,}04$ e $0{,}92$) --- a vitória do ajuste
+parcial nesse horizonte é pequena demais, relativo à sua própria variabilidade, para ser
+declarada estatisticamente real.
 
 \subsubsection*{O resultado, honestamente}
 
@@ -866,7 +1146,7 @@ torna relevante na prática. Essa é a correção que mais mudou a conclusão do
 versões anteriores: antes, o texto afirmava com mais confiança que o ajuste parcial ``supera a
 previsão ingênua'' --- o teste formal mostrou que essa afirmação precisava ser mais cautelosa.
 
-$\Rightarrow$ \textbf{Seção 6.1 ``Previsão recursiva e o teste de Diebold--Mariano'', Tabela 11}
+$\Rightarrow$ \textbf{Seção 4.7.1 ``Previsão recursiva e o teste de Diebold--Mariano'', Tabela 9}
 do \texttt{tcc I.pdf}.
 
 % ======================================================================
@@ -887,14 +1167,38 @@ dias (somar diretamente subestimaria o efeito, por ignorar juros compostos dentr
 Controlando por esses fatores, os coeficientes de preço e beta de VALE3 praticamente não mudam
 ($0{,}00496 \to 0{,}00526$; $-0{,}00649 \to -0{,}00609$) --- ou seja, o que esses regressores
 capturam não é, em sua maior parte, exposição a risco de mercado conhecido, catalogado na
-literatura; é algo mais específico à posição em VALE3. $\Rightarrow$ \textbf{Tabela 4, Seção 4.3.}
+literatura; é algo mais específico à posição em VALE3. A tabela completa (mesma Tabela 10, Seção
+4.8, do \texttt{tcc I.pdf}), com e sem os quatro fatores:
+
+\begin{center}\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Variável & Sem fatores NEFIN & Com fatores NEFIN \\
+\midrule
+Preço de VALE3 por d.p.    & $0{,}00496^{***}$  & $0{,}00526^{***}$ \\
+Beta de VALE3 por d.p.     & $-0{,}00649^{***}$ & $-0{,}00609^{***}$ \\
+Mercado (Rm$-$Rf) por d.p. & --- & $0{,}00216^{***}$ \\
+Tamanho (SMB) por d.p.     & --- & $-0{,}00305^{***}$ \\
+Valor (HML) por d.p.       & --- & $-0{,}00035$ (n.s.) \\
+Momento (WML) por d.p.     & --- & $0{,}00019$ (n.s.) \\
+\midrule
+$R^2$ & $0{,}166$ & $0{,}172$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+O fator de mercado e o de tamanho entram significativos por conta própria (fundos com mais VALE3
+também carregam, em algum grau, mais exposição a esses dois fatores conhecidos) --- mas isso não
+``rouba'' quase nada dos coeficientes de preço e beta de VALE3, que é o achado central desta
+tabela: o padrão capturado por preço e beta \emph{não é}, em sua maior parte, um proxy disfarçado
+para risco de mercado já catalogado.
 
 \subsection{Beta do próprio fundo}
 
 Diferente do beta de VALE3 (o risco da \emph{ação}), esse é o beta do \emph{fundo} --- calculado
 com a mesma metodologia (covariância do retorno da cota do fundo com o Ibovespa), mas aplicado
 ao retorno da cota, não da ação. Descreve o quão ``parecido com o mercado de ações'' é o fundo
-como um todo. $\Rightarrow$ \textbf{Seção 4.4.}
+como um todo. $\Rightarrow$ \textbf{Seção 4.9.}
 
 \subsection{O universo multiativo: o padrão de VALE3 generaliza?}
 \label{sec:multi}
@@ -970,15 +1274,38 @@ Ativos com série completa o bastante para comparar com VALE3 ($\geq24$ meses) &
 \end{tabular}
 \end{center}
 
-As \textbf{direções} dos efeitos generalizam fortemente (88\% a 98\% dos 207 ativos têm o mesmo
-sinal que VALE3 para tamanho, cotistas e FIC). Mas a \textbf{magnitude} de VALE3 é extrema em três
-das quatro dimensões --- ela é a 2ª ou 3ª mais extrema entre os 207 ativos, tanto em tamanho
-quanto em cotistas quanto em FIC (só o coeficiente de fluxo é comum, sem destaque). Isso significa:
-o \emph{padrão} (a direção do efeito) generaliza para qualquer ação; a \emph{magnitude exata}
+Para cada um dos 207 ativos com histórico suficiente, calcula-se a média temporal do coeficiente
+de cada característica, e observa-se onde VALE3 cai dentro dessa distribuição \emph{entre
+ativos}:
+
+\begin{center}\scriptsize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Coeficiente & Direção de VALE3, \% dos 207 igual & Posição de VALE3 entre os 207 & Percentil \\
+\midrule
+$\ln$(patrimônio) & negativo, $93{,}7\%$ & \textbf{3º mais negativo} & $1{,}4$ \\
+$\ln$(cotistas)   & positivo, $98{,}1\%$ & \textbf{2º mais positivo} & $99{,}5$ \\
+Fundo de cotas     & negativo, $88{,}4\%$ & \textbf{2º mais negativo} & $1{,}0$ \\
+Captação/PL       & majoritariamente positivo, $70{,}5\%$ & comum, sem destaque & $60{,}9$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A coluna do meio (``\% dos 207 igual'') é a resposta à pergunta da \textbf{direção}: para
+tamanho, por exemplo, $93{,}7\%$ dos 207 ativos têm coeficiente negativo, igual a VALE3 --- é um
+padrão amplamente compartilhado, não uma peculiaridade de um único papel. A coluna do percentil é
+a resposta à pergunta da \textbf{magnitude}: percentil $1{,}4$ para tamanho significa que só
+$1{,}4\%$ dos 207 ativos têm um coeficiente de tamanho mais negativo que o de VALE3 --- ou seja,
+VALE3 está na cauda extrema, não no meio da distribuição. As \textbf{direções} dos efeitos
+generalizam fortemente (88\% a 98\% dos 207 ativos têm o mesmo sinal que VALE3 para tamanho,
+cotistas e FIC). Mas a \textbf{magnitude} de VALE3 é extrema em três das quatro dimensões --- ela
+é a 2ª ou 3ª mais extrema entre os 207 ativos, tanto em tamanho quanto em cotistas quanto em FIC
+(só o coeficiente de fluxo é comum, percentil $60{,}9$, sem destaque). Isso significa: o
+\emph{padrão} (a direção do efeito) generaliza para qualquer ação; a \emph{magnitude exata}
 encontrada para VALE3 não deve ser extrapolada como ``típica'' --- VALE3 é um papel grande,
 líquido e historicamente volátil, que puxa para o extremo em quase toda dimensão medida.
 
-$\Rightarrow$ \textbf{Seção 5 inteira, Tabela 8 e Figura 3} do \texttt{tcc I.pdf}.
+$\Rightarrow$ \textbf{Seção 4.10 inteira, Tabela 11 e Figura 3} do \texttt{tcc I.pdf}.
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_multiativo_dist.pdf}
@@ -988,7 +1315,7 @@ repare como ele fica na cauda em três dos quatro painéis.}
 
 \subsubsection*{Um detalhe técnico da regressão que soma todos os ativos numa conta só}
 
-A Seção 5.3 do \texttt{tcc I.pdf} traz uma checagem complementar, empilhando todas as observações
+A Seção 4.10.3 do \texttt{tcc I.pdf} traz uma checagem complementar, empilhando todas as observações
 de todos os ativos numa única regressão, com um ``efeito-fixo de ativo e de mês''. Isso é feito por
 uma técnica chamada \textbf{demeaning iterativo} (ou Frisch--Waugh--Lovell): em vez de criar uma
 coluna extra na regressão para cada um dos 444 ativos e cada um dos 72 meses (o que seria
