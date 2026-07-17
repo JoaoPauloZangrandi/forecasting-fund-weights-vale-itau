@@ -524,74 +524,6 @@ comparável ($-1{,}70$), em vez de um pouco menor como a versão anterior (com a
 --- a diferença entre os dois cálculos não é desprezível para uma variável cujo efeito é o maior
 da tabela.
 
-\subsection{Regressão empilhada: preço, beta e dois novos controles}
-\label{sec:pooled}
-\label{sec:nefin}
-
-A Tabela~\ref{tab:pool} traz a regressão empilhada (72 meses, 11.413 observações) com preço e
-beta de VALE3, e --- nesta versão --- dois blocos de controle adicionais estimados
-separadamente: os fatores de risco do NEFIN-USP (Seção~\ref{sec:nefin}) e o beta do próprio
-fundo (Seção~\ref{sec:betafundo}).
-
-\begin{table}[h]\centering\small
-\caption{Regressão empilhada: especificação base e com fatores NEFIN-USP como controle.}
-\label{tab:pool}
-\begin{tabular}{@{}lrr@{}}
-\toprule
-Variável & Sem fatores NEFIN & Com fatores NEFIN \\
-\midrule
-Intercepto                 & $0{,}04146$  & $0{,}04143$ \\
-$\ln$(patrimônio) por d.p. & $-0{,}00640^{***}$ & $-0{,}00642^{***}$ \\
-$\ln$(cotistas) por d.p.   & $0{,}01090^{***}$  & $0{,}01088^{***}$ \\
-Fundo de cotas             & $-0{,}01682^{***}$ & $-0{,}01678^{***}$ \\
-Captação / patrimônio      & $-0{,}00030$  & $-0{,}00036$ \\
-Preço de VALE3 por d.p.    & $0{,}00496^{***}$  & $0{,}00526^{***}$ \\
-Beta de VALE3 por d.p.     & $-0{,}00649^{***}$ & $-0{,}00609^{***}$ \\
-Mercado (Rm$-$Rf) por d.p. & --- & $0{,}00216^{***}$ \\
-Tamanho (SMB) por d.p.     & --- & $-0{,}00305^{***}$ \\
-Valor (HML) por d.p.       & --- & $-0{,}00035$ \\
-Momento (WML) por d.p.     & --- & $0{,}00019$ \\
-\midrule
-$R^2$ & $0{,}166$ & $0{,}172$ \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize *** significância a $0{,}1\%$. Fatores diários do NEFIN-USP (Núcleo de
-Economia Financeira, USP: mercado, tamanho, valor e momento, metodologia
-Fama-French/Carhart adaptada ao Brasil), agregados por retorno composto dentro do mês. Fonte:
-elaboração própria (script \texttt{R/34}); fatores de \url{https://nefin.com.br/data/risk-factors/}.}
-\end{table}
-
-O achado central desta tabela é de \emph{estabilidade}: os coeficientes de preço e de beta de
-VALE3 praticamente não se movem ao controlar pelos quatro fatores de risco de mercado conhecidos
-(preço: $0{,}00496\to0{,}00526$; beta: $-0{,}00649\to-0{,}00609$). Isso indica que o padrão
-capturado por esses dois regressores não é, em sua maior parte, exposição a risco de mercado já
-catalogado na literatura --- é específico à posição em VALE3 (incluindo o componente mecânico
-discutido na Seção~\ref{sec:disc}), não um proxy para o fator de mercado, de tamanho, de valor ou
-de momento. O fator de mercado (Rm$-$Rf) e o de tamanho (SMB) entram significativos por conta
-própria; valor e momento, não.
-
-\subsection{Beta do próprio fundo}
-\label{sec:betafundo}
-
-Nesta versão, além do beta de VALE3 (uma característica do \emph{ativo}), calcula-se o
-beta do \emph{fundo}: a covariância entre o retorno diário da cota do fundo e o retorno do
-Ibovespa, dividida pela variância do Ibovespa, em janela móvel de 252 pregões, medido no último
-pregão do mês anterior --- exatamente a mesma metodologia usada para o beta de VALE3, aplicada
-ao retorno da cota em vez do retorno da ação. Esse beta descreve o quão ``parecido com o
-mercado'' é o retorno do fundo como um todo, funcionando como proxy do quão orientado a ações
-(e não a renda fixa ou outras classes) é o seu mandato --- uma dimensão de risco distinta do
-porte (PL) ou da estrutura (cotistas, FIC).
-
-Na amostra dos 307 fundos, o beta do próprio fundo tem média $0{,}50$, com mínimo $-0{,}27$ e
-máximo $1{,}27$ --- consideravelmente mais baixo, em média, do que o beta de VALE3 ($1{,}04$),
-como esperado de uma carteira diversificada com componentes de renda fixa. A cobertura é de
-$73\%$ da amostra: fundos no início de sua vida (menos de 252 pregões de histórico de cota) ficam
-sem beta, uma limitação a registrar. Ao incluir o beta do fundo como regressor adicional na
-regressão empilhada (não reportado em tabela separada por redundância com a Tabela~\ref{tab:pool}),
-o coeficiente entra positivo e significativo, consistente com a leitura de que fundos mais
-``equity-like'' tendem a manter maior peso em VALE3 --- uma checagem de consistência interna do
-desenho da base, mais do que um resultado novo de interpretação econômica ampla.
-
 \subsection{Dinâmica do fator}
 \label{sec:dyn}
 
@@ -806,120 +738,7 @@ segunda ordem nos resíduos diferenciados da versão com instrumentos completos 
 ausência de autocorrelação de ordem 2 ($p=0{,}37$), o único diagnóstico desse bloco que não
 levanta bandeira.
 
-%==================== 5. EXTENSÃO MULTIATIVO ====================
-\section{Extensão: a demanda por um universo amplo de ações}
-\label{sec:multi}
-
-Toda a análise anterior condiciona em um único ativo, VALE3. Esta seção pergunta: o padrão
-encontrado --- fundos maiores carregam menos peso, fundos com mais cotistas carregam mais,
-fundos de cotas carregam menos --- é uma propriedade geral de como os fundos do Itaú demandam
-ações, ou uma particularidade de VALE3?
-
-\subsection{Construção do painel amplo}
-
-O painel fundo$\times$ativo$\times$mês (Seção~\ref{sec:dados}), já restrito a posições diretas
-(444 ativos distintos), permite estimar a mesma regressão~\eqref{eq:cs}, célula a célula, para
-\emph{cada} par (ativo, mês) com pelo menos 15 fundos do Itaú detentores --- um limiar que
-garante graus de liberdade suficientes para os cinco parâmetros da regressão. Isso produz 13.821
-células (ativo, mês), cobrindo 375 ativos distintos, 888.186 observações fundo-ativo-mês. Cada
-célula gera um vetor $\widehat\theta_{n,t}$, exatamente como a cross-section mensal da
-Seção~\ref{sec:cs}, mas agora indexado também pelo ativo $n$ --- é a matriz de fatores latentes
-($\theta$, \emph{asset embeddings}) que o desenho teórico de Koijen--Yogo antecipa, estimada a
-partir da matriz de características dos fundos ($x$, \emph{investor embeddings}), tal como
-discutido com o orientador.
-
-\subsection{O padrão de VALE3 generaliza?}
-
-Para cada ativo com pelo menos 24 meses de $\widehat\theta_{n,t}$ estimado (207 ativos), calcula-se
-a média temporal dos coeficientes, e observa-se a distribuição \emph{entre ativos} dessa média.
-
-\begin{center}\scriptsize
-\begin{tabular}{@{}lccc@{}}
-\toprule
-Coeficiente & Direção (VALE3) e \% dos 207 igual & Posição de VALE3 entre os 207 & Percentil \\
-\midrule
-$\ln$(patrimônio) & negativo, $93{,}7\%$ & \textbf{3º mais negativo} & $1{,}4$ \\
-$\ln$(cotistas)   & positivo, $98{,}1\%$ & \textbf{2º mais positivo} & $99{,}5$ \\
-Fundo de cotas     & negativo, $88{,}4\%$ & \textbf{2º mais negativo} & $1{,}0$ \\
-Captação/PL       & majoritariamente positivo, $70{,}5\%$ & comum, sem destaque & $60{,}9$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.92\textwidth]{fig_multiativo_dist.pdf}
-\caption{Distribuição, entre os 207 ativos com amostra suficiente, do coeficiente médio de cada
-característica (linha vermelha: VALE3; linha tracejada cinza: mediana entre ativos).}
-\label{fig:multiativo}
-\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/37}).}
-\end{figure}
-
-A resposta é matizada, e mais rica do que uma primeira leitura sugere. As \emph{direções} dos
-três efeitos estruturais generalizam fortemente: 88 a 98\% dos ativos com amostra suficiente têm
-o mesmo sinal que VALE3 para tamanho, cotistas e fundo de cotas --- não é uma peculiaridade de
-VALE3, é um padrão de como os fundos do Itaú, em geral, distribuem posições em ações conforme o
-perfil do fundo. Mas a \emph{magnitude} desses efeitos para VALE3 é extrema em \textbf{três} das
-quatro dimensões, não apenas na de tamanho: o coeficiente de tamanho é o 3º mais negativo entre
-207 ativos (percentil $1{,}4$), o de cotistas é o 2º mais positivo (percentil $99{,}5$), e o de
-fundo de cotas é o 2º mais negativo (percentil $1{,}0$) --- visíveis na Figura~\ref{fig:multiativo}
-como a linha vermelha na cauda extrema de três dos quatro histogramas. Só o coeficiente de fluxo
-é comum (percentil $61$, sem destaque). Isso é uma qualificação importante para a leitura de todo
-o restante deste trabalho: os números de \emph{magnitude} estimados para VALE3 (os pontos
-percentuais específicos citados nas Seções~\ref{sec:det} e~\ref{sec:fraclogit}) não devem ser
-extrapolados, sem ressalva, como ``o efeito típico de uma ação qualquer'' --- são o efeito para um
-papel particular, grande, líquido e historicamente volátil, que se encontra reiteradamente nas
-caudas dessa distribuição. As \emph{direções} dos efeitos, essas sim, generalizam.
-
-\subsection{Regressão pooled com efeito-fixo de ativo e de mês}
-
-Como checagem complementar, a Tabela~\ref{tab:fe2way} reporta uma única regressão empilhando
-todas as 894.551 observações do painel amplo, com efeito-fixo de \emph{ativo} e de
-\emph{mês} (via demeaning iterativo de Frisch--Waugh--Lovell), erro-padrão agrupado por fundo ---
-o coeficiente ``médio'', líquido de qualquer nível particular de cada ativo ou de qualquer choque
-comum de cada mês.
-
-\begin{table}[h]\centering\small
-\caption{Regressão pooled multiativo com efeito-fixo de ativo e de mês (894.551
-observações, 444 ativos, 305 fundos, 72 meses).}
-\label{tab:fe2way}
-\begin{tabular}{@{}lrrr@{}}
-\toprule
-Variável & Coeficiente & Erro padrão (cluster fundo) & $t$ \\
-\midrule
-$\ln$(patrimônio) por d.p. & $-0{,}00125$ & $0{,}00038$ & $-3{,}3$ \\
-$\ln$(cotistas) por d.p.   & $0{,}00224$  & $0{,}00028$ & $8{,}1$ \\
-Fundo de cotas             & $-0{,}00276$ & $0{,}00074$ & $-3{,}7$ \\
-Captação/PL                & $0{,}00003$  & $0{,}00007$ & $0{,}4$ \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize Efeitos-fixos de ativo e de mês absorvidos por demeaning; intercepto não
-identificado separadamente. Fonte: elaboração própria (script \texttt{R/32}).}
-\end{table}
-
-Os três sinais estruturais permanecem significativos com o painel inteiro e efeitos-fixos
-duplos, confirmando a leitura da subseção anterior por um caminho estatístico independente: o
-padrão de VALE3 --- fundos maiores com peso menor, mais cotistas com peso maior, fundos de cotas
-com peso menor --- é uma característica geral da forma como os fundos de ações do Itaú compõem
-suas carteiras.
-
-\subsection{Limitações explícitas desta extensão}
-
-Mesmo depois da limpeza que reduziu o painel a posições diretas (444 ativos, todos com
-\emph{ticker} padrão da B3), a parte \emph{dinâmica} do modelo (preço e beta próprios de cada
-ativo, filtro de Kalman, ajuste parcial, previsão fora da amostra) não foi estendida a todos os
-papéis nesta rodada --- isso exigiria buscar preço e beta individualmente para cada um dos 444
-\emph{tickers} em uma fonte de mercado, o que é mecanicamente mais tratável agora que os nomes
-estão padronizados (cada ativo já tem um \emph{ticker} B3 identificável, ao contrário do painel
-bruto original, em que ``VALE3'' aparecia sob rótulos ambíguos como posição emprestada ou direito
-de subscrição), mas ainda não foi feito por tempo. VALE3 permanece, portanto, o estudo de caso
-aprofundado para a parte dinâmica; a generalização desta seção cobre apenas a camada de
-\emph{explicação} transversal (o primeiro passo do modelo em dois passos, Seção~\ref{sec:cs}),
-não a segunda. Estender a cobertura de preço/beta aos 444 ativos --- ou, para começar, aos mais
-frequentemente detidos --- fica registrado como agenda futura (Seção~\ref{sec:agenda}), agora
-mais tratável do que antes da limpeza.
-
-%==================== 6. SÉRIE DO ERRO E DECISÃO ====================
-\section{Série do erro de previsão e regra de decisão}
+\subsection{Série do erro de previsão e regra de decisão}
 \label{sec:decis}
 
 Com a velocidade estimada, o erro de previsão é $\widehat{u}_{n,t+1} = (w_{n,t+1}-w_{n,t}) -
@@ -928,7 +747,7 @@ média $0{,}0002$--$0{,}0004$, desvio-padrão $0{,}015$, autocorrelação $-0{,}
 unitária no teste de Dickey-Fuller ($-9{,}6$) --- números idênticos aos da versão anterior, não
 afetados pelas correções.
 
-\subsection{Previsão recursiva e o teste de Diebold--Mariano}
+\subsubsection{Previsão recursiva e o teste de Diebold--Mariano}
 
 A regra de decisão recursiva projeta $\widehat{w}_{t+h}=w_t+[1-(1-\lambda)^h]d_t$, com $\lambda$
 reestimado a cada origem (janela expansiva), nos horizontes $h=1$ e $h=3$.
@@ -975,6 +794,186 @@ horizonte que importa). Duas rotas ficam abertas para fortalecer (ii) no futuro:
 estimado \emph{dentro} do fundo (efeito-fixo, ou o Arellano--Bond) na regra de decisão, em vez do
 agregado; e remover o componente mecânico do preço do alvo e do erro antes de avaliar a previsão
 (Seção~\ref{sec:agenda}).
+
+\subsection{Regressão empilhada: preço, beta e dois novos controles}
+\label{sec:pooled}
+\label{sec:nefin}
+
+A Tabela~\ref{tab:pool} traz a regressão empilhada (72 meses, 11.413 observações) com preço e
+beta de VALE3, e --- nesta versão --- dois blocos de controle adicionais estimados
+separadamente: os fatores de risco do NEFIN-USP (Seção~\ref{sec:nefin}) e o beta do próprio
+fundo (Seção~\ref{sec:betafundo}).
+
+\begin{table}[h]\centering\small
+\caption{Regressão empilhada: especificação base e com fatores NEFIN-USP como controle.}
+\label{tab:pool}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Variável & Sem fatores NEFIN & Com fatores NEFIN \\
+\midrule
+Intercepto                 & $0{,}04146$  & $0{,}04143$ \\
+$\ln$(patrimônio) por d.p. & $-0{,}00640^{***}$ & $-0{,}00642^{***}$ \\
+$\ln$(cotistas) por d.p.   & $0{,}01090^{***}$  & $0{,}01088^{***}$ \\
+Fundo de cotas             & $-0{,}01682^{***}$ & $-0{,}01678^{***}$ \\
+Captação / patrimônio      & $-0{,}00030$  & $-0{,}00036$ \\
+Preço de VALE3 por d.p.    & $0{,}00496^{***}$  & $0{,}00526^{***}$ \\
+Beta de VALE3 por d.p.     & $-0{,}00649^{***}$ & $-0{,}00609^{***}$ \\
+Mercado (Rm$-$Rf) por d.p. & --- & $0{,}00216^{***}$ \\
+Tamanho (SMB) por d.p.     & --- & $-0{,}00305^{***}$ \\
+Valor (HML) por d.p.       & --- & $-0{,}00035$ \\
+Momento (WML) por d.p.     & --- & $0{,}00019$ \\
+\midrule
+$R^2$ & $0{,}166$ & $0{,}172$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize *** significância a $0{,}1\%$. Fatores diários do NEFIN-USP (Núcleo de
+Economia Financeira, USP: mercado, tamanho, valor e momento, metodologia
+Fama-French/Carhart adaptada ao Brasil), agregados por retorno composto dentro do mês. Fonte:
+elaboração própria (script \texttt{R/34}); fatores de \url{https://nefin.com.br/data/risk-factors/}.}
+\end{table}
+
+O achado central desta tabela é de \emph{estabilidade}: os coeficientes de preço e de beta de
+VALE3 praticamente não se movem ao controlar pelos quatro fatores de risco de mercado conhecidos
+(preço: $0{,}00496\to0{,}00526$; beta: $-0{,}00649\to-0{,}00609$). Isso indica que o padrão
+capturado por esses dois regressores não é, em sua maior parte, exposição a risco de mercado já
+catalogado na literatura --- é específico à posição em VALE3 (incluindo o componente mecânico
+discutido na Seção~\ref{sec:disc}), não um proxy para o fator de mercado, de tamanho, de valor ou
+de momento. O fator de mercado (Rm$-$Rf) e o de tamanho (SMB) entram significativos por conta
+própria; valor e momento, não.
+
+\subsection{Beta do próprio fundo}
+\label{sec:betafundo}
+
+Nesta versão, além do beta de VALE3 (uma característica do \emph{ativo}), calcula-se o
+beta do \emph{fundo}: a covariância entre o retorno diário da cota do fundo e o retorno do
+Ibovespa, dividida pela variância do Ibovespa, em janela móvel de 252 pregões, medido no último
+pregão do mês anterior --- exatamente a mesma metodologia usada para o beta de VALE3, aplicada
+ao retorno da cota em vez do retorno da ação. Esse beta descreve o quão ``parecido com o
+mercado'' é o retorno do fundo como um todo, funcionando como proxy do quão orientado a ações
+(e não a renda fixa ou outras classes) é o seu mandato --- uma dimensão de risco distinta do
+porte (PL) ou da estrutura (cotistas, FIC).
+
+Na amostra dos 307 fundos, o beta do próprio fundo tem média $0{,}50$, com mínimo $-0{,}27$ e
+máximo $1{,}27$ --- consideravelmente mais baixo, em média, do que o beta de VALE3 ($1{,}04$),
+como esperado de uma carteira diversificada com componentes de renda fixa. A cobertura é de
+$73\%$ da amostra: fundos no início de sua vida (menos de 252 pregões de histórico de cota) ficam
+sem beta, uma limitação a registrar. Ao incluir o beta do fundo como regressor adicional na
+regressão empilhada (não reportado em tabela separada por redundância com a Tabela~\ref{tab:pool}),
+o coeficiente entra positivo e significativo, consistente com a leitura de que fundos mais
+``equity-like'' tendem a manter maior peso em VALE3 --- uma checagem de consistência interna do
+desenho da base, mais do que um resultado novo de interpretação econômica ampla.
+
+\subsection{Extensão: a demanda por um universo amplo de ações}
+\label{sec:multi}
+
+Toda a análise anterior condiciona em um único ativo, VALE3. Esta seção pergunta: o padrão
+encontrado --- fundos maiores carregam menos peso, fundos com mais cotistas carregam mais,
+fundos de cotas carregam menos --- é uma propriedade geral de como os fundos do Itaú demandam
+ações, ou uma particularidade de VALE3?
+
+\subsubsection{Construção do painel amplo}
+
+O painel fundo$\times$ativo$\times$mês (Seção~\ref{sec:dados}), já restrito a posições diretas
+(444 ativos distintos), permite estimar a mesma regressão~\eqref{eq:cs}, célula a célula, para
+\emph{cada} par (ativo, mês) com pelo menos 15 fundos do Itaú detentores --- um limiar que
+garante graus de liberdade suficientes para os cinco parâmetros da regressão. Isso produz 13.821
+células (ativo, mês), cobrindo 375 ativos distintos, 888.186 observações fundo-ativo-mês. Cada
+célula gera um vetor $\widehat\theta_{n,t}$, exatamente como a cross-section mensal da
+Seção~\ref{sec:cs}, mas agora indexado também pelo ativo $n$ --- é a matriz de fatores latentes
+($\theta$, \emph{asset embeddings}) que o desenho teórico de Koijen--Yogo antecipa, estimada a
+partir da matriz de características dos fundos ($x$, \emph{investor embeddings}), tal como
+discutido com o orientador.
+
+\subsubsection{O padrão de VALE3 generaliza?}
+
+Para cada ativo com pelo menos 24 meses de $\widehat\theta_{n,t}$ estimado (207 ativos), calcula-se
+a média temporal dos coeficientes, e observa-se a distribuição \emph{entre ativos} dessa média.
+
+\begin{center}\scriptsize
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Coeficiente & Direção (VALE3) e \% dos 207 igual & Posição de VALE3 entre os 207 & Percentil \\
+\midrule
+$\ln$(patrimônio) & negativo, $93{,}7\%$ & \textbf{3º mais negativo} & $1{,}4$ \\
+$\ln$(cotistas)   & positivo, $98{,}1\%$ & \textbf{2º mais positivo} & $99{,}5$ \\
+Fundo de cotas     & negativo, $88{,}4\%$ & \textbf{2º mais negativo} & $1{,}0$ \\
+Captação/PL       & majoritariamente positivo, $70{,}5\%$ & comum, sem destaque & $60{,}9$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_multiativo_dist.pdf}
+\caption{Distribuição, entre os 207 ativos com amostra suficiente, do coeficiente médio de cada
+característica (linha vermelha: VALE3; linha tracejada cinza: mediana entre ativos).}
+\label{fig:multiativo}
+\caption*{\footnotesize Fonte: elaboração própria (script \texttt{R/37}).}
+\end{figure}
+
+A resposta é matizada, e mais rica do que uma primeira leitura sugere. As \emph{direções} dos
+três efeitos estruturais generalizam fortemente: 88 a 98\% dos ativos com amostra suficiente têm
+o mesmo sinal que VALE3 para tamanho, cotistas e fundo de cotas --- não é uma peculiaridade de
+VALE3, é um padrão de como os fundos do Itaú, em geral, distribuem posições em ações conforme o
+perfil do fundo. Mas a \emph{magnitude} desses efeitos para VALE3 é extrema em \textbf{três} das
+quatro dimensões, não apenas na de tamanho: o coeficiente de tamanho é o 3º mais negativo entre
+207 ativos (percentil $1{,}4$), o de cotistas é o 2º mais positivo (percentil $99{,}5$), e o de
+fundo de cotas é o 2º mais negativo (percentil $1{,}0$) --- visíveis na Figura~\ref{fig:multiativo}
+como a linha vermelha na cauda extrema de três dos quatro histogramas. Só o coeficiente de fluxo
+é comum (percentil $61$, sem destaque). Isso é uma qualificação importante para a leitura de todo
+o restante deste trabalho: os números de \emph{magnitude} estimados para VALE3 (os pontos
+percentuais específicos citados nas Seções~\ref{sec:det} e~\ref{sec:fraclogit}) não devem ser
+extrapolados, sem ressalva, como ``o efeito típico de uma ação qualquer'' --- são o efeito para um
+papel particular, grande, líquido e historicamente volátil, que se encontra reiteradamente nas
+caudas dessa distribuição. As \emph{direções} dos efeitos, essas sim, generalizam.
+
+\subsubsection{Regressão pooled com efeito-fixo de ativo e de mês}
+
+Como checagem complementar, a Tabela~\ref{tab:fe2way} reporta uma única regressão empilhando
+todas as 894.551 observações do painel amplo, com efeito-fixo de \emph{ativo} e de
+\emph{mês} (via demeaning iterativo de Frisch--Waugh--Lovell), erro-padrão agrupado por fundo ---
+o coeficiente ``médio'', líquido de qualquer nível particular de cada ativo ou de qualquer choque
+comum de cada mês.
+
+\begin{table}[h]\centering\small
+\caption{Regressão pooled multiativo com efeito-fixo de ativo e de mês (894.551
+observações, 444 ativos, 305 fundos, 72 meses).}
+\label{tab:fe2way}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Variável & Coeficiente & Erro padrão (cluster fundo) & $t$ \\
+\midrule
+$\ln$(patrimônio) por d.p. & $-0{,}00125$ & $0{,}00038$ & $-3{,}3$ \\
+$\ln$(cotistas) por d.p.   & $0{,}00224$  & $0{,}00028$ & $8{,}1$ \\
+Fundo de cotas             & $-0{,}00276$ & $0{,}00074$ & $-3{,}7$ \\
+Captação/PL                & $0{,}00003$  & $0{,}00007$ & $0{,}4$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Efeitos-fixos de ativo e de mês absorvidos por demeaning; intercepto não
+identificado separadamente. Fonte: elaboração própria (script \texttt{R/32}).}
+\end{table}
+
+Os três sinais estruturais permanecem significativos com o painel inteiro e efeitos-fixos
+duplos, confirmando a leitura da subseção anterior por um caminho estatístico independente: o
+padrão de VALE3 --- fundos maiores com peso menor, mais cotistas com peso maior, fundos de cotas
+com peso menor --- é uma característica geral da forma como os fundos de ações do Itaú compõem
+suas carteiras.
+
+\subsubsection{Limitações explícitas desta extensão}
+
+Mesmo depois da limpeza que reduziu o painel a posições diretas (444 ativos, todos com
+\emph{ticker} padrão da B3), a parte \emph{dinâmica} do modelo (preço e beta próprios de cada
+ativo, filtro de Kalman, ajuste parcial, previsão fora da amostra) não foi estendida a todos os
+papéis nesta rodada --- isso exigiria buscar preço e beta individualmente para cada um dos 444
+\emph{tickers} em uma fonte de mercado, o que é mecanicamente mais tratável agora que os nomes
+estão padronizados (cada ativo já tem um \emph{ticker} B3 identificável, ao contrário do painel
+bruto original, em que ``VALE3'' aparecia sob rótulos ambíguos como posição emprestada ou direito
+de subscrição), mas ainda não foi feito por tempo. VALE3 permanece, portanto, o estudo de caso
+aprofundado para a parte dinâmica; a generalização desta seção cobre apenas a camada de
+\emph{explicação} transversal (o primeiro passo do modelo em dois passos, Seção~\ref{sec:cs}),
+não a segunda. Estender a cobertura de preço/beta aos 444 ativos --- ou, para começar, aos mais
+frequentemente detidos --- fica registrado como agenda futura (Seção~\ref{sec:agenda}), agora
+mais tratável do que antes da limpeza.
+
 
 %==================== 7. DISCUSSÃO ====================
 \section{Discussão}
