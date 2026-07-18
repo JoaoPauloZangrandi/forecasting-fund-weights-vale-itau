@@ -1,0 +1,334 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figuras/}}
+\definecolor{azul}{RGB}{20,60,110}
+\definecolor{verde}{RGB}{20,110,70}
+\definecolor{vermelho}{RGB}{150,30,30}
+\newcommand{\pergunta}[1]{\par\vspace{4pt}\noindent\textbf{\color{azul}A pergunta:} #1\par\vspace{2pt}}
+\newcommand{\equacao}[0]{\par\vspace{4pt}\noindent\textbf{\color{vermelho}A equação estimada:}\ }
+\newcommand{\aha}[1]{\par\vspace{4pt}\noindent\textbf{\color{vermelho}Achado:} #1\par\vspace{2pt}}
+\emergencystretch=2.5em
+\setstretch{1.15}
+\captionsetup{font=small,labelsep=colon}
+\setcounter{tocdepth}{2}
+
+\title{\textbf{v2 OFICIAL}\\[8pt]
+\Large Peso de VALE3 nos fundos do Itaú --- versão simples, direta e objetiva\\[4pt]
+\normalsize Cross-section por MQO, logit, ajuste parcial e um esquema in/out-of-sample ---
+sem Newey--West, sem Kalman, sem Diebold--Mariano, sem múltiplos métodos de robustez}
+\author{João Paulo Zangrandi (FGV--EESP)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Este documento retoma o projeto a partir da ideia original das anotações do
+orientador: uma cross-section simples que estima um fator latente $\theta$, uma etapa
+logística para manter a previsão dentro de $[0,1]$, e um modelo de ajuste parcial para a
+dinâmica. Cada etapa usa \textbf{um único método} (MQO ou MQO logístico), sem testes ou
+correções de robustez em cascata. O objetivo é ter um pipeline curto, auditável do início ao
+fim, e um esquema simples de avaliação fora da amostra.
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ======================================================================
+\section{Por que esta versão existe}
+
+As versões anteriores deste projeto acumularam camada sobre camada de robustez estatística
+(Newey--West, filtro de Kalman, variável instrumental com múltiplos esquemas de cluster,
+painel dinâmico de Arellano--Bond, teste de Diebold--Mariano) até o núcleo do modelo ficar
+difícil de enxergar por trás das correções. Esta versão volta ao desenho original discutido
+com o orientador: uma cross-section por mínimos quadrados que gera um fator latente $\theta$,
+uma etapa logística (a única forma de robustez mantida, porque o peso é limitado a $[0,1]$ e a
+reta não respeita esse limite), e um modelo de ajuste parcial estimado diretamente por MQO. Cada
+etapa produz um erro, e cada erro é examinado com estatísticas simples --- média, desvio-padrão,
+assimetria, curtose, e um histograma --- sem bateria de testes formais.
+
+A base de dados (composição de carteiras da CVM, filtrada para os fundos do grupo Itaú,
+2016--2021, 307 fundos, 72 meses, 11.413 observações de fundo-mês) é a mesma já construída e
+validada na versão anterior do projeto --- essa parte nunca foi a fonte da complexidade, e não
+foi refeita.
+
+% ======================================================================
+\section{Etapa 1: a cross-section por MQO}
+
+\pergunta{As características de um fundo (tamanho, número de cotistas, se é fundo de cotas,
+quanto captou ou resgatou) explicam o peso de VALE3 que ele carrega?}
+
+Para cada um dos 72 meses, roda-se uma única regressão MQO, usando só os fundos daquele mês:
+
+\equacao
+\begin{equation}
+\text{peso}_{i,t} = \alpha_t + b^{aum}_t\, z(\ln AUM_i) + b^{cot}_t\, z(\ln \text{cotistas}_i)
++ b^{fic}_t\, FIC_i + b^{flow}_t\, \Big(\tfrac{\text{captação}-\text{resgate}}{AUM}\Big)_i
++ \text{erro}_{i,t}
+\label{eq:cs}
+\end{equation}
+em que $z(\cdot)$ padroniza a variável (subtrai a média, divide pelo desvio-padrão), para que
+tamanho e cotistas fiquem na mesma régua. $FIC$ é uma variável de $0$ ou $1$ (é fundo de cotas
+ou não); o fluxo entra na escala original (fração do patrimônio).
+
+O vetor $\theta_t = (\alpha_t, b^{aum}_t, b^{cot}_t, b^{fic}_t, b^{flow}_t)$ é o resultado de
+\emph{um único mês}. $\Theta$ é a coleção dos 72 vetores $\theta_t$, um por mês --- é o objeto
+central de todo o resto do documento.
+
+\subsection{O resultado}
+
+\begin{table}[h]\centering\small
+\caption{$\Theta$: média, desvio-padrão, mínimo e máximo dos 72 $\theta_t$ mensais.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Variável & Média & Desvio-padrão & Mínimo & Máximo \\
+\midrule
+$\alpha$ (intercepto)     & $0{,}0396$  & $0{,}0171$ & $0{,}0080$  & $0{,}0663$ \\
+$b^{aum}$ (tamanho)       & $-0{,}0067$ & $0{,}0031$ & $-0{,}0162$ & $-0{,}0014$ \\
+$b^{cot}$ (cotistas)      & $0{,}0108$  & $0{,}0047$ & $0{,}0028$  & $0{,}0233$ \\
+$b^{fic}$ (fundo de cotas) & $-0{,}0170$ & $0{,}0075$ & $-0{,}0380$ & $-0{,}0031$ \\
+$b^{flow}$ (captação/resgate) & $-0{,}0004$ & $0{,}0263$ & $-0{,}1227$ & $0{,}0878$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize $R^2$ médio das 72 regressões: $0{,}152$. $N=11.413$ fundo-meses,
+$307$ fundos, $72$ meses. Fonte: elaboração própria (\texttt{scripts/01\_cross\_section\_theta.R}).}
+\end{table}
+
+A leitura direta: fundos maiores carregam menos peso ($b^{aum}<0$); fundos com mais cotistas
+carregam mais ($b^{cot}>0$); fundos de cotas carregam menos ($b^{fic}<0$); captação não tem um
+efeito médio claro ($b^{flow}$ perto de zero, com bastante variação mês a mês).
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.95\textwidth]{fig_theta_trajetoria.pdf}
+\caption{Os cinco componentes de $\theta_t$ ao longo dos 72 meses, e o $R^2$ de cada regressão
+mensal. Os coeficientes não são constantes --- há uma mudança de patamar visível em torno de
+2018 --- mas mantêm o mesmo sinal na maior parte do período.}
+\end{figure}
+
+% ======================================================================
+\section{Etapa 2: a ligação logística e o erro $e$}
+
+\pergunta{O peso é uma fração entre 0\% e 100\%. Por que não usar direto o $\theta$ linear da
+Etapa 1 para gerar uma previsão?}
+
+Porque $x'\theta$ (a combinação linear das características) pode sair fora do intervalo
+$[0,1]$ --- nada nas contas da Etapa 1 impede um peso previsto negativo ou maior que $100\%$. A
+correção --- a única forma de robustez mantida nesta versão --- é passar a combinação linear por
+uma função logística antes de virar previsão:
+
+\equacao
+\begin{equation}
+\text{peso}_{i,t} = g\big(x_{i,t}'\theta_t\big) + e_{i,t}, \qquad g(z) = \frac{1}{1+e^{-z}}
+\label{eq:logit}
+\end{equation}
+Como $g(z)$ nunca sai de $(0,1)$, qualquer que seja $z$, a previsão nunca sai dos limites. Mas
+isso exige reestimar $\theta_t$ \textbf{diretamente pela equação logística} (por máxima
+verossimilhança, \texttt{glm} com família quase-binomial, um único método, um por mês) --- o
+$\theta$ linear da Etapa 1 não é compatível com essa escala (perto de $z=0$, $g(z)\approx0{,}5$,
+enquanto o peso real gira em torno de $1$--$5\%$; usar o $\theta$ linear dentro do $g(\cdot)$
+gera um erro sistemático de quase $-0{,}5$ --- um erro de especificação encontrado e corrigido
+durante a construção deste documento).
+
+\subsection{O resultado}
+
+Média de $\theta_t$ (logístico) ao longo dos 72 meses: $\alpha=-3{,}36$,
+$b^{aum}=-0{,}318$, $b^{cot}=0{,}461$, $b^{fic}=-0{,}732$, $b^{flow}=0{,}078$ --- mesmos sinais
+da Etapa 1, agora em unidades de log-odds (a escala interna da função logística), não pontos
+percentuais diretos.
+
+\subsection{O erro $e$}
+
+$e_{i,t} = \text{peso}_{i,t} - g(x_{i,t}'\theta_t)$ é o erro de ajuste da própria regressão
+(dentro da amostra, não é previsão fora da amostra).
+
+\begin{table}[h]\centering\small
+\caption{Estatísticas do erro $e$ (11.413 observações).}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Estatística & Valor \\
+\midrule
+Média & $0{,}000000$ \\
+Desvio-padrão & $0{,}0305$ \\
+Mediana & $-0{,}0046$ \\
+Mínimo / Máximo & $-0{,}127$ / $0{,}155$ \\
+\% de observações com $e>0$ & $36{,}2\%$ \\
+Assimetria & $0{,}98$ \\
+Curtose & $4{,}76$ (normal $=3$) \\
+Previsões fora de $[0,1]$ & $0$ de $11.413$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A média de $e$ é zero em \textbf{todo} mês --- mas isso é mecânico: com intercepto na equação,
+a condição de primeira ordem da máxima verossimilhança força isso, do mesmo jeito que o resíduo
+de MQO com intercepto sempre soma zero. Não é evidência de bom ajuste, só confirma que a
+otimização convergiu. O que de fato descreve o comportamento do erro é o desvio-padrão
+($3{,}05$ pontos percentuais), a assimetria (positiva: mais erros pequenos negativos, com uma
+cauda de erros positivos maiores) e a curtose (mais alta que a normal --- caudas mais pesadas).
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{hist_erro_cross_section.pdf}
+\caption{Histograma do erro $e$ da Etapa 2 (11.413 observações). A linha tracejada marca zero.}
+\end{figure}
+
+% ======================================================================
+\section{Etapa 3: o ajuste parcial}
+
+\pergunta{O peso de um fundo se move em direção ao que as características sugerem, ou fica
+parado onde está?}
+
+O peso desejado (alvo) de um fundo, num mês, é $w^*_{i,t} = g(x_{i,t}'\theta_t)$ --- a mesma
+previsão da Etapa 2. A hipótese de ajuste parcial: o fundo não salta direto para o alvo, mas
+fecha uma fração $\lambda$ da distância a cada mês:
+
+\equacao
+\begin{equation}
+w_{i,t+1} - w_{i,t} = \lambda\, d_{i,t} + u_{i,t+1}, \qquad d_{i,t} \equiv w^*_{i,t} - w_{i,t}
+\label{eq:pa}
+\end{equation}
+Estimado por MQO direto, sem intercepto (a teoria não prevê nenhum), pooled em todos os
+fundo-meses --- \textbf{um único método}, sem instrumento, sem efeito-fixo de fundo, sem painel
+dinâmico.
+
+\subsection{O resultado}
+
+$$\widehat\lambda = 0{,}0980 \qquad (\text{erro-padrão}=0{,}0047,\ t=20{,}8,\
+R^2=0{,}038,\ n=10.972)$$
+
+Checagem: com intercepto incluído, ele sai $0{,}00021$ ($t=1{,}4$, não significativo) ---
+consistente com a equação~\eqref{eq:pa} não prever nenhum. $\widehat\lambda=0{,}098$ significa
+que, em média, um fundo fecha cerca de $9{,}8\%$ da distância até o alvo a cada mês.
+
+\subsection{O erro $u$}
+
+\begin{table}[h]\centering\small
+\caption{Estatísticas do erro $u$ (10.972 observações, pares de meses consecutivos).}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Estatística & Valor \\
+\midrule
+Média & $0{,}0002$ \\
+Desvio-padrão & $0{,}0151$ \\
+Mediana & $-0{,}0009$ \\
+Mínimo / Máximo & $-0{,}172$ / $0{,}190$ \\
+\% de observações com $u>0$ & $37{,}6\%$ \\
+Assimetria & $0{,}40$ \\
+Curtose & $19{,}7$ (normal $=3$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Diferente do erro $e$, a média de $u$ \textbf{não} é mecanicamente zero (a equação~\eqref{eq:pa}
+não tem intercepto) --- e mesmo assim sai muito perto de zero ($0{,}0002$), sem viés aparente. A
+curtose de $19{,}7$ é bem mais alta que a da Etapa 2: a maior parte dos erros é pequena e
+concentrada perto de zero, mas alguns poucos fundo-meses têm erro grande, puxando a cauda.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{hist_erro_ajuste_parcial.pdf}
+\caption{Histograma do erro $u$ da Etapa 3 (10.972 observações). Note o pico estreito perto de
+zero e as caudas longas --- coerente com a curtose alta.}
+\end{figure}
+
+% ======================================================================
+\section{Etapa 4: um esquema in/out-of-sample}
+
+\pergunta{O $\lambda$ estimado serve pra prever de verdade, em dados que o modelo nunca viu?}
+
+Um único corte no tempo --- sem janela expansiva com muitas origens, sem múltiplos horizontes:
+
+\begin{itemize}[topsep=2pt,itemsep=2pt]
+\item \textbf{Treino:} 2016-01 a 2019-12 (48 meses, 6.428 observações).
+\item \textbf{Teste:} 2020-01 a 2021-11 (23 meses, 4.544 observações).
+\end{itemize}
+
+\equacao
+$\widehat\lambda$ é estimado pela equação~\eqref{eq:pa} \textbf{só com dados de treino}. Esse
+valor fixo é aplicado às observações de teste para prever a variação do peso, comparado contra a
+previsão ingênua ($\Delta w$ previsto $=0$, ou seja, ``o peso do mês que vem é igual ao de
+hoje''). $\theta_t$ continua sendo estimado mês a mês, dentro ou fora do período de treino, sem
+nenhum vazamento de informação futura.
+
+$$\widehat\lambda_{\text{treino}} = 0{,}1043 \qquad (\text{erro-padrão}=0{,}0065,\ t=16{,}0)$$
+
+\subsection{O resultado, fora da amostra}
+
+\begin{table}[h]\centering\small
+\caption{RMSE e MAE dentro e fora da amostra, ajuste parcial vs. ingênua.}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Amostra & Modelo & RMSE & MAE \\
+\midrule
+Treino (2016--2019)  & Ajuste parcial & $0{,}01361$ & --- \\
+Treino (2016--2019)  & Ingênua        & $0{,}01388$ & --- \\
+Teste (2020--2021)   & Ajuste parcial & $0{,}01689$ & $0{,}00995$ \\
+Teste (2020--2021)   & Ingênua        & $0{,}01721$ & $0{,}00934$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.72\textwidth]{fig_oos_barras.pdf}
+\caption{RMSE dentro (treino) e fora (teste) da amostra, ajuste parcial vs. ingênua.}
+\end{figure}
+
+O ajuste parcial vence em RMSE nas duas amostras (razão teste $=0{,}981$, cerca de $1{,}9\%$
+menor) --- um padrão consistente entre treino e teste, não um resultado que só aparece por
+acaso fora da amostra. Em MAE, a ingênua erra menos com mais frequência ($0{,}00934$ contra
+$0{,}00995$): o ajuste parcial evita alguns erros grandes (por isso vence em RMSE, que penaliza
+erro grande mais que proporcionalmente), mas erra um pouco mais nos casos típicos.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\textwidth]{fig_oos_mensal.pdf}
+\caption{RMSE mês a mês no período de teste. As duas linhas seguem praticamente juntas --- a
+vantagem do ajuste parcial é pequena e consistente, não concentrada num único mês.}
+\end{figure}
+
+Mês a mês, o ajuste parcial vence a ingênua em $15$ dos $23$ meses de teste ($65\%$).
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.62\textwidth]{fig_oos_dispersao.pdf}
+\caption{Variação do peso prevista (eixo x) vs. observada (eixo y), fora da amostra. As
+previsões ficam concentradas perto de zero (o modelo prevê mudanças pequenas), enquanto a
+variação observada tem bem mais dispersão --- coerente com o $R^2$ baixo da
+equação~\eqref{eq:pa} ($0{,}038$): o modelo capta uma tendência real, mas pequena parte da
+variação total.}
+\end{figure}
+
+% ======================================================================
+\section{Resumo}
+
+Quatro etapas, cada uma com um único método, uma equação e um erro examinado:
+
+\begin{enumerate}[topsep=2pt,itemsep=3pt]
+\item \textbf{Cross-section (MQO), equação~\eqref{eq:cs}:} $\theta_t$ mês a mês; tamanho,
+cotistas e fundo de cotas explicam o peso, com sinais estáveis; $R^2$ médio $0{,}152$.
+\item \textbf{Logística, equação~\eqref{eq:logit}:} $\theta_t$ reestimado por MQO logístico
+para gerar previsão sempre em $[0,1]$; erro $e$ com desvio-padrão $3{,}05$ p.p., levemente
+assimétrico, sem viés (por construção).
+\item \textbf{Ajuste parcial, equação~\eqref{eq:pa}:} $\widehat\lambda=0{,}098$ --- um fundo
+fecha, em média, $9{,}8\%$ da distância ao alvo por mês; erro $u$ sem viés aparente, mas com
+caudas pesadas (curtose $19{,}7$).
+\item \textbf{In/out-of-sample:} $\lambda$ treinado em 2016--2019 vence a previsão ingênua fora
+da amostra (2020--2021) em RMSE, por uma margem pequena mas consistente ($1{,}9\%$; vence em
+$65\%$ dos meses de teste).
+\end{enumerate}
+
+Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
+teste de Diebold--Mariano --- o preço dessa simplicidade é não corrigir os vieses conhecidos do
+MQO direto no ajuste parcial (erro de medida no alvo; a distância e a variação do peso
+compartilharem $w_{i,t}$), que a versão anterior do projeto documentou e tentou corrigir. Fica
+registrado como decisão consciente desta versão, não como descuido.
+
+\end{document}
