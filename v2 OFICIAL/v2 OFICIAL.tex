@@ -153,10 +153,37 @@ durante a construção deste documento).
 
 \subsection{O resultado}
 
-Média de $\theta_t$ (logístico) ao longo dos 72 meses: $\alpha=-3{,}36$,
-$b^{aum}=-0{,}318$, $b^{cot}=0{,}461$, $b^{fic}=-0{,}732$, $b^{flow}=0{,}078$ --- mesmos sinais
-da Etapa 1, agora em unidades de log-odds (a escala interna da função logística), não pontos
-percentuais diretos.
+\begin{table}[h]\centering\small
+\caption{$\Theta$ (logit): média, desvio-padrão, mínimo e máximo dos 72 $\theta_t$ mensais.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Variável & Média & Desvio-padrão & Mínimo & Máximo \\
+\midrule
+$\alpha$ (intercepto)      & $-3{,}3641$ & $0{,}6520$ & $-4{,}9745$ & $-2{,}6739$ \\
+$b^{aum}$ (tamanho)        & $-0{,}3183$ & $0{,}1677$ & $-0{,}6830$ & $-0{,}0570$ \\
+$b^{cot}$ (cotistas)       & $0{,}4607$  & $0{,}1480$ & $0{,}2153$  & $0{,}8033$ \\
+$b^{fic}$ (fundo de cotas) & $-0{,}7317$ & $0{,}3175$ & $-1{,}4450$ & $-0{,}1763$ \\
+$b^{flow}$ (captação/resgate) & $0{,}0779$ & $1{,}2048$ & $-3{,}5171$ & $5{,}1177$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Mesmos sinais da Etapa 1, agora em unidades de log-odds (a escala
+interna da função logística $g(\cdot)$), não pontos percentuais diretos. Fonte: elaboração
+própria (\texttt{scripts/02\_logit\_erro.R}).}
+\end{table}
+
+Os sinais batem com a Etapa 1 (tamanho negativo, cotistas positivo, fundo de cotas negativo), mas
+a variabilidade mês a mês é bem maior em unidades de log-odds --- em especial $b^{flow}$, cujo
+desvio-padrão ($1{,}20$) é maior que a própria média em módulo, e cujo mínimo/máximo
+($-3{,}52$ / $5{,}12$) mostra uma dispersão bem mais ampla que a das outras quatro variáveis.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{fig_theta_logit_combinado.pdf}
+\caption{Os cinco componentes de $\theta_t$ (logit), padronizados (z-score) e sobrepostos no
+mesmo gráfico. O padrão é mais ruidoso que o da Etapa 1 (Figura 2) --- esperado, já que cada
+$\theta_t$ logístico é estimado por máxima verossimilhança, mês a mês, com a mesma amostra de
+$\sim$130--145 fundos --- mas $\alpha$, $b^{aum}$ e $b^{fic}$ ainda mostram comovimento visível
+na segunda metade da série.}
+\end{figure}
 
 \subsection{O erro $e$}
 
