@@ -232,12 +232,13 @@ cauda de erros positivos maiores) e a curtose (mais alta que a normal --- caudas
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.78\textwidth]{fig_erro_logit_mensal.pdf}
-\caption{Evolução mês a mês da média e do desvio-padrão do erro $e$. A média (linha cheia) fica
-achatada em zero em \textbf{todo} mês --- mecânico, como já explicado. O desvio-padrão (linha
-tracejada) é a série que de fato mostra evolução: sobe de $\approx0{,}01$ em 2016 para um platô
-de $0{,}03$--$0{,}04$ a partir de 2018, mesma janela em que a Figura 1 mostrou a mudança de
-patamar dos coeficientes --- o ajuste da regressão mensal piora um pouco (em dispersão absoluta)
-exatamente quando $\theta_t$ muda de regime.}
+\caption{Evolução mês a mês do erro $e$: a nuvem cinza é o erro individual de \textbf{cada
+fundo-mês} (11.413 pontos), com a média (linha azul) e o desvio-padrão (linha vermelha
+tracejada) de cada mês sobrepostos. A média fica achatada em zero em \textbf{todo} mês ---
+mecânico, como já explicado --- mas a nuvem de pontos mostra que os erros individuais estão
+longe de ser todos zero; é só a média entre fundos que cancela. O desvio-padrão é a série que de
+fato mostra evolução: sobe de $\approx0{,}01$ em 2016 para um platô de $0{,}03$--$0{,}04$ a
+partir de 2018, mesma janela em que a Figura 1 mostrou a mudança de patamar dos coeficientes.}
 \end{figure}
 
 % ======================================================================
@@ -301,11 +302,14 @@ zero e as caudas longas --- coerente com a curtose alta.}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.78\textwidth]{fig_erro_ajuste_mensal.pdf}
-\caption{Evolução mês a mês da média e do desvio-padrão do erro $u$. Diferente do erro $e$ da
-Etapa 2, a média \textbf{não} é mecanicamente zero (a equação~\eqref{eq:pa} não tem intercepto)
---- oscila visivelmente em torno de zero, mas sem tendência clara de longo prazo. O
-desvio-padrão também oscila bastante mês a mês, com alguns picos isolados (o mais forte em
-meados de 2018) coerentes com a curtose alta reportada na Tabela~4.}
+\caption{Evolução mês a mês do erro $u$: a nuvem cinza é o erro individual de cada par
+fundo-mês consecutivo (10.972 pontos), com a média (linha azul) e o desvio-padrão (linha
+vermelha tracejada) de cada mês sobrepostos. Diferente do erro $e$ da Etapa 2, a média
+\textbf{não} é mecanicamente zero (a equação~\eqref{eq:pa} não tem intercepto) --- oscila
+visivelmente em torno de zero, mas sem tendência clara de longo prazo. O desvio-padrão também
+oscila bastante mês a mês, com alguns picos isolados (o mais forte em meados de 2018) coerentes
+com a curtose alta reportada na Tabela~4; a nuvem de pontos mostra de onde vêm esses picos ---
+meses com alguns poucos fundos bem fora do padrão típico, não uma mudança geral de todo mundo.}
 \end{figure}
 
 % ======================================================================
