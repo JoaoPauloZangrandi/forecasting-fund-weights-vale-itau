@@ -333,14 +333,25 @@ Um único corte no tempo --- sem janela expansiva com muitas origens, sem múlti
 \item \textbf{Teste:} 2020-01 a 2021-11 (23 meses, 4.544 observações).
 \end{itemize}
 
-\equacao
-$\widehat\lambda$ é estimado pela equação~\eqref{eq:pa} \textbf{só com dados de treino}. Esse
-valor fixo é aplicado às observações de teste para prever a variação do peso, comparado contra a
-previsão ingênua ($\Delta w$ previsto $=0$, ou seja, ``o peso do mês que vem é igual ao de
-hoje''). $\theta_t$ continua sendo estimado mês a mês, dentro ou fora do período de treino, sem
-nenhum vazamento de informação futura.
-
+Primeiro, $\widehat\lambda$ é estimado pela mesma equação~\eqref{eq:pa} da Etapa 3, mas
+\textbf{restrita só aos meses de treino} ($t<$ 2020-01):
 $$\widehat\lambda_{\text{treino}} = 0{,}1043 \qquad (\text{erro-padrão}=0{,}0065,\ t=16{,}0)$$
+
+\equacao
+Depois, esse valor fixo (não reestimado mês a mês) é usado para prever a variação do peso em
+\textbf{cada mês do período de teste}, comparando contra a previsão ingênua:
+\begin{equation}
+\widehat w_{i,t+1} = w_{i,t} + \widehat\lambda_{\text{treino}}\,d_{i,t}
+\qquad\text{(ajuste parcial)}
+\qquad\text{vs.}\qquad
+\widehat w_{i,t+1} = w_{i,t} \qquad\text{(ingênua)}
+\label{eq:oos}
+\end{equation}
+para todo $t$ no período de teste (2020-01 a 2021-11). $d_{i,t}=w^*_{i,t}-w_{i,t}$ é a mesma
+distância da Etapa 3, com $w^*_{i,t}=g(x_{i,t}'\theta_t)$ --- e $\theta_t$ continua sendo
+estimado mês a mês (Etapa 2), dentro ou fora do período de treino, sem nenhum vazamento de
+informação futura: em cada mês de teste, $\theta_t$ usa só as características \emph{daquele
+mês}, nunca de meses futuros.
 
 \subsection{O resultado, fora da amostra}
 
@@ -370,12 +381,18 @@ $0{,}00995$): o ajuste parcial evita alguns erros grandes (por isso vence em RMS
 erro grande mais que proporcionalmente), mas erra um pouco mais nos casos típicos.
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.85\textwidth]{fig_oos_mensal.pdf}
-\caption{RMSE mês a mês no período de teste. As duas linhas seguem praticamente juntas --- a
-vantagem do ajuste parcial é pequena e consistente, não concentrada num único mês.}
+\includegraphics[width=0.9\textwidth]{fig_erro_periodo_completo.pdf}
+\caption{RMSE mês a mês no \textbf{período completo} (2016--2021), ajuste parcial vs.\ ingênua,
+aplicando o mesmo $\widehat\lambda_{\text{treino}}=0{,}1043$ do início ao fim da série. A linha
+vermelha tracejada marca o início do período de teste (2020-01) --- tudo à esquerda dela é
+treino (onde $\lambda$ foi ajustado), tudo à direita é genuinamente fora da amostra. As duas
+linhas (ajuste parcial e ingênua) seguem praticamente coladas o período inteiro, dos dois lados
+da linha tracejada --- a vantagem do ajuste parcial é pequena e consistente, não concentrada
+num único mês nem surge só depois do corte.}
 \end{figure}
 
-Mês a mês, o ajuste parcial vence a ingênua em $15$ dos $23$ meses de teste ($65\%$).
+Mês a mês, no período de teste, o ajuste parcial vence a ingênua em $15$ dos $23$ meses
+($65\%$).
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.62\textwidth]{fig_oos_dispersao.pdf}
