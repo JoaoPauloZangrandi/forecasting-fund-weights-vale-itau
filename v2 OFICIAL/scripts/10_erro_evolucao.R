@@ -19,14 +19,17 @@ suppressPackageStartupMessages(library(data.table))
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 FIG  <- file.path(REPO, "v2 OFICIAL/figuras")
 
-plot_evolucao <- function(dt_ind, col_erro, dt_mes, col_media, col_dp, titulo, arquivo) {
+plot_evolucao <- function(dt_ind, col_erro, dt_mes, col_media, col_dp, titulo, arquivo, yl) {
   setorder(dt_mes, ym)
   datas_mes <- as.Date(paste0(substr(dt_mes$ym,1,4), "-", substr(dt_mes$ym,5,6), "-01"))
   datas_ind <- as.Date(paste0(substr(dt_ind$ym,1,4), "-", substr(dt_ind$ym,5,6), "-01"))
 
+  n_fora <- sum(dt_ind[[col_erro]] < yl[1] | dt_ind[[col_erro]] > yl[2])
+  cat(sprintf("%s: %d de %d pontos individuais ficam fora de [%.3f, %.3f]\n",
+              arquivo, n_fora, nrow(dt_ind), yl[1], yl[2]))
+
   pdf(file.path(FIG, arquivo), width = 7.5, height = 4.8)
   par(mar = c(3, 4, 2.5, 1))
-  yl <- range(c(dt_ind[[col_erro]], dt_mes[[col_media]], dt_mes[[col_dp]]))
   plot(datas_ind, dt_ind[[col_erro]], pch = 16, cex = 0.35,
        col = rgb(0.4, 0.4, 0.4, 0.18), ylim = yl,
        xlab = "", ylab = "erro (fração do peso)", main = titulo)
@@ -44,12 +47,12 @@ e_ind <- fread(file.path(REPO, "v2 OFICIAL/data/erro_cross_section.csv"))
 e_mes <- fread(file.path(REPO, "v2 OFICIAL/data/erro_cross_section_por_mes.csv"))
 plot_evolucao(e_ind, "e", e_mes, "media_e", "dp_e",
               "Evolução mês a mês do erro e (Etapa 2, logit)",
-              "fig_erro_logit_mensal.pdf")
+              "fig_erro_logit_mensal.pdf", yl = c(-0.025, 0.05))
 
 u_ind <- fread(file.path(REPO, "v2 OFICIAL/data/ajuste_parcial_erros.csv"))
 u_mes <- fread(file.path(REPO, "v2 OFICIAL/data/ajuste_parcial_erros_por_mes.csv"))
 plot_evolucao(u_ind, "u", u_mes, "media_u", "dp_u",
               "Evolução mês a mês do erro u (Etapa 3, ajuste parcial)",
-              "fig_erro_ajuste_mensal.pdf")
+              "fig_erro_ajuste_mensal.pdf", yl = c(-0.03, 0.04))
 
 cat("OK - salvos em 'v2 OFICIAL/figuras/fig_erro_logit_mensal.pdf' e 'fig_erro_ajuste_mensal.pdf'\n")

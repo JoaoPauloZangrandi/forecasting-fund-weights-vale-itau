@@ -234,11 +234,15 @@ cauda de erros positivos maiores) e a curtose (mais alta que a normal --- caudas
 \includegraphics[width=0.78\textwidth]{fig_erro_logit_mensal.pdf}
 \caption{Evolução mês a mês do erro $e$: a nuvem cinza é o erro individual de \textbf{cada
 fundo-mês} (11.413 pontos), com a média (linha azul) e o desvio-padrão (linha vermelha
-tracejada) de cada mês sobrepostos. A média fica achatada em zero em \textbf{todo} mês ---
-mecânico, como já explicado --- mas a nuvem de pontos mostra que os erros individuais estão
-longe de ser todos zero; é só a média entre fundos que cancela. O desvio-padrão é a série que de
-fato mostra evolução: sobe de $\approx0{,}01$ em 2016 para um platô de $0{,}03$--$0{,}04$ a
-partir de 2018, mesma janela em que a Figura 1 mostrou a mudança de patamar dos coeficientes.}
+tracejada) de cada mês sobrepostos. \textbf{O eixo $y$ é restrito a $[-0{,}025,\ 0{,}05]$} para
+deixar a média e o desvio-padrão mensal mais fáceis de enxergar; $2.805$ dos $11.413$ pontos
+individuais ($25\%$) caem fora desse intervalo e não aparecem no gráfico --- a Tabela~3 já
+reporta o mínimo e o máximo verdadeiros ($-0{,}127$ / $0{,}155$). A média fica achatada em zero
+em \textbf{todo} mês --- mecânico, como já explicado --- mas a nuvem de pontos mostra que os
+erros individuais estão longe de ser todos zero; é só a média entre fundos que cancela. O
+desvio-padrão é a série que de fato mostra evolução: sobe de $\approx0{,}01$ em 2016 para um
+platô de $0{,}03$--$0{,}04$ a partir de 2018, mesma janela em que a Figura 1 mostrou a mudança de
+patamar dos coeficientes.}
 \end{figure}
 
 % ======================================================================
@@ -304,12 +308,16 @@ zero e as caudas longas --- coerente com a curtose alta.}
 \includegraphics[width=0.78\textwidth]{fig_erro_ajuste_mensal.pdf}
 \caption{Evolução mês a mês do erro $u$: a nuvem cinza é o erro individual de cada par
 fundo-mês consecutivo (10.972 pontos), com a média (linha azul) e o desvio-padrão (linha
-vermelha tracejada) de cada mês sobrepostos. Diferente do erro $e$ da Etapa 2, a média
-\textbf{não} é mecanicamente zero (a equação~\eqref{eq:pa} não tem intercepto) --- oscila
-visivelmente em torno de zero, mas sem tendência clara de longo prazo. O desvio-padrão também
-oscila bastante mês a mês, com alguns picos isolados (o mais forte em meados de 2018) coerentes
-com a curtose alta reportada na Tabela~4; a nuvem de pontos mostra de onde vêm esses picos ---
-meses com alguns poucos fundos bem fora do padrão típico, não uma mudança geral de todo mundo.}
+vermelha tracejada) de cada mês sobrepostos. \textbf{O eixo $y$ é restrito a
+$[-0{,}03,\ 0{,}04]$} para deixar a média e o desvio-padrão mensal mais fáceis de enxergar;
+$487$ dos $10.972$ pontos individuais ($4{,}4\%$) caem fora desse intervalo e não aparecem no
+gráfico --- a Tabela~4 já reporta o mínimo e o máximo verdadeiros ($-0{,}172$ / $0{,}190$).
+Diferente do erro $e$ da Etapa 2, a média \textbf{não} é mecanicamente zero (a
+equação~\eqref{eq:pa} não tem intercepto) --- oscila visivelmente em torno de zero, mas sem
+tendência clara de longo prazo. O desvio-padrão também oscila bastante mês a mês, com alguns
+picos isolados (o mais forte em meados de 2018) coerentes com a curtose alta reportada na
+Tabela~4; a nuvem de pontos mostra de onde vêm esses picos --- meses com alguns poucos fundos
+bem fora do padrão típico, não uma mudança geral de todo mundo.}
 \end{figure}
 
 % ======================================================================
