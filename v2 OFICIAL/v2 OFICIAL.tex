@@ -10,6 +10,7 @@
 \usepackage{setspace}
 \usepackage{enumitem}
 \usepackage{xcolor}
+\usepackage{placeins}
 \usepackage[hidelinks]{hyperref}
 \graphicspath{{figuras/}}
 \definecolor{azul}{RGB}{20,60,110}
@@ -65,6 +66,7 @@ validada na versão anterior do projeto --- essa parte nunca foi a fonte da comp
 foi refeita.
 
 % ======================================================================
+\FloatBarrier
 \section{Etapa 1: a cross-section por MQO}
 
 \pergunta{As características de um fundo (tamanho, número de cotistas, se é fundo de cotas,
@@ -132,6 +134,7 @@ das outras quatro séries.}
 \end{figure}
 
 % ======================================================================
+\FloatBarrier
 \section{Etapa 2: a ligação logística e o erro $e$}
 
 \pergunta{O peso é uma fração entre 0\% e 100\%. Por que não usar direto o $\theta$ linear da
@@ -227,7 +230,18 @@ cauda de erros positivos maiores) e a curtose (mais alta que a normal --- caudas
 \caption{Histograma do erro $e$ da Etapa 2 (11.413 observações). A linha tracejada marca zero.}
 \end{figure}
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.78\textwidth]{fig_erro_logit_mensal.pdf}
+\caption{Evolução mês a mês da média e do desvio-padrão do erro $e$. A média (linha cheia) fica
+achatada em zero em \textbf{todo} mês --- mecânico, como já explicado. O desvio-padrão (linha
+tracejada) é a série que de fato mostra evolução: sobe de $\approx0{,}01$ em 2016 para um platô
+de $0{,}03$--$0{,}04$ a partir de 2018, mesma janela em que a Figura 1 mostrou a mudança de
+patamar dos coeficientes --- o ajuste da regressão mensal piora um pouco (em dispersão absoluta)
+exatamente quando $\theta_t$ muda de regime.}
+\end{figure}
+
 % ======================================================================
+\FloatBarrier
 \section{Etapa 3: o ajuste parcial}
 
 \pergunta{O peso de um fundo se move em direção ao que as características sugerem, ou fica
@@ -285,7 +299,17 @@ concentrada perto de zero, mas alguns poucos fundo-meses têm erro grande, puxan
 zero e as caudas longas --- coerente com a curtose alta.}
 \end{figure}
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.78\textwidth]{fig_erro_ajuste_mensal.pdf}
+\caption{Evolução mês a mês da média e do desvio-padrão do erro $u$. Diferente do erro $e$ da
+Etapa 2, a média \textbf{não} é mecanicamente zero (a equação~\eqref{eq:pa} não tem intercepto)
+--- oscila visivelmente em torno de zero, mas sem tendência clara de longo prazo. O
+desvio-padrão também oscila bastante mês a mês, com alguns picos isolados (o mais forte em
+meados de 2018) coerentes com a curtose alta reportada na Tabela~4.}
+\end{figure}
+
 % ======================================================================
+\FloatBarrier
 \section{Etapa 4: um esquema in/out-of-sample}
 
 \pergunta{O $\lambda$ estimado serve pra prever de verdade, em dados que o modelo nunca viu?}
@@ -351,6 +375,7 @@ variação total.}
 \end{figure}
 
 % ======================================================================
+\FloatBarrier
 \section{Resumo}
 
 Quatro etapas, cada uma com um único método, uma equação e um erro examinado:
