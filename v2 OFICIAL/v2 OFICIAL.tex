@@ -90,20 +90,24 @@ central de todo o resto do documento.
 \subsection{O resultado}
 
 \begin{table}[h]\centering\small
-\caption{$\Theta$: média, desvio-padrão, mínimo e máximo dos 72 $\theta_t$ mensais.}
-\begin{tabular}{@{}lrrrr@{}}
+\caption{$\Theta$: média, desvio-padrão, mínimo, máximo e teste ingênuo de significância da
+média dos 72 $\theta_t$ mensais.}
+\begin{tabular}{@{}lrrrrrc@{}}
 \toprule
-Variável & Média & Desvio-padrão & Mínimo & Máximo \\
+Variável & Média & Desvio-padrão & Mínimo & Máximo & $t$ & Sig. \\
 \midrule
-$\alpha$ (intercepto)     & $0{,}0396$  & $0{,}0171$ & $0{,}0080$  & $0{,}0663$ \\
-$b^{aum}$ (tamanho)       & $-0{,}0067$ & $0{,}0031$ & $-0{,}0162$ & $-0{,}0014$ \\
-$b^{cot}$ (cotistas)      & $0{,}0108$  & $0{,}0047$ & $0{,}0028$  & $0{,}0233$ \\
-$b^{fic}$ (fundo de cotas) & $-0{,}0170$ & $0{,}0075$ & $-0{,}0380$ & $-0{,}0031$ \\
-$b^{flow}$ (captação/resgate) & $-0{,}0004$ & $0{,}0263$ & $-0{,}1227$ & $0{,}0878$ \\
+$\alpha$ (intercepto)     & $0{,}0396$  & $0{,}0171$ & $0{,}0080$  & $0{,}0663$ & $19{,}6$ & *** \\
+$b^{aum}$ (tamanho)       & $-0{,}0067$ & $0{,}0031$ & $-0{,}0162$ & $-0{,}0014$ & $-18{,}3$ & *** \\
+$b^{cot}$ (cotistas)      & $0{,}0108$  & $0{,}0047$ & $0{,}0028$  & $0{,}0233$ & $19{,}6$ & *** \\
+$b^{fic}$ (fundo de cotas) & $-0{,}0170$ & $0{,}0075$ & $-0{,}0380$ & $-0{,}0031$ & $-19{,}2$ & *** \\
+$b^{flow}$ (captação/resgate) & $-0{,}0004$ & $0{,}0263$ & $-0{,}1227$ & $0{,}0878$ & $-0{,}1$ & n.s. \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize $R^2$ médio das 72 regressões: $0{,}152$. $N=11.413$ fundo-meses,
-$307$ fundos, $72$ meses. Fonte: elaboração própria (\texttt{scripts/01\_cross\_section\_theta.R}).}
+$307$ fundos, $72$ meses. $t=\bar\theta/(\text{dp}(\theta)/\sqrt{72})$ --- teste \textbf{ingênuo}
+sobre a média dos 72 valores mensais, sem nenhuma correção de autocorrelação (não é
+Newey--West); $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
+(\texttt{scripts/01\_cross\_section\_theta.R}, \texttt{09\_theta\_significancia.R}).}
 \end{table}
 
 A leitura direta: fundos maiores carregam menos peso ($b^{aum}<0$); fundos com mais cotistas
@@ -154,21 +158,24 @@ durante a construção deste documento).
 \subsection{O resultado}
 
 \begin{table}[h]\centering\small
-\caption{$\Theta$ (logit): média, desvio-padrão, mínimo e máximo dos 72 $\theta_t$ mensais.}
-\begin{tabular}{@{}lrrrr@{}}
+\caption{$\Theta$ (logit): média, desvio-padrão, mínimo, máximo e teste ingênuo de
+significância da média dos 72 $\theta_t$ mensais.}
+\begin{tabular}{@{}lrrrrrc@{}}
 \toprule
-Variável & Média & Desvio-padrão & Mínimo & Máximo \\
+Variável & Média & Desvio-padrão & Mínimo & Máximo & $t$ & Sig. \\
 \midrule
-$\alpha$ (intercepto)      & $-3{,}3641$ & $0{,}6520$ & $-4{,}9745$ & $-2{,}6739$ \\
-$b^{aum}$ (tamanho)        & $-0{,}3183$ & $0{,}1677$ & $-0{,}6830$ & $-0{,}0570$ \\
-$b^{cot}$ (cotistas)       & $0{,}4607$  & $0{,}1480$ & $0{,}2153$  & $0{,}8033$ \\
-$b^{fic}$ (fundo de cotas) & $-0{,}7317$ & $0{,}3175$ & $-1{,}4450$ & $-0{,}1763$ \\
-$b^{flow}$ (captação/resgate) & $0{,}0779$ & $1{,}2048$ & $-3{,}5171$ & $5{,}1177$ \\
+$\alpha$ (intercepto)      & $-3{,}3641$ & $0{,}6520$ & $-4{,}9745$ & $-2{,}6739$ & $-43{,}8$ & *** \\
+$b^{aum}$ (tamanho)        & $-0{,}3183$ & $0{,}1677$ & $-0{,}6830$ & $-0{,}0570$ & $-16{,}1$ & *** \\
+$b^{cot}$ (cotistas)       & $0{,}4607$  & $0{,}1480$ & $0{,}2153$  & $0{,}8033$ & $26{,}4$ & *** \\
+$b^{fic}$ (fundo de cotas) & $-0{,}7317$ & $0{,}3175$ & $-1{,}4450$ & $-0{,}1763$ & $-19{,}6$ & *** \\
+$b^{flow}$ (captação/resgate) & $0{,}0779$ & $1{,}2048$ & $-3{,}5171$ & $5{,}1177$ & $0{,}6$ & n.s. \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Mesmos sinais da Etapa 1, agora em unidades de log-odds (a escala
-interna da função logística $g(\cdot)$), não pontos percentuais diretos. Fonte: elaboração
-própria (\texttt{scripts/02\_logit\_erro.R}).}
+interna da função logística $g(\cdot)$), não pontos percentuais diretos. $t=\bar\theta/(\text{dp}
+(\theta)/\sqrt{72})$ --- mesmo teste ingênuo da Tabela 1, sem correção de autocorrelação;
+$^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
+(\texttt{scripts/02\_logit\_erro.R}, \texttt{09\_theta\_significancia.R}).}
 \end{table}
 
 Os sinais batem com a Etapa 1 (tamanho negativo, cotistas positivo, fundo de cotas negativo), mas
