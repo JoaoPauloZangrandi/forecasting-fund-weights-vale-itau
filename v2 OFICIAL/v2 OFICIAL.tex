@@ -319,6 +319,144 @@ vantagem do ajuste parcial é pequena e consistente, não concentrada num único
 
 % ======================================================================
 \FloatBarrier
+\section{Extensão: mais gestoras}
+\label{sec:gestoras}
+
+\pergunta{O padrão encontrado (tamanho, cotistas, fundo de cotas, beta do fundo explicam o
+peso) é uma particularidade dos fundos do Itaú, ou aparece em qualquer gestora? E gestoras
+diferentes carregam mais ou menos VALE3 do que outras, tudo o mais igual?}
+
+Até aqui, a amostra era só os fundos do grupo Itaú. Esta extensão amplia para \textbf{todos os
+fundos do universo CVM} que já tiveram VALE3 em algum momento (2016--2021) --- $2.820$ fundos,
+$41$ grupos de gestora (agrupados por marca controladora; ex.: ``BTG Pactual'' junta 4 rótulos
+diferentes que a CVM usa para a mesma casa). A equação~\eqref{eq:cs} ganha um efeito fixo de
+gestora --- $40$ variáveis de $0$/$1$ (uma por grupo, exceto o Itaú, que fica como referência,
+para não haver colinearidade perfeita com o intercepto):
+$$\text{peso}_{i,t} = \alpha_t + b^{aum}_t z(\ln AUM_i) + \dots + b^{bf}_t z(\beta^{fundo}_i)
++ \sum_{g\neq\text{Itaú}} \gamma_{g,t}\, D_{g,i} + \text{erro}_{i,t}$$
+
+\textbf{Adendo de processo:} ao rodar essa regressão pela primeira vez, todas as cinco
+características saíram não significativas --- um resultado que parecia dizer ``a identidade da
+gestora explica tudo, as características não importam mais''. Investigando, a causa não era o
+efeito fixo de gestora: era \textbf{um único fundo-mês com dado corrompido} (peso de VALE3
+registrado como $1.398{,}5$ --- impossível, peso é uma fração de $0$ a $1$) que, sozinho,
+distorcia a regressão de um mês inteiro (set/2018). Removido esse ponto (junto com outro caso
+igual, peso $=1.087{,}8$, e $13$ fundo-meses de beta do fundo com denominador degenerado por
+cota irregular), o resultado abaixo é o que sobrevive.
+
+\begin{table}[h]\centering\small
+\caption{$\Theta$ linear, amostra de todas as gestoras (59 meses, $71.569$ obs.): sem e com
+efeito fixo de gestora.}
+\begin{tabular}{@{}lrcrc@{}}
+\toprule
+Variável & Média (sem FE gestora) & Sig. & Média (com FE gestora) & Sig. \\
+\midrule
+$\alpha$                   & $0{,}03647$  & *** & $0{,}03294$  & *** \\
+$b^{aum}$ (tamanho)        & $-0{,}00178$ & *** & $-0{,}00171$ & *** \\
+$b^{cot}$ (cotistas)       & $0{,}00236$  & *** & $0{,}00118$  & *** \\
+$b^{fic}$ (fundo de cotas) & $-0{,}00681$ & **  & $-0{,}00621$ & *** \\
+$b^{flow}$ (captação/resgate) & $-0{,}00446$ & n.s. & $-0{,}00312$ & n.s. \\
+$b^{bf}$ (beta do fundo)   & $0{,}02536$  & *** & $0{,}02528$  & *** \\
+\midrule
+$R^2$ médio & $0{,}540$ & & $0{,}632$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\aha{As cinco características sobrevivem quase intactas ao entrar o efeito fixo de gestora ---
+tamanho, FIC e beta do fundo praticamente não mudam; só cotistas perde metade da magnitude
+($0{,}0024\to0{,}0012$), continuando *** significativo. $R^2$ sobe de $0{,}540$ para $0{,}632$: a
+identidade da gestora tem poder explicativo próprio, mas não ``rouba'' o efeito das
+características --- o padrão da Etapa 1 generaliza para além do Itaú.}
+
+\subsection{Quanto cada gestora carrega, relativo ao Itaú}
+
+Cada $\gamma_g$ é a diferença média de peso de VALE3 entre um fundo da gestora $g$ e um fundo do
+Itaú \textbf{com as mesmas} cinco características. Positivo = carrega mais que o Itaú
+equivalente; negativo = carrega menos.
+
+\begin{table}[h]\centering\scriptsize
+\caption{Coeficiente de cada gestora vs.\ Itaú (referência), ordenado do maior para o menor.}
+\begin{tabular}{@{}lrrc@{}}
+\toprule
+Gestora & Meses & Coef. & Sig. \\
+\midrule
+Legacy Capital & 1 & $+0{,}1288$ & --- \\
+Núcleo Capital & 4 & $+0{,}0243$ & *** \\
+Occam Brasil & 59 & $+0{,}0230$ & *** \\
+Caixa & 59 & $+0{,}0179$ & *** \\
+Western Asset & 59 & $+0{,}0179$ & *** \\
+AZ Quest & 56 & $+0{,}0172$ & *** \\
+Gávea Investimentos & 34 & $+0{,}0157$ & *** \\
+Sharp Capital & 59 & $+0{,}0144$ & *** \\
+Truxt Investimentos & 42 & $+0{,}0131$ & *** \\
+Kinea Investimentos & 54 & $+0{,}0119$ & *** \\
+Bradesco Asset Management & 59 & $+0{,}0113$ & *** \\
+Plural & 59 & $+0{,}0110$ & *** \\
+BB Asset Management & 59 & $+0{,}0103$ & *** \\
+Claritas Investimentos & 59 & $+0{,}0094$ & *** \\
+Santander Brasil Asset Management & 59 & $+0{,}0088$ & *** \\
+Absolute Investimentos & 28 & $+0{,}0085$ & n.s. \\
+BNP Paribas & 59 & $+0{,}0078$ & *** \\
+Opportunity & 59 & $+0{,}0076$ & ** \\
+SPX Capital & 59 & $+0{,}0054$ & * \\
+Verde Asset Management & 59 & $+0{,}0047$ & * \\
+\bottomrule
+\end{tabular}
+\hspace{0.02\textwidth}
+\begin{tabular}{@{}lrrc@{}}
+\toprule
+Gestora & Meses & Coef. & Sig. \\
+\midrule
+Real Investor & 47 & $+0{,}0038$ & n.s. \\
+Credit Suisse & 59 & $+0{,}0037$ & *** \\
+Dahlia Capital & 30 & $+0{,}0032$ & n.s. \\
+JGP & 59 & $+0{,}0026$ & n.s. \\
+Safra Asset Management & 59 & $+0{,}0017$ & ** \\
+ARX Investimentos & 57 & $-0{,}0009$ & n.s. \\
+BTG Pactual & 59 & $-0{,}0017$ & *** \\
+Vinci Partners & 59 & $-0{,}0023$ & n.s. \\
+XP & 59 & $-0{,}0025$ & *** \\
+Daycoval Asset Management & 57 & $-0{,}0062$ & *** \\
+Julius Baer Family Office & 59 & $-0{,}0073$ & *** \\
+TNA Gestão Patrimonial & 59 & $-0{,}0100$ & *** \\
+Kapitalo Investimentos & 52 & $-0{,}0105$ & *** \\
+Ibiuna Investimentos & 45 & $-0{,}0141$ & *** \\
+Squadra Investimentos & 45 & $-0{,}0209$ & *** \\
+Atmos Capital & 33 & $-0{,}0238$ & *** \\
+Bogari Capital & 11 & $-0{,}0278$ & *** \\
+Constellation Asset Management & 25 & $-0{,}0316$ & *** \\
+Forpus Capital & 33 & $-0{,}0391$ & *** \\
+Guepardo Investimentos & 33 & $-0{,}0602$ & *** \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize ``Meses'' = quantos dos 59 meses aquela gestora teve dados suficientes
+para entrar na regressão (nem toda gestora tem VALE3 o período inteiro). $t$ e significância:
+teste ingênuo sobre a média dos coeficientes mensais, mesmo estilo das demais tabelas. Fonte:
+elaboração própria (\texttt{scripts/20\_etapa1\_com\_gestora.R},
+\texttt{21\_coeficientes\_gestora.R}).}
+\end{table}
+
+\textbf{Leitura:} gestoras grandes de varejo/plataforma (Caixa, Bradesco, BB, Santander, Western
+Asset) carregam \emph{mais} VALE3 que o Itaú equivalente; gestoras boutique de gestão
+concentrada/high-conviction (Guepardo, Forpus, Constellation, Bogari, Atmos, Squadra) carregam
+\emph{bem menos}. Não é uma medida de causalidade --- é o resíduo estrutural, depois de
+controlar pelas 5 características, e a leitura mais plausível é filosofia de gestão: carteiras
+concentradas tendem a evitar ``o nome que todo mundo tem'' a menos que apostem nele
+especificamente, diferente de uma plataforma de varejo mais próxima de uma composição ampla.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\textwidth]{fig_coef_gestora_evolucao.pdf}
+\caption{Evolução mensal do coeficiente de gestora (vs.\ Itaú), para as 5 gestoras mais
+positivas e as 5 mais negativas entre as que têm cobertura de pelo menos 45 dos 59 meses. O pico
+isolado da Kapitalo em jul/2018 não é erro de dado: naquele mês, um único fundo da casa
+concentrava $37\%$ em VALE3 dentro de um grupo pequeno (13 fundos), o suficiente para puxar a
+estimativa mensal daquele grupo --- ilustra como esses coeficientes podem ser voláteis mês a mês
+quando o grupo tem poucos fundos.}
+\end{figure}
+
+% ======================================================================
+\FloatBarrier
 \section{Resumo}
 
 \begin{enumerate}[topsep=2pt,itemsep=3pt]
@@ -333,6 +471,12 @@ anterior.
 \item \textbf{Etapa 3:} $\lambda$ treinado em 2017--2019 vence a ingênua fora da amostra
 (2020--2021) em RMSE, por margem pequena mas consistente ($1{,}6\%$; vence em $61\%$ dos meses
 de teste) --- resultado qualitativamente igual ao da versão anterior.
+\item \textbf{Extensão de gestoras (Seção~\ref{sec:gestoras}):} o padrão da Etapa 1 generaliza
+para além do Itaú --- $2.820$ fundos, $41$ grupos de gestora, as cinco características
+sobrevivem quase intactas ao entrar o efeito fixo de gestora ($R^2$ $0{,}540\to0{,}632$).
+Gestoras de varejo/plataforma carregam mais VALE3 que o Itaú equivalente; boutiques de gestão
+concentrada carregam bem menos. Ainda restrito a VALE3 (não integrado ao ajuste
+parcial/in-out-of-sample desta rodada).
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
