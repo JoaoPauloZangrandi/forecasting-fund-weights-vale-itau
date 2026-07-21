@@ -34,10 +34,12 @@ for (i in seq_along(meses)) {
 theta_lin_sem <- rbindlist(out_lin); theta_log_sem <- rbindlist(out_log)
 
 resumo <- function(dt) {
+  n_meses <- nrow(dt)  # NAO usar .N depois de criar r (viraria nrow(r)=5, numero de variaveis --
+                        # bug ja encontrado e corrigido nos scripts 13/20/23)
   r <- dt[, .(media = c(mean(alpha),mean(b_aum),mean(b_cot),mean(b_fic),mean(b_flow)),
               dp    = c(sd(alpha),sd(b_aum),sd(b_cot),sd(b_fic),sd(b_flow)))]
   r[, variavel := c("alpha","b_aum","b_cot","b_fic","b_flow")]
-  r[, t := media/(dp/sqrt(.N))]
+  r[, t := media/(dp/sqrt(n_meses))]
   r[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
   setcolorder(r,"variavel"); r
 }

@@ -50,12 +50,14 @@ for (i in seq_along(meses)) {
 theta_lin <- rbindlist(out_lin)
 
 cat("===== Theta_t linear: media, dp, min, max (72 meses) =====\n")
+n_meses_lin <- nrow(theta_lin)  # NAO usar .N depois de criar resumo_lin (viraria nrow(resumo_lin)=6, o
+                                 # numero de VARIAVEIS, nao de meses -- bug ja encontrado e corrigido)
 resumo_lin <- theta_lin[, .(
   media = c(mean(alpha), mean(b_aum), mean(b_cot), mean(b_fic), mean(b_flow), mean(b_betaf)),
   dp    = c(sd(alpha), sd(b_aum), sd(b_cot), sd(b_fic), sd(b_flow), sd(b_betaf))
 )]
 resumo_lin[, variavel := c("alpha","b_aum","b_cot","b_fic","b_flow","b_betaf")]
-resumo_lin[, t := media/(dp/sqrt(.N))]
+resumo_lin[, t := media/(dp/sqrt(n_meses_lin))]
 resumo_lin[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
 setcolorder(resumo_lin, "variavel")
 print(resumo_lin[, .(variavel, media=round(media,5), dp=round(dp,5), t=round(t,2), sig)])
@@ -78,12 +80,13 @@ for (i in seq_along(meses)) {
 theta_log <- rbindlist(out_log)
 
 cat("===== Theta_t logit: media, dp, min, max (72 meses) =====\n")
+n_meses_log <- nrow(theta_log)
 resumo_log <- theta_log[, .(
   media = c(mean(alpha), mean(b_aum), mean(b_cot), mean(b_fic), mean(b_flow), mean(b_betaf)),
   dp    = c(sd(alpha), sd(b_aum), sd(b_cot), sd(b_fic), sd(b_flow), sd(b_betaf))
 )]
 resumo_log[, variavel := c("alpha","b_aum","b_cot","b_fic","b_flow","b_betaf")]
-resumo_log[, t := media/(dp/sqrt(.N))]
+resumo_log[, t := media/(dp/sqrt(n_meses_log))]
 resumo_log[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
 setcolorder(resumo_log, "variavel")
 print(resumo_log[, .(variavel, media=round(media,4), dp=round(dp,4), t=round(t,2), sig)])

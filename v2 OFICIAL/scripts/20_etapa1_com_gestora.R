@@ -48,12 +48,14 @@ for (i in seq_along(meses)) {
 theta_fe <- rbindlist(out)
 
 cat("===== Theta_t (COM efeito-fixo de gestora): media, dp, t, sig (caracteristicas) =====\n")
+n_meses_fe <- nrow(theta_fe)  # NAO usar .N depois de criar resumo (viraria nrow(resumo)=6 -- bug
+                               # ja encontrado e corrigido)
 resumo <- theta_fe[, .(
   media = c(mean(alpha),mean(b_aum),mean(b_cot),mean(b_fic),mean(b_flow),mean(b_betaf)),
   dp    = c(sd(alpha),sd(b_aum),sd(b_cot),sd(b_fic),sd(b_flow),sd(b_betaf))
 )]
 resumo[, variavel := c("alpha","b_aum","b_cot","b_fic","b_flow","b_betaf")]
-resumo[, t := media/(dp/sqrt(.N))]
+resumo[, t := media/(dp/sqrt(n_meses_fe))]
 resumo[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
 setcolorder(resumo,"variavel")
 print(resumo[, .(variavel, media=round(media,5), t=round(t,2), sig)])

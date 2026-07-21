@@ -124,9 +124,9 @@ ingênuo de significância $t=\bar\theta/(\text{dp}(\theta)/\sqrt{59})$).}
 Variável & Média (sem $\beta^{fundo}$) & Sig. & Média (com $\beta^{fundo}$) & Sig. \\
 \midrule
 $\alpha$                   & $0{,}04524$  & *** & $0{,}03554$  & *** \\
-$b^{aum}$ (tamanho)        & $-0{,}00743$ & *** & $-0{,}00161$ & *   \\
-$b^{cot}$ (cotistas)       & $0{,}01304$  & *** & $0{,}00179$  & n.s.\\
-$b^{fic}$ (fundo de cotas) & $-0{,}01956$ & *** & $-0{,}00567$ & **  \\
+$b^{aum}$ (tamanho)        & $-0{,}00743$ & *** & $-0{,}00161$ & *** \\
+$b^{cot}$ (cotistas)       & $0{,}01304$  & *** & $0{,}00179$  & *** \\
+$b^{fic}$ (fundo de cotas) & $-0{,}01956$ & *** & $-0{,}00567$ & *** \\
 $b^{flow}$ (captação/resgate) & $0{,}00987$ & n.s. & $-0{,}00339$ & n.s. \\
 $b^{bf}$ (beta do fundo)   & ---          & ---& $0{,}02325$  & *** \\
 \midrule
@@ -134,21 +134,26 @@ $R^2$ médio & $0{,}166$ & & $0{,}532$ & \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
-(\texttt{scripts/13\_etapa1\_unificada.R}, \texttt{14\_etapa1\_antes\_depois.R}).}
+(\texttt{scripts/13\_etapa1\_unificada.R}, \texttt{14\_etapa1\_antes\_depois.R}). \textbf{Nota de
+correção:} uma versão anterior deste documento reportava $t$ errado nesta tabela (usava
+$\sqrt{6}$, o número de \emph{variáveis}, em vez de $\sqrt{59}$, o número de \emph{meses}, no
+denominador do teste) --- os $t$ corretos são $\approx3{,}1\times$ maiores; tamanho e cotistas
+continuam *** significativos com o beta do fundo, não n.s./* como antes reportado.}
 \end{table}
 
 \aha{O mesmo padrão que já tinha aparecido como checagem à parte na versão anterior (Tabela 11
-do \texttt{tcc I.pdf}) agora é a especificação principal: com o beta do fundo na conta, tamanho
-perde quase toda a força ($t=-5{,}2\to-2{,}2$), cotistas deixa de ser significativo
-($t=6{,}9\to1{,}9$), e só fundo de cotas e beta do fundo continuam robustos. $R^2$ triplica
-($0{,}166\to0{,}532$). Leitura: parte do que tamanho e cotistas pareciam explicar era, na
-verdade, um proxy indireto para o quão ``equity-like'' é o fundo --- o beta do fundo mede isso
-diretamente.}
+do \texttt{tcc I.pdf}) agora é a especificação principal: com o beta do fundo na conta, tamanho e
+cotistas ficam \textbf{bem mais fracos} em magnitude de $t$ (tamanho: $t=-17{,}8\to-6{,}7$;
+cotistas: $t=23{,}8\to6{,}0$) --- mas \textbf{continuam estatisticamente significativos a
+$0{,}1\%$}, não perdem a significância. $R^2$ triplica ($0{,}166\to0{,}532$). Leitura: parte do
+que tamanho e cotistas explicavam era, na verdade, um proxy indireto para o quão ``equity-like''
+é o fundo --- o beta do fundo mede isso diretamente e absorve boa parte (não toda) dessa força
+explicativa.}
 
-A versão logística mostra o mesmo padrão (tamanho e cotistas perdem significância, beta do
-fundo domina): $\alpha=-3{,}81$ (era $-3{,}13$), $b^{aum}=-0{,}06$ n.s.\ (era $-0{,}27$ ***),
-$b^{cot}=0{,}05$ n.s.\ (era $0{,}44$ ***), $b^{fic}=-0{,}21$ ** (era $-0{,}67$ ***),
-$b^{bf}=1{,}01$ ***.
+A versão logística mostra o mesmo padrão de enfraquecimento (beta do fundo passa a dominar, mas
+tamanho e cotistas continuam significativos): $\alpha=-3{,}81$ (era $-3{,}13$),
+$b^{aum}=-0{,}06$ *** (era $-0{,}27$ ***), $b^{cot}=0{,}05$ *** (era $0{,}44$ ***),
+$b^{fic}=-0{,}21$ *** (era $-0{,}67$ ***), $b^{bf}=1{,}01$ ***.
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{fig_theta_trajetoria_v2.pdf}
@@ -354,8 +359,8 @@ Variável & Média (sem FE gestora) & Sig. & Média (com FE gestora) & Sig. \\
 $\alpha$                   & $0{,}03647$  & *** & $0{,}03294$  & *** \\
 $b^{aum}$ (tamanho)        & $-0{,}00178$ & *** & $-0{,}00171$ & *** \\
 $b^{cot}$ (cotistas)       & $0{,}00236$  & *** & $0{,}00118$  & *** \\
-$b^{fic}$ (fundo de cotas) & $-0{,}00681$ & **  & $-0{,}00621$ & *** \\
-$b^{flow}$ (captação/resgate) & $-0{,}00446$ & n.s. & $-0{,}00312$ & n.s. \\
+$b^{fic}$ (fundo de cotas) & $-0{,}00681$ & *** & $-0{,}00621$ & *** \\
+$b^{flow}$ (captação/resgate) & $-0{,}00446$ & *** & $-0{,}00312$ & ** \\
 $b^{bf}$ (beta do fundo)   & $0{,}02536$  & *** & $0{,}02528$  & *** \\
 \midrule
 $R^2$ médio & $0{,}540$ & & $0{,}632$ & \\
@@ -364,10 +369,13 @@ $R^2$ médio & $0{,}540$ & & $0{,}632$ & \\
 \end{table}
 
 \aha{As cinco características sobrevivem quase intactas ao entrar o efeito fixo de gestora ---
-tamanho, FIC e beta do fundo praticamente não mudam; só cotistas perde metade da magnitude
+tamanho, FIC e beta do fundo praticamente não mudam; cotistas perde metade da magnitude
 ($0{,}0024\to0{,}0012$), continuando *** significativo. $R^2$ sobe de $0{,}540$ para $0{,}632$: a
 identidade da gestora tem poder explicativo próprio, mas não ``rouba'' o efeito das
-características --- o padrão da Etapa 1 generaliza para além do Itaú.}
+características --- o padrão da Etapa 1 generaliza para além do Itaú. Diferente da amostra
+só-Itaú (Tabela 1), aqui a captação/resgate é significativa (*** sem FE, ** com FE) --- com
+$71.569$ observações contra $8.335$, há poder estatístico para detectar um efeito de fluxo
+pequeno que na amostra menor não era distinguível de ruído.}
 
 \subsection{Quanto cada gestora carrega, relativo ao Itaú}
 
@@ -462,9 +470,9 @@ quando o grupo tem poucos fundos.}
 \begin{enumerate}[topsep=2pt,itemsep=3pt]
 \item \textbf{Etapa 1, equações~\eqref{eq:cs}--\eqref{eq:logit}:} $\theta_t$ mês a mês, cinco
 características (agora incluindo beta do fundo), todas predeterminadas ($t-1$). Com o beta do
-fundo na conta, tamanho e cotistas perdem quase toda a força explicativa; só fundo de cotas e
-beta do fundo continuam robustos. $R^2$ médio $0{,}532$ (era $0{,}166$). Custo: cobertura cai
-para 59 meses (fev/2017 em diante).
+fundo na conta, tamanho e cotistas ficam bem mais fracos em magnitude de $t$, mas continuam ***
+significativos; fundo de cotas e beta do fundo continuam com a força quase intacta. $R^2$ médio
+$0{,}532$ (era $0{,}166$). Custo: cobertura cai para 59 meses (fev/2017 em diante).
 \item \textbf{Etapa 2, equação~\eqref{eq:pa}:} $\widehat\lambda=0{,}153$ (era $0{,}098$) --- um
 alvo mais preciso atenua menos o coeficiente. Erro $u$ com comportamento parecido ao da versão
 anterior.
