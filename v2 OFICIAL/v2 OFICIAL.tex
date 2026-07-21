@@ -26,7 +26,7 @@
 
 \title{\textbf{v2 OFICIAL}\\[8pt]
 \Large Peso de VALE3 nos fundos do Itaú --- versão simples, direta e objetiva\\[4pt]
-\normalsize Cross-section por MQO, logit, ajuste parcial e um esquema in/out-of-sample ---
+\normalsize Cross-section (MQO + logit), ajuste parcial e um esquema in/out-of-sample ---
 sem Newey--West, sem Kalman, sem Diebold--Mariano, sem múltiplos métodos de robustez}
 \author{João Paulo Zangrandi (FGV--EESP)}
 \date{}
@@ -39,8 +39,9 @@ sem Newey--West, sem Kalman, sem Diebold--Mariano, sem múltiplos métodos de ro
 orientador: uma cross-section simples que estima um fator latente $\theta$, uma etapa
 logística para manter a previsão dentro de $[0,1]$, e um modelo de ajuste parcial para a
 dinâmica. Cada etapa usa \textbf{um único método} (MQO ou MQO logístico), sem testes ou
-correções de robustez em cascata. O objetivo é ter um pipeline curto, auditável do início ao
-fim, e um esquema simples de avaliação fora da amostra.
+correções de robustez em cascata. Nesta versão, as características do fundo (inclusive o novo
+beta do próprio fundo) passam a ser sempre medidas no \textbf{último dia do mês anterior},
+eliminando qualquer look-ahead bias.
 \end{abstract}
 
 \newpage
@@ -57,301 +58,231 @@ difícil de enxergar por trás das correções. Esta versão volta ao desenho or
 com o orientador: uma cross-section por mínimos quadrados que gera um fator latente $\theta$,
 uma etapa logística (a única forma de robustez mantida, porque o peso é limitado a $[0,1]$ e a
 reta não respeita esse limite), e um modelo de ajuste parcial estimado diretamente por MQO. Cada
-etapa produz um erro, e cada erro é examinado com estatísticas simples --- média, desvio-padrão,
-assimetria, curtose, e um histograma --- sem bateria de testes formais.
+etapa produz um erro, examinado com estatísticas simples --- média, desvio-padrão, assimetria,
+curtose, histograma --- sem bateria de testes formais.
 
-A base de dados (composição de carteiras da CVM, filtrada para os fundos do grupo Itaú,
-2016--2021, 307 fundos, 72 meses, 11.413 observações de fundo-mês) é a mesma já construída e
-validada na versão anterior do projeto --- essa parte nunca foi a fonte da complexidade, e não
-foi refeita.
+A base de dados (composição de carteiras da CVM, fundos do grupo Itaú, 2016--2021) é a mesma já
+construída e validada na versão anterior --- essa parte nunca foi a fonte da complexidade.
 
 % ======================================================================
 \FloatBarrier
-\section{Etapa 1: a cross-section por MQO}
+\section{Etapa 1: a cross-section (MQO + logit)}
+\label{sec:etapa1}
 
-\pergunta{As características de um fundo (tamanho, número de cotistas, se é fundo de cotas,
-quanto captou ou resgatou) explicam o peso de VALE3 que ele carrega?}
+\pergunta{As características de um fundo explicam o peso de VALE3 que ele carrega? E, se sim,
+como transformar essa explicação numa previsão que respeite os limites de $0\%$ a $100\%$?}
 
-Para cada um dos 72 meses, roda-se uma única regressão MQO, usando só os fundos daquele mês:
-
-\equacao
-\begin{equation}
-\text{peso}_{i,t} = \alpha_t + b^{aum}_t\, z(\ln AUM_i) + b^{cot}_t\, z(\ln \text{cotistas}_i)
-+ b^{fic}_t\, FIC_i + b^{flow}_t\, \Big(\tfrac{\text{captação}-\text{resgate}}{AUM}\Big)_i
-+ \text{erro}_{i,t}
-\label{eq:cs}
-\end{equation}
-em que $z(\cdot)$ padroniza a variável (subtrai a média, divide pelo desvio-padrão), para que
-tamanho e cotistas fiquem na mesma régua. $FIC$ é uma variável de $0$ ou $1$ (é fundo de cotas
-ou não); o fluxo entra na escala original (fração do patrimônio).
-
-O vetor $\theta_t = (\alpha_t, b^{aum}_t, b^{cot}_t, b^{fic}_t, b^{flow}_t)$ é o resultado de
-\emph{um único mês}. $\Theta$ é a coleção dos 72 vetores $\theta_t$, um por mês --- é o objeto
-central de todo o resto do documento.
-
-\subsection{O resultado}
-
-\begin{table}[h]\centering\small
-\caption{$\Theta$: média, desvio-padrão, mínimo, máximo e teste ingênuo de significância da
-média dos 72 $\theta_t$ mensais.}
-\begin{tabular}{@{}lrrrrrc@{}}
-\toprule
-Variável & Média & Desvio-padrão & Mínimo & Máximo & $t$ & Sig. \\
-\midrule
-$\alpha$ (intercepto)     & $0{,}0396$  & $0{,}0171$ & $0{,}0080$  & $0{,}0663$ & $19{,}6$ & *** \\
-$b^{aum}$ (tamanho)       & $-0{,}0067$ & $0{,}0031$ & $-0{,}0162$ & $-0{,}0014$ & $-18{,}3$ & *** \\
-$b^{cot}$ (cotistas)      & $0{,}0108$  & $0{,}0047$ & $0{,}0028$  & $0{,}0233$ & $19{,}6$ & *** \\
-$b^{fic}$ (fundo de cotas) & $-0{,}0170$ & $0{,}0075$ & $-0{,}0380$ & $-0{,}0031$ & $-19{,}2$ & *** \\
-$b^{flow}$ (captação/resgate) & $-0{,}0004$ & $0{,}0263$ & $-0{,}1227$ & $0{,}0878$ & $-0{,}1$ & n.s. \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize $R^2$ médio das 72 regressões: $0{,}152$. $N=11.413$ fundo-meses,
-$307$ fundos, $72$ meses. $t=\bar\theta/(\text{dp}(\theta)/\sqrt{72})$ --- teste \textbf{ingênuo}
-sobre a média dos 72 valores mensais, sem nenhuma correção de autocorrelação (não é
-Newey--West); $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
-(\texttt{scripts/01\_cross\_section\_theta.R}, \texttt{09\_theta\_significancia.R}).}
-\end{table}
-
-A leitura direta: fundos maiores carregam menos peso ($b^{aum}<0$); fundos com mais cotistas
-carregam mais ($b^{cot}>0$); fundos de cotas carregam menos ($b^{fic}<0$); captação não tem um
-efeito médio claro ($b^{flow}$ perto de zero, com bastante variação mês a mês).
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.78\textwidth]{fig_theta_trajetoria.pdf}
-\caption{Os cinco componentes de $\theta_t$ ao longo dos 72 meses, e o $R^2$ de cada regressão
-mensal. Os coeficientes não são constantes --- há uma mudança de patamar visível em torno de
-2018 --- mas mantêm o mesmo sinal na maior parte do período.}
-\end{figure}
-
-\begin{figure}[h!]\centering
-\includegraphics[width=0.75\textwidth]{fig_theta_combinado.pdf}
-\caption{Os mesmos cinco componentes de $\theta_t$, agora padronizados (z-score) e sobrepostos
-num único gráfico, para comparar a evolução relativa entre eles. $\alpha$, $b^{aum}$, $b^{cot}$
-e $b^{fic}$ se movem de forma bastante parecida ao longo do tempo (inclusive na mudança de
-patamar de 2018) --- um indício de que compartilham boa parte da mesma dinâmica subjacente.
-$b^{flow}$ é visivelmente mais ruidoso, com um pico isolado em meados de 2018 que foge do padrão
-das outras quatro séries.}
-\end{figure}
-
-% ======================================================================
-\FloatBarrier
-\section{Etapa 2: a ligação logística e o erro $e$}
-
-\pergunta{O peso é uma fração entre 0\% e 100\%. Por que não usar direto o $\theta$ linear da
-Etapa 1 para gerar uma previsão?}
-
-Porque $x'\theta$ (a combinação linear das características) pode sair fora do intervalo
-$[0,1]$ --- nada nas contas da Etapa 1 impede um peso previsto negativo ou maior que $100\%$. A
-correção --- a única forma de robustez mantida nesta versão --- é passar a combinação linear por
-uma função logística antes de virar previsão:
+Esta etapa une o que em versões anteriores deste documento eram duas seções separadas: a
+cross-section \textbf{linear} (para interpretar os coeficientes diretamente em pontos
+percentuais) e a cross-section \textbf{logística} (para gerar um peso previsto que nunca sai de
+$[0,1]$). As duas usam as mesmas cinco características, mês a mês:
 
 \equacao
-\begin{equation}
-\text{peso}_{i,t} = g\big(x_{i,t}'\theta_t\big) + e_{i,t}, \qquad g(z) = \frac{1}{1+e^{-z}}
+\begin{align}
+\text{peso}_{i,t} &= \alpha_t + b^{aum}_t z(\ln AUM_{i}) + b^{cot}_t z(\ln\text{cot}_{i})
+  + b^{fic}_t FIC_i + b^{flow}_t\Big(\tfrac{\text{capt}-\text{resg}}{AUM}\Big)_i
+  + b^{bf}_t z(\beta^{fundo}_i) + \text{erro}_{i,t} \label{eq:cs}\\[4pt]
+\text{peso}_{i,t} &= g\big(x_{i,t}'\theta_t\big) + e_{i,t}, \qquad g(z)=\frac{1}{1+e^{-z}}
 \label{eq:logit}
-\end{equation}
-Como $g(z)$ nunca sai de $(0,1)$, qualquer que seja $z$, a previsão nunca sai dos limites. Mas
-isso exige reestimar $\theta_t$ \textbf{diretamente pela equação logística} (por máxima
-verossimilhança, \texttt{glm} com família quase-binomial, um único método, um por mês) --- o
-$\theta$ linear da Etapa 1 não é compatível com essa escala (perto de $z=0$, $g(z)\approx0{,}5$,
-enquanto o peso real gira em torno de $1$--$5\%$; usar o $\theta$ linear dentro do $g(\cdot)$
-gera um erro sistemático de quase $-0{,}5$ --- um erro de especificação encontrado e corrigido
-durante a construção deste documento).
+\end{align}
+A primeira é estimada por MQO (coeficientes em pontos percentuais, fáceis de interpretar); a
+segunda por máxima verossimilhança (\texttt{glm} quase-binomial), a única forma de robustez
+mantida nesta versão, porque $x'\theta$ pode sair de $[0,1]$ mas $g(x'\theta)$ nunca sai. As
+duas rodam mês a mês, uma regressão por mês, sem nenhuma etapa de resumo temporal em cima
+(não é Fama--MacBeth).
 
-\subsection{O resultado}
+\textbf{Novidade desta versão --- duas mudanças na Etapa 1:}
+\begin{enumerate}[topsep=2pt,itemsep=2pt]
+\item[(a)] Entra uma 5ª característica, o \textbf{beta do próprio fundo} $\beta^{fundo}$
+(covariância do retorno da cota com o Ibovespa, janela de 252 pregões --- mesma metodologia já
+usada para o beta de VALE3).
+\item[(b)] \textbf{Todas} as cinco características (não só o beta do fundo) passam a ser medidas
+no \textbf{último dia do mês anterior} ($t-1$), nunca no mês corrente --- antes, $AUM$, cotistas
+e fluxo eram contemporâneos ao próprio mês $t$. Agora $\theta_t$ é 100\% predeterminado: tudo que
+ele usa já era conhecido antes do mês $t$ começar.
+\end{enumerate}
+
+\textbf{Adendo sobre a amostra:} exigir as cinco características simultaneamente reduz a
+cobertura de 72 para \textbf{59 meses} (fev/2017 a dez/2021) --- o beta do fundo exige
+$\geq252$ pregões de histórico de cota (quase um ano), então nenhum fundo tem essa variável
+disponível nos primeiros meses da amostra (jan/2016 a jan/2017 ficam sem fundos suficientes).
+Essa perda foi aceita conscientemente, não é um erro: a partir daqui, todo número deste
+documento vem dos $8.335$ fundo-meses com as cinco características completas ($120$ a $190$
+fundos por mês, média $141$).
+
+\subsection{O resultado: antes e depois do beta do fundo}
+
+Para deixar claro o efeito de adicionar o beta do fundo, a tabela abaixo compara --- na
+\textbf{mesma amostra} de $59$ meses --- a regressão linear com as quatro características
+clássicas contra a mesma regressão com o beta do fundo incluído.
 
 \begin{table}[h]\centering\small
-\caption{$\Theta$ (logit): média, desvio-padrão, mínimo, máximo e teste ingênuo de
-significância da média dos 72 $\theta_t$ mensais.}
-\begin{tabular}{@{}lrrrrrc@{}}
+\caption{$\Theta$ linear: antes e depois do beta do fundo (mesma amostra, 59 meses, teste
+ingênuo de significância $t=\bar\theta/(\text{dp}(\theta)/\sqrt{59})$).}
+\begin{tabular}{@{}lrcrc@{}}
 \toprule
-Variável & Média & Desvio-padrão & Mínimo & Máximo & $t$ & Sig. \\
+Variável & Média (sem $\beta^{fundo}$) & Sig. & Média (com $\beta^{fundo}$) & Sig. \\
 \midrule
-$\alpha$ (intercepto)      & $-3{,}3641$ & $0{,}6520$ & $-4{,}9745$ & $-2{,}6739$ & $-43{,}8$ & *** \\
-$b^{aum}$ (tamanho)        & $-0{,}3183$ & $0{,}1677$ & $-0{,}6830$ & $-0{,}0570$ & $-16{,}1$ & *** \\
-$b^{cot}$ (cotistas)       & $0{,}4607$  & $0{,}1480$ & $0{,}2153$  & $0{,}8033$ & $26{,}4$ & *** \\
-$b^{fic}$ (fundo de cotas) & $-0{,}7317$ & $0{,}3175$ & $-1{,}4450$ & $-0{,}1763$ & $-19{,}6$ & *** \\
-$b^{flow}$ (captação/resgate) & $0{,}0779$ & $1{,}2048$ & $-3{,}5171$ & $5{,}1177$ & $0{,}6$ & n.s. \\
+$\alpha$                   & $0{,}04524$  & *** & $0{,}03554$  & *** \\
+$b^{aum}$ (tamanho)        & $-0{,}00743$ & *** & $-0{,}00161$ & *   \\
+$b^{cot}$ (cotistas)       & $0{,}01304$  & *** & $0{,}00179$  & n.s.\\
+$b^{fic}$ (fundo de cotas) & $-0{,}01956$ & *** & $-0{,}00567$ & **  \\
+$b^{flow}$ (captação/resgate) & $0{,}00987$ & n.s. & $-0{,}00339$ & n.s. \\
+$b^{bf}$ (beta do fundo)   & ---          & ---& $0{,}02325$  & *** \\
+\midrule
+$R^2$ médio & $0{,}166$ & & $0{,}532$ & \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Mesmos sinais da Etapa 1, agora em unidades de log-odds (a escala
-interna da função logística $g(\cdot)$), não pontos percentuais diretos. $t=\bar\theta/(\text{dp}
-(\theta)/\sqrt{72})$ --- mesmo teste ingênuo da Tabela 1, sem correção de autocorrelação;
-$^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
-(\texttt{scripts/02\_logit\_erro.R}, \texttt{09\_theta\_significancia.R}).}
+\caption*{\footnotesize $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
+(\texttt{scripts/13\_etapa1\_unificada.R}, \texttt{14\_etapa1\_antes\_depois.R}).}
 \end{table}
 
-Os sinais batem com a Etapa 1 (tamanho negativo, cotistas positivo, fundo de cotas negativo), mas
-a variabilidade mês a mês é bem maior em unidades de log-odds --- em especial $b^{flow}$, cujo
-desvio-padrão ($1{,}20$) é maior que a própria média em módulo, e cujo mínimo/máximo
-($-3{,}52$ / $5{,}12$) mostra uma dispersão bem mais ampla que a das outras quatro variáveis.
+\aha{O mesmo padrão que já tinha aparecido como checagem à parte na versão anterior (Tabela 11
+do \texttt{tcc I.pdf}) agora é a especificação principal: com o beta do fundo na conta, tamanho
+perde quase toda a força ($t=-5{,}2\to-2{,}2$), cotistas deixa de ser significativo
+($t=6{,}9\to1{,}9$), e só fundo de cotas e beta do fundo continuam robustos. $R^2$ triplica
+($0{,}166\to0{,}532$). Leitura: parte do que tamanho e cotistas pareciam explicar era, na
+verdade, um proxy indireto para o quão ``equity-like'' é o fundo --- o beta do fundo mede isso
+diretamente.}
+
+A versão logística mostra o mesmo padrão (tamanho e cotistas perdem significância, beta do
+fundo domina): $\alpha=-3{,}81$ (era $-3{,}13$), $b^{aum}=-0{,}06$ n.s.\ (era $-0{,}27$ ***),
+$b^{cot}=0{,}05$ n.s.\ (era $0{,}44$ ***), $b^{fic}=-0{,}21$ ** (era $-0{,}67$ ***),
+$b^{bf}=1{,}01$ ***.
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.75\textwidth]{fig_theta_logit_combinado.pdf}
-\caption{Os cinco componentes de $\theta_t$ (logit), padronizados (z-score) e sobrepostos no
-mesmo gráfico. O padrão é mais ruidoso que o da Etapa 1 (Figura 2) --- esperado, já que cada
-$\theta_t$ logístico é estimado por máxima verossimilhança, mês a mês, com a mesma amostra de
-$\sim$130--145 fundos --- mas $\alpha$, $b^{aum}$ e $b^{fic}$ ainda mostram comovimento visível
-na segunda metade da série.}
+\includegraphics[width=0.75\textwidth]{fig_theta_trajetoria_v2.pdf}
+\caption{Os seis componentes de $\theta_t$ linear (com beta do fundo) ao longo dos 59 meses, e o
+$R^2$ de cada regressão mensal. $b^{bf}$ é sempre positivo, numa faixa relativamente estreita ---
+coerente com sua significância forte e estável.}
 \end{figure}
 
 \subsection{O erro $e$}
 
-$e_{i,t} = \text{peso}_{i,t} - g(x_{i,t}'\theta_t)$ é o erro de ajuste da própria regressão
-(dentro da amostra, não é previsão fora da amostra).
+$e_{i,t}=\text{peso}_{i,t}-g(x_{i,t}'\theta_t)$, o erro de ajuste da regressão logística
+(dentro da amostra).
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas do erro $e$ (11.413 observações).}
+\caption{Estatísticas do erro $e$ (8.335 observações).}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Estatística & Valor \\
 \midrule
 Média & $0{,}000000$ \\
-Desvio-padrão & $0{,}0305$ \\
-Mediana & $-0{,}0046$ \\
-Mínimo / Máximo & $-0{,}127$ / $0{,}155$ \\
-\% de observações com $e>0$ & $36{,}2\%$ \\
-Assimetria & $0{,}98$ \\
-Curtose & $4{,}76$ (normal $=3$) \\
-Previsões fora de $[0,1]$ & $0$ de $11.413$ \\
+Desvio-padrão & $0{,}0227$ \\
+Mediana & $-0{,}0008$ \\
+Mínimo / Máximo & $-0{,}113$ / $0{,}178$ \\
+\% de observações com $e>0$ & $45{,}1\%$ \\
+Assimetria & $0{,}39$ \\
+Curtose & $7{,}67$ (normal $=3$) \\
+Previsões fora de $[0,1]$ & $0$ de $8.335$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-A média de $e$ é zero em \textbf{todo} mês --- mas isso é mecânico: com intercepto na equação,
-a condição de primeira ordem da máxima verossimilhança força isso, do mesmo jeito que o resíduo
-de MQO com intercepto sempre soma zero. Não é evidência de bom ajuste, só confirma que a
-otimização convergiu. O que de fato descreve o comportamento do erro é o desvio-padrão
-($3{,}05$ pontos percentuais), a assimetria (positiva: mais erros pequenos negativos, com uma
-cauda de erros positivos maiores) e a curtose (mais alta que a normal --- caudas mais pesadas).
+A média é zero em todo mês --- mecânico (condição de primeira ordem da máxima verossimilhança
+com intercepto), não evidência de bom ajuste. O desvio-padrão caiu de $0{,}0305$ (versão sem
+beta do fundo) para $0{,}0227$ --- o modelo ajusta melhor, coerente com o salto no $R^2$.
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.75\textwidth]{hist_erro_cross_section.pdf}
-\caption{Histograma do erro $e$ da Etapa 2 (11.413 observações). A linha tracejada marca zero.}
+\includegraphics[width=0.7\textwidth]{hist_erro_e_v2.pdf}
+\caption{Histograma do erro $e$ (8.335 observações). A linha tracejada marca zero.}
 \end{figure}
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.78\textwidth]{fig_erro_logit_mensal.pdf}
-\caption{Evolução mês a mês do erro $e$: a nuvem cinza é o erro individual de \textbf{cada
-fundo-mês} (11.413 pontos), com a média (linha azul) e o desvio-padrão (linha vermelha
-tracejada) de cada mês sobrepostos. \textbf{O eixo $y$ é restrito a $[-0{,}025,\ 0{,}05]$} para
-deixar a média e o desvio-padrão mensal mais fáceis de enxergar; $2.805$ dos $11.413$ pontos
-individuais ($25\%$) caem fora desse intervalo e não aparecem no gráfico --- a Tabela~3 já
-reporta o mínimo e o máximo verdadeiros ($-0{,}127$ / $0{,}155$). A média fica achatada em zero
-em \textbf{todo} mês --- mecânico, como já explicado --- mas a nuvem de pontos mostra que os
-erros individuais estão longe de ser todos zero; é só a média entre fundos que cancela. O
-desvio-padrão é a série que de fato mostra evolução: sobe de $\approx0{,}01$ em 2016 para um
-platô de $0{,}03$--$0{,}04$ a partir de 2018, mesma janela em que a Figura 1 mostrou a mudança de
-patamar dos coeficientes.}
+\includegraphics[width=0.78\textwidth]{fig_erro_e_mensal_v2.pdf}
+\caption{Evolução mês a mês do erro $e$: nuvem cinza = erro individual de cada fundo-mês; linha
+azul = média mensal (mecanicamente zero); linha vermelha tracejada = desvio-padrão mensal. Eixo
+$y$ restrito a $[-0{,}03,\,0{,}06]$ para facilitar a leitura das duas linhas ---
+$843$ dos $8.335$ pontos individuais ($10\%$) ficam fora e não aparecem.}
 \end{figure}
 
 % ======================================================================
 \FloatBarrier
-\section{Etapa 3: o ajuste parcial}
+\section{Etapa 2: o ajuste parcial}
 
 \pergunta{O peso de um fundo se move em direção ao que as características sugerem, ou fica
 parado onde está?}
 
-O peso desejado (alvo) de um fundo, num mês, é $w^*_{i,t} = g(x_{i,t}'\theta_t)$ --- a mesma
-previsão da Etapa 2. A hipótese de ajuste parcial: o fundo não salta direto para o alvo, mas
-fecha uma fração $\lambda$ da distância a cada mês:
+O alvo de um fundo, num mês, é $w^*_{i,t}=g(x_{i,t}'\theta_t)$ --- a mesma previsão da Etapa 1.
+A hipótese de ajuste parcial: o fundo fecha uma fração $\lambda$ da distância ao alvo a cada mês.
 
 \equacao
 \begin{equation}
 w_{i,t+1} - w_{i,t} = \lambda\, d_{i,t} + u_{i,t+1}, \qquad d_{i,t} \equiv w^*_{i,t} - w_{i,t}
 \label{eq:pa}
 \end{equation}
-Estimado por MQO direto, sem intercepto (a teoria não prevê nenhum), pooled em todos os
-fundo-meses --- \textbf{um único método}, sem instrumento, sem efeito-fixo de fundo, sem painel
-dinâmico.
+Estimado por MQO direto, sem intercepto, pooled em todos os fundo-meses --- um único método,
+sem instrumento, sem efeito-fixo, sem painel dinâmico.
 
 \subsection{O resultado}
 
-$$\widehat\lambda = 0{,}0980 \qquad (\text{erro-padrão}=0{,}0047,\ t=20{,}8,\
-R^2=0{,}038,\ n=10.972)$$
+$$\widehat\lambda = 0{,}1534 \qquad (\text{erro-padrão}=0{,}0075,\ t=20{,}6,\
+R^2=0{,}050,\ n=7.987)$$
 
-Checagem: com intercepto incluído, ele sai $0{,}00021$ ($t=1{,}4$, não significativo) ---
-consistente com a equação~\eqref{eq:pa} não prever nenhum. $\widehat\lambda=0{,}098$ significa
-que, em média, um fundo fecha cerca de $9{,}8\%$ da distância até o alvo a cada mês.
+$\lambda$ subiu de $0{,}098$ (versão anterior) para $0{,}153$ --- esperado, já que o alvo $w^*$
+agora é mais preciso ($R^2$ maior na Etapa 1), o que atenua menos o coeficiente pelo erro de
+medida clássico (Problema 1 do modelo de ajuste parcial). Em média, um fundo fecha $15{,}3\%$
+da distância ao alvo por mês.
 
 \subsection{O erro $u$}
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas do erro $u$ (10.972 observações, pares de meses consecutivos).}
+\caption{Estatísticas do erro $u$ (7.987 observações, pares de meses consecutivos).}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Estatística & Valor \\
 \midrule
 Média & $0{,}0002$ \\
 Desvio-padrão & $0{,}0151$ \\
-Mediana & $-0{,}0009$ \\
-Mínimo / Máximo & $-0{,}172$ / $0{,}190$ \\
-\% de observações com $u>0$ & $37{,}6\%$ \\
-Assimetria & $0{,}40$ \\
-Curtose & $19{,}7$ (normal $=3$) \\
+Mediana & $-0{,}0004$ \\
+Mínimo / Máximo & $-0{,}160$ / $0{,}185$ \\
+\% de observações com $u>0$ & $44{,}3\%$ \\
+Assimetria & $0{,}59$ \\
+Curtose & $19{,}4$ (normal $=3$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Diferente do erro $e$, a média de $u$ \textbf{não} é mecanicamente zero (a equação~\eqref{eq:pa}
-não tem intercepto) --- e mesmo assim sai muito perto de zero ($0{,}0002$), sem viés aparente. A
-curtose de $19{,}7$ é bem mais alta que a da Etapa 2: a maior parte dos erros é pequena e
-concentrada perto de zero, mas alguns poucos fundo-meses têm erro grande, puxando a cauda.
+Praticamente idêntico ao da versão anterior (dp $0{,}0151$ nas duas) --- a mudança na Etapa 1
+melhorou o ajuste de $e$, mas o comportamento do erro do ajuste parcial em si não muda muito.
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.75\textwidth]{hist_erro_ajuste_parcial.pdf}
-\caption{Histograma do erro $u$ da Etapa 3 (10.972 observações). Note o pico estreito perto de
-zero e as caudas longas --- coerente com a curtose alta.}
+\includegraphics[width=0.7\textwidth]{hist_erro_u_v2.pdf}
+\caption{Histograma do erro $u$ (7.987 observações).}
 \end{figure}
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.78\textwidth]{fig_erro_ajuste_mensal.pdf}
-\caption{Evolução mês a mês do erro $u$: a nuvem cinza é o erro individual de cada par
-fundo-mês consecutivo (10.972 pontos), com a média (linha azul) e o desvio-padrão (linha
-vermelha tracejada) de cada mês sobrepostos. \textbf{O eixo $y$ é restrito a
-$[-0{,}03,\ 0{,}04]$} para deixar a média e o desvio-padrão mensal mais fáceis de enxergar;
-$487$ dos $10.972$ pontos individuais ($4{,}4\%$) caem fora desse intervalo e não aparecem no
-gráfico --- a Tabela~4 já reporta o mínimo e o máximo verdadeiros ($-0{,}172$ / $0{,}190$).
-Diferente do erro $e$ da Etapa 2, a média \textbf{não} é mecanicamente zero (a
-equação~\eqref{eq:pa} não tem intercepto) --- oscila visivelmente em torno de zero, mas sem
-tendência clara de longo prazo. O desvio-padrão também oscila bastante mês a mês, com alguns
-picos isolados (o mais forte em meados de 2018) coerentes com a curtose alta reportada na
-Tabela~4; a nuvem de pontos mostra de onde vêm esses picos --- meses com alguns poucos fundos
-bem fora do padrão típico, não uma mudança geral de todo mundo.}
+\includegraphics[width=0.78\textwidth]{fig_erro_u_mensal_v2.pdf}
+\caption{Evolução mês a mês do erro $u$. Eixo $y$ restrito a $[-0{,}03,\,0{,}04]$; $369$ dos
+$7.987$ pontos individuais ($4{,}6\%$) ficam fora e não aparecem.}
 \end{figure}
 
 % ======================================================================
 \FloatBarrier
-\section{Etapa 4: um esquema in/out-of-sample}
+\section{Etapa 3: um esquema in/out-of-sample}
 
 \pergunta{O $\lambda$ estimado serve pra prever de verdade, em dados que o modelo nunca viu?}
 
-Um único corte no tempo --- sem janela expansiva com muitas origens, sem múltiplos horizontes:
+Um único corte no tempo, dentro do período coberto pela Etapa 1 (fev/2017 a dez/2021):
 
 \begin{itemize}[topsep=2pt,itemsep=2pt]
-\item \textbf{Treino:} 2016-01 a 2019-12 (48 meses, 6.428 observações).
-\item \textbf{Teste:} 2020-01 a 2021-11 (23 meses, 4.544 observações).
+\item \textbf{Treino:} 2017-02 a 2019-12 (35 meses, 4.352 observações).
+\item \textbf{Teste:} 2020-01 a 2021-11 (23 meses, 3.635 observações).
 \end{itemize}
 
-Primeiro, $\widehat\lambda$ é estimado pela mesma equação~\eqref{eq:pa} da Etapa 3, mas
-\textbf{restrita só aos meses de treino} ($t<$ 2020-01):
-$$\widehat\lambda_{\text{treino}} = 0{,}1043 \qquad (\text{erro-padrão}=0{,}0065,\ t=16{,}0)$$
-
 \equacao
-Depois, esse valor fixo (não reestimado mês a mês) é usado para prever a variação do peso em
-\textbf{cada mês do período de teste}, comparando contra a previsão ingênua:
+$\widehat\lambda$ é estimado pela equação~\eqref{eq:pa} só com dados de treino, depois aplicado
+fixo aos meses de teste:
 \begin{equation}
 \widehat w_{i,t+1} = w_{i,t} + \widehat\lambda_{\text{treino}}\,d_{i,t}
-\qquad\text{(ajuste parcial)}
-\qquad\text{vs.}\qquad
-\widehat w_{i,t+1} = w_{i,t} \qquad\text{(ingênua)}
+\quad\text{(ajuste parcial)} \qquad\text{vs.}\qquad
+\widehat w_{i,t+1} = w_{i,t} \quad\text{(ingênua)}
 \label{eq:oos}
 \end{equation}
-para todo $t$ no período de teste (2020-01 a 2021-11). $d_{i,t}=w^*_{i,t}-w_{i,t}$ é a mesma
-distância da Etapa 3, com $w^*_{i,t}=g(x_{i,t}'\theta_t)$ --- e $\theta_t$ continua sendo
-estimado mês a mês (Etapa 2), dentro ou fora do período de treino, sem nenhum vazamento de
-informação futura: em cada mês de teste, $\theta_t$ usa só as características \emph{daquele
-mês}, nunca de meses futuros.
+$\theta_t$ continua sendo estimado mês a mês, sem vazamento de informação futura.
+
+$$\widehat\lambda_{\text{treino}} = 0{,}1951 \qquad (\text{35 meses de treino})$$
 
 \subsection{O resultado, fora da amostra}
 
@@ -361,72 +292,52 @@ mês}, nunca de meses futuros.
 \toprule
 Amostra & Modelo & RMSE & MAE \\
 \midrule
-Treino (2016--2019)  & Ajuste parcial & $0{,}01361$ & --- \\
-Treino (2016--2019)  & Ingênua        & $0{,}01388$ & --- \\
-Teste (2020--2021)   & Ajuste parcial & $0{,}01689$ & $0{,}00995$ \\
-Teste (2020--2021)   & Ingênua        & $0{,}01721$ & $0{,}00934$ \\
+Treino (2017--2019) & Ajuste parcial & $0{,}01463$ & --- \\
+Treino (2017--2019) & Ingênua        & $0{,}01510$ & --- \\
+Teste (2020--2021)  & Ajuste parcial & $0{,}01560$ & $0{,}00906$ \\
+Teste (2020--2021)  & Ingênua        & $0{,}01585$ & $0{,}00847$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.72\textwidth]{fig_oos_barras.pdf}
+\includegraphics[width=0.68\textwidth]{fig_oos_barras_v2.pdf}
 \caption{RMSE dentro (treino) e fora (teste) da amostra, ajuste parcial vs. ingênua.}
 \end{figure}
 
-O ajuste parcial vence em RMSE nas duas amostras (razão teste $=0{,}981$, cerca de $1{,}9\%$
-menor) --- um padrão consistente entre treino e teste, não um resultado que só aparece por
-acaso fora da amostra. Em MAE, a ingênua erra menos com mais frequência ($0{,}00934$ contra
-$0{,}00995$): o ajuste parcial evita alguns erros grandes (por isso vence em RMSE, que penaliza
-erro grande mais que proporcionalmente), mas erra um pouco mais nos casos típicos.
+O ajuste parcial vence em RMSE nas duas amostras (razão teste $=0{,}984$) --- mesmo padrão da
+versão anterior. Em MAE, a ingênua continua vencendo nos casos típicos ($0{,}00847$ contra
+$0{,}00906$): o ajuste parcial evita alguns erros grandes, mas erra um pouco mais em geral.
+Mês a mês, vence em $14$ dos $23$ meses de teste ($61\%$).
 
 \begin{figure}[h]\centering
-\includegraphics[width=0.9\textwidth]{fig_erro_periodo_completo.pdf}
-\caption{RMSE mês a mês no \textbf{período completo} (2016--2021), ajuste parcial vs.\ ingênua,
-aplicando o mesmo $\widehat\lambda_{\text{treino}}=0{,}1043$ do início ao fim da série. A linha
-vermelha tracejada marca o início do período de teste (2020-01) --- tudo à esquerda dela é
-treino (onde $\lambda$ foi ajustado), tudo à direita é genuinamente fora da amostra. As duas
-linhas (ajuste parcial e ingênua) seguem praticamente coladas o período inteiro, dos dois lados
-da linha tracejada --- a vantagem do ajuste parcial é pequena e consistente, não concentrada
-num único mês nem surge só depois do corte.}
-\end{figure}
-
-Mês a mês, no período de teste, o ajuste parcial vence a ingênua em $15$ dos $23$ meses
-($65\%$).
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.62\textwidth]{fig_oos_dispersao.pdf}
-\caption{Variação do peso prevista (eixo x) vs. observada (eixo y), fora da amostra. As
-previsões ficam concentradas perto de zero (o modelo prevê mudanças pequenas), enquanto a
-variação observada tem bem mais dispersão --- coerente com o $R^2$ baixo da
-equação~\eqref{eq:pa} ($0{,}038$): o modelo capta uma tendência real, mas pequena parte da
-variação total.}
+\includegraphics[width=0.85\textwidth]{fig_erro_periodo_completo_v2.pdf}
+\caption{RMSE mês a mês no período completo (2017--2021). A linha vermelha tracejada marca o
+início do teste (2020-01). As duas linhas seguem coladas dos dois lados do corte --- a
+vantagem do ajuste parcial é pequena e consistente, não concentrada num único mês.}
 \end{figure}
 
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
 
-Quatro etapas, cada uma com um único método, uma equação e um erro examinado:
-
 \begin{enumerate}[topsep=2pt,itemsep=3pt]
-\item \textbf{Cross-section (MQO), equação~\eqref{eq:cs}:} $\theta_t$ mês a mês; tamanho,
-cotistas e fundo de cotas explicam o peso, com sinais estáveis; $R^2$ médio $0{,}152$.
-\item \textbf{Logística, equação~\eqref{eq:logit}:} $\theta_t$ reestimado por MQO logístico
-para gerar previsão sempre em $[0,1]$; erro $e$ com desvio-padrão $3{,}05$ p.p., levemente
-assimétrico, sem viés (por construção).
-\item \textbf{Ajuste parcial, equação~\eqref{eq:pa}:} $\widehat\lambda=0{,}098$ --- um fundo
-fecha, em média, $9{,}8\%$ da distância ao alvo por mês; erro $u$ sem viés aparente, mas com
-caudas pesadas (curtose $19{,}7$).
-\item \textbf{In/out-of-sample:} $\lambda$ treinado em 2016--2019 vence a previsão ingênua fora
-da amostra (2020--2021) em RMSE, por uma margem pequena mas consistente ($1{,}9\%$; vence em
-$65\%$ dos meses de teste).
+\item \textbf{Etapa 1, equações~\eqref{eq:cs}--\eqref{eq:logit}:} $\theta_t$ mês a mês, cinco
+características (agora incluindo beta do fundo), todas predeterminadas ($t-1$). Com o beta do
+fundo na conta, tamanho e cotistas perdem quase toda a força explicativa; só fundo de cotas e
+beta do fundo continuam robustos. $R^2$ médio $0{,}532$ (era $0{,}166$). Custo: cobertura cai
+para 59 meses (fev/2017 em diante).
+\item \textbf{Etapa 2, equação~\eqref{eq:pa}:} $\widehat\lambda=0{,}153$ (era $0{,}098$) --- um
+alvo mais preciso atenua menos o coeficiente. Erro $u$ com comportamento parecido ao da versão
+anterior.
+\item \textbf{Etapa 3:} $\lambda$ treinado em 2017--2019 vence a ingênua fora da amostra
+(2020--2021) em RMSE, por margem pequena mas consistente ($1{,}6\%$; vence em $61\%$ dos meses
+de teste) --- resultado qualitativamente igual ao da versão anterior.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
-teste de Diebold--Mariano --- o preço dessa simplicidade é não corrigir os vieses conhecidos do
-MQO direto no ajuste parcial (erro de medida no alvo; a distância e a variação do peso
-compartilharem $w_{i,t}$), que a versão anterior do projeto documentou e tentou corrigir. Fica
-registrado como decisão consciente desta versão, não como descuido.
+teste de Diebold--Mariano --- o preço da simplicidade é não corrigir os vieses conhecidos do
+MQO direto no ajuste parcial, que a versão anterior do projeto documentou e tentou corrigir.
+Fica registrado como decisão consciente, não como descuido.
 
 \end{document}
