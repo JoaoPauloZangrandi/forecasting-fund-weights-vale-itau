@@ -477,6 +477,66 @@ mês. Média do erro por gestora é, portanto, zero por construção, não uma m
 informativo é a \textbf{dispersão} do erro dentro de cada gestora --- quanto maior, mais difícil
 o modelo (mesmo com a dummy) explica a alocação daquele grupo em VALE3.
 
+\begin{table}[h]\centering\scriptsize
+\caption{Desvio-padrão do erro $e$ de cada gestora, ordenado do mais disperso para o menos.}
+\begin{tabular}{@{}lrrc@{}}
+\toprule
+Gestora & Obs. & Meses & dp \\
+\midrule
+Verde Asset Management & 429 & 59 & $0{,}0353$ \\
+Opportunity & 786 & 59 & $0{,}0349$ \\
+Vinci Partners & 1492 & 59 & $0{,}0349$ \\
+Sharp Capital & 748 & 59 & $0{,}0346$ \\
+BTG Pactual & 4904 & 59 & $0{,}0342$ \\
+Caixa & 829 & 59 & $0{,}0341$ \\
+BB Asset Management & 3663 & 59 & $0{,}0289$ \\
+Truxt Investimentos & 767 & 42 & $0{,}0289$ \\
+Bradesco Asset Management & 9411 & 59 & $0{,}0283$ \\
+Western Asset & 1191 & 59 & $0{,}0281$ \\
+Real Investor & 126 & 47 & $0{,}0272$ \\
+AZ Quest & 679 & 56 & $0{,}0261$ \\
+ARX Investimentos & 422 & 57 & $0{,}0261$ \\
+Credit Suisse & 1980 & 59 & $0{,}0243$ \\
+Kapitalo Investimentos & 824 & 52 & $0{,}0240$ \\
+Absolute Investimentos & 161 & 28 & $0{,}0239$ \\
+Safra Asset Management & 4375 & 59 & $0{,}0226$ \\
+BNP Paribas & 1957 & 59 & $0{,}0217$ \\
+Santander Brasil Asset Management & 3157 & 59 & $0{,}0207$ \\
+Julius Baer Family Office & 1999 & 59 & $0{,}0205$ \\
+\bottomrule
+\end{tabular}
+\hspace{0.02\textwidth}
+\begin{tabular}{@{}lrrc@{}}
+\toprule
+Gestora & Obs. & Meses & dp \\
+\midrule
+Itaú & 19386 & 59 & $0{,}0199$ \\
+JGP & 1748 & 59 & $0{,}0185$ \\
+XP & 2555 & 59 & $0{,}0180$ \\
+Occam Brasil & 1117 & 59 & $0{,}0175$ \\
+SPX Capital & 1474 & 59 & $0{,}0171$ \\
+Claritas Investimentos & 339 & 59 & $0{,}0166$ \\
+Ibiuna Investimentos & 256 & 45 & $0{,}0160$ \\
+Daycoval Asset Management & 145 & 57 & $0{,}0154$ \\
+Squadra Investimentos & 541 & 45 & $0{,}0152$ \\
+Plural & 204 & 59 & $0{,}0139$ \\
+Kinea Investimentos & 111 & 54 & $0{,}0109$ \\
+Constellation Asset Management & 217 & 25 & $0{,}0106$ \\
+TNA Gestão Patrimonial & 1630 & 59 & $0{,}0097$ \\
+Gávea Investimentos & 464 & 34 & $0{,}0092$ \\
+Núcleo Capital & 56 & 4 & $0{,}0087$ \\
+Atmos Capital & 845 & 33 & $0{,}0072$ \\
+Dahlia Capital & 260 & 30 & $0{,}0068$ \\
+Bogari Capital & 114 & 11 & $0{,}0033$ \\
+Forpus Capital & 82 & 33 & $0{,}0026$ \\
+Guepardo Investimentos & 124 & 33 & $0{,}0021$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Legacy Capital fica de fora (apenas 1 observação, dp indefinido). Fonte:
+elaboração própria (\texttt{scripts/33\_erro\_por\_gestora.R},
+\texttt{34\_erro\_gestora\_dispersao.R}).}
+\end{table}
+
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{hist_erro_e_gestora_v2.pdf}
 \caption{Distribuição do erro $e$ (com efeito-fixo de gestora), $71.569$ observações.}
