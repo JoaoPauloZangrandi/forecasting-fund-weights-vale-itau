@@ -169,11 +169,42 @@ $0{,}1\%$}, não perdem a significância. O pseudo-$R^2$ quase quadruplica
 proxy indireto para o quão ``equity-like'' é o fundo --- o beta do fundo mede isso diretamente e
 absorve boa parte (não toda) dessa força explicativa.}
 
-Em pontos percentuais (mais fáceis de ler diretamente), a versão \textbf{linear} da mesma
-comparação mostra o mesmo padrão de enfraquecimento: $\alpha=0{,}0355$ (era $0{,}0452$),
-$\theta^{aum}=-0{,}0016$ *** (era $-0{,}0074$ ***), $\theta^{cot}=0{,}0018$ *** (era $0{,}0130$ ***),
-$\theta^{fic}=-0{,}0057$ *** (era $-0{,}0196$ ***), $\theta^{bf}=0{,}0233$ ***, $R^2=0{,}532$ (era
-$0{,}166$).
+\subsubsection*{Tornando o logit interpretável: efeito marginal médio}
+
+Um coeficiente logístico não é ``pontos percentuais'' --- está na escala do preditor linear
+$x'\theta$ (log-odds), não na escala do peso em si. Para interpretar em pontos percentuais sem
+abandonar o logit, uso o \textbf{efeito marginal médio} (\emph{average partial effect}, APE):
+para uma característica contínua $k$, $\text{APE}_k=\theta_k\cdot\overline{g'(x'\theta)}$, a média
+(em toda a amostra) da inclinação de $g(\cdot)$ vezes o coeficiente --- quanto o peso previsto se
+move, em média, para uma variação de $1$ desvio-padrão naquela característica. Para o FIC (0/1,
+discreta), uso a diferença média de $g(\cdot)$ forçando FIC$=1$ contra FIC$=0$ em cada fundo,
+mantendo as demais características observadas --- mais correto que a derivada para uma variável
+que só assume dois valores.
+
+\begin{table}[h]\centering\small
+\caption{Efeito marginal médio (APE) do logit, em pontos percentuais de peso --- mesma
+comparação sem/com beta do fundo.}
+\begin{tabular}{@{}lrcrc@{}}
+\toprule
+Característica & APE (sem $\beta^{fundo}$) & Sig. & APE (com $\beta^{fundo}$) & Sig. \\
+\midrule
+Tamanho              & $-0{,}00734$ & *** & $-0{,}00154$ & *** \\
+Cotistas             & $0{,}01271$  & *** & $0{,}00111$  & *** \\
+Fundo de cotas       & $-0{,}02222$ & *** & $-0{,}00580$ & *** \\
+Captação/resgate     & $0{,}01068$  & n.s. & $0{,}00449$ & n.s. \\
+Beta do fundo        & ---           & --- & $0{,}02942$  & *** \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/13\_etapa1\_unificada.R},
+\texttt{14\_etapa1\_antes\_depois.R}).}
+\end{table}
+
+\aha{O APE bate de perto com o que a versão linear já dava (tamanho $-0{,}0074\to-0{,}0016$
+linear vs.\ $-0{,}00734\to-0{,}00154$ via APE; cotistas $0{,}0130\to0{,}0018$ linear vs.\
+$0{,}01271\to0{,}00111$ via APE) --- não é coincidência: quando o modelo se ajusta bem, a
+inclinação média do logit converge para perto do coeficiente linear equivalente. A vantagem do
+APE é que ele vem do \textbf{próprio} modelo logístico (respeitando os limites de $[0,1]$), não
+de uma regressão linear separada rodada só para efeito de leitura.}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{fig_theta_trajetoria_v2.pdf}
@@ -344,10 +375,10 @@ vantagem do ajuste parcial é pequena e consistente, não concentrada num único
 
 \subsection{RMSE flexível: o mesmo teste, em vários horizontes}
 
-\pergunta{A vantagem do ajuste parcial sobre a ingênua (Tabela~4) é específica de prever 1 mês à
+\pergunta{A vantagem do ajuste parcial sobre a ingênua (Tabela~5) é específica de prever 1 mês à
 frente, ou se mantém prevendo 2, 3, 6, 12 meses à frente?}
 
-Mesmo esquema treino/teste da Tabela~4 (treino $<$ 2020-01, teste $\geq$ 2020-01), repetido para
+Mesmo esquema treino/teste da Tabela~5 (treino $<$ 2020-01, teste $\geq$ 2020-01), repetido para
 cada horizonte $h\in\{1,2,3,6,12\}$ meses: $dw_h=w_{i,t+h}-w_{i,t}$, $\widehat\lambda_h$ estimado
 por MQO só no treino, alvo $w^*_{i,t}$ sempre fixado em $t$ (não temos características futuras
 para recalculá-lo). Modelo ingênuo continua prevendo zero mudança.
@@ -455,7 +486,7 @@ equivalente; negativo = carrega menos.
 Gestora & Meses & Coef. & Sig. \\
 \midrule
 \endfirsthead
-\multicolumn{4}{l}{\textit{Tabela 7 (continuação)}}\\
+\multicolumn{4}{l}{\textit{Tabela 8 (continuação)}}\\
 \toprule
 Gestora & Meses & Coef. & Sig. \\
 \midrule
@@ -525,7 +556,7 @@ especificamente, diferente de uma plataforma de varejo mais próxima de uma comp
 \includegraphics[width=0.85\textwidth]{fig_coef_gestora_evolucao.pdf}
 \caption{Evolução mensal do coeficiente de gestora (vs.\ Itaú), para as 5 gestoras com coeficiente
 mais positivo e as 5 com coeficiente mais negativo \textbf{de verdade} (mesmo ranking da
-Tabela~7, sem filtro de cobertura). Duas delas têm pouquíssimos meses --- Legacy Capital ($1$ mês,
+Tabela~8, sem filtro de cobertura). Duas delas têm pouquíssimos meses --- Legacy Capital ($1$ mês,
 aparece como ponto isolado) e Núcleo Capital ($4$ meses) --- porque são, de fato, as gestoras com
 o coeficiente médio mais alto; não há ``evolução'' de verdade pra mostrar nesses dois casos
 específicos, só o valor pontual. O pico da Constellation em mar/2019 é o mesmo padrão de sempre:
@@ -666,7 +697,7 @@ as ações --- ordenado do viés mais positivo ao mais negativo.}\\
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
 \endfirsthead
-\multicolumn{6}{l}{\textit{Tabela 10 (continuação)}}\\
+\multicolumn{6}{l}{\textit{Tabela 11 (continuação)}}\\
 \toprule
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
@@ -739,7 +770,7 @@ mediana de $0{,}01451$) --- relativamente ``previsível'' nesse universo amplo.}
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_erro_multiativo_media_dp.pdf}
 \caption{Cada ponto é uma gestora: erro médio (eixo $x$) vs.\ dispersão do erro (eixo $y$).
-Rótulos legíveis só nos extremos --- a Tabela~10 tem os valores exatos das $41$.}
+Rótulos legíveis só nos extremos --- a Tabela~11 tem os valores exatos das $41$.}
 \end{figure}
 
 \aha{Viés e dispersão andam juntos: correlação de $0{,}86$ entre $|\text{viés}|$ e dp entre as

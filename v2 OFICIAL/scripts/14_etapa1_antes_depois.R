@@ -27,10 +27,15 @@ for (i in seq_along(meses)) {
   fl <- glm(peso_vale3 ~ z_aum + z_cot + is_fic + flow_aum, family = quasibinomial(link="logit"), data = dt)
   cf  <- coef(f); cfl <- coef(fl)
   pr2 <- 1 - fl$deviance/fl$null.deviance  # pseudo-R2 de McFadden
+  z_pred <- predict(fl, type = "link"); dg <- dlogis(z_pred)
+  ape_aum <- cfl["z_aum"]*mean(dg); ape_cot <- cfl["z_cot"]*mean(dg); ape_flow <- cfl["flow_aum"]*mean(dg)
+  z0 <- z_pred - cfl["is_fic"]*dt$is_fic; z1 <- z0 + cfl["is_fic"]
+  ape_fic <- mean(plogis(z1) - plogis(z0))
   out_lin[[i]] <- data.table(ym=t, alpha=cf["(Intercept)"], b_aum=cf["z_aum"], b_cot=cf["z_cot"],
                               b_fic=cf["is_fic"], b_flow=cf["flow_aum"])
   out_log[[i]] <- data.table(ym=t, alpha=cfl["(Intercept)"], b_aum=cfl["z_aum"], b_cot=cfl["z_cot"],
-                              b_fic=cfl["is_fic"], b_flow=cfl["flow_aum"], pr2=pr2)
+                              b_fic=cfl["is_fic"], b_flow=cfl["flow_aum"], pr2=pr2,
+                              ape_aum=ape_aum, ape_cot=ape_cot, ape_fic=ape_fic, ape_flow=ape_flow)
 }
 theta_lin_sem <- rbindlist(out_lin); theta_log_sem <- rbindlist(out_log)
 
@@ -49,6 +54,18 @@ print(resumo(theta_lin_sem)[,.(variavel,media=round(media,5),t=round(t,2),sig)])
 cat("\n===== SEM beta do fundo, mesma amostra (logit) =====\n")
 print(resumo(theta_log_sem)[,.(variavel,media=round(media,4),t=round(t,2),sig)])
 cat("Pseudo-R2 (McFadden) medio (logit, sem beta):", round(mean(theta_log_sem$pr2, na.rm=TRUE),4), "\n")
+
+n_meses_sem <- nrow(theta_log_sem)
+resumo_ape_sem <- theta_log_sem[, .(
+  media = c(mean(ape_aum), mean(ape_cot), mean(ape_fic), mean(ape_flow)),
+  dp    = c(sd(ape_aum), sd(ape_cot), sd(ape_fic), sd(ape_flow))
+)]
+resumo_ape_sem[, variavel := c("ape_aum","ape_cot","ape_fic","ape_flow")]
+resumo_ape_sem[, t := media/(dp/sqrt(n_meses_sem))]
+resumo_ape_sem[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
+setcolorder(resumo_ape_sem, "variavel")
+cat("\n===== Efeito marginal medio (APE), SEM beta do fundo =====\n")
+print(resumo_ape_sem[, .(variavel, media=round(media,5), t=round(t,2), sig)])
 
 fwrite(theta_lin_sem, file.path(REPO, "v2 OFICIAL/data/theta_mensal_v2_sembeta.csv"))
 fwrite(theta_log_sem, file.path(REPO, "v2 OFICIAL/data/theta_logit_mensal_v2_sembeta.csv"))

@@ -73,10 +73,26 @@ for (i in seq_along(meses)) {
            family = quasibinomial(link="logit"), data = dt)
   cf <- coef(f)
   pr2 <- 1 - f$deviance/f$null.deviance  # pseudo-R2 de McFadden
+  # ---- efeito marginal medio (APE): converte coeficiente logit p/ pontos
+  # percentuais. Continuas: theta_k * media(g'(z)) = theta_k*media(dlogis(z)).
+  # is_fic (discreta 0/1): diferenca media de g(z) forcando is_fic=1 vs 0
+  # p/ cada fundo, mantendo as outras variaveis observadas (efeito de
+  # tratamento medio, nao so a derivada) -- mais correto p/ variavel discreta.
+  z_pred <- predict(f, type = "link")
+  dg <- dlogis(z_pred)
+  ape_aum  <- cf["z_aum"]   * mean(dg)
+  ape_cot  <- cf["z_cot"]   * mean(dg)
+  ape_flow <- cf["flow_aum"]* mean(dg)
+  ape_betaf<- cf["z_betaf"] * mean(dg)
+  z0 <- z_pred - cf["is_fic"]*dt$is_fic         # forca is_fic=0 p/ todos
+  z1 <- z0 + cf["is_fic"]                        # forca is_fic=1 p/ todos
+  ape_fic <- mean(plogis(z1) - plogis(z0))
   out_log[[i]] <- data.table(ym = t, n_fundos = nrow(dt),
                               alpha = cf["(Intercept)"], b_aum = cf["z_aum"],
                               b_cot = cf["z_cot"], b_fic = cf["is_fic"],
-                              b_flow = cf["flow_aum"], b_betaf = cf["z_betaf"], pr2 = pr2)
+                              b_flow = cf["flow_aum"], b_betaf = cf["z_betaf"], pr2 = pr2,
+                              ape_aum = ape_aum, ape_cot = ape_cot, ape_fic = ape_fic,
+                              ape_flow = ape_flow, ape_betaf = ape_betaf)
 }
 theta_log <- rbindlist(out_log)
 
@@ -92,6 +108,17 @@ resumo_log[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(
 setcolorder(resumo_log, "variavel")
 print(resumo_log[, .(variavel, media=round(media,4), dp=round(dp,4), t=round(t,2), sig)])
 cat("Pseudo-R2 (McFadden) medio:", round(mean(theta_log$pr2, na.rm=TRUE),4), "\n\n")
+
+cat("===== Efeito marginal medio (APE, em pontos percentuais de peso) =====\n")
+resumo_ape <- theta_log[, .(
+  media = c(mean(ape_aum), mean(ape_cot), mean(ape_fic), mean(ape_flow), mean(ape_betaf)),
+  dp    = c(sd(ape_aum), sd(ape_cot), sd(ape_fic), sd(ape_flow), sd(ape_betaf))
+)]
+resumo_ape[, variavel := c("ape_aum","ape_cot","ape_fic","ape_flow","ape_betaf")]
+resumo_ape[, t := media/(dp/sqrt(n_meses_log))]
+resumo_ape[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
+setcolorder(resumo_ape, "variavel")
+print(resumo_ape[, .(variavel, media=round(media,5), t=round(t,2), sig)])
 
 fwrite(theta_lin, file.path(REPO, "v2 OFICIAL/data/theta_mensal_v2.csv"))
 fwrite(theta_log, file.path(REPO, "v2 OFICIAL/data/theta_logit_mensal_v2.csv"))
