@@ -635,6 +635,121 @@ generalizar fortemente, aqui perdem quase toda a força quando testados no unive
 gestoras e ações com o beta do fundo como controle --- boa parte do que pareciam explicar era,
 plausivelmente, um proxy indireto para o quão ``equity-like'' o fundo é.}
 
+\subsection{O erro por gestora, agora com todas as ações}
+\label{sec:erro-multiativo}
+
+\pergunta{A regressão da Seção~\ref{sec:multiativo} cobre agora os 501 ativos, não só VALE3.
+Como se comporta o erro dela quando agregado por gestora --- olhando a carteira inteira de ações,
+não só uma posição?}
+
+\equacao
+$$\text{erro}_{i,n,t} = \text{peso}_{i,n,t} - \widehat{\text{peso}}_{i,n,t}$$
+onde $\widehat{\text{peso}}_{i,n,t}$ é o valor ajustado pela mesma regressão por célula
+(ativo $n$, mês $t$) da Seção~\ref{sec:multiativo} --- $8.258.930$ observações, $430$ ativos,
+$2.347$ fundos, $41$ gestoras.
+
+\textbf{Adendo de processo:} diferente de uma especificação com efeito-fixo de gestora (equação
+da Seção~\ref{sec:gestoras}, onde as equações normais do MQO garantem soma-zero do resíduo dentro
+de cada grupo com dummy própria), aqui \textbf{cada célula tem sua própria regressão, sem dummy
+de gestora}. A
+média do erro por gestora, portanto, \textbf{não} é zero por construção --- é genuinamente
+informativa, junto com a dispersão. Significância da média testada pela série \textbf{mensal}
+por gestora (mesmo estilo do resto do documento: $t=\bar e/(\text{dp}(e)/\sqrt{\text{meses}})$),
+não pelas $8,26$ milhões de observações brutas (que tornaria qualquer diferença minúscula
+``significativa'' só pelo tamanho da amostra).
+
+\begin{center}\scriptsize
+\begin{longtable}{@{}lrrrc r@{}}
+\caption{Erro médio (testado pela série mensal) e dispersão, por gestora, no universo de todas
+as ações --- ordenado do viés mais positivo ao mais negativo.}\\
+\toprule
+Gestora & Obs. & Meses & Média & Sig. & dp \\
+\midrule
+\endfirsthead
+\multicolumn{6}{l}{\textit{Tabela 10 (continuação)}}\\
+\toprule
+Gestora & Obs. & Meses & Média & Sig. & dp \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{6}{@{}p{0.95\textwidth}@{}}{\footnotesize Fonte: elaboração própria
+(\texttt{scripts/37\_erro\_multiativo.R}, \texttt{38\_erro\_multiativo\_gestora.R}).}\\
+\endlastfoot
+Guepardo Investimentos & 10801 & 60 & $0{,}04499$ & *** & $0{,}06997$ \\
+Núcleo Capital & 12247 & 60 & $0{,}03773$ & *** & $0{,}02742$ \\
+Ibiuna Investimentos & 11384 & 60 & $0{,}01798$ & *** & $0{,}02404$ \\
+Constellation Asset Management & 17430 & 60 & $0{,}01388$ & *** & $0{,}02484$ \\
+Real Investor & 8247 & 60 & $0{,}01272$ & *** & $0{,}02233$ \\
+Bogari Capital & 21809 & 60 & $0{,}01208$ & *** & $0{,}01788$ \\
+Squadra Investimentos & 20941 & 60 & $0{,}00978$ & *** & $0{,}02883$ \\
+Sharp Capital & 37416 & 60 & $0{,}00936$ & *** & $0{,}02490$ \\
+Atmos Capital & 52386 & 60 & $0{,}00923$ & *** & $0{,}02062$ \\
+Kinea Investimentos & 10050 & 60 & $0{,}00750$ & *** & $0{,}02153$ \\
+Verde Asset Management & 26453 & 60 & $0{,}00650$ & *** & $0{,}02068$ \\
+ARX Investimentos & 21290 & 60 & $0{,}00560$ & *** & $0{,}01679$ \\
+Gávea Investimentos & 13274 & 60 & $0{,}00540$ & *** & $0{,}00620$ \\
+AZ Quest & 49456 & 60 & $0{,}00538$ & *** & $0{,}01578$ \\
+Forpus Capital & 10279 & 60 & $0{,}00467$ & *** & $0{,}01854$ \\
+Claritas Investimentos & 24520 & 60 & $0{,}00448$ & *** & $0{,}01374$ \\
+Truxt Investimentos & 54195 & 43 & $0{,}00409$ & *** & $0{,}01592$ \\
+Legacy Capital & 203 & 2 & $0{,}00369$ & ** & $0{,}01654$ \\
+JGP & 110083 & 60 & $0{,}00251$ & *** & $0{,}01129$ \\
+Occam Brasil & 75166 & 60 & $0{,}00229$ & *** & $0{,}01088$ \\
+Absolute Investimentos & 20379 & 29 & $0{,}00198$ & *** & $0{,}01249$ \\
+Vinci Partners & 140046 & 60 & $0{,}00197$ & *** & $0{,}01699$ \\
+Western Asset & 77837 & 60 & $0{,}00143$ & *** & $0{,}01421$ \\
+Plural & 17826 & 60 & $0{,}00121$ & *** & $0{,}01107$ \\
+Opportunity & 54836 & 60 & $0{,}00116$ & *** & $0{,}01704$ \\
+Caixa & 70987 & 60 & $0{,}00077$ & *** & $0{,}01451$ \\
+BTG Pactual & 520203 & 60 & $0{,}00054$ & *** & $0{,}01562$ \\
+Safra Asset Management & 562245 & 60 & $0{,}00023$ & *** & $0{,}00858$ \\
+BB Asset Management & 339045 & 60 & $0{,}00018$ & n.s. & $0{,}01465$ \\
+Credit Suisse & 250689 & 60 & $0{,}00004$ & n.s. & $0{,}00915$ \\
+Kapitalo Investimentos & 94917 & 60 & $-0{,}00018$ & n.s. & $0{,}00937$ \\
+BNP Paribas & 248171 & 60 & $-0{,}00024$ & *** & $0{,}01131$ \\
+XP & 392104 & 60 & $-0{,}00026$ & *** & $0{,}00711$ \\
+Santander Brasil Asset Management & 348573 & 60 & $-0{,}00030$ & *** & $0{,}00840$ \\
+Dahlia Capital & 36993 & 31 & $-0{,}00059$ & *** & $0{,}00608$ \\
+Bradesco Asset Management & 931323 & 60 & $-0{,}00063$ & *** & $0{,}01101$ \\
+SPX Capital & 126867 & 60 & $-0{,}00087$ & *** & $0{,}01071$ \\
+TNA Gestão Patrimonial & 263178 & 60 & $-0{,}00100$ & *** & $0{,}00539$ \\
+Itaú & 2885337 & 60 & $-0{,}00113$ & *** & $0{,}00617$ \\
+Julius Baer Family Office & 273943 & 60 & $-0{,}00131$ & *** & $0{,}00758$ \\
+Daycoval Asset Management & 15801 & 60 & $-0{,}00165$ & *** & $0{,}00935$ \\
+\end{longtable}
+\end{center}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{hist_erro_multiativo_v2.pdf}
+\caption{Distribuição do erro no universo multiativo, $8.258.930$ observações.}
+\end{figure}
+
+\aha{$37$ das $41$ gestoras têm viés estatisticamente significativo a $0{,}1\%$ (só $3$ são
+n.s.\@: BB Asset Management, Credit Suisse, Kapitalo) --- mas a maioria das magnitudes é pequena;
+a significância generalizada reflete o tamanho da amostra ($8,26$ milhões de obs.), não
+necessariamente relevância econômica. A \textbf{Guepardo} é o extremo isolado: viés de
+$+0{,}045$, mais de $10\times$ a segunda colocada (Núcleo Capital, $+0{,}038$) --- olhando a
+carteira de ações inteira, não só VALE3, ela sobe-pesa sistematicamente o que a fórmula prevê.
+O Itaú fica com viés pequeno e negativo ($-0{,}00113$) e dispersão baixa ($0{,}00617$, abaixo da
+mediana de $0{,}01451$) --- relativamente ``previsível'' nesse universo amplo.}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.85\textwidth]{fig_erro_multiativo_media_dp.pdf}
+\caption{Cada ponto é uma gestora: erro médio (eixo $x$) vs.\ dispersão do erro (eixo $y$).
+Rótulos legíveis só nos extremos --- a Tabela~10 tem os valores exatos das $41$.}
+\end{figure}
+
+\aha{Viés e dispersão andam juntos: correlação de $0{,}86$ entre $|\text{viés}|$ e dp entre as
+$41$ gestoras. Não é um resultado óbvio a priori --- uma gestora poderia ter viés grande mas
+consistente (erro sempre igual, dp baixo) ou viés pequeno mas errático (dp alto, média perto de
+zero). Na prática, as duas coisas se confundem: quem foge mais sistematicamente do que a fórmula
+prevê (Guepardo, Núcleo Capital, Ibiuna) também é quem tem o erro mais instável mês a mês. Isso é
+o material que vai orientar o desenho do robô caça-replicantes --- decisão ainda em aberto,
+tratada à parte.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
@@ -664,8 +779,12 @@ fundos/gestoras, agora testado em $501$ ativos ($13.957$ células ativo-mês). O
 a característica que mais generaliza ($97\%$ dos ativos com o mesmo sinal de VALE3) e a única
 que sobrevive robusta numa regressão pooled com efeito-fixo de ativo e mês ($t=39{,}6$); tamanho,
 cotistas e fluxo generalizam bem mais fraco do que a v1 havia encontrado, e fundo de cotas não é
-sequer identificável nessa especificação pooled (efeito absorvido pelos efeitos-fixos). Ainda
-restrito a VALE3 no ajuste parcial/in-out-of-sample desta rodada.
+sequer identificável nessa especificação pooled (efeito absorvido pelos efeitos-fixos). Estendendo
+o erro dessa mesma regressão para todas as ações (Seção~\ref{sec:erro-multiativo}, $8.258.930$
+obs.), $37$ das $41$ gestoras têm viés significativo (mas em geral pequeno) e a Guepardo se
+destaca isolada ($+0{,}045$, $10\times$ a segunda colocada); viés e dispersão andam juntos
+(correlação $0{,}86$) --- material que vai orientar o desenho do robô caça-replicantes, decisão
+ainda em aberto. Ainda restrito a VALE3 no ajuste parcial/in-out-of-sample desta rodada.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
