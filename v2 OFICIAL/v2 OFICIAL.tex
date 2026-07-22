@@ -384,12 +384,28 @@ Cada $\gamma_g$ é a diferença média de peso de VALE3 entre um fundo da gestor
 Itaú \textbf{com as mesmas} cinco características. Positivo = carrega mais que o Itaú
 equivalente; negativo = carrega menos.
 
-\begin{table}[h]\centering\scriptsize
-\caption{Coeficiente de cada gestora vs.\ Itaú (referência), ordenado do maior para o menor.}
-\begin{tabular}{@{}lrrc@{}}
+\begin{center}\scriptsize
+\begin{longtable}{@{}lrrc@{}}
+\caption{Coeficiente de cada gestora vs.\ Itaú (referência), ordenado do maior para o menor.}\\
 \toprule
 Gestora & Meses & Coef. & Sig. \\
 \midrule
+\endfirsthead
+\multicolumn{4}{l}{\textit{Tabela 6 (continuação)}}\\
+\toprule
+Gestora & Meses & Coef. & Sig. \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{4}{@{}p{0.9\textwidth}@{}}{\footnotesize ``Meses'' = quantos dos 59 meses aquela
+gestora teve dados suficientes para entrar na regressão (nem toda gestora tem VALE3 o período
+inteiro). $t$ e significância: teste ingênuo sobre a média dos coeficientes mensais, mesmo estilo
+das demais tabelas. Fonte: elaboração própria (\texttt{scripts/20\_etapa1\_com\_gestora.R},
+\texttt{21\_coeficientes\_gestora.R}).}\\
+\endlastfoot
 Legacy Capital & 1 & $+0{,}1288$ & --- \\
 Núcleo Capital & 4 & $+0{,}0243$ & *** \\
 Occam Brasil & 59 & $+0{,}0230$ & *** \\
@@ -410,13 +426,6 @@ BNP Paribas & 59 & $+0{,}0078$ & *** \\
 Opportunity & 59 & $+0{,}0076$ & ** \\
 SPX Capital & 59 & $+0{,}0054$ & * \\
 Verde Asset Management & 59 & $+0{,}0047$ & * \\
-\bottomrule
-\end{tabular}
-\hspace{0.02\textwidth}
-\begin{tabular}{@{}lrrc@{}}
-\toprule
-Gestora & Meses & Coef. & Sig. \\
-\midrule
 Real Investor & 47 & $+0{,}0038$ & n.s. \\
 Credit Suisse & 59 & $+0{,}0037$ & *** \\
 Dahlia Capital & 30 & $+0{,}0032$ & n.s. \\
@@ -437,14 +446,8 @@ Bogari Capital & 11 & $-0{,}0278$ & *** \\
 Constellation Asset Management & 25 & $-0{,}0316$ & *** \\
 Forpus Capital & 33 & $-0{,}0391$ & *** \\
 Guepardo Investimentos & 33 & $-0{,}0602$ & *** \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize ``Meses'' = quantos dos 59 meses aquela gestora teve dados suficientes
-para entrar na regressão (nem toda gestora tem VALE3 o período inteiro). $t$ e significância:
-teste ingênuo sobre a média dos coeficientes mensais, mesmo estilo das demais tabelas. Fonte:
-elaboração própria (\texttt{scripts/20\_etapa1\_com\_gestora.R},
-\texttt{21\_coeficientes\_gestora.R}).}
-\end{table}
+\end{longtable}
+\end{center}
 
 \textbf{Leitura:} gestoras grandes de varejo/plataforma (Caixa, Bradesco, BB, Santander, Western
 Asset) carregam \emph{mais} VALE3 que o Itaú equivalente; gestoras boutique de gestão
