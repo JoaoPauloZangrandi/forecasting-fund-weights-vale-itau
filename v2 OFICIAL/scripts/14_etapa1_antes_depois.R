@@ -26,10 +26,11 @@ for (i in seq_along(meses)) {
   f  <- lm(peso_vale3 ~ z_aum + z_cot + is_fic + flow_aum, data = dt)
   fl <- glm(peso_vale3 ~ z_aum + z_cot + is_fic + flow_aum, family = quasibinomial(link="logit"), data = dt)
   cf  <- coef(f); cfl <- coef(fl)
+  pr2 <- 1 - fl$deviance/fl$null.deviance  # pseudo-R2 de McFadden
   out_lin[[i]] <- data.table(ym=t, alpha=cf["(Intercept)"], b_aum=cf["z_aum"], b_cot=cf["z_cot"],
                               b_fic=cf["is_fic"], b_flow=cf["flow_aum"])
   out_log[[i]] <- data.table(ym=t, alpha=cfl["(Intercept)"], b_aum=cfl["z_aum"], b_cot=cfl["z_cot"],
-                              b_fic=cfl["is_fic"], b_flow=cfl["flow_aum"])
+                              b_fic=cfl["is_fic"], b_flow=cfl["flow_aum"], pr2=pr2)
 }
 theta_lin_sem <- rbindlist(out_lin); theta_log_sem <- rbindlist(out_log)
 
@@ -47,6 +48,7 @@ cat("===== SEM beta do fundo, mesma amostra (linear) =====\n")
 print(resumo(theta_lin_sem)[,.(variavel,media=round(media,5),t=round(t,2),sig)])
 cat("\n===== SEM beta do fundo, mesma amostra (logit) =====\n")
 print(resumo(theta_log_sem)[,.(variavel,media=round(media,4),t=round(t,2),sig)])
+cat("Pseudo-R2 (McFadden) medio (logit, sem beta):", round(mean(theta_log_sem$pr2, na.rm=TRUE),4), "\n")
 
 fwrite(theta_lin_sem, file.path(REPO, "v2 OFICIAL/data/theta_mensal_v2_sembeta.csv"))
 fwrite(theta_log_sem, file.path(REPO, "v2 OFICIAL/data/theta_logit_mensal_v2_sembeta.csv"))

@@ -72,10 +72,11 @@ for (i in seq_along(meses)) {
   f <- glm(peso_vale3 ~ z_aum + z_cot + is_fic + flow_aum + z_betaf,
            family = quasibinomial(link="logit"), data = dt)
   cf <- coef(f)
+  pr2 <- 1 - f$deviance/f$null.deviance  # pseudo-R2 de McFadden
   out_log[[i]] <- data.table(ym = t, n_fundos = nrow(dt),
                               alpha = cf["(Intercept)"], b_aum = cf["z_aum"],
                               b_cot = cf["z_cot"], b_fic = cf["is_fic"],
-                              b_flow = cf["flow_aum"], b_betaf = cf["z_betaf"])
+                              b_flow = cf["flow_aum"], b_betaf = cf["z_betaf"], pr2 = pr2)
 }
 theta_log <- rbindlist(out_log)
 
@@ -90,6 +91,7 @@ resumo_log[, t := media/(dp/sqrt(n_meses_log))]
 resumo_log[, sig := ifelse(abs(t)>3.29,"***",ifelse(abs(t)>2.58,"**",ifelse(abs(t)>1.96,"*","n.s.")))]
 setcolorder(resumo_log, "variavel")
 print(resumo_log[, .(variavel, media=round(media,4), dp=round(dp,4), t=round(t,2), sig)])
+cat("Pseudo-R2 (McFadden) medio:", round(mean(theta_log$pr2, na.rm=TRUE),4), "\n\n")
 
 fwrite(theta_lin, file.path(REPO, "v2 OFICIAL/data/theta_mensal_v2.csv"))
 fwrite(theta_log, file.path(REPO, "v2 OFICIAL/data/theta_logit_mensal_v2.csv"))

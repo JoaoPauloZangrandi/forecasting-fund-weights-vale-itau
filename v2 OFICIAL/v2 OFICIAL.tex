@@ -81,12 +81,17 @@ $[0,1]$). As duas usam as mesmas cinco características, mês a mês:
 
 \equacao
 \begin{align}
-\text{peso}_{i,t} &= \alpha_t + b^{aum}_t z(\ln AUM_{i}) + b^{cot}_t z(\ln\text{cot}_{i})
-  + b^{fic}_t FIC_i + b^{flow}_t\Big(\tfrac{\text{capt}-\text{resg}}{AUM}\Big)_i
-  + b^{bf}_t z(\beta^{fundo}_i) + \text{erro}_{i,t} \label{eq:cs}\\[4pt]
+\text{peso}_{i,t} &= \alpha_t + \theta^{aum}_t z(\ln AUM_{i}) + \theta^{cot}_t z(\ln\text{cot}_{i})
+  + \theta^{fic}_t FIC_i + \theta^{flow}_t\Big(\tfrac{\text{capt}-\text{resg}}{AUM}\Big)_i
+  + \theta^{bf}_t z(\beta^{fundo}_i) + \text{erro}_{i,t} \label{eq:cs}\\[4pt]
 \text{peso}_{i,t} &= g\big(x_{i,t}'\theta_t\big) + e_{i,t}, \qquad g(z)=\frac{1}{1+e^{-z}}
 \label{eq:logit}
 \end{align}
+$\theta_t=(\alpha_t,\theta^{aum}_t,\theta^{cot}_t,\theta^{fic}_t,\theta^{flow}_t,\theta^{bf}_t)$
+é o vetor de coeficientes de \textbf{um único mês} $t$; $\Theta=\{\theta_t\}_{t}$, o \textbf{teta
+grande}, é o conjunto de todos os $\theta_t$ ao longo do tempo --- é esse conjunto que as tabelas
+e figuras a seguir resumem (média, desvio-padrão, evolução mês a mês).
+
 A primeira é estimada por MQO (coeficientes em pontos percentuais, fáceis de interpretar); a
 segunda por máxima verossimilhança (\texttt{glm} quase-binomial), a única forma de robustez
 mantida nesta versão, porque $x'\theta$ pode sair de $[0,1]$ mas $g(x'\theta)$ nunca sai. As
@@ -125,24 +130,26 @@ fundos por mês, média $141$).
 \subsection{O resultado: antes e depois do beta do fundo}
 
 Para deixar claro o efeito de adicionar o beta do fundo, a tabela abaixo compara --- na
-\textbf{mesma amostra} de $59$ meses --- a regressão linear com as quatro características
-clássicas contra a mesma regressão com o beta do fundo incluído.
+\textbf{mesma amostra} de $59$ meses --- a regressão \textbf{logística} (equação~\eqref{eq:logit},
+a que de fato alimenta o erro $e$ e todo o resto do documento a partir daqui) com as quatro
+características clássicas contra a mesma regressão com o beta do fundo incluído. Os coeficientes
+estão na escala do preditor linear $x'\theta$ (log-odds), não em pontos percentuais.
 
 \begin{table}[h]\centering\small
-\caption{$\Theta$ linear: antes e depois do beta do fundo (mesma amostra, 59 meses, teste
+\caption{$\Theta$ logístico: antes e depois do beta do fundo (mesma amostra, 59 meses, teste
 ingênuo de significância $t=\bar\theta/(\text{dp}(\theta)/\sqrt{59})$).}
 \begin{tabular}{@{}lrcrc@{}}
 \toprule
 Variável & Média (sem $\beta^{fundo}$) & Sig. & Média (com $\beta^{fundo}$) & Sig. \\
 \midrule
-$\alpha$                   & $0{,}04524$  & *** & $0{,}03554$  & *** \\
-$b^{aum}$ (tamanho)        & $-0{,}00743$ & *** & $-0{,}00161$ & *** \\
-$b^{cot}$ (cotistas)       & $0{,}01304$  & *** & $0{,}00179$  & *** \\
-$b^{fic}$ (fundo de cotas) & $-0{,}01956$ & *** & $-0{,}00567$ & *** \\
-$b^{flow}$ (captação/resgate) & $0{,}00987$ & n.s. & $-0{,}00339$ & n.s. \\
-$b^{bf}$ (beta do fundo)   & ---          & ---& $0{,}02325$  & *** \\
+$\alpha$                   & $-3{,}1262$ & *** & $-3{,}8110$ & *** \\
+$\theta^{aum}$ (tamanho)        & $-0{,}2749$ & *** & $-0{,}0594$ & *** \\
+$\theta^{cot}$ (cotistas)       & $0{,}4429$  & *** & $0{,}0493$  & *** \\
+$\theta^{fic}$ (fundo de cotas) & $-0{,}6669$ & *** & $-0{,}2149$ & *** \\
+$\theta^{flow}$ (captação/resgate) & $0{,}4402$ & n.s. & $0{,}1396$ & n.s. \\
+$\theta^{bf}$ (beta do fundo)   & ---          & ---& $1{,}0110$  & *** \\
 \midrule
-$R^2$ médio & $0{,}166$ & & $0{,}532$ & \\
+Pseudo-$R^2$ (McFadden) médio & $0{,}164$ & & $0{,}614$ & \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize $^{*}p<5\%$, $^{**}p<1\%$, $^{***}p<0{,}1\%$. Fonte: elaboração própria
@@ -155,22 +162,23 @@ continuam *** significativos com o beta do fundo, não n.s./* como antes reporta
 
 \aha{O mesmo padrão que já tinha aparecido como checagem à parte na versão anterior (Tabela 11
 do \texttt{tcc I.pdf}) agora é a especificação principal: com o beta do fundo na conta, tamanho e
-cotistas ficam \textbf{bem mais fracos} em magnitude de $t$ (tamanho: $t=-17{,}8\to-6{,}7$;
-cotistas: $t=23{,}8\to6{,}0$) --- mas \textbf{continuam estatisticamente significativos a
-$0{,}1\%$}, não perdem a significância. $R^2$ triplica ($0{,}166\to0{,}532$). Leitura: parte do
-que tamanho e cotistas explicavam era, na verdade, um proxy indireto para o quão ``equity-like''
-é o fundo --- o beta do fundo mede isso diretamente e absorve boa parte (não toda) dessa força
-explicativa.}
+cotistas ficam \textbf{bem mais fracos} em magnitude de $t$ (tamanho: $t=-15{,}1\to-6{,}0$;
+cotistas: $t=31{,}5\to4{,}9$) --- mas \textbf{continuam estatisticamente significativos a
+$0{,}1\%$}, não perdem a significância. O pseudo-$R^2$ quase quadruplica
+($0{,}164\to0{,}614$). Leitura: parte do que tamanho e cotistas explicavam era, na verdade, um
+proxy indireto para o quão ``equity-like'' é o fundo --- o beta do fundo mede isso diretamente e
+absorve boa parte (não toda) dessa força explicativa.}
 
-A versão logística mostra o mesmo padrão de enfraquecimento (beta do fundo passa a dominar, mas
-tamanho e cotistas continuam significativos): $\alpha=-3{,}81$ (era $-3{,}13$),
-$b^{aum}=-0{,}06$ *** (era $-0{,}27$ ***), $b^{cot}=0{,}05$ *** (era $0{,}44$ ***),
-$b^{fic}=-0{,}21$ *** (era $-0{,}67$ ***), $b^{bf}=1{,}01$ ***.
+Em pontos percentuais (mais fáceis de ler diretamente), a versão \textbf{linear} da mesma
+comparação mostra o mesmo padrão de enfraquecimento: $\alpha=0{,}0355$ (era $0{,}0452$),
+$\theta^{aum}=-0{,}0016$ *** (era $-0{,}0074$ ***), $\theta^{cot}=0{,}0018$ *** (era $0{,}0130$ ***),
+$\theta^{fic}=-0{,}0057$ *** (era $-0{,}0196$ ***), $\theta^{bf}=0{,}0233$ ***, $R^2=0{,}532$ (era
+$0{,}166$).
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{fig_theta_trajetoria_v2.pdf}
 \caption{Os seis componentes de $\theta_t$ linear (com beta do fundo) ao longo dos 59 meses, e o
-$R^2$ de cada regressão mensal. $b^{bf}$ é sempre positivo, numa faixa relativamente estreita ---
+$R^2$ de cada regressão mensal. $\theta^{bf}$ é sempre positivo, numa faixa relativamente estreita ---
 coerente com sua significância forte e estável.}
 \end{figure}
 
@@ -394,7 +402,7 @@ $41$ grupos de gestora (agrupados por marca controladora; ex.: ``BTG Pactual'' j
 diferentes que a CVM usa para a mesma casa). A equação~\eqref{eq:cs} ganha um efeito fixo de
 gestora --- $40$ variáveis de $0$/$1$ (uma por grupo, exceto o Itaú, que fica como referência,
 para não haver colinearidade perfeita com o intercepto):
-$$\text{peso}_{i,t} = \alpha_t + b^{aum}_t z(\ln AUM_i) + \dots + b^{bf}_t z(\beta^{fundo}_i)
+$$\text{peso}_{i,t} = \alpha_t + \theta^{aum}_t z(\ln AUM_i) + \dots + \theta^{bf}_t z(\beta^{fundo}_i)
 + \sum_{g\neq\text{Itaú}} \gamma_{g,t}\, D_{g,i} + \text{erro}_{i,t}$$
 
 \textbf{Adendo de processo:} ao rodar essa regressão pela primeira vez, todas as cinco
@@ -414,11 +422,11 @@ efeito fixo de gestora.}
 Variável & Média (sem FE gestora) & Sig. & Média (com FE gestora) & Sig. \\
 \midrule
 $\alpha$                   & $0{,}03647$  & *** & $0{,}03294$  & *** \\
-$b^{aum}$ (tamanho)        & $-0{,}00178$ & *** & $-0{,}00171$ & *** \\
-$b^{cot}$ (cotistas)       & $0{,}00236$  & *** & $0{,}00118$  & *** \\
-$b^{fic}$ (fundo de cotas) & $-0{,}00681$ & *** & $-0{,}00621$ & *** \\
-$b^{flow}$ (captação/resgate) & $-0{,}00446$ & *** & $-0{,}00312$ & ** \\
-$b^{bf}$ (beta do fundo)   & $0{,}02536$  & *** & $0{,}02528$  & *** \\
+$\theta^{aum}$ (tamanho)        & $-0{,}00178$ & *** & $-0{,}00171$ & *** \\
+$\theta^{cot}$ (cotistas)       & $0{,}00236$  & *** & $0{,}00118$  & *** \\
+$\theta^{fic}$ (fundo de cotas) & $-0{,}00681$ & *** & $-0{,}00621$ & *** \\
+$\theta^{flow}$ (captação/resgate) & $-0{,}00446$ & *** & $-0{,}00312$ & ** \\
+$\theta^{bf}$ (beta do fundo)   & $0{,}02536$  & *** & $0{,}02528$  & *** \\
 \midrule
 $R^2$ médio & $0{,}540$ & & $0{,}632$ & \\
 \bottomrule
@@ -665,8 +673,8 @@ fundos, $501$ ativos.
 \subsection{Regressão por ativo e por mês: o padrão de VALE3 generaliza?}
 
 \equacao
-$$\text{peso}_{i,n,t} = \alpha_{n,t} + b^{aum}_{n,t}z(\ln AUM_i) + b^{cot}_{n,t}z(\ln\text{cot}_i)
-+ b^{fic}_{n,t}FIC_i + b^{flow}_{n,t}(\text{fluxo/AUM})_i + b^{bf}_{n,t}z(\beta^{fundo}_i) + \text{erro}$$
+$$\text{peso}_{i,n,t} = \alpha_{n,t} + \theta^{aum}_{n,t}z(\ln AUM_i) + \theta^{cot}_{n,t}z(\ln\text{cot}_i)
++ \theta^{fic}_{n,t}FIC_i + \theta^{flow}_{n,t}(\text{fluxo/AUM})_i + \theta^{bf}_{n,t}z(\beta^{fundo}_i) + \text{erro}$$
 uma regressão por \textbf{célula (ativo $n$, mês $t$)} com $\geq15$ fundos holders --- mesma
 equação da Etapa 1, agora estimada ativo a ativo. $z(\cdot)$ usa a distribuição de
 (fundo,mês) \textbf{únicos}, não repetida por ativo (senão um fundo com muitas posições pesaria
