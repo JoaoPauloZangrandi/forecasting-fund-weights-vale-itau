@@ -463,6 +463,48 @@ estimativa mensal daquele grupo --- ilustra como esses coeficientes podem ser vo
 quando o grupo tem poucos fundos.}
 \end{figure}
 
+\FloatBarrier
+\subsection{O erro por gestora: quem o modelo explica melhor}
+
+\pergunta{O erro $e$ da cross-section (Seção~2.2) é parecido entre gestoras, ou tem gestoras que
+o modelo explica muito melhor que outras?}
+
+\textbf{Adendo de processo:} a primeira tentativa comparou a \emph{média} do erro $e$ entre
+gestoras --- deu essencialmente zero para todas as $40$, sem exceção. Não é coincidência nem
+erro de cálculo: como a regressão tem uma dummy própria para cada gestora, as equações normais do
+MQO garantem que o resíduo soma zero \textbf{dentro} de cada grupo com dummy própria, em todo
+mês. Média do erro por gestora é, portanto, zero por construção, não uma medida útil. O que sobra
+informativo é a \textbf{dispersão} do erro dentro de cada gestora --- quanto maior, mais difícil
+o modelo (mesmo com a dummy) explica a alocação daquele grupo em VALE3.
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{hist_erro_e_gestora_v2.pdf}
+\caption{Distribuição do erro $e$ (com efeito-fixo de gestora), $71.569$ observações.}
+\end{figure}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{hist_dp_erro_gestora_v2.pdf}
+\caption{Distribuição do desvio-padrão do erro entre as $40$ gestoras (linha vermelha: Itaú).}
+\end{figure}
+
+\aha{O Itaú fica perto do meio da distribuição ($\text{dp}=0{,}0199$, posição $21$ de $40$, do
+menos para o mais disperso). Nos extremos: gestoras \emph{boutique} concentradas e de renda
+variável pura --- Verde, Opportunity, Vinci Partners, Sharp, BTG --- têm o erro mais disperso
+($\text{dp}\approx0{,}034$--$0{,}035$, quase o dobro do Itaú); gestoras com mandatos mais amplos
+ou passivos --- TNA, Kinea, Plural, Squadra, Daycoval --- têm o erro bem mais concentrado
+($\text{dp}\approx0{,}009$--$0{,}015$). Leitura: as 5 características usadas explicam melhor o
+comportamento de gestoras com carteiras mais diversificadas/institucionais do que o de gestoras
+de convicção concentrada, cuja alocação em VALE3 provavelmente depende mais de uma visão
+específica sobre o papel do que dos atributos genéricos do fundo.}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_dp_erro_gestora_evolucao.pdf}
+\caption{Evolução mensal do desvio-padrão do erro, para as 5 gestoras mais dispersas e as 5 menos
+dispersas (cobertura mínima de 45 dos 59 meses). Os picos isolados (Vinci Partners em 2021, Plural
+em 2018) seguem o mesmo padrão já visto na evolução dos coeficientes de gestora: grupos pequenos,
+sensíveis a um único fundo concentrado naquele mês.}
+\end{figure}
+
 % ======================================================================
 \FloatBarrier
 \section{Extensão: todas as ações}
@@ -583,7 +625,11 @@ de teste) --- resultado qualitativamente igual ao da versão anterior.
 para além do Itaú --- $2.820$ fundos, $41$ grupos de gestora, as cinco características
 sobrevivem quase intactas ao entrar o efeito fixo de gestora ($R^2$ $0{,}540\to0{,}632$).
 Gestoras de varejo/plataforma carregam mais VALE3 que o Itaú equivalente; boutiques de gestão
-concentrada carregam bem menos.
+concentrada carregam bem menos. O erro \emph{médio} por gestora é zero por construção
+(efeito-fixo absorve); a \emph{dispersão} não é --- boutiques de convicção concentrada (Verde,
+Opportunity, Vinci, Sharp, BTG) têm erro até o dobro mais disperso que gestoras de mandato amplo
+(TNA, Kinea, Plural), sinal de que as cinco características explicam pior a alocação de gestoras
+concentradas.
 \item \textbf{Extensão de todas as ações (Seção~\ref{sec:multiativo}):} mesmo universo de
 fundos/gestoras, agora testado em $501$ ativos ($13.957$ células ativo-mês). O beta do fundo é
 a característica que mais generaliza ($97\%$ dos ativos com o mesmo sinal de VALE3) e a única
