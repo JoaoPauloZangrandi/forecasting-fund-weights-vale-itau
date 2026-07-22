@@ -430,11 +430,10 @@ diferentes carregam mais ou menos VALE3 do que outras, tudo o mais igual?}
 Até aqui, a amostra era só os fundos do grupo Itaú. Esta extensão amplia para \textbf{todos os
 fundos do universo CVM} que já tiveram VALE3 em algum momento (2016--2021) --- $2.820$ fundos,
 $41$ grupos de gestora (agrupados por marca controladora; ex.: ``BTG Pactual'' junta 4 rótulos
-diferentes que a CVM usa para a mesma casa). A equação~\eqref{eq:cs} ganha um efeito fixo de
+diferentes que a CVM usa para a mesma casa). A equação~\eqref{eq:logit} ganha um efeito fixo de
 gestora --- $40$ variáveis de $0$/$1$ (uma por grupo, exceto o Itaú, que fica como referência,
 para não haver colinearidade perfeita com o intercepto):
-$$\text{peso}_{i,t} = \alpha_t + \theta^{aum}_t z(\ln AUM_i) + \dots + \theta^{bf}_t z(\beta^{fundo}_i)
-+ \sum_{g\neq\text{Itaú}} \gamma_{g,t}\, D_{g,i} + \text{erro}_{i,t}$$
+$$\text{peso}_{i,t} = g\big(x_{i,t}'\theta_t + \textstyle\sum_{g\neq\text{Itaú}} \gamma_{g,t}\, D_{g,i}\big) + \text{erro}_{i,t}$$
 
 \textbf{Adendo de processo:} ao rodar essa regressão pela primeira vez, todas as cinco
 características saíram não significativas --- um resultado que parecia dizer ``a identidade da
