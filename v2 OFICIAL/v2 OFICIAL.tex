@@ -680,14 +680,80 @@ sugeria ($55{,}9\%$), e bem mais fraco do que a v1 encontrou (tamanho/cotistas/F
 em $88$--$98\%$ dos ativos). Captação/resgate generaliza \textbf{pior que o acaso} nos dois
 planos. O beta do fundo é, disparado, o padrão mais universal: $96$--$97\%$ dos ativos têm o
 mesmo sinal de VALE3, nas duas medidas. VALE3 continua extremo em quase toda dimensão do APE
-(percentis abaixo de $6$ ou acima de $95$), inclusive no beta do fundo, onde fica no topo da
-distribuição inteira.}
+(percentis abaixo de $6$ ou acima de $95$), inclusive no beta do fundo, onde fica em $2^o$ lugar
+entre os $236$ ativos.}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.92\textwidth]{fig_multiativo_dist_v2.pdf}
 \caption{Distribuição do APE médio de cada característica entre os 236 ativos com histórico
 suficiente (linha vermelha: VALE3; linha tracejada: mediana entre ativos).}
 \end{figure}
+
+\subsubsection*{Um panorama mais completo: além da comparação com VALE3}
+
+A Tabela~10 sempre ancora a comparação em VALE3 --- de propósito, já que a pergunta desta seção é
+se o padrão de VALE3 generaliza, não um estudo independente de demanda por todas as $236$ ações.
+Mas os dados já dão pra um panorama mais amplo: a distribuição completa do APE entre os ativos, e
+quem são os outros papéis nos extremos.
+
+\begin{table}[h]\centering\small
+\caption{Distribuição do APE entre os 236 ativos (quartis), com VALE3 para referência.}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Característica & Q1 & Mediana & Q3 & VALE3 \\
+\midrule
+Tamanho          & $-0{,}00026$ & $-0{,}00000$ & $0{,}00027$ & $-0{,}00079$ \\
+Cotistas         & $-0{,}00003$ & $0{,}00015$  & $0{,}00045$ & $0{,}00122$  \\
+Fundo de cotas   & $-0{,}00061$ & $-0{,}00002$ & $0{,}00057$ & $-0{,}00457$ \\
+Captação/resgate & $-0{,}00010$ & $0{,}00056$  & $0{,}00169$ & $-0{,}00376$ \\
+Beta do fundo    & $0{,}00100$  & $0{,}00242$  & $0{,}00429$ & $0{,}02670$  \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/25b} a \texttt{30}).}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{Os 5 ativos mais e menos impulsionados pelo beta do fundo (APE), entre os 236 com
+histórico suficiente.}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\multicolumn{3}{c}{\textbf{Mais impulsionados}} \\
+Ativo & Meses & APE \\
+\midrule
+JSL ON NM - JSLG3 & 58 & $0{,}03204$ \\
+VALE ON N1 - VALE3 & 60 & $0{,}02670$ \\
+Petrobras PN - PETR4 & 60 & $0{,}02368$ \\
+Itaú Unibanco PN N1 - ITUB4 & 60 & $0{,}02302$ \\
+Bradesco PN N1 - BBDC4 & 60 & $0{,}02293$ \\
+\midrule
+\multicolumn{3}{c}{\textbf{Menos impulsionados (ou negativo)}} \\
+Ativo & Meses & APE \\
+\midrule
+Alpargatas ON N1 - ALPA3 & 55 & $-0{,}00037$ \\
+Magnesita SA ON NM - MAGG3 & 25 & $-0{,}00076$ \\
+Terra Santa ON NM - TESA3 & 55 & $-0{,}00112$ \\
+Kroton UNT N2 - KROT11 & 33 & $-0{,}00266$ \\
+Klabin S/A PN N2 - KLBN4 & 39 & $-0{,}08910$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/25b} a \texttt{30}).}
+\end{table}
+
+\textbf{Adendo de processo:} o APE da Klabin PN parece um exagero (quase $30\times$ maior em
+magnitude que o segundo colocado) --- e é. Investigando célula a célula: a \textbf{mediana}
+mensal do APE da Klabin é praticamente zero ($\approx-0{,}00001$), mas alguns meses (sobretudo
+2020--2021) têm pseudo-$R^2$ perto de $1$ (ex.\ $0{,}998$ em abr/2021) --- sinal de célula quase
+perfeitamente separada, onde o coeficiente (e o APE derivado dele) explode sem representar um
+efeito econômico real. A \textbf{média} simples entre os meses fica dominada por esses poucos
+casos extremos, o mesmo padrão já visto com a Kinea na Seção~\ref{sec:gestoras}. Mantido na
+tabela por transparência, mas a leitura correta da Klabin é ``sem padrão claro'', não ``efeito
+negativo forte''.
+
+\aha{VALE3 é o $2^o$ mais impulsionado pelo beta do fundo entre $236$ ativos --- atrás só da
+JSL Logística, uma diferença pequena ($0{,}032$ vs.\ $0{,}027$). Os outros nomes no topo (PETR4,
+ITUB4, BBDC4) são, como VALE3, \emph{blue chips} muito líquidas do Ibovespa --- reforça a leitura
+de que o beta do fundo captura o quão ``equity-like''/ligado ao índice é o fundo, e isso importa
+mais pra decidir quanto carregar dos papéis mais representativos do mercado.}
 
 \subsection{Checagem complementar: uma única regressão com efeito-fixo de ativo e de mês}
 
@@ -771,7 +837,7 @@ as ações --- ordenado do viés mais positivo ao mais negativo.}\\
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
 \endfirsthead
-\multicolumn{6}{l}{\textit{Tabela 12 (continuação)}}\\
+\multicolumn{6}{l}{\textit{Tabela 14 (continuação)}}\\
 \toprule
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
@@ -845,7 +911,7 @@ mediana de $0{,}0145$) --- relativamente ``previsível'' nesse universo amplo.}
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_erro_multiativo_media_dp.pdf}
 \caption{Cada ponto é uma gestora: erro médio (eixo $x$) vs.\ dispersão do erro (eixo $y$).
-Rótulos legíveis só nos extremos --- a Tabela~12 tem os valores exatos das $41$.}
+Rótulos legíveis só nos extremos --- a Tabela~14 tem os valores exatos das $41$.}
 \end{figure}
 
 \aha{Viés e dispersão andam juntos: correlação de $0{,}88$ entre $|\text{viés}|$ e dp entre as
