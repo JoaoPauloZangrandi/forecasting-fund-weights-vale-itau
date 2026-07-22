@@ -95,9 +95,19 @@ duas rodam mês a mês, uma regressão por mês, sem nenhuma etapa de resumo tem
 
 \textbf{Novidade desta versão --- duas mudanças na Etapa 1:}
 \begin{enumerate}[topsep=2pt,itemsep=2pt]
-\item[(a)] Entra uma 5ª característica, o \textbf{beta do próprio fundo} $\beta^{fundo}$
-(covariância do retorno da cota com o Ibovespa, janela de 252 pregões --- mesma metodologia já
-usada para o beta de VALE3).
+\item[(a)] Entra uma 5ª característica, o \textbf{beta do próprio fundo} $\beta^{fundo}$: mede o
+quanto a cota do fundo se move junto com o mercado (Ibovespa), do mesmo jeito que se mede o beta
+de uma ação.
+\equacao
+$$r_{i,d} = \frac{\text{cota}_{i,d}}{\text{cota}_{i,d-1}} - 1 \qquad\qquad
+r_{m,d} = \frac{\text{Ibov}_d}{\text{Ibov}_{d-1}} - 1$$
+$$\beta^{fundo}_{i,t} = \frac{\widehat{\text{Cov}}_{252}\big(r_i,\,r_m\big)}
+{\widehat{\text{Var}}_{252}\big(r_m\big)}$$
+$r_{i,d}$ é o retorno diário da cota do fundo $i$; $r_{m,d}$ é o retorno diário do Ibovespa;
+$\widehat{\text{Cov}}_{252}$ e $\widehat{\text{Var}}_{252}$ são covariância e variância amostrais
+numa janela móvel dos últimos $252$ pregões (${\approx}1$ ano), terminando no último pregão do
+mês $t-1$ --- mesma metodologia (e mesma janela) já usada para o beta de VALE3 (mercado) no
+\texttt{tcc I.pdf} (v1), agora aplicada à \emph{cota do fundo} em vez do preço da ação.
 \item[(b)] \textbf{Todas} as cinco características (não só o beta do fundo) passam a ser medidas
 no \textbf{último dia do mês anterior} ($t-1$), nunca no mês corrente --- antes, $AUM$, cotistas
 e fluxo eram contemporâneos ao próprio mês $t$. Agora $\theta_t$ é 100\% predeterminado: tudo que
