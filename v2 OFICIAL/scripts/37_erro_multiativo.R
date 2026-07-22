@@ -1,11 +1,13 @@
 # =============================================================================
 # 37_erro_multiativo.R  (v2 OFICIAL)
 #
-# Estende a regressao por celula (ativo,mes) do R/30 -- em vez de so guardar
-# os coeficientes de cada celula, guarda tambem o ERRO individual de cada
-# fundo (peso real - peso previsto pela celula), abrangendo todos os 501
-# ativos e as 41 gestoras. Mesma equacao, mesmo criterio de celula (>=15
-# holders), mesma padronizacao (R/30) -- so acrescenta a extracao do residuo.
+# LOGIT (nao mais linear -- decisao do Joao: logit e o modelo mae em todo o
+# documento). Estende a regressao logistica por celula (ativo,mes) do R/30
+# -- em vez de so guardar os coeficientes de cada celula, guarda tambem o
+# ERRO individual de cada fundo na escala da resposta (peso real - peso
+# previsto por g(x'theta)), abrangendo todos os 501 ativos e as 41
+# gestoras. Mesma equacao, mesmo criterio de celula (>=15 holders), mesma
+# padronizacao (R/30) -- so acrescenta a extracao do residuo.
 #
 # Objetivo: decidir como construir o robo caca-replicantes SOMENTE depois de
 # ver o comportamento desse erro no universo completo (nao so VALE3/Itau) --
@@ -33,16 +35,19 @@ cat("Celulas (ativo,mes) com >=15 holders:", nrow(celulas), "|", uniqueN(celulas
     "ativos distintos |", sum(celulas$N), "obs\n")
 
 setkey(d, ativo, ym)
+n_nao_convergiu <- 0L
 run_cell <- function(av, mm) {
   dm <- d[.(av, mm)]
-  fit <- tryCatch(lm(peso ~ z_aum + z_cot + is_fic + flow_aum + z_betaf, data = dm), error = function(e) NULL)
+  fit <- tryCatch(suppressWarnings(glm(peso ~ z_aum + z_cot + is_fic + flow_aum + z_betaf,
+                     family = quasibinomial(link="logit"), data = dm)), error = function(e) NULL)
   if (is.null(fit) || length(coef(fit)) < 6) return(NULL)
+  if (!fit$converged) { n_nao_convergiu <<- n_nao_convergiu + 1L; return(NULL) }
   data.table(cod_fundo = dm$cod_fundo, gestora_grupo = dm$gestora_grupo, ativo = av, ym = mm,
-             peso = dm$peso, peso_pred = fitted(fit), erro = residuals(fit))
+             peso = dm$peso, peso_pred = fitted(fit), erro = residuals(fit, type = "response"))
 }
 t0 <- Sys.time()
 E <- rbindlist(mapply(run_cell, celulas$ativo, celulas$ym, SIMPLIFY = FALSE))
-cat("Tempo:", round(as.numeric(Sys.time()-t0, units="secs"),1), "s\n")
+cat("Tempo:", round(as.numeric(Sys.time()-t0, units="secs"),1), "s |", n_nao_convergiu, "celulas nao convergiram\n")
 cat("\nErro multiativo: n =", nrow(E), "| media =", round(mean(E$erro), 8),
     "| dp =", round(sd(E$erro), 6), "\n")
 cat("Fundos distintos:", uniqueN(E$cod_fundo), "| ativos distintos:", uniqueN(E$ativo),
