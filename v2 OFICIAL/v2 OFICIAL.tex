@@ -786,8 +786,9 @@ Captação/resgate     & $-0{,}0010$ & $-0{,}82$ & n.s. & $-0{,}000005$ \\
 Beta do fundo        & $0{,}8994$  & $28{,}60$ & *** & $0{,}004619$ \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Pseudo-$R^2$ $=0{,}314$. Fonte: elaboração própria
-(\texttt{scripts/31\_pooled\_fe2way\_multiativo.R}).}
+\caption*{\footnotesize Correlação ao quadrado $=0{,}314$ (estatística reportada pelo
+\texttt{fixest}, não é o pseudo-$R^2$ de McFadden usado nas demais tabelas). Fonte: elaboração
+própria (\texttt{scripts/31\_pooled\_fe2way\_multiativo.R}).}
 \end{table}
 
 \aha{As duas abordagens --- regressão por ativo-mês e pooled com efeito-fixo --- convergem para
@@ -997,7 +998,8 @@ gestora) --- e como todas as observações de um ativo somam através dessas mes
 do erro \textbf{por ativo} sai $\approx0$ por construção (checado: média de VALE3 $=-3{,}7\times
 10^{-12}$, essencialmente zero de máquina). É o espelho do que acontece na Seção~\ref{sec:gestoras}
 com o efeito-fixo de gestora --- só que lá é por gestora e aqui é por ativo. Só a
-\textbf{dispersão} sobra como informativa, o mesmo padrão já visto na Seção~5.2 original.
+\textbf{dispersão} sobra como informativa, o mesmo padrão do efeito-fixo de gestora
+(Seção~\ref{sec:gestoras}): soma-zero do resíduo dentro de cada grupo por construção.
 
 \textbf{Adendo de processo:} sem filtro, os ativos ``menos dispersos'' repetem o mesmo artefato já
 visto na Tabela~15 e na Tabela~12 (Klabin): dominados por posições nunca efetivamente alocadas
