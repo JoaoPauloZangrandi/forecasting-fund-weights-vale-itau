@@ -10,19 +10,19 @@ suppressPackageStartupMessages(library(data.table))
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 FIG  <- file.path(REPO, "v2 OFICIAL/figuras")
 
-# ---- (1) trajetoria de theta linear, 6 paineis ------------------------------
-theta <- fread(file.path(REPO, "v2 OFICIAL/data/theta_mensal_v2.csv")); setorder(theta, ym)
+# ---- (1) trajetoria de theta LOGIT (especificacao principal), 6 paineis ----
+theta <- fread(file.path(REPO, "v2 OFICIAL/data/theta_logit_mensal_v2.csv")); setorder(theta, ym)
 datas <- as.Date(paste0(substr(theta$ym,1,4),"-",substr(theta$ym,5,6),"-01"))
 
-pdf(file.path(FIG, "fig_theta_trajetoria_v2.pdf"), width = 8, height = 9.2)
+cairo_pdf(file.path(FIG, "fig_theta_trajetoria_v2.pdf"), width = 8, height = 9.2)
 par(mfrow = c(4,2), mar = c(3,4,2.5,1))
-plot(datas, theta$alpha, type="l", col="#2E5C8A", lwd=1.6, main="alpha (intercepto)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
-plot(datas, theta$b_aum, type="l", col="#2E5C8A", lwd=1.6, main="b_aum (tamanho)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
-plot(datas, theta$b_cot, type="l", col="#2E5C8A", lwd=1.6, main="b_cot (cotistas)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
-plot(datas, theta$b_fic, type="l", col="#2E5C8A", lwd=1.6, main="b_fic (fundo de cotas)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
-plot(datas, theta$b_flow, type="l", col="#2E5C8A", lwd=1.6, main="b_flow (captação/resgate)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
-plot(datas, theta$b_betaf, type="l", col="#2E5C8A", lwd=1.6, main="b_betafundo (beta do fundo)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
-plot(datas, theta$r2, type="l", col="#8A2E2E", lwd=1.6, main="R2 da regressão mensal", xlab="", ylab="")
+plot(datas, theta$alpha, type="l", col="#2E5C8A", lwd=1.6, main="α (intercepto)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
+plot(datas, theta$b_aum, type="l", col="#2E5C8A", lwd=1.6, main="θ-aum (tamanho)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
+plot(datas, theta$b_cot, type="l", col="#2E5C8A", lwd=1.6, main="θ-cot (cotistas)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
+plot(datas, theta$b_fic, type="l", col="#2E5C8A", lwd=1.6, main="θ-fic (fundo de cotas)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
+plot(datas, theta$b_flow, type="l", col="#2E5C8A", lwd=1.6, main="θ-flow (captação/resgate)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
+plot(datas, theta$b_betaf, type="l", col="#2E5C8A", lwd=1.6, main="θ-bf (beta do fundo)", xlab="", ylab=""); abline(h=0,col="grey70",lty=2)
+plot(datas, theta$pr2, type="l", col="#8A2E2E", lwd=1.6, main="Pseudo-R² (McFadden) da regressão mensal", xlab="", ylab="")
 frame()
 dev.off()
 
