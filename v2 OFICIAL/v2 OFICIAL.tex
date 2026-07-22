@@ -465,6 +465,106 @@ quando o grupo tem poucos fundos.}
 
 % ======================================================================
 \FloatBarrier
+\section{Extensão: todas as ações}
+\label{sec:multiativo}
+
+\pergunta{O padrão encontrado para VALE3 é uma particularidade daquele papel, ou aparece em
+qualquer ação que esses mesmos fundos carreguem?}
+
+Mantendo o mesmo universo de $2.820$ fundos e $41$ gestoras da extensão anterior, esta seção olha
+\textbf{todas as ações} que eles carregam, não só VALE3. Mesma limpeza de custódia usada no
+\texttt{tcc I.pdf} (v1): a CVM registra a mesma ação sob rótulos diferentes conforme o tipo de
+posição (direta, cedida/recebida em empréstimo, direito de subscrição); só a posição direta é
+mantida, classificada pelo sufixo numérico do \emph{ticker} (convenção B3). Resultado: $523$
+ativos de posição direta, $10.603.928$ linhas fundo-ativo-mês --- VALE3 reproduziu exatamente as
+$96.349$ linhas já conhecidas, confirmando a limpeza.
+
+\textbf{Adendo de processo:} a tabela de características (AUM/cotistas/fluxo) da Etapa 2 só
+cobria os meses em que cada fundo tinha VALE3 --- $16{,}8\%$ dos fundo-mês do painel multiativo
+(fundos que naquele mês só tinham \emph{outras} ações) ficavam sem essas características por um
+motivo evitável, não por falta real de dado. Reconstruída usando o conjunto correto de
+fundo-mês, a cobertura subiu para $97{,}6\%$. A amostra final tem $8.268.920$ linhas, $2.347$
+fundos, $501$ ativos.
+
+\subsection{Regressão por ativo e por mês: o padrão de VALE3 generaliza?}
+
+\equacao
+$$\text{peso}_{i,n,t} = \alpha_{n,t} + b^{aum}_{n,t}z(\ln AUM_i) + b^{cot}_{n,t}z(\ln\text{cot}_i)
++ b^{fic}_{n,t}FIC_i + b^{flow}_{n,t}(\text{fluxo/AUM})_i + b^{bf}_{n,t}z(\beta^{fundo}_i) + \text{erro}$$
+uma regressão por \textbf{célula (ativo $n$, mês $t$)} com $\geq15$ fundos holders --- mesma
+equação da Etapa 1, agora estimada ativo a ativo. $z(\cdot)$ usa a distribuição de
+(fundo,mês) \textbf{únicos}, não repetida por ativo (senão um fundo com muitas posições pesaria
+mais na padronização). Resultado: $13.957$ células estimadas, $430$ ativos, $236$ com histórico
+suficiente ($\geq24$ meses) para comparar com VALE3.
+
+\begin{table}[h]\centering\small
+\caption{Generalização do padrão de VALE3 entre os 236 ativos com histórico suficiente.}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Característica & \% dos ativos com mesmo sinal que VALE3 & Percentil de VALE3 \\
+\midrule
+Tamanho              & $62{,}3\%$ & $1{,}7$ \\
+Cotistas             & $78{,}8\%$ & $98{,}3$ \\
+Fundo de cotas        & $54{,}2\%$ & $0{,}8$ \\
+Captação/resgate     & $43{,}2\%$ (pior que o acaso) & $5{,}9$ \\
+Beta do fundo        & $\mathbf{97{,}0\%}$ & $99{,}6$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/25b} a \texttt{30}).}
+\end{table}
+
+\aha{Diferente do que a v1 encontrou (tamanho/cotistas/FIC generalizando em $88$--$98\%$ dos
+ativos), aqui --- com o beta do fundo na conta e o universo ampliado para $41$ gestoras ---
+tamanho e fundo de cotas generalizam bem mais fraco, e captação/resgate generaliza \textbf{pior
+que o acaso} (a maioria dos ativos tem sinal oposto ao de VALE3 para essa variável). O beta do
+fundo é, disparado, o padrão mais universal: $97\%$ dos ativos têm o mesmo sinal de VALE3. VALE3
+continua extremo em quase toda dimensão (percentis abaixo de $6$ ou acima de $98$), inclusive no
+beta do fundo, onde fica no topo da distribuição inteira.}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.92\textwidth]{fig_multiativo_dist_v2.pdf}
+\caption{Distribuição do coeficiente médio de cada característica entre os 236 ativos com
+histórico suficiente (linha vermelha: VALE3; linha tracejada: mediana entre ativos).}
+\end{figure}
+
+\subsection{Checagem complementar: uma única regressão com efeito-fixo de ativo e de mês}
+
+Como checagem independente, uma regressão \emph{pooled} com todas as $8.268.920$ observações,
+efeito-fixo de ativo \emph{e} de mês (via demeaning iterativo, Frisch--Waugh--Lovell), erro-padrão
+agrupado por fundo --- o coeficiente ``dentro'' de cada ativo-mês, líquido de qualquer nível
+particular daquele ativo ou choque daquele mês.
+
+\textbf{Adendo de processo:} a primeira tentativa incluiu fundo de cotas (FIC) e a matriz ficou
+\textbf{exatamente singular} (número de condição $=\infty$). Não é bug: depois de remover o
+efeito de ativo e de mês, o FIC não tem mais nenhuma variação residual nesta especificação
+específica --- seu efeito já está totalmente absorvido pelos efeitos-fixos. Removido da equação
+(as outras quatro variáveis não têm esse problema, número de condição cai para $2{,}2$), o
+resultado é:
+
+\begin{table}[h]\centering\small
+\caption{Regressão pooled com efeito-fixo de ativo e de mês (8.268.920 obs., 501 ativos, 60
+meses, 2.347 fundos).}
+\begin{tabular}{@{}lrrc@{}}
+\toprule
+Variável & Coeficiente & $t$ (cluster por fundo) & Sig. \\
+\midrule
+Tamanho          & $-0{,}000058$ & $-0{,}6$  & n.s. \\
+Cotistas         & $0{,}000137$  & $1{,}2$   & n.s. \\
+Captação/resgate & $0{,}000004$  & $0{,}3$   & n.s. \\
+Beta do fundo    & $0{,}005565$  & $39{,}6$  & *** \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\aha{As duas abordagens --- regressão por ativo-mês e pooled com efeito-fixo --- convergem para
+a mesma conclusão: o beta do fundo é a característica que mais robustamente explica o peso de
+\textbf{qualquer} ação carregada por esses fundos. Tamanho, cotistas e fluxo, que na v1 pareciam
+generalizar fortemente, aqui perdem quase toda a força quando testados no universo amplo de
+gestoras e ações com o beta do fundo como controle --- boa parte do que pareciam explicar era,
+plausivelmente, um proxy indireto para o quão ``equity-like'' o fundo é.}
+
+% ======================================================================
+\FloatBarrier
 \section{Resumo}
 
 \begin{enumerate}[topsep=2pt,itemsep=3pt]
@@ -483,8 +583,14 @@ de teste) --- resultado qualitativamente igual ao da versão anterior.
 para além do Itaú --- $2.820$ fundos, $41$ grupos de gestora, as cinco características
 sobrevivem quase intactas ao entrar o efeito fixo de gestora ($R^2$ $0{,}540\to0{,}632$).
 Gestoras de varejo/plataforma carregam mais VALE3 que o Itaú equivalente; boutiques de gestão
-concentrada carregam bem menos. Ainda restrito a VALE3 (não integrado ao ajuste
-parcial/in-out-of-sample desta rodada).
+concentrada carregam bem menos.
+\item \textbf{Extensão de todas as ações (Seção~\ref{sec:multiativo}):} mesmo universo de
+fundos/gestoras, agora testado em $501$ ativos ($13.957$ células ativo-mês). O beta do fundo é
+a característica que mais generaliza ($97\%$ dos ativos com o mesmo sinal de VALE3) e a única
+que sobrevive robusta numa regressão pooled com efeito-fixo de ativo e mês ($t=39{,}6$); tamanho,
+cotistas e fluxo generalizam bem mais fraco do que a v1 havia encontrado, e fundo de cotas não é
+sequer identificável nessa especificação pooled (efeito absorvido pelos efeitos-fixos). Ainda
+restrito a VALE3 no ajuste parcial/in-out-of-sample desta rodada.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
