@@ -636,11 +636,16 @@ x'\theta &= \alpha_{n,t} + \theta^{aum}_{n,t}z(\ln AUM_i) + \theta^{cot}_{n,t}z(
 + \theta^{bf}_{n,t}z(\beta^{fundo}_i)
 \end{align*}
 uma regressão logística por \textbf{célula (ativo $n$, mês $t$)} com $\geq15$ fundos holders ---
-mesma equação da Etapa 1, agora estimada ativo a ativo. $z(\cdot)$ usa a distribuição de
-(fundo,mês) \textbf{únicos}, não repetida por ativo (senão um fundo com muitas posições pesaria
-mais na padronização). Resultado: $13.938$ células estimadas ($19$ não convergiram, excluídas),
-$430$ ativos, $236$ com histórico suficiente ($\geq24$ meses) para comparar com VALE3.
-Pseudo-$R^2$ médio de $0{,}441$.
+mesma equação da Etapa 1 (\textbf{sem} o efeito fixo de gestora da Seção~\ref{sec:gestoras}), agora
+estimada ativo a ativo. Sem gestora porque a pergunta aqui é outra: a Seção~\ref{sec:gestoras}
+pergunta ``controlando por gestora, o padrão se sustenta?''; esta seção pergunta ``esse mesmo
+padrão aparece em qualquer ação?'' --- para isso, já varia a regressão inteira por ativo e mês,
+uma partição bem mais fina do que adicionar gestora. Na prática, também não daria: com
+$15$--$20$ fundos por célula, $40$ dummies de gestora quebrariam a conta na maioria delas (mais
+parâmetros que observações). $z(\cdot)$ usa a distribuição de (fundo,mês) \textbf{únicos}, não
+repetida por ativo (senão um fundo com muitas posições pesaria mais na padronização). Resultado:
+$13.938$ células estimadas ($19$ não convergiram, excluídas), $430$ ativos, $236$ com histórico
+suficiente ($\geq24$ meses) para comparar com VALE3. Pseudo-$R^2$ médio de $0{,}441$.
 
 \textbf{Adendo de processo:} em $12$ das $13.957$ células ($0{,}09\%$), o peso de todos os fundos
 daquele ativo-mês era essencialmente zero (posição residual/legado, ex.: Cia Hering set/2021, $17$
@@ -747,9 +752,15 @@ da Seção~\ref{sec:gestoras}, onde as equações normais do MQO garantem soma-z
 de cada grupo com dummy própria), aqui \textbf{cada célula tem sua própria regressão, sem dummy
 de gestora}. A
 média do erro por gestora, portanto, \textbf{não} é zero por construção --- é genuinamente
-informativa, junto com a dispersão. Significância da média testada pela série \textbf{mensal}
-por gestora (mesmo estilo do resto do documento: $t=\bar e/(\text{dp}(e)/\sqrt{\text{meses}})$),
-não pelas $8,25$ milhões de observações brutas (que tornaria qualquer diferença minúscula
+informativa, junto com a dispersão. Um \textbf{viés} positivo aqui não é sobre um papel só: como
+a regressão roda célula a célula (um ativo por vez) e depois o erro de cada célula é agregado por
+gestora, um viés positivo significa que, \textbf{olhando o book de ações inteiro daquela
+gestora}, os fundos dela carregam sistematicamente mais peso do que as 5 características previam
+--- um padrão que se repete ação após ação, não um desvio pontual. Viés negativo é o oposto:
+carregam menos do que a fórmula prevê, de forma consistente. Significância da média testada pela
+série \textbf{mensal} por gestora (mesmo estilo do resto do documento:
+$t=\bar e/(\text{dp}(e)/\sqrt{\text{meses}})$), não pelas $8,25$ milhões de observações brutas
+(que tornaria qualquer diferença minúscula
 ``significativa'' só pelo tamanho da amostra).
 
 \begin{center}\scriptsize
