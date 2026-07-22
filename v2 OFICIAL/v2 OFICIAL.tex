@@ -687,39 +687,48 @@ suficiente (linha vermelha: VALE3; linha tracejada: mediana entre ativos).}
 
 \subsection{Checagem complementar: uma única regressão com efeito-fixo de ativo e de mês}
 
-Como checagem independente, uma regressão \emph{pooled} com todas as $8.268.920$ observações,
-efeito-fixo de ativo \emph{e} de mês (via demeaning iterativo, Frisch--Waugh--Lovell), erro-padrão
-agrupado por fundo --- o coeficiente ``dentro'' de cada ativo-mês, líquido de qualquer nível
-particular daquele ativo ou choque daquele mês.
+Como checagem independente, uma regressão logística \emph{pooled} com todas as $8.268.920$
+observações, efeito-fixo de ativo \emph{e} de mês, erro-padrão agrupado por fundo --- o
+coeficiente ``dentro'' de cada ativo-mês, líquido de qualquer nível particular daquele ativo ou
+choque daquele mês. O truque de demeaning (Frisch--Waugh--Lovell) usado na versão linear
+\textbf{não} funciona em modelos não-lineares; esta versão usa o pacote \texttt{fixest}
+(\texttt{feglm}), feito especificamente para efeito-fixo em GLM de forma rápida mesmo com muitos
+níveis --- aqui, $501$ ativos $+$ $60$ meses.
 
-\textbf{Adendo de processo:} a primeira tentativa incluiu fundo de cotas (FIC) e a matriz ficou
-\textbf{exatamente singular} (número de condição $=\infty$). Não é bug: depois de remover o
-efeito de ativo e de mês, o FIC não tem mais nenhuma variação residual nesta especificação
-específica --- seu efeito já está totalmente absorvido pelos efeitos-fixos. Removido da equação
-(as outras quatro variáveis não têm esse problema, número de condição cai para $2{,}2$), o
-resultado é:
+\textbf{Adendo de processo:} $13$ efeitos-fixos de ativo ($49$ observações) foram removidos
+automaticamente por terem só um desfecho (\emph{singleton}) --- rotina do próprio
+\texttt{fixest}, não afeta o resultado. Diferente da versão linear (onde o fundo de cotas saía
+\textbf{exatamente} da equação, absorvido por completo pelos efeitos-fixos), aqui o FIC
+\textbf{sobrevive} --- o logit não sofre da mesma colinearidade exata que a demeaning linear
+sofria, porque a estimação não depende de inverter a mesma matriz.
 
 \begin{table}[h]\centering\small
-\caption{Regressão pooled com efeito-fixo de ativo e de mês (8.268.920 obs., 501 ativos, 60
-meses, 2.347 fundos).}
-\begin{tabular}{@{}lrrc@{}}
+\caption{Regressão logística pooled com efeito-fixo de ativo e de mês (8.268.871 obs., 488
+ativos, 60 meses, 2.347 fundos).}
+\begin{tabular}{@{}lrrcr@{}}
 \toprule
-Variável & Coeficiente & $t$ (cluster por fundo) & Sig. \\
+Variável & Coeficiente & $t$ (cluster por fundo) & Sig. & APE \\
 \midrule
-Tamanho          & $-0{,}000058$ & $-0{,}6$  & n.s. \\
-Cotistas         & $0{,}000137$  & $1{,}2$   & n.s. \\
-Captação/resgate & $0{,}000004$  & $0{,}3$   & n.s. \\
-Beta do fundo    & $0{,}005565$  & $39{,}6$  & *** \\
+Tamanho              & $0{,}0490$  & $2{,}17$  & *   & $0{,}000252$ \\
+Cotistas             & $0{,}0094$  & $0{,}50$  & n.s. & $0{,}000048$ \\
+Fundo de cotas       & $0{,}0497$  & $1{,}25$  & n.s. & $0{,}000255$ \\
+Captação/resgate     & $-0{,}0010$ & $-0{,}82$ & n.s. & $-0{,}000005$ \\
+Beta do fundo        & $0{,}8994$  & $28{,}60$ & *** & $0{,}004619$ \\
 \bottomrule
 \end{tabular}
+\caption*{\footnotesize Pseudo-$R^2$ $=0{,}314$. Fonte: elaboração própria
+(\texttt{scripts/31\_pooled\_fe2way\_multiativo.R}).}
 \end{table}
 
 \aha{As duas abordagens --- regressão por ativo-mês e pooled com efeito-fixo --- convergem para
-a mesma conclusão: o beta do fundo é a característica que mais robustamente explica o peso de
-\textbf{qualquer} ação carregada por esses fundos. Tamanho, cotistas e fluxo, que na v1 pareciam
-generalizar fortemente, aqui perdem quase toda a força quando testados no universo amplo de
-gestoras e ações com o beta do fundo como controle --- boa parte do que pareciam explicar era,
-plausivelmente, um proxy indireto para o quão ``equity-like'' o fundo é.}
+a mesma conclusão: o beta do fundo é, disparado, a característica que mais robustamente explica
+o peso de \textbf{qualquer} ação carregada por esses fundos ($t=28{,}6$, APE $\approx18\times$
+maior que o de qualquer outra característica). Tamanho fica só marginalmente significativo
+($t=2{,}17$); cotistas, FIC e fluxo não são distinguíveis de zero nesta especificação --- mesmo
+padrão qualitativo da checagem por ativo-mês (Seção 6.1): o que na v1 parecia um efeito robusto
+de tamanho/cotistas/FIC, testado no universo amplo de gestoras e ações com o beta do fundo como
+controle, perde quase toda a força. Boa parte do que pareciam explicar era, plausivelmente, um
+proxy indireto para o quão ``equity-like'' o fundo é.}
 
 \subsection{O erro por gestora, agora com todas as ações}
 \label{sec:erro-multiativo}

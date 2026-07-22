@@ -1,13 +1,18 @@
 # =============================================================================
 # 31_pooled_fe2way_multiativo.R  (v2 OFICIAL)
 #
-# Checagem complementar (igual v1, R/32 parte C): UMA regressao pooled com
+# LOGIT (nao mais linear -- decisao do Joao: logit e o modelo mae em todo o
+# documento). Checagem complementar: UMA regressao pooled logistica com
 # TODAS as observacoes do painel multiativo, com efeito-fixo de ATIVO e de
-# MES (demeaning iterativo, Frisch-Waugh-Lovell), erro-padrao agrupado por
-# fundo. Agora com beta do fundo tambem incluido.
+# MES, erro-padrao agrupado por fundo.
+#
+# O truque de demeaning (Frisch-Waugh-Lovell) usado na versao linear NAO
+# funciona em modelos nao-lineares -- por isso usa o pacote fixest
+# (feglm), feito especificamente para efeito-fixo em GLM de forma rapida
+# mesmo com muitos niveis de FE (aqui, 501 ativos + 60 meses).
 # RODAR COM CAMINHO ABSOLUTO.
 # =============================================================================
-suppressPackageStartupMessages({ library(data.table); library(MASS) })
+suppressPackageStartupMessages({ library(data.table); library(fixest) })
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 
 d <- fread(file.path(REPO, "v2 OFICIAL/data/painel_multiativo_final.csv"))
@@ -20,56 +25,45 @@ d[, z_cot := (l_cot-mu_cot)/sd_cot]
 d[, z_betaf := (beta_fundo-mu_bf)/sd_bf]
 
 dd <- d[is.finite(flow_aum)]
-cat("Obs para o pooled FE-2way:", nrow(dd), "| ativos:", uniqueN(dd$ativo),
+cat("Obs para o pooled FE-2way logit:", nrow(dd), "| ativos:", uniqueN(dd$ativo),
     "| meses:", uniqueN(dd$ym), "| fundos:", uniqueN(dd$cod_fundo), "\n")
 
-# NOTA: is_fic sai da especificacao -- apos o demeaning por ativo e mes, essa
-# variavel fica completamente absorvida (vira vetor de zeros, X'X singular,
-# t=NaN). Nao e um bug: is_fic nao tem variacao suficiente DENTRO de
-# (ativo,mes) que nao seja ja explicada pelos efeitos-fixos nesta
-# especificacao. Confirmado testando com kappa(X'X)=Inf e ginv() antes.
-vars <- c("peso","z_aum","z_cot","flow_aum","z_betaf")
-cat("\nDemeaning iterativo (ativo x mes), via data.table...\n")
 t0 <- Sys.time()
-DT <- dd[, c("ativo","ym",vars), with = FALSE]
-for (i in seq_len(15)) {
-  DT[, (vars) := lapply(.SD, function(v) v - mean(v, na.rm = TRUE)), by = ativo, .SDcols = vars]
-  DT[, (vars) := lapply(.SD, function(v) v - mean(v, na.rm = TRUE)), by = ym,    .SDcols = vars]
-}
-Dm <- DT[, ..vars]
-setnames(Dm, paste0(vars, "_d"))
-cat("Tempo demeaning:", round(as.numeric(Sys.time()-t0, units="secs"),1), "s\n")
+f <- feglm(peso ~ z_aum + z_cot + is_fic + flow_aum + z_betaf | ativo + ym,
+           data = dd, family = quasibinomial(), cluster = ~cod_fundo)
+cat("Tempo de estimacao:", round(as.numeric(Sys.time()-t0, units="secs"),1), "s\n")
+print(summary(f))
 
-Xm <- cbind(1, as.matrix(Dm[, .(z_aum_d, z_cot_d, flow_aum_d, z_betaf_d)]))
-y  <- Dm$peso_d
-# usa pseudo-inversa (Moore-Penrose) em vez de solve() exato: apos o demeaning
-# iterativo (aproximacao numerica ao FWL exato, nao e algebricamente identico),
-# a matriz X'X fica muito perto de singular para is_fic (variavel binaria) em
-# alguns ativos com pouca variacao -- solve() estoura, ginv() da a solucao de
-# norma minima sem quebrar.
-XtX <- crossprod(Xm)
-XtX_inv <- ginv(XtX)
-b  <- XtX_inv %*% crossprod(Xm, y)
-u  <- as.numeric(y - Xm %*% b)
-cat("Numero de condicao de X'X:", round(kappa(XtX),1), "\n")
+cf <- coef(f)
+cat("\nColapsou (perfect fit) alguma variavel?\n")
+print(f$collin.var)
 
-cl_meat <- function(Z, u, cl) {
-  k <- ncol(Z)
-  Zu <- Z * u  # produto elemento a elemento, cada coluna de Z vezes u
-  ZuDT <- as.data.table(Zu); ZuDT[, cl := cl]
-  soma_por_cluster <- ZuDT[, lapply(.SD, sum), by = cl, .SDcols = 1:k]
-  Sm <- as.matrix(soma_por_cluster[, -"cl", with = FALSE])
-  ng <- nrow(Sm)
-  Mt <- crossprod(Sm)  # soma dos produtos externos = t(Sm) %*% Sm
-  (ng/(ng-1)) * Mt
-}
-cat("Calculando erro-padrao (cluster por fundo)...\n")
-t1 <- Sys.time()
-V <- XtX_inv %*% cl_meat(Xm, u, dd$cod_fundo) %*% XtX_inv
-cat("Tempo cluster SE:", round(as.numeric(Sys.time()-t1, units="secs"),1), "s\n")
-se <- sqrt(diag(V)); tt <- as.numeric(b)/se
-res_fe2 <- data.table(variavel = c("intercepto(omitido p/FE)","z_aum","z_cot","flow_aum","z_betaf"),
-                      coef = as.numeric(b), se_cluster_fundo = se, t = as.numeric(tt))
+# ---- APE: usa a media de g'(z) na amostra inteira (mesma logica das outras) --
+# CUIDADO: feglm remove observacoes com FE singleton (aqui, algumas celulas de
+# ativo com 0 ou so 1 desfecho) -- z_pred tem MENOS linhas que dd. Usar
+# f$obs_selection$obsRemoved (indices negativos) pra alinhar dd ao que o
+# modelo de fato usou, senao dd$is_fic fica dessincronizado com z_pred
+# (bug real encontrado ao rodar: aviso de reciclagem de vetor).
+dd_usado <- if (!is.null(f$obs_selection$obsRemoved)) dd[f$obs_selection$obsRemoved] else dd
+stopifnot(nrow(dd_usado) == nobs(f))
+
+z_pred <- predict(f, type = "link")
+dg <- dlogis(z_pred)
+ape_aum <- cf[["z_aum"]]*mean(dg); ape_cot <- cf[["z_cot"]]*mean(dg)
+ape_flow <- cf[["flow_aum"]]*mean(dg); ape_betaf <- cf[["z_betaf"]]*mean(dg)
+if ("is_fic" %in% names(cf)) {
+  z0 <- z_pred - cf[["is_fic"]]*dd_usado$is_fic; z1 <- z0 + cf[["is_fic"]]
+  ape_fic <- mean(plogis(z1) - plogis(z0))
+} else ape_fic <- NA_real_
+
+se <- se(f); tt <- cf/se
+res_fe2 <- data.table(
+  variavel = names(cf), coef = as.numeric(cf), se_cluster_fundo = as.numeric(se), t = as.numeric(tt)
+)
+res_fe2 <- rbind(res_fe2, data.table(
+  variavel = c("ape_aum","ape_cot","ape_fic","ape_flow","ape_betaf"),
+  coef = c(ape_aum, ape_cot, ape_fic, ape_flow, ape_betaf), se_cluster_fundo = NA_real_, t = NA_real_
+))
 print(res_fe2)
 cat("\nObs:", nrow(dd), "| ativos:", uniqueN(dd$ativo), "| meses:", uniqueN(dd$ym),
     "| fundos:", uniqueN(dd$cod_fundo), "\n")
