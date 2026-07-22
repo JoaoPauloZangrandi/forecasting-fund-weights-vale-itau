@@ -800,6 +800,67 @@ de tamanho/cotistas/FIC, testado no universo amplo de gestoras e ações com o b
 controle, perde quase toda a força. Boa parte do que pareciam explicar era, plausivelmente, um
 proxy indireto para o quão ``equity-like'' o fundo é.}
 
+\subsubsection*{Um panorama mais completo: o efeito-fixo de cada ativo}
+
+A Tabela~13 resume só os $5$ coeficientes pooled --- comuns a todos os ativos. Mas o modelo com
+efeito-fixo de ativo estima, como subproduto, um nível \textbf{próprio para cada um dos $488$
+ativos} (o quanto aquele papel é sobre- ou sub-pesado, líquido das $5$ características e do mês).
+Vale a pena olhar essa distribuição.
+
+\textbf{Adendo de processo:} extrair o efeito-fixo bruto direto (\texttt{fixef(f)\$ativo}) reproduz
+o mesmo problema já visto na Tabela~12 (Klabin): os extremos ficam dominados por ativos com peso
+\textbf{mediano} praticamente zero --- posições residuais presentes em muitos meses mas nunca
+efetivamente alocadas, cujo efeito-fixo é instável sem representar demanda real (ex.: papéis com
+peso mediano da ordem de $10^{-7}$ a $10^{-9}$, mesmo com $60$ meses de ``cobertura''). O filtro de
+$\geq24$ meses (usado em toda a Seção~6) não resolve isso --- meses de presença não é o mesmo que
+peso relevante. A tabela abaixo usa por isso um filtro adicional: peso mediano $>0{,}1\%$, o que
+deixa $60$ dos $488$ ativos.
+
+\begin{table}[h]\centering\small
+\caption{Distribuição do efeito-fixo de ativo (log-odds, escala do modelo pooled) entre os 60
+ativos com posição relevante ($\geq24$ meses e peso mediano $>0{,}1\%$).}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Q1 & Mediana & Q3 & VALE3 \\
+\midrule
+$-5{,}123$ & $-4{,}784$ & $-4{,}315$ & $-3{,}407$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/39\_panorama\_fe\_ativo.R}).}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{Os 5 ativos com efeito-fixo mais alto e mais baixo, entre os 60 com posição relevante.}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\multicolumn{4}{c}{\textbf{Efeito-fixo mais alto (sobrepeso)}} \\
+Ativo & Efeito-fixo & Meses & Peso mediano \\
+\midrule
+Döhler PN - DOHL4 & $-1{,}698$ & 60 & $21{,}02\%$ \\
+Coelba ON - CEEB3 & $-1{,}957$ & 60 & $5{,}63\%$ \\
+Celpe ON - CEPE3 & $-2{,}406$ & 60 & $1{,}63\%$ \\
+Cosern ON - CSRN3 & $-2{,}837$ & 60 & $1{,}82\%$ \\
+VALE ON N1 - VALE3 & $-3{,}407$ & 60 & $1{,}57\%$ \\
+\midrule
+\multicolumn{4}{c}{\textbf{Efeito-fixo mais baixo (subpeso)}} \\
+Ativo & Efeito-fixo & Meses & Peso mediano \\
+\midrule
+Gerdau Met PN N1 - GOAU4 & $-5{,}488$ & 60 & $0{,}12\%$ \\
+Eletrobras ON N1 - ELET3 & $-5{,}492$ & 60 & $0{,}12\%$ \\
+Eletrobras PNB N1 - ELET6 & $-5{,}569$ & 60 & $0{,}13\%$ \\
+WLM Ind Com PN - WLMM4 & $-6{,}079$ & 52 & $0{,}13\%$ \\
+D H B PN - DHBI4 & $-6{,}586$ & 45 & $0{,}22\%$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/39\_panorama\_fe\_ativo.R}).}
+\end{table}
+
+\aha{VALE3 fica em $5^o$ lugar entre $60$ ativos com posição relevante --- no quarto superior da
+distribuição, mas não isolada: Döhler, Coelba, Celpe e Cosern têm efeito-fixo ainda mais alto.
+Nenhum nome no topo ou na base é posição residual (todos com peso mediano acima de $0{,}1\%$,
+alguns como a Döhler acima de $20\%$) --- ao contrário da tentativa sem filtro, aqui os extremos
+refletem sobre-/sub-peso genuíno, não ruído de posições nunca alocadas.}
+
 \subsection{O erro por gestora, agora com todas as ações}
 \label{sec:erro-multiativo}
 
@@ -837,7 +898,7 @@ as ações --- ordenado do viés mais positivo ao mais negativo.}\\
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
 \endfirsthead
-\multicolumn{6}{l}{\textit{Tabela 14 (continuação)}}\\
+\multicolumn{6}{l}{\textit{Tabela 16 (continuação)}}\\
 \toprule
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
@@ -911,7 +972,7 @@ mediana de $0{,}0145$) --- relativamente ``previsível'' nesse universo amplo.}
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_erro_multiativo_media_dp.pdf}
 \caption{Cada ponto é uma gestora: erro médio (eixo $x$) vs.\ dispersão do erro (eixo $y$).
-Rótulos legíveis só nos extremos --- a Tabela~14 tem os valores exatos das $41$.}
+Rótulos legíveis só nos extremos --- a Tabela~16 tem os valores exatos das $41$.}
 \end{figure}
 
 \aha{Viés e dispersão andam juntos: correlação de $0{,}88$ entre $|\text{viés}|$ e dp entre as
@@ -921,6 +982,75 @@ zero). Na prática, as duas coisas se confundem: quem foge mais sistematicamente
 prevê (Guepardo, Núcleo Capital, Ibiuna) também é quem tem o erro mais instável mês a mês. Isso é
 o material que vai orientar o desenho do robô caça-replicantes --- decisão ainda em aberto,
 tratada à parte.}
+
+\subsubsection*{Um panorama mais completo: o mesmo erro, agora por ativo}
+
+A Tabela~16 agrega o erro por gestora --- a carteira inteira de um gestor, ação após ação. A mesma
+base (\texttt{scripts/37\_erro\_multiativo.R}) também permite agregar por \textbf{ativo}: qual
+papel tem erro mais ou menos disperso, olhando todas as gestoras que o carregam?
+
+Aqui a média \textbf{não} é informativa --- ao contrário do corte por gestora. Toda observação de
+um ativo vem de células (ativo, mês) indexadas por esse mesmo ativo; como cada célula é uma
+regressão própria, a condição de primeira ordem do MLE força a soma dos resíduos daquela célula a
+zero (mesma lógica de soma-zero de um efeito-fixo, mas aqui aplicada por ativo em vez de por
+gestora) --- e como todas as observações de um ativo somam através dessas mesmas células, a média
+do erro \textbf{por ativo} sai $\approx0$ por construção (checado: média de VALE3 $=-3{,}7\times
+10^{-12}$, essencialmente zero de máquina). É o espelho do que acontece na Seção~\ref{sec:gestoras}
+com o efeito-fixo de gestora --- só que lá é por gestora e aqui é por ativo. Só a
+\textbf{dispersão} sobra como informativa, o mesmo padrão já visto na Seção~5.2 original.
+
+\textbf{Adendo de processo:} sem filtro, os ativos ``menos dispersos'' repetem o mesmo artefato já
+visto na Tabela~15 e na Tabela~12 (Klabin): dominados por posições nunca efetivamente alocadas
+(peso mediano da ordem de $10^{-6}$ a $10^{-11}$), cujo erro é trivialmente $\approx0$ --- não
+porque o modelo os explica bem, mas porque não há nada a explicar. Mesmo filtro das tabelas
+anteriores ($\geq24$ meses e peso mediano $>0{,}1\%$), restando $50$ dos $430$ ativos.
+
+\begin{table}[h]\centering\small
+\caption{Distribuição da dispersão do erro (dp) entre os 50 ativos com posição relevante, com
+VALE3 para referência.}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Q1 & Mediana & Q3 & VALE3 \\
+\midrule
+$0{,}00990$ & $0{,}01274$ & $0{,}01629$ & $0{,}02816$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/40\_panorama\_erro\_ativo.R}).}
+\end{table}
+
+\begin{table}[h]\centering\small
+\caption{Os 5 ativos com erro mais e menos disperso, entre os 50 com posição relevante.}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+\multicolumn{4}{c}{\textbf{Erro mais disperso (menos previsível)}} \\
+Ativo & Obs. & Meses & dp \\
+\midrule
+Petrobras PN - PETR4 & 73550 & 60 & $0{,}03064$ \\
+VALE ON N1 - VALE3 & 73273 & 60 & $0{,}02816$ \\
+Equatorial ON NM - EQTL3 & 70599 & 60 & $0{,}02539$ \\
+Itaú Unibanco PN N1 - ITUB4 & 71314 & 60 & $0{,}02309$ \\
+Bradesco PN N1 - BBDC4 & 71707 & 60 & $0{,}02226$ \\
+\midrule
+\multicolumn{4}{c}{\textbf{Erro menos disperso (mais previsível)}} \\
+Ativo & Obs. & Meses & dp \\
+\midrule
+Sul América UNT N2 - SULA11 & 50759 & 60 & $0{,}00783$ \\
+TIM Part S/A ON NM - TIMP3 & 41833 & 46 & $0{,}00758$ \\
+Eletrobras ON N1 - ELET3 & 62259 & 60 & $0{,}00747$ \\
+Eletrobras PNB N1 - ELET6 & 60600 & 60 & $0{,}00696$ \\
+Vivara S.A. ON NM - VIVA3 & 22731 & 27 & $0{,}00587$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/40\_panorama\_erro\_ativo.R}).}
+\end{table}
+
+\aha{VALE3 é o $2^o$ ativo com erro mais disperso entre os $50$ com posição relevante --- atrás só
+da Petrobras, e à frente de Equatorial, Itaú Unibanco e Bradesco: as blue chips mais líquidas do
+Ibovespa são justamente as menos previsíveis por essa fórmula, não as mais. Faz sentido à luz do
+achado central da Seção~6.2 --- é o beta do fundo que domina a explicação do peso, e blue chips
+concentram a variação de beta entre fundos ``equity-like'' e ``conservadores''; papéis menos
+líquidos (Sul América, TIM, Eletrobras, Vivara) têm posição mais parecida entre os fundos que os
+carregam, sobrando menos espaço para o erro variar.}
 
 % ======================================================================
 \FloatBarrier
