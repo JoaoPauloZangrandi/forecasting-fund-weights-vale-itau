@@ -514,18 +514,28 @@ quando o grupo tem poucos fundos.}
 \end{figure}
 
 \FloatBarrier
-\subsection{O erro por gestora: quem o modelo explica melhor}
+\subsection{O robô caça-replicantes: qual gestora segue a fórmula ``no automático''?}
 
-\pergunta{O erro $e$ da cross-section (Seção~2.2) é parecido entre gestoras, ou tem gestoras que
-o modelo explica muito melhor que outras?}
+\pergunta{O erro $e$ da cross-section (Seção~2.2) é parecido entre gestoras, ou tem gestora que o
+modelo explica muito melhor que outra?}
+
+A referência é o teste de Voight-Kampff de \emph{Blade Runner}: não olha uma resposta isolada,
+olha o padrão de reações ao longo de várias perguntas para flagrar quem responde de um jeito
+mecânico demais para ser espontâneo. Aqui, a ``pergunta'' mensal é a mesma de sempre --- o que as
+5 características previam que os fundos daquela gestora carregassem de VALE3 --- e a resposta é o
+peso real. Uma \textbf{gestora replicante} tem erro $e$ pequeno e estável mês após mês: a
+alocação dos seus fundos é basicamente uma função das características genéricas, sem sinal de
+convicção própria. Uma \textbf{gestora humana} tem erro grande e disperso: os fundos dela estão
+apostando em VALE3 de um jeito que a fórmula não capta.
 
 \textbf{Adendo de processo:} a primeira tentativa comparou a \emph{média} do erro $e$ entre
 gestoras --- deu essencialmente zero para todas as $40$, sem exceção. Não é coincidência nem
 erro de cálculo: como a regressão tem uma dummy própria para cada gestora, as equações normais do
 MQO garantem que o resíduo soma zero \textbf{dentro} de cada grupo com dummy própria, em todo
-mês. Média do erro por gestora é, portanto, zero por construção, não uma medida útil. O que sobra
-informativo é a \textbf{dispersão} do erro dentro de cada gestora --- quanto maior, mais difícil
-o modelo (mesmo com a dummy) explica a alocação daquele grupo em VALE3.
+mês. Média do erro por gestora é, portanto, zero por construção, não um escore útil de
+replicante/humana. O que sobra informativo é a \textbf{dispersão} do erro dentro de cada gestora
+--- quanto maior, mais difícil o modelo (mesmo com a dummy) explica a alocação daquele grupo em
+VALE3, e mais ``humana'' ela é nesse sentido.
 
 \begin{center}\scriptsize
 \begin{longtable}{@{}lrrc@{}}
@@ -601,10 +611,11 @@ Guepardo Investimentos & 124 & 33 & $0{,}0021$ \\
 \end{figure}
 
 \aha{O Itaú fica perto do meio da distribuição ($\text{dp}=0{,}0199$, posição $21$ de $40$, do
-menos para o mais disperso). Nos extremos: gestoras \emph{boutique} concentradas e de renda
-variável pura --- Verde, Opportunity, Vinci Partners, Sharp, BTG --- têm o erro mais disperso
-($\text{dp}\approx0{,}034$--$0{,}035$, quase o dobro do Itaú); gestoras com mandatos mais amplos
-ou passivos --- TNA, Kinea, Plural, Squadra, Daycoval --- têm o erro bem mais concentrado
+menos para o mais disperso) --- nem replicante nem humana, no meio do espectro. Nos extremos:
+gestoras \textbf{humanas} --- \emph{boutique} concentradas e de renda variável pura, Verde,
+Opportunity, Vinci Partners, Sharp, BTG --- têm o erro mais disperso ($\text{dp}\approx0{,}034$--
+$0{,}035$, quase o dobro do Itaú); gestoras \textbf{replicantes} --- de mandato mais amplo ou
+passivo, TNA, Kinea, Plural, Squadra, Daycoval --- têm o erro bem mais concentrado
 ($\text{dp}\approx0{,}009$--$0{,}015$). Leitura: as 5 características usadas explicam melhor o
 comportamento de gestoras com carteiras mais diversificadas/institucionais do que o de gestoras
 de convicção concentrada, cuja alocação em VALE3 provavelmente depende mais de uma visão
@@ -720,98 +731,6 @@ plausivelmente, um proxy indireto para o quão ``equity-like'' o fundo é.}
 
 % ======================================================================
 \FloatBarrier
-\section{O robô caça-replicantes: erro por fundo individual}
-\label{sec:robo}
-
-\pergunta{A Seção~\ref{sec:gestoras} mostrou que a \emph{dispersão} do erro varia por gestora ---
-mas dentro de uma mesma gestora, todo fundo se comporta igual, ou tem fundo que segue a fórmula
-``no automático'' e fundo que claramente está fazendo uma aposta própria?}
-
-A referência é o teste de Voight-Kampff de \emph{Blade Runner}: não olha uma resposta isolada,
-olha o padrão de reações ao longo de várias perguntas para flagrar quem responde de um jeito
-mecânico demais para ser espontâneo. Aqui, a ``pergunta'' mensal é a mesma de sempre --- o que as
-5 características previam que o fundo carregasse de VALE3 --- e a resposta é o peso real. Um
-\textbf{fundo replicante} tem erro $e$ pequeno mês após mês: sua alocação é basicamente uma
-função das características genéricas, sem sinal de decisão própria. Um \textbf{fundo humano} tem
-erro grande e persistente: alguém ali está apostando em VALE3 de um jeito que a fórmula não
-capta.
-
-\textbf{Adendo sobre o escore:} no nível gestora (Seção~\ref{sec:gestoras}), a \emph{média} do
-erro é zero por construção (efeito-fixo absorve). No nível fundo isso \textbf{não} vale --- cada
-fundo é só uma entre várias observações que alimentam a dummy da sua gestora, então a média do
-erro de um fundo específico pode se afastar bastante de zero (média de $|\bar e_i|$ entre os
-fundos: $0{,}014$, bem acima de zero). O escore usado é o \textbf{MAE do erro} de cada fundo ao
-longo do tempo --- combina viés sistemático e volatilidade num número só. Amostra: fundos com
-$\geq24$ meses de histórico (mesmo corte da Seção~\ref{sec:multiativo}), $1.282$ dos $2.257$
-fundos da Seção~\ref{sec:gestoras}.
-
-\begin{table}[h]\centering\scriptsize
-\caption{Os 10 fundos mais ``replicantes'' (menor MAE) e os 10 mais ``humanos'' (maior MAE).}
-\begin{tabular}{@{}rlrr@{}}
-\toprule
-\multicolumn{4}{c}{\textbf{Mais replicantes}} \\
-Cód. fundo & Gestora & Meses & MAE \\
-\midrule
-274100 & Guepardo Investimentos & 32 & $0{,}00045$ \\
-150568 & Itaú & 59 & $0{,}00161$ \\
-394165 & Forpus Capital & 33 & $0{,}00163$ \\
-211613 & Itaú & 38 & $0{,}00165$ \\
-358495 & TNA Gestão Patrimonial & 59 & $0{,}00183$ \\
-136883 & Itaú & 30 & $0{,}00188$ \\
-339628 & Itaú & 52 & $0{,}00200$ \\
-68675 & Itaú & 31 & $0{,}00205$ \\
-386588 & Atmos Capital & 32 & $0{,}00206$ \\
-123641 & Itaú & 59 & $0{,}00209$ \\
-\midrule
-\multicolumn{4}{c}{\textbf{Mais humanos}} \\
-Cód. fundo & Gestora & Meses & MAE \\
-\midrule
-191914 & BTG Pactual & 53 & $\mathbf{0{,}25115}$ \\
-481041 & Itaú & 24 & $0{,}07123$ \\
-218421 & Itaú & 26 & $0{,}06985$ \\
-110108 & Itaú & 26 & $0{,}06710$ \\
-212891 & BTG Pactual & 24 & $0{,}06413$ \\
-130958 & Safra Asset Management & 30 & $0{,}06230$ \\
-426717 & Opportunity & 50 & $0{,}06107$ \\
-337285 & BB Asset Management & 27 & $0{,}05779$ \\
-292826 & Vinci Partners & 38 & $0{,}05307$ \\
-49336 & Safra Asset Management & 33 & $0{,}05298$ \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/35\_robo\_replicante.R}).}
-\end{table}
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.75\textwidth]{hist_mae_fundo_v2.pdf}
-\caption{Distribuição do MAE do erro $e$ entre os $1.282$ fundos elegíveis.}
-\end{figure}
-
-\aha{A distribuição é bem assimétrica: mediana de MAE $=0{,}0115$, mas o percentil $90$ já é
-$0{,}0294$ e o fundo mais extremo chega a $0{,}251$ --- mais de $20\times$ a mediana. Como
-checagem de convergência com a Seção~\ref{sec:gestoras}: a média do MAE dos fundos elegíveis de
-cada gestora tem correlação de $0{,}92$ com o desvio-padrão do erro daquela gestora (Tabela~8)
---- os dois níveis de análise (gestora e fundo) apontam para a mesma leitura, o que reforça que a
-dispersão por gestora não é ruído de agregação.}
-
-O fundo mais ``humano'' de toda a amostra ($191914$, BTG Pactual) ilustra bem o padrão: não é erro
-de dado (peso sempre dentro de $[0,1]$), é um fundo que carrega VALE3 de forma persistente e
-crescentemente descolada do que as características preveem.
-
-\begin{figure}[H]\centering
-\includegraphics[width=0.85\textwidth]{fig_erro_fundo_extremo_v2.pdf}
-\caption{Peso real vs.\ previsto pela fórmula, fundo $191914$ (BTG Pactual) --- o caso mais
-``humano'' da amostra.}
-\end{figure}
-
-\aha{Em ago/2017 o fundo já carregava $27\%$ em VALE3 contra um previsto de $5\%$; a partir de
-2020 a divergência só cresce, terminando dez/2021 em $50\%$ de peso real contra $7\%$ previsto.
-Nenhuma das 5 características (tamanho, cotistas, FIC, fluxo, beta do fundo) evolui o suficiente
-para explicar esse movimento --- é o oposto exato de um fundo replicante: uma aposta concentrada e
-crescente num único papel, que a fórmula genérica nunca vai captar porque ela foi desenhada para
-explicar o comportamento médio, não a convicção individual de um gestor específico.}
-
-% ======================================================================
-\FloatBarrier
 \section{Resumo}
 
 \begin{enumerate}[topsep=2pt,itemsep=3pt]
@@ -834,10 +753,11 @@ para além do Itaú --- $2.820$ fundos, $41$ grupos de gestora, as cinco caracte
 sobrevivem quase intactas ao entrar o efeito fixo de gestora ($R^2$ $0{,}540\to0{,}632$).
 Gestoras de varejo/plataforma carregam mais VALE3 que o Itaú equivalente; boutiques de gestão
 concentrada carregam bem menos. O erro \emph{médio} por gestora é zero por construção
-(efeito-fixo absorve); a \emph{dispersão} não é --- boutiques de convicção concentrada (Verde,
-Opportunity, Vinci, Sharp, BTG) têm erro até o dobro mais disperso que gestoras de mandato amplo
-(TNA, Kinea, Plural), sinal de que as cinco características explicam pior a alocação de gestoras
-concentradas.
+(efeito-fixo absorve); a \emph{dispersão} não é, e serve de escore ``replicante/humana'' no
+espírito do teste de Voight-Kampff de \emph{Blade Runner} --- gestoras \textbf{replicantes} (TNA,
+Kinea, Plural, mandato amplo/passivo) têm erro pequeno e estável, seguindo as 5 características
+``no automático''; gestoras \textbf{humanas} (Verde, Opportunity, Vinci, Sharp, BTG, convicção
+concentrada) têm erro até o dobro mais disperso, sinal de decisão própria que a fórmula não capta.
 \item \textbf{Extensão de todas as ações (Seção~\ref{sec:multiativo}):} mesmo universo de
 fundos/gestoras, agora testado em $501$ ativos ($13.957$ células ativo-mês). O beta do fundo é
 a característica que mais generaliza ($97\%$ dos ativos com o mesmo sinal de VALE3) e a única
@@ -845,13 +765,6 @@ que sobrevive robusta numa regressão pooled com efeito-fixo de ativo e mês ($t
 cotistas e fluxo generalizam bem mais fraco do que a v1 havia encontrado, e fundo de cotas não é
 sequer identificável nessa especificação pooled (efeito absorvido pelos efeitos-fixos). Ainda
 restrito a VALE3 no ajuste parcial/in-out-of-sample desta rodada.
-\item \textbf{O robô caça-replicantes (Seção~\ref{sec:robo}):} descendo do nível gestora para o
-nível fundo, o MAE do erro $e$ de cada fundo ($1.282$ com $\geq24$ meses de histórico) separa
-fundos ``replicantes'' (alocação bem explicada pelas 5 características) de fundos ``humanos''
-(alocação que a fórmula não capta). Convergência forte com a Seção~\ref{sec:gestoras}: correlação
-de $0{,}92$ entre o MAE médio dos fundos de uma gestora e a dispersão já reportada por gestora. O
-caso mais extremo (fundo $191914$, BTG Pactual) mostra uma aposta concentrada e crescente em
-VALE3 (de $27\%$ para $50\%$ de peso) que nenhuma das 5 características explica.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
