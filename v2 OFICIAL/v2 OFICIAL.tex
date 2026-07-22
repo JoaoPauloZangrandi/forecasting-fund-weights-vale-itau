@@ -535,123 +535,6 @@ entre $16\%$ e $16{,}4\%$) --- reflete uma mudança de alocação mais ampla da 
 em detalhe aqui.}
 \end{figure}
 
-\FloatBarrier
-\subsection{O robô caça-replicantes: qual gestora segue a fórmula ``no automático''?}
-
-\pergunta{O erro $e$ da cross-section (Seção~2.2) é parecido entre gestoras, ou tem gestora que o
-modelo explica muito melhor que outra?}
-
-A referência é o teste de Voight-Kampff de \emph{Blade Runner}: não olha uma resposta isolada,
-olha o padrão de reações ao longo de várias perguntas para flagrar quem responde de um jeito
-mecânico demais para ser espontâneo. Aqui, a ``pergunta'' mensal é a mesma de sempre --- o que as
-5 características previam que os fundos daquela gestora carregassem de VALE3 --- e a resposta é o
-peso real. Uma \textbf{gestora replicante} tem erro $e$ pequeno e estável mês após mês: a
-alocação dos seus fundos é basicamente uma função das características genéricas, sem sinal de
-convicção própria. Uma \textbf{gestora humana} tem erro grande e disperso: os fundos dela estão
-apostando em VALE3 de um jeito que a fórmula não capta.
-
-\textbf{Adendo de processo:} a primeira tentativa comparou a \emph{média} do erro $e$ entre
-gestoras --- deu essencialmente zero para todas as $40$, sem exceção. Não é coincidência nem
-erro de cálculo: como a regressão tem uma dummy própria para cada gestora, as equações normais do
-MQO garantem que o resíduo soma zero \textbf{dentro} de cada grupo com dummy própria, em todo
-mês. Média do erro por gestora é, portanto, zero por construção, não um escore útil de
-replicante/humana. O que sobra informativo é a \textbf{dispersão} do erro dentro de cada gestora
---- quanto maior, mais difícil o modelo (mesmo com a dummy) explica a alocação daquele grupo em
-VALE3, e mais ``humana'' ela é nesse sentido.
-
-\begin{center}\scriptsize
-\begin{longtable}{@{}lrrc@{}}
-\caption{Desvio-padrão do erro $e$ de cada gestora, ordenado do mais disperso para o menos.}\\
-\toprule
-Gestora & Obs. & Meses & dp \\
-\midrule
-\endfirsthead
-\multicolumn{4}{l}{\textit{Tabela 8 (continuação)}}\\
-\toprule
-Gestora & Obs. & Meses & dp \\
-\midrule
-\endhead
-\midrule
-\multicolumn{4}{r}{\textit{continua na próxima página}}\\
-\endfoot
-\bottomrule
-\multicolumn{4}{@{}p{0.9\textwidth}@{}}{\footnotesize Legacy Capital fica de fora (apenas 1
-observação, dp indefinido). Fonte: elaboração própria (\texttt{scripts/33\_erro\_por\_gestora.R},
-\texttt{34\_erro\_gestora\_dispersao.R}).}\\
-\endlastfoot
-Verde Asset Management & 429 & 59 & $0{,}0353$ \\
-Opportunity & 786 & 59 & $0{,}0349$ \\
-Vinci Partners & 1492 & 59 & $0{,}0349$ \\
-Sharp Capital & 748 & 59 & $0{,}0346$ \\
-BTG Pactual & 4904 & 59 & $0{,}0342$ \\
-Caixa & 829 & 59 & $0{,}0341$ \\
-BB Asset Management & 3663 & 59 & $0{,}0289$ \\
-Truxt Investimentos & 767 & 42 & $0{,}0289$ \\
-Bradesco Asset Management & 9411 & 59 & $0{,}0283$ \\
-Western Asset & 1191 & 59 & $0{,}0281$ \\
-Real Investor & 126 & 47 & $0{,}0272$ \\
-AZ Quest & 679 & 56 & $0{,}0261$ \\
-ARX Investimentos & 422 & 57 & $0{,}0261$ \\
-Credit Suisse & 1980 & 59 & $0{,}0243$ \\
-Kapitalo Investimentos & 824 & 52 & $0{,}0240$ \\
-Absolute Investimentos & 161 & 28 & $0{,}0239$ \\
-Safra Asset Management & 4375 & 59 & $0{,}0226$ \\
-BNP Paribas & 1957 & 59 & $0{,}0217$ \\
-Santander Brasil Asset Management & 3157 & 59 & $0{,}0207$ \\
-Julius Baer Family Office & 1999 & 59 & $0{,}0205$ \\
-Itaú & 19386 & 59 & $0{,}0199$ \\
-JGP & 1748 & 59 & $0{,}0185$ \\
-XP & 2555 & 59 & $0{,}0180$ \\
-Occam Brasil & 1117 & 59 & $0{,}0175$ \\
-SPX Capital & 1474 & 59 & $0{,}0171$ \\
-Claritas Investimentos & 339 & 59 & $0{,}0166$ \\
-Ibiuna Investimentos & 256 & 45 & $0{,}0160$ \\
-Daycoval Asset Management & 145 & 57 & $0{,}0154$ \\
-Squadra Investimentos & 541 & 45 & $0{,}0152$ \\
-Plural & 204 & 59 & $0{,}0139$ \\
-Kinea Investimentos & 111 & 54 & $0{,}0109$ \\
-Constellation Asset Management & 217 & 25 & $0{,}0106$ \\
-TNA Gestão Patrimonial & 1630 & 59 & $0{,}0097$ \\
-Gávea Investimentos & 464 & 34 & $0{,}0092$ \\
-Núcleo Capital & 56 & 4 & $0{,}0087$ \\
-Atmos Capital & 845 & 33 & $0{,}0072$ \\
-Dahlia Capital & 260 & 30 & $0{,}0068$ \\
-Bogari Capital & 114 & 11 & $0{,}0033$ \\
-Forpus Capital & 82 & 33 & $0{,}0026$ \\
-Guepardo Investimentos & 124 & 33 & $0{,}0021$ \\
-\end{longtable}
-\end{center}
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.75\textwidth]{hist_erro_e_gestora_v2.pdf}
-\caption{Distribuição do erro $e$ (com efeito-fixo de gestora), $71.569$ observações.}
-\end{figure}
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.75\textwidth]{hist_dp_erro_gestora_v2.pdf}
-\caption{Distribuição do desvio-padrão do erro entre as $40$ gestoras (linha vermelha: Itaú).}
-\end{figure}
-
-\aha{O Itaú fica perto do meio da distribuição ($\text{dp}=0{,}0199$, posição $21$ de $40$, do
-menos para o mais disperso) --- nem replicante nem humana, no meio do espectro. Nos extremos:
-gestoras \textbf{humanas} --- \emph{boutique} concentradas e de renda variável pura, Verde,
-Opportunity, Vinci Partners, Sharp, BTG --- têm o erro mais disperso ($\text{dp}\approx0{,}034$--
-$0{,}035$, quase o dobro do Itaú); gestoras \textbf{replicantes} --- de mandato mais amplo ou
-passivo, TNA, Kinea, Plural, Squadra, Daycoval --- têm o erro bem mais concentrado
-($\text{dp}\approx0{,}009$--$0{,}015$). Leitura: as 5 características usadas explicam melhor o
-comportamento de gestoras com carteiras mais diversificadas/institucionais do que o de gestoras
-de convicção concentrada, cuja alocação em VALE3 provavelmente depende mais de uma visão
-específica sobre o papel do que dos atributos genéricos do fundo.}
-
-\begin{figure}[h]\centering
-\includegraphics[width=0.92\textwidth]{fig_dp_erro_gestora_evolucao.pdf}
-\caption{Evolução mensal do desvio-padrão do erro, para as 5 gestoras mais dispersas e as 5 menos
-dispersas de verdade (mesmo ranking da Tabela~8, sem filtro de cobertura --- por isso o painel de
-baixo tem gestoras com cobertura mais curta, $11$ a $33$ dos $59$ meses). O pico isolado da Vinci
-Partners em 2021 segue o mesmo padrão já visto na evolução dos coeficientes de gestora: grupo
-pequeno, sensível a um único fundo concentrado naquele mês.}
-\end{figure}
-
 % ======================================================================
 \FloatBarrier
 \section{Extensão: todas as ações}
@@ -775,12 +658,7 @@ meses).
 para além do Itaú --- $2.820$ fundos, $41$ grupos de gestora, as cinco características
 sobrevivem quase intactas ao entrar o efeito fixo de gestora ($R^2$ $0{,}540\to0{,}632$).
 Gestoras de varejo/plataforma carregam mais VALE3 que o Itaú equivalente; boutiques de gestão
-concentrada carregam bem menos. O erro \emph{médio} por gestora é zero por construção
-(efeito-fixo absorve); a \emph{dispersão} não é, e serve de escore ``replicante/humana'' no
-espírito do teste de Voight-Kampff de \emph{Blade Runner} --- gestoras \textbf{replicantes} (TNA,
-Kinea, Plural, mandato amplo/passivo) têm erro pequeno e estável, seguindo as 5 características
-``no automático''; gestoras \textbf{humanas} (Verde, Opportunity, Vinci, Sharp, BTG, convicção
-concentrada) têm erro até o dobro mais disperso, sinal de decisão própria que a fórmula não capta.
+concentrada carregam bem menos.
 \item \textbf{Extensão de todas as ações (Seção~\ref{sec:multiativo}):} mesmo universo de
 fundos/gestoras, agora testado em $501$ ativos ($13.957$ células ativo-mês). O beta do fundo é
 a característica que mais generaliza ($97\%$ dos ativos com o mesmo sinal de VALE3) e a única
