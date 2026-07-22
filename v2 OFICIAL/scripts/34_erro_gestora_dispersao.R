@@ -42,12 +42,17 @@ abline(v = dp_itau, col = "#8A2E2E", lwd = 2)
 legend("topright", legend = "Itaú", col = "#8A2E2E", lwd = 2, bty = "n")
 dev.off()
 
-# ---- Figura C: evolucao mensal do dp, top-5/bottom-5 (n_meses>=45) ---------
-elig <- agg[n_meses >= 45]
-top5 <- elig[order(-dp)][1:5, gestora_grupo]
-bot5 <- elig[order(dp)][1:5, gestora_grupo]
-cat("\nTop-5 mais dispersas (>=45 meses):", paste(top5, collapse=", "), "\n")
-cat("Bottom-5 menos dispersas (>=45 meses):", paste(bot5, collapse=", "), "\n")
+# ---- Figura C: evolucao mensal do dp, top-5/bottom-5 REAIS (ranking pelo dp,
+# sem filtro de cobertura -- um filtro >=45 meses aqui trocava o bottom-5
+# real (Guepardo/Forpus/Bogari/Dahlia/Atmos) por substitutos so por terem
+# mais cobertura (TNA/Kinea/Plural/Squadra/Daycoval), incoerente com a
+# Tabela 8. Corrigido apos o Joao flagrar o mesmo problema na Figura 9) -----
+top5 <- agg[order(-dp)][1:5, gestora_grupo]
+bot5 <- agg[order(dp)][1:5, gestora_grupo]
+cat("\nTop-5 mais dispersas (ranking real):", paste(top5, collapse=", "), "\n")
+cat("Bottom-5 menos dispersas (ranking real):", paste(bot5, collapse=", "), "\n")
+cat("n_meses (Top5):", paste(agg[gestora_grupo %in% top5, n_meses], collapse=", "), "\n")
+cat("n_meses (Bottom5):", paste(agg[gestora_grupo %in% bot5, n_meses], collapse=", "), "\n")
 
 por_mes <- E[gestora_grupo %in% c(top5, bot5), .(dp_mes = sd(erro), n = .N), by = .(gestora_grupo, ym)]
 por_mes <- por_mes[n >= 3]

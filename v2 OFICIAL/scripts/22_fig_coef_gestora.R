@@ -2,8 +2,12 @@
 # 22_fig_coef_gestora.R  (v2 OFICIAL)
 #
 # Evolucao mensal do coeficiente de gestora (vs. Itau) para as 5 gestoras
-# mais positivas e as 5 mais negativas (por media, ver R/21) -- mostrar
-# todas as 40 num grafico so seria ilegivel.
+# mais positivas e as 5 mais negativas de verdade (ranking pela media, sem
+# filtro de cobertura minima -- um filtro >=45 meses aqui escondia os
+# extremos reais da Tabela 7 atras de substitutos com mais cobertura, ex.:
+# Kapitalo aparecia como "5a mais negativa" quando na verdade e a 8a. Corrigido
+# apos o Joao flagrar a incoerencia entre o texto da figura e a Tabela 7).
+# Mostrar todas as 40 num grafico so seria ilegivel.
 # RODAR COM CAMINHO ABSOLUTO.
 # =============================================================================
 suppressPackageStartupMessages(library(data.table))
@@ -12,15 +16,14 @@ FIG  <- file.path(REPO, "v2 OFICIAL/figuras")
 
 G <- fread(file.path(REPO, "v2 OFICIAL/data/coeficientes_gestora_mensal.csv"))
 resumo <- fread(file.path(REPO, "v2 OFICIAL/data/coeficientes_gestora_resumo.csv"))
-# so gestoras com cobertura razoavel (>=45 dos 59 meses), para a serie de
-# tempo nao ficar cheia de buracos / dominada por 1-4 pontos isolados
-resumo_cob <- resumo[n_meses >= 45]
-setorder(resumo_cob, -media)
+setorder(resumo, -media)
 
-top5 <- head(resumo_cob$gestora, 5)
-bot5 <- tail(resumo_cob$gestora, 5)
-cat("Top 5 (mais positivas):", paste(top5, collapse=", "), "\n")
-cat("Bottom 5 (mais negativas):", paste(bot5, collapse=", "), "\n")
+top5 <- head(resumo$gestora, 5)
+bot5 <- tail(resumo$gestora, 5)
+cat("Top 5 (mais positivas, ranking real):", paste(top5, collapse=", "), "\n")
+cat("Bottom 5 (mais negativas, ranking real):", paste(bot5, collapse=", "), "\n")
+cat("n_meses de cada uma (Top5):", paste(resumo[gestora %in% top5, n_meses], collapse=", "), "\n")
+cat("n_meses de cada uma (Bottom5):", paste(resumo[gestora %in% bot5, n_meses], collapse=", "), "\n")
 
 meses_todos <- sort(unique(G$ym))
 datas_todas <- as.Date(paste0(substr(meses_todos,1,4),"-",substr(meses_todos,5,6),"-01"))

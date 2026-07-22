@@ -523,12 +523,16 @@ especificamente, diferente de uma plataforma de varejo mais próxima de uma comp
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_coef_gestora_evolucao.pdf}
-\caption{Evolução mensal do coeficiente de gestora (vs.\ Itaú), para as 5 gestoras mais
-positivas e as 5 mais negativas entre as que têm cobertura de pelo menos 45 dos 59 meses. O pico
-isolado da Kapitalo em jul/2018 não é erro de dado: naquele mês, um único fundo da casa
-concentrava $37\%$ em VALE3 dentro de um grupo pequeno (13 fundos), o suficiente para puxar a
-estimativa mensal daquele grupo --- ilustra como esses coeficientes podem ser voláteis mês a mês
-quando o grupo tem poucos fundos.}
+\caption{Evolução mensal do coeficiente de gestora (vs.\ Itaú), para as 5 gestoras com coeficiente
+mais positivo e as 5 com coeficiente mais negativo \textbf{de verdade} (mesmo ranking da
+Tabela~7, sem filtro de cobertura). Duas delas têm pouquíssimos meses --- Legacy Capital ($1$ mês,
+aparece como ponto isolado) e Núcleo Capital ($4$ meses) --- porque são, de fato, as gestoras com
+o coeficiente médio mais alto; não há ``evolução'' de verdade pra mostrar nesses dois casos
+específicos, só o valor pontual. O pico da Constellation em mar/2019 é o mesmo padrão de sempre:
+naquele mês só havia $1$ fundo da casa na amostra. Já o pico da Occam Brasil em 2021 \textbf{não}
+é um artefato de grupo pequeno --- tinha $20$ fundos naquele mês, com pesos variados (vários
+entre $16\%$ e $16{,}4\%$) --- reflete uma mudança de alocação mais ampla da casa, não investigada
+em detalhe aqui.}
 \end{figure}
 
 \FloatBarrier
@@ -642,9 +646,10 @@ específica sobre o papel do que dos atributos genéricos do fundo.}
 \begin{figure}[h]\centering
 \includegraphics[width=0.92\textwidth]{fig_dp_erro_gestora_evolucao.pdf}
 \caption{Evolução mensal do desvio-padrão do erro, para as 5 gestoras mais dispersas e as 5 menos
-dispersas (cobertura mínima de 45 dos 59 meses). Os picos isolados (Vinci Partners em 2021, Plural
-em 2018) seguem o mesmo padrão já visto na evolução dos coeficientes de gestora: grupos pequenos,
-sensíveis a um único fundo concentrado naquele mês.}
+dispersas de verdade (mesmo ranking da Tabela~8, sem filtro de cobertura --- por isso o painel de
+baixo tem gestoras com cobertura mais curta, $11$ a $33$ dos $59$ meses). O pico isolado da Vinci
+Partners em 2021 segue o mesmo padrão já visto na evolução dos coeficientes de gestora: grupo
+pequeno, sensível a um único fundo concentrado naquele mês.}
 \end{figure}
 
 % ======================================================================
