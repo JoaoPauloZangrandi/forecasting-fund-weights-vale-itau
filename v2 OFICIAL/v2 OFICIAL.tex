@@ -11,6 +11,7 @@
 \usepackage{enumitem}
 \usepackage{xcolor}
 \usepackage{placeins}
+\usepackage{longtable}
 \usepackage[hidelinks]{hyperref}
 \graphicspath{{figuras/}}
 \definecolor{azul}{RGB}{20,60,110}
@@ -477,12 +478,26 @@ mês. Média do erro por gestora é, portanto, zero por construção, não uma m
 informativo é a \textbf{dispersão} do erro dentro de cada gestora --- quanto maior, mais difícil
 o modelo (mesmo com a dummy) explica a alocação daquele grupo em VALE3.
 
-\begin{table}[h]\centering\scriptsize
-\caption{Desvio-padrão do erro $e$ de cada gestora, ordenado do mais disperso para o menos.}
-\begin{tabular}{@{}lrrc@{}}
+\begin{center}\scriptsize
+\begin{longtable}{@{}lrrc@{}}
+\caption{Desvio-padrão do erro $e$ de cada gestora, ordenado do mais disperso para o menos.}\\
 \toprule
 Gestora & Obs. & Meses & dp \\
 \midrule
+\endfirsthead
+\multicolumn{4}{l}{\textit{Tabela 7 (continuação)}}\\
+\toprule
+Gestora & Obs. & Meses & dp \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{4}{@{}p{0.9\textwidth}@{}}{\footnotesize Legacy Capital fica de fora (apenas 1
+observação, dp indefinido). Fonte: elaboração própria (\texttt{scripts/33\_erro\_por\_gestora.R},
+\texttt{34\_erro\_gestora\_dispersao.R}).}\\
+\endlastfoot
 Verde Asset Management & 429 & 59 & $0{,}0353$ \\
 Opportunity & 786 & 59 & $0{,}0349$ \\
 Vinci Partners & 1492 & 59 & $0{,}0349$ \\
@@ -503,13 +518,6 @@ Safra Asset Management & 4375 & 59 & $0{,}0226$ \\
 BNP Paribas & 1957 & 59 & $0{,}0217$ \\
 Santander Brasil Asset Management & 3157 & 59 & $0{,}0207$ \\
 Julius Baer Family Office & 1999 & 59 & $0{,}0205$ \\
-\bottomrule
-\end{tabular}
-\hspace{0.02\textwidth}
-\begin{tabular}{@{}lrrc@{}}
-\toprule
-Gestora & Obs. & Meses & dp \\
-\midrule
 Itaú & 19386 & 59 & $0{,}0199$ \\
 JGP & 1748 & 59 & $0{,}0185$ \\
 XP & 2555 & 59 & $0{,}0180$ \\
@@ -530,12 +538,8 @@ Dahlia Capital & 260 & 30 & $0{,}0068$ \\
 Bogari Capital & 114 & 11 & $0{,}0033$ \\
 Forpus Capital & 82 & 33 & $0{,}0026$ \\
 Guepardo Investimentos & 124 & 33 & $0{,}0021$ \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize Legacy Capital fica de fora (apenas 1 observação, dp indefinido). Fonte:
-elaboração própria (\texttt{scripts/33\_erro\_por\_gestora.R},
-\texttt{34\_erro\_gestora\_dispersao.R}).}
-\end{table}
+\end{longtable}
+\end{center}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{hist_erro_e_gestora_v2.pdf}
