@@ -446,124 +446,162 @@ igual, peso $=1.087{,}8$, e $13$ fundo-meses de beta do fundo com denominador de
 cota irregular), o resultado abaixo é o que sobrevive.
 
 \begin{table}[h]\centering\small
-\caption{$\Theta$ linear, amostra de todas as gestoras (59 meses, $71.569$ obs.): sem e com
+\caption{$\Theta$ logístico, amostra de todas as gestoras (59 meses, $71.569$ obs.): sem e com
 efeito fixo de gestora.}
 \begin{tabular}{@{}lrcrc@{}}
 \toprule
 Variável & Média (sem FE gestora) & Sig. & Média (com FE gestora) & Sig. \\
 \midrule
-$\alpha$                   & $0{,}03647$  & *** & $0{,}03294$  & *** \\
-$\theta^{aum}$ (tamanho)        & $-0{,}00178$ & *** & $-0{,}00171$ & *** \\
-$\theta^{cot}$ (cotistas)       & $0{,}00236$  & *** & $0{,}00118$  & *** \\
-$\theta^{fic}$ (fundo de cotas) & $-0{,}00681$ & *** & $-0{,}00621$ & *** \\
-$\theta^{flow}$ (captação/resgate) & $-0{,}00446$ & *** & $-0{,}00312$ & ** \\
-$\theta^{bf}$ (beta do fundo)   & $0{,}02536$  & *** & $0{,}02528$  & *** \\
+$\alpha$                   & $-3{,}7989$  & *** & $-3{,}9272$  & *** \\
+$\theta^{aum}$ (tamanho)        & $-0{,}0120$ & n.s. & $-0{,}0141$ & * \\
+$\theta^{cot}$ (cotistas)       & $0{,}0462$  & *** & $0{,}0331$  & *** \\
+$\theta^{fic}$ (fundo de cotas) & $-0{,}1641$ & *** & $-0{,}1559$ & *** \\
+$\theta^{flow}$ (captação/resgate) & $-0{,}1583$ & *** & $-0{,}1254$ & *** \\
+$\theta^{bf}$ (beta do fundo)   & $0{,}9052$  & *** & $0{,}8833$  & *** \\
 \midrule
-$R^2$ médio & $0{,}540$ & & $0{,}632$ & \\
+Pseudo-$R^2$ (McFadden) médio & $0{,}604$ & & $0{,}696$ & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\aha{As cinco características sobrevivem quase intactas ao entrar o efeito fixo de gestora ---
-tamanho, FIC e beta do fundo praticamente não mudam; cotistas perde metade da magnitude
-($0{,}0024\to0{,}0012$), continuando *** significativo. $R^2$ sobe de $0{,}540$ para $0{,}632$: a
-identidade da gestora tem poder explicativo próprio, mas não ``rouba'' o efeito das
-características --- o padrão da Etapa 1 generaliza para além do Itaú. Diferente da amostra
-só-Itaú (Tabela 1), aqui a captação/resgate é significativa (*** sem FE, ** com FE) --- com
-$71.569$ observações contra $8.335$, há poder estatístico para detectar um efeito de fluxo
-pequeno que na amostra menor não era distinguível de ruído.}
+\begin{table}[h]\centering\small
+\caption{Efeito marginal médio (APE) do logit com todas as gestoras, em pontos percentuais.}
+\begin{tabular}{@{}lrcrc@{}}
+\toprule
+Característica & APE (sem FE gestora) & Sig. & APE (com FE gestora) & Sig. \\
+\midrule
+Tamanho              & $-0{,}00085$ & *** & $-0{,}00080$ & *** \\
+Cotistas             & $0{,}00123$  & *** & $0{,}00079$  & *** \\
+Fundo de cotas       & $-0{,}00455$ & *** & $-0{,}00424$ & *** \\
+Captação/resgate     & $-0{,}00377$ & *** & $-0{,}00251$ & ** \\
+Beta do fundo        & $0{,}02691$  & *** & $0{,}02635$  & *** \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/20\_etapa1\_com\_gestora.R},
+\texttt{23\_etapa1\_gestora\_antes\_depois.R}).}
+\end{table}
+
+\aha{Uma diferença real em relação à versão anterior (linear): no logit, \textbf{tamanho fica bem
+mais fraco} --- n.s.\ sem FE, só marginal (*) com FE, contra ***/*** que a escala linear
+mostrava. É o coeficiente bruto (log-odds) que perde força; o APE de tamanho continua ***
+significativo nas duas colunas ($-0{,}00085$ e $-0{,}00080$), só que pequeno em magnitude --- as
+duas leituras não se contradizem, só usam testes diferentes (a variação mês a mês do coeficiente
+bruto é maior, em termos relativos, do que a da sua tradução em pontos percentuais). Cotistas,
+FIC, fluxo e beta do fundo continuam robustamente significativos nas duas especificações. Pseudo-$R^2$
+sobe de $0{,}604$ para $0{,}696$ com o efeito fixo de gestora: a identidade da gestora tem poder
+explicativo próprio, mas não ``rouba'' o efeito das características --- o padrão da Etapa 1
+generaliza para além do Itaú. Diferente da amostra só-Itaú (Tabela 1), aqui a captação/resgate é
+claramente significativa (*** sem FE, ** com FE) --- com $71.569$ observações contra $8.335$, há
+poder estatístico para detectar um efeito de fluxo pequeno que na amostra menor não era
+distinguível de ruído.}
 
 \subsection{Quanto cada gestora carrega, relativo ao Itaú}
 
-Cada $\gamma_g$ é a diferença média de peso de VALE3 entre um fundo da gestora $g$ e um fundo do
-Itaú \textbf{com as mesmas} cinco características. Positivo = carrega mais que o Itaú
-equivalente; negativo = carrega menos.
+Cada $\gamma_g$ (log-odds) é o quanto o preditor linear de um fundo da gestora $g$ se desloca em
+relação a um fundo do Itaú \textbf{com as mesmas} cinco características. Como log-odds não é
+diretamente interpretável, a tabela também traz o \textbf{APE discreto} de cada gestora: a
+diferença média de $g(\cdot)$ forçando aquele fundo a ser da gestora $g$ contra forçá-lo a ser do
+Itaú, para todos os fundos da amostra (mesma lógica do APE do FIC) --- em pontos percentuais de
+peso, positivo = carrega mais VALE3 que o Itaú equivalente, negativo = carrega menos.
+
+\textbf{Adendo de processo:} em $5$ das $40$ gestoras, o sinal do coeficiente médio (log-odds) e
+do APE médio \textbf{discordam}. Não é erro: dentro de cada mês, os dois sempre têm o mesmo sinal
+matematicamente (é uma propriedade de $g(\cdot)$ ser monótona) --- a discordância aparece só na
+\emph{média simples ao longo dos meses}, quando o coeficiente em log-odds tem alguns meses de
+magnitude extrema (comum quando a gestora tem poucos fundos naquele mês) que dominam a média bruta
+mas ficam ``espremidos'' pela função logística ao virar APE. O caso mais claro é a Kinea: negativa
+e com magnitude enorme em 2017--2018 (chegando a $-12{,}6$ em jun/2018), mas consistentemente
+positiva e modesta de 2019 em diante --- a média do coeficiente fica negativa (dominada pelos
+extremos de 2017--2018), a média do APE fica positiva (o período mais longo e mais estável de
+2019--2021 pesa mais depois de passar pela função logística). Os outros $4$ casos (JGP, ARX,
+Vinci Partners, Safra) têm APE tão perto de zero que o sinal é irrelevante na prática. Por isso a
+tabela é ordenada pelo \textbf{APE}, a medida mais robusta a esses extremos.
 
 \begin{center}\scriptsize
-\begin{longtable}{@{}lrrc@{}}
-\caption{Coeficiente de cada gestora vs.\ Itaú (referência), ordenado do maior para o menor.}\\
+\begin{longtable}{@{}lrrcrc@{}}
+\caption{Coeficiente (log-odds) e APE (pontos percentuais) de cada gestora vs.\ Itaú
+(referência), ordenado pelo APE do maior para o menor.}\\
 \toprule
-Gestora & Meses & Coef. & Sig. \\
+Gestora & Meses & Coef. & Sig. & APE & Sig. \\
 \midrule
 \endfirsthead
-\multicolumn{4}{l}{\textit{Tabela 8 (continuação)}}\\
+\multicolumn{6}{l}{\textit{Tabela 8 (continuação)}}\\
 \toprule
-Gestora & Meses & Coef. & Sig. \\
+Gestora & Meses & Coef. & Sig. & APE & Sig. \\
 \midrule
 \endhead
 \midrule
-\multicolumn{4}{r}{\textit{continua na próxima página}}\\
+\multicolumn{6}{r}{\textit{continua na próxima página}}\\
 \endfoot
 \bottomrule
-\multicolumn{4}{@{}p{0.9\textwidth}@{}}{\footnotesize ``Meses'' = quantos dos 59 meses aquela
-gestora teve dados suficientes para entrar na regressão (nem toda gestora tem VALE3 o período
-inteiro). $t$ e significância: teste ingênuo sobre a média dos coeficientes mensais, mesmo estilo
-das demais tabelas. Fonte: elaboração própria (\texttt{scripts/20\_etapa1\_com\_gestora.R},
+\multicolumn{6}{@{}p{0.95\textwidth}@{}}{\footnotesize ``Meses'' = quantos dos 59 meses aquela
+gestora teve dados suficientes para entrar na regressão. $t$ e significância: teste ingênuo sobre
+a média mensal (do coeficiente e do APE, respectivamente), mesmo estilo das demais tabelas. Fonte:
+elaboração própria (\texttt{scripts/20\_etapa1\_com\_gestora.R},
 \texttt{21\_coeficientes\_gestora.R}).}\\
 \endlastfoot
-Legacy Capital & 1 & $+0{,}1288$ & --- \\
-Núcleo Capital & 4 & $+0{,}0243$ & *** \\
-Occam Brasil & 59 & $+0{,}0230$ & *** \\
-Caixa & 59 & $+0{,}0179$ & *** \\
-Western Asset & 59 & $+0{,}0179$ & *** \\
-AZ Quest & 56 & $+0{,}0172$ & *** \\
-Gávea Investimentos & 34 & $+0{,}0157$ & *** \\
-Sharp Capital & 59 & $+0{,}0144$ & *** \\
-Truxt Investimentos & 42 & $+0{,}0131$ & *** \\
-Kinea Investimentos & 54 & $+0{,}0119$ & *** \\
-Bradesco Asset Management & 59 & $+0{,}0113$ & *** \\
-Plural & 59 & $+0{,}0110$ & *** \\
-BB Asset Management & 59 & $+0{,}0103$ & *** \\
-Claritas Investimentos & 59 & $+0{,}0094$ & *** \\
-Santander Brasil Asset Management & 59 & $+0{,}0088$ & *** \\
-Absolute Investimentos & 28 & $+0{,}0085$ & n.s. \\
-BNP Paribas & 59 & $+0{,}0078$ & *** \\
-Opportunity & 59 & $+0{,}0076$ & ** \\
-SPX Capital & 59 & $+0{,}0054$ & * \\
-Verde Asset Management & 59 & $+0{,}0047$ & * \\
-Real Investor & 47 & $+0{,}0038$ & n.s. \\
-Credit Suisse & 59 & $+0{,}0037$ & *** \\
-Dahlia Capital & 30 & $+0{,}0032$ & n.s. \\
-JGP & 59 & $+0{,}0026$ & n.s. \\
-Safra Asset Management & 59 & $+0{,}0017$ & ** \\
-ARX Investimentos & 57 & $-0{,}0009$ & n.s. \\
-BTG Pactual & 59 & $-0{,}0017$ & *** \\
-Vinci Partners & 59 & $-0{,}0023$ & n.s. \\
-XP & 59 & $-0{,}0025$ & *** \\
-Daycoval Asset Management & 57 & $-0{,}0062$ & *** \\
-Julius Baer Family Office & 59 & $-0{,}0073$ & *** \\
-TNA Gestão Patrimonial & 59 & $-0{,}0100$ & *** \\
-Kapitalo Investimentos & 52 & $-0{,}0105$ & *** \\
-Ibiuna Investimentos & 45 & $-0{,}0141$ & *** \\
-Squadra Investimentos & 45 & $-0{,}0209$ & *** \\
-Atmos Capital & 33 & $-0{,}0238$ & *** \\
-Bogari Capital & 11 & $-0{,}0278$ & *** \\
-Constellation Asset Management & 25 & $-0{,}0316$ & *** \\
-Forpus Capital & 33 & $-0{,}0391$ & *** \\
-Guepardo Investimentos & 33 & $-0{,}0602$ & *** \\
+Legacy Capital & 1 & $+2{,}3422$ & --- & $+0{,}16960$ & --- \\
+Núcleo Capital & 4 & $+1{,}1618$ & *** & $+0{,}04666$ & *** \\
+Occam Brasil & 59 & $+0{,}6456$ & *** & $+0{,}02703$ & *** \\
+Truxt Investimentos & 42 & $+0{,}3892$ & *** & $+0{,}02071$ & *** \\
+Plural & 59 & $+0{,}4350$ & *** & $+0{,}02050$ & *** \\
+AZ Quest & 56 & $+0{,}2826$ & *** & $+0{,}01437$ & *** \\
+Absolute Investimentos & 28 & $+0{,}1246$ & n.s. & $+0{,}01413$ & ** \\
+Sharp Capital & 59 & $+0{,}2679$ & *** & $+0{,}01315$ & *** \\
+Real Investor & 47 & $+0{,}2455$ & ** & $+0{,}01275$ & *** \\
+SPX Capital & 59 & $+0{,}1818$ & * & $+0{,}01230$ & *** \\
+Western Asset & 59 & $+0{,}3688$ & *** & $+0{,}01156$ & *** \\
+Caixa & 59 & $+0{,}3634$ & *** & $+0{,}01113$ & *** \\
+Dahlia Capital & 30 & $+0{,}1551$ & n.s. & $+0{,}01070$ & ** \\
+Claritas Investimentos & 59 & $+0{,}2810$ & *** & $+0{,}01058$ & *** \\
+Opportunity & 59 & $+0{,}1438$ & n.s. & $+0{,}01040$ & *** \\
+BB Asset Management & 59 & $+0{,}3277$ & *** & $+0{,}00909$ & *** \\
+Credit Suisse & 59 & $+0{,}1557$ & ** & $+0{,}00892$ & *** \\
+Bradesco Asset Management & 59 & $+0{,}2945$ & *** & $+0{,}00886$ & *** \\
+Santander Brasil Asset Management & 59 & $+0{,}2252$ & *** & $+0{,}00839$ & *** \\
+Kinea Investimentos & 54 & $-0{,}6161$ & * & $+0{,}00555$ & * \\
+BNP Paribas & 59 & $+0{,}1602$ & *** & $+0{,}00505$ & *** \\
+Verde Asset Management & 59 & $+0{,}0688$ & n.s. & $+0{,}00402$ & ** \\
+JGP & 59 & $-0{,}0275$ & n.s. & $+0{,}00153$ & n.s. \\
+ARX Investimentos & 57 & $-0{,}4219$ & * & $+0{,}00029$ & n.s. \\
+Vinci Partners & 59 & $-0{,}2411$ & ** & $+0{,}00007$ & n.s. \\
+Safra Asset Management & 59 & $-0{,}0973$ & * & $+0{,}00000$ & n.s. \\
+BTG Pactual & 59 & $-0{,}0914$ & * & $-0{,}00078$ & n.s. \\
+Julius Baer Family Office & 59 & $-0{,}0491$ & n.s. & $-0{,}00140$ & * \\
+Ibiuna Investimentos & 45 & $-0{,}5727$ & * & $-0{,}00425$ & n.s. \\
+Daycoval Asset Management & 57 & $-1{,}0280$ & *** & $-0{,}00523$ & *** \\
+XP & 59 & $-0{,}2856$ & *** & $-0{,}00562$ & *** \\
+TNA Gestão Patrimonial & 59 & $-0{,}3059$ & *** & $-0{,}00751$ & *** \\
+Squadra Investimentos & 45 & $-0{,}7695$ & * & $-0{,}00830$ & *** \\
+Atmos Capital & 33 & $-0{,}4879$ & *** & $-0{,}01048$ & *** \\
+Constellation Asset Management & 25 & $-1{,}9235$ & *** & $-0{,}01224$ & * \\
+Gávea Investimentos & 34 & $-0{,}9917$ & *** & $-0{,}01274$ & *** \\
+Bogari Capital & 11 & $-0{,}6110$ & *** & $-0{,}01484$ & *** \\
+Kapitalo Investimentos & 52 & $-1{,}7679$ & *** & $-0{,}01790$ & *** \\
+Forpus Capital & 33 & $-2{,}4478$ & *** & $-0{,}02059$ & *** \\
+Guepardo Investimentos & 33 & $-4{,}6030$ & *** & $-0{,}02944$ & *** \\
 \end{longtable}
 \end{center}
 
 \textbf{Leitura:} gestoras grandes de varejo/plataforma (Caixa, Bradesco, BB, Santander, Western
 Asset) carregam \emph{mais} VALE3 que o Itaú equivalente; gestoras boutique de gestão
-concentrada/high-conviction (Guepardo, Forpus, Constellation, Bogari, Atmos, Squadra) carregam
-\emph{bem menos}. Não é uma medida de causalidade --- é o resíduo estrutural, depois de
-controlar pelas 5 características, e a leitura mais plausível é filosofia de gestão: carteiras
-concentradas tendem a evitar ``o nome que todo mundo tem'' a menos que apostem nele
-especificamente, diferente de uma plataforma de varejo mais próxima de uma composição ampla.
+concentrada/high-conviction (Guepardo, Forpus, Kapitalo, Bogari, Gávea) carregam \emph{bem
+menos}. Não é uma medida de causalidade --- é o resíduo estrutural, depois de controlar pelas 5
+características, e a leitura mais plausível é filosofia de gestão: carteiras concentradas tendem
+a evitar ``o nome que todo mundo tem'' a menos que apostem nele especificamente, diferente de uma
+plataforma de varejo mais próxima de uma composição ampla.
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_coef_gestora_evolucao.pdf}
-\caption{Evolução mensal do coeficiente de gestora (vs.\ Itaú), para as 5 gestoras com coeficiente
-mais positivo e as 5 com coeficiente mais negativo \textbf{de verdade} (mesmo ranking da
+\caption{Evolução mensal do APE de gestora (vs.\ Itaú, em pontos percentuais), para as 5 gestoras
+com APE mais positivo e as 5 com APE mais negativo \textbf{de verdade} (mesmo ranking da
 Tabela~8, sem filtro de cobertura). Duas delas têm pouquíssimos meses --- Legacy Capital ($1$ mês,
 aparece como ponto isolado) e Núcleo Capital ($4$ meses) --- porque são, de fato, as gestoras com
-o coeficiente médio mais alto; não há ``evolução'' de verdade pra mostrar nesses dois casos
-específicos, só o valor pontual. O pico da Constellation em mar/2019 é o mesmo padrão de sempre:
-naquele mês só havia $1$ fundo da casa na amostra. Já o pico da Occam Brasil em 2021 \textbf{não}
-é um artefato de grupo pequeno --- tinha $20$ fundos naquele mês, com pesos variados (vários
-entre $16\%$ e $16{,}4\%$) --- reflete uma mudança de alocação mais ampla da casa, não investigada
-em detalhe aqui.}
+o APE médio mais alto; não há ``evolução'' de verdade pra mostrar nesses dois casos específicos,
+só o valor pontual. O pico da Kapitalo em jul/2018 não é erro de dado: naquele mês, um único
+fundo da casa concentrava $37\%$ em VALE3 dentro de um grupo pequeno ($13$ fundos), o suficiente
+para puxar a estimativa mensal daquele grupo --- ilustra como esses coeficientes podem ser
+voláteis mês a mês quando o grupo tem poucos fundos.}
 \end{figure}
 
 % ======================================================================
