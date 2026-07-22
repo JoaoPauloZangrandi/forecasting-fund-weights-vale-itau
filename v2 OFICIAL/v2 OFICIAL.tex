@@ -324,6 +324,51 @@ início do teste (2020-01). As duas linhas seguem coladas dos dois lados do cort
 vantagem do ajuste parcial é pequena e consistente, não concentrada num único mês.}
 \end{figure}
 
+\subsection{RMSE flexível: o mesmo teste, em vários horizontes}
+
+\pergunta{A vantagem do ajuste parcial sobre a ingênua (Tabela~4) é específica de prever 1 mês à
+frente, ou se mantém prevendo 2, 3, 6, 12 meses à frente?}
+
+Mesmo esquema treino/teste da Tabela~4 (treino $<$ 2020-01, teste $\geq$ 2020-01), repetido para
+cada horizonte $h\in\{1,2,3,6,12\}$ meses: $dw_h=w_{i,t+h}-w_{i,t}$, $\widehat\lambda_h$ estimado
+por MQO só no treino, alvo $w^*_{i,t}$ sempre fixado em $t$ (não temos características futuras
+para recalculá-lo). Modelo ingênuo continua prevendo zero mudança.
+
+\begin{table}[h]\centering\small
+\caption{RMSE fora da amostra (2020--2021), ajuste parcial vs. ingênua, por horizonte.}
+\begin{tabular}{@{}rrrrrrr@{}}
+\toprule
+$h$ (meses) & $\widehat\lambda_h$ & Meses teste & RMSE ajuste & RMSE ingênua & Margem & Vence \\
+\midrule
+1  & $0{,}1951$ & 23 & $0{,}01560$ & $0{,}01585$ & $1{,}5\%$ & $61\%$ \\
+2  & $0{,}2502$ & 22 & $0{,}01904$ & $0{,}01957$ & $2{,}7\%$ & $59\%$ \\
+3  & $0{,}2604$ & 21 & $0{,}02087$ & $0{,}02175$ & $4{,}1\%$ & $57\%$ \\
+6  & $0{,}3191$ & 18 & $0{,}02472$ & $0{,}02577$ & $4{,}1\%$ & $78\%$ \\
+12 & $0{,}4059$ & 12 & $0{,}02943$ & $0{,}02960$ & $0{,}6\%$ & $67\%$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize ``Margem'' = redução percentual de RMSE do ajuste parcial sobre a
+ingênua; ``Vence'' = \% dos meses de teste em que o ajuste parcial tem RMSE menor naquele mês.
+Fonte: elaboração própria (\texttt{scripts/36\_rmse\_multihorizonte.R}).}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{fig_rmse_multihorizonte_v2.pdf}
+\caption{RMSE fora da amostra, ajuste parcial vs.\ ingênua, por horizonte de previsão.}
+\end{figure}
+
+\aha{O ajuste parcial vence a ingênua em RMSE em \textbf{todos} os 5 horizontes testados --- a
+vantagem não é um artefato de olhar só 1 mês à frente. Mas a margem não é estável: cresce de
+$1{,}5\%$ ($h=1$) para um pico de $4{,}1\%$ ($h=3$ e $h=6$) e praticamente desaparece em $h=12$
+($0{,}6\%$, com apenas $12$ meses de teste disponíveis --- amostra pequena, ler com cautela).
+$\widehat\lambda_h$ cresce com o horizonte ($0{,}195\to0{,}406$), mas bem mais devagar do que uma
+composição geométrica simples do $\lambda_1$ previria (12 aplicações sucessivas de
+$\lambda_1=0{,}195$ fechariam $\approx93\%$ do hiato, não os $\approx41\%$ observados) --- sinal
+de que o
+ajuste parcial não é um processo de decaimento a taxa constante: o alvo $w^*$ também se move no
+caminho, e um $\lambda$ estimado separadamente para cada horizonte capta isso melhor do que
+projetar $\lambda_1$ para frente.}
+
 % ======================================================================
 \FloatBarrier
 \section{Extensão: mais gestoras}
@@ -392,7 +437,7 @@ equivalente; negativo = carrega menos.
 Gestora & Meses & Coef. & Sig. \\
 \midrule
 \endfirsthead
-\multicolumn{4}{l}{\textit{Tabela 6 (continuação)}}\\
+\multicolumn{4}{l}{\textit{Tabela 7 (continuação)}}\\
 \toprule
 Gestora & Meses & Coef. & Sig. \\
 \midrule
@@ -489,7 +534,7 @@ o modelo (mesmo com a dummy) explica a alocação daquele grupo em VALE3.
 Gestora & Obs. & Meses & dp \\
 \midrule
 \endfirsthead
-\multicolumn{4}{l}{\textit{Tabela 7 (continuação)}}\\
+\multicolumn{4}{l}{\textit{Tabela 8 (continuação)}}\\
 \toprule
 Gestora & Obs. & Meses & dp \\
 \midrule
@@ -744,7 +789,7 @@ Cód. fundo & Gestora & Meses & MAE \\
 \aha{A distribuição é bem assimétrica: mediana de MAE $=0{,}0115$, mas o percentil $90$ já é
 $0{,}0294$ e o fundo mais extremo chega a $0{,}251$ --- mais de $20\times$ a mediana. Como
 checagem de convergência com a Seção~\ref{sec:gestoras}: a média do MAE dos fundos elegíveis de
-cada gestora tem correlação de $0{,}92$ com o desvio-padrão do erro daquela gestora (Tabela~7)
+cada gestora tem correlação de $0{,}92$ com o desvio-padrão do erro daquela gestora (Tabela~8)
 --- os dois níveis de análise (gestora e fundo) apontam para a mesma leitura, o que reforça que a
 dispersão por gestora não é ruído de agregação.}
 
@@ -779,8 +824,11 @@ $0{,}532$ (era $0{,}166$). Custo: cobertura cai para 59 meses (fev/2017 em diant
 alvo mais preciso atenua menos o coeficiente. Erro $u$ com comportamento parecido ao da versão
 anterior.
 \item \textbf{Etapa 3:} $\lambda$ treinado em 2017--2019 vence a ingênua fora da amostra
-(2020--2021) em RMSE, por margem pequena mas consistente ($1{,}6\%$; vence em $61\%$ dos meses
-de teste) --- resultado qualitativamente igual ao da versão anterior.
+(2020--2021) em RMSE, por margem pequena mas consistente ($1{,}5\%$; vence em $61\%$ dos meses
+de teste) --- resultado qualitativamente igual ao da versão anterior. Flexibilizando para outros
+horizontes ($h=2,3,6,12$ meses), a vantagem se mantém nos 5 horizontes testados, com margem
+maior em $h=3$-$6$ ($\approx4\%$) e quase sumindo em $h=12$ (amostra de teste pequena, só 12
+meses).
 \item \textbf{Extensão de gestoras (Seção~\ref{sec:gestoras}):} o padrão da Etapa 1 generaliza
 para além do Itaú --- $2.820$ fundos, $41$ grupos de gestora, as cinco características
 sobrevivem quase intactas ao entrar o efeito fixo de gestora ($R^2$ $0{,}540\to0{,}632$).
