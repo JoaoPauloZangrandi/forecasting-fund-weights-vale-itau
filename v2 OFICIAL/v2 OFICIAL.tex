@@ -630,42 +630,59 @@ fundos, $501$ ativos.
 \subsection{Regressão por ativo e por mês: o padrão de VALE3 generaliza?}
 
 \equacao
-$$\text{peso}_{i,n,t} = \alpha_{n,t} + \theta^{aum}_{n,t}z(\ln AUM_i) + \theta^{cot}_{n,t}z(\ln\text{cot}_i)
-+ \theta^{fic}_{n,t}FIC_i + \theta^{flow}_{n,t}(\text{fluxo/AUM})_i + \theta^{bf}_{n,t}z(\beta^{fundo}_i) + \text{erro}$$
-uma regressão por \textbf{célula (ativo $n$, mês $t$)} com $\geq15$ fundos holders --- mesma
-equação da Etapa 1, agora estimada ativo a ativo. $z(\cdot)$ usa a distribuição de
+\begin{align*}
+\text{peso}_{i,n,t} &= g\big(x_{i,n,t}'\theta_{n,t}\big) + \text{erro} \\
+x'\theta &= \alpha_{n,t} + \theta^{aum}_{n,t}z(\ln AUM_i) + \theta^{cot}_{n,t}z(\ln\text{cot}_i)
++ \theta^{fic}_{n,t}FIC_i + \theta^{flow}_{n,t}\Big(\tfrac{\text{fluxo}}{AUM}\Big)_i
++ \theta^{bf}_{n,t}z(\beta^{fundo}_i)
+\end{align*}
+uma regressão logística por \textbf{célula (ativo $n$, mês $t$)} com $\geq15$ fundos holders ---
+mesma equação da Etapa 1, agora estimada ativo a ativo. $z(\cdot)$ usa a distribuição de
 (fundo,mês) \textbf{únicos}, não repetida por ativo (senão um fundo com muitas posições pesaria
-mais na padronização). Resultado: $13.957$ células estimadas, $430$ ativos, $236$ com histórico
-suficiente ($\geq24$ meses) para comparar com VALE3.
+mais na padronização). Resultado: $13.938$ células estimadas ($19$ não convergiram, excluídas),
+$430$ ativos, $236$ com histórico suficiente ($\geq24$ meses) para comparar com VALE3.
+Pseudo-$R^2$ médio de $0{,}441$.
+
+\textbf{Adendo de processo:} em $12$ das $13.957$ células ($0{,}09\%$), o peso de todos os fundos
+daquele ativo-mês era essencialmente zero (posição residual/legado, ex.: Cia Hering set/2021, $17$
+fundos, peso $=0$ para todos) --- o denominador do pseudo-$R^2$ de McFadden colapsa nesses casos e
+o valor explode para $-\infty$, não por erro de ajuste, mas por degenerescência numérica de uma
+variável-resposta sem variância. Corrigido com um piso em $-1$ só nessas células (não afeta
+coeficiente nem APE, só a estatística de ajuste).
+
+A generalização é medida em dois planos, como na Seção~\ref{sec:gestoras}: pelo \textbf{sinal do
+coeficiente} (log-odds) e pelo \textbf{sinal do APE} (pontos percentuais, mais robusto a
+extremos).
 
 \begin{table}[h]\centering\small
 \caption{Generalização do padrão de VALE3 entre os 236 ativos com histórico suficiente.}
-\begin{tabular}{@{}lrr@{}}
+\begin{tabular}{@{}lrrr@{}}
 \toprule
-Característica & \% dos ativos com mesmo sinal que VALE3 & Percentil de VALE3 \\
+Característica & \% mesmo sinal (coef.) & \% mesmo sinal (APE) & Percentil de VALE3 (APE) \\
 \midrule
-Tamanho              & $62{,}3\%$ & $1{,}7$ \\
-Cotistas             & $78{,}8\%$ & $98{,}3$ \\
-Fundo de cotas        & $54{,}2\%$ & $0{,}8$ \\
-Captação/resgate     & $43{,}2\%$ (pior que o acaso) & $5{,}9$ \\
-Beta do fundo        & $\mathbf{97{,}0\%}$ & $99{,}6$ \\
+Tamanho              & $55{,}9\%$ & $50{,}8\%$ (acaso) & $5{,}9$ \\
+Cotistas             & $78{,}0\%$ & $73{,}3\%$ & $95{,}3$ \\
+Fundo de cotas        & $55{,}9\%$ & $50{,}8\%$ (acaso) & $5{,}1$ \\
+Captação/resgate     & $30{,}9\%$ (pior que o acaso) & $33{,}5\%$ (pior que o acaso) & $5{,}5$ \\
+Beta do fundo        & $97{,}0\%$ & $\mathbf{96{,}2\%}$ & $99{,}6$ \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/25b} a \texttt{30}).}
 \end{table}
 
-\aha{Diferente do que a v1 encontrou (tamanho/cotistas/FIC generalizando em $88$--$98\%$ dos
-ativos), aqui --- com o beta do fundo na conta e o universo ampliado para $41$ gestoras ---
-tamanho e fundo de cotas generalizam bem mais fraco, e captação/resgate generaliza \textbf{pior
-que o acaso} (a maioria dos ativos tem sinal oposto ao de VALE3 para essa variável). O beta do
-fundo é, disparado, o padrão mais universal: $97\%$ dos ativos têm o mesmo sinal de VALE3. VALE3
-continua extremo em quase toda dimensão (percentis abaixo de $6$ ou acima de $98$), inclusive no
-beta do fundo, onde fica no topo da distribuição inteira.}
+\aha{Pelo APE (a medida mais confiável), tamanho e fundo de cotas generalizam \textbf{no nível do
+acaso} ($50{,}8\%$, o mesmo que uma moeda) --- mais fraco do que o sinal do coeficiente bruto já
+sugeria ($55{,}9\%$), e bem mais fraco do que a v1 encontrou (tamanho/cotistas/FIC generalizando
+em $88$--$98\%$ dos ativos). Captação/resgate generaliza \textbf{pior que o acaso} nos dois
+planos. O beta do fundo é, disparado, o padrão mais universal: $96$--$97\%$ dos ativos têm o
+mesmo sinal de VALE3, nas duas medidas. VALE3 continua extremo em quase toda dimensão do APE
+(percentis abaixo de $6$ ou acima de $95$), inclusive no beta do fundo, onde fica no topo da
+distribuição inteira.}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.92\textwidth]{fig_multiativo_dist_v2.pdf}
-\caption{Distribuição do coeficiente médio de cada característica entre os 236 ativos com
-histórico suficiente (linha vermelha: VALE3; linha tracejada: mediana entre ativos).}
+\caption{Distribuição do APE médio de cada característica entre os 236 ativos com histórico
+suficiente (linha vermelha: VALE3; linha tracejada: mediana entre ativos).}
 \end{figure}
 
 \subsection{Checagem complementar: uma única regressão com efeito-fixo de ativo e de mês}

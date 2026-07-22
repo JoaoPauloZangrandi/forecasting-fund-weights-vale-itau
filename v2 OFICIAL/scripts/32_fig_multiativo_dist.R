@@ -5,10 +5,11 @@ FIG  <- file.path(REPO, "v2 OFICIAL/figuras")
 avg <- fread(file.path(REPO, "v2 OFICIAL/data/theta_media_ativo.csv"))
 vale <- avg[ativo == "VALE ON N1 - VALE3"]
 
+# LOGIT: distribuicao do APE (pontos percentuais), nao mais do coeficiente linear bruto
 pdf(file.path(FIG, "fig_multiativo_dist_v2.pdf"), width = 9, height = 6)
 par(mfrow = c(2,3), mar = c(3,3,2.5,1))
-vars <- c(b_aum="tamanho", b_cot="cotistas", b_fic="fundo de cotas",
-          b_flow="captação/resgate", b_betaf="beta do fundo")
+vars <- c(ape_aum="tamanho", ape_cot="cotistas", ape_fic="fundo de cotas",
+          ape_flow="captação/resgate", ape_betaf="beta do fundo")
 for (v in names(vars)) {
   hist(avg[[v]], breaks = 30, col = "#B0B8C1", border = "white",
        main = vars[v], xlab = "", ylab = "")
