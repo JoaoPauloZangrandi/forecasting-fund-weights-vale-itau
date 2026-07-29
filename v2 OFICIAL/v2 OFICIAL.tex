@@ -1608,6 +1608,22 @@ ruído onde não tinha erro pra corrigir. Pro robô: essas $4$ gestoras merecem 
 não são bons alvos pra um modelo baseado em ajuste parcial, seja porque decidem rápido demais
 (Guepardo, Núcleo Capital, XP) ou porque simplesmente não se mexem (Plural).}
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{fig_multihorizonte_gestora_rmse_margem.pdf}
+\caption{Cada ponto é uma gestora: RMSE fora da amostra em $h{=}1$ (eixo $x$, dificuldade
+absoluta) vs.\ margem sobre a ingênua em $h{=}1$ (eixo $y$, negativo = ajuste parcial piora).
+Rótulos legíveis só nos extremos --- as Tabelas~25 e~26 têm os valores exatos das $41$.}
+\end{figure}
+
+\aha{O gráfico deixa visível que os $4$ casos de margem negativa \textbf{não} formam um grupo
+único --- estão espalhados em posições bem diferentes no eixo $x$. Guepardo fica no extremo
+direito (RMSE mais alto de todos) só ligeiramente abaixo de zero; Plural e XP ficam no extremo
+esquerdo (RMSE baixíssimo) bem mais abaixo de zero; Legacy Capital (cobertura mínima, ver
+Adendo de processo anterior) é o ponto mais negativo do gráfico. Não existe uma relação simples
+entre ``difícil de prever'' e ``a fórmula ajuda'' --- os dois eixos capturam problemas
+genuinamente diferentes, reforçando que o robô precisa olhar as duas medidas separadamente, não
+só uma proxy da outra.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
