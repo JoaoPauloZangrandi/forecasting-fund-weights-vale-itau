@@ -11,6 +11,11 @@
 # Gera a figura para h=1 (a que entrou no documento, Figura 14) E h=3
 # (pedido de acompanhamento do Joao) -- mesma funcao, so muda o horizonte.
 #
+# Joao pediu a MESMA ESCALA nos dois graficos, pra comparar visualmente sem
+# risco de leitura errada (um ponto "mais a direita" em h=3 so e comparavel
+# a h=1 se os eixos forem identicos). xlim/ylim calculados uma vez, com os
+# dados dos DOIS horizontes juntos, e reaplicados nas duas figuras.
+#
 # So rotula os extremos (mesma regra da Fig 12): top-6 por |RMSE| ou top-6
 # por margem mais negativa, pra nao poluir o grafico com as 41 gestoras.
 # RODAR COM CAMINHO ABSOLUTO.
@@ -21,6 +26,11 @@ FIG  <- file.path(REPO, "v2 OFICIAL/figuras")
 
 W <- fread(file.path(REPO, "v2 OFICIAL/data/etapa3_multiativo_gestora_multihorizonte.csv"))
 cat("Gestoras:", nrow(W), "\n")
+
+xlim_comum <- range(c(W$rmse_h1, W$rmse_h3), finite = TRUE)
+ylim_comum <- range(c(W$margem_h1, W$margem_h3), finite = TRUE)
+cat("Escala comum -- RMSE:", paste(round(xlim_comum,4), collapse=" a "),
+    "| Margem:", paste(round(ylim_comum,1), collapse=" a "), "\n")
 
 faz_grafico <- function(h) {
   col_rmse <- paste0("rmse_h", h); col_margem <- paste0("margem_h", h)
@@ -35,6 +45,7 @@ faz_grafico <- function(h) {
   pdf(arq, width = 7, height = 6)
   par(mar = c(4,4,1,1))
   plot(rmse[ok], margem[ok], pch = 16, col = "#2E5C8A", cex = 1.1,
+       xlim = xlim_comum, ylim = ylim_comum,
        xlab = sprintf("RMSE fora da amostra, h=%d (dificuldade absoluta)", h),
        ylab = sprintf("margem vs. ingênua, h=%d (%%) -- negativo = ajuste parcial piora", h))
   abline(h = 0, col = "grey70", lty = 2)
