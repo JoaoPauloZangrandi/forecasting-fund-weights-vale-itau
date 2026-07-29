@@ -65,9 +65,21 @@ fe_g <- fixef(f)$gestora_grupo
 fe_g <- data.table(gestora = names(fe_g), fe = as.numeric(fe_g))
 itau_fe <- fe_g[gestora == "Itau", fe]
 fe_g[, fe_vs_itau := fe - itau_fe]
+
+# ---- cobertura por gestora (n de fundos/meses) -- achado de auditoria: sem
+# essa coluna, o ranking do efeito-fixo esconde que os extremos tendem a ser
+# gestoras com poucos fundos (mais ruido na estimativa, nao necessariamente
+# um efeito economico maior). Correlacao checada: n_fundos vs |fe_vs_itau|
+# = -0.47 (ou -0.56 com log(n_fundos)) -- real, nao coincidencia dos
+# primeiros nomes do ranking.
+cov_g <- dd_usado[, .(n_fundos = uniqueN(cod_fundo), n_meses = uniqueN(ym)), by = gestora_grupo]
+setnames(cov_g, "gestora_grupo", "gestora")
+fe_g <- merge(fe_g, cov_g, by = "gestora")
 setorder(fe_g, -fe_vs_itau)
-cat("\n===== Efeito-fixo de gestora (log-odds), centrado no Itau =====\n")
+cat("\n===== Efeito-fixo de gestora (log-odds), centrado no Itau, com cobertura =====\n")
 print(fe_g)
+cat("\nCorrelacao n_fundos vs |fe_vs_itau|:", round(cor(fe_g$n_fundos, abs(fe_g$fe_vs_itau)),3),
+    "| com log(n_fundos):", round(cor(log(fe_g$n_fundos), abs(fe_g$fe_vs_itau)),3), "\n")
 
 fwrite(res_5, file.path(REPO, "v2 OFICIAL/data/pooled_fe3way_multiativo_chars.csv"))
 fwrite(fe_g, file.path(REPO, "v2 OFICIAL/data/pooled_fe3way_multiativo_gestora.csv"))
