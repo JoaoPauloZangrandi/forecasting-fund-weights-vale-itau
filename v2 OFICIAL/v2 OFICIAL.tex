@@ -1428,6 +1428,101 @@ forma parecida à versão só-VALE3 ($0{,}075\to0{,}346$, vs.\ $0{,}195\to0{,}40
 que uma composição geométrica simples previria, mesma leitura de antes: o alvo $w^*$ também se
 move no caminho, não é um decaimento a taxa constante.}
 
+\subsubsection*{Por gestora, em todos os ativos e vários horizontes: fechando o material do robô}
+
+\pergunta{A Tabela~22 (VALE3, $h=3$) mostrou qual gestora é mais difícil de prever fora da
+amostra, mas só numa ação. O material mais completo pra decidir o desenho do robô
+caça-replicantes precisa de duas coisas a mais: \textbf{todos} os ativos (não só VALE3) e
+\textbf{vários horizontes} (pra saber se o ranking de ``quem é mais previsível'' é estável ou
+muda dependendo de quanto tempo à frente se tenta prever).}
+
+Mesmo esquema de sempre (equação~\eqref{eq:pa}, $\lambda_h$ único por horizonte, estimado só no
+treino), agora agregado por \textbf{gestora} em vez de pooled --- reaproveita os pares $(t,t+h)$
+já calculados nesta seção para $h=1$ e $h=3$, soma $h=6$ e $h=12$.
+
+\textbf{Adendo de processo:} a primeira tentativa de montar a tabela larga (uma coluna por
+horizonte) usou `gestora + nº de fundos'' como chave pra combinar os 4 horizontes --- bug real: o
+nº de fundos com par $(t,t+h)$ válido \textbf{muda} de horizonte pra horizonte (quanto maior o
+$h$, menos pares sobram), então usar as duas colunas juntas fragmentava cada gestora em várias
+linhas parciais. Corrigido combinando só por gestora, com o nº de fundos de $h=1$ guardado à
+parte como referência de cobertura.
+
+\begin{center}\scriptsize
+\begin{longtable}{@{}lrrrrr@{}}
+\caption{RMSE fora da amostra por gestora, todos os 430 ativos, em 4 horizontes --- ordenado do
+mais ao menos errante em $h=1$.}\\
+\toprule
+Gestora & Fundos ($h{=}1$) & RMSE $h{=}1$ & RMSE $h{=}3$ & RMSE $h{=}6$ & RMSE $h{=}12$ \\
+\midrule
+\endfirsthead
+\multicolumn{6}{l}{\textit{Tabela 25 (continuação)}}\\
+\toprule
+Gestora & Fundos ($h{=}1$) & RMSE $h{=}1$ & RMSE $h{=}3$ & RMSE $h{=}6$ & RMSE $h{=}12$ \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{6}{@{}p{0.95\textwidth}@{}}{\footnotesize Fonte: elaboração própria
+(\texttt{scripts/44\_etapa3\_multiativo\_gestora\_multihorizonte.R}).}\\
+\endlastfoot
+Guepardo Investimentos & 10 & $0{,}01447$ & $0{,}02392$ & $0{,}03569$ & $0{,}06177$ \\
+Ibiuna Investimentos & 7 & $0{,}01331$ & $0{,}02130$ & $0{,}02491$ & $0{,}02828$ \\
+AZ Quest & 22 & $0{,}01096$ & $0{,}01461$ & $0{,}01649$ & $0{,}01876$ \\
+Núcleo Capital & 17 & $0{,}01045$ & $0{,}01830$ & $0{,}02490$ & $0{,}03539$ \\
+Squadra Investimentos & 14 & $0{,}01007$ & $0{,}01390$ & $0{,}01681$ & $0{,}02127$ \\
+Forpus Capital & 3 & $0{,}00991$ & $0{,}01430$ & $0{,}01641$ & $0{,}01661$ \\
+Sharp Capital & 34 & $0{,}00813$ & $0{,}01295$ & $0{,}01709$ & $0{,}02092$ \\
+Truxt Investimentos & 31 & $0{,}00812$ & $0{,}01261$ & $0{,}01596$ & $0{,}01952$ \\
+Legacy Capital & 1 & $0{,}00800$ & --- & --- & --- \\
+ARX Investimentos & 12 & $0{,}00792$ & $0{,}01084$ & $0{,}01262$ & $0{,}01515$ \\
+Vinci Partners & 48 & $0{,}00753$ & $0{,}01053$ & $0{,}01031$ & $0{,}01272$ \\
+Kinea Investimentos & 4 & $0{,}00717$ & $0{,}01160$ & $0{,}01515$ & $0{,}01543$ \\
+Constellation Asset Management & 26 & $0{,}00693$ & $0{,}01377$ & $0{,}01845$ & $0{,}02775$ \\
+Opportunity & 19 & $0{,}00678$ & $0{,}01052$ & $0{,}01352$ & $0{,}01594$ \\
+SPX Capital & 35 & $0{,}00613$ & $0{,}00916$ & $0{,}01166$ & $0{,}01328$ \\
+Atmos Capital & 28 & $0{,}00613$ & $0{,}00999$ & $0{,}01340$ & $0{,}01704$ \\
+Verde Asset Management & 14 & $0{,}00600$ & $0{,}01021$ & $0{,}01293$ & $0{,}01632$ \\
+Absolute Investimentos & 7 & $0{,}00589$ & $0{,}00925$ & $0{,}01216$ & $0{,}01401$ \\
+Daycoval Asset Management & 5 & $0{,}00582$ & $0{,}00733$ & $0{,}00741$ & $0{,}00787$ \\
+JGP & 40 & $0{,}00554$ & $0{,}00773$ & $0{,}00893$ & $0{,}01074$ \\
+Kapitalo Investimentos & 22 & $0{,}00538$ & $0{,}00580$ & $0{,}00690$ & $0{,}00823$ \\
+Credit Suisse & 65 & $0{,}00537$ & $0{,}00750$ & $0{,}00868$ & $0{,}00980$ \\
+Bogari Capital & 14 & $0{,}00533$ & $0{,}00932$ & $0{,}01209$ & $0{,}01594$ \\
+Real Investor & 5 & $0{,}00486$ & $0{,}00897$ & $0{,}01412$ & $0{,}01756$ \\
+Claritas Investimentos & 10 & $0{,}00481$ & $0{,}00709$ & $0{,}00795$ & $0{,}00843$ \\
+Caixa & 27 & $0{,}00461$ & $0{,}00681$ & $0{,}00888$ & $0{,}01141$ \\
+Bradesco Asset Management & 281 & $0{,}00443$ & $0{,}00613$ & $0{,}00728$ & $0{,}00858$ \\
+Western Asset & 26 & $0{,}00437$ & $0{,}00700$ & $0{,}00960$ & $0{,}01252$ \\
+BB Asset Management & 103 & $0{,}00413$ & $0{,}00642$ & $0{,}00804$ & $0{,}00989$ \\
+Occam Brasil & 26 & $0{,}00411$ & $0{,}00668$ & $0{,}00763$ & $0{,}01001$ \\
+BTG Pactual & 139 & $0{,}00409$ & $0{,}00611$ & $0{,}00716$ & $0{,}00880$ \\
+Santander Brasil Asset Management & 70 & $0{,}00394$ & $0{,}00551$ & $0{,}00630$ & $0{,}00735$ \\
+Safra Asset Management & 137 & $0{,}00360$ & $0{,}00509$ & $0{,}00603$ & $0{,}00674$ \\
+Julius Baer Family Office & 57 & $0{,}00308$ & $0{,}00416$ & $0{,}00497$ & $0{,}00570$ \\
+BNP Paribas & 42 & $0{,}00300$ & $0{,}00434$ & $0{,}00527$ & $0{,}00692$ \\
+XP & 87 & $0{,}00294$ & $0{,}00444$ & $0{,}00537$ & $0{,}00745$ \\
+Itaú & 440 & $0{,}00264$ & $0{,}00389$ & $0{,}00473$ & $0{,}00557$ \\
+Dahlia Capital & 18 & $0{,}00247$ & $0{,}00426$ & $0{,}00556$ & $0{,}00625$ \\
+TNA Gestão Patrimonial & 29 & $0{,}00151$ & $0{,}00218$ & $0{,}00281$ & $0{,}00388$ \\
+Gávea Investimentos & 17 & $0{,}00144$ & $0{,}00265$ & $0{,}00363$ & $0{,}00470$ \\
+Plural & 1 & $0{,}00050$ & $0{,}00080$ & $0{,}00105$ & $0{,}00136$ \\
+\end{longtable}
+\end{center}
+
+\aha{O ranking é \textbf{estável entre horizontes} --- correlação de Spearman entre $0{,}90$ e
+$0{,}99$ em todos os pares de horizonte (a mais baixa, $0{,}90$, entre $h=1$ e $h=12$, os
+extremos). Guepardo é a gestora mais difícil de prever fora da amostra em \textbf{todos os 4
+horizontes}, seguida por Ibiuna e AZ Quest; Plural é a mais previsível nos 4 --- TNA Gestão
+Patrimonial e Gávea Investimentos alternam entre $2^o$ e $3^o$ lugar dependendo do horizonte, mas
+sempre as duas entre as três mais previsíveis. O mesmo grupo de nomes aparece nos extremos
+independente de quantos meses à frente se tenta prever. Isso é uma boa notícia pro desenho do robô: a dificuldade de prever uma gestora não
+é um artefato de escolher um horizonte específico, é uma característica persistente daquela
+gestora. O Itaú fica perto do fim da tabela em $h=1$ (RMSE baixo, $5^o$ mais previsível de $41$)
+--- consistente com o achado da Seção~\ref{sec:erro-multiativo} de que o Itaú é relativamente
+``previsível'' nesse universo amplo.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
@@ -1492,6 +1587,11 @@ horizontes --- mais forte e mais estável que o $57$--$78\%$ da versão só-VALE
 milhões de observações por mês elimina o ruído de um painel pequeno. A margem cresce
 monotonicamente com o horizonte ($1{,}8\%\to7{,}0\%$), sem o pico seguido de queda que a versão
 só-VALE3 mostrava em $h=12$ (aqui a amostra de teste continua grande, $1{,}4$ milhões de obs.).
+\item \textbf{Erro fora da amostra por gestora, todos os ativos, 4 horizontes:} fecha o material
+completo pro robô caça-replicantes --- RMSE fora da amostra por gestora ($h=1,3,6,12$), não mais
+restrito a VALE3. O ranking de quem é mais/menos previsível é \textbf{estável entre horizontes}
+(correlação de Spearman entre $0{,}90$ e $0{,}99$): Guepardo é a mais difícil de prever nos $4$
+horizontes; Plural, a mais previsível nos $4$. O Itaú fica entre as $5$ mais previsíveis de $41$.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
