@@ -43,13 +43,19 @@ abline(v = 0, col = "#8A2E2E", lwd = 2, lty = 2)
 dev.off()
 
 # ---- Figura B: dispersao (y) vs media (x), uma bolha por gestora -----------
+# So rotula os extremos (top-6 por dispersao OU por |vies|) -- rotular as 41
+# deixava o aglomerado perto da origem ilegivel (rotulos sobrepostos); a
+# legenda da figura ja avisava "so nos extremos", agora isso e verdade de
+# fato, nao so por acidente de sobreposicao.
 pdf(file.path(FIG, "fig_erro_multiativo_media_dp.pdf"), width = 7, height = 6)
-par(mar = c(4,4,2,1))
+par(mar = c(4,4,1,1))
 plot(resumo$media, resumo$dp, pch = 16, col = "#2E5C8A", cex = 1.1,
-     xlab = "erro médio (viés sistemático)", ylab = "desvio-padrão do erro (dispersão)",
-     main = "Erro por gestora: viés vs. dispersão (universo de todas as ações)")
+     xlab = "erro médio (viés sistemático)", ylab = "desvio-padrão do erro (dispersão)", main = "")
 abline(v = 0, col = "grey70", lty = 2)
-text(resumo$media, resumo$dp, labels = resumo$gestora_grupo, pos = 3, cex = 0.55, col = "grey30")
+rank_dp <- rank(-resumo$dp); rank_vies <- rank(-abs(resumo$media))
+rotula <- rank_dp <= 6 | rank_vies <= 6
+text(resumo$media[rotula], resumo$dp[rotula], labels = resumo$gestora_grupo[rotula],
+     pos = 3, cex = 0.65, col = "grey20")
 dev.off()
 
 cat("\nOK - salvo em 'v2 OFICIAL/data/erro_multiativo_gestora_resumo.csv' e figuras\n")

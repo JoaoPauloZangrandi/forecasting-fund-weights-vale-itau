@@ -67,10 +67,10 @@ fwrite(POR_MES, file.path(REPO, "v2 OFICIAL/data/rmse_multihorizonte_por_mes.csv
 
 # ---- Figura: RMSE ajuste vs. ingenua, por horizonte -------------------------
 pdf(file.path(FIG, "fig_rmse_multihorizonte_v2.pdf"), width = 7, height = 4.8)
-par(mar = c(4,4,2.5,1))
+par(mar = c(4,4,1.2,1))
 plot(tab$h, tab$rmse_naive, type = "o", pch = 16, col = "#8A2E2E", lwd = 1.8,
      ylim = range(c(tab$rmse_ajuste, tab$rmse_naive)), xlab = "horizonte (meses à frente)",
-     ylab = "RMSE fora da amostra (2020-2021)", main = "RMSE fora da amostra por horizonte", xaxt="n")
+     ylab = "RMSE fora da amostra (2020-2021)", main = "", xaxt="n")
 axis(1, at = horizontes)
 lines(tab$h, tab$rmse_ajuste, type = "o", pch = 16, col = "#2E5C8A", lwd = 1.8)
 legend("topleft", legend = c("ingênua (sem mudança)", "ajuste parcial"),

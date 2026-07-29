@@ -49,13 +49,15 @@ plot(datas_todas, m_top[,1], type="n", ylim = range(m_top, na.rm=TRUE),
      xlab="", ylab="APE vs. Itaú (pontos percentuais)", main="As 5 gestoras com APE mais POSITIVO (vs. Itaú)")
 abline(h=0, col="grey70", lty=3)
 for (i in seq_along(top5)) lines(datas_todas, m_top[,i], col=cores[i], lwd=1.8, type="o", pch=16, cex=0.5)
-legend("topleft", legend=top5, col=cores, lwd=1.8, bty="n", cex=0.75, ncol=2)
+legend("topleft", legend=top5, col=cores, lwd=1.8, bty="o", bg="white", box.col="grey85",
+       cex=0.75, ncol=2)
 
 plot(datas_todas, m_bot[,1], type="n", ylim = range(m_bot, na.rm=TRUE),
      xlab="", ylab="APE vs. Itaú (pontos percentuais)", main="As 5 gestoras com APE mais NEGATIVO (vs. Itaú)")
 abline(h=0, col="grey70", lty=3)
 for (i in seq_along(bot5)) lines(datas_todas, m_bot[,i], col=cores[i], lwd=1.8, type="o", pch=16, cex=0.5)
-legend("bottomleft", legend=bot5, col=cores, lwd=1.8, bty="n", cex=0.75, ncol=2)
+legend("bottomleft", legend=bot5, col=cores, lwd=1.8, bty="o", bg="white", box.col="grey85",
+       cex=0.75, ncol=2)
 
 dev.off()
 cat("\nOK - salvo em 'v2 OFICIAL/figuras/fig_coef_gestora_evolucao.pdf'\n")
