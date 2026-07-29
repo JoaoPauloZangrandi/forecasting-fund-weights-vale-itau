@@ -768,6 +768,131 @@ ITUB4, BBDC4) são, como VALE3, \emph{blue chips} muito líquidas do Ibovespa --
 de que o beta do fundo captura o quão ``equity-like''/ligado ao índice é o fundo, e isso importa
 mais pra decidir quanto carregar dos papéis mais representativos do mercado.}
 
+\subsubsection*{Trazendo gestora de volta: uma regressão pooled com efeito-fixo de gestora}
+
+\pergunta{No começo desta seção, explicamos por que a regressão por célula ativo-mês não comporta
+$40$ dummies de gestora --- poucos fundos por célula, mais parâmetros que observações. Mas fica
+uma pergunta em aberto: controlando por ativo e por mês, como cada gestora se compara ao Itaú
+olhando a carteira de ações \textbf{inteira} dela (não só VALE3), não uma posição isolada?}
+
+\equacao
+$$\text{peso}_{i,n,g,t} = g\big(x_{i,n,t}'\theta + \alpha_n + \delta_t + \gamma_g\big)$$
+uma única regressão logística com todas as $8.268.920$ observações e \textbf{três} efeitos-fixos
+simultâneos --- ativo ($\alpha_n$), mês ($\delta_t$) e \textbf{gestora} ($\gamma_g$) --- em vez de
+só ativo e mês, a checagem complementar sem gestora que vem a seguir, na Seção 6.2.
+
+\textbf{Adendo de processo:} a primeira tentativa colocou gestora como \textbf{dummy} comum na
+equação (as $40$ colunas, igual à Seção~\ref{sec:gestoras}) em vez de efeito-fixo --- e estourou a
+memória da máquina ($16$GB, sobrando poucos MB livres, processo precisou ser encerrado
+manualmente). O motivo: o \texttt{fixest} usa um algoritmo enxuto (projeções alternadas, custo
+linear no número de observações) só para variáveis marcadas como efeito-fixo; uma dummy comum de
+$40$ níveis, combinada com erro-padrão clusterizado em $2.347$ fundos e mais $488+60$ níveis de
+efeito-fixo de ativo/mês, monta uma matriz densa grande demais. Corrigido tratando gestora como
+\textbf{terceiro} efeito-fixo --- roda em $74$ segundos, memória estável.
+
+\begin{table}[h]\centering\small
+\caption{As 5 características, com efeito-fixo de ativo, mês \emph{e} gestora juntos.}
+\begin{tabular}{@{}lrrcr@{}}
+\toprule
+Variável & Coeficiente & $t$ (cluster por fundo) & Sig. & APE \\
+\midrule
+Tamanho              & $-0{,}0237$ & $-1{,}13$ & n.s. & $-0{,}000121$ \\
+Cotistas             & $0{,}0773$  & $4{,}72$  & *** & $0{,}000396$ \\
+Fundo de cotas       & $-0{,}0499$ & $-1{,}49$ & n.s. & $-0{,}000256$ \\
+Captação/resgate     & $0{,}0007$  & $0{,}56$  & n.s. & $0{,}000004$ \\
+Beta do fundo        & $0{,}8486$  & $29{,}04$ & *** & $0{,}004345$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Correlação ao quadrado $=0{,}358$. Fonte: elaboração própria
+(\texttt{scripts/41\_pooled\_fe3way\_gestora\_multiativo.R}).}
+\end{table}
+
+\aha{Com efeito-fixo de gestora somado, tamanho e fundo de cotas deixam de ser sequer
+marginalmente significativos (eram $t=2{,}17$ e $t=1{,}25$ na Tabela~15, sem gestora --- a
+checagem da Seção 6.2, mais adiante) --- parte do que pareciam captar era, na verdade, o
+\textbf{perfil típico} de cada gestora (gestoras maiores tendem a ter fundos maiores, por
+exemplo), absorvido agora pela dummy de gestora. Cotistas continua *** mas cai de magnitude. O
+beta do fundo \textbf{não se move} ($t=29{,}0$ vs.\ $28{,}6$) --- reforça que é o padrão mais
+robusto do documento, resistente a qualquer controle adicional.}
+
+\begin{center}\scriptsize
+\begin{longtable}{@{}lrr@{}}
+\caption{Efeito-fixo de gestora (log-odds), centrado no Itaú --- painel completo de 430 ativos,
+não só VALE3.}\\
+\toprule
+Gestora & Efeito-fixo & vs.\ Itaú \\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\textit{Tabela 14 (continuação)}}\\
+\toprule
+Gestora & Efeito-fixo & vs.\ Itaú \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{3}{@{}p{0.85\textwidth}@{}}{\footnotesize Fonte: elaboração própria
+(\texttt{scripts/41\_pooled\_fe3way\_gestora\_multiativo.R}).}\\
+\endlastfoot
+Guepardo Investimentos & $1{,}897$ & $+2{,}185$ \\
+Núcleo Capital & $1{,}567$ & $+1{,}855$ \\
+Bogari Capital & $1{,}189$ & $+1{,}477$ \\
+Real Investor & $1{,}151$ & $+1{,}439$ \\
+Ibiuna Investimentos & $1{,}046$ & $+1{,}335$ \\
+Legacy Capital & $1{,}038$ & $+1{,}327$ \\
+Constellation Asset Management & $0{,}936$ & $+1{,}225$ \\
+Sharp Capital & $0{,}883$ & $+1{,}171$ \\
+Claritas Investimentos & $0{,}821$ & $+1{,}109$ \\
+Squadra Investimentos & $0{,}812$ & $+1{,}101$ \\
+Atmos Capital & $0{,}807$ & $+1{,}096$ \\
+Forpus Capital & $0{,}787$ & $+1{,}076$ \\
+Plural & $0{,}734$ & $+1{,}022$ \\
+Gávea Investimentos & $0{,}724$ & $+1{,}012$ \\
+Kinea Investimentos & $0{,}719$ & $+1{,}008$ \\
+Truxt Investimentos & $0{,}681$ & $+0{,}969$ \\
+AZ Quest & $0{,}656$ & $+0{,}945$ \\
+Verde Asset Management & $0{,}561$ & $+0{,}849$ \\
+Absolute Investimentos & $0{,}559$ & $+0{,}848$ \\
+ARX Investimentos & $0{,}553$ & $+0{,}842$ \\
+JGP & $0{,}470$ & $+0{,}759$ \\
+Vinci Partners & $0{,}462$ & $+0{,}750$ \\
+Occam Brasil & $0{,}425$ & $+0{,}714$ \\
+Opportunity & $0{,}405$ & $+0{,}694$ \\
+Credit Suisse & $0{,}351$ & $+0{,}639$ \\
+SPX Capital & $0{,}284$ & $+0{,}572$ \\
+Dahlia Capital & $0{,}282$ & $+0{,}571$ \\
+BTG Pactual & $0{,}278$ & $+0{,}567$ \\
+Western Asset & $0{,}232$ & $+0{,}521$ \\
+Safra Asset Management & $0{,}216$ & $+0{,}505$ \\
+Kapitalo Investimentos & $0{,}158$ & $+0{,}447$ \\
+BB Asset Management & $0{,}112$ & $+0{,}400$ \\
+Caixa & $0{,}098$ & $+0{,}387$ \\
+Santander Brasil Asset Management & $0{,}039$ & $+0{,}328$ \\
+Bradesco Asset Management & $0{,}000$ & $+0{,}289$ \\
+BNP Paribas & $-0{,}018$ & $+0{,}271$ \\
+Julius Baer Family Office & $-0{,}033$ & $+0{,}256$ \\
+TNA Gestão Patrimonial & $-0{,}098$ & $+0{,}190$ \\
+XP & $-0{,}227$ & $+0{,}062$ \\
+Daycoval Asset Management & $-0{,}288$ & $+0{,}001$ \\
+Itaú & $-0{,}289$ & $0{,}000$ \\
+\end{longtable}
+\end{center}
+
+\aha{A ordem quase se \textbf{inverte} em relação à Seção~\ref{sec:gestoras}: lá (só VALE3),
+gestoras de varejo/plataforma (Caixa, BB, Santander, Western Asset) carregavam \textbf{mais} VALE3
+que o Itaú, e boutiques concentradas (Guepardo, Forpus, Constellation, Bogari, Atmos, Squadra)
+carregavam \textbf{menos}. Aqui, olhando a carteira de ações inteira (não só VALE3), são
+justamente as boutiques que têm o efeito-fixo mais alto --- Guepardo, Núcleo Capital e Bogari no
+topo --- e o Itaú fica \textbf{na última posição}, junto de Daycoval. Não é uma contradição: as
+duas coisas podem ser verdade ao mesmo tempo --- gestoras de convicção concentrada tendem a montar
+posições \textbf{maiores} em geral (é o estilo delas), mas em VALE3 especificamente, um blue chip
+mega-cap do Ibovespa, preferem ficar \textbf{abaixo} do Itaú (evitam ``o nome que todo mundo
+tem''). Essa leitura também bate com a Seção~\ref{sec:erro-multiativo} (Tabela~18): a mesma
+Guepardo e a mesma Núcleo Capital têm o viés mais positivo do erro por gestora --- duas
+metodologias bem diferentes (coeficiente estrutural vs.\ resíduo agregado) chegando à mesma
+ordenação, o que reforça que o padrão é real, não um artefato de uma escolha de modelo específica.}
+
 \subsection{Checagem complementar: uma única regressão com efeito-fixo de ativo e de mês}
 
 Como checagem independente, uma regressão logística \emph{pooled} com todas as $8.268.920$
@@ -816,7 +941,7 @@ proxy indireto para o quão ``equity-like'' o fundo é.}
 
 \subsubsection*{Um panorama mais completo: o efeito-fixo de cada ativo}
 
-A Tabela~13 resume só os $5$ coeficientes pooled --- comuns a todos os ativos. Mas o modelo com
+A Tabela~15 resume só os $5$ coeficientes pooled --- comuns a todos os ativos. Mas o modelo com
 efeito-fixo de ativo estima, como subproduto, um nível \textbf{próprio para cada um dos $488$
 ativos} (o quanto aquele papel é sobre- ou sub-pesado, líquido das $5$ características e do mês).
 Vale a pena olhar essa distribuição.
@@ -912,7 +1037,7 @@ as ações --- ordenado do viés mais positivo ao mais negativo.}\\
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
 \endfirsthead
-\multicolumn{6}{l}{\textit{Tabela 16 (continuação)}}\\
+\multicolumn{6}{l}{\textit{Tabela 18 (continuação)}}\\
 \toprule
 Gestora & Obs. & Meses & Média & Sig. & dp \\
 \midrule
@@ -986,7 +1111,7 @@ mediana de $0{,}0145$) --- relativamente ``previsível'' nesse universo amplo.}
 \begin{figure}[h]\centering
 \includegraphics[width=0.85\textwidth]{fig_erro_multiativo_media_dp.pdf}
 \caption{Cada ponto é uma gestora: erro médio (eixo $x$) vs.\ dispersão do erro (eixo $y$).
-Rótulos legíveis só nos extremos --- a Tabela~16 tem os valores exatos das $41$.}
+Rótulos legíveis só nos extremos --- a Tabela~18 tem os valores exatos das $41$.}
 \end{figure}
 
 \aha{Viés e dispersão andam juntos: correlação de $0{,}88$ entre $|\text{viés}|$ e dp entre as
@@ -999,7 +1124,7 @@ tratada à parte.}
 
 \subsubsection*{Um panorama mais completo: o mesmo erro, agora por ativo}
 
-A Tabela~16 agrega o erro por gestora --- a carteira inteira de um gestor, ação após ação. A mesma
+A Tabela~18 agrega o erro por gestora --- a carteira inteira de um gestor, ação após ação. A mesma
 base (\texttt{scripts/37\_erro\_multiativo.R}) também permite agregar por \textbf{ativo}: qual
 papel tem erro mais ou menos disperso, olhando todas as gestoras que o carregam?
 
@@ -1015,7 +1140,7 @@ com o efeito-fixo de gestora --- só que lá é por gestora e aqui é por ativo.
 (Seção~\ref{sec:gestoras}): soma-zero do resíduo dentro de cada grupo por construção.
 
 \textbf{Adendo de processo:} sem filtro, os ativos ``menos dispersos'' repetem o mesmo artefato já
-visto na Tabela~15 e na Tabela~12 (Klabin): dominados por posições nunca efetivamente alocadas
+visto na Tabela~17 e na Tabela~12 (Klabin): dominados por posições nunca efetivamente alocadas
 (peso mediano da ordem de $10^{-6}$ a $10^{-11}$), cujo erro é trivialmente $\approx0$ --- não
 porque o modelo os explica bem, mas porque não há nada a explicar. Mesmo filtro das tabelas
 anteriores ($\geq24$ meses e peso mediano $>0{,}1\%$), restando $50$ dos $430$ ativos.
@@ -1067,133 +1192,6 @@ concentram a variação de beta entre fundos ``equity-like'' e ``conservadores''
 líquidos (Sul América, TIM, Eletrobras, Vivara) têm posição mais parecida entre os fundos que os
 carregam, sobrando menos espaço para o erro variar.}
 
-\subsection{Fechando o panorama: gestora, ativo e mês juntos, nos coeficientes}
-\label{sec:panorama-geral}
-
-\pergunta{Até aqui, o coeficiente por gestora (Seção~\ref{sec:gestoras}) só foi estimado com
-VALE3; e o painel de todas as ações (Seção~\ref{sec:multiativo} em diante) nunca quebrou por
-gestora nos \textbf{coeficientes} --- só no \textbf{erro} (Seção~\ref{sec:erro-multiativo}).
-Controlando por ativo e por mês, como cada gestora se compara ao Itaú olhando a carteira de ações
-\textbf{inteira} dela, não só uma posição?}
-
-\equacao
-$$\text{peso}_{i,n,g,t} = g\big(x_{i,n,t}'\theta + \alpha_n + \delta_t + \gamma_g\big)$$
-uma única regressão logística com todas as $8.268.920$ observações e \textbf{três} efeitos-fixos
-simultâneos --- ativo ($\alpha_n$), mês ($\delta_t$) e \textbf{gestora} ($\gamma_g$) --- em vez de
-só ativo e mês (Seção 6.2).
-
-\textbf{Adendo de processo:} a primeira tentativa colocou gestora como \textbf{dummy} comum na
-equação (as $40$ colunas, igual à Seção~\ref{sec:gestoras}) em vez de efeito-fixo --- e estourou a
-memória da máquina ($16$GB, sobrando poucos MB livres, processo precisou ser encerrado
-manualmente). O motivo: o \texttt{fixest} usa um algoritmo enxuto (projeções alternadas, custo
-linear no número de observações) só para variáveis marcadas como efeito-fixo; uma dummy comum de
-$40$ níveis, combinada com erro-padrão clusterizado em $2.347$ fundos e mais $488+60$ níveis de
-efeito-fixo de ativo/mês, monta uma matriz densa grande demais. Corrigido tratando gestora como
-\textbf{terceiro} efeito-fixo --- roda em $74$ segundos, memória estável.
-
-\begin{table}[h]\centering\small
-\caption{As 5 características, com efeito-fixo de ativo, mês \emph{e} gestora juntos.}
-\begin{tabular}{@{}lrrcr@{}}
-\toprule
-Variável & Coeficiente & $t$ (cluster por fundo) & Sig. & APE \\
-\midrule
-Tamanho              & $-0{,}0237$ & $-1{,}13$ & n.s. & $-0{,}000121$ \\
-Cotistas             & $0{,}0773$  & $4{,}72$  & *** & $0{,}000396$ \\
-Fundo de cotas       & $-0{,}0499$ & $-1{,}49$ & n.s. & $-0{,}000256$ \\
-Captação/resgate     & $0{,}0007$  & $0{,}56$  & n.s. & $0{,}000004$ \\
-Beta do fundo        & $0{,}8486$  & $29{,}04$ & *** & $0{,}004345$ \\
-\bottomrule
-\end{tabular}
-\caption*{\footnotesize Correlação ao quadrado $=0{,}358$. Fonte: elaboração própria
-(\texttt{scripts/41\_pooled\_fe3way\_gestora\_multiativo.R}).}
-\end{table}
-
-\aha{Com efeito-fixo de gestora somado, tamanho e fundo de cotas deixam de ser sequer
-marginalmente significativos (eram $t=2{,}17$ e $t=1{,}25$ na Tabela~13, sem gestora) --- parte do
-que pareciam captar era, na verdade, o \textbf{perfil típico} de cada gestora (gestoras maiores
-tendem a ter fundos maiores, por exemplo), absorvido agora pela dummy de gestora. Cotistas
-continua *** mas cai de magnitude. O beta do fundo \textbf{não se move}
-($t=29{,}0$ vs.\ $28{,}6$) --- reforça que é o padrão mais robusto do documento, resistente a
-qualquer controle adicional.}
-
-\begin{center}\scriptsize
-\begin{longtable}{@{}lrr@{}}
-\caption{Efeito-fixo de gestora (log-odds), centrado no Itaú --- painel completo de 430 ativos,
-não só VALE3.}\\
-\toprule
-Gestora & Efeito-fixo & vs.\ Itaú \\
-\midrule
-\endfirsthead
-\multicolumn{3}{l}{\textit{Tabela 20 (continuação)}}\\
-\toprule
-Gestora & Efeito-fixo & vs.\ Itaú \\
-\midrule
-\endhead
-\midrule
-\multicolumn{3}{r}{\textit{continua na próxima página}}\\
-\endfoot
-\bottomrule
-\multicolumn{3}{@{}p{0.85\textwidth}@{}}{\footnotesize Fonte: elaboração própria
-(\texttt{scripts/41\_pooled\_fe3way\_gestora\_multiativo.R}).}\\
-\endlastfoot
-Guepardo Investimentos & $1{,}897$ & $+2{,}185$ \\
-Núcleo Capital & $1{,}567$ & $+1{,}855$ \\
-Bogari Capital & $1{,}189$ & $+1{,}477$ \\
-Real Investor & $1{,}151$ & $+1{,}439$ \\
-Ibiuna Investimentos & $1{,}046$ & $+1{,}335$ \\
-Legacy Capital & $1{,}038$ & $+1{,}327$ \\
-Constellation Asset Management & $0{,}936$ & $+1{,}225$ \\
-Sharp Capital & $0{,}883$ & $+1{,}171$ \\
-Claritas Investimentos & $0{,}821$ & $+1{,}109$ \\
-Squadra Investimentos & $0{,}812$ & $+1{,}101$ \\
-Atmos Capital & $0{,}807$ & $+1{,}096$ \\
-Forpus Capital & $0{,}787$ & $+1{,}076$ \\
-Plural & $0{,}734$ & $+1{,}022$ \\
-Gávea Investimentos & $0{,}724$ & $+1{,}012$ \\
-Kinea Investimentos & $0{,}719$ & $+1{,}008$ \\
-Truxt Investimentos & $0{,}681$ & $+0{,}969$ \\
-AZ Quest & $0{,}656$ & $+0{,}945$ \\
-Verde Asset Management & $0{,}561$ & $+0{,}849$ \\
-Absolute Investimentos & $0{,}559$ & $+0{,}848$ \\
-ARX Investimentos & $0{,}553$ & $+0{,}842$ \\
-JGP & $0{,}470$ & $+0{,}759$ \\
-Vinci Partners & $0{,}462$ & $+0{,}750$ \\
-Occam Brasil & $0{,}425$ & $+0{,}714$ \\
-Opportunity & $0{,}405$ & $+0{,}694$ \\
-Credit Suisse & $0{,}351$ & $+0{,}639$ \\
-SPX Capital & $0{,}284$ & $+0{,}572$ \\
-Dahlia Capital & $0{,}282$ & $+0{,}571$ \\
-BTG Pactual & $0{,}278$ & $+0{,}567$ \\
-Western Asset & $0{,}232$ & $+0{,}521$ \\
-Safra Asset Management & $0{,}216$ & $+0{,}505$ \\
-Kapitalo Investimentos & $0{,}158$ & $+0{,}447$ \\
-BB Asset Management & $0{,}112$ & $+0{,}400$ \\
-Caixa & $0{,}098$ & $+0{,}387$ \\
-Santander Brasil Asset Management & $0{,}039$ & $+0{,}328$ \\
-Bradesco Asset Management & $0{,}000$ & $+0{,}289$ \\
-BNP Paribas & $-0{,}018$ & $+0{,}271$ \\
-Julius Baer Family Office & $-0{,}033$ & $+0{,}256$ \\
-TNA Gestão Patrimonial & $-0{,}098$ & $+0{,}190$ \\
-XP & $-0{,}227$ & $+0{,}062$ \\
-Daycoval Asset Management & $-0{,}288$ & $+0{,}001$ \\
-Itaú & $-0{,}289$ & $0{,}000$ \\
-\end{longtable}
-\end{center}
-
-\aha{A ordem quase se \textbf{inverte} em relação à Seção~\ref{sec:gestoras}: lá (só VALE3),
-gestoras de varejo/plataforma (Caixa, BB, Santander, Western Asset) carregavam \textbf{mais} VALE3
-que o Itaú, e boutiques concentradas (Guepardo, Forpus, Constellation, Bogari, Atmos, Squadra)
-carregavam \textbf{menos}. Aqui, olhando a carteira de ações inteira (não só VALE3), são
-justamente as boutiques que têm o efeito-fixo mais alto --- Guepardo, Núcleo Capital e Bogari no
-topo --- e o Itaú fica \textbf{na última posição}, junto de Daycoval. Não é uma contradição: as
-duas coisas podem ser verdade ao mesmo tempo --- gestoras de convicção concentrada tendem a montar
-posições \textbf{maiores} em geral (é o estilo delas), mas em VALE3 especificamente, um blue chip
-mega-cap do Ibovespa, preferem ficar \textbf{abaixo} do Itaú (evitam ``o nome que todo mundo
-tem''). Essa leitura também bate com a Seção~\ref{sec:erro-multiativo} (Tabela~16): a mesma
-Guepardo e a mesma Núcleo Capital têm o viés mais positivo do erro por gestora --- duas
-metodologias bem diferentes (coeficiente estrutural vs.\ resíduo agregado) chegando à mesma
-ordenação, o que reforça que o padrão é real, não um artefato de uma escolha de modelo específica.}
-
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
@@ -1232,8 +1230,8 @@ viés mais positivo e, disparada, a maior dispersão (mais que o dobro da segund
 dispersão andam juntos (correlação $0{,}88$) --- material que vai orientar o desenho do robô
 caça-replicantes, decisão
 ainda em aberto. Ainda restrito a VALE3 no ajuste parcial/in-out-of-sample desta rodada.
-\item \textbf{Panorama geral, gestora e ativo juntos (Seção~\ref{sec:panorama-geral}):} uma única
-regressão com efeito-fixo de ativo, mês \emph{e} gestora simultâneos --- a primeira vez que o
+\item \textbf{Gestora de volta ao painel completo, via pooled com 3 efeitos-fixos (Seção 6.1):}
+uma única regressão com efeito-fixo de ativo, mês \emph{e} gestora simultâneos --- a primeira vez que o
 coeficiente por gestora é estimado no painel completo ($430$ ativos), não só VALE3. Tamanho e
 fundo de cotas deixam de ser significativos (o efeito-fixo de gestora absorve boa parte do que
 pareciam captar); beta do fundo não se move ($t=29{,}0$). A ordem das gestoras quase se
