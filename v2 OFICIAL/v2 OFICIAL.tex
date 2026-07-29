@@ -1205,6 +1205,177 @@ concentram a variação de beta entre fundos ``equity-like'' e ``conservadores''
 líquidos (Sul América, TIM, Eletrobras, Vivara) têm posição mais parecida entre os fundos que os
 carregam, sobrando menos espaço para o erro variar.}
 
+\subsection{Etapa 3 generalizada: fora da amostra para todas as gestoras e todos os ativos}
+\label{sec:etapa3-multiativo}
+
+\pergunta{A Etapa 3 (Seção 4) testou o ajuste parcial fora da amostra só para VALE3-Itaú.
+Generalizando para todas as gestoras e todos os ativos: quais fundos, gestoras e ativos o modelo
+prevê melhor ou pior, fora da amostra?}
+
+\equacao
+$$w_{i,n,t+h} - w_{i,n,t} = \lambda_h\, d_{i,n,t} + u_{i,n,t+h}, \qquad
+d_{i,n,t} \equiv w^*_{i,n,t} - w_{i,n,t}$$
+mesma equação~\eqref{eq:pa} da Etapa 3, agora com índice extra de ativo $n$: $w^*_{i,n,t}$ é o
+alvo já calculado pela regressão por célula ativo-mês da Seção~\ref{sec:multiativo}
+(\texttt{peso\_pred}, script~37) --- não precisa reestimar nada, só faltava montar os pares
+$(t,t+h)$ e rodar o mesmo esquema de sempre: $\lambda_h$ único, estimado por MQO só no treino
+($<$~2020-01), aplicado ao teste (2020-01 a 2021-11), o resultado comparado com a previsão
+ingênua (nenhuma mudança).
+
+\subsubsection*{VALE3, 3 meses à frente: quais fundos e gestoras erram mais}
+
+\textbf{Adendo de processo:} o fundo com maior erro fora da amostra (RMSE $=0{,}315$, Vinci
+Partners) tem uma variação real e enorme de peso: $13\%$ em fev/2021, $80\%$ em mar--abr/2021,
+$11\%$ em mai/2021 --- verificado que \textbf{não} é resgate mecânico (o AUM do fundo fica estável,
+${\approx}$R$\,9$ milhões, nos 5 meses); é uma aposta ativa e concentrada de curtíssimo prazo, real
+mas essencialmente imprevisível por uma fórmula que só olha as 5 características. O $2^o$ fundo
+mais errante é o mesmo já identificado numa tentativa anterior deste projeto (nível fundo, robô
+caça-replicantes): o fundo BTG Pactual que apostou de $27\%$ para $50\%$ em VALE3 --- o mesmo caso
+extremo aparece pelas duas abordagens.
+
+\begin{table}[h]\centering\small
+\caption{Os 5 fundos com maior e menor RMSE fora da amostra em VALE3, $h=3$ meses (1.812 fundos
+com VALE3 no período de teste).}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\multicolumn{3}{c}{\textbf{Maior erro (menos previsível)}} \\
+Fundo (código CVM) & Obs. teste & RMSE \\
+\midrule
+292826 (Vinci Partners) & 17 & $0{,}3152$ \\
+191914 (BTG Pactual) & 21 & $0{,}1022$ \\
+497479 & 10 & $0{,}0969$ \\
+496006 & 4 & $0{,}0899$ \\
+494933 & 18 & $0{,}0895$ \\
+\midrule
+\multicolumn{3}{c}{\textbf{Menor erro (mais previsível)}} \\
+Fundo (código CVM) & Obs. teste & RMSE \\
+\midrule
+549835 & 2 & $0{,}0008$ \\
+532800 & 1 & $0{,}0007$ \\
+549991 & 1 & $0{,}0007$ \\
+397563 & 3 & $0{,}0004$ \\
+549053 & 1 & $0{,}0003$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/42\_etapa3\_multiativo.R}).}
+\end{table}
+
+\begin{center}\scriptsize
+\begin{longtable}{@{}lrrr@{}}
+\caption{RMSE fora da amostra em VALE3 ($h=3$), por gestora --- ordenado do mais ao menos
+errante.}\\
+\toprule
+Gestora & Fundos & Obs. teste & RMSE \\
+\midrule
+\endfirsthead
+\multicolumn{4}{l}{\textit{Tabela 22 (continuação)}}\\
+\toprule
+Gestora & Fundos & Obs. teste & RMSE \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{4}{@{}p{0.75\textwidth}@{}}{\footnotesize Fonte: elaboração própria
+(\texttt{scripts/42\_etapa3\_multiativo.R}).}\\
+\endlastfoot
+Vinci Partners & 46 & 662 & $0{,}0555$ \\
+Opportunity & 18 & 290 & $0{,}0442$ \\
+Ibiuna Investimentos & 7 & 114 & $0{,}0426$ \\
+AZ Quest & 17 & 254 & $0{,}0420$ \\
+Truxt Investimentos & 29 & 446 & $0{,}0373$ \\
+Sharp Capital & 30 & 363 & $0{,}0325$ \\
+Kinea Investimentos & 4 & 48 & $0{,}0297$ \\
+SPX Capital & 35 & 608 & $0{,}0296$ \\
+Caixa & 20 & 315 & $0{,}0283$ \\
+Credit Suisse & 58 & 920 & $0{,}0277$ \\
+Western Asset & 26 & 466 & $0{,}0275$ \\
+BNP Paribas & 38 & 716 & $0{,}0273$ \\
+Absolute Investimentos & 7 & 137 & $0{,}0257$ \\
+Occam Brasil & 26 & 416 & $0{,}0250$ \\
+Verde Asset Management & 13 & 169 & $0{,}0246$ \\
+Bradesco Asset Management & 243 & 3710 & $0{,}0240$ \\
+Santander Brasil Asset Management & 67 & 1106 & $0{,}0227$ \\
+ARX Investimentos & 10 & 189 & $0{,}0225$ \\
+Dahlia Capital & 18 & 204 & $0{,}0223$ \\
+Squadra Investimentos & 14 & 210 & $0{,}0220$ \\
+Claritas Investimentos & 10 & 154 & $0{,}0218$ \\
+BB Asset Management & 92 & 1532 & $0{,}0201$ \\
+BTG Pactual & 131 & 2036 & $0{,}0192$ \\
+Safra Asset Management & 130 & 1861 & $0{,}0190$ \\
+Constellation Asset Management & 18 & 100 & $0{,}0183$ \\
+XP & 76 & 1128 & $0{,}0180$ \\
+Daycoval Asset Management & 5 & 65 & $0{,}0176$ \\
+Itaú & 417 & 7226 & $0{,}0171$ \\
+Julius Baer Family Office & 53 & 897 & $0{,}0168$ \\
+Kapitalo Investimentos & 21 & 389 & $0{,}0157$ \\
+Atmos Capital & 28 & 422 & $0{,}0147$ \\
+JGP & 37 & 580 & $0{,}0141$ \\
+Real Investor & 5 & 70 & $0{,}0139$ \\
+Guepardo Investimentos & 1 & 14 & $0{,}0134$ \\
+Forpus Capital & 3 & 9 & $0{,}0128$ \\
+Bogari Capital & 12 & 12 & $0{,}0115$ \\
+TNA Gestão Patrimonial & 29 & 609 & $0{,}0072$ \\
+Gávea Investimentos & 17 & 299 & $0{,}0049$ \\
+Plural & 1 & 21 & $0{,}0028$ \\
+\end{longtable}
+\end{center}
+
+\aha{Correlação entre cobertura (fundos) e RMSE fora da amostra: $-0{,}06$ --- fraca, diferente do
+achado da Tabela~14, então o ranking aqui não é dominado por gestoras com poucos fundos (embora
+os últimos 3 lugares, com $1$--$12$ fundos, mereçam a mesma cautela de sempre). O Itaú fica no meio
+da tabela ($28^a$ posição de $39$), nem entre os mais nem entre os menos previsíveis. Vinci
+Partners, no topo, tem cobertura ampla ($46$ fundos, $662$ observações de teste) --- não é um caso
+isolado, é um padrão real de dificuldade em prever essa gestora especificamente em VALE3, $3$
+meses à frente.}
+
+\subsubsection*{Todos os ativos, 1 mês à frente: quais generalizam melhor fora da amostra}
+
+\textbf{Adendo de processo:} o mesmo artefato de posição-poeira já visto $4$ vezes nesta seção
+(Klabin, efeito-fixo de ativo, dispersão do erro) reaparece aqui: sem filtro, tanto os ativos com
+\textbf{melhor} quanto os com \textbf{pior} margem fora da amostra são dominados por papéis com
+peso mediano ${\approx}0$ --- com RMSE quase zero dos dois lados (ajuste e ingênua), qualquer
+diferença mínima vira uma margem percentual enorme sem significado econômico. Mesmo filtro de
+sempre (peso mediano $>0{,}1\%$, $\geq24$ meses, e aqui também $\geq100$ observações de teste),
+restando $48$ dos $359$ ativos com par $(t,t{+}1)$ disponível.
+
+\begin{table}[h]\centering\small
+\caption{Os 10 ativos com maior e menor margem do ajuste parcial sobre a ingênua fora da amostra
+($h=1$), entre os 48 com posição relevante.}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\multicolumn{3}{c}{\textbf{Maior margem (ajuste parcial vence por mais)}} \\
+Ativo & Obs. teste & Margem \\
+\midrule
+Pão de Açúcar PN N1 - PCAR4 & 1023 & $6{,}5\%$ \\
+Aliansce Sonae ON NM - ALSO3 & 17836 & $3{,}8\%$ \\
+BR Malls Par ON NM - BRML3 & 25426 & $3{,}5\%$ \\
+Sabesp ON NM - SBSP3 & 25255 & $3{,}2\%$ \\
+Banco do Brasil ON NM - BBAS3 & 27331 & $2{,}9\%$ \\
+\midrule
+\multicolumn{3}{c}{\textbf{Menor margem (ajuste parcial perde ou empata)}} \\
+Ativo & Obs. teste & Margem \\
+\midrule
+Eneva ON NM - ENEV3 & 23177 & $-2{,}3\%$ \\
+Equatorial ON NM - EQTL3 & 29993 & $-1{,}5\%$ \\
+Locamérica ON NM - LCAM3 & 24516 & $-0{,}2\%$ \\
+Alpargatas PN N1 - ALPA4 & 20402 & $-0{,}1\%$ \\
+Rumo S.A. ON NM - RAIL3 & 26919 & $0{,}0\%$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Fonte: elaboração própria (\texttt{scripts/42\_etapa3\_multiativo.R}).}
+\end{table}
+
+\aha{Com o filtro, o painel fica coerente: $89{,}6\%$ dos $48$ ativos elegíveis têm o ajuste
+parcial vencendo a ingênua fora da amostra (margem $>0$), mediana de $1{,}85\%$ --- \textbf{mais
+forte} que a margem de $1{,}5\%$ (e $1{,}62\%$ nesta mesma base) já encontrada para VALE3-Itaú na
+Etapa 3 original (Tabela~5). O padrão generaliza bem: blue chips líquidas (Pão de Açúcar, Aliansce
+Sonae, BR Malls, Sabesp, Banco do Brasil, Itaú Unibanco) estão entre as que mais se beneficiam do
+ajuste parcial; só $5$ dos $48$ ativos (Eneva, Equatorial, Locamérica, Alpargatas, Rumo) têm o
+ajuste parcial perdendo pra ingênua fora da amostra --- e, mesmo nesses $5$, a margem negativa é
+pequena ($-2{,}3\%$ a $-0{,}0\%$), nada perto da magnitude das vitórias no topo da tabela.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
@@ -1253,6 +1424,15 @@ Núcleo Capital, Bogari), que carregavam \emph{menos} VALE3 que o Itaú, têm o 
 olhando a carteira inteira --- montam posições maiores em geral, mas evitam especificamente o
 blue chip mega-cap. Essa ordenação bate com o viés do erro por gestora (Seção~\ref{sec:erro-multiativo}),
 duas metodologias independentes chegando à mesma conclusão.
+\item \textbf{Etapa 3 generalizada (Seção~\ref{sec:etapa3-multiativo}):} o mesmo ajuste parcial
+fora da amostra testado para todos os fundos, gestoras e ativos, reaproveitando o alvo $w^*$ já
+calculado na Seção~\ref{sec:multiativo}. Em VALE3 ($h=3$), a Vinci Partners é a gestora mais
+difícil de prever fora da amostra (cobertura ampla, não é artefato de poucos fundos); o fundo mais
+errante tem uma aposta real e concentrada de curtíssimo prazo (13\%$\to$80\%$\to$11\% em 3 meses,
+AUM estável, não é resgate). Generalizando para todos os ativos ($h=1$, com o mesmo filtro de
+posição-poeira das seções anteriores): $89{,}6\%$ dos $48$ ativos elegíveis têm o ajuste parcial
+vencendo a ingênua fora da amostra, mediana de $1{,}85\%$ --- mais forte que o $1{,}5\%$ da Etapa
+3 original, um sinal de que a vantagem do ajuste parcial não é uma particularidade de VALE3.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
