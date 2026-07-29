@@ -1656,8 +1656,8 @@ $39$ das $41$ gestoras.
 
 \begin{center}\scriptsize
 \begin{longtable}{@{}lp{3.9cm}rp{3.9cm}r@{}}
-\caption{Ativo com mais e menos erro fora da amostra ($h{=}1$), por gestora --- ordenado do maior
-RMSE para o menor.}\\
+\caption{Top-3 ativos com mais e menos erro fora da amostra ($h{=}1$), por gestora --- ordenado
+do maior RMSE (rank 1) para o menor.}\\
 \toprule
 Gestora & Ativo (mais erro) & RMSE & Ativo (menos erro) & RMSE \\
 \midrule
@@ -1671,67 +1671,144 @@ Gestora & Ativo (mais erro) & RMSE & Ativo (menos erro) & RMSE \\
 \multicolumn{5}{r}{\textit{continua na próxima página}}\\
 \endfoot
 \bottomrule
-\multicolumn{5}{@{}p{0.95\textwidth}@{}}{\footnotesize Fonte: elaboração própria
-(\texttt{scripts/46\_erro\_ativo\_por\_gestora\_e\_fundo.R},
+\multicolumn{5}{@{}p{0.95\textwidth}@{}}{\footnotesize Cada gestora ocupa 3 linhas (rank 1 a 3).
+Fonte: elaboração própria (\texttt{scripts/46\_erro\_ativo\_por\_gestora\_e\_fundo.R},
 \texttt{47\_tabela\_erro\_ativo\_por\_gestora.R}).}\\
 \endlastfoot
 Guepardo Investimentos & JSL ON NM - JSLG3 & $0{,}0756$ & SIMPAR ON NM - SIMH3 & $0{,}0005$ \\
+Guepardo Investimentos & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0273$ & IMC S/A ON NM - MEAL3 & $0{,}0017$ \\
+Guepardo Investimentos & GERDAU PN N1 - GGBR4 & $0{,}0229$ & MARCOPOLO PN N2 - POMO4 & $0{,}0027$ \\
 Vinci Partners & VALE ON N1 - VALE3 & $0{,}0365$ & VALID ON NM - VLID3 & $0{,}0005$ \\
-Kapitalo Investimentos & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0338$ & RODOBENSIMOB ON NM - RDNI3 &
-$0{,}0001$ \\
+Vinci Partners & TENDA ON - TEND3 & $0{,}0274$ & CESP PNB N1 - CESP6 & $0{,}0008$ \\
+Vinci Partners & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0210$ & GRENDENE ON NM - GRND3 & $0{,}0009$ \\
+Kapitalo Investimentos & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0338$ & RODOBENSIMOB ON NM - RDNI3 & $0{,}0001$ \\
+Kapitalo Investimentos & BRF SA ON NM - BRFS3 & $0{,}0194$ & QUERO-QUERO ON NM - LJQQ3 & $0{,}0005$ \\
+Kapitalo Investimentos & PETROBRAS PN - PETR4 & $0{,}0176$ & OMEGA GER ON NM - OMGE3 & $0{,}0007$ \\
 AZ Quest & VALE ON N1 - VALE3 & $0{,}0337$ & IOCHP-MAXION ON NM - MYPK3 & $0{,}0003$ \\
-Ibiuna Investimentos & BRADESCO PN N1 - BBDC4 & $0{,}0309$ & ENGIE BRASIL ON NM - EGIE3 &
-$0{,}0005$ \\
+AZ Quest & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0285$ & ALUPAR UNT N2 - ALUP11 & $0{,}0004$ \\
+AZ Quest & PETROBRAS PN - PETR4 & $0{,}0285$ & COPEL PNB N1 - CPLE6 & $0{,}0007$ \\
+Ibiuna Investimentos & BRADESCO PN N1 - BBDC4 & $0{,}0309$ & ENGIE BRASIL ON NM - EGIE3 & $0{,}0005$ \\
+Ibiuna Investimentos & VALE ON N1 - VALE3 & $0{,}0284$ & RAIADROGASIL ON NM - RADL3 & $0{,}0015$ \\
+Ibiuna Investimentos & BRASIL ON NM - BBAS3 & $0{,}0251$ & TRAN PAULIST PN N1 - TRPL4 & $0{,}0021$ \\
 Opportunity & PETROBRAS PN - PETR4 & $0{,}0281$ & IHPARDINI ON NM - PARD3 & $0{,}0001$ \\
+Opportunity & VALE ON N1 - VALE3 & $0{,}0273$ & BBSEGURIDADE ON NM - BBSE3 & $0{,}0001$ \\
+Opportunity & ITAUSA PN N1 - ITSA4 & $0{,}0192$ & VIVARA S.A. ON NM - VIVA3 & $0{,}0003$ \\
 Absolute Investimentos & LINX ON NM - LINX3 & $0{,}0261$ & D1000VFARMA ON NM - DMVF3 & $0{,}0001$ \\
+Absolute Investimentos & PETROBRAS ON - PETR3 & $0{,}0214$ & OUROFINO S/A ON NM - OFSA3 & $0{,}0004$ \\
+Absolute Investimentos & PETROBRAS PN - PETR4 & $0{,}0187$ & CBA ON NM - CBAV3 & $0{,}0006$ \\
 Squadra Investimentos & PETROBRAS PN - PETR4 & $0{,}0250$ & BR BROKERS ON NM - BBRK3 & $0{,}0002$ \\
+Squadra Investimentos & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0206$ & CR2 ON NM - CRDE3 & $0{,}0003$ \\
+Squadra Investimentos & VALE ON N1 - VALE3 & $0{,}0191$ & M.DIASBRANCO ON NM - MDIA3 & $0{,}0008$ \\
 Truxt Investimentos & PETROBRAS PN - PETR4 & $0{,}0246$ & BR PARTNERS UNT N2 - BRBI11 & $0{,}0008$ \\
+Truxt Investimentos & PETRORIO ON NM - PRIO3 & $0{,}0236$ & MOBLY ON NM - MBLY3 & $0{,}0008$ \\
+Truxt Investimentos & VALE ON N1 - VALE3 & $0{,}0236$ & VIBRA ON NM - VBBR3 & $0{,}0009$ \\
 Forpus Capital & MELIUZ ON NM - CASH3 & $0{,}0236$ & JALLESMACHADON NM - JALL3 & $0{,}0024$ \\
+Forpus Capital & LOCAWEB ON NM - LWSA3 & $0{,}0217$ & EUCATEX PN N1 - EUCA4 & $0{,}0027$ \\
+Forpus Capital & MAGAZ LUIZA ON NM - MGLU3 & $0{,}0198$ & BRADESCO PN N1 - BBDC4 & $0{,}0030$ \\
 Kinea Investimentos & BRADESCO PN N1 - BBDC4 & $0{,}0229$ & ALIANSCSONAEON NM - ALSO3 & $0{,}0039$ \\
+Kinea Investimentos & VALE ON N1 - VALE3 & $0{,}0186$ & SAO MARTINHO ON NM - SMTO3 & $0{,}0041$ \\
+Kinea Investimentos & BRASIL ON NM - BBAS3 & $0{,}0134$ & KLABIN S/A UNT N2 - KLBN11 & $0{,}0046$ \\
 Credit Suisse & PETROBRAS PN - PETR4 & $0{,}0220$ & CYRE COM-CCP ON NM - CCPR3 & $0{,}0004$ \\
+Credit Suisse & VALE ON N1 - VALE3 & $0{,}0195$ & WDC NETWORKSON NM - LVTC3 & $0{,}0006$ \\
+Credit Suisse & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0145$ & HBR REALTY ON NM - HBRE3 & $0{,}0007$ \\
 ARX Investimentos & ASSAI ON NM - ASAI3 & $0{,}0208$ & RAIADROGASIL ON NM - RADL3 & $0{,}0012$ \\
+ARX Investimentos & LINX ON NM - LINX3 & $0{,}0174$ & BANCO PAN PN N1 - BPAN4 & $0{,}0013$ \\
+ARX Investimentos & B2W DIGITAL ON NM - BTOW3 & $0{,}0165$ & MODALMAIS UNT N2 - MODL11 & $0{,}0013$ \\
 Sharp Capital & VALE ON N1 - VALE3 & $0{,}0197$ & TELEF BRASIL ON - VIVT3 & $0{,}0002$ \\
+Sharp Capital & PETROBRAS ON - PETR3 & $0{,}0176$ & BR MALLS PAR ON NM - BRML3 & $0{,}0006$ \\
+Sharp Capital & PETROBRAS PN - PETR4 & $0{,}0147$ & LAVVI ON NM - LAVV3 & $0{,}0006$ \\
 BNP Paribas & VALE ON N1 - VALE3 & $0{,}0197$ & CBA ON NM - CBAV3 & $0{,}0004$ \\
+BNP Paribas & PETROBRAS PN - PETR4 & $0{,}0109$ & ALUPAR UNT N2 - ALUP11 & $0{,}0005$ \\
+BNP Paribas & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0099$ & OMEGA GER ON NM - OMGE3 & $0{,}0007$ \\
 Caixa & VALE ON N1 - VALE3 & $0{,}0197$ & MITRE REALTYON NM - MTRE3 & $0{,}0002$ \\
+Caixa & PETROBRAS PN - PETR4 & $0{,}0124$ & DIMED ON - PNVL3 & $0{,}0004$ \\
+Caixa & TIM PART S/A ON NM - TIMP3 & $0{,}0110$ & CIA HERING ON NM - HGTX3 & $0{,}0004$ \\
 Bradesco Asset Management & VALE ON N1 - VALE3 & $0{,}0184$ & HIDROVIAS ON NM - HBSA3 & $0{,}0012$ \\
-Constellation Asset Management & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0181$ & CVC BRASIL ON NM -
-CVCB3 & $0{,}0002$ \\
+Bradesco Asset Management & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0142$ & PETRORECSA ON NM - RECV3 & $0{,}0017$ \\
+Bradesco Asset Management & PETROBRAS PN - PETR4 & $0{,}0127$ & BR MALLS PAR ON NM - BRML3 & $0{,}0017$ \\
+Constellation Asset Management & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0181$ & CVC BRASIL ON NM - CVCB3 & $0{,}0002$ \\
+Constellation Asset Management & LOJAS RENNER ON NM - LREN3 & $0{,}0141$ & FLEURY ON NM - FLRY3 & $0{,}0002$ \\
+Constellation Asset Management & RUMO S.A. ON NM - RAIL3 & $0{,}0129$ & IGUATEMI ON NM - IGTA3 & $0{,}0005$ \\
 Núcleo Capital & INTERMEDICA ON NM - GNDI3 & $0{,}0177$ & COMPASS PNB - PASS6 & $0{,}0010$ \\
+Núcleo Capital & RUMO S.A. ON NM - RAIL3 & $0{,}0167$ & VIVEO ON NM - VVEO3 & $0{,}0019$ \\
+Núcleo Capital & WEG ON NM - WEGE3 & $0{,}0149$ & TC ON NM - TRAD3 & $0{,}0027$ \\
 SPX Capital & VALE ON N1 - VALE3 & $0{,}0174$ & SMART FIT ON M2 - SMFT3 & $0{,}0004$ \\
-Santander Brasil Asset Management & VALE ON N1 - VALE3 & $0{,}0174$ & VIVEO ON NM - VVEO3 &
-$0{,}0005$ \\
+SPX Capital & BRADESCO PN N1 - BBDC4 & $0{,}0169$ & DIRECIONAL ON NM - DIRR3 & $0{,}0005$ \\
+SPX Capital & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0141$ & VAMOS ON NM - VAMO3 & $0{,}0006$ \\
+Santander Brasil Asset Management & VALE ON N1 - VALE3 & $0{,}0174$ & VIVEO ON NM - VVEO3 & $0{,}0005$ \\
+Santander Brasil Asset Management & PETROBRAS PN - PETR4 & $0{,}0129$ & PETRORECSA ON NM - RECV3 & $0{,}0005$ \\
+Santander Brasil Asset Management & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0129$ & BANRISUL PNB N1 - BRSR6 & $0{,}0010$ \\
 Daycoval Asset Management & VALE ON N1 - VALE3 & $0{,}0173$ & EZTEC ON NM - EZTC3 & $0{,}0038$ \\
+Daycoval Asset Management & BRADESCO PN N1 - BBDC4 & $0{,}0160$ & INTERMEDICA ON NM - GNDI3 & $0{,}0039$ \\
+Daycoval Asset Management & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0156$ & CRUZEIRO EDUON NM - CSED3 & $0{,}0051$ \\
 Atmos Capital & B3 ON NM - B3SA3 & $0{,}0168$ & IGUATEMI S.AUNT N1 - IGTI11 & $0{,}0002$ \\
+Atmos Capital & GRUPO NATURAON NM - NTCO3 & $0{,}0158$ & BR PARTNERS UNT N2 - BRBI11 & $0{,}0003$ \\
+Atmos Capital & AMBEV S/A ON - ABEV3 & $0{,}0103$ & DESKTOP ON NM - DESK3 & $0{,}0004$ \\
 Verde Asset Management & ASSAI ON NM - ASAI3 & $0{,}0163$ & CIELO ON NM - CIEL3 & $0{,}0004$ \\
+Verde Asset Management & VALE ON N1 - VALE3 & $0{,}0157$ & LINX ON NM - LINX3 & $0{,}0006$ \\
+Verde Asset Management & SUZANO PAPEL ON NM - SUZB3 & $0{,}0129$ & TAESA UNT N2 - TAEE11 & $0{,}0006$ \\
 Occam Brasil & VALE ON N1 - VALE3 & $0{,}0162$ & LINX ON NM - LINX3 & $0{,}0004$ \\
+Occam Brasil & PETROBRAS PN - PETR4 & $0{,}0124$ & BRADESPAR PN N1 - BRAP4 & $0{,}0007$ \\
+Occam Brasil & B3 ON NM - B3SA3 & $0{,}0106$ & OI ON N1 - OIBR3 & $0{,}0007$ \\
 Western Asset & VALE ON N1 - VALE3 & $0{,}0143$ & BANCO PAN PN N1 - BPAN4 & $0{,}0003$ \\
+Western Asset & PETROBRAS PN - PETR4 & $0{,}0109$ & GERDAU MET PN N1 - GOAU4 & $0{,}0004$ \\
+Western Asset & CYRE COM-CCP ON NM - CCPR3 & $0{,}0087$ & M.DIASBRANCO ON NM - MDIA3 & $0{,}0005$ \\
 Bogari Capital & ENERGISA UNT N2 - ENGI11 & $0{,}0141$ & BR BROKERS ON NM - BBRK3 & $0{,}0002$ \\
+Bogari Capital & M.DIASBRANCO ON NM - MDIA3 & $0{,}0134$ & BBSEGURIDADE ON NM - BBSE3 & $0{,}0002$ \\
+Bogari Capital & BANCO INTER UNT N2 - BIDI11 & $0{,}0119$ & LINX ON NM - LINX3 & $0{,}0004$ \\
 Safra Asset Management & VALE ON N1 - VALE3 & $0{,}0138$ & COMPASS PNB - PASS6 & $0{,}0006$ \\
+Safra Asset Management & PETROBRAS PN - PETR4 & $0{,}0129$ & PASSPN - PASS5 & $0{,}0008$ \\
+Safra Asset Management & SUZANO PAPEL ON NM - SUZB3 & $0{,}0108$ & ESPACOLASER ON NM - ESPA3 & $0{,}0012$ \\
 JGP & SUZANO PAPEL ON NM - SUZB3 & $0{,}0138$ & IHPARDINI ON NM - PARD3 & $0{,}0001$ \\
+JGP & VALE ON N1 - VALE3 & $0{,}0126$ & BANRISUL PNB N1 - BRSR6 & $0{,}0001$ \\
+JGP & PETROBRAS PN - PETR4 & $0{,}0119$ & SMILES ON NM - SMLS3 & $0{,}0002$ \\
 Claritas Investimentos & VALE ON N1 - VALE3 & $0{,}0138$ & DIMED ON - PNVL3 & $0{,}0008$ \\
+Claritas Investimentos & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0134$ & CVC BRASIL ON NM - CVCB3 & $0{,}0008$ \\
+Claritas Investimentos & CPFL ENERGIA ON NM - CPFE3 & $0{,}0117$ & AZUL PN N2 - AZUL4 & $0{,}0009$ \\
 BTG Pactual & PETROBRAS PN - PETR4 & $0{,}0135$ & PASSPN - PASS5 & $0{,}0011$ \\
-Julius Baer Family Office & VALE ON N1 - VALE3 & $0{,}0129$ & WILSON SONS ON NM - PORT3 &
-$0{,}0004$ \\
+BTG Pactual & VALE ON N1 - VALE3 & $0{,}0123$ & CIA HERING ON NM - HGTX3 & $0{,}0015$ \\
+BTG Pactual & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0094$ & QUERO-QUERO ON NM - LJQQ3 & $0{,}0016$ \\
+Julius Baer Family Office & VALE ON N1 - VALE3 & $0{,}0129$ & WILSON SONS ON NM - PORT3 & $0{,}0004$ \\
+Julius Baer Family Office & SABESP ON NM - SBSP3 & $0{,}0120$ & BRISANET ON NM - BRIT3 & $0{,}0005$ \\
+Julius Baer Family Office & PETROBRAS PN - PETR4 & $0{,}0105$ & FOCUS ON ON NM - POWE3 & $0{,}0005$ \\
 Dahlia Capital & VALE ON N1 - VALE3 & $0{,}0127$ & BLAU ON NM - BLAU3 & $0{,}0003$ \\
+Dahlia Capital & TIM PART S/A ON NM - TIMP3 & $0{,}0102$ & COPEL ON N1 - CPLE3 & $0{,}0004$ \\
+Dahlia Capital & PETROBRAS PN - PETR4 & $0{,}0069$ & MATER DEI ON EB NM - MATD3 & $0{,}0005$ \\
 Itaú & VALE ON N1 - VALE3 & $0{,}0126$ & PASSPN - PASS5 & $0{,}0006$ \\
+Itaú & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0099$ & SMART FIT ON M2 - SMFT3 & $0{,}0008$ \\
+Itaú & PETROBRAS PN - PETR4 & $0{,}0088$ & GRUPO MATEUSON NM - GMAT3 & $0{,}0010$ \\
 XP & VALE ON N1 - VALE3 & $0{,}0124$ & ALIANSCSONAEON NM - ALSO3 & $0{,}0007$ \\
+XP & REDE D OR ON NM - RDOR3 & $0{,}0095$ & GRUPO MATEUSON NM - GMAT3 & $0{,}0009$ \\
+XP & VIAVAREJO ON N2 - VVAR3 & $0{,}0089$ & VIVARA S.A. ON NM - VIVA3 & $0{,}0009$ \\
 BB Asset Management & VALE ON N1 - VALE3 & $0{,}0119$ & CEMIG ON N1 - CMIG3 & $0{,}0007$ \\
+BB Asset Management & P.ACUCAR-CBD PN N1 - PCAR4 & $0{,}0096$ & BRADESCO ON N1 - BBDC3 & $0{,}0008$ \\
+BB Asset Management & PETROBRAS PN - PETR4 & $0{,}0086$ & LINX ON NM - LINX3 & $0{,}0008$ \\
 Real Investor & VALE ON N1 - VALE3 & $0{,}0093$ & IMC S/A ON NM - MEAL3 & $0{,}0016$ \\
+Real Investor & BRASIL ON NM - BBAS3 & $0{,}0091$ & CYRE COM-CCP ON NM - CCPR3 & $0{,}0019$ \\
+Real Investor & NEOENERGIA ON ATZ NM - NEOE3 & $0{,}0091$ & GRENDENE ON NM - GRND3 & $0{,}0023$ \\
 TNA Gestão Patrimonial & COSAN ON NM - CSAN3 & $0{,}0072$ & CVC BRASIL ON NM - CVCB3 & $0{,}0001$ \\
+TNA Gestão Patrimonial & GRUPO NATURAON NM - NTCO3 & $0{,}0064$ & WILSON SONS ON NM - PORT3 & $0{,}0002$ \\
+TNA Gestão Patrimonial & PETROBRAS DISTRIB ON - BRDT3 & $0{,}0055$ & SMART FIT ON M2 - SMFT3 & $0{,}0004$ \\
 Gávea Investimentos & VIAVAREJO ON N2 - VVAR3 & $0{,}0032$ & GERDAU PN N1 - GGBR4 & $0{,}0003$ \\
+Gávea Investimentos & VALE ON N1 - VALE3 & $0{,}0028$ & CESP PNB N1 - CESP6 & $0{,}0004$ \\
+Gávea Investimentos & GRUPO NATURAON NM - NTCO3 & $0{,}0025$ & TRISUL ON NM - TRIS3 & $0{,}0004$ \\
 \end{longtable}
 \end{center}
 
 \aha{\textbf{VALE3 domina como o ativo mais difícil de prever}: $19$ das $39$ gestoras
-($49\%$) têm VALE3 como o ativo de maior erro fora da amostra; somando Petrobras ($5$ gestoras),
-mais de $60\%$ das gestoras têm uma dessas duas \emph{blue chips} como seu ponto cego. Não é
-coincidência --- confirma, com uma terceira metodologia independente, o mesmo padrão já visto na
-Tabela~20 (VALE3 é o $2^o$ ativo com erro mais disperso \textbf{dentro} da amostra, atrás só da
-Petrobras) e discutido na Seção~6.2 (o beta do fundo, que mais separa fundos ``equity-like'' de
-``conservadores'', é dominado pela variação nessas ações mais representativas do índice). Pro
-robô: mesmo dentro de gestoras consideradas ``previsíveis'' no agregado (Tabela~25), VALE3 e
-Petrobras são candidatas naturais a ficarem de fora de qualquer tentativa de replicar posições com
-alta confiança --- o erro se concentra ali de forma sistemática, gestora após gestora.}
+($49\%$) têm VALE3 como o ativo de \textbf{maior} erro fora da amostra (rank~1); olhando o
+top-3 inteiro, $29$ das $39$ ($74\%$) têm VALE3 em algum dos três, e $33$ das $39$ ($85\%$) têm
+VALE3, Petrobras \textbf{ou} Itaú Unibanco --- as três \emph{blue chips} mais líquidas do
+Ibovespa dominam o erro fora da amostra de quase toda gestora, independente do book específico
+dela. Não é coincidência --- confirma, com uma terceira metodologia independente, o mesmo padrão
+já visto na Tabela~20 (VALE3 é o $2^o$ ativo com erro mais disperso \textbf{dentro} da amostra,
+atrás só da Petrobras) e discutido na Seção~6.2 (o beta do fundo, que mais separa fundos
+``equity-like'' de ``conservadores'', é dominado pela variação nessas ações mais representativas
+do índice). Pro robô: mesmo dentro de gestoras consideradas ``previsíveis'' no agregado
+(Tabela~25), VALE3/Petrobras/Itaú Unibanco são candidatas naturais a ficarem de fora de qualquer
+tentativa de replicar posições com alta confiança --- o erro se concentra nelas de forma
+sistemática, gestora após gestora. O lado ``menos erro'' é mais idiossincrático: cada gestora tem
+seus próprios ativos-âncora, sem um padrão de concentração parecido.}
 
 % ======================================================================
 \FloatBarrier
@@ -1806,12 +1883,13 @@ Comparando com a ingênua, $4$ gestoras (Guepardo, Núcleo Capital, XP, Plural) 
 \textbf{negativa} nos $4$ horizontes --- pra elas o ajuste parcial \emph{piora} a previsão, por
 motivos opostos: Guepardo/Núcleo Capital/XP decidem rápido demais pro modelo captar; a Plural
 simplesmente não se mexe, e a ingênua já acerta sozinha.
-\item \textbf{Qual ativo específico puxa o erro, por gestora:} quebrando o erro fora da amostra
-($h=1$) por (gestora, ativo), $19$ das $39$ gestoras elegíveis ($49\%$) têm \textbf{VALE3} como o
-ativo de maior erro dentro do próprio book; somando Petrobras ($5$ gestoras), mais de $60\%$.
-Confirma, com uma terceira metodologia independente, o mesmo padrão da Tabela~20 (VALE3 é o
-$2^o$ ativo com erro mais disperso dentro da amostra) --- mesmo gestoras consideradas
-``previsíveis'' no agregado erram sistematicamente mais nessas duas \emph{blue chips}.
+\item \textbf{Qual ativo específico puxa o erro, por gestora (top-3):} quebrando o erro fora da
+amostra ($h=1$) por (gestora, ativo), $19$ das $39$ gestoras elegíveis ($49\%$) têm
+\textbf{VALE3} como o ativo de \textbf{maior} erro; olhando o top-3 inteiro, $29$ ($74\%$) têm
+VALE3 em algum dos três, e $33$ ($85\%$) têm VALE3, Petrobras \textbf{ou} Itaú Unibanco. Confirma,
+com uma terceira metodologia independente, o mesmo padrão da Tabela~20 (VALE3 é o $2^o$ ativo com
+erro mais disperso dentro da amostra) --- mesmo gestoras consideradas ``previsíveis'' no agregado
+erram sistematicamente mais nessas \emph{blue chips}.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
