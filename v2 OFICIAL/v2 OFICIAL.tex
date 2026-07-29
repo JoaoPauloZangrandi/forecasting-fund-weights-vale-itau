@@ -626,6 +626,19 @@ motivo evitável, não por falta real de dado. Reconstruída usando o conjunto c
 fundo-mês, a cobertura subiu para $97{,}6\%$. A amostra final tem $8.268.920$ linhas, $2.347$
 fundos, $501$ ativos.
 
+\textbf{Limitação conhecida:} diferente da Etapa 1/Seção~\ref{sec:gestoras} (onde o merge do beta
+do fundo desloca explicitamente para o mês $t-1$), o painel multiativo desta seção em diante junta
+o beta do fundo \textbf{contemporâneo} ao mês $t$, não defasado --- uma inconsistência com o
+desenho ``tudo predeterminado, sem look-ahead'' descrito na Seção~\ref{sec:etapa1}. É também por
+isso que este painel cobre $60$ meses (jan/2017--dez/2021) contra os $59$ da Etapa 1/Seção~5
+(fev/2017 em diante): com o mês inicial contemporâneo, um mês a mais de beta fica disponível.
+Testado o impacto (regressão pooled da Seção~6.2 refeita com o beta corretamente defasado):
+coeficiente $0{,}867$ (era $0{,}899$), $t=30{,}2$ (era $28{,}6$), APE $0{,}00375$ (era $0{,}00462$)
+--- mesma ordem de grandeza, mesmo sinal, significância igual ou mais forte. Como o beta do fundo
+varia pouco de um mês para o outro (janela móvel de $252$ pregões), a defasagem de $1$ mês altera
+pouco seu valor; nenhuma conclusão qualitativa das Seções~6.1--6.4 muda. Corrigido o merge e
+reprocessada a seção por completo é o próximo passo natural, mas não feito nesta rodada.
+
 \subsection{Regressão por ativo e por mês: o padrão de VALE3 generaliza?}
 
 \equacao
