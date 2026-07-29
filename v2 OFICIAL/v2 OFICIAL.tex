@@ -1376,6 +1376,52 @@ ajuste parcial; só $5$ dos $48$ ativos (Eneva, Equatorial, Locamérica, Alparga
 ajuste parcial perdendo pra ingênua fora da amostra --- e, mesmo nesses $5$, a margem negativa é
 pequena ($-2{,}3\%$ a $-0{,}0\%$), nada perto da magnitude das vitórias no topo da tabela.}
 
+\subsubsection*{Flexibilização de lags: todos os horizontes, todos os ativos}
+
+\pergunta{A Seção~4.2 flexibilizou o horizonte de previsão ($h=1,2,3,6,12$ meses) só para
+VALE3-Itaú. O mesmo teste, agregado em todos os $430$ ativos e $2.347$ fundos, mostra o mesmo
+padrão?}
+
+Mesmo esquema da Seção~4.2 (equação~\eqref{eq:pa}, $\widehat\lambda_h$ estimado só no treino,
+$w^*$ fixado em $t$), repetido para cada horizonte --- mas agora \emph{pooled} em todo o painel
+multiativo, não só num fundo-ativo por vez.
+
+\begin{table}[h]\centering\small
+\caption{RMSE fora da amostra (2020--2021), ajuste parcial vs.\ ingênua, por horizonte --- todos
+os ativos e gestoras agregados (não só VALE3-Itaú).}
+\begin{tabular}{@{}rrrrrrr@{}}
+\toprule
+$h$ (meses) & $\widehat\lambda_h$ & Obs.\ teste & RMSE ajuste & RMSE ingênua & Margem & Vence \\
+\midrule
+1  & $0{,}0750$ & 3.771.495 & $0{,}00404$ & $0{,}00411$ & $1{,}8\%$ & $100\%$ \\
+2  & $0{,}1177$ & 3.440.838 & $0{,}00518$ & $0{,}00534$ & $2{,}9\%$ & $100\%$ \\
+3  & $0{,}1543$ & 3.159.659 & $0{,}00584$ & $0{,}00606$ & $3{,}6\%$ & $100\%$ \\
+6  & $0{,}2321$ & 2.460.165 & $0{,}00701$ & $0{,}00738$ & $4{,}9\%$ & $100\%$ \\
+12 & $0{,}3457$ & 1.396.662 & $0{,}00842$ & $0{,}00905$ & $7{,}0\%$ & $100\%$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize ``Margem'' = redução percentual de RMSE do ajuste parcial sobre a
+ingênua; ``Vence'' = \% dos meses de teste em que o ajuste parcial tem RMSE menor naquele mês.
+Fonte: elaboração própria (\texttt{scripts/43\_rmse\_multihorizonte\_multiativo.R}).}
+\end{table}
+
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{fig_rmse_multihorizonte_multiativo_v2.pdf}
+\caption{RMSE fora da amostra, ajuste parcial vs.\ ingênua, por horizonte --- todos os ativos e
+gestoras agregados.}
+\end{figure}
+
+\aha{O ajuste parcial vence a ingênua em \textbf{100\% dos meses de teste, em todos os 5
+horizontes} --- bem mais forte que o $57$--$78\%$ da Etapa 3 original (Tabela~6), porque agregar
+milhões de observações por mês elimina o ruído de um único painel pequeno (23 fundos VALE3-Itaú).
+A margem cresce \textbf{monotonicamente} com o horizonte ($1{,}8\%\to7{,}0\%$), sem o pico em
+$h=3$-$6$ seguido de queda em $h=12$ que a versão só-VALE3 mostrava --- aqui a amostra de teste
+continua grande até em $h=12$ ($1{,}4$ milhões de obs., contra só $12$ meses de VALE3-Itaú), então
+o resultado não sofre da mesma instabilidade de amostra pequena. $\widehat\lambda_h$ cresce de
+forma parecida à versão só-VALE3 ($0{,}075\to0{,}346$, vs.\ $0{,}195\to0{,}406$) --- mais devagar
+que uma composição geométrica simples previria, mesma leitura de antes: o alvo $w^*$ também se
+move no caminho, não é um decaimento a taxa constante.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
@@ -1433,6 +1479,13 @@ AUM estável, não é resgate). Generalizando para todos os ativos ($h=1$, com o
 posição-poeira das seções anteriores): $89{,}6\%$ dos $48$ ativos elegíveis têm o ajuste parcial
 vencendo a ingênua fora da amostra, mediana de $1{,}85\%$ --- mais forte que o $1{,}5\%$ da Etapa
 3 original, um sinal de que a vantagem do ajuste parcial não é uma particularidade de VALE3.
+\item \textbf{Flexibilização de lags, todos os ativos:} o teste multi-horizonte ($h=1,2,3,6,12$)
+da Seção~4.2, generalizado para o painel multiativo inteiro (\emph{pooled}, não fundo-ativo por
+vez). O ajuste parcial vence a ingênua em $100\%$ dos meses de teste, em \textbf{todos} os $5$
+horizontes --- mais forte e mais estável que o $57$--$78\%$ da versão só-VALE3, porque agregar
+milhões de observações por mês elimina o ruído de um painel pequeno. A margem cresce
+monotonicamente com o horizonte ($1{,}8\%\to7{,}0\%$), sem o pico seguido de queda que a versão
+só-VALE3 mostrava em $h=12$ (aqui a amostra de teste continua grande, $1{,}4$ milhões de obs.).
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
