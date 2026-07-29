@@ -1624,6 +1624,21 @@ entre ``difícil de prever'' e ``a fórmula ajuda'' --- os dois eixos capturam p
 genuinamente diferentes, reforçando que o robô precisa olhar as duas medidas separadamente, não
 só uma proxy da outra.}
 
+\begin{figure}[h]\centering
+\includegraphics[width=0.75\textwidth]{fig_multihorizonte_gestora_rmse_margem_h3.pdf}
+\caption{Mesmo gráfico da Figura~14, agora em $h{=}3$.}
+\end{figure}
+
+\aha{Em $h{=}3$ ($40$ gestoras --- Legacy Capital cai por falta de dado nesse horizonte), os
+mesmos $4$ casos continuam negativos (Guepardo, Núcleo Capital, XP, Plural), mas se juntam a
+eles \textbf{dois novos}: TNA Gestão Patrimonial e Bogari Capital, que em $h{=}1$ tinham margem
+positiva ou perto de zero e viram negativos em $h{=}3$ (já visível na Tabela~26: TNA
+$+0{,}1\%\to-1{,}6\%$; Bogari $-0{,}8\%\to-0{,}2\%$, ambos oscilando perto de zero e cruzando pra
+negativo). Confirma o padrão da Tabela~26: o grupo ``sempre negativo'' (Guepardo, Núcleo Capital,
+XP, Plural) é estável, mas existe um segundo grupo, maior, que \textbf{oscila} em torno de zero
+dependendo do horizonte --- vale considerar os dois grupos separadamente no desenho do robô: um
+núcleo duro de gestoras onde o ajuste parcial nunca ajuda, e uma franja de casos-limite.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
