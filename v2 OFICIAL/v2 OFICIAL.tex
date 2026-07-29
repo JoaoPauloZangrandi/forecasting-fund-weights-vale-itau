@@ -1639,6 +1639,100 @@ XP, Plural) é estável, mas existe um segundo grupo, maior, que \textbf{oscila}
 dependendo do horizonte --- vale considerar os dois grupos separadamente no desenho do robô: um
 núcleo duro de gestoras onde o ajuste parcial nunca ajuda, e uma franja de casos-limite.}
 
+\subsubsection*{Por gestora, qual ativo específico puxa o erro}
+
+\pergunta{As Tabelas~25 e~26 agregam o erro de cada gestora em todas as ações. Dentro do book de
+cada gestora, qual ativo específico é o mais difícil de prever, e qual é o mais fácil?}
+
+Mesmos dados de $h{=}1$, agora quebrados por (gestora, ativo) em vez de só por gestora ---
+reaproveita as mesmas observações de erro fora da amostra, só muda o nível de agregação.
+
+\textbf{Adendo de processo:} sem filtro, o ativo ``menos errante'' de cada gestora repetia o
+mesmo artefato de posição-poeira já visto várias vezes nesta seção --- RMSE exatamente $0$ em
+ativos que a gestora praticamente nunca carrega de verdade (ex.: margens de $-500.000\%$, sem
+nenhum sentido econômico). Mesmo filtro de sempre (peso mediano da célula gestora-ativo
+$>0{,}1\%$, $\geq24$ observações), restando $2.542$ células (gestora, ativo) de $9.063$, cobrindo
+$39$ das $41$ gestoras.
+
+\begin{center}\scriptsize
+\begin{longtable}{@{}lp{3.9cm}rp{3.9cm}r@{}}
+\caption{Ativo com mais e menos erro fora da amostra ($h{=}1$), por gestora --- ordenado do maior
+RMSE para o menor.}\\
+\toprule
+Gestora & Ativo (mais erro) & RMSE & Ativo (menos erro) & RMSE \\
+\midrule
+\endfirsthead
+\multicolumn{5}{l}{\textit{Tabela 27 (continuação)}}\\
+\toprule
+Gestora & Ativo (mais erro) & RMSE & Ativo (menos erro) & RMSE \\
+\midrule
+\endhead
+\midrule
+\multicolumn{5}{r}{\textit{continua na próxima página}}\\
+\endfoot
+\bottomrule
+\multicolumn{5}{@{}p{0.95\textwidth}@{}}{\footnotesize Fonte: elaboração própria
+(\texttt{scripts/46\_erro\_ativo\_por\_gestora\_e\_fundo.R},
+\texttt{47\_tabela\_erro\_ativo\_por\_gestora.R}).}\\
+\endlastfoot
+Guepardo Investimentos & JSL ON NM - JSLG3 & $0{,}0756$ & SIMPAR ON NM - SIMH3 & $0{,}0005$ \\
+Vinci Partners & VALE ON N1 - VALE3 & $0{,}0365$ & VALID ON NM - VLID3 & $0{,}0005$ \\
+Kapitalo Investimentos & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0338$ & RODOBENSIMOB ON NM - RDNI3 &
+$0{,}0001$ \\
+AZ Quest & VALE ON N1 - VALE3 & $0{,}0337$ & IOCHP-MAXION ON NM - MYPK3 & $0{,}0003$ \\
+Ibiuna Investimentos & BRADESCO PN N1 - BBDC4 & $0{,}0309$ & ENGIE BRASIL ON NM - EGIE3 &
+$0{,}0005$ \\
+Opportunity & PETROBRAS PN - PETR4 & $0{,}0281$ & IHPARDINI ON NM - PARD3 & $0{,}0001$ \\
+Absolute Investimentos & LINX ON NM - LINX3 & $0{,}0261$ & D1000VFARMA ON NM - DMVF3 & $0{,}0001$ \\
+Squadra Investimentos & PETROBRAS PN - PETR4 & $0{,}0250$ & BR BROKERS ON NM - BBRK3 & $0{,}0002$ \\
+Truxt Investimentos & PETROBRAS PN - PETR4 & $0{,}0246$ & BR PARTNERS UNT N2 - BRBI11 & $0{,}0008$ \\
+Forpus Capital & MELIUZ ON NM - CASH3 & $0{,}0236$ & JALLESMACHADON NM - JALL3 & $0{,}0024$ \\
+Kinea Investimentos & BRADESCO PN N1 - BBDC4 & $0{,}0229$ & ALIANSCSONAEON NM - ALSO3 & $0{,}0039$ \\
+Credit Suisse & PETROBRAS PN - PETR4 & $0{,}0220$ & CYRE COM-CCP ON NM - CCPR3 & $0{,}0004$ \\
+ARX Investimentos & ASSAI ON NM - ASAI3 & $0{,}0208$ & RAIADROGASIL ON NM - RADL3 & $0{,}0012$ \\
+Sharp Capital & VALE ON N1 - VALE3 & $0{,}0197$ & TELEF BRASIL ON - VIVT3 & $0{,}0002$ \\
+BNP Paribas & VALE ON N1 - VALE3 & $0{,}0197$ & CBA ON NM - CBAV3 & $0{,}0004$ \\
+Caixa & VALE ON N1 - VALE3 & $0{,}0197$ & MITRE REALTYON NM - MTRE3 & $0{,}0002$ \\
+Bradesco Asset Management & VALE ON N1 - VALE3 & $0{,}0184$ & HIDROVIAS ON NM - HBSA3 & $0{,}0012$ \\
+Constellation Asset Management & ITAUUNIBANCO PN N1 - ITUB4 & $0{,}0181$ & CVC BRASIL ON NM -
+CVCB3 & $0{,}0002$ \\
+Núcleo Capital & INTERMEDICA ON NM - GNDI3 & $0{,}0177$ & COMPASS PNB - PASS6 & $0{,}0010$ \\
+SPX Capital & VALE ON N1 - VALE3 & $0{,}0174$ & SMART FIT ON M2 - SMFT3 & $0{,}0004$ \\
+Santander Brasil Asset Management & VALE ON N1 - VALE3 & $0{,}0174$ & VIVEO ON NM - VVEO3 &
+$0{,}0005$ \\
+Daycoval Asset Management & VALE ON N1 - VALE3 & $0{,}0173$ & EZTEC ON NM - EZTC3 & $0{,}0038$ \\
+Atmos Capital & B3 ON NM - B3SA3 & $0{,}0168$ & IGUATEMI S.AUNT N1 - IGTI11 & $0{,}0002$ \\
+Verde Asset Management & ASSAI ON NM - ASAI3 & $0{,}0163$ & CIELO ON NM - CIEL3 & $0{,}0004$ \\
+Occam Brasil & VALE ON N1 - VALE3 & $0{,}0162$ & LINX ON NM - LINX3 & $0{,}0004$ \\
+Western Asset & VALE ON N1 - VALE3 & $0{,}0143$ & BANCO PAN PN N1 - BPAN4 & $0{,}0003$ \\
+Bogari Capital & ENERGISA UNT N2 - ENGI11 & $0{,}0141$ & BR BROKERS ON NM - BBRK3 & $0{,}0002$ \\
+Safra Asset Management & VALE ON N1 - VALE3 & $0{,}0138$ & COMPASS PNB - PASS6 & $0{,}0006$ \\
+JGP & SUZANO PAPEL ON NM - SUZB3 & $0{,}0138$ & IHPARDINI ON NM - PARD3 & $0{,}0001$ \\
+Claritas Investimentos & VALE ON N1 - VALE3 & $0{,}0138$ & DIMED ON - PNVL3 & $0{,}0008$ \\
+BTG Pactual & PETROBRAS PN - PETR4 & $0{,}0135$ & PASSPN - PASS5 & $0{,}0011$ \\
+Julius Baer Family Office & VALE ON N1 - VALE3 & $0{,}0129$ & WILSON SONS ON NM - PORT3 &
+$0{,}0004$ \\
+Dahlia Capital & VALE ON N1 - VALE3 & $0{,}0127$ & BLAU ON NM - BLAU3 & $0{,}0003$ \\
+Itaú & VALE ON N1 - VALE3 & $0{,}0126$ & PASSPN - PASS5 & $0{,}0006$ \\
+XP & VALE ON N1 - VALE3 & $0{,}0124$ & ALIANSCSONAEON NM - ALSO3 & $0{,}0007$ \\
+BB Asset Management & VALE ON N1 - VALE3 & $0{,}0119$ & CEMIG ON N1 - CMIG3 & $0{,}0007$ \\
+Real Investor & VALE ON N1 - VALE3 & $0{,}0093$ & IMC S/A ON NM - MEAL3 & $0{,}0016$ \\
+TNA Gestão Patrimonial & COSAN ON NM - CSAN3 & $0{,}0072$ & CVC BRASIL ON NM - CVCB3 & $0{,}0001$ \\
+Gávea Investimentos & VIAVAREJO ON N2 - VVAR3 & $0{,}0032$ & GERDAU PN N1 - GGBR4 & $0{,}0003$ \\
+\end{longtable}
+\end{center}
+
+\aha{\textbf{VALE3 domina como o ativo mais difícil de prever}: $19$ das $39$ gestoras
+($49\%$) têm VALE3 como o ativo de maior erro fora da amostra; somando Petrobras ($5$ gestoras),
+mais de $60\%$ das gestoras têm uma dessas duas \emph{blue chips} como seu ponto cego. Não é
+coincidência --- confirma, com uma terceira metodologia independente, o mesmo padrão já visto na
+Tabela~20 (VALE3 é o $2^o$ ativo com erro mais disperso \textbf{dentro} da amostra, atrás só da
+Petrobras) e discutido na Seção~6.2 (o beta do fundo, que mais separa fundos ``equity-like'' de
+``conservadores'', é dominado pela variação nessas ações mais representativas do índice). Pro
+robô: mesmo dentro de gestoras consideradas ``previsíveis'' no agregado (Tabela~25), VALE3 e
+Petrobras são candidatas naturais a ficarem de fora de qualquer tentativa de replicar posições com
+alta confiança --- o erro se concentra ali de forma sistemática, gestora após gestora.}
+
 % ======================================================================
 \FloatBarrier
 \section{Resumo}
@@ -1712,6 +1806,12 @@ Comparando com a ingênua, $4$ gestoras (Guepardo, Núcleo Capital, XP, Plural) 
 \textbf{negativa} nos $4$ horizontes --- pra elas o ajuste parcial \emph{piora} a previsão, por
 motivos opostos: Guepardo/Núcleo Capital/XP decidem rápido demais pro modelo captar; a Plural
 simplesmente não se mexe, e a ingênua já acerta sozinha.
+\item \textbf{Qual ativo específico puxa o erro, por gestora:} quebrando o erro fora da amostra
+($h=1$) por (gestora, ativo), $19$ das $39$ gestoras elegíveis ($49\%$) têm \textbf{VALE3} como o
+ativo de maior erro dentro do próprio book; somando Petrobras ($5$ gestoras), mais de $60\%$.
+Confirma, com uma terceira metodologia independente, o mesmo padrão da Tabela~20 (VALE3 é o
+$2^o$ ativo com erro mais disperso dentro da amostra) --- mesmo gestoras consideradas
+``previsíveis'' no agregado erram sistematicamente mais nessas duas \emph{blue chips}.
 \end{enumerate}
 
 Nenhuma dessas conclusões depende de Newey--West, cluster, Kalman, variável instrumental ou
