@@ -66,6 +66,23 @@ fe_g <- data.table(gestora = names(fe_g), fe = as.numeric(fe_g))
 itau_fe <- fe_g[gestora == "Itau", fe]
 fe_g[, fe_vs_itau := fe - itau_fe]
 
+# ---- APE discreto por gestora (pontos percentuais), mesma logica do R/21 --
+# (Secao 5) so que aqui a "dummy" de gestora e um efeito-fixo, nao uma
+# covariavel comum -- entao em vez de usar o coeficiente, usa-se o proprio
+# fixef() como o deslocamento a aplicar/remover de z_pred. Para CADA
+# observacao da amostra: tira o efeito-fixo da gestora que ela realmente
+# tem (z_base), depois testa "e se essa observacao fosse de uma gestora g"
+# vs "e se fosse do Itau", mantendo ativo/mes/caracteristicas fixos -- media
+# da diferenca em toda a amostra = APE_g (pontos percentuais de peso).
+fe_lookup <- setNames(fe_g$fe, fe_g$gestora)
+fe_obs <- fe_lookup[as.character(dd_usado$gestora_grupo)]
+z_base <- z_pred - fe_obs
+ape_gestora <- vapply(fe_g$gestora, function(g) {
+  z_g <- z_base + fe_lookup[[g]]; z_it <- z_base + fe_lookup[["Itau"]]
+  mean(plogis(z_g) - plogis(z_it))
+}, numeric(1))
+fe_g[, ape_vs_itau := ape_gestora[gestora]]
+
 # ---- cobertura por gestora (n de fundos/meses) -- achado de auditoria: sem
 # essa coluna, o ranking do efeito-fixo esconde que os extremos tendem a ser
 # gestoras com poucos fundos (mais ruido na estimativa, nao necessariamente
@@ -75,11 +92,12 @@ fe_g[, fe_vs_itau := fe - itau_fe]
 cov_g <- dd_usado[, .(n_fundos = uniqueN(cod_fundo), n_meses = uniqueN(ym)), by = gestora_grupo]
 setnames(cov_g, "gestora_grupo", "gestora")
 fe_g <- merge(fe_g, cov_g, by = "gestora")
-setorder(fe_g, -fe_vs_itau)
-cat("\n===== Efeito-fixo de gestora (log-odds), centrado no Itau, com cobertura =====\n")
+setorder(fe_g, -ape_vs_itau)
+cat("\n===== Efeito-fixo de gestora (log-odds e APE), centrado no Itau, com cobertura =====\n")
 print(fe_g)
 cat("\nCorrelacao n_fundos vs |fe_vs_itau|:", round(cor(fe_g$n_fundos, abs(fe_g$fe_vs_itau)),3),
     "| com log(n_fundos):", round(cor(log(fe_g$n_fundos), abs(fe_g$fe_vs_itau)),3), "\n")
+cat("Correlacao n_fundos vs |ape_vs_itau|:", round(cor(fe_g$n_fundos, abs(fe_g$ape_vs_itau)),3), "\n")
 
 fwrite(res_5, file.path(REPO, "v2 OFICIAL/data/pooled_fe3way_multiativo_chars.csv"))
 fwrite(fe_g, file.path(REPO, "v2 OFICIAL/data/pooled_fe3way_multiativo_gestora.csv"))

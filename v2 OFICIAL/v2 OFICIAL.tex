@@ -816,66 +816,69 @@ beta do fundo \textbf{não se move} ($t=29{,}0$ vs.\ $28{,}6$) --- reforça que 
 robusto do documento, resistente a qualquer controle adicional.}
 
 \begin{center}\scriptsize
-\begin{longtable}{@{}lrrrr@{}}
-\caption{Efeito-fixo de gestora (log-odds), centrado no Itaú --- painel completo de 430 ativos,
-não só VALE3.}\\
+\begin{longtable}{@{}lrrrrr@{}}
+\caption{Efeito-fixo de gestora (log-odds), centrado no Itaú, e APE (pontos percentuais) ---
+painel completo de 430 ativos, não só VALE3.}\\
 \toprule
-Gestora & Fundos & Meses & Efeito-fixo & vs.\ Itaú \\
+Gestora & Fundos & Meses & Efeito-fixo & vs.\ Itaú & APE vs.\ Itaú \\
 \midrule
 \endfirsthead
-\multicolumn{5}{l}{\textit{Tabela 14 (continuação)}}\\
+\multicolumn{6}{l}{\textit{Tabela 14 (continuação)}}\\
 \toprule
-Gestora & Fundos & Meses & Efeito-fixo & vs.\ Itaú \\
+Gestora & Fundos & Meses & Efeito-fixo & vs.\ Itaú & APE vs.\ Itaú \\
 \midrule
 \endhead
 \midrule
-\multicolumn{5}{r}{\textit{continua na próxima página}}\\
+\multicolumn{6}{r}{\textit{continua na próxima página}}\\
 \endfoot
 \bottomrule
-\multicolumn{5}{@{}p{0.95\textwidth}@{}}{\footnotesize Fonte: elaboração própria
+\multicolumn{6}{@{}p{0.95\textwidth}@{}}{\footnotesize APE = diferença média de peso previsto
+(pontos percentuais), forçando cada fundo-mês da amostra a ser da gestora indicada em vez do
+Itaú, mantendo ativo, mês e as 5 características observadas -- mesma lógica do APE discreto da
+Tabela~9, adaptada pra efeito-fixo em vez de dummy. Fonte: elaboração própria
 (\texttt{scripts/41\_pooled\_fe3way\_gestora\_multiativo.R}).}\\
 \endlastfoot
-Guepardo Investimentos & 15 & 60 & $1{,}897$ & $+2{,}185$ \\
-Núcleo Capital & 19 & 60 & $1{,}567$ & $+1{,}855$ \\
-Bogari Capital & 16 & 60 & $1{,}189$ & $+1{,}477$ \\
-Real Investor & 5 & 60 & $1{,}151$ & $+1{,}439$ \\
-Ibiuna Investimentos & 8 & 60 & $1{,}046$ & $+1{,}335$ \\
-Legacy Capital & 1 & 2 & $1{,}038$ & $+1{,}327$ \\
-Constellation Asset Management & 28 & 60 & $0{,}936$ & $+1{,}225$ \\
-Sharp Capital & 35 & 60 & $0{,}883$ & $+1{,}171$ \\
-Claritas Investimentos & 15 & 60 & $0{,}821$ & $+1{,}109$ \\
-Squadra Investimentos & 20 & 60 & $0{,}812$ & $+1{,}101$ \\
-Atmos Capital & 32 & 60 & $0{,}807$ & $+1{,}096$ \\
-Forpus Capital & 3 & 60 & $0{,}787$ & $+1{,}076$ \\
-Plural & 15 & 60 & $0{,}734$ & $+1{,}022$ \\
-Gávea Investimentos & 17 & 60 & $0{,}724$ & $+1{,}012$ \\
-Kinea Investimentos & 10 & 60 & $0{,}719$ & $+1{,}008$ \\
-Truxt Investimentos & 31 & 43 & $0{,}681$ & $+0{,}969$ \\
-AZ Quest & 24 & 60 & $0{,}656$ & $+0{,}945$ \\
-Verde Asset Management & 15 & 60 & $0{,}561$ & $+0{,}849$ \\
-Absolute Investimentos & 7 & 29 & $0{,}559$ & $+0{,}848$ \\
-ARX Investimentos & 15 & 60 & $0{,}553$ & $+0{,}842$ \\
-JGP & 46 & 60 & $0{,}470$ & $+0{,}759$ \\
-Vinci Partners & 55 & 60 & $0{,}462$ & $+0{,}750$ \\
-Occam Brasil & 29 & 60 & $0{,}425$ & $+0{,}714$ \\
-Opportunity & 25 & 60 & $0{,}405$ & $+0{,}694$ \\
-Credit Suisse & 76 & 60 & $0{,}351$ & $+0{,}639$ \\
-SPX Capital & 37 & 60 & $0{,}284$ & $+0{,}572$ \\
-Dahlia Capital & 18 & 31 & $0{,}282$ & $+0{,}571$ \\
-BTG Pactual & 157 & 60 & $0{,}278$ & $+0{,}567$ \\
-Western Asset & 31 & 60 & $0{,}232$ & $+0{,}521$ \\
-Safra Asset Management & 156 & 60 & $0{,}216$ & $+0{,}505$ \\
-Kapitalo Investimentos & 22 & 60 & $0{,}158$ & $+0{,}447$ \\
-BB Asset Management & 116 & 60 & $0{,}112$ & $+0{,}400$ \\
-Caixa & 29 & 60 & $0{,}098$ & $+0{,}387$ \\
-Santander Brasil Asset Management & 98 & 60 & $0{,}039$ & $+0{,}328$ \\
-Bradesco Asset Management & 331 & 60 & $0{,}000$ & $+0{,}289$ \\
-BNP Paribas & 58 & 60 & $-0{,}018$ & $+0{,}271$ \\
-Julius Baer Family Office & 65 & 60 & $-0{,}033$ & $+0{,}256$ \\
-TNA Gestão Patrimonial & 33 & 60 & $-0{,}098$ & $+0{,}190$ \\
-XP & 104 & 60 & $-0{,}227$ & $+0{,}062$ \\
-Daycoval Asset Management & 6 & 60 & $-0{,}288$ & $+0{,}001$ \\
-Itaú & 524 & 60 & $-0{,}289$ & $0{,}000$ \\
+Guepardo Investimentos & 15 & 60 & $1{,}897$ & $+2{,}185$ & $+0{,}02450$ \\
+Núcleo Capital & 19 & 60 & $1{,}567$ & $+1{,}855$ & $+0{,}01720$ \\
+Bogari Capital & 16 & 60 & $1{,}189$ & $+1{,}477$ & $+0{,}01103$ \\
+Real Investor & 5 & 60 & $1{,}151$ & $+1{,}439$ & $+0{,}01052$ \\
+Ibiuna Investimentos & 8 & 60 & $1{,}046$ & $+1{,}335$ & $+0{,}00920$ \\
+Legacy Capital & 1 & 2 & $1{,}038$ & $+1{,}327$ & $+0{,}00910$ \\
+Constellation Asset Management & 28 & 60 & $0{,}936$ & $+1{,}225$ & $+0{,}00793$ \\
+Sharp Capital & 35 & 60 & $0{,}883$ & $+1{,}171$ & $+0{,}00736$ \\
+Claritas Investimentos & 15 & 60 & $0{,}821$ & $+1{,}109$ & $+0{,}00674$ \\
+Squadra Investimentos & 20 & 60 & $0{,}812$ & $+1{,}101$ & $+0{,}00666$ \\
+Atmos Capital & 32 & 60 & $0{,}807$ & $+1{,}096$ & $+0{,}00661$ \\
+Forpus Capital & 3 & 60 & $0{,}787$ & $+1{,}076$ & $+0{,}00642$ \\
+Plural & 15 & 60 & $0{,}734$ & $+1{,}022$ & $+0{,}00592$ \\
+Gávea Investimentos & 17 & 60 & $0{,}724$ & $+1{,}012$ & $+0{,}00583$ \\
+Kinea Investimentos & 10 & 60 & $0{,}719$ & $+1{,}008$ & $+0{,}00579$ \\
+Truxt Investimentos & 31 & 43 & $0{,}681$ & $+0{,}969$ & $+0{,}00545$ \\
+AZ Quest & 24 & 60 & $0{,}656$ & $+0{,}945$ & $+0{,}00524$ \\
+Verde Asset Management & 15 & 60 & $0{,}561$ & $+0{,}849$ & $+0{,}00448$ \\
+Absolute Investimentos & 7 & 29 & $0{,}559$ & $+0{,}848$ & $+0{,}00447$ \\
+ARX Investimentos & 15 & 60 & $0{,}553$ & $+0{,}842$ & $+0{,}00442$ \\
+JGP & 46 & 60 & $0{,}470$ & $+0{,}759$ & $+0{,}00381$ \\
+Vinci Partners & 55 & 60 & $0{,}462$ & $+0{,}750$ & $+0{,}00375$ \\
+Occam Brasil & 29 & 60 & $0{,}425$ & $+0{,}714$ & $+0{,}00350$ \\
+Opportunity & 25 & 60 & $0{,}405$ & $+0{,}694$ & $+0{,}00336$ \\
+Credit Suisse & 76 & 60 & $0{,}351$ & $+0{,}639$ & $+0{,}00301$ \\
+SPX Capital & 37 & 60 & $0{,}284$ & $+0{,}572$ & $+0{,}00261$ \\
+Dahlia Capital & 18 & 31 & $0{,}282$ & $+0{,}571$ & $+0{,}00259$ \\
+BTG Pactual & 157 & 60 & $0{,}278$ & $+0{,}567$ & $+0{,}00257$ \\
+Western Asset & 31 & 60 & $0{,}232$ & $+0{,}521$ & $+0{,}00231$ \\
+Safra Asset Management & 156 & 60 & $0{,}216$ & $+0{,}505$ & $+0{,}00222$ \\
+Kapitalo Investimentos & 22 & 60 & $0{,}158$ & $+0{,}447$ & $+0{,}00190$ \\
+BB Asset Management & 116 & 60 & $0{,}112$ & $+0{,}400$ & $+0{,}00167$ \\
+Caixa & 29 & 60 & $0{,}098$ & $+0{,}387$ & $+0{,}00160$ \\
+Santander Brasil Asset Management & 98 & 60 & $0{,}039$ & $+0{,}328$ & $+0{,}00132$ \\
+Bradesco Asset Management & 331 & 60 & $0{,}000$ & $+0{,}289$ & $+0{,}00113$ \\
+BNP Paribas & 58 & 60 & $-0{,}018$ & $+0{,}271$ & $+0{,}00106$ \\
+Julius Baer Family Office & 65 & 60 & $-0{,}033$ & $+0{,}256$ & $+0{,}00099$ \\
+TNA Gestão Patrimonial & 33 & 60 & $-0{,}098$ & $+0{,}190$ & $+0{,}00071$ \\
+XP & 104 & 60 & $-0{,}227$ & $+0{,}062$ & $+0{,}00022$ \\
+Daycoval Asset Management & 6 & 60 & $-0{,}288$ & $+0{,}001$ & $+0{,}00000$ \\
+Itaú & 524 & 60 & $-0{,}289$ & $0{,}000$ & $0{,}00000$ \\
 \end{longtable}
 \end{center}
 
@@ -883,12 +886,12 @@ Itaú & 524 & 60 & $-0{,}289$ & $0{,}000$ \\
 cobertura ao lado do ranking por gestora), esta tabela precisou de uma coluna nova de
 \textbf{fundos}: sem ela, o ranking esconde que os extremos tendem a ser gestoras com \textbf{poucos}
 fundos --- correlação de $-0{,}47$ entre nº de fundos e $|\text{efeito-fixo vs.\ Itaú}|$ ($-0{,}56$
-com o log). É o padrão estatístico esperado (menos fundos = mais ruído na estimativa do
-efeito-fixo daquela gestora), não um erro de cálculo --- mas fica mais claro com a coluna à vista:
-a \textbf{Legacy Capital} ($6^o$ lugar) tem só $1$ fundo em $2$ meses; Real Investor ($4^o$) e
-Forpus ($12^o$) têm $5$ e $3$ fundos. Mesmo a \textbf{Guepardo}, no topo, tem só $15$ fundos ---
-poucos perto do Itaú ($524$) ou Bradesco ($331$), que ficam nos dois últimos lugares. Não invalida
-o achado (fica reforçado pela Tabela~18, uma metodologia bem diferente), mas os extremos com
+com o log; $-0{,}35$ na escala do APE). É o padrão estatístico esperado (menos fundos = mais ruído na
+estimativa do efeito-fixo daquela gestora), não um erro de cálculo --- mas fica mais claro com a
+coluna à vista: a \textbf{Legacy Capital} ($6^o$ lugar) tem só $1$ fundo em $2$ meses; Real Investor
+($4^o$) e Forpus ($12^o$) têm $5$ e $3$ fundos. Mesmo a \textbf{Guepardo}, no topo, tem só $15$
+fundos --- poucos perto do Itaú ($524$) ou Bradesco ($331$), que ficam nos dois últimos lugares. Não
+invalida o achado (fica reforçado pela Tabela~18, uma metodologia bem diferente), mas os extremos com
 cobertura baixa devem ser lidos como \textbf{estimativas menos precisas}, não necessariamente como
 os desvios econômicos mais extremos de verdade.
 
@@ -897,7 +900,10 @@ gestoras de varejo/plataforma (Caixa, BB, Santander, Western Asset) carregavam \
 que o Itaú, e boutiques concentradas (Guepardo, Forpus, Constellation, Bogari, Atmos, Squadra)
 carregavam \textbf{menos}. Aqui, olhando a carteira de ações inteira (não só VALE3), são
 justamente as boutiques que têm o efeito-fixo mais alto --- Guepardo, Núcleo Capital e Bogari no
-topo --- e o Itaú fica \textbf{na última posição}, junto de Daycoval. Não é uma contradição: as
+topo --- e o Itaú fica \textbf{na última posição}, junto de Daycoval. Em pontos percentuais (APE):
+um fundo com o perfil da \textbf{Guepardo} carrega, em média, $2{,}45$ pontos percentuais a mais
+naquele ativo do que um fundo equivalente do Itaú; Núcleo Capital, $1{,}72$ pp; Bogari, $1{,}10$ pp
+--- efeitos grandes perto da mediana da amostra. Não é uma contradição com a Seção~5: as
 duas coisas podem ser verdade ao mesmo tempo --- gestoras de convicção concentrada tendem a montar
 posições \textbf{maiores} em geral (é o estilo delas), mas em VALE3 especificamente, um blue chip
 mega-cap do Ibovespa, preferem ficar \textbf{abaixo} do Itaú (evitam ``o nome que todo mundo
