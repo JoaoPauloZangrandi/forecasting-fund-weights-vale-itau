@@ -34,6 +34,7 @@ roda_horizonte <- function(h) {
   treino <- M[ym < CORTE]; teste  <- M[ym >= CORTE & ym_fut <= 202112L]
   fit <- lm(dw ~ 0 + d, data = treino); lam <- unname(coef(fit)["d"])
   teste[, erro_oos := dw - lam * d]
+  teste[, erro_naive := dw]
   cat(sprintf("h=%d: treino %d obs | teste %d obs | lambda=%.4f\n", h, nrow(treino), nrow(teste), lam))
   teste
 }
@@ -44,8 +45,15 @@ h3 <- fread(file.path(REPO, "v2 OFICIAL/data/etapa3_multiativo_h3.csv"))
 h6  <- roda_horizonte(6)
 h12 <- roda_horizonte(12)
 
+# ---- Joao perguntou: RMSE eh so do ajuste parcial, cade a ingenua pra
+# comparar (padrao do resto do documento: Tabelas 6/23/24 sempre mostram os
+# dois lado a lado)? Corrigido: agora tambem agrega rmse_naive (erro da
+# previsao ingenua = nenhuma mudanca, dw puro) e calcula a margem % de
+# reducao do ajuste sobre a ingenua, por gestora e horizonte.
 por_gestora <- function(dt, h) {
-  g <- dt[, .(n_obs = .N, n_fundos = uniqueN(cod_fundo), rmse_oos = rmse(erro_oos)), by = gestora_grupo]
+  g <- dt[, .(n_obs = .N, n_fundos = uniqueN(cod_fundo), rmse_oos = rmse(erro_oos),
+              rmse_naive = rmse(erro_naive)), by = gestora_grupo]
+  g[, margem_pct := 100*(rmse_naive - rmse_oos)/rmse_naive]
   g[, horizonte := h]; g
 }
 G <- rbindlist(list(por_gestora(h1,1), por_gestora(h3,3), por_gestora(h6,6), por_gestora(h12,12)))
@@ -57,11 +65,16 @@ G <- rbindlist(list(por_gestora(h1,1), por_gestora(h3,3), por_gestora(h6,6), por
 # n_fundos_h1 a parte, so como referencia de cobertura.
 W <- dcast(G, gestora_grupo ~ horizonte, value.var = "rmse_oos", fun.aggregate = mean)
 setnames(W, as.character(c(1,3,6,12)), paste0("rmse_h", c(1,3,6,12)))
+Wm <- dcast(G, gestora_grupo ~ horizonte, value.var = "margem_pct", fun.aggregate = mean)
+setnames(Wm, as.character(c(1,3,6,12)), paste0("margem_h", c(1,3,6,12)))
+W <- merge(W, Wm, by = "gestora_grupo")
 n_fundos_h1 <- G[horizonte == 1, .(gestora_grupo, n_fundos_h1 = n_fundos)]
 W <- merge(W, n_fundos_h1, by = "gestora_grupo", all.x = TRUE)
 setorder(W, -rmse_h1)
-cat("\n===== RMSE fora da amostra por gestora, todos os ativos, 4 horizontes =====\n")
-print(W, nrows = 50)
+cat("\n===== RMSE (ajuste) fora da amostra por gestora, todos os ativos, 4 horizontes =====\n")
+print(W[, .(gestora_grupo, n_fundos_h1, rmse_h1, rmse_h3, rmse_h6, rmse_h12)], nrows = 50)
+cat("\n===== Margem %% (ajuste vs ingenua) por gestora, 4 horizontes =====\n")
+print(W[, .(gestora_grupo, margem_h1, margem_h3, margem_h6, margem_h12)], nrows = 50)
 
 # ---- estabilidade do ranking entre horizontes (correlacao de Spearman) ---
 cat("\n===== Correlacao de Spearman do ranking entre horizontes =====\n")
