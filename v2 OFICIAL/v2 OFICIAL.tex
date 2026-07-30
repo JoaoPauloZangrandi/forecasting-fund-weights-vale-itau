@@ -340,6 +340,16 @@ $\theta_t$ continua sendo estimado mês a mês, sem vazamento de informação fu
 
 $$\widehat\lambda_{\text{treino}} = 0{,}1951 \qquad (\text{35 meses de treino})$$
 
+Note que $\widehat\lambda_{\text{treino}}=0{,}1951$ é uma estimativa \textbf{diferente} do
+$\widehat\lambda=0{,}1534$ da Etapa 2 --- a Etapa 2 usa a amostra inteira (2017--2021), a Etapa 3
+usa só o treino (2017--2019), deliberadamente, para não vazar informação do período de teste na
+estimação. As duas são estimativas do mesmo parâmetro conceitual (velocidade de ajuste), só que em
+janelas de dados diferentes. O erro fora da amostra reportado a seguir é definido usando esse
+$\lambda$ de treino, não o da Etapa 2 --- $\lambda$ entra diretamente dentro da fórmula do erro
+($\text{erro}=dw_{\text{real}}-\widehat\lambda_{\text{treino}}\cdot d$), então a pergunta que a
+Etapa 3 testa é, na prática, se esse $\lambda$ estimado só com dados antigos ainda funciona bem em
+dados novos que o modelo nunca viu.
+
 \subsection{O resultado, fora da amostra}
 
 \begin{table}[h]\centering\small
