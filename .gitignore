@@ -9,6 +9,11 @@ outputs/tables/*
 !outputs/tables/.gitkeep
 !outputs/tables/load_audit.csv
 
+# v2 OFICIAL: saídas de dado regeneráveis pelos scripts (alguns arquivos >1GB,
+# muito acima do limite de 100MB do GitHub) -- só os scripts e os PDFs/figuras
+# ficam versionados.
+v2 OFICIAL/data/*
+
 # LaTeX (artefatos de compilação) — mantém .tex e .pdf.
 *.aux
 *.log
