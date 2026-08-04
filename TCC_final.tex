@@ -277,6 +277,36 @@ percentual entre os dois RMSEs --- chamada, neste trabalho, de \textbf{margem} -
 pergunta que interessa de fato: o ajuste parcial estimado com dados antigos ainda ajuda a prever
 dados novos, ou uma previsão ingênua seria tão boa quanto?
 
+\paragraph{Robustez: $\lambda$ fixo vs. janela expansiva.} O corte único mantém $\lambda_h$
+congelado no valor de treino durante todo o período de teste --- uma escolha deliberada de
+simplicidade (Seção~\ref{sec:metodologia}), mas que levanta a dúvida óbvia: um $\lambda_h$
+reestimado a cada mês, incorporando os dados de teste já observados até ali (janela expansiva,
+sem nenhum vazamento --- cada $\lambda_{h,s}$ usa só pares cujo resultado já era conhecido antes
+do mês $s$), previa melhor? A Tabela~\ref{tab:janela_expansiva} responde que não, de forma
+consistente nas duas versões da amostra: a razão RMSE/ingênua praticamente não muda, o padrão de
+quais meses o ajuste parcial vence a previsão ingênua é idêntico entre as duas versões de
+$\lambda$, e --- na base multiativo, que sustenta a maior parte desta seção de Resultados --- o
+ranking de dificuldade de previsão por gestora tem correlação de Spearman de $0{,}9998$ entre as
+duas versões. Isso valida empiricamente a simplificação: atualizar $\lambda_h$ mês a mês não
+captura nenhuma dinâmica relevante que o valor fixo, estimado uma única vez, já não capture.
+
+\begin{table}[h]\centering\small
+\caption{$\lambda$ fixo (treino único) vs. janela expansiva (reestimado mês a mês, sem
+vazamento), fora da amostra, $h=1$.}
+\label{tab:janela_expansiva}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Base & Meses de teste & RMSE/RMSE ingênua ($\lambda$ fixo) & RMSE/RMSE ingênua (expansiva) \\
+\midrule
+VALE3--Itaú (250 fundos) & 23 & $0{,}9846$ & $0{,}9813$ \\
+Multiativo (2.347 fundos, 501 ativos) & 23 & $0{,}9824$ & $0{,}9824$ \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Em ambas as bases, o ajuste parcial vence a previsão ingênua exatamente
+nos mesmos meses sob as duas versões de $\lambda$ (14 de 23 na base VALE3--Itaú; 23 de 23 na base
+multiativo).}
+\end{table}
+
 \subsubsection*{Por que a análise do erro é o centro deste trabalho}
 
 As três etapas descritas acima poderiam ser resumidas, cada uma, num único número: um
