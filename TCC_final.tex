@@ -95,10 +95,11 @@ Ampliação de gestoras (todo o universo CVM, só VALE3) & 2.820 & 2.295 & 41 & 
 Ampliação de ativos (todo o universo CVM, todas as ações) & 2.820 & 2.347 & 41 & 501 & 8.268.920 \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Observações em fundo(-ativo)-mês. A Seção~\ref{sec:resultados} apresenta
-os resultados na mesma ordem desta tabela: as estimativas e os erros estáticos (Etapas 1--2) usam
-a amostra inicial (250 fundos, só VALE3); os erros fora da amostra, na forma dinâmica (Etapa 3
-generalizada), usam a amostra amplamente expandida (última linha).}
+\caption*{\footnotesize Observações em fundo(-ativo)-mês. A Seção~\ref{sec:resultados} organiza
+os resultados por etapa (Seção~\ref{sec:metodologia}): as Etapas 1 e 2 (estimativas e erros $e$,
+$u$) usam a amostra inicial (250 fundos, só VALE3); a Etapa 3 (erro fora da amostra) começa nessa
+mesma amostra inicial e depois generaliza para a amostra amplamente expandida (última linha desta
+tabela).}
 \end{table}
 
 Um detalhe da Tabela~\ref{tab:universo} merece atenção porque, à primeira vista, parece
@@ -349,7 +350,19 @@ orientador. Tabelas e figuras abaixo já validadas em versões anteriores do doc
 trabalho \texttt{v2 OFICIAL.tex}; as legendas foram mantidas apenas descritivas.]}
 
 \FloatBarrier
-\subsection{Estimativas (Etapa 1)}
+\subsection{Etapa 1: cross-section}
+
+Relembrando a equação~\eqref{eq:cs}, $\text{peso}_{i,n,t} = g(x'_{i,n,t}\theta_{n,t}) + e_{i,n,t}$:
+para cada ativo $n$ e mês $t$, o modelo logístico estima o peso que cada fundo $i$
+\emph{deveria} carregar, a partir de $x_{i,n,t}$ (as cinco características do fundo) e
+$\theta_{n,t}$ (os coeficientes daquele ativo naquele mês). O erro $e_{i,n,t}$ é a distância
+entre o peso observado e essa previsão: por construção da máxima verossimilhança, sua média é
+mecanicamente zero em cada célula (ativo, mês) --- não é evidência de bom ajuste, é uma
+propriedade algébrica do estimador. O que de fato varia, e é informativo, é a \textbf{dispersão}
+do erro: um fundo cujo erro é consistentemente pequeno tem posições bem explicadas pelas cinco
+características observáveis; um fundo cujo erro é grande e disperso tem posições que fogem
+desse padrão. As tabelas e figuras abaixo cobrem primeiro as estimativas de $\theta_{n,t}$, e em
+seguida a estatística do erro $e$ que elas produzem.
 
 \begin{table}[h]\centering\small
 \caption{$\Theta$ logístico: antes e depois do beta do fundo (mesma amostra, 59 meses, teste
@@ -394,9 +407,6 @@ Beta do fundo        & ---           & --- & $0{,}02942$  & *** \\
 o pseudo-$R^2$ de McFadden de cada regressão mensal.}
 \end{figure}
 
-\FloatBarrier
-\subsection{Erros --- estática (Etapas 1--2)}
-
 \begin{table}[h]\centering\small
 \caption{Estatísticas do erro $e$, Etapa 1 (8.335 observações).}
 \begin{tabular}{@{}lr@{}}
@@ -426,6 +436,20 @@ Previsões fora de $[0,1]$ & $0$ de $8.335$ \\
 azul = média mensal (mecanicamente zero); linha vermelha tracejada = desvio-padrão mensal.}
 \end{figure}
 
+\FloatBarrier
+\subsection{Etapa 2: ajuste parcial}
+
+Relembrando a equação~\eqref{eq:pa}, $w_{i,n,t+1} - w_{i,n,t} = \lambda\, d_{i,n,t} +
+u_{i,n,t+1}$, com $d_{i,n,t} \equiv w^*_{i,n,t} - w_{i,n,t}$: o alvo $w^*_{i,n,t} =
+g(x'_{i,n,t}\theta_{n,t})$ vem da Etapa 1 (Seção~\ref{sec:resultados}.1), e $d_{i,n,t}$ é a
+distância entre a posição atual do fundo e esse alvo. O ajuste parcial modela a mudança de
+posição de um mês para o outro como uma fração $\lambda$ dessa distância, estimada por MQO
+pooled (Seção~\ref{sec:metodologia}) --- um único coeficiente para todo fundo e todo ativo. O
+erro $u_{i,n,t+1}$ mede o quanto a mudança de posição observada difere do que essa velocidade
+média de ajuste previu: valores próximos de zero indicam fundos cuja movimentação segue de perto
+o $\lambda$ estimado; valores grandes indicam movimentos abruptos --- apostas concentradas de
+curto prazo --- que o modelo, por construção, não tem como antecipar.
+
 \begin{table}[h]\centering\small
 \caption{Estatísticas do erro $u$, Etapa 2 (7.987 observações, pares de meses consecutivos).}
 \begin{tabular}{@{}lr@{}}
@@ -453,6 +477,24 @@ Curtose & $19{,}4$ (normal $=3$) \\
 \caption{Evolução mês a mês do erro $u$.}
 \end{figure}
 
+\FloatBarrier
+\subsection{Etapa 3: esquema fora da amostra}
+
+Relembrando a equação~\eqref{eq:oos}: $\widehat w_{i,n,t+h} = w_{i,n,t} +
+\widehat\lambda_{h,\text{treino}}\, d_{i,n,t}$ (ajuste parcial) contra $\widehat w_{i,n,t+h} =
+w_{i,n,t}$ (previsão ingênua), com $\lambda_h$ estimado \textbf{apenas} nos meses de treino
+(anteriores a janeiro de 2020) e aplicado, fixo, aos meses de teste --- dados que o modelo nunca
+viu durante a estimação (a robustez dessa escolha de $\lambda$ fixo está discutida na
+Seção~\ref{sec:metodologia}). O erro fora da amostra, $\text{erro}_{i,n,t+h} =
+(w_{i,n,t+h}-w_{i,n,t}) - \widehat\lambda_{h,\text{treino}}\, d_{i,n,t}$, mede o quanto essa
+previsão --- feita com um parâmetro estimado em dados que o modelo nunca viu no período de teste
+--- erra ao prever a mudança de posição real. É esse erro que responde à pergunta central deste
+trabalho (Seção~\ref{sec:metodologia}): o ajuste parcial estimado com dados antigos ainda ajuda
+a prever dados novos, ou uma previsão ingênua seria tão boa quanto? As tabelas e figuras a seguir
+cobrem primeiro o caso de base ($h=1$, VALE3--Itaú), e depois a generalização completa --- todas
+as gestoras, todos os ativos, quatro horizontes de previsão --- que estrutura o restante desta
+subseção.
+
 \begin{table}[h]\centering\small
 \caption{RMSE e MAE dentro e fora da amostra, ajuste parcial vs. ingênua (VALE3--Itaú).}
 \begin{tabular}{@{}lrrr@{}}
@@ -479,7 +521,11 @@ início do teste (2020-01).}
 \end{figure}
 
 \FloatBarrier
-\subsection{Erros --- dinâmica fora da amostra (Etapa 3 generalizada)}
+
+A generalização da Etapa 3 --- índice de ativo $n$ e horizonte $h$ explícitos na
+equação~\eqref{eq:pa}, conforme a Seção~\ref{sec:metodologia} --- permite ir além do RMSE
+agregado acima e perguntar \emph{quem} erra mais: quais fundos, gestoras e ativos têm erro fora
+da amostra pequeno e estável, e quais fogem sistematicamente do modelo.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_dinamica_erro_gestora_extremos.pdf}
