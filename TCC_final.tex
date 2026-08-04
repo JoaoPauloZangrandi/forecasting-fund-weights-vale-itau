@@ -592,6 +592,85 @@ sistematicamente mais do que o modelo prevê. Base: multiativo (2.347 fundos, 41
 \label{fig:vies-dinamico}
 \end{figure}
 
+\paragraph{O viés é persistente, mas explica pouco do erro.} Um viés grande e estável seria
+evidência de que uma gestora tem um estilo sistemático (convicção própria, mandato diferente)
+não capturado pelas cinco características do modelo --- vale então perguntar se o padrão da
+Figura~\ref{fig:vies-dinamico} é um traço real da gestora ou um acidente da janela de teste.
+Dividindo os 23 meses de teste ao meio e comparando o viés médio de cada gestora nas duas
+metades, a correlação é $0{,}83$ ($R^2=0{,}69$, $p<0{,}0001$): o viés é, de fato, persistente.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.55\textwidth]{fig_persistencia_vies_gestora.pdf}
+\caption{Persistência do viés por gestora: viés médio na 1ª metade do período de teste
+(2020-01 a 2020-12) vs.\ na 2ª metade (2021-01 a 2021-11), 40 gestoras com pelo menos 50
+observações em cada metade. Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos).}
+\label{fig:persistencia-vies}
+\end{figure}
+
+Sendo persistente, o viés poderia em princípio ser corrigido: estimando-o só na 1ª metade do
+teste e aplicando-o, como um ajuste fixo, às previsões da 2ª metade (que nunca entraram nessa
+estimativa), o RMSE agregado da 2ª metade cai de $0{,}006093$ para $0{,}006089$ --- uma melhora
+de apenas $0{,}07\%$. A correção ajuda mais nas gestoras com viés mais extremo (Guepardo
+Investimentos, $-3{,}7\%$ de RMSE; Real Investor, $-3{,}3\%$; Núcleo Capital, $-3{,}2\%$), mas é
+irrelevante para a maioria. A razão fica clara na decomposição a seguir.
+
+\paragraph{Por que o viés importa pouco: a variância domina o erro.} Como
+$\text{RMSE}^2 = \text{viés}^2 + \text{variância}$, é possível medir exatamente que fração do
+erro de cada gestora vem do viés (um deslocamento sistemático, corrigível) e que fração vem da
+variância (dispersão em torno da média, não corrigível por um simples ajuste de nível).
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.68\textwidth]{fig_decomposicao_vies_variancia.pdf}
+\caption{Decomposição $\text{RMSE}^2=\text{viés}^2+\text{variância}$ do erro fora da amostra
+($h=1$), por gestora, ordenada por RMSE. Base: multiativo (2.347 fundos, 41 gestoras,
+501 ativos).}
+\label{fig:decomposicao-vies-variancia}
+\end{figure}
+
+Em média entre as 40 gestoras, o viés$^2$ explica só $0{,}67\%$ do $\text{RMSE}^2$ (mediana
+$0{,}16\%$); mesmo a Guepardo, a mais enviesada, chega a apenas $5{,}96\%$. Somando todas as
+observações da base (\emph{pooled}, em vez de médias por gestora), o viés$^2$ é essencialmente
+$0\%$ do erro total. A variância --- não o viés --- é, de longe, a peça que domina o erro fora
+da amostra, o que explica por que a correção acima rende tão pouco.
+
+\paragraph{A variância também é persistente.} Se a variância domina o erro, vale perguntar se
+ela também é um traço estável da gestora ou apenas ruído ano a ano. Repetindo o teste de
+persistência (1ª vs.\ 2ª metade do teste), agora para o desvio-padrão do erro em vez da média:
+correlação de $0{,}78$ ($R^2=0{,}61$, $p<0{,}0001$) --- quase tão persistente quanto o viés.
+Gestoras mais imprevisíveis continuam mais imprevisíveis de um período para o outro.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.55\textwidth]{fig_persistencia_dp_gestora.pdf}
+\caption{Persistência da dispersão do erro por gestora: desvio-padrão do erro na 1ª metade do
+teste vs.\ na 2ª metade, mesmas 40 gestoras da Figura~\ref{fig:persistencia-vies}. A linha
+tracejada é a identidade ($y=x$); a linha sólida é o ajuste linear. Base: multiativo
+(2.347 fundos, 41 gestoras, 501 ativos).}
+\label{fig:persistencia-dp}
+\end{figure}
+
+\paragraph{O que explica a variância: concentração da carteira, mais do que beta ou tamanho.}
+Sendo a variância a peça relevante do erro, e sendo ela previsível de uma gestora para a outra,
+cabe perguntar o que a determina. Cruzando o desvio-padrão do erro de cada gestora contra três
+características --- beta médio do fundo, tamanho médio (log do PL) e concentração média da
+carteira (índice HHI dos pesos por ativo, dentro de cada fundo-mês) --- a concentração se destaca
+claramente: correlação de $0{,}76$ ($R^2=0{,}57$), contra $0{,}49$ ($R^2=0{,}24$) do beta e
+apenas $0{,}14$ ($R^2=0{,}02$) do tamanho.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.95\textwidth]{fig_explica_variancia_gestora.pdf}
+\caption{Desvio-padrão do erro fora da amostra por gestora ($h=1$) vs.\ beta médio do fundo,
+tamanho médio (log AUM) e concentração média da carteira (HHI), 40 gestoras. Base: multiativo
+(2.347 fundos, 41 gestoras, 501 ativos).}
+\label{fig:explica-variancia}
+\end{figure}
+
+Numa regressão múltipla com as três características juntas, só a concentração continua
+estatisticamente significativa ($t=5{,}48$, $p<0{,}0001$); beta e tamanho perdem significância.
+Isso sugere que a relação entre beta e RMSE mostrada na Figura~\ref{fig:beta-erro} a seguir é, em
+boa parte, um reflexo indireto da concentração --- gestoras com fundos de beta alto tendem
+também a manter carteiras mais concentradas, e é a concentração, não o beta em si, que parece
+determinar o quão imprevisível é a mudança de posição.
+
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig_beta_vs_erro.pdf}
 \caption{Beta médio do fundo (Etapa 1) vs. RMSE fora da amostra ($h=1$), 1.946 fundos com pelo
