@@ -116,13 +116,34 @@ que um fundo carrega, em vez de só VALE3, multiplica o número de (fundo, mês)
 satisfazer as cinco exigências de dado ao mesmo tempo; por isso a amostra final cresce, mesmo
 partindo do mesmo universo de 2.820 fundos.
 
-A exigência simultânea das cinco características do fundo (Seção~\ref{sec:metodologia})
-reduz a cobertura temporal de 72 para 59 meses efetivos (fevereiro de 2017 a dezembro de 2021):
-uma delas, o beta do fundo, precisa de pelo menos 252 pregões de histórico de cota (cerca de um
-ano) para ser calculada, o que deixa os primeiros doze meses da amostra sem fundos suficientes.
-Essa perda de cobertura inicial foi uma escolha deliberada, não uma limitação inesperada do
-dado: preferiu-se um conjunto menor de meses com as cinco características completas a um
-conjunto maior com características faltantes preenchidas de forma arbitrária.
+Vale perguntar, especificamente, por que 473 dos 2.820 fundos do universo bruto (todas as
+gestoras, todos os ativos, sem nenhum filtro por ativo específico) ficam de fora da amostra
+final. A resposta, verificada fundo a fundo sobre o histórico completo de cotas de 2016 a 2021
+(não uma amostra): 28 fundos (5,9\% dos 473) nunca têm patrimônio, cotistas, fluxo e indicador
+de FIC completos ao mesmo tempo em nenhum mês, independente do beta. Os outros 445 (94,1\%) têm
+essas quatro características completas em algum mês, mas nunca chegam a ter beta --- e o motivo,
+para a esmagadora maioria deles, é simplesmente não ter acumulado histórico de cota suficiente
+dentro da janela do trabalho, não fechamento precoce: 406 desses 445 fundos (91,2\%) nunca somam
+252 dias de cota válida em toda a janela 2016--2021, e portanto jamais teriam beta calculável
+mesmo que a amostra usasse o período inteiro; dentre estes, 263 (65\%) só começam a reportar
+cota em 2021, isto é, são fundos jovens demais para acumular um ano de histórico antes do fim da
+amostra (dezembro de 2021). Um grupo bem menor, 18 fundos (4,0\% dos 445), tem os 252 dias
+acumulados sem lacunas relevantes na série, mas começa a reportar cota por volta de
+novembro/dezembro de 2020 --- tarde o suficiente para que o primeiro beta válido só surgisse
+perto do fim da amostra, sem mais nenhum mês seguinte disponível para usá-lo como preditor
+defasado (t$-$1). Apenas os 21 fundos restantes (4,7\% dos 445) têm histórico suficiente que
+termina antes de novembro de 2021, um padrão mais consistente com fechamento ou saída do fundo.
+Em suma: quase toda a perda de fundos por causa do beta (424 dos 445, ou 95,3\%) reflete fundos
+jovens demais para a janela do trabalho, não uma limitação de dado nem fundos que encerraram
+atividades.
+
+A mesma exigência simultânea das cinco características do fundo (Seção~\ref{sec:metodologia})
+também reduz a cobertura temporal de 72 para 59 meses efetivos (fevereiro de 2017 a dezembro de
+2021): o beta do fundo precisa de pelo menos 252 pregões de histórico de cota (cerca de um ano)
+para ser calculado, o que deixa os primeiros doze meses da amostra sem fundos suficientes. Essa
+perda de cobertura inicial foi uma escolha deliberada, não uma limitação inesperada do dado:
+preferiu-se um conjunto menor de meses com as cinco características completas a um conjunto
+maior com características faltantes preenchidas de forma arbitrária.
 
 \subsection{Limpeza de custódia}
 
