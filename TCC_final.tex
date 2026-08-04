@@ -182,7 +182,7 @@ de fundo-ativo-mês, cobrindo os 2.347 fundos e 501 ativos mencionados. A Tabela
 resume as principais dimensões dessa amostra final.
 
 \begin{table}[h]\centering
-\caption{Dimensões da amostra final.}
+\caption{Dimensões da amostra final (base multiativo --- todas as gestoras, todos os ativos).}
 \label{tab:amostra}
 \begin{tabular}{@{}lr@{}}
 \toprule
@@ -193,6 +193,11 @@ Ativos (posição direta) & 501 \\
 Meses (fev/2017--dez/2021) & 59 \\
 \bottomrule
 \end{tabular}
+\caption*{\footnotesize Esta é a maior base do trabalho, mas \textbf{não} é usada em todas as
+tabelas e figuras da Seção~\ref{sec:resultados} --- só na parte generalizada da Etapa 3
+(Seção~\ref{sec:resultados}.3, a partir da Figura~\ref{fig:dinamica-gestora}). As Seções~5.1, 5.2
+e o início da 5.3 usam a amostra inicial menor (VALE3--Itaú, 250 fundos, Tabela~\ref{tab:universo}).
+Cada tabela e figura a seguir indica explicitamente qual base usa.}
 \end{table}
 
 \emph{[Tabelas/figuras adicionais de cobertura --- por exemplo, distribuição do número de
@@ -366,7 +371,8 @@ seguida a estatística do erro $e$ que elas produzem.
 
 \begin{table}[h]\centering\small
 \caption{$\Theta$ logístico: antes e depois do beta do fundo (mesma amostra, 59 meses, teste
-de significância $t=\bar\theta/(\text{dp}(\theta)/\sqrt{59})$).}
+de significância $t=\bar\theta/(\text{dp}(\theta)/\sqrt{59})$). Base: VALE3--Itaú (250 fundos,
+1 ativo).}
 \label{tab:theta}
 \begin{tabular}{@{}lrcrc@{}}
 \toprule
@@ -387,7 +393,7 @@ Pseudo-$R^2$ (McFadden) médio & $0{,}164$ & & $0{,}614$ & \\
 
 \begin{table}[h]\centering\small
 \caption{Efeito marginal médio (APE) do logit, em pontos percentuais de peso --- mesma
-comparação sem/com beta do fundo.}
+comparação sem/com beta do fundo. Base: VALE3--Itaú (250 fundos, 1 ativo).}
 \begin{tabular}{@{}lrcrc@{}}
 \toprule
 Característica & APE (sem $\beta^{fundo}$) & Sig. & APE (com $\beta^{fundo}$) & Sig. \\
@@ -404,11 +410,12 @@ Beta do fundo        & ---           & --- & $0{,}02942$  & *** \\
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{fig_theta_trajetoria_v2.pdf}
 \caption{Os seis componentes de $\theta_t$ logístico (com beta do fundo) ao longo dos 59 meses, e
-o pseudo-$R^2$ de McFadden de cada regressão mensal.}
+o pseudo-$R^2$ de McFadden de cada regressão mensal. Base: VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas do erro $e$, Etapa 1 (8.335 observações).}
+\caption{Estatísticas do erro $e$, Etapa 1 (8.335 observações). Base: VALE3--Itaú (250 fundos,
+1 ativo).}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Estatística & Valor \\
@@ -427,13 +434,15 @@ Previsões fora de $[0,1]$ & $0$ de $8.335$ \\
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.65\textwidth]{hist_erro_e_v2.pdf}
-\caption{Histograma do erro $e$ (8.335 observações). A linha tracejada marca zero.}
+\caption{Histograma do erro $e$ (8.335 observações). A linha tracejada marca zero. Base:
+VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{fig_erro_e_mensal_v2.pdf}
 \caption{Evolução mês a mês do erro $e$: nuvem cinza = erro individual de cada fundo-mês; linha
-azul = média mensal (mecanicamente zero); linha vermelha tracejada = desvio-padrão mensal.}
+azul = média mensal (mecanicamente zero); linha vermelha tracejada = desvio-padrão mensal. Base:
+VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \FloatBarrier
@@ -451,7 +460,8 @@ o $\lambda$ estimado; valores grandes indicam movimentos abruptos --- apostas co
 curto prazo --- que o modelo, por construção, não tem como antecipar.
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas do erro $u$, Etapa 2 (7.987 observações, pares de meses consecutivos).}
+\caption{Estatísticas do erro $u$, Etapa 2 (7.987 observações, pares de meses consecutivos).
+Base: VALE3--Itaú (250 fundos, 1 ativo).}
 \begin{tabular}{@{}lr@{}}
 \toprule
 Estatística & Valor \\
@@ -469,12 +479,12 @@ Curtose & $19{,}4$ (normal $=3$) \\
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.65\textwidth]{hist_erro_u_v2.pdf}
-\caption{Histograma do erro $u$ (7.987 observações).}
+\caption{Histograma do erro $u$ (7.987 observações). Base: VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.75\textwidth]{fig_erro_u_mensal_v2.pdf}
-\caption{Evolução mês a mês do erro $u$.}
+\caption{Evolução mês a mês do erro $u$. Base: VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \FloatBarrier
@@ -496,7 +506,8 @@ as gestoras, todos os ativos, quatro horizontes de previsão --- que estrutura o
 subseção.
 
 \begin{table}[h]\centering\small
-\caption{RMSE e MAE dentro e fora da amostra, ajuste parcial vs. ingênua (VALE3--Itaú).}
+\caption{RMSE e MAE dentro e fora da amostra, ajuste parcial vs. ingênua. Base: VALE3--Itaú
+(250 fundos, 1 ativo).}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
 Amostra & Modelo & RMSE & MAE \\
@@ -511,13 +522,14 @@ Teste (2020--2021)  & Ingênua        & $0{,}01585$ & $0{,}00847$ \\
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.6\textwidth]{fig_oos_barras_v2.pdf}
-\caption{RMSE dentro (treino) e fora (teste) da amostra, ajuste parcial vs. ingênua.}
+\caption{RMSE dentro (treino) e fora (teste) da amostra, ajuste parcial vs. ingênua. Base:
+VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.78\textwidth]{fig_erro_periodo_completo_v2.pdf}
 \caption{RMSE mês a mês no período completo (2017--2021). A linha vermelha tracejada marca o
-início do teste (2020-01).}
+início do teste (2020-01). Base: VALE3--Itaú (250 fundos, 1 ativo).}
 \end{figure}
 
 \FloatBarrier
@@ -525,13 +537,17 @@ início do teste (2020-01).}
 A generalização da Etapa 3 --- índice de ativo $n$ e horizonte $h$ explícitos na
 equação~\eqref{eq:pa}, conforme a Seção~\ref{sec:metodologia} --- permite ir além do RMSE
 agregado acima e perguntar \emph{quem} erra mais: quais fundos, gestoras e ativos têm erro fora
-da amostra pequeno e estável, e quais fogem sistematicamente do modelo.
+da amostra pequeno e estável, e quais fogem sistematicamente do modelo. \textbf{A partir daqui, e
+até o final desta subseção, todas as tabelas e figuras usam a base multiativo} (2.347 fundos,
+41 gestoras, 501 ativos, Tabela~\ref{tab:amostra}) --- não mais a amostra VALE3--Itaú das seções
+anteriores.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_dinamica_erro_gestora_extremos.pdf}
 \caption{Evolução mensal do erro médio fora da amostra ($h=1$), para as 3 gestoras mais
 difíceis de prever e as 3 mais previsíveis em todos os horizontes testados
-(Tabelas~\ref{tab:rmse-gestora} e~\ref{tab:margem-gestora}).}
+(Tabelas~\ref{tab:rmse-gestora} e~\ref{tab:margem-gestora}). Base: multiativo (2.347 fundos,
+41 gestoras, 501 ativos).}
 \label{fig:dinamica-gestora}
 \end{figure}
 
@@ -540,7 +556,7 @@ difíceis de prever e as 3 mais previsíveis em todos os horizontes testados
 \caption{Erro fora da amostra ao longo do período de teste (2020--2021), agregado em todos os
 fundos, gestoras e ativos --- nuvem cinza: erro individual de cada fundo-ativo-mês; linha azul:
 média mensal; linha vermelha: desvio-padrão mensal. Painel esquerdo: $h=1$ mês; painel direito:
-$h=3$ meses.}
+$h=3$ meses. Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos).}
 \label{fig:dinamica-agregado}
 \end{figure}
 
@@ -549,7 +565,8 @@ $h=3$ meses.}
 \caption{Margem do ajuste parcial sobre a previsão ingênua, mês a mês, ao longo de todo o
 período de teste (2020--2021) --- $h=1$ e $h=3$. Complementa a Tabela~\ref{tab:margem-gestora}
 (que resume a margem do período inteiro num único número por gestora e horizonte) mostrando se
-essa vantagem é estável ao longo do tempo.}
+essa vantagem é estável ao longo do tempo. Base: multiativo (2.347 fundos, 41 gestoras,
+501 ativos).}
 \label{fig:margem-dinamica}
 \end{figure}
 
@@ -560,7 +577,8 @@ em VALE3 --- o fundo com maior RMSE fora da amostra identificado neste trabalho.
 antecipa o salto de $13\%$ para $80\%$ em fev--mar/2021 (triângulos ficam perto de $12\%$
 enquanto o peso real dispara), e também erra na volta: baseado nos pesos elevados recém-observados,
 prevê continuidade em torno de $70\%$ quando o peso real já havia recuado para
-$10$--$13\%$.}
+$10$--$13\%$. Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos) --- este gráfico exibe
+apenas um fundo e um ativo (VALE3) dessa base, para ilustração.}
 \label{fig:trajetoria-fundo}
 \end{figure}
 
@@ -569,7 +587,8 @@ $10$--$13\%$.}
 \caption{Viés médio mensal fora da amostra ($h=1$, com sinal --- não apenas magnitude), para as
 3 gestoras com viés mais positivo e as 3 com viés mais negativo (entre gestoras com pelo menos
 100 observações de teste). Pergunta diferente da magnitude do erro: quem compra ou vende
-sistematicamente mais do que o modelo prevê.}
+sistematicamente mais do que o modelo prevê. Base: multiativo (2.347 fundos, 41 gestoras,
+501 ativos).}
 \label{fig:vies-dinamico}
 \end{figure}
 
@@ -579,7 +598,9 @@ sistematicamente mais do que o modelo prevê.}
 menos 6 observações de teste, após o mesmo filtro de posição-poeira usado nas demais figuras
 (peso mediano da célula fundo-ativo $\geq 0{,}1\%$). A característica que mais explica o
 \emph{peso} (Tabela~\ref{tab:theta}) também explica parte de quem é mais difícil de prever
-\emph{fora da amostra}: $R^2=0{,}23$.}
+\emph{fora da amostra}: $R^2=0{,}23$. Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos)
+--- o beta do fundo usado aqui é o mesmo conceito estimado na Etapa 1, recalculado nessa base
+maior.}
 \label{fig:beta-erro}
 \end{figure}
 
@@ -590,7 +611,8 @@ erro médio no mês $t+1$ (agregado por fundo-mês, 34.120 pares consecutivos, 1
 distribuição da autocorrelação lag-1 entre os 1.657 fundos com pelo menos 8 pares. Correlação
 pooled $=0{,}014$; autocorrelação média entre fundos $=-0{,}075$ --- sem evidência de
 persistência mês a mês na \emph{direção} do erro, distinto da estabilidade de \emph{magnitude}
-(RMSE) entre horizontes mostrada na Figura a seguir.}
+(RMSE) entre horizontes mostrada na Figura a seguir. Base: multiativo (2.347 fundos, 41 gestoras,
+501 ativos).}
 \label{fig:persistencia-erro}
 \end{figure}
 
@@ -600,7 +622,8 @@ persistência mês a mês na \emph{direção} do erro, distinto da estabilidade 
 horizontes testados, 40 gestoras com dado completo em todos os horizontes (exclui Legacy
 Capital, que só tem observação em $h=1$). As gestoras mais extremas (destacadas) permanecem nos
 extremos em todos os horizontes; a correlação de Spearman entre rankings varia de $0{,}90$
-($h=1$ vs.\ $h=12$, os mais distantes) a $0{,}99$ ($h=6$ vs.\ $h=12$, os mais próximos).}
+($h=1$ vs.\ $h=12$, os mais distantes) a $0{,}99$ ($h=6$ vs.\ $h=12$, os mais próximos). Base:
+multiativo (2.347 fundos, 41 gestoras, 501 ativos).}
 \label{fig:ranking-horizontes}
 \end{figure}
 
@@ -608,7 +631,8 @@ extremos em todos os horizontes; a correlação de Spearman entre rankings varia
 \begin{longtable}{@{}lrrrrr@{}}
 \caption{RMSE fora da amostra por gestora, todos os 430 ativos com par (treino, teste) válido
 em $h=1$ --- dos 501 ativos da amostra final, 71 não têm cobertura suficiente nesse horizonte
---- em 4 horizontes, ordenado do mais ao menos errante em $h=1$.}
+--- em 4 horizontes, ordenado do mais ao menos errante em $h=1$. Base: multiativo (2.347 fundos,
+41 gestoras, 501 ativos).}
 \label{tab:rmse-gestora}\\
 \toprule
 Gestora & Fundos ($h{=}1$) & RMSE $h{=}1$ & RMSE $h{=}3$ & RMSE $h{=}6$ & RMSE $h{=}12$ \\
@@ -672,7 +696,7 @@ Plural & 1 & $0{,}00050$ & $0{,}00080$ & $0{,}00105$ & $0{,}00136$ \\
 \begin{longtable}{@{}lrrrr@{}}
 \caption{Margem do ajuste parcial sobre a ingênua ($\%$ de redução de RMSE), por gestora, 4
 horizontes --- mesma ordem da Tabela~\ref{tab:rmse-gestora}. Negativo = ajuste parcial pior que
-a ingênua.}
+a ingênua. Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos).}
 \label{tab:margem-gestora}\\
 \toprule
 Gestora & Margem $h{=}1$ & Margem $h{=}3$ & Margem $h{=}6$ & Margem $h{=}12$ \\
@@ -735,7 +759,8 @@ Plural & $-3{,}3\%$ & $-4{,}9\%$ & $-4{,}2\%$ & $-8{,}1\%$ \\
 \begin{figure}[h]\centering
 \includegraphics[width=0.7\textwidth]{fig_multihorizonte_gestora_rmse_margem.pdf}
 \caption{Cada ponto é uma gestora: RMSE fora da amostra em $h{=}1$ (eixo $x$, dificuldade
-absoluta) vs.\ margem sobre a ingênua em $h{=}1$ (eixo $y$, negativo = ajuste parcial piora).}
+absoluta) vs.\ margem sobre a ingênua em $h{=}1$ (eixo $y$, negativo = ajuste parcial piora).
+Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos).}
 \end{figure}
 
 % ======================================================================
