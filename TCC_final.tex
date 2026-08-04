@@ -48,6 +48,7 @@ parcial em finanças corporativas e de portfólio.]}
 \section{Dados}
 \label{sec:dados}
 
+\FloatBarrier
 \subsection{Fontes}
 
 Os dados usados neste trabalho vêm de dois registros públicos que a Comissão de Valores
@@ -59,6 +60,7 @@ em um determinado mês. O segundo é o Informe Diário, que traz, para cada fund
 o patrimônio líquido, o número de cotistas, a captação e o resgate do dia, e o valor da cota
 --- é dele que vêm as características do fundo usadas como variáveis explicativas.
 
+\FloatBarrier
 \subsection{Universo e período}
 
 O período coberto vai de janeiro de 2016 a dezembro de 2021. O universo de fundos partiu dos
@@ -145,6 +147,7 @@ perda de cobertura inicial foi uma escolha deliberada, não uma limitação ines
 preferiu-se um conjunto menor de meses com as cinco características completas a um conjunto
 maior com características faltantes preenchidas de forma arbitrária.
 
+\FloatBarrier
 \subsection{Limpeza de custódia}
 
 Um mesmo ativo pode aparecer na CDA sob rótulos diferentes conforme o tipo de posição que o
@@ -156,6 +159,7 @@ identificada pelo sufixo numérico do código de negociação (convenção da B3
 associadas a empréstimo ou subscrição são descartados). Essa limpeza resulta em 523 ativos de
 posição direta e 10.603.928 linhas de fundo-ativo-mês antes dos demais filtros.
 
+\FloatBarrier
 \subsection{Características do fundo}
 
 Cinco características de cada fundo entram no modelo, todas medidas no último dia do mês
@@ -168,6 +172,7 @@ Ibovespa, dividida pela variância do retorno do Ibovespa, numa janela móvel de
 terminando no último pregão do mês anterior. As quatro primeiras características vêm do Informe
 Diário; a quinta é construída a partir da série de cotas do próprio fundo.
 
+\FloatBarrier
 \subsection{Amostra final}
 
 Depois de exigidas as cinco características simultaneamente, a amostra usada na etapa de
@@ -207,6 +212,7 @@ descartado: ele é o principal objeto de análise deste trabalho, na medida em q
 (quem erra mais, quando, e em que direção) é o que permite comparar fundos e gestoras entre si e
 avaliar se o modelo tem poder explicativo genuíno ou apenas se ajusta ao passado.
 
+\FloatBarrier
 \subsection{Etapa 1: cross-section}
 
 Para cada ativo $n$ e cada mês $t$, o peso que um fundo $i$ carrega é modelado como função
@@ -235,6 +241,7 @@ fundo cujo erro é consistentemente pequeno tem posições bem explicadas pelas 
 características observáveis; um fundo cujo erro é grande e disperso tem posições que fogem
 desse padrão --- convicção própria do gestor, não captada pelas variáveis do modelo.
 
+\FloatBarrier
 \subsection{Etapa 2: ajuste parcial}
 
 A Etapa 1 estima um alvo, $w^*_{i,n,t} = g(x_{i,n,t}'\theta_{n,t})$, mas não diz nada sobre a
@@ -255,6 +262,7 @@ próximos de zero indicam fundos cuja movimentação segue de perto a velocidade
 estimada; valores grandes indicam movimentos abruptos --- apostas concentradas de curto prazo
 --- que o modelo, por construção, não tem como antecipar.
 
+\FloatBarrier
 \subsection{Etapa 3: esquema fora da amostra}
 
 As duas primeiras etapas são estimadas com a amostra inteira e, por isso, não dizem se o modelo
@@ -292,11 +300,11 @@ captura nenhuma dinâmica relevante que o valor fixo, estimado uma única vez, j
 
 \begin{table}[h]\centering\small
 \caption{$\lambda$ fixo (treino único) vs. janela expansiva (reestimado mês a mês, sem
-vazamento), fora da amostra, $h=1$.}
+vazamento), fora da amostra, $h=1$. Colunas 3--4: razão RMSE/RMSE ingênua.}
 \label{tab:janela_expansiva}
-\begin{tabular}{@{}lrrr@{}}
+\begin{tabular}{@{}p{4.6cm}rrr@{}}
 \toprule
-Base & Meses de teste & RMSE/RMSE ingênua ($\lambda$ fixo) & RMSE/RMSE ingênua (expansiva) \\
+Base & Meses de teste & $\lambda$ fixo & $\lambda$ expansiva \\
 \midrule
 VALE3--Itaú (250 fundos) & 23 & $0{,}9846$ & $0{,}9813$ \\
 Multiativo (2.347 fundos, 501 ativos) & 23 & $0{,}9824$ & $0{,}9824$ \\
@@ -319,6 +327,7 @@ como um acidente de uma única janela de teste. Essa estrutura de erro é a base
 de Resultados deste trabalho e, potencialmente, de uma aplicação prática discutida na
 Seção~\ref{sec:aplicacao}.
 
+\FloatBarrier
 \subsection{Extensões}
 
 O procedimento descrito acima --- Etapas 1 a 3 --- é aplicado primeiro à ação VALE3 dentro dos
@@ -339,6 +348,7 @@ horizonte de previsão simultaneamente.
 orientador. Tabelas e figuras abaixo já validadas em versões anteriores do documento de
 trabalho \texttt{v2 OFICIAL.tex}; as legendas foram mantidas apenas descritivas.]}
 
+\FloatBarrier
 \subsection{Estimativas (Etapa 1)}
 
 \begin{table}[h]\centering\small
@@ -384,6 +394,7 @@ Beta do fundo        & ---           & --- & $0{,}02942$  & *** \\
 o pseudo-$R^2$ de McFadden de cada regressão mensal.}
 \end{figure}
 
+\FloatBarrier
 \subsection{Erros --- estática (Etapas 1--2)}
 
 \begin{table}[h]\centering\small
@@ -467,6 +478,7 @@ Teste (2020--2021)  & Ingênua        & $0{,}01585$ & $0{,}00847$ \\
 início do teste (2020-01).}
 \end{figure}
 
+\FloatBarrier
 \subsection{Erros --- dinâmica fora da amostra (Etapa 3 generalizada)}
 
 \begin{figure}[H]\centering
@@ -681,6 +693,7 @@ absoluta) vs.\ margem sobre a ingênua em $h{=}1$ (eixo $y$, negativo = ajuste p
 \end{figure}
 
 % ======================================================================
+\FloatBarrier
 \section{Aplicação}
 \label{sec:aplicacao}
 
@@ -690,6 +703,7 @@ estrutura do erro fora da amostra (Seção~\ref{sec:resultados}) para identifica
 cujo erro se move em sincronia além do que suas características observáveis explicam.]}
 
 % ======================================================================
+\FloatBarrier
 \section{Conclusão}
 
 \emph{[Seção a ser escrita após a Introdução.]}
