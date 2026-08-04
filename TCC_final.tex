@@ -671,6 +671,33 @@ boa parte, um reflexo indireto da concentração --- gestoras com fundos de beta
 também a manter carteiras mais concentradas, e é a concentração, não o beta em si, que parece
 determinar o quão imprevisível é a mudança de posição.
 
+\paragraph{Concentração no nível fundo-mês: sobretudo um traço entre fundos, não dentro do
+fundo.} O resultado acima usa uma única média de concentração por gestora --- 40 pontos. Refinado
+para o nível fundo-mês --- a concentração da carteira de um fundo específico, num mês específico,
+contra o erro desse mesmo fundo nesse mesmo mês, com dezenas de milhares de pares em vez de 40 ---
+o padrão se confirma e se aprofunda em três versões.
+
+\begin{figure}[H]\centering
+\includegraphics[width=0.95\textwidth]{fig_concentracao_mes_a_mes.pdf}
+\caption{Concentração da carteira (HHI) vs.\ erro fora da amostra (RMS), nível fundo-mês, em
+decis. (A) contemporânea: HHI do mês $t$ vs.\ erro do mês $t$. (B) defasada: HHI do mês $t-1$
+vs.\ erro do mês $t$. (C) dentro do fundo: ambos os eixos com a média de cada fundo subtraída,
+isolando a variação temporal dentro do mesmo fundo. Barras de erro $=\pm 1$ erro-padrão da média
+por decil. Base: multiativo (2.347 fundos, 41 gestoras, 501 ativos).}
+\label{fig:concentracao-mes}
+\end{figure}
+
+Nas versões contemporânea e defasada (painéis A e B), a correlação é praticamente idêntica
+($0{,}42$ e $0{,}44$) --- a concentração do mês \emph{anterior}, que já era conhecida antes do
+erro acontecer, prediz o erro do mês seguinte quase tão bem quanto a concentração do próprio mês,
+afastando a hipótese de que a relação seja só uma coincidência dentro do mesmo mês. Já a versão
+dentro do fundo (painel C, que subtrai de cada fundo sua própria média de concentração e de erro,
+isolando a variação temporal de um mesmo fundo em relação a si mesmo) mostra uma correlação bem
+mais fraca ($0{,}21$): a concentração é, sobretudo, um traço que diferencia fundos \emph{entre
+si} --- um fundo tipicamente mais concentrado do que a média tende a errar mais do que a média
+--- e não tanto um sinal de curto prazo de que um fundo específico está prestes a errar mais do
+que o normal dele mesmo.
+
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig_beta_vs_erro.pdf}
 \caption{Beta médio do fundo (Etapa 1) vs. RMSE fora da amostra ($h=1$), 1.946 fundos com pelo
