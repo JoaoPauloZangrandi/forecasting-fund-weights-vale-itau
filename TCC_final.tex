@@ -558,7 +558,13 @@ Etapa 3 recalculadas do zero sobre a base já limpa), o que reduz o RMSE agregad
 em $4{,}45\%$ ($h=1$) e $3{,}86\%$ ($h=3$) --- uma correção real, não cosmética, embora o ranking
 de dificuldade por gestora praticamente não mude (correlação de Spearman de $0{,}97$ entre o
 ranking antes e depois da limpeza). O caso mais afetado, disparado, é a Vinci Partners: RMSE
-($h=1$) cai $44\%$ com a limpeza, puxado quase inteiramente pelo fundo problemático.
+($h=1$) cai $44\%$ com a limpeza, puxado quase inteiramente pelo fundo problemático. Uma
+auditoria mais ampla das duas bases (pesos negativos ou $>1$, AUM/cotistas ausentes ou
+negativos, beta do fundo fora de um intervalo razoável, linhas duplicadas) não encontrou outro
+problema dessa magnitude; o único ponto adicional --- fluxo de captação/resgate acima de $200\%$
+do patrimônio no mesmo mês, em $74$ fundos ($0{,}06\%$ das observações, tipicamente fundos quase
+zerados por resgates que somem quase todo o patrimônio dentro do próprio mês) --- muda o RMSE
+agregado em apenas $0{,}09\%$ se excluído, e por isso não foi removido.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_dinamica_erro_gestora_extremos.pdf}
