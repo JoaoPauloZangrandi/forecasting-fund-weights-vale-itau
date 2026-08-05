@@ -812,31 +812,6 @@ maior.}
 \label{fig:beta-erro}
 \end{figure}
 
-\paragraph{Uma pergunta diferente: o erro de um fundo específico se repete de um mês para o
-outro?} As persistências testadas até aqui (viés e variância) comparam o comportamento
-\emph{médio} de uma gestora numa metade do período de teste (cerca de 11 meses) contra a outra
---- um traço de longo prazo, como perguntar se um jogador de futebol abaixo da média no primeiro
-turno de um campeonato continua abaixo da média no segundo turno. A pergunta agora é bem
-diferente, e olha para um único fundo, mês a mês: depois de errar numa direção \emph{neste} mês,
-esse fundo tende a errar na mesma direção \emph{no mês seguinte} --- uma ``fase ruim'' que se
-repete de um mês para o outro, como um jogador que, depois de uma partida ruim, tende a jogar mal
-na partida seguinte também? A figura a seguir testa isso e encontra que não --- a correlação é
-essencialmente zero. As duas coisas não se contradizem: um fundo pode ser, de fato, geralmente
-mais difícil de prever (um traço estável de longo prazo, já mostrado acima) sem que um mês ruim
-específico avise nada sobre o mês seguinte.
-
-\begin{figure}[H]\centering
-\includegraphics[width=0.95\textwidth]{fig_persistencia_erro.pdf}
-\caption{Persistência do erro fora da amostra dentro do mesmo fundo: erro médio no mês $t$ vs.
-erro médio no mês $t+1$ (agregado por fundo-mês, 33.600 pares consecutivos, 1.917 fundos), e
-distribuição da autocorrelação lag-1 entre os 1.636 fundos com pelo menos 8 pares. Correlação
-pooled $=0{,}015$; autocorrelação média entre fundos $=-0{,}077$ --- sem evidência de
-persistência mês a mês na \emph{direção} do erro, distinto da estabilidade de \emph{magnitude}
-(RMSE) entre horizontes mostrada na Figura a seguir. Base: multiativo (2.343 fundos, 41 gestoras,
-501 ativos).}
-\label{fig:persistencia-erro}
-\end{figure}
-
 \paragraph{Os achados valem só para $h=1$, ou se mantêm em horizontes mais longos?} Tudo até aqui
 usou $h=1$ (previsão de um mês à frente). A figura a seguir verifica se o ranking de dificuldade
 por gestora --- quem é mais difícil de prever --- muda quando o horizonte de previsão aumenta
