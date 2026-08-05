@@ -5,13 +5,24 @@
 # corr=0,78). Pergunta agora: o que EXPLICA essa dispersao? Cruza o
 # desvio-padrao do erro fora da amostra de cada gestora (h=1, mesmo
 # filtro de posicao-poeira de sempre) contra tres caracteristicas de
-# gestora, calculadas a partir do painel final (painel_multiativo_final,
-# a mesma base da Etapa 1):
+# gestora:
 #   - beta medio do fundo (ja teoria, Figura 13, mas la era vs RMSE
 #     inteiro; aqui isola so a parte de dispersao)
 #   - tamanho medio (log AUM)
 #   - concentracao media da carteira (indice HHI dos pesos por ativo,
 #     dentro de cada fundo-mes, depois medido por gestora)
+#
+# CORRIGIDO (pedido do Joao): a primeira versao calculava essas tres
+# caracteristicas usando os 59 meses inteiros do painel (fev/2017 a
+# dez/2021), que INCLUI o proprio periodo de teste (2020-2021) onde
+# dp_erro e medido -- nao e look-ahead bias no sentido usual (essa
+# regressao nao e um modelo preditivo, e descritiva), mas mistura
+# caracteristica "explicativa" com o mesmo periodo do erro que ela
+# tenta explicar, o que enfraquece a leitura causal. Agora as
+# caracteristicas usam SO o periodo de treino (<2020-01), genuinamente
+# predeterminadas em relacao ao dp_erro (so periodo de teste) --
+# mesma disciplina usada em todo o resto do modelo (lambda, etc.).
+# Resultado: conclusao se mantem (HHI ainda o mais forte).
 # RODAR COM CAMINHO ABSOLUTO.
 # =============================================================================
 suppressPackageStartupMessages(library(data.table))
@@ -29,11 +40,12 @@ dp_gestora <- h1f[, .(dp_erro = sd(erro_oos), n = .N), by = gestora_grupo]
 dp_gestora <- dp_gestora[n >= 100]
 cat("Gestoras com dispersao estimavel (n>=100):", nrow(dp_gestora), "\n")
 
-# --- caracteristicas de gestora, a partir do painel final completo ---
-carac_fundo <- pp[, .(l_aum = mean(l_aum, na.rm=TRUE), beta_fundo = mean(beta_fundo, na.rm=TRUE)),
+# --- caracteristicas de gestora, SO periodo de treino (<2020-01) ---
+pp_treino <- pp[ym < 202001]
+carac_fundo <- pp_treino[, .(l_aum = mean(l_aum, na.rm=TRUE), beta_fundo = mean(beta_fundo, na.rm=TRUE)),
                    by = .(gestora_grupo)]
 
-hhi_fundo_mes <- pp[, .(hhi = sum(peso^2)), by = .(cod_fundo, ym, gestora_grupo)]
+hhi_fundo_mes <- pp_treino[, .(hhi = sum(peso^2)), by = .(cod_fundo, ym, gestora_grupo)]
 hhi_gestora <- hhi_fundo_mes[, .(hhi_medio = mean(hhi, na.rm=TRUE)), by = gestora_grupo]
 
 carac <- merge(carac_fundo, hhi_gestora, by = "gestora_grupo")

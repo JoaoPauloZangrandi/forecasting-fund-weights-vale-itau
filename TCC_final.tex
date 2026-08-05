@@ -690,11 +690,16 @@ tracejada é a identidade ($y=x$); a linha sólida é o ajuste linear. Base: mul
 
 \paragraph{O que explica a variância: concentração da carteira, mais do que beta ou tamanho.}
 Sendo a variância a peça relevante do erro, e sendo ela previsível de uma gestora para a outra,
-cabe perguntar o que a determina. Cruzando o desvio-padrão do erro de cada gestora contra beta
-médio do fundo, tamanho médio (log do PL) e concentração média da carteira (índice HHI dos
-pesos por ativo, dentro de cada fundo-mês) --- as três características mais plausíveis à primeira
-vista --- a concentração se destaca claramente: correlação de $0{,}71$ ($R^2=0{,}50$), contra
-$0{,}52$ ($R^2=0{,}27$) do beta e apenas $0{,}17$ ($R^2=0{,}03$) do tamanho.
+cabe perguntar o que a determina. As características de cada gestora usadas a seguir --- beta
+médio do fundo, tamanho médio (log do PL) e concentração média da carteira (índice HHI dos pesos
+por ativo, dentro de cada fundo-mês) --- são calculadas \textbf{apenas com dados do período de
+treino} (anteriores a janeiro de 2020), genuinamente predeterminadas em relação ao desvio-padrão
+do erro (medido só no período de teste): a mesma disciplina de defasagem usada em todo o resto
+deste trabalho, para não misturar a caracterização com o próprio período que ela tenta explicar.
+Cruzando essas três características --- as mais plausíveis à primeira vista --- contra o
+desvio-padrão do erro, a concentração se destaca claramente: correlação de $0{,}68$
+($R^2=0{,}47$), contra $0{,}47$ ($R^2=0{,}22$) do beta e apenas $0{,}14$ ($R^2=0{,}02$) do
+tamanho.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_explica_variancia_gestora.pdf}
@@ -711,7 +716,9 @@ mais concentradas). Para isolar o efeito de cada característica, mantendo as ou
 concentração entra numa regressão junto com \textbf{todas as cinco características da Etapa~1}
 --- não só beta e tamanho --- para não deixar de fora candidatos plausíveis (cotistas, indicador
 de FIC, fluxo de captação/resgate) só porque a comparação inicial (Figuras~\ref{fig:beta-erro}
-e~\ref{fig:explica-variancia}) partiu de beta:
+e~\ref{fig:explica-variancia}) partiu de beta. Como nas correlações acima, todas as seis
+características são calculadas só com dados do período de treino (anteriores a janeiro de 2020)
+--- predeterminadas em relação ao $\text{dp}(\text{erro})_g$, medido só no período de teste:
 \begin{equation}
 \text{dp}(\text{erro})_g = \alpha + \beta_1\,\overline{\text{beta}}_g +
 \beta_2\,\overline{\log(\text{AUM})}_g + \beta_3\,\overline{\log(\text{cotistas})}_g +
@@ -722,42 +729,38 @@ e~\ref{fig:explica-variancia}) partiu de beta:
 
 \begin{table}[h]\centering\small
 \caption{Regressão múltipla (equação~\eqref{eq:regressao-variancia}): desvio-padrão do erro fora
-da amostra por gestora ($h=1$) explicado pelas cinco características da Etapa 1 e pela
-concentração média, juntas. 40 gestoras.}
+da amostra por gestora ($h=1$, período de teste) explicado pelas cinco características da
+Etapa 1 e pela concentração média, todas medidas só no período de treino. 40 gestoras.}
 \label{tab:regressao-variancia}
 \begin{tabular}{@{}lrrc@{}}
 \toprule
 Variável & Coeficiente & $t$ & Sig. \\
 \midrule
-Intercepto ($\alpha$) & $-0{,}0162$ & $-1{,}28$ & n.s. \\
-Beta médio do fundo ($\beta_1$) & $0{,}0018$ & $0{,}76$ & n.s. \\
-Tamanho médio, log AUM ($\beta_2$) & $0{,}0011$ & $1{,}48$ & n.s. \\
-Cotistas médio, log ($\beta_3$) & $0{,}00002$ & $0{,}05$ & n.s. \\
-\% FIC ($\beta_4$) & $-0{,}0019$ & $-0{,}95$ & n.s. \\
-Fluxo/AUM médio ($\beta_5$) & $-0{,}0229$ & $-1{,}86$ & $\dagger$ \\
-Concentração média, HHI ($\beta_6$) & $0{,}0945$ & $4{,}18$ & *** \\
+Intercepto ($\alpha$) & $-0{,}0147$ & $-1{,}31$ & n.s. \\
+Beta médio do fundo ($\beta_1$) & $0{,}0018$ & $0{,}71$ & n.s. \\
+Tamanho médio, log AUM ($\beta_2$) & $0{,}0010$ & $1{,}56$ & n.s. \\
+Cotistas médio, log ($\beta_3$) & $0{,}00003$ & $0{,}05$ & n.s. \\
+\% FIC ($\beta_4$) & $-0{,}0007$ & $-0{,}38$ & n.s. \\
+Fluxo/AUM médio ($\beta_5$) & $-0{,}0095$ & $-1{,}42$ & n.s. \\
+Concentração média, HHI ($\beta_6$) & $0{,}0845$ & $4{,}18$ & *** \\
 \midrule
-$R^2$ & \multicolumn{3}{r}{$0{,}58$} \\
+$R^2$ & \multicolumn{3}{r}{$0{,}54$} \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Variável dependente: desvio-padrão do erro fora da amostra por gestora
-($h=1$). $^{***}p<0{,}1\%$; $^{\dagger}p<10\%$ (mas $p=0{,}07$, acima do corte convencional de
-$5\%$); n.s. = não significativo a $10\%$.}
+($h=1$). $^{***}p<0{,}1\%$; n.s. = não significativo a $5\%$.}
 \end{table}
 
 O resultado responde à pergunta: mesmo com as cinco características da Etapa 1 todas presentes,
-só a concentração ($\beta_6$) continua estatisticamente significativa --- beta e tamanho, que
-pareciam relevantes sozinhos (Figura~\ref{fig:explica-variancia}), perdem significância quando a
-concentração entra na mesma regressão; cotistas e o indicador de FIC nunca chegam perto de
-significativos. Isso sugere que a relação entre beta e RMSE mostrada na Figura~\ref{fig:beta-erro}
-a seguir é, em boa parte, um reflexo indireto da concentração --- gestoras com fundos de beta
-alto tendem também a manter carteiras mais concentradas, e é a concentração, não o beta em si,
-que parece determinar o quão imprevisível é a mudança de posição. O único candidato que chega
-perto de disputar espaço com a concentração é o fluxo de captação/resgate ($\beta_5$,
-$p=0{,}07$): gestoras cujos fundos captam mais recursos, em média, tendem a ter erro um pouco
-menos disperso --- plausível (fundos crescendo de forma mais estável tendem a ser mais
-previsíveis), mas o efeito não passa do corte convencional de significância a $5\%$ com apenas
-40 gestoras na amostra.
+e todas genuinamente defasadas em relação ao erro que tentam explicar, só a concentração
+($\beta_6$) continua estatisticamente significativa --- beta e tamanho, que pareciam relevantes
+sozinhos (Figura~\ref{fig:explica-variancia}), perdem significância quando a concentração entra
+na mesma regressão; cotistas, o indicador de FIC e o fluxo de captação/resgate ficam bem longe
+de significativos. Isso sugere que a relação entre beta e RMSE mostrada na
+Figura~\ref{fig:beta-erro} a seguir é, em boa parte, um reflexo indireto da concentração ---
+gestoras com fundos de beta alto tendem também a manter carteiras mais concentradas, e é a
+concentração, não o beta em si, que parece determinar o quão imprevisível é a mudança de
+posição.
 
 \paragraph{Concentração no nível fundo-mês: sobretudo um traço entre fundos, não dentro do
 fundo.} O resultado acima usa uma única média de concentração por gestora --- 40 pontos --- e por
