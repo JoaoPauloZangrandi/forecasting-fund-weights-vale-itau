@@ -33,7 +33,7 @@ cat("h1:", nrow(h1), "obs |", uniqueN(h1$gestora_grupo), "gestoras\n")
 cat("h3:", nrow(h3), "obs |", uniqueN(h3$gestora_grupo), "gestoras\n")
 
 # ---- Figura A: evolucao mensal do erro OOS por gestora (extremos da Tabela 25/26) ----
-dificeis  <- c("Guepardo Investimentos", "Ibiuna Investimentos", "AZ Quest")
+dificeis  <- c("Ibiuna Investimentos", "Guepardo Investimentos", "AZ Quest")
 faceis    <- c("Plural", "TNA Gestão Patrimonial", "Gávea Investimentos")
 
 por_mes_gestora <- h1[gestora_grupo %in% c(dificeis, faceis),
@@ -50,7 +50,7 @@ ylim_comum <- range(por_mes_gestora$erro_medio, na.rm=TRUE)
 eixo_x_datas <- range(por_mes_gestora$data)
 plot(eixo_x_datas, c(0,0), type="n", xaxt="n", xlim=eixo_x_datas, ylim=ylim_comum,
      xlab="Mês (teste, out-of-sample)",
-     ylab="Erro médio mensal (h=1)", main="As 3 gestoras mais difíceis\n(Guepardo, Ibiuna, AZ Quest)")
+     ylab="Erro médio mensal (h=1)", main="As 3 gestoras mais difíceis\n(Ibiuna, Guepardo, AZ Quest)")
 axis.Date(1, at=seq(eixo_x_datas[1], eixo_x_datas[2], by="4 months"), format="%b/%Y")
 abline(h=0, col="grey80")
 for (i in seq_along(dificeis)) {
