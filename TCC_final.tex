@@ -689,12 +689,46 @@ tamanho médio (log AUM) e concentração média da carteira (HHI), 40 gestoras.
 \label{fig:explica-variancia}
 \end{figure}
 
-Numa regressão múltipla com as três características juntas, só a concentração continua
-estatisticamente significativa ($t=4{,}45$, $p<0{,}0001$); beta e tamanho perdem significância.
-Isso sugere que a relação entre beta e RMSE mostrada na Figura~\ref{fig:beta-erro} a seguir é, em
-boa parte, um reflexo indireto da concentração --- gestoras com fundos de beta alto tendem
-também a manter carteiras mais concentradas, e é a concentração, não o beta em si, que parece
-determinar o quão imprevisível é a mudança de posição.
+As três correlações acima são bivariadas --- cada característica sozinha contra a dispersão do
+erro --- e não dizem se elas têm efeito \emph{independente} umas das outras, ou se estão só
+capturando a mesma coisa por tabela (gestoras com beta alto podem também ser, coincidentemente,
+mais concentradas). Para isolar o efeito de cada característica, mantendo as outras duas fixas,
+as três entram juntas numa única regressão linear, por gestora ($g=1,\ldots,40$):
+\begin{equation}
+\text{dp}(\text{erro})_g = \alpha + \beta_1\,\overline{\text{beta}}_g +
+\beta_2\,\overline{\log(\text{AUM})}_g + \beta_3\,\overline{\text{HHI}}_g + u_g
+\label{eq:regressao-variancia}
+\end{equation}
+
+\begin{table}[h]\centering\small
+\caption{Regressão múltipla (equação~\eqref{eq:regressao-variancia}): desvio-padrão do erro fora
+da amostra por gestora ($h=1$) explicado por beta médio, tamanho médio e concentração média,
+juntos. 40 gestoras.}
+\label{tab:regressao-variancia}
+\begin{tabular}{@{}lrrc@{}}
+\toprule
+Variável & Coeficiente & $t$ & Sig. \\
+\midrule
+Intercepto ($\alpha$) & $-0{,}0098$ & $-0{,}87$ & n.s. \\
+Beta médio do fundo ($\beta_1$) & $0{,}0016$ & $0{,}69$ & n.s. \\
+Tamanho médio, log AUM ($\beta_2$) & $0{,}0007$ & $1{,}16$ & n.s. \\
+Concentração média, HHI ($\beta_3$) & $0{,}0961$ & $4{,}45$ & *** \\
+\midrule
+$R^2$ & \multicolumn{3}{r}{$0{,}53$} \\
+\bottomrule
+\end{tabular}
+\caption*{\footnotesize Variável dependente: desvio-padrão do erro fora da amostra por gestora
+($h=1$). $^{***}p<0{,}1\%$; n.s. = não significativo a $5\%$.}
+\end{table}
+
+O resultado responde à pergunta: só a concentração ($\beta_3$) continua estatisticamente
+significativa depois de controlar pelas outras duas --- beta e tamanho, que pareciam relevantes
+sozinhos (Figura~\ref{fig:explica-variancia}), perdem significância quando a concentração entra
+na mesma regressão. Isso sugere que a relação entre beta e RMSE mostrada na
+Figura~\ref{fig:beta-erro} a seguir é, em boa parte, um reflexo indireto da concentração ---
+gestoras com fundos de beta alto tendem também a manter carteiras mais concentradas, e é a
+concentração, não o beta em si, que parece determinar o quão imprevisível é a mudança de
+posição.
 
 \paragraph{Concentração no nível fundo-mês: sobretudo um traço entre fundos, não dentro do
 fundo.} O resultado acima usa uma única média de concentração por gestora --- 40 pontos. Refinado
