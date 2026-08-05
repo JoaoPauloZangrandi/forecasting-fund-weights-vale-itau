@@ -78,8 +78,10 @@ cat(sprintf("Correlacao (Spearman) = %.4f\n", cor(wide$dp_primeira, wide$dp_segu
 cat(sprintf("R2 = %.4f | p(coef) = %.4g\n", summary(fit_dp)$r.squared, summary(fit_dp)$coefficients[2,4]))
 cat(sprintf("(Para comparacao: persistencia do VIES no script 84 foi corr=0,832, R2=0,693)\n"))
 
-pdf(file.path(FIG, "fig_persistencia_dp_gestora.pdf"), width = 6.5, height = 6)
+lim_comum <- range(c(wide$dp_primeira, wide$dp_segunda))
+pdf(file.path(FIG, "fig_persistencia_dp_gestora.pdf"), width = 6.5, height = 6.5)
 plot(wide$dp_primeira, wide$dp_segunda, pch = 19, col = adjustcolor("#3B6E9E", 0.6),
+     xlim = lim_comum, ylim = lim_comum, asp = 1,
      xlab = "Desvio-padrão do erro, 1ª metade do teste", ylab = "Desvio-padrão do erro, 2ª metade do teste",
      main = sprintf("Persistência da dispersão do erro por gestora\ncorrelação = %.3f", corr_dp))
 abline(0, 1, col = "grey70", lty = 2)
