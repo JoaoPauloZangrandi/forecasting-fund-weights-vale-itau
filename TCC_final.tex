@@ -617,6 +617,15 @@ sistematicamente mais do que o modelo prevê. Base: multiativo (2.343 fundos, 41
 \label{fig:vies-dinamico}
 \end{figure}
 
+Esta parte final da subseção segue uma cadeia de perguntas, cada uma motivada pela resposta da
+anterior. A Figura~\ref{fig:vies-dinamico} mostrou que algumas gestoras compram (ou vendem)
+sistematicamente mais do que o modelo prevê --- um viés. Daqui em diante, nessa ordem: esse
+viés é um traço real da gestora, ou coincidência da janela de teste? Se é real, dá pra corrigir
+a previsão com base nele? Por que essa correção ajuda tão pouco? A parte do erro que sobra --- a
+variância --- também é um traço estável da gestora, ou é ruído puro? O que explica essa
+variância? E, por fim, esses achados valem só para o horizonte de um mês, ou se mantêm ao tentar
+prever 3, 6 ou 12 meses à frente?
+
 \paragraph{O viés é persistente, mas explica pouco do erro.} Um viés grande e estável seria
 evidência de que uma gestora tem um estilo sistemático (convicção própria, mandato diferente)
 não capturado pelas cinco características do modelo --- vale então perguntar se o padrão da
@@ -639,10 +648,16 @@ de apenas $0{,}07\%$. A correção ajuda mais nas gestoras com viés mais extrem
 Investimentos, $-3{,}5\%$ de RMSE; Real Investor, $-3{,}1\%$; Núcleo Capital, $-3{,}1\%$), mas é
 irrelevante para a maioria. A razão fica clara na decomposição a seguir.
 
-\paragraph{Por que o viés importa pouco: a variância domina o erro.} Como
-$\text{RMSE}^2 = \text{viés}^2 + \text{variância}$, é possível medir exatamente que fração do
-erro de cada gestora vem do viés (um deslocamento sistemático, corrigível) e que fração vem da
-variância (dispersão em torno da média, não corrigível por um simples ajuste de nível).
+\paragraph{Por que o viés importa pouco: a variância domina o erro.} Pense em dois arqueiros
+atirando num alvo, onde ``erro'' é a distância de cada flecha ao centro. O primeiro erra pouco,
+mas sempre um pouco para o mesmo lado --- um desvio sistemático, fácil de corrigir (basta mirar
+um pouco mais para o outro lado). O segundo acerta o centro \emph{em média}, mas cada flecha cai
+num lugar diferente --- imprevisibilidade genuína, sem direção fixa, que nenhum ajuste simples
+corrige. Os dois podem ter o mesmo erro médio ao quadrado, por motivos opostos: o primeiro por
+\textbf{viés}, o segundo por \textbf{variância}. A identidade
+$\text{RMSE}^2 = \text{viés}^2 + \text{variância}$ --- a mesma relação algébrica por trás da
+fórmula usual de variância, $\text{Var}(X) = E[X^2] - E[X]^2$ --- separa essas duas fontes de
+erro para cada gestora, e permite medir exatamente qual das duas pesa mais.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig_decomposicao_vies_variancia.pdf}
@@ -757,6 +772,8 @@ si} --- um fundo tipicamente mais concentrado do que a média tende a errar mais
 --- e não um sinal de curto prazo de que um fundo específico está prestes a errar mais do que o
 normal dele mesmo.
 
+Como prometido, a figura a seguir mostra essa relação entre beta e RMSE diretamente:
+
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig_beta_vs_erro.pdf}
 \caption{Beta médio do fundo (Etapa 1) vs. RMSE fora da amostra ($h=1$), 1.941 fundos com pelo
@@ -768,6 +785,13 @@ menos 6 observações de teste, após o mesmo filtro de posição-poeira usado n
 maior.}
 \label{fig:beta-erro}
 \end{figure}
+
+\paragraph{Uma pergunta diferente: o erro de um fundo específico se repete de um mês para o
+outro?} A persistência testada até aqui foi \emph{entre gestoras} --- uma gestora com viés ou
+dispersão alta continua assim ao longo do tempo. Falta perguntar o mesmo dentro de um único
+fundo, mês a mês: se um fundo errou numa direção este mês, ele tende a errar na mesma direção no
+mês seguinte? A figura a seguir testa isso e encontra que não --- a correlação é essencialmente
+zero.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_persistencia_erro.pdf}
@@ -781,6 +805,11 @@ persistência mês a mês na \emph{direção} do erro, distinto da estabilidade 
 \label{fig:persistencia-erro}
 \end{figure}
 
+\paragraph{Os achados valem só para $h=1$, ou se mantêm em horizontes mais longos?} Tudo até aqui
+usou $h=1$ (previsão de um mês à frente). A figura a seguir verifica se o ranking de dificuldade
+por gestora --- quem é mais difícil de prever --- muda quando o horizonte de previsão aumenta
+para 3, 6 ou 12 meses.
+
 \begin{figure}[H]\centering
 \includegraphics[width=0.75\textwidth]{fig_ranking_horizontes_slopegraph.pdf}
 \caption{Estabilidade do ranking de dificuldade de previsão (RMSE fora da amostra) entre os 4
@@ -791,6 +820,9 @@ extremos em todos os horizontes; a correlação de Spearman entre rankings varia
 multiativo (2.343 fundos, 41 gestoras, 501 ativos).}
 \label{fig:ranking-horizontes}
 \end{figure}
+
+As duas tabelas a seguir trazem os números completos por trás da figura acima: RMSE e margem de
+todas as 41 gestoras, nos quatro horizontes.
 
 \begin{center}\scriptsize
 \begin{longtable}{@{}lrrrrr@{}}
@@ -920,6 +952,10 @@ Gávea Investimentos & $2{,}0\%$ & $4{,}1\%$ & $8{,}0\%$ & $10{,}6\%$ \\
 Plural & $-3{,}1\%$ & $-4{,}7\%$ & $-3{,}9\%$ & $-7{,}6\%$ \\
 \end{longtable}
 \end{center}
+
+Por fim, a figura a seguir junta as duas dimensões discutidas nesta subseção --- dificuldade
+absoluta (RMSE) e se o ajuste parcial realmente ajuda (margem) --- num único gráfico, uma
+gestora por ponto.
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.7\textwidth]{fig_multihorizonte_gestora_rmse_margem.pdf}
