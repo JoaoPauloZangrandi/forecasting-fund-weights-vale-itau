@@ -64,9 +64,9 @@ ação} que carregam, não só VALE3.
 \caption{Evolução do universo de dados. Fonte: scripts \texttt{17}--\texttt{29} $\to$
 \texttt{painel\_multiativo\_final.csv}.}
 \label{tab:universo}
-\begin{tabular}{@{}p{6.4cm}rrrr@{}}
+\begin{tabular}{@{}p{7.3cm}rrrr@{}}
 \toprule
-Etapa & Universo (fundos) & Amostra final (fundos) & Gestoras & Ativos \\
+Etapa & Universo & Amostra final & Gestoras & Ativos \\
 \midrule
 Ampliação de gestoras (todo o universo CVM, só VALE3) & 2.820 & 2.295 & 41 & 1 \\
 Ampliação de ativos (todo o universo CVM, todas as ações) & 2.820 & 2.347 & 41 & 501 \\
@@ -134,8 +134,11 @@ Ativos (posição direta) & 501 \\
 Meses (fev/2017--dez/2021) & 59 \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Esta é a base única usada em toda a Seção~\ref{sec:resultados} --- ao
-contrário da versão anterior deste documento, não há troca de base entre Etapas.}
+\caption*{\footnotesize Esta é a amostra final antes da limpeza descrita na
+Seção~\ref{sec:resultados} (597 fundo-mês com soma de peso $>105\%$ do patrimônio, erro de
+reporte da CDA, excluídos antes de qualquer regressão) --- a Seção~\ref{sec:resultados} usa,
+uma única vez do início ao fim, a versão já limpa (2.343 fundos), ao contrário da versão
+anterior deste documento, que trocava de base entre Etapas.}
 \end{table}
 
 % ======================================================================
@@ -238,10 +241,11 @@ ativo e por horizonte de previsão simultaneamente.
 \section{Resultados}
 \label{sec:resultados}
 
-Toda esta seção usa a base multiativo (Tabela~\ref{tab:amostra}: 2.343 fundos, 41 gestoras, 501
-ativos, após excluir 597 fundo-mês com soma de peso $>105\%$ do patrimônio --- erro de reporte
-identificado na CDA da CVM, não deste trabalho) --- uma única base do início ao fim, diferente de
-versões anteriores deste documento.
+Toda esta seção usa a base multiativo já limpa: dos 2.347 fundos da Tabela~\ref{tab:amostra},
+597 fundo-mês (73 fundos) têm soma de peso $>105\%$ do patrimônio --- erro de reporte
+identificado na CDA da CVM, não deste trabalho --- e são excluídos antes de qualquer regressão,
+restando \textbf{2.343 fundos, 41 gestoras, 501 ativos}. Uma única base do início ao fim,
+diferente de versões anteriores deste documento.
 
 \FloatBarrier
 \subsection{Etapa 1: cross-section}
@@ -478,13 +482,13 @@ pergunta: sim, ainda explica. Para isolar o efeito de cada característica, a co
 numa regressão múltipla junto com as 5 características não-HHI da Etapa 1, todas medidas só no
 período de treino (predeterminadas em relação ao $\text{dp}(\text{erro})_g$, medido só no
 período de teste):
-\begin{equation}
-\text{dp}(\text{erro})_g = \alpha + \beta_1\,\overline{\text{beta}}_g +
-\beta_2\,\overline{\log(\text{AUM})}_g + \beta_3\,\overline{\log(\text{cotistas})}_g +
-\beta_4\,\overline{\text{\%FIC}}_g + \beta_5\,\overline{\text{fluxo/AUM}}_g +
+\begin{align}
+\text{dp}(\text{erro})_g = {}& \alpha + \beta_1\,\overline{\text{beta}}_g +
+\beta_2\,\overline{\log(\text{AUM})}_g + \beta_3\,\overline{\log(\text{cotistas})}_g \notag\\
+& + \beta_4\,\overline{\text{\%FIC}}_g + \beta_5\,\overline{\text{fluxo/AUM}}_g +
 \beta_6\,\overline{\text{HHI}_{\text{medio}}}_g + u_g
 \label{eq:regressao-variancia}
-\end{equation}
+\end{align}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_explica_variancia_gestora.pdf}
