@@ -22,10 +22,12 @@ q_rest <- fread(file.path(REPO, "v2 OFICIAL/data/quintis_fluxo_retorno_restrito.
 pdf(file.path(FIG, "fig4_quintis_retorno.pdf"), width = 7.5, height = 5)
 par(mfrow = c(1,2), mar = c(4,4,2.5,1))
 bp1 <- barplot(100*q_full$retorno_medio, names.arg = paste0("Q",1:5), col = "#2E5C8A", border=NA,
-               ylab = "Retorno médio subsequente (%)", main = "Amostra completa\n(8.614 obs)",
+               ylab = "Retorno médio subsequente (%)",
+               main = sprintf("Amostra completa\n(%s obs)", format(nrow(M), big.mark=".")),
                ylim = c(0, max(100*q_full$retorno_medio, 100*q_rest$retorno_medio)*1.15))
 bp2 <- barplot(100*q_rest$retorno_medio, names.arg = paste0("Q",1:5), col = "#B8452E", border=NA,
-               ylab = "Retorno médio subsequente (%)", main = "Só ativos com margem>0\n(6.224 obs)",
+               ylab = "Retorno médio subsequente (%)",
+               main = sprintf("Só ativos com margem>0\n(%s obs)", format(nrow(Mr), big.mark=".")),
                ylim = c(0, max(100*q_full$retorno_medio, 100*q_rest$retorno_medio)*1.15))
 mtext("Quintil 1 = mais fluxo vendedor previsto | Quintil 5 = mais fluxo comprador previsto",
       side = 1, outer = TRUE, line = -1.2, cex = 0.75)
