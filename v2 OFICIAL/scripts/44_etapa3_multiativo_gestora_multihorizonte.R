@@ -1,4 +1,14 @@
 # =============================================================================
+# !!! SUPERADO (12/08/2026) -- NAO RODAR SEM QUERER !!!
+# Versao de 5 caracteristicas (sem HHI_resto) -- depende do R/42, tambem
+# superado. O script 99_pipeline_hhi_lag_etapa1.R e quem produz oficialmente
+# etapa3_multiativo_gestora_multihorizonte.csv/_longo.csv hoje (6 caracte-
+# risticas, HHI_resto defasado). Este script escreve NOS MESMOS nomes de
+# arquivo -- rodar por engano (mesmo que so pra regerar as Tabelas 9/10 via
+# script 93) sobrescreve silenciosamente o resultado atual com a versao
+# antiga, sem erro nem aviso. Mantido so por referencia historica/
+# comparacao. Se precisar rerodar de verdade, rode 99, nao este.
+# =============================================================================
 # 44_etapa3_multiativo_gestora_multihorizonte.R  (v2 OFICIAL)
 #
 # Fecha uma lacuna apontada pelo Joao: a Tabela 22 (erro fora da amostra por

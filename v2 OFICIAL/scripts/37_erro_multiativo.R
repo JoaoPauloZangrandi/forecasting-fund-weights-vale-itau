@@ -1,4 +1,12 @@
 # =============================================================================
+# !!! SUPERADO (12/08/2026) -- NAO RODAR SEM QUERER !!!
+# Versao de 5 caracteristicas (sem HHI_resto). O script 99_pipeline_hhi_lag_
+# etapa1.R e quem produz oficialmente erro_e_multiativo.csv hoje (6 caracte-
+# risticas, HHI_resto defasado). Este script escreve NO MESMO nome de
+# arquivo -- rodar por engano sobrescreve silenciosamente o resultado atual
+# com a versao antiga, sem erro nem aviso. Mantido so por referencia
+# historica/comparacao. Se precisar rerodar de verdade, rode 99, nao este.
+# =============================================================================
 # 37_erro_multiativo.R  (v2 OFICIAL)
 #
 # LOGIT (nao mais linear -- decisao do Joao: logit e o modelo mae em todo o

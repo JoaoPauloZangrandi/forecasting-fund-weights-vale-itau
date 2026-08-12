@@ -1,4 +1,13 @@
 # =============================================================================
+# !!! SUPERADO (12/08/2026) -- NAO RODAR SEM QUERER !!!
+# Versao de 5 caracteristicas (sem HHI_resto) -- le erro_e_multiativo.csv da
+# epoca de 5 caracteristicas. O script 99_pipeline_hhi_lag_etapa1.R e quem
+# produz oficialmente etapa3_multiativo_h1.csv/h3.csv hoje (6 caracteristicas,
+# HHI_resto defasado). Este script escreve NOS MESMOS nomes de arquivo --
+# rodar por engano sobrescreve silenciosamente o resultado atual com a
+# versao antiga, sem erro nem aviso. Mantido so por referencia
+# historica/comparacao. Se precisar rerodar de verdade, rode 99, nao este.
+# =============================================================================
 # 42_etapa3_multiativo.R  (v2 OFICIAL)
 #
 # Generaliza a Etapa 3 (ajuste parcial fora da amostra, scripts 03/05/36,
