@@ -7,17 +7,18 @@
 # ja existem na parte de estimativas (evolucao mensal de theta, evolucao
 # mensal do APE por gestora, Figura 9).
 #
-# Usa a base JA VALIDADA da Etapa 3 generalizada (scripts/42, arquivo
-# etapa3_multiativo_h1.csv/h3.csv -- universo de 2.820 fundos/41 gestoras
-# que ja fundamenta as Tabelas 25/26 do v2 OFICIAL.tex), NAO a base do
-# teste_estrategia (universo expandido, ignorado por pedido explicito
-# desta rodada).
+# Atualizado 12/08/2026: painel_multiativo_final.csv (e os arquivos
+# derivados etapa3_multiativo_h1/h3.csv) agora contem o universo COMPLETO
+# (todas as gestoras, todas as acoes), nao mais ancorado em VALE3. As
+# gestoras "mais dificeis"/"mais faceis" deixaram de ser hardcoded -- sao
+# recalculadas aqui, dinamicamente, a partir do RMSE h=1 de
+# etapa3_multiativo_gestora_multihorizonte.csv (top-3/bottom-3), a mesma
+# fonte usada pelas Tabelas 9/10 (script 93).
 #
-# 2 figuras novas:
-#  (1) evolucao mensal do erro fora da amostra (h=1), por gestora -- so as
-#      3 gestoras mais dificeis e as 3 mais previsiveis em TODOS os
-#      horizontes (achado da Tabela 25/26: Guepardo/Ibiuna/AZ Quest vs.
-#      Plural/TNA/Gavea) -- mesmo estilo da Figura 9 (evolucao APE gestora).
+# 2 figuras:
+#  (1) evolucao mensal do erro fora da amostra (h=1), por gestora -- as
+#      3 gestoras com maior RMSE e as 3 com menor RMSE (h=1) -- mesmo
+#      estilo da Figura 9 (evolucao APE gestora).
 #  (2) erro fora da amostra agregado (nuvem + media + dp mensal), h=1 vs
 #      h=3 lado a lado -- mesmo estilo das Figuras 3/6 (evolucao erro e/u),
 #      agora pro erro fora da amostra generalizado.
@@ -32,9 +33,13 @@ h3 <- fread(file.path(REPO, "v2 OFICIAL/data/etapa3_multiativo_h3.csv"))
 cat("h1:", nrow(h1), "obs |", uniqueN(h1$gestora_grupo), "gestoras\n")
 cat("h3:", nrow(h3), "obs |", uniqueN(h3$gestora_grupo), "gestoras\n")
 
-# ---- Figura A: evolucao mensal do erro OOS por gestora (extremos da Tabela 25/26) ----
-dificeis  <- c("Ibiuna Investimentos", "Guepardo Investimentos", "AZ Quest")
-faceis    <- c("Plural", "TNA Gestão Patrimonial", "Gávea Investimentos")
+# ---- Figura A: evolucao mensal do erro OOS por gestora (extremos dinamicos) ----
+W <- fread(file.path(REPO, "v2 OFICIAL/data/etapa3_multiativo_gestora_multihorizonte.csv"))
+setorder(W, -rmse_h1)
+dificeis  <- head(W$gestora_grupo, 3)
+faceis    <- tail(W$gestora_grupo, 3)
+cat("Dificeis (maior RMSE h1):", paste(dificeis, collapse=", "), "\n")
+cat("Faceis (menor RMSE h1):", paste(faceis, collapse=", "), "\n")
 
 por_mes_gestora <- h1[gestora_grupo %in% c(dificeis, faceis),
                        .(erro_medio = mean(erro_oos), n = .N), by = .(gestora_grupo, ym)]
@@ -50,7 +55,8 @@ ylim_comum <- range(por_mes_gestora$erro_medio, na.rm=TRUE)
 eixo_x_datas <- range(por_mes_gestora$data)
 plot(eixo_x_datas, c(0,0), type="n", xaxt="n", xlim=eixo_x_datas, ylim=ylim_comum,
      xlab="Mês (teste, out-of-sample)",
-     ylab="Erro médio mensal (h=1)", main="As 3 gestoras mais difíceis\n(Ibiuna, Guepardo, AZ Quest)")
+     ylab="Erro médio mensal (h=1)",
+     main="As 3 gestoras mais difíceis")
 axis.Date(1, at=seq(eixo_x_datas[1], eixo_x_datas[2], by="4 months"), format="%b/%Y")
 abline(h=0, col="grey80")
 for (i in seq_along(dificeis)) {
@@ -61,7 +67,8 @@ legend("topleft", legend=dificeis, col=cores_d, lwd=2, bty="n", cex=0.65)
 
 plot(eixo_x_datas, c(0,0), type="n", xaxt="n", xlim=eixo_x_datas, ylim=ylim_comum,
      xlab="Mês (teste, out-of-sample)",
-     ylab="Erro médio mensal (h=1)", main="As 3 gestoras mais previsíveis\n(Plural, TNA, Gávea)")
+     ylab="Erro médio mensal (h=1)",
+     main="As 3 gestoras mais previsíveis")
 axis.Date(1, at=seq(eixo_x_datas[1], eixo_x_datas[2], by="4 months"), format="%b/%Y")
 abline(h=0, col="grey80")
 for (i in seq_along(faceis)) {

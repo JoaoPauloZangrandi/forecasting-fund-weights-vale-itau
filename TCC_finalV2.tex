@@ -18,7 +18,7 @@
 \captionsetup{font=small,labelsep=colon}
 \setcounter{tocdepth}{2}
 
-\title{Peso de VALE3 nos fundos de investimento brasileiros:\\
+\title{Peso de ações nos fundos de investimento brasileiros:\\
 um modelo de fator dinâmico com correção logística e ajuste parcial}
 \author{João Paulo Zangrandi\\
 Fundação Getulio Vargas --- Escola de Economia de São Paulo (FGV--EESP)\\
@@ -55,35 +55,40 @@ Os dados vêm de dois registros públicos que a CVM exige de todo fundo de inves
 brasileiro: a Composição e Diversificação de Aplicações (CDA), extrato mensal de que vem o peso
 de cada ativo na carteira de cada fundo (a variável dependente deste trabalho), e o Informe
 Diário, de onde vêm patrimônio líquido, cotistas, captação e resgate (as características do
-fundo). O período coberto vai de janeiro de 2016 a dezembro de 2021. O universo de fundos parte
-de todo fundo do universo CVM que já teve VALE3 em carteira em algum momento do período (2.820
-fundos, 41 grupos de gestora por marca controladora), e para esses fundos observa-se \textbf{toda
-ação} que carregam, não só VALE3.
+fundo). O período coberto vai de janeiro de 2016 a dezembro de 2021. O universo de fundos é
+\textbf{todo fundo do universo CVM com posição em ações no período} (3.254 fundos, 41 grupos de
+gestora por marca controladora, 536 ativos de posição direta) --- não restrito a nenhuma gestora
+ou ativo específico. Esse universo bruto já reflete uma limpeza de qualidade de dado: 1.072
+fundo-mês (207 fundos) com soma de participações $>105\%$ do patrimônio na CDA --- erro de
+reporte identificado na fonte, não deste trabalho --- foram excluídos antes de qualquer outra
+etapa.
 
 \begin{table}[h]\centering\small
-\caption{Evolução do universo de dados. Fonte: scripts \texttt{17}--\texttt{29} $\to$
-\texttt{painel\_multiativo\_final.csv}.}
+\caption{Funil da amostra, do universo bruto à amostra final. Fonte: scripts
+\texttt{50}--\texttt{58} $\to$ \texttt{painel\_universo\_completo\_final.csv}; script
+\texttt{101\_cross\_section\_universo\_completo\_hhi.R} para a etapa de
+$\text{HHI}_{\text{resto}}$.}
 \label{tab:universo}
-\begin{tabular}{@{}p{7.3cm}rrrr@{}}
+\begin{tabular}{@{}p{7.6cm}rrr@{}}
 \toprule
-Etapa & Universo & Amostra final & Gestoras & Ativos \\
+Etapa & Fundos & Ativos & Gestoras \\
 \midrule
-Ampliação de gestoras (todo o universo CVM, só VALE3) & 2.820 & 2.295 & 41 & 1 \\
-Ampliação de ativos (todo o universo CVM, todas as ações) & 2.820 & 2.347 & 41 & 501 \\
+Universo bruto (posição em ações, 2016--2021) & 3.254 & 536 & 41 \\
++ 5 características do Informe Diário completas & 2.572 & 513 & 41 \\
++ $\text{HHI}_{\text{resto}}$ defasado disponível & 2.502 & 512 & 41 \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Amostra final = fundos com as 6 características (Seção~\ref{sec:dados})
-simultaneamente disponíveis em pelo menos um mês. A cobertura temporal efetiva é de 59 meses
-(fev/2017--dez/2021, não os 72 meses do período bruto): o beta do fundo exige 252 pregões de
-histórico de cota, o que exclui os primeiros 12 meses da amostra.}
+\caption*{\footnotesize Cobertura temporal: 60 meses (jan/2017--dez/2021, não os 72 meses do
+período bruto) --- o beta do fundo exige 252 pregões de histórico de cota, o que exclui os
+primeiros 12 meses da amostra.}
 \end{table}
 
-Dos 473 fundos do universo bruto que não entram na amostra final, 28 nunca têm as quatro
-características do Informe Diário completas ao mesmo tempo; os outros 445 têm essas quatro, mas
-nunca chegam a ter beta --- 91,2\% deles (406) simplesmente não acumulam 252 dias de cota válida
-na janela 2016--2021 (fundos jovens demais, não uma limitação de dado), 4,0\% (18) acumulam mas
-começam tarde demais para deixar mês seguinte disponível como preditor, e só 4,7\% (21) têm um
-padrão mais consistente com fechamento do fundo.
+Dos 682 fundos do universo bruto que não entram na amostra de 5 características completas, 68
+nunca têm as quatro características do Informe Diário completas ao mesmo tempo; os outros 614
+têm essas quatro, mas nunca chegam a ter beta --- 90,9\% deles (558) simplesmente não acumulam
+252 dias de cota válida na janela 2016--2021 (fundos jovens demais, não uma limitação de dado), e
+os 9,1\% restantes (56) acumulam mas não geram beta por outro motivo (ex.: janela sem par
+completo com o Ibovespa, ou fundo encerrado logo em seguida).
 
 \FloatBarrier
 \subsection{Limpeza e características}
@@ -91,7 +96,7 @@ padrão mais consistente com fechamento do fundo.
 Um mesmo ativo pode aparecer na CDA sob rótulos diferentes conforme o tipo de posição (direta,
 cedida/recebida em empréstimo, direito de subscrição). Este trabalho mantém apenas a posição
 direta, identificada pelo sufixo numérico do código de negociação (convenção B3: sufixos 3, 4,
-5, 6, 7, 8, 11) --- 523 ativos de posição direta, 10.603.928 linhas de fundo-ativo-mês antes dos
+5, 6, 7, 8, 11) --- 536 ativos de posição direta, 10.743.850 linhas de fundo-ativo-mês antes dos
 demais filtros.
 
 Seis características de cada fundo entram no modelo (equação~\eqref{eq:cs}), todas medidas no
@@ -129,18 +134,15 @@ ficam sem essa característica ($2{,}6\%$ das linhas) \\
 \label{tab:amostra}
 \begin{tabular}{@{}lr@{}}
 \toprule
-Observações (fundo $\times$ ativo $\times$ mês) & 8.268.920 \\
-Fundos & 2.347 \\
+Observações (fundo $\times$ ativo $\times$ mês) & 8.154.818 \\
+Fundos & 2.502 \\
 Grupos de gestora & 41 \\
-Ativos (posição direta) & 501 \\
-Meses (fev/2017--dez/2021) & 59 \\
+Ativos (posição direta) & 512 \\
+Meses (jan/2017--dez/2021) & 60 \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Esta é a amostra final antes da limpeza descrita na
-Seção~\ref{sec:resultados} (597 fundo-mês com soma de peso $>105\%$ do patrimônio, erro de
-reporte da CDA, excluídos antes de qualquer regressão) --- a Seção~\ref{sec:resultados} usa,
-uma única vez do início ao fim, a versão já limpa (2.343 fundos), ao contrário da versão
-anterior deste documento, que trocava de base entre Etapas.}
+\caption*{\footnotesize Esta é a amostra final com as 6 características (Seção~\ref{sec:dados})
+disponíveis linha a linha, uma única base do início ao fim (Seção~\ref{sec:resultados}).}
 \end{table}
 
 % ======================================================================
@@ -189,17 +191,6 @@ mesmo; defasar para $t-1$ garante a mesma disciplina de predeterminação das ou
 características. Fundos sem nenhum dado de carteira em $t-1$ (fundo novo, por exemplo) ficam
 sem essa característica e saem da amostra --- 2,6\% das linhas.
 
-Essa característica passou por uma correção de percurso que vale registrar. O piloto que
-motivou sua inclusão (amostra aleatória de 100 células ativo-mês, sem viés de seleção) usava o
-peso do \textbf{mesmo mês} $t$, não de $t-1$: 77\% das células com coeficiente significativo,
-sinal positivo em 75 das 77, ganho médio de pseudo-$R^2$ de $0{,}080$. Uma auditoria posterior
-identificou que essa versão contemporânea contradizia a disciplina de defasagem das outras 5
-características, então o teste foi refeito com a versão defasada (equação acima): a força do
-efeito se manteve quase idêntica (72,1\% de significância contra 72,3\% da versão
-contemporânea, 95,2\% de sinal positivo nos dois casos) --- evidência de que o efeito não era um
-artefato mecânico de usar a mesma foto de carteira duas vezes. A versão defasada passou a ser a
-especificação oficial deste trabalho.
-
 O erro dessa etapa, $e_{i,n,t} = \text{peso}_{i,n,t} - g(x_{i,n,t}'\theta_{n,t})$, mede o quanto
 a posição observada de um fundo se afasta do que suas próprias características explicam,
 \emph{dentro} do mesmo mês. Por construção da máxima verossimilhança, a média desse erro é
@@ -243,58 +234,47 @@ percentual entre os dois RMSEs (\textbf{margem}) responde à pergunta central: o
 estimado com dados antigos ainda ajuda a prever dados novos, ou uma previsão ingênua seria tão
 boa quanto?
 
-\FloatBarrier
-\subsection{Extensões}
-
-O procedimento --- Etapas 1 a 3 --- é aplicado a todas as gestoras do universo CVM e a todas as
-ações que essas gestoras carregam, repetindo a equação~\eqref{eq:cs} célula por célula de
-ativo-mês. A Etapa 3 é igualmente generalizada: o índice de ativo $n$ e o horizonte $h$ são
-explícitos na equação~\eqref{eq:pa}, permitindo agregar o erro fora da amostra por gestora, por
-ativo e por horizonte de previsão simultaneamente.
-
 % ======================================================================
 \section{Resultados}
 \label{sec:resultados}
 
-Toda esta seção usa a base multiativo já limpa, em dois passos a partir dos 2.347 fundos da
-Tabela~\ref{tab:amostra}: (1) 597 fundo-mês (73 fundos) com soma de peso $>105\%$ do patrimônio
---- erro de reporte identificado na CDA da CVM, não deste trabalho --- excluídos antes de
-qualquer regressão, restando 2.343 fundos; (2) mais 211.441 linhas (2,6\%, 47 fundos) sem
-$\text{HHI}_{\text{resto}}$ disponível (sem dado de carteira no mês anterior --- tipicamente
-fundo novo), exigido junto com as outras 5 características. Resultado: \textbf{2.296 fundos, 40
-grupos de gestora, 501 ativos, 8.013.407 observações de fundo-ativo-mês} --- uma única base do
-início ao fim, diferente de versões anteriores deste documento. (Um grupo de gestora, Legacy
-Capital, tinha um único fundo cobrindo justamente o intervalo perdido pela exigência do HHI
-defasado, e por isso não aparece mais em nenhuma tabela desta seção.)
+Toda esta seção usa a base final da Tabela~\ref{tab:amostra} (2.502 fundos, 41 grupos de
+gestora, 512 ativos, 8.154.818 observações, 60 meses) --- uma única base do início ao fim. A
+Etapa 1 é estimada célula a célula (ativo, mês), com exigência mínima de 15 fundos holders por
+célula; um grupo de gestora, Legacy Capital, tinha um único fundo cobrindo justamente o intervalo
+que essa exigência de célula (junto com a disponibilidade de $\text{HHI}_{\text{resto}}$) acaba
+excluindo, e por isso não aparece mais em nenhuma tabela desta seção --- resultado:
+\textbf{2.499 fundos, 40 grupos de gestora, 430 ativos com célula estimada, 8.137.786
+observações}.
 
 \FloatBarrier
 \subsection{Etapa 1: cross-section}
 
-O modelo (equação~\eqref{eq:cs}) é estimado célula a célula (ativo, mês); 13.697 células
+O modelo (equação~\eqref{eq:cs}) é estimado célula a célula (ativo, mês); 13.711 células
 convergiram (18 não convergiram, excluídas). A Tabela~\ref{tab:theta} resume o coeficiente
 padronizado (log-odds) e a Tabela~\ref{tab:ape} o efeito marginal médio (APE, pontos percentuais)
-de cada característica, entre as 13.697 células.
+de cada característica, entre as 13.711 células.
 
 \begin{table}[h]\centering\small
 \caption{Coeficiente padronizado (log-odds) de cada característica, mediana e \% de células com
-sinal positivo, entre 13.697 células (ativo, mês). Fonte: script
+sinal positivo, entre 13.711 células (ativo, mês). Fonte: script
 \texttt{99\_pipeline\_hhi\_lag\_etapa1.R} $\to$ \texttt{theta\_multiativo.csv}.}
 \label{tab:theta}
 \begin{tabular}{@{}lrr@{}}
 \toprule
 Característica & Mediana & \% de células positivo \\
 \midrule
-Tamanho ($\theta^{aum}$) & $-0{,}0154$ & $47{,}4\%$ \\
-Cotistas ($\theta^{cot}$) & $0{,}1211$ & $70{,}6\%$ \\
-Fundo de cotas ($\theta^{fic}$) & $0{,}0171$ & $51{,}4\%$ \\
-Fluxo/AUM ($\theta^{flow}$) & $0{,}0534$ & $54{,}0\%$ \\
-Beta do fundo ($\theta^{bf}$) & $0{,}7283$ & $85{,}5\%$ \\
-$\text{HHI}_{\text{resto}}$ ($\theta^{hhi}$) & $0{,}4774$ & $86{,}5\%$ \\
+Tamanho ($\theta^{aum}$) & $-0{,}0315$ & $44{,}0\%$ \\
+Cotistas ($\theta^{cot}$) & $0{,}1254$ & $72{,}3\%$ \\
+Fundo de cotas ($\theta^{fic}$) & $-0{,}0226$ & $48{,}2\%$ \\
+Fluxo/AUM ($\theta^{flow}$) & $0{,}0368$ & $53{,}1\%$ \\
+Beta do fundo ($\theta^{bf}$) & $0{,}7847$ & $87{,}7\%$ \\
+$\text{HHI}_{\text{resto}}$ ($\theta^{hhi}$) & $0{,}4234$ & $87{,}1\%$ \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Pseudo-$R^2$ de McFadden médio (com piso em $-1$, ver nota do script): $0{,}525$.
-$\text{HHI}_{\text{resto}}$ é significativo ($|t|>1{,}96$) em $72{,}1\%$ das células ($9.874$ de
-$13.697$), com sinal positivo em $95{,}2\%$ dos casos significativos --- concentrar o restante da
+\caption*{\footnotesize Pseudo-$R^2$ de McFadden médio (com piso em $-1$, ver nota do script): $0{,}531$.
+$\text{HHI}_{\text{resto}}$ é significativo ($|t|>1{,}96$) em $73{,}6\%$ das células ($10.089$ de
+$13.711$), com sinal positivo em $95{,}5\%$ dos casos significativos --- concentrar o restante da
 carteira no mês anterior aumenta a probabilidade de concentrar também no ativo-alvo este mês.}
 \end{table}
 
@@ -306,18 +286,18 @@ Fonte: script \texttt{99\_pipeline\_hhi\_lag\_etapa1.R} $\to$ \texttt{theta\_mul
 \toprule
 Característica & Mediana (p.p.) & \% de células positivo \\
 \midrule
-Tamanho & $-0{,}0001\%$ & $47{,}4\%$ \\
-Cotistas & $0{,}0092\%$ & $70{,}6\%$ \\
-Fundo de cotas & $0{,}0001\%$ & $51{,}4\%$ \\
-Fluxo/AUM & $0{,}0032\%$ & $54{,}0\%$ \\
-Beta do fundo & $0{,}0988\%$ & $85{,}5\%$ \\
-$\text{HHI}_{\text{resto}}$ & $0{,}0488\%$ & $86{,}5\%$ \\
+Tamanho & $-0{,}0008\%$ & $44{,}0\%$ \\
+Cotistas & $0{,}0128\%$ & $72{,}3\%$ \\
+Fundo de cotas & $-0{,}0004\%$ & $48{,}2\%$ \\
+Fluxo/AUM & $0{,}0027\%$ & $53{,}0\%$ \\
+Beta do fundo & $0{,}1331\%$ & $87{,}6\%$ \\
+$\text{HHI}_{\text{resto}}$ & $0{,}0531\%$ & $87{,}1\%$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas do erro $e$, Etapa 1, 7.997.296 observações. Fonte: script
+\caption{Estatísticas do erro $e$, Etapa 1, 8.137.786 observações. Fonte: script
 \texttt{99\_pipeline\_hhi\_lag\_etapa1.R} $\to$ \texttt{erro\_e\_multiativo.csv}.}
 \label{tab:erro-e}
 \begin{tabular}{@{}lr@{}}
@@ -325,28 +305,28 @@ $\text{HHI}_{\text{resto}}$ & $0{,}0488\%$ & $86{,}5\%$ \\
 Estatística & Valor \\
 \midrule
 Média & $0{,}000000$ \\
-Desvio-padrão & $0{,}0104$ \\
-Mediana & $-0{,}0003$ \\
-Mínimo / Máximo & $-0{,}660$ / $0{,}982$ \\
-\% de observações com $e>0$ & $26{,}2\%$ \\
-Assimetria & $6{,}62$ \\
-Curtose & $396{,}37$ (normal $=3$) \\
-Previsões fora de $[0,1]$ & $0$ de $7.997.296$ \\
+Desvio-padrão & $0{,}0116$ \\
+Mediana & $-0{,}0004$ \\
+Mínimo / Máximo & $-0{,}688$ / $0{,}985$ \\
+\% de observações com $e>0$ & $25{,}6\%$ \\
+Assimetria & $12{,}18$ \\
+Curtose & $808{,}39$ (normal $=3$) \\
+Previsões fora de $[0,1]$ & $0$ de $8.137.786$ \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize Assimetria/curtose bem mais altas que na versão de 1 ativo (VALE3--Itaú)
---- esperado: a base multiativo mistura 501 ativos de liquidez e perfil muito diferentes numa
-única distribuição agregada.}
+\caption*{\footnotesize Assimetria/curtose altas por construção: a base mistura 512 ativos de
+liquidez e perfil muito diferentes numa única distribuição agregada, dominada por posições
+pequenas/residuais e algumas concentrações extremas.}
 \end{table}
 
 \FloatBarrier
 \subsection{Etapa 2: ajuste parcial}
 
 $\lambda$ (equação~\eqref{eq:pa}) estimado por MQO \emph{pooled}, todos os pares de meses
-consecutivos, toda a amostra: $\widehat\lambda = 0{,}0785$.
+consecutivos, toda a amostra: $\widehat\lambda = 0{,}0677$.
 
 \begin{table}[h]\centering\small
-\caption{Estatísticas do erro $u$, Etapa 2, 7.262.533 pares de meses consecutivos. Fonte: script
+\caption{Estatísticas do erro $u$, Etapa 2, 7.388.879 pares de meses consecutivos. Fonte: script
 \texttt{98\_etapa1\_etapa2\_stats\_multiativo.R} $\to$ \texttt{erro\_u\_multiativo.csv}.}
 \label{tab:erro-u}
 \begin{tabular}{@{}lr@{}}
@@ -354,12 +334,12 @@ consecutivos, toda a amostra: $\widehat\lambda = 0{,}0785$.
 Estatística & Valor \\
 \midrule
 Média & $-0{,}00004$ \\
-Desvio-padrão & $0{,}0043$ \\
+Desvio-padrão & $0{,}0044$ \\
 Mediana & $0{,}0000$ \\
-Mínimo / Máximo & $-0{,}612$ / $0{,}592$ \\
-\% de observações com $u>0$ & $33{,}5\%$ \\
-Assimetria & $0{,}63$ \\
-Curtose & $541{,}36$ (normal $=3$) \\
+Mínimo / Máximo & $-0{,}893$ / $0{,}592$ \\
+\% de observações com $u>0$ & $33{,}6\%$ \\
+Assimetria & $-1{,}71$ \\
+Curtose & $963{,}33$ (normal $=3$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -368,58 +348,49 @@ Curtose & $541{,}36$ (normal $=3$) \\
 \subsection{Etapa 3: esquema fora da amostra}
 
 $\lambda_h$ (equação~\eqref{eq:oos}) estimado só em treino ($<$jan/2020), aplicado fixo ao teste
-(jan/2020--dez/2021). A Tabela~\ref{tab:oos-agregado} traz o RMSE agregado nos 4 horizontes, e
-compara diretamente o modelo com 6 características (com $\text{HHI}_{\text{resto}}$) contra a
-versão anterior de 5 características.
+(jan/2020--dez/2021). A Tabela~\ref{tab:oos-agregado} traz o RMSE agregado nos 4 horizontes.
 
 \begin{table}[h]\centering\small
-\caption{RMSE fora da amostra, ajuste parcial vs.\ previsão ingênua, 4 horizontes --- HHI
-defasado (oficial) vs.\ as duas versões anteriores. Fonte: script
+\caption{RMSE fora da amostra, ajuste parcial vs.\ previsão ingênua, 4 horizontes. Fonte: script
 \texttt{99\_pipeline\_hhi\_lag\_etapa1.R}.}
 \label{tab:oos-agregado}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
 & $h=1$ & $h=3$ & $h=6$ & $h=12$ \\
 \midrule
-RMSE ajuste parcial (6 caract., HHI defasado) & $0{,}003817$ & $0{,}005543$ & $0{,}006730$ & $0{,}008104$ \\
-RMSE previsão ingênua & $0{,}003882$ & $0{,}005741$ & $0{,}007097$ & $0{,}008735$ \\
-Razão ajuste/ingênua & $0{,}9833$ & $0{,}9656$ & $0{,}9483$ & $0{,}9278$ \\
-\midrule
-RMSE ajuste parcial (5 características, sem HHI) & $0{,}003859$ & $0{,}005619$ & --- & --- \\
-RMSE ajuste parcial (6 caract., HHI contemporâneo) & $0{,}003856$ & $0{,}005610$ & --- & --- \\
-Variação, defasado vs.\ 5 características & $-1{,}09\%$ & $-1{,}35\%$ & --- & --- \\
-Variação, defasado vs.\ contemporâneo & $-1{,}01\%$ & $-1{,}20\%$ & --- & --- \\
+RMSE ajuste parcial & $0{,}003895$ & $0{,}005682$ & $0{,}006924$ & $0{,}008374$ \\
+RMSE previsão ingênua & $0{,}003953$ & $0{,}005860$ & $0{,}007261$ & $0{,}008958$ \\
+Razão ajuste/ingênua & $0{,}9853$ & $0{,}9696$ & $0{,}9536$ & $0{,}9348$ \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize $\lambda_1=0{,}0808$, $\lambda_3=0{,}1689$, $\lambda_6=0{,}2532$,
-$\lambda_{12}=0{,}3855$. A versão defasada de $\text{HHI}_{\text{resto}}$ não só corrige a
-disciplina de defasagem (Seção~\ref{sec:metodologia}) como melhora o RMSE agregado mais que a
-versão contemporânea que a precedeu --- esperado, já que uma característica predeterminada é
-mais útil para um esquema cujo objetivo final é prever fora da amostra.}
+\caption*{\footnotesize $\lambda_1=0{,}0696$, $\lambda_3=0{,}1445$, $\lambda_6=0{,}2170$,
+$\lambda_{12}=0{,}3349$ --- crescente com o horizonte, como esperado (mais tempo, mais da
+distância ao alvo é percorrida). O ajuste parcial vence a previsão ingênua nos 4 horizontes, com
+margem crescente.}
 \end{table}
 
 \begin{table}[h]\centering\small
 \caption{$\lambda$ fixo (treino único) vs.\ janela expansiva (reestimado mês a mês, sem
-vazamento), fora da amostra, $h=1$, base multiativo (6 características, HHI defasado). Fonte:
+vazamento), fora da amostra, $h=1$. Fonte:
 script \texttt{82\_etapa3\_multiativo\_janela\_expansiva.R}.}
 \label{tab:janela_expansiva}
 \begin{tabular}{@{}p{5.2cm}rrr@{}}
 \toprule
 Meses de teste & $\lambda$ fixo & $\lambda$ expansiva \\
 \midrule
-23 & $0{,}9833$ & $0{,}9833$ \\
+23 & $0{,}9854$ & $0{,}9854$ \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Razão RMSE/RMSE ingênua. Ambas as versões vencem a ingênua em 23 dos 23
 meses; correlação de Spearman do ranking de dificuldade por gestora entre as duas versões de
-$\lambda$, 40 gestoras: $1{,}0000$. Confirma a robustez do $\lambda$ fixo já vista na versão
-anterior deste documento.}
+$\lambda$, 40 gestoras: $1{,}0000$. Confirma a robustez do $\lambda$ fixo.}
 \end{table}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_dinamica_erro_gestora_extremos.pdf}
-\caption{Evolução mensal do erro médio fora da amostra ($h=1$), 3 gestoras mais difíceis e 3 mais
-previsíveis (Tabelas~\ref{tab:rmse-gestora}--\ref{tab:margem-gestora}). Fonte: script
+\caption{Evolução mensal do erro médio fora da amostra ($h=1$), 3 gestoras mais difíceis
+(Ibiuna, Guepardo, AZ Quest) e 3 mais previsíveis (TNA, Gávea, Plural) --- extremos de RMSE $h=1$
+(Tabelas~\ref{tab:rmse-gestora}--\ref{tab:margem-gestora}). Fonte: script
 \texttt{74\_figuras\_dinamica\_erro\_tcc.R} $\to$ \texttt{etapa3\_multiativo\_h1.csv}.}
 \end{figure}
 
@@ -432,33 +403,34 @@ desvio-padrão mensal). Esquerda: $h=1$; direita: $h=3$. Fonte: script
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.75\textwidth]{fig_margem_dinamica_mensal.pdf}
-\caption{Margem do ajuste parcial sobre a ingênua, mês a mês ($h=1$: média $1{,}61\%$; $h=3$:
-média $3{,}43\%$). Fonte: script \texttt{75\_figura\_margem\_dinamica.R}.}
+\caption{Margem do ajuste parcial sobre a ingênua, mês a mês ($h=1$: média $1{,}43\%$; $h=3$:
+média $3{,}03\%$). Fonte: script \texttt{75\_figura\_margem\_dinamica.R}.}
 \end{figure}
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.78\textwidth]{fig_trajetoria_fundo_guepardo_jslg3.pdf}
-\caption{Peso real vs.\ previsto ($h=3$), fundo 396303 (Guepardo Investimentos), JSLG3 --- ainda o
-fundo com maior RMSE fora da amostra mesmo com HHI incluído. Desmonte de posição concentrada
-($69{,}5\%\to3{,}8\%$ do patrimônio entre jan/2020 e fev/2020) que o modelo não antecipa. Fonte:
-script \texttt{92\_figura\_trajetoria\_fundo\_v2.R}.}
+\includegraphics[width=0.78\textwidth]{fig_trajetoria_fundo_pior_rmse.pdf}
+\caption{Peso real vs.\ previsto ($h=3$), fundo 406724 (Squadra Investimentos), EQTL3 --- o par
+fundo-ativo de maior RMSE fora da amostra entre os que têm posição de verdade (sem
+posição-poeira). Diferente do exemplo de "desmonte abrupto" da versão anterior deste documento:
+aqui o peso fica persistentemente concentrado (entre $97\%$ e $99{,}9\%$ do patrimônio) ao longo
+de todo o período de teste, e é justamente essa concentração extrema e permanente --- não
+capturada plenamente pelas 6 características --- que o ajuste parcial sistematicamente não
+acerta. Fonte: script \texttt{92\_figura\_trajetoria\_fundo\_v2.R}.}
 \label{fig:trajetoria-fundo}
 \end{figure}
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.95\textwidth]{fig_vies_dinamico_gestora.pdf}
 \caption{Viés médio mensal fora da amostra, com sinal, 3 gestoras mais positivas e 3 mais
-negativas (mín.\ 100 obs.\ de teste). Maior viés positivo: Guepardo ($0{,}00364$), Núcleo Capital
-($0{,}00193$); maior negativo: Daycoval ($-0{,}00061$), Kinea ($-0{,}00033$). Fonte: script
+negativas (mín.\ 100 obs.\ de teste). Maior viés positivo: Guepardo ($0{,}00322$), Núcleo Capital
+($0{,}00165$); maior negativo: Daycoval ($-0{,}00070$), Kinea ($-0{,}00042$). Fonte: script
 \texttt{77\_figura\_vies\_dinamico\_gestora.R}.}
 \label{fig:vies-dinamico}
 \end{figure}
 
 \paragraph{Persistência do viés.} Dividindo os 23 meses de teste ao meio: correlação de
-$0{,}71$ ($R^2=0{,}51$) entre o viés médio de cada gestora nas duas metades (39 gestoras com
-$\geq 50$ observações em cada metade) --- persistente, um pouco menos que na versão sem HHI
-($0{,}80$), consistente com HHI absorvendo parte do que antes aparecia como viés sistemático de
-gestora.
+$0{,}68$ ($R^2=0{,}46$) entre o viés médio de cada gestora nas duas metades (39 gestoras com
+$\geq 50$ observações em cada metade) --- persistente, mas longe de perfeito.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.55\textwidth]{fig_persistencia_vies_gestora.pdf}
@@ -468,12 +440,11 @@ gestora.
 \end{figure}
 
 \paragraph{Correção de viés.} Estimando o viés na 1ª metade e aplicando-o, fixo, à 2ª: RMSE cai de
-$0{,}005642$ para $0{,}005639$ --- melhora de $0{,}05\%$ (era $0{,}07\%$ sem HHI), irrelevante na
-prática.
+$0{,}005679$ para $0{,}005677$ --- melhora de $0{,}03\%$, irrelevante na prática.
 
 \paragraph{Decomposição $\text{RMSE}^2=\text{viés}^2+\text{variância}$.} Em média entre as 40
-gestoras, viés$^2$ explica $0{,}60\%$ do $\text{RMSE}^2$ (mediana $0{,}15\%$; máximo $3{,}87\%$,
-Real Investor). \emph{Pooled} (todas as observações juntas): $0{,}001\%$. A variância domina.
+gestoras, viés$^2$ explica $0{,}45\%$ do $\text{RMSE}^2$ (mediana $0{,}12\%$; máximo $2{,}91\%$,
+Real Investor). \emph{Pooled} (todas as observações juntas): $0{,}000\%$. A variância domina.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig_decomposicao_vies_variancia.pdf}
@@ -483,9 +454,9 @@ script \texttt{86\_decomposicao\_e\_persistencia\_variancia.R}.}
 \end{figure}
 
 \paragraph{Persistência da variância.} Correlação de $0{,}86$ ($R^2=0{,}74$) entre o
-desvio-padrão do erro na 1ª e na 2ª metade do teste (39 gestoras) --- tão persistente quanto na
-versão sem HHI ($0{,}85$, $R^2=0{,}71$): HHI não absorve a persistência da variância como
-absorveu parte da do viés.
+desvio-padrão do erro na 1ª e na 2ª metade do teste (39 gestoras) --- bem mais persistente que o
+viés (parágrafo anterior): quem é difícil de prever numa metade do teste tende a continuar
+difícil na outra, de forma muito mais estável do que a direção do erro.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.55\textwidth]{fig_persistencia_dp_gestora.pdf}
@@ -500,9 +471,10 @@ fundo-ativo-mês, já dentro da Etapa 1) e $\text{HHI}_{\text{medio}}$ (inclui t
 nível gestora, usado só nesta regressão de diagnóstico --- pergunta diferente: mesmo com HHI já
 formalmente no modelo de peso, a concentração ainda explica erro residual entre gestoras?).
 Correlações bivariadas contra o desvio-padrão do erro por gestora: beta $0{,}48$
-($R^2=0{,}23$), tamanho $0{,}14$ ($R^2=0{,}02$), $\text{HHI}_{\text{medio}}$ $0{,}69$
-($R^2=0{,}47$) --- praticamente idênticas à versão sem HHI na Etapa 1, o que já responde à
-pergunta: sim, ainda explica. Para isolar o efeito de cada característica, a concentração entra
+($R^2=0{,}23$), tamanho $0{,}10$ ($R^2=0{,}01$), $\text{HHI}_{\text{medio}}$ $0{,}62$
+($R^2=0{,}39$) --- mesmo com HHI já formalmente no modelo de peso (Etapa 1), a concentração ainda
+explica bastante do erro residual entre gestoras. Para isolar o efeito de cada característica, a
+concentração entra
 numa regressão múltipla junto com as 5 características não-HHI da Etapa 1, todas medidas só no
 período de treino (predeterminadas em relação ao $\text{dp}(\text{erro})_g$, medido só no
 período de teste):
@@ -531,24 +503,24 @@ $\text{HHI}_{\text{medio}}$, todas do período de treino. 40 gestoras. Fonte: sc
 \toprule
 Variável & Coeficiente & $t$ & Sig. \\
 \midrule
-Intercepto ($\alpha$) & $-0{,}0143$ & $-1{,}29$ & n.s. \\
-Beta médio do fundo & $0{,}0020$ & $0{,}82$ & n.s. \\
-Tamanho médio, log AUM & $0{,}0010$ & $1{,}53$ & n.s. \\
-Cotistas médio, log & $0{,}000003$ & $0{,}01$ & n.s. \\
-\% FIC & $-0{,}0005$ & $-0{,}29$ & n.s. \\
-Fluxo/AUM médio & $-0{,}0094$ & $-1{,}42$ & n.s. \\
-$\text{HHI}_{\text{medio}}$ & $0{,}0832$ & $4{,}17$ & *** \\
+Intercepto ($\alpha$) & $-0{,}0132$ & $-1{,}11$ & n.s. \\
+Beta médio do fundo & $0{,}0025$ & $0{,}91$ & n.s. \\
+Tamanho médio, log AUM & $0{,}0009$ & $1{,}35$ & n.s. \\
+Cotistas médio, log & $-0{,}00004$ & $-0{,}06$ & n.s. \\
+\% FIC & $-0{,}0004$ & $-0{,}19$ & n.s. \\
+Fluxo/AUM médio & $-0{,}0089$ & $-1{,}28$ & n.s. \\
+$\text{HHI}_{\text{medio}}$ & $0{,}0667$ & $3{,}27$ & ** \\
 \midrule
-$R^2$ & \multicolumn{3}{r}{$0{,}550$} \\
+$R^2$ & \multicolumn{3}{r}{$0{,}466$} \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize $^{***}p<0{,}1\%$; n.s.\ = não significativo a $5\%$. Praticamente idêntica
-à versão sem HHI na Etapa 1 ($R^2=0{,}54$, mesmo coeficiente/$t$ do HHI): HHI já estar na Etapa 1
-não elimina seu poder explicativo aqui --- são perguntas diferentes.}
+\caption*{\footnotesize $^{**}p<1\%$; n.s.\ = não significativo a $5\%$. HHI já estar formalmente
+na Etapa 1 não elimina seu poder explicativo aqui --- são perguntas diferentes (a Etapa 1 explica
+o \emph{peso}; esta regressão explica o \emph{erro} de gestoras inteiras).}
 \end{table}
 
 \paragraph{Concentração no nível fundo-mês.} Refinando para o nível fundo-mês (não mais média por
-gestora): correlação contemporânea $0{,}42$ (Spearman $0{,}80$), defasada (mês $t-1$) $0{,}44$
+gestora): correlação contemporânea $0{,}48$ (Spearman $0{,}80$), defasada (mês $t-1$) $0{,}49$
 (Spearman $0{,}80$) --- quase idênticas, afastando coincidência de mesmo mês --- e dentro do
 fundo (demeaned) $0{,}06$ (Spearman $0{,}10$): a concentração é, sobretudo, um traço que
 diferencia fundos entre si, não um sinal de curto prazo dentro do mesmo fundo.
@@ -563,8 +535,8 @@ contemporânea; (B) defasada; (C) dentro do fundo. Fonte: script
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig_beta_vs_erro.pdf}
-\caption{Beta médio do fundo vs.\ RMSE fora da amostra, 1.912 fundos ($\geq 6$ obs.\ de teste,
-peso mediano $\geq 0{,}1\%$). $R^2=0{,}23$ (coef.\ $0{,}00742$, $p<10^{-100}$). Fonte: script
+\caption{Beta médio do fundo vs.\ RMSE fora da amostra, 2.033 fundos ($\geq 6$ obs.\ de teste,
+peso mediano $\geq 0{,}1\%$). $R^2=0{,}21$ (coef.\ $0{,}00739$, $p<10^{-100}$). Fonte: script
 \texttt{78\_figura\_beta\_vs\_erro.R}.}
 \label{fig:beta-erro}
 \end{figure}
@@ -573,7 +545,7 @@ peso mediano $\geq 0{,}1\%$). $R^2=0{,}23$ (coef.\ $0{,}00742$, $p<10^{-100}$). 
 \includegraphics[width=0.75\textwidth]{fig_ranking_horizontes_slopegraph.pdf}
 \caption{Estabilidade do ranking de dificuldade por gestora entre horizontes, 40 gestoras (todas
 com dado completo nos 4 horizontes). Spearman: $0{,}97$ ($h1$–$h3$), $0{,}95$ ($h1$–$h6$),
-$0{,}89$ ($h1$–$h12$), $0{,}98$ ($h3$–$h6$), $0{,}94$ ($h3$–$h12$), $0{,}97$ ($h6$–$h12$). Fonte:
+$0{,}89$ ($h1$–$h12$), $0{,}99$ ($h3$–$h6$), $0{,}95$ ($h3$–$h12$), $0{,}97$ ($h6$–$h12$). Fonte:
 script \texttt{80\_figura\_ranking\_horizontes.R}.}
 \label{fig:ranking-horizontes}
 \end{figure}
@@ -598,46 +570,46 @@ Gestora & Fundos ($h{=}1$) & RMSE $h{=}1$ & RMSE $h{=}3$ & RMSE $h{=}6$ & RMSE $
 \endfoot
 \bottomrule
 \endlastfoot
-Ibiuna Investimentos & 6 & $0{,}01461$ & $0{,}02348$ & $0{,}02742$ & $0{,}03336$ \\
-Guepardo Investimentos & 10 & $0{,}01429$ & $0{,}02322$ & $0{,}03384$ & $0{,}05699$ \\
-AZ Quest & 22 & $0{,}01088$ & $0{,}01449$ & $0{,}01630$ & $0{,}01835$ \\
-Núcleo Capital & 17 & $0{,}01045$ & $0{,}01833$ & $0{,}02504$ & $0{,}03588$ \\
-Squadra Investimentos & 14 & $0{,}01010$ & $0{,}01397$ & $0{,}01698$ & $0{,}02165$ \\
-Forpus Capital & 3 & $0{,}00994$ & $0{,}01291$ & $0{,}01510$ & $0{,}00969$ \\
-Truxt Investimentos & 29 & $0{,}00807$ & $0{,}01254$ & $0{,}01585$ & $0{,}01944$ \\
-Sharp Capital & 34 & $0{,}00789$ & $0{,}01284$ & $0{,}01695$ & $0{,}02112$ \\
-ARX Investimentos & 11 & $0{,}00785$ & $0{,}01082$ & $0{,}01259$ & $0{,}01517$ \\
-Kinea Investimentos & 4 & $0{,}00708$ & $0{,}01152$ & $0{,}01521$ & $0{,}01601$ \\
-Constellation Asset Management & 25 & $0{,}00696$ & $0{,}01386$ & $0{,}01841$ & $0{,}02789$ \\
-Opportunity & 19 & $0{,}00680$ & $0{,}01050$ & $0{,}01342$ & $0{,}01558$ \\
-Atmos Capital & 28 & $0{,}00614$ & $0{,}01000$ & $0{,}01338$ & $0{,}01700$ \\
-SPX Capital & 35 & $0{,}00613$ & $0{,}00911$ & $0{,}01156$ & $0{,}01301$ \\
-Verde Asset Management & 14 & $0{,}00602$ & $0{,}01023$ & $0{,}01299$ & $0{,}01656$ \\
-Absolute Investimentos & 7 & $0{,}00560$ & $0{,}00824$ & $0{,}01049$ & $0{,}01265$ \\
-Daycoval Asset Management & 5 & $0{,}00555$ & $0{,}00724$ & $0{,}00717$ & $0{,}00807$ \\
-JGP & 40 & $0{,}00555$ & $0{,}00775$ & $0{,}00894$ & $0{,}01072$ \\
-Kapitalo Investimentos & 22 & $0{,}00534$ & $0{,}00577$ & $0{,}00690$ & $0{,}00818$ \\
-Bogari Capital & 14 & $0{,}00534$ & $0{,}00933$ & $0{,}01211$ & $0{,}01612$ \\
-Real Investor & 5 & $0{,}00497$ & $0{,}00932$ & $0{,}01427$ & $0{,}01783$ \\
-Credit Suisse & 64 & $0{,}00487$ & $0{,}00669$ & $0{,}00795$ & $0{,}00899$ \\
-Claritas Investimentos & 10 & $0{,}00482$ & $0{,}00704$ & $0{,}00789$ & $0{,}00837$ \\
-Caixa & 27 & $0{,}00462$ & $0{,}00682$ & $0{,}00888$ & $0{,}01140$ \\
-Western Asset & 26 & $0{,}00436$ & $0{,}00697$ & $0{,}00958$ & $0{,}01246$ \\
-Bradesco Asset Management & 270 & $0{,}00425$ & $0{,}00594$ & $0{,}00708$ & $0{,}00844$ \\
-BB Asset Management & 103 & $0{,}00415$ & $0{,}00644$ & $0{,}00808$ & $0{,}00989$ \\
-Vinci Partners & 47 & $0{,}00414$ & $0{,}00628$ & $0{,}00741$ & $0{,}00838$ \\
-Occam Brasil & 26 & $0{,}00412$ & $0{,}00670$ & $0{,}00764$ & $0{,}00996$ \\
-Santander Brasil Asset Management & 70 & $0{,}00389$ & $0{,}00539$ & $0{,}00622$ & $0{,}00724$ \\
-BTG Pactual & 136 & $0{,}00387$ & $0{,}00581$ & $0{,}00678$ & $0{,}00846$ \\
-Safra Asset Management & 135 & $0{,}00331$ & $0{,}00466$ & $0{,}00556$ & $0{,}00621$ \\
-BNP Paribas & 42 & $0{,}00301$ & $0{,}00437$ & $0{,}00538$ & $0{,}00725$ \\
-XP & 81 & $0{,}00291$ & $0{,}00435$ & $0{,}00523$ & $0{,}00722$ \\
-Itaú & 436 & $0{,}00257$ & $0{,}00378$ & $0{,}00459$ & $0{,}00541$ \\
-Julius Baer Family Office & 56 & $0{,}00253$ & $0{,}00348$ & $0{,}00434$ & $0{,}00536$ \\
-Dahlia Capital & 18 & $0{,}00245$ & $0{,}00420$ & $0{,}00545$ & $0{,}00628$ \\
-TNA Gestão Patrimonial & 29 & $0{,}00151$ & $0{,}00218$ & $0{,}00282$ & $0{,}00389$ \\
-Gávea Investimentos & 17 & $0{,}00144$ & $0{,}00265$ & $0{,}00363$ & $0{,}00468$ \\
-Plural & 1 & $0{,}00050$ & $0{,}00081$ & $0{,}00105$ & $0{,}00137$ \\
+Ibiuna Investimentos & 6 & $0{,}01467$ & $0{,}02372$ & $0{,}02767$ & $0{,}03385$ \\
+Guepardo Investimentos & 11 & $0{,}01423$ & $0{,}02302$ & $0{,}03349$ & $0{,}05647$ \\
+AZ Quest & 22 & $0{,}01092$ & $0{,}01463$ & $0{,}01653$ & $0{,}01875$ \\
+Squadra Investimentos & 15 & $0{,}01067$ & $0{,}01580$ & $0{,}02076$ & $0{,}03041$ \\
+Núcleo Capital & 22 & $0{,}01037$ & $0{,}01808$ & $0{,}02466$ & $0{,}03532$ \\
+Forpus Capital & 3 & $0{,}00996$ & $0{,}01295$ & $0{,}01518$ & $0{,}00983$ \\
+Truxt Investimentos & 29 & $0{,}00808$ & $0{,}01259$ & $0{,}01595$ & $0{,}01975$ \\
+Sharp Capital & 34 & $0{,}00788$ & $0{,}01283$ & $0{,}01703$ & $0{,}02132$ \\
+ARX Investimentos & 11 & $0{,}00786$ & $0{,}01084$ & $0{,}01261$ & $0{,}01511$ \\
+Kinea Investimentos & 4 & $0{,}00709$ & $0{,}01157$ & $0{,}01538$ & $0{,}01602$ \\
+Constellation Asset Management & 25 & $0{,}00691$ & $0{,}01373$ & $0{,}01830$ & $0{,}02767$ \\
+Opportunity & 19 & $0{,}00681$ & $0{,}01053$ & $0{,}01350$ & $0{,}01571$ \\
+SPX Capital & 35 & $0{,}00614$ & $0{,}00919$ & $0{,}01176$ & $0{,}01340$ \\
+Atmos Capital & 28 & $0{,}00612$ & $0{,}00998$ & $0{,}01340$ & $0{,}01714$ \\
+Verde Asset Management & 14 & $0{,}00600$ & $0{,}01020$ & $0{,}01296$ & $0{,}01641$ \\
+Absolute Investimentos & 7 & $0{,}00560$ & $0{,}00826$ & $0{,}01054$ & $0{,}01268$ \\
+JGP & 46 & $0{,}00559$ & $0{,}00784$ & $0{,}00903$ & $0{,}01080$ \\
+Daycoval Asset Management & 6 & $0{,}00557$ & $0{,}00730$ & $0{,}00727$ & $0{,}00826$ \\
+Kapitalo Investimentos & 22 & $0{,}00536$ & $0{,}00581$ & $0{,}00693$ & $0{,}00818$ \\
+Bogari Capital & 15 & $0{,}00530$ & $0{,}00924$ & $0{,}01200$ & $0{,}01574$ \\
+Real Investor & 5 & $0{,}00491$ & $0{,}00919$ & $0{,}01401$ & $0{,}01743$ \\
+Caixa & 31 & $0{,}00490$ & $0{,}00744$ & $0{,}00990$ & $0{,}01274$ \\
+Credit Suisse & 65 & $0{,}00489$ & $0{,}00673$ & $0{,}00803$ & $0{,}00915$ \\
+Claritas Investimentos & 10 & $0{,}00482$ & $0{,}00706$ & $0{,}00796$ & $0{,}00851$ \\
+Western Asset & 26 & $0{,}00435$ & $0{,}00696$ & $0{,}00960$ & $0{,}01250$ \\
+Bradesco Asset Management & 299 & $0{,}00434$ & $0{,}00607$ & $0{,}00725$ & $0{,}00865$ \\
+Occam Brasil & 27 & $0{,}00430$ & $0{,}00715$ & $0{,}00831$ & $0{,}01097$ \\
+BB Asset Management & 129 & $0{,}00430$ & $0{,}00667$ & $0{,}00837$ & $0{,}01019$ \\
+Vinci Partners & 47 & $0{,}00414$ & $0{,}00628$ & $0{,}00745$ & $0{,}00857$ \\
+BTG Pactual & 142 & $0{,}00394$ & $0{,}00597$ & $0{,}00706$ & $0{,}00876$ \\
+Santander Brasil Asset Management & 70 & $0{,}00390$ & $0{,}00541$ & $0{,}00625$ & $0{,}00728$ \\
+Safra Asset Management & 154 & $0{,}00358$ & $0{,}00520$ & $0{,}00614$ & $0{,}00698$ \\
+XP & 89 & $0{,}00327$ & $0{,}00477$ & $0{,}00564$ & $0{,}00747$ \\
+BNP Paribas & 44 & $0{,}00323$ & $0{,}00461$ & $0{,}00558$ & $0{,}00736$ \\
+Julius Baer Family Office & 62 & $0{,}00280$ & $0{,}00393$ & $0{,}00485$ & $0{,}00619$ \\
+Itaú & 466 & $0{,}00257$ & $0{,}00380$ & $0{,}00467$ & $0{,}00552$ \\
+Dahlia Capital & 18 & $0{,}00245$ & $0{,}00422$ & $0{,}00549$ & $0{,}00632$ \\
+TNA Gestão Patrimonial & 29 & $0{,}00150$ & $0{,}00216$ & $0{,}00277$ & $0{,}00383$ \\
+Gávea Investimentos & 17 & $0{,}00144$ & $0{,}00266$ & $0{,}00366$ & $0{,}00472$ \\
+Plural & 1 & $0{,}00050$ & $0{,}00079$ & $0{,}00103$ & $0{,}00133$ \\
 \end{longtable}
 \end{center}
 
@@ -661,46 +633,46 @@ Gestora & Margem $h{=}1$ & Margem $h{=}3$ & Margem $h{=}6$ & Margem $h{=}12$ \\
 \endfoot
 \bottomrule
 \endlastfoot
-Ibiuna Investimentos & $3{,}7\%$ & $8{,}1\%$ & $8{,}6\%$ & $15{,}2\%$ \\
-Guepardo Investimentos & $0{,}8\%$ & $0{,}3\%$ & $-0{,}9\%$ & $-2{,}2\%$ \\
-AZ Quest & $3{,}4\%$ & $7{,}5\%$ & $10{,}6\%$ & $16{,}7\%$ \\
-Núcleo Capital & $-1{,}6\%$ & $-3{,}2\%$ & $-3{,}4\%$ & $-7{,}5\%$ \\
-Squadra Investimentos & $0{,}5\%$ & $0{,}0\%$ & $-1{,}0\%$ & $-3{,}0\%$ \\
-Forpus Capital & $2{,}4\%$ & $5{,}0\%$ & $8{,}4\%$ & $19{,}1\%$ \\
-Truxt Investimentos & $1{,}8\%$ & $4{,}1\%$ & $6{,}4\%$ & $14{,}2\%$ \\
-Sharp Capital & $1{,}4\%$ & $4{,}3\%$ & $8{,}6\%$ & $15{,}7\%$ \\
-ARX Investimentos & $2{,}1\%$ & $4{,}4\%$ & $7{,}0\%$ & $7{,}5\%$ \\
-Kinea Investimentos & $1{,}8\%$ & $4{,}0\%$ & $9{,}0\%$ & $9{,}9\%$ \\
-Constellation Asset Management & $-0{,}9\%$ & $-0{,}2\%$ & $2{,}3\%$ & $3{,}3\%$ \\
-Opportunity & $1{,}6\%$ & $4{,}0\%$ & $6{,}7\%$ & $10{,}3\%$ \\
-Atmos Capital & $-0{,}0\%$ & $2{,}7\%$ & $5{,}2\%$ & $12{,}4\%$ \\
-SPX Capital & $2{,}9\%$ & $7{,}3\%$ & $11{,}9\%$ & $20{,}1\%$ \\
-Verde Asset Management & $0{,}4\%$ & $1{,}4\%$ & $2{,}9\%$ & $-1{,}1\%$ \\
-Absolute Investimentos & $1{,}5\%$ & $3{,}3\%$ & $5{,}5\%$ & $4{,}9\%$ \\
-Daycoval Asset Management & $3{,}2\%$ & $6{,}4\%$ & $9{,}2\%$ & $14{,}6\%$ \\
-JGP & $2{,}3\%$ & $4{,}2\%$ & $5{,}0\%$ & $8{,}4\%$ \\
-Kapitalo Investimentos & $3{,}0\%$ & $6{,}3\%$ & $7{,}5\%$ & $8{,}0\%$ \\
-Bogari Capital & $-1{,}1\%$ & $-0{,}6\%$ & $-0{,}0\%$ & $-5{,}6\%$ \\
-Real Investor & $-2{,}6\%$ & $-0{,}2\%$ & $0{,}6\%$ & $6{,}0\%$ \\
-Credit Suisse & $2{,}5\%$ & $5{,}0\%$ & $8{,}5\%$ & $15{,}2\%$ \\
-Claritas Investimentos & $1{,}7\%$ & $6{,}3\%$ & $11{,}3\%$ & $19{,}5\%$ \\
-Caixa & $1{,}8\%$ & $4{,}2\%$ & $7{,}0\%$ & $9{,}7\%$ \\
-Western Asset & $1{,}0\%$ & $3{,}1\%$ & $5{,}5\%$ & $5{,}9\%$ \\
-Bradesco Asset Management & $2{,}0\%$ & $3{,}7\%$ & $4{,}8\%$ & $4{,}3\%$ \\
-BB Asset Management & $1{,}1\%$ & $2{,}7\%$ & $3{,}8\%$ & $5{,}0\%$ \\
-Vinci Partners & $0{,}8\%$ & $3{,}1\%$ & $7{,}1\%$ & $19{,}5\%$ \\
-Occam Brasil & $2{,}3\%$ & $4{,}9\%$ & $8{,}1\%$ & $10{,}7\%$ \\
-Santander Brasil Asset Management & $2{,}1\%$ & $4{,}3\%$ & $5{,}7\%$ & $7{,}3\%$ \\
-BTG Pactual & $1{,}4\%$ & $2{,}7\%$ & $3{,}9\%$ & $4{,}4\%$ \\
-Safra Asset Management & $2{,}0\%$ & $3{,}2\%$ & $5{,}7\%$ & $8{,}5\%$ \\
-BNP Paribas & $0{,}0\%$ & $-1{,}1\%$ & $-3{,}4\%$ & $-7{,}1\%$ \\
-XP & $-3{,}1\%$ & $-6{,}5\%$ & $-9{,}8\%$ & $-11{,}7\%$ \\
-Itaú & $2{,}0\%$ & $4{,}6\%$ & $6{,}6\%$ & $8{,}4\%$ \\
-Julius Baer Family Office & $1{,}5\%$ & $3{,}0\%$ & $4{,}5\%$ & $6{,}6\%$ \\
-Dahlia Capital & $2{,}4\%$ & $5{,}7\%$ & $8{,}6\%$ & $10{,}6\%$ \\
-TNA Gestão Patrimonial & $-0{,}3\%$ & $-1{,}8\%$ & $-2{,}2\%$ & $1{,}0\%$ \\
-Gávea Investimentos & $2{,}1\%$ & $4{,}3\%$ & $8{,}5\%$ & $11{,}1\%$ \\
-Plural & $-3{,}3\%$ & $-5{,}2\%$ & $-4{,}5\%$ & $-8{,}3\%$ \\
+Ibiuna Investimentos & $3{,}3\%$ & $7{,}2\%$ & $7{,}7\%$ & $14{,}0\%$ \\
+Guepardo Investimentos & $1{,}2\%$ & $1{,}1\%$ & $0{,}2\%$ & $-1{,}3\%$ \\
+AZ Quest & $3{,}1\%$ & $6{,}6\%$ & $9{,}3\%$ & $14{,}9\%$ \\
+Squadra Investimentos & $-5{,}2\%$ & $-13{,}1\%$ & $-23{,}5\%$ & $-44{,}8\%$ \\
+Núcleo Capital & $-0{,}9\%$ & $-1{,}9\%$ & $-1{,}9\%$ & $-5{,}6\%$ \\
+Forpus Capital & $2{,}2\%$ & $4{,}7\%$ & $7{,}9\%$ & $17{,}9\%$ \\
+Truxt Investimentos & $1{,}7\%$ & $3{,}7\%$ & $5{,}8\%$ & $12{,}9\%$ \\
+Sharp Capital & $1{,}6\%$ & $4{,}4\%$ & $8{,}2\%$ & $14{,}9\%$ \\
+ARX Investimentos & $2{,}0\%$ & $4{,}3\%$ & $6{,}8\%$ & $7{,}8\%$ \\
+Kinea Investimentos & $1{,}7\%$ & $3{,}6\%$ & $8{,}0\%$ & $9{,}8\%$ \\
+Constellation Asset Management & $-0{,}1\%$ & $0{,}7\%$ & $2{,}9\%$ & $4{,}0\%$ \\
+Opportunity & $1{,}6\%$ & $3{,}8\%$ & $6{,}2\%$ & $9{,}6\%$ \\
+SPX Capital & $2{,}6\%$ & $6{,}4\%$ & $10{,}4\%$ & $17{,}7\%$ \\
+Atmos Capital & $0{,}2\%$ & $2{,}9\%$ & $5{,}1\%$ & $11{,}6\%$ \\
+Verde Asset Management & $0{,}6\%$ & $1{,}7\%$ & $3{,}1\%$ & $-0{,}2\%$ \\
+Absolute Investimentos & $1{,}4\%$ & $3{,}1\%$ & $5{,}0\%$ & $4{,}6\%$ \\
+JGP & $2{,}1\%$ & $3{,}9\%$ & $4{,}8\%$ & $7{,}7\%$ \\
+Daycoval Asset Management & $2{,}8\%$ & $5{,}5\%$ & $7{,}9\%$ & $12{,}3\%$ \\
+Kapitalo Investimentos & $2{,}7\%$ & $5{,}8\%$ & $7{,}0\%$ & $8{,}0\%$ \\
+Bogari Capital & $-0{,}4\%$ & $0{,}3\%$ & $0{,}9\%$ & $-3{,}1\%$ \\
+Real Investor & $-1{,}4\%$ & $1{,}2\%$ & $2{,}4\%$ & $8{,}1\%$ \\
+Caixa & $1{,}6\%$ & $3{,}6\%$ & $6{,}0\%$ & $8{,}4\%$ \\
+Credit Suisse & $2{,}3\%$ & $4{,}5\%$ & $7{,}6\%$ & $13{,}7\%$ \\
+Claritas Investimentos & $1{,}8\%$ & $6{,}0\%$ & $10{,}5\%$ & $18{,}2\%$ \\
+Western Asset & $1{,}2\%$ & $3{,}1\%$ & $5{,}3\%$ & $5{,}7\%$ \\
+Bradesco Asset Management & $1{,}8\%$ & $3{,}4\%$ & $4{,}5\%$ & $4{,}4\%$ \\
+Occam Brasil & $1{,}8\%$ & $4{,}0\%$ & $6{,}7\%$ & $9{,}6\%$ \\
+BB Asset Management & $0{,}9\%$ & $2{,}1\%$ & $3{,}2\%$ & $3{,}7\%$ \\
+Vinci Partners & $0{,}9\%$ & $3{,}1\%$ & $6{,}6\%$ & $17{,}6\%$ \\
+BTG Pactual & $1{,}0\%$ & $1{,}8\%$ & $2{,}7\%$ & $4{,}4\%$ \\
+Santander Brasil Asset Management & $1{,}9\%$ & $3{,}9\%$ & $5{,}2\%$ & $6{,}8\%$ \\
+Safra Asset Management & $1{,}9\%$ & $3{,}5\%$ & $6{,}4\%$ & $9{,}7\%$ \\
+XP & $-1{,}5\%$ & $-3{,}3\%$ & $-4{,}3\%$ & $-4{,}4\%$ \\
+BNP Paribas & $0{,}5\%$ & $0{,}1\%$ & $-1{,}3\%$ & $-4{,}6\%$ \\
+Julius Baer Family Office & $0{,}9\%$ & $3{,}3\%$ & $6{,}4\%$ & $9{,}8\%$ \\
+Itaú & $1{,}9\%$ & $4{,}2\%$ & $6{,}1\%$ & $8{,}0\%$ \\
+Dahlia Capital & $2{,}3\%$ & $5{,}2\%$ & $7{,}9\%$ & $10{,}0\%$ \\
+TNA Gestão Patrimonial & $0{,}2\%$ & $-0{,}7\%$ & $-0{,}6\%$ & $2{,}5\%$ \\
+Gávea Investimentos & $2{,}2\%$ & $4{,}2\%$ & $7{,}8\%$ & $10{,}3\%$ \\
+Plural & $-2{,}2\%$ & $-3{,}3\%$ & $-2{,}4\%$ & $-5{,}6\%$ \\
 \end{longtable}
 \end{center}
 
@@ -710,6 +682,13 @@ Plural & $-3{,}3\%$ & $-5{,}2\%$ & $-4{,}5\%$ & $-8{,}3\%$ \\
 eixo $y$; negativo = ajuste parcial piora). Fonte: script
 \texttt{45\_fig\_multihorizonte\_gestora\_rmse\_margem.R}.}
 \end{figure}
+
+Squadra Investimentos é o único caso em que o ajuste parcial \textbf{piora} a previsão em relação
+à ingênua de forma expressiva e crescente com o horizonte ($-5{,}2\%$ em $h=1$ a $-44{,}8\%$ em
+$h=12$, Tabela~\ref{tab:margem-gestora}) --- puxado justamente pelo fundo 406724, o par
+fundo-ativo de maior RMSE de toda a amostra (Figura~\ref{fig:trajetoria-fundo}): sua concentração
+extrema e persistente em EQTL3 faz o modelo prever repetidamente uma reversão à média que nunca
+acontece, e o erro se acumula a cada horizonte mais longo.
 
 % ======================================================================
 \FloatBarrier
@@ -724,29 +703,15 @@ esta base de resultados nunca tinha sido usada para responder: será que esse pa
 em sinal de fluxo previsto, prediz retorno futuro do ativo? Um achado é validado; o outro,
 testado e rejeitado, honestamente relatado como tal.
 
-Duas mudanças de desenho em relação às Etapas 1--3: (i) o universo deixa de ser ancorado em
-VALE3 --- passa a incluir todo fundo brasileiro com posição em ações entre 2016 e 2021, não só
-os que já tiveram VALE3; (ii) a variação de peso é corrigida do efeito mecânico do preço
-(dividendos, desdobramentos), para isolar negociação ativa de valorização passiva. A
-especificação da Etapa 1 é a mesma da Seção~\ref{sec:metodologia}, com as seis características
-completas (incluindo $\text{HHI}_{\text{resto}}$ defasado, equação~\eqref{eq:hhi-resto}).
+A base é a mesma da Seção~\ref{sec:resultados} (mesma especificação de 6 características,
+equações~\eqref{eq:cs}, \eqref{eq:hhi-resto}, \eqref{eq:pa} e~\eqref{eq:oos}) --- não há mais
+nada a generalizar aqui. Esta seção acrescenta uma única mudança de desenho: a variação de peso é
+corrigida do efeito mecânico do preço (dividendos, desdobramentos), para isolar negociação ativa
+de valorização passiva. Preço disponível para 519 dos 536 ativos do universo bruto (96,8\%;
+99,65\% do peso agregado).
 
 \FloatBarrier
-\subsection{Universo completo e correção de efeito mecânico}
-
-\begin{table}[h]\centering\small
-\caption{Universo ancorado em VALE3 (Seção~\ref{sec:dados}) vs.\ universo completo. Fonte:
-scripts \texttt{50}--\texttt{58} $\to$ \texttt{painel\_universo\_completo\_final.csv}.}
-\begin{tabular}{@{}lrr@{}}
-\toprule
- & Ancorado (VALE3) & Completo \\
-\midrule
-Fundos & 2.820 & 3.254 \\
-Ativos & 501 & 536 \\
-Ativos com preço (cobertura) & --- & 519 (96,8\%; 99,65\% do peso) \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection{Correção de efeito mecânico do preço}
 
 O peso observado mistura negociação ativa com valorização pura do preço --- um fundo que não
 faz nada pode ver seu peso num ativo subir só porque o preço subiu mais que o resto da
@@ -768,35 +733,6 @@ desdobramento/grupamento de cota não ajustado em alguns fundos (ex.: fundo 3321
 R\$2,00$\to$R\$0,0375 em dez/2018, volta a crescer normalmente dali --- não é perda real); e
 retorno de fundo ou ativo com $<-90\%$ ou $>200\%$ num único mês, excluído só da correção
 mecânica (não do resto da amostra).
-
-\FloatBarrier
-\subsection{Etapas 1--3 no universo completo}
-
-Mesma especificação da Seção~\ref{sec:metodologia} (equações~\eqref{eq:cs},
-\eqref{eq:hhi-resto}, \eqref{eq:pa} e~\eqref{eq:oos}, 6 características, incluindo
-$\text{HHI}_{\text{resto}}$), agora estimada no universo completo.
-
-\begin{table}[h]\centering\small
-\caption{Etapa 1: ancorado vs.\ completo. Fonte: script
-\texttt{101\_cross\_section\_universo\_completo\_hhi.R} $\to$ \texttt{theta\_universo\_completo.csv}
-(coluna Ancorado a partir de \texttt{theta\_multiativo.csv}, script~\texttt{99}).}
-\begin{tabular}{@{}lrr@{}}
-\toprule
- & Ancorado & Completo \\
-\midrule
-Ativos com $\geq$24 meses estimados & 233 & 233 \\
-Beta do fundo, \% mesmo sinal que VALE3 & 91,8\% & 92,3\% \\
-Pseudo-$R^2$ médio & 0,5245 & 0,5311 \\
-Células (ativo, mês) estimadas & 13.697 & 13.712 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Beta do fundo continua sendo a característica que mais generaliza entre ativos --- não é
-artefato da amostra restrita a VALE3. $\text{HHI}_{\text{resto}}$ é significativo em 73,6\% das
-células e positivo em 95,5\% delas quando significativo, e o pseudo-$R^2$ médio sobe de 0,449
-(especificação de 5 características, sem HHI) para 0,531 --- mesmo padrão de ganho de ajuste já
-documentado na Seção~\ref{sec:resultados}.
 
 \begin{table}[h]\centering\small
 \caption{Etapa 2: $\lambda$ (equação~\eqref{eq:pa}) bruto vs.\ com correção mecânica, MQO
@@ -1035,50 +971,30 @@ resultado, não escondido: um achado positivo (existe replicação) não implica
 achado positivo seguinte (dá para lucrar com isso) --- e este trabalho testou os dois,
 separadamente, em vez de assumir que o segundo decorre do primeiro.
 
-\paragraph{Nota sobre qualidade de dado.} A base desta seção (universo completo, 3.254 fundos)
-recebeu, em 12/08/2026, a mesma limpeza de contaminação de soma de peso $>105\%$ já aplicada à
-base multiativo (Seção~\ref{sec:resultados}): 1.072 fundo-mês (207 fundos) excluídos antes de
-qualquer regressão --- 98 desses fundos nunca tinham sido auditados antes, por só existirem
-neste universo mais amplo (fora do universo ancorado em VALE3). Todos os números desta seção já
-refletem a base limpa; o efeito foi pequeno e nenhuma conclusão mudou de direção em relação à
-análise original sobre dado contaminado.
-
 % ======================================================================
 \FloatBarrier
 \section{Conclusão}
 
 Este trabalho modela o peso de ações em carteiras de fundos brasileiros como um fator dinâmico:
 uma cross-section logística estima, mês a mês, o peso que cada fundo deveria carregar dado seis
-características observáveis (equação~\eqref{eq:cs}); um mecanismo de ajuste parcial modela a
-velocidade com que a posição real converge a esse alvo (equação~\eqref{eq:pa}); e um esquema
-fora da amostra, com $\lambda$ estimado só em treino e aplicado fixo ao teste
-(equação~\eqref{eq:oos}), testa se isso tem valor preditivo genuíno em dados que o modelo nunca
-viu. O procedimento nasceu restrito a VALE3 e aos fundos do grupo Itaú e foi generalizado, em
-etapas, para o universo inteiro da CVM --- 40 grupos de gestora, 501 ativos, 2.296 fundos na
-versão final (Seção~\ref{sec:resultados}).
+características observáveis --- tamanho, cotistas, fundo de cotas, fluxo, beta do fundo e a
+concentração do restante da carteira ($\text{HHI}_{\text{resto}}$, equação~\eqref{eq:hhi-resto})
+--- (equação~\eqref{eq:cs}); um mecanismo de ajuste parcial modela a velocidade com que a posição
+real converge a esse alvo (equação~\eqref{eq:pa}); e um esquema fora da amostra, com $\lambda$
+estimado só em treino e aplicado fixo ao teste (equação~\eqref{eq:oos}), testa se isso tem valor
+preditivo genuíno em dados que o modelo nunca viu. O procedimento é aplicado a todo fundo do
+universo CVM com posição em ações no período (não restrito a nenhuma gestora ou ativo
+específico) --- 40 grupos de gestora, 430 ativos com célula estimada, 2.499 fundos na versão
+final (Seção~\ref{sec:resultados}).
 
 O resultado central é que o ajuste parcial vence a previsão ingênua de forma consistente e
-crescente com o horizonte --- razão RMSE/ingênua de $0{,}9833$ em $h=1$ até $0{,}9278$ em
+crescente com o horizonte --- razão RMSE/ingênua de $0{,}9853$ em $h=1$ até $0{,}9348$ em
 $h=12$ --- mas o ganho é modesto, e a contribuição mais rica do trabalho não está no RMSE
 agregado, e sim na estrutura do erro. A variância domina o viés como fonte de erro (viés$^2$
-explica só $0{,}001\%$ do RMSE$^2$ \emph{pooled}), e essa variância é, ela mesma, previsível: é
-persistente entre janelas de teste ($R^2=0{,}72$--$0{,}74$) e explicada, sobretudo, pela
-concentração da carteira --- muito mais do que por beta ou tamanho do fundo
-(Tabela~\ref{tab:regressao-variancia}). Foi exatamente esse achado, obtido primeiro como
-diagnóstico \emph{fora} da Etapa 1, que motivou incorporar
-$\text{HHI}_{\text{resto}}$ --- a concentração do restante da carteira, excluindo o ativo-alvo
-(equação~\eqref{eq:hhi-resto}) --- como sexta característica formal do modelo de peso, ao lado
-de tamanho, cotistas, fundo de cotas, fluxo e beta.
-
-Essa incorporação passou por uma correção de percurso que vale registrar como parte do
-resultado, não só do processo: a primeira versão usava a concentração do \emph{mesmo} mês que
-o peso que tentava explicar, contrariando a disciplina de defasagem das demais cinco
-características; uma auditoria identificou a inconsistência, e o reteste com a versão
-defasada (mês $t-1$) mostrou efeito quase idêntico (72,1\% das células com coeficiente
-significativo, contra 72,3\% da versão contemporânea) --- e, ao final, um RMSE fora da amostra
-\emph{melhor} do que a versão original, não apenas mais correta metodologicamente. O modelo de
-6 características é, hoje, o que efetivamente gera todos os resultados deste documento; a
-versão de 5 características aparece só como termo de comparação.
+explica só $0{,}000\%$ do RMSE$^2$ \emph{pooled}), e essa variância é, ela mesma, previsível: é
+persistente entre janelas de teste ($R^2=0{,}74$) e explicada, sobretudo, pela concentração da
+carteira --- muito mais do que por beta ou tamanho do fundo
+(Tabela~\ref{tab:regressao-variancia}).
 
 A Seção~\ref{sec:aplicacao} testou se essa estrutura de erro serve para algo além de
 diagnóstico. A resposta é dupla, e as duas metades importam igualmente. Existem pares de fundos

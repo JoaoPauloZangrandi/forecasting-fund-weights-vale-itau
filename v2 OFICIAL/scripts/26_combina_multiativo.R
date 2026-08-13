@@ -1,3 +1,13 @@
+# =============================================================================
+# !!! SUPERADO (12/08/2026) -- NAO RODAR SEM QUERER !!!
+# Constroi o painel ANTIGO ancorado em VALE3 (todo fundo que ja teve VALE3
+# em carteira). O padrao do TCC deixou de ser essa base -- desde 12/08/2026
+# painel_multiativo_final.csv contem o universo COMPLETO (todo fundo com
+# posicao em acoes 2016-2021, nao so quem teve VALE3; ver scripts 50-58,
+# 101_cross_section_universo_completo_hhi.R). Rodar esta cadeia (17-29) por
+# engano sobrescreve painel_multiativo_final.csv de volta para a base antiga,
+# silenciosamente. Mantido so por referencia historica. NAO RODAR.
+# =============================================================================
 suppressPackageStartupMessages(library(data.table))
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 

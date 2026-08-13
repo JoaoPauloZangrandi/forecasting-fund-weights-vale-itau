@@ -23,7 +23,7 @@ por_fundo <- h1f[, .(rmse = sqrt(mean(erro_oos^2)), n_obs = .N), by = cod_fundo]
 por_fundo <- por_fundo[n_obs >= 6]
 cat("Fundos com >=6 obs de teste (pos filtro):", nrow(por_fundo), "\n")
 
-beta <- fread(file.path(REPO, "v2 OFICIAL/data/beta_fundo_todas_gestoras.csv"))
+beta <- fread(file.path(REPO, "v2 OFICIAL/data/beta_fundo_universo_completo.csv"))
 beta_medio <- beta[, .(beta_medio = mean(beta_fundo)), by = cod_fundo]
 m <- merge(por_fundo, beta_medio, by="cod_fundo")
 cat("Amostra final (RMSE + beta, pos filtro):", nrow(m), "fundos\n")
