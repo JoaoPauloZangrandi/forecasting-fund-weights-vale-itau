@@ -64,8 +64,8 @@ cat("coef=", signif(coef(fit_c)[2],3), " p=", signif(summary(fit_c)$coefficients
 
 cat("\n===== RESUMO COMPARATIVO =====\n")
 cat(sprintf("%-45s %10s %10s %10s\n", "Especificacao", "coef", "p-valor", "R2(%)"))
-cat(sprintf("%-45s %10s %10s %10s\n", "Original, com eco (R/70)", "-8.9e-08", "0.071", "0.038"))
-cat(sprintf("%-45s %10s %10s %10s\n", "Original, sem eco (R/70)", "7.6e-07", "0.023", "0.06"))
+cat(sprintf("%-45s %10s %10s %10s\n", "Original, com eco (R/70)", "-3.6e-08", "0.487", "0.006"))
+cat(sprintf("%-45s %10s %10s %10s\n", "Original, sem eco (R/70)", "1.3e-06", "0.001", "0.132"))
 cat(sprintf("%-45s %10.2e %10.3f %10.4f\n", "A: FE mes, com eco", coef(fit_a_eco)[2], summary(fit_a_eco)$coefficients[2,4], 100*summary(fit_a_eco)$r.squared))
 cat(sprintf("%-45s %10.2e %10.3f %10.4f\n", "A: FE mes, sem eco", coef(fit_a_normal)[2], summary(fit_a_normal)$coefficients[2,4], 100*summary(fit_a_normal)$r.squared))
 cat(sprintf("%-45s %10.2e %10.3f %10.4f\n", "B: so extremos (top20%), com eco", coef(fit_b_eco)[2], summary(fit_b_eco)$coefficients[2,4], 100*summary(fit_b_eco)$r.squared))

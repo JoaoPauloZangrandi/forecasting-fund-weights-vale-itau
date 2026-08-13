@@ -95,24 +95,32 @@ como artefato e excluído só da correção mecânica.}
 \equacao
 $$w_{i,n,t} = g(x'_{i,n,t}\theta_{n,t}) + e_{i,n,t}, \qquad
 g(\cdot) = \text{logit}^{-1}(\cdot)$$
-Logit por célula (ativo, mês), $\geq15$ fundos holders, 5 características (tamanho, cotistas,
-fundo de cotas, fluxo, beta do fundo).
+Logit por célula (ativo, mês), $\geq15$ fundos holders, 6 características (tamanho, cotistas,
+fundo de cotas, fluxo, beta do fundo, HHI do restante da carteira defasado em $t-1$:
+$\text{HHI}_{\text{resto},i,n,t} = \text{HHI}_{\text{total},i,t-1} - w_{i,n,t-1}^2$ --- mesma
+especificação do documento principal).
 
 \begin{center}\small
 \begin{tabular}{lrr}
 \toprule
  & \textbf{Ancorado} & \textbf{Completo} \\
 \midrule
-Ativos com $\geq$24 meses estimados & 236 & 236 \\
-Beta do fundo, \% mesmo sinal que VALE3 & 97,0\% & 97,5\% \\
-Pseudo-$R^2$ médio & 0,4407 & 0,4473 \\
-Células (ativo, mês) estimadas & 13.957 & 13.939 \\
+Ativos com $\geq$24 meses estimados & 233 & 233 \\
+Beta do fundo, \% mesmo sinal que VALE3 & 91,8\% & 92,3\% \\
+HHI do resto, \% mesmo sinal que VALE3 & --- & 10,7\% \\
+Pseudo-$R^2$ médio & 0,5245 & 0,5311 \\
+Células (ativo, mês) estimadas & 13.697 & 13.712 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \aha{Beta do fundo continua sendo a característica que mais generaliza entre ativos --- não é
-artefato da amostra restrita a VALE3.}
+artefato da amostra restrita a VALE3. HHI do resto é significativo em 73,6\% das células e
+positivo em 95,5\% delas quando significativo (pseudo-$R^2$ sobe de 0,449 para 0,531 em relação
+à especificação de 5 características usada numa versão anterior deste documento) --- mesmo
+padrão da Seção~5 do documento principal. O baixo \% de mesmo sinal que VALE3 (10,7\%) só
+reflete que o próprio VALE3 tem coeficiente negativo nesta característica, não que o efeito seja
+fraco no geral.}
 
 % ======================================================================
 \section{Etapa 2 --- Ajuste parcial com correção mecânica (Equação 2)}
@@ -128,8 +136,8 @@ $dw_{\text{corrigido}}$.
 \toprule
  & $\boldsymbol\lambda$ & $R^2$ \\
 \midrule
-Sem correção mecânica & 0,0640 & 0,0301 \\
-Com correção mecânica & 0,0639 & 0,0323 \\
+Sem correção mecânica & 0,0678 & 0,0313 \\
+Com correção mecânica & 0,0677 & 0,0336 \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -157,9 +165,9 @@ $\lambda_h$ estimado só no treino ($<$2020-01), aplicado fixo ao teste ($\geq$2
 \toprule
  & \textbf{$\lambda$ bruto} & \textbf{$\lambda$ corrigido} & \textbf{Margem mediana} & \textbf{\% vence ingênua} \\
 \midrule
-h=1, bruto & 0,0642 & --- & 1,52\% & 73,5\% \\
-h=1, corrigido & --- & 0,0659 & 0,99\% & 61,5\% \\
-h=3 & 0,1324 & 0,1324 & --- & --- \\
+h=1, bruto & 0,0696 & --- & 1,48\% & 71,1\% \\
+h=1, corrigido & --- & 0,0706 & 0,58\% & 60,1\% \\
+h=3 & 0,1445 & 0,1441 & --- & --- \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -171,11 +179,11 @@ $\geq$100 obs. de teste). Pontos abaixo da diagonal: correção piora a margem.}
 \end{figure}
 
 \aha{Quebrando por fonte do preço: ativos com preço ajustado (Yahoo, 234) quase não mudam
-(1,32\%$\to$1,11\%); ativos só com preço bruto da B3 (106) caem bem mais (2,03\%$\to$0,72\%,
+(1,27\%$\to$0,58\%); ativos só com preço bruto da B3 (106) caem mais (1,83\%$\to$0,62\%,
 visível como a nuvem vermelha mais abaixo da diagonal na Figura~1). A limitação de dado da
 Seção 1 tem consequência prática mensurável.}
 
-\ressalva{Caso mais extremo (Alpargatas, margem corrigida $-96\%$): preço ajustado, não é
+\ressalva{Caso mais extremo (Alpargatas ON, margem corrigida $-51,1\%$): preço ajustado, não é
 problema de dividendo --- sofreu volatilidade real em 2020 (queda de 30\% em março) que o
 modelo não capta. Achado genuíno, não bug.}
 
@@ -199,11 +207,11 @@ m = 31.907.281 \text{ testes}$$
 \begin{center}\small
 \begin{tabular}{lr}
 \toprule
-Ativos elegíveis (pós filtro de poeira) & 344 \\
-Pares com $|$correlação$|\geq$0,6 & 1.833.580 \\
-\textbf{Pares significativos} ($p_{\text{ajustado}}<$0,05) & \textbf{1.272.131} \\
-\quad --- mesma gestora / gestoras diferentes & 463.856 (36\%) / 808.275 (64\%) \\
-\textbf{Pares com liderança clara} (assimetria $>$0,2) & \textbf{74.596} (58.133 cross-gestora) \\
+Ativos elegíveis (pós filtro de poeira) & 340 \\
+Pares com $|$correlação$|\geq$0,6 & 1.773.415 \\
+\textbf{Pares significativos} ($p_{\text{ajustado}}<$0,05) & \textbf{1.228.599} \\
+\quad --- mesma gestora / gestoras diferentes & 450.587 (37\%) / 778.012 (63\%) \\
+\textbf{Pares com liderança clara} (assimetria $>$0,2) & \textbf{78.205} (59.989 cross-gestora) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -216,9 +224,9 @@ $\div$ pares possíveis entre as duas gestoras).}
 
 \aha{Pela contagem bruta, Itaú domina (671 fundos, quase 3$\times$ o 2\textsuperscript{o}
 maior) --- artefato de tamanho. Normalizado (Figura~2), quem domina são
-\textbf{boutiques menores}: Atmos $\leftrightarrow$ TNA (taxa 3,02), Occam
-$\leftrightarrow$ Plural (1,91), Squadra $\leftrightarrow$ TNA (1,88) --- consistente com
-replicação entre gestoras próximas, não só efeito de escala.}
+\textbf{boutiques menores}: Atmos $\leftrightarrow$ TNA (taxa 2,82), Squadra
+$\leftrightarrow$ TNA (1,87), Julius Baer $\leftrightarrow$ SPX Capital (1,74) --- consistente
+com replicação entre gestoras próximas, não só efeito de escala.}
 
 % ======================================================================
 \section{Fase 5 --- Sinal do robô}
@@ -238,7 +246,7 @@ entre todas, por ativo-mês.
 \toprule
  & \textbf{Sem ajuste} & \textbf{Com ajuste} \\
 \midrule
-RMSE (19.423 pares seguidor-ativo, 374.516 obs) & 0,00621 & 0,00410 (--33,9\%) \\
+RMSE (18.459 pares seguidor-ativo, 354.951 obs) & 0,00600 & 0,00396 (--34,0\%) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -253,20 +261,20 @@ RMSE (19.423 pares seguidor-ativo, 374.516 obs) & 0,00621 & 0,00410 (--33,9\%) \
 \toprule
  & \textbf{Ativo} & \textbf{Mês} & \textbf{Fluxo líquido} & \textbf{Fundos / Gestoras} \\
 \midrule
-Maior compra & Petrobras ON & jan/2020 & +R\$1,71 bi & 269 / 18 \\
-Maior venda & Petrobras Distrib. & mai/2021 & -R\$853 mi & 430 / 23 \\
+Maior compra & Petrobras ON & jan/2020 & +R\$1,49 bi & 255 / 19 \\
+Maior venda & Petrobras Distrib. & mai/2021 & -R\$893 mi & 440 / 23 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\aha{Mediana do fluxo líquido perto de zero (-R\$14,7 mil), distribuição bem assimétrica ---
+\aha{Mediana do fluxo líquido perto de zero (-R\$12,3 mil), distribuição bem assimétrica ---
 maioria neutra, poucos ativo-mês concentram sinal forte. R\$1--2 bi/mês para uma blue chip
 amplamente carregada é fração pequena do patrimônio total da indústria de fundos --- ordem de
 grandeza plausível.}
 
-\ressalva{Melhora de RMSE de 33,9\% é \textbf{dentro da amostra} ($\beta$ estimado e avaliado
+\ressalva{Melhora de RMSE de 34,0\% é \textbf{dentro da amostra} ($\beta$ estimado e avaliado
 nos mesmos dados --- garantia matemática do MQO, não prova generalização). Fluxo reportado é
-só o componente "eco do replicante" (19.423 pares com líder identificado), não a previsão de
+só o componente "eco do replicante" (18.459 pares com líder identificado), não a previsão de
 todos os fundos do universo --- ainda não é um sinal de demanda de mercado completo.}
 
 % ======================================================================
@@ -283,28 +291,28 @@ $$\text{retorno}_{i,t+1} = \alpha + \beta_{\text{ret}} \cdot \text{fluxo\_pct}_{
 $$\text{fluxo\_pct}_{i,t} = \frac{\text{fluxo líquido em R\$}_{i,t}}{\text{valor total da posição em } i \text{ no universo, mês } t}$$
 Fluxo normalizado pelo valor total da posição (não R\$ bruto) --- senão o teste só capturaria
 "ativo grande tem fluxo grande", não poder preditivo de verdade. Rodado em duas versões do
-sinal (com e sem o eco do líder) e duas amostras (completa; restrita aos 215 ativos com
-margem positiva na Etapa~3, de 360 elegíveis, na hipótese de que ruído dos ativos onde o
+sinal (com e sem o eco do líder) e duas amostras (completa; restrita aos 212 ativos com
+margem positiva na Etapa~3, de 359 elegíveis, na hipótese de que ruído dos ativos onde o
 modelo não funciona bem estivesse diluindo o teste).
 
 \begin{center}\small
 \begin{tabular}{lrrrr}
 \toprule
- & \multicolumn{2}{c}{\textbf{Amostra completa (8.585 obs)}} & \multicolumn{2}{c}{\textbf{Só margem$>$0 (5.958 obs)}} \\
+ & \multicolumn{2}{c}{\textbf{Amostra completa (8.275 obs)}} & \multicolumn{2}{c}{\textbf{Só margem$>$0 (5.748 obs)}} \\
  & Coef. ($\beta_{\text{ret}}$) & $p$-valor & Coef. ($\beta_{\text{ret}}$) & $p$-valor \\
 \midrule
-Sinal COM eco do líder & $-8,6\times10^{-8}$ & 0,077 & $-1,1\times10^{-7}$ & \textbf{0,045} \\
-Sinal SEM eco (só $\hat\lambda d$) & $+7,1\times10^{-7}$ & \textbf{0,032} & $+6,3\times10^{-7}$ & 0,160 \\
+Sinal COM eco do líder & $-3,6\times10^{-8}$ & 0,487 & $-2,1\times10^{-8}$ & 0,739 \\
+Sinal SEM eco (só $\hat\lambda d$) & $+1,3\times10^{-6}$ & \textbf{0,001} & $+7,4\times10^{-7}$ & 0,156 \\
 \bottomrule
 \end{tabular}
 \end{center}
-$R^2$ em todos os casos: entre 0,033\% e 0,067\% --- estatisticamente às vezes detectável, mas
-economicamente irrisório.
+$R^2$ em todos os casos: entre 0,002\% e 0,132\% --- economicamente irrisório em qualquer
+especificação.
 
 \begin{figure}[H]\centering
 \includegraphics[width=0.68\textwidth]{fig5_dispersao_fluxo_retorno.pdf}
 \caption{Fluxo previsto (mês $t$) vs. retorno do ativo (mês $t+1$), amostra completa. A reta
-de regressão é essencialmente plana --- $R^2=0{,}036\%$.}
+de regressão é essencialmente plana --- $R^2=0{,}006\%$.}
 \end{figure}
 
 \begin{figure}[H]\centering
@@ -318,22 +326,22 @@ mais comprador), amostra completa vs. restrita a ativos de margem positiva.}
 \toprule
  & \textbf{Amostra completa} & \textbf{Só margem$>$0} \\
 \midrule
-Diferença retorno médio (Q5 -- Q1) & +0,52 p.p. & +0,85 p.p. \\
-$p$-valor (teste $t$, Q5 vs. Q1) & 0,271 & 0,137 \\
+Diferença retorno médio (Q5 -- Q1) & +0,44 p.p. & +0,53 p.p. \\
+$p$-valor (teste $t$, Q5 vs. Q1) & 0,366 & 0,362 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \aha{\textbf{O teste não valida a premissa de negociar em cima do sinal.} O sinal com eco do
-líder (o produto final das Fases 4--5) sai com coeficiente \emph{negativo} na amostra completa e
-não significativo a 5\% ($p=0{,}077$) --- pior que o sinal mais simples (só $\hat\lambda d$), que
-ao menos tem o sinal certo e é estatisticamente detectável, mas com $R^2$ tão baixo (0,03--0,07\%)
-que não sustenta uma estratégia. Restringir a ativos de margem positiva (Figura~4, painel
-direito) não resgatou o resultado: o sinal COM eco passa a ser estatisticamente significativo
-nessa subamostra ($p=0{,}045$), mas com o sinal \emph{errado} para a teoria (mais fluxo
-comprador previsto associado a retorno \emph{menor}) e magnitude ainda irrisória --- não é uma
-reversão do achado, é ruído com sorte estatística. O espalhamento entre quintis extremos cresce
-um pouco (0,52pp$\to$0,85pp), mas continua estatisticamente não significativo ($p=0{,}137$).}
+líder (o produto final das Fases 4--5) sai com coeficiente \emph{negativo} e não significativo em
+nenhuma das duas amostras ($p=0{,}487$ completa, $p=0{,}739$ restrita a margem positiva) --- pior
+que o sinal mais simples (só $\hat\lambda d$), que ao menos tem o sinal certo e é
+estatisticamente detectável na amostra completa ($p=0{,}001$), mas com $R^2$ tão baixo
+(0,002--0,132\%) que não sustenta uma estratégia, e perde significância na subamostra restrita
+($p=0{,}156$). Restringir a ativos de margem positiva (Figura~4, painel direito) não resgatou o
+resultado em nenhuma versão do sinal. O espalhamento entre quintis extremos é pequeno e
+estatisticamente não significativo nas duas amostras (0,44pp, $p=0{,}366$; 0,53pp,
+$p=0{,}362$).}
 
 \ressalva{Isto é um resultado negativo genuíno, não uma limitação de dado a ser corrigida
 depois. O mecanismo "fundos compram $\Rightarrow$ preço sobe" pode existir no mercado como um
@@ -349,10 +357,10 @@ sentido otimizar execução de um sinal sem poder preditivo demonstrado.}
 \toprule
 \textbf{Achado} & \textbf{Status} & \textbf{Evidência} \\
 \midrule
-Beta do fundo generaliza entre ativos & \textbf{Validado} & Seção~2, 97,9\% mesmo sinal \\
+Beta do fundo generaliza entre ativos & \textbf{Validado} & Seção~2, 92,3\% mesmo sinal \\
 Correção mecânica de preço melhora o ajuste & \textbf{Validado} & Seção~3, $R^2$ melhora \\
-Pares de fundos com erro sincronizado além das características (replicantes) & \textbf{Validado} & Seção~5, 1.272.131 pares, $p<0{,}05$ com Benjamini--Hochberg \\
-Relação líder$\to$seguidor melhora previsão de \emph{peso} & Validado \emph{dentro da amostra} & Seção~6, RMSE --33\% \\
+Pares de fundos com erro sincronizado além das características (replicantes) & \textbf{Validado} & Seção~5, 1.228.599 pares, $p<0{,}05$ com Benjamini--Hochberg \\
+Relação líder$\to$seguidor melhora previsão de \emph{peso} & Validado \emph{dentro da amostra} & Seção~6, RMSE --34\% \\
 Sinal de fluxo previsto prediz \emph{retorno} do ativo & \textbf{Rejeitado} & Seção~7, $R^2\approx$0 \\
 Estratégia long/short executável & \textbf{Não avaliado} (depende do item anterior) & --- \\
 \bottomrule
@@ -388,6 +396,13 @@ antes auditada nesta base mais ampla (98 dos 207 fundos contaminados só existem
 universo VALE3-ancorado). Todos os números deste documento já refletem a base limpa; o efeito
 foi pequeno e nenhuma conclusão (nem o achado validado da Seção~5, nem a rejeição da
 Seção~7) mudou de direção.
+\item \textbf{Especificação de 6 características (12/08/2026)}: uma versão anterior deste
+documento estimava a Etapa~1 com apenas 5 características (sem HHI do restante da carteira),
+inconsistente com a Seção~5 do documento principal, que já usava 6 desde a correção anterior.
+Corrigido nesta data (script \texttt{101\_cross\_section\_universo\_completo\_hhi.R}): HHI do
+resto defasado incluído como 6ª característica, toda a cadeia (Etapas~1--3, Fases~4--5, teste
+decisivo) rerodada com a especificação atualizada. Nenhuma conclusão qualitativa mudou de
+direção; o teste decisivo (Seção~7), se algo, ficou ainda mais claramente rejeitado.
 \end{enumerate}
 
 \end{document}
