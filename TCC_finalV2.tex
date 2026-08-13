@@ -975,50 +975,6 @@ separadamente, em vez de assumir que o segundo decorre do primeiro.
 \FloatBarrier
 \section{Conclusão}
 
-Este trabalho modela o peso de ações em carteiras de fundos brasileiros como um fator dinâmico:
-uma cross-section logística estima, mês a mês, o peso que cada fundo deveria carregar dado seis
-características observáveis --- tamanho, cotistas, fundo de cotas, fluxo, beta do fundo e a
-concentração do restante da carteira ($\text{HHI}_{\text{resto}}$, equação~\eqref{eq:hhi-resto})
---- (equação~\eqref{eq:cs}); um mecanismo de ajuste parcial modela a velocidade com que a posição
-real converge a esse alvo (equação~\eqref{eq:pa}); e um esquema fora da amostra, com $\lambda$
-estimado só em treino e aplicado fixo ao teste (equação~\eqref{eq:oos}), testa se isso tem valor
-preditivo genuíno em dados que o modelo nunca viu. O procedimento é aplicado a todo fundo do
-universo CVM com posição em ações no período (não restrito a nenhuma gestora ou ativo
-específico) --- 40 grupos de gestora, 430 ativos com célula estimada, 2.499 fundos na versão
-final (Seção~\ref{sec:resultados}).
-
-O resultado central é que o ajuste parcial vence a previsão ingênua de forma consistente e
-crescente com o horizonte --- razão RMSE/ingênua de $0{,}9853$ em $h=1$ até $0{,}9348$ em
-$h=12$ --- mas o ganho é modesto, e a contribuição mais rica do trabalho não está no RMSE
-agregado, e sim na estrutura do erro. A variância domina o viés como fonte de erro (viés$^2$
-explica só $0{,}000\%$ do RMSE$^2$ \emph{pooled}), e essa variância é, ela mesma, previsível: é
-persistente entre janelas de teste ($R^2=0{,}74$) e explicada, sobretudo, pela concentração da
-carteira --- muito mais do que por beta ou tamanho do fundo
-(Tabela~\ref{tab:regressao-variancia}).
-
-A Seção~\ref{sec:aplicacao} testou se essa estrutura de erro serve para algo além de
-diagnóstico. A resposta é dupla, e as duas metades importam igualmente. Existem pares de fundos
---- 1.228.599 deles, entre 41 grupos de gestora, estatisticamente robustos mesmo depois de
-corrigir milhões de comparações múltiplas --- cujo erro se move em sincronia além do que
-características observáveis explicam; isso é replicação de carteira genuína, não coincidência,
-e é o achado que mais diretamente estende a literatura de \emph{demand-based asset pricing}
-para o contexto de fundos brasileiros. Mas convertido em sinal de fluxo previsto, esse padrão
-não prediz retorno subsequente do ativo: o teste decisivo (Seção~\ref{sec:teste-decisivo})
-produz coeficientes minúsculos, de sinal inconsistente entre especificações, com $R^2$ entre
-$0{,}002\%$ e $0{,}132\%$. O trabalho registra isso como um resultado negativo genuíno, não como
-uma limitação a ser corrigida depois --- uma estratégia de negociação sobre este sinal não está
-justificada pelos dados desta amostra, e não faz sentido avançar para questões de execução
-(liquidez, custo de transação) sem poder preditivo demonstrado primeiro.
-
-Duas limitações estruturais valem menção explícita. Primeiro, a variável dependente --- peso
-declarado na CDA --- é uma posição \emph{direta}: um fundo que investe via cotas de outro fundo
-(FIC) não tem sua exposição indireta capturada, o que provavelmente explica por que ser FIC
-segue associado, em média, a menor peso direto observado. Segundo, o modelo é inteiramente de
-demanda: nenhuma característica do lado da oferta (liquidez do ativo, free float, restrições
-institucionais) entra na equação~\eqref{eq:cs}, e a Seção~\ref{sec:aplicacao} mostrou
-concretamente que demanda sincronizada entre fundos não implica, sozinha, efeito de preço
-detectável. Futuras extensões naturais incluem testar HHI$_{\text{resto}}$ em conjunto com
-efeitos fixos de gestora, e revisitar o teste de fluxo-prediz-retorno com uma medida de
-liquidez do ativo como controle explícito, não apenas como filtro de amostra.
+\emph{[Seção a ser escrita por último.]}
 
 \end{document}
