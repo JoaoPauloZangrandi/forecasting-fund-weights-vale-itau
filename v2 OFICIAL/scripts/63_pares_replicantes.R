@@ -27,7 +27,7 @@ LIMIAR_CORR <- 0.6
 
 M <- fread(file.path(REPO, "v2 OFICIAL/data/ajuste_parcial_universo_completo_h1.csv"))
 M[, cod_fundo := as.character(cod_fundo)]
-lam <- 0.0677  # atualizado 12/08/2026 apos Etapa 1 passar a 6 caracteristicas (era 0.0665)
+lam <- 0.0690  # atualizado 12/08/2026 apos corte soma_peso subir de 105% p/ 150% (era 0.0677)
 M[, u := dw_corrigido - lam * d]
 M <- M[!is.na(u)]
 M[, mes_idx := (ym %/% 100L - 2016L) * 12L + (ym %% 100L)]

@@ -18,7 +18,11 @@
 # =============================================================================
 suppressPackageStartupMessages(library(data.table))
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
-LIM <- 1.05
+LIM <- 1.50  # atualizado 12/08/2026: investigacao (posicao maxima individual, persistencia
+             # mes-a-mes, classificacao Anbima) mostrou que 105% excluia alavancagem legitima
+             # (fundos "Acoes Livre"/"Multimercados Livre" persistentemente >100%) junto com
+             # erro de dado de verdade (posicao unica dominante, evento isolado). 150% separa
+             # melhor os dois padroes -- ver TCC_finalV2.tex Secao 3 para a evidencia completa.
 
 pp <- fread(file.path(REPO, "v2 OFICIAL/data/painel_multiativo_direto_completo.csv"))
 cat("Painel universo completo (bruto):", nrow(pp), "linhas |", uniqueN(pp$cod_fundo), "fundos\n")
