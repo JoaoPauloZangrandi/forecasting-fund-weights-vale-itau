@@ -100,6 +100,15 @@ cat("\n\n========== ETAPA B2: re-sincronizando painel_multiativo_final.csv =====
 }
 
 # =============================================================================
+# ETAPA B3 -- diagnostico de atricao (por que fundos do universo bruto nao
+#             entram na amostra final) -- alimenta o paragrafo logo apos a
+#             Tabela do funil (Secao "Dados"). LENTO (le SH_2016..SH_2021.csv
+#             brutos, ~1-2 min) mas obrigatorio -- ficou faltando numa
+#             rodada anterior porque nao havia lista central de scripts.
+# =============================================================================
+rodar("103_diagnostico_atricao_universo_completo.R")
+
+# =============================================================================
 # ETAPA C -- motores de Etapa 1+3 (os dois pesados; geram os arquivos
 #             canonicos que quase tudo depois le)
 # =============================================================================
@@ -182,3 +191,25 @@ cat("conferir, linha por linha, cada numero do TCC_finalV2.tex contra os\n")
 cat("logs _log_*_novo.txt gerados agora. So depois disso, recompilar e\n")
 cat("commitar.\n")
 cat("=====================================================================\n")
+
+# =============================================================================
+# COMO ESTA LISTA FOI VALIDADA (13/08/2026) -- repetir se desconfiar que
+# falta algo de novo, em vez de so confiar na memoria da sessao anterior:
+#
+#   grep -lE "painel_multiativo_final\.csv|painel_universo_completo_final\.csv|
+#             painel_multiativo_direto_completo\.csv" v2\ OFICIAL/scripts/*.R
+#
+# Isso retorna ~60 arquivos, a maioria SUPERADO (marcado explicitamente no
+# proprio cabecalho, ex.: "script 99 e quem produz oficialmente X hoje").
+# Pra cada um que NAO estiver nesta lista de 30 e nao tiver "SUPERADO"/
+# "referencia historica" no cabecalho: (1) ver que arquivo ele produz
+# (grep "pdf(file.path\|fwrite(" no script), (2) conferir se esse arquivo
+# aparece em algum \includegraphics ou "Fonte: script" do TCC_finalV2.tex.
+# Se sim, falta nesta lista -- adicionar. Se nao, e' rascunho/exploratorio
+# (normalmente prefixo "_", ex. _check_*.R) ou um achado ainda nao
+# incorporado ao documento (ex.: 105_fluxo_induzido_agregado.R, analise de
+# Flow-Induced Trading pedida em 12/08 como alternativa ao robo
+# caca-replicantes -- le painel_multiativo_final.csv, NUNCA foi citada no
+# TCC_finalV2.tex, portanto NAO esta neste pipeline; se o Joao decidir
+# incorporar esse achado ao texto, adicionar aqui na hora).
+# =============================================================================

@@ -32,6 +32,7 @@ gráfico" — desde 12/08/2026 a Seção 4/5 e a Seção 6 correm sobre a mesma 
 100 (limpa soma_peso)
  └─ 58 (merge → painel_universo_completo_final.csv)
      └─ [resync manual → painel_multiativo_final.csv]
+         ├─ 103 (diagnóstico de atrição, Seção "Dados") — lento (lê SH brutos)
          ├─ 99 (motor Etapa1+3, Seção 4/5) ─┬─ 98  (stats erro e/u, Seção 5)
          │                                   ├─ 82  (janela expansiva, Seção 5)
          │                                   ├─ 93  (tabelas 9/10 LaTeX, Seção 5)
@@ -54,7 +55,44 @@ gráfico" — desde 12/08/2026 a Seção 4/5 e a Seção 6 correm sobre a mesma 
 
 Scripts 51–57 (construção do painel bruto a partir de CONS/SH/Informe Diário)
 **não** entram nesse rerun — só são necessários se os dados brutos da CVM
-mudarem, não para mudanças de Etapa 1/corte de qualidade.
+mudarem, não para mudanças de Etapa 1/corte de qualidade. Se a mudança for na
+**definição de uma característica** (não só no corte de qualidade), os scripts
+52 (features)/53 (beta) também precisam rodar de novo antes do 58.
+
+## Como esta lista foi auditada (e como reauditar se desconfiar que falta algo)
+
+Rodar, na raiz do projeto:
+```
+grep -lE "painel_multiativo_final\.csv|painel_universo_completo_final\.csv|painel_multiativo_direto_completo\.csv" "v2 OFICIAL/scripts"/*.R
+```
+Isso retorna ~60 arquivos (checado em 13/08/2026). A maioria é **superado**,
+com aviso explícito no próprio cabeçalho do script (ex.: *"O script
+99_pipeline_hhi_lag_etapa1.R é quem produz oficialmente X hoje... mantido só
+por referência histórica"*) — são versões antigas (5 características sem
+HHI_resto, ou ancoradas em VALE3/Itaú, da estrutura de documento anterior à
+reescrita completa de 12/08) que sobrescrevem os MESMOS nomes de arquivo dos
+scripts atuais se rodadas por engano. **Não rodar esses.**
+
+Para qualquer script que aparecer nessa busca e **não** estiver na lista deste
+documento nem tiver aviso de "superado" no cabeçalho: (1) ver que arquivo ele
+produz (`grep "pdf(file.path\|fwrite(" no script`), (2) conferir se esse nome
+aparece em algum `\includegraphics` ou `Fonte: script` do `TCC_finalV2.tex`.
+Se sim, **falta nesta lista — adicionar** (foi assim que o script 103 foi
+achado em 13/08/2026, faltando desde a rodada de 12/08). Se não aparecer no
+`.tex`, é rascunho (prefixo `_`, ex. `_check_*.R`) ou um achado ainda não
+incorporado ao documento — ver seção seguinte.
+
+## Scripts com dado sensível ao início da Etapa 1 mas que NÃO estão no pipeline
+
+**`105_fluxo_induzido_agregado.R`** — análise de Flow-Induced Trading (Lou
+2012), pedida pelo João em 12/08/2026 como alternativa ao robô
+caça-replicantes (que foi testado e rejeitado). Lê `painel_multiativo_final.csv`
+diretamente, então é tão sensível ao corte de `soma_peso` quanto qualquer
+script desta lista — mas **nunca foi citada em nenhum `Fonte:` do
+`TCC_finalV2.tex`**, então não faz parte do pipeline obrigatório. Ficou com
+dado desatualizado (base pré-150%) até pelo menos 13/08/2026. Se o achado for
+incorporado ao texto no futuro, adicionar este script à Etapa C/D do
+`00_RUN_ALL_apos_etapa1.R` nesse momento.
 
 ## Armadilhas conhecidas (cada uma já causou um erro real)
 
@@ -93,6 +131,7 @@ mudarem, não para mudanças de Etapa 1/corte de qualidade.
 |---|---|---|---|
 | 100 | painel limpo | linha ~62 (funil, texto) | corte %, fundo-mês/fundos excluídos |
 | 58 | `painel_universo_completo_final.csv` | linha ~99 (`10.818.395 linhas`), Tabela funil linha 76–79 | linhas antes dos filtros, "+5 características" |
+| 103 | diagnóstico de atrição | parágrafo logo após a Tabela do funil (~86–91) | fundos excluídos, % sem 4 características, % sem beta (jovem demais vs. outro motivo) |
 | 99 | theta/erro_e/etapa3_multiativo_* | Tabela `tab:amostra` (~138), parágrafo Legacy Capital (~242), Tabela `tab:theta`/`tab:ape` (~259–298), Tabela `tab:erro-e` (~300), Tabela `tab:oos-agregado` (~354) | obs/fundos/ativos/meses, medianas θ/APE, % significância HHI, RMSE por horizonte, λ_h |
 | 101 | theta/peso_pred (universo completo) | Tabela funil linha 79 (`+HHI_resto`) | fundos/ativos pós HHI-lag |
 | 98 | erro_e_comD/erro_u | Tabela `tab:erro-u` (~330), linha `\widehat\lambda` (~327) | estatísticas erro u, λ pooled amostra completa |
