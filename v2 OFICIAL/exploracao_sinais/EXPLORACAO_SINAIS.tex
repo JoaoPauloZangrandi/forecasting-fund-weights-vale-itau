@@ -1,0 +1,406 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{caption}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{placeins}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage[hidelinks]{hyperref}
+\setstretch{1.35}
+\captionsetup{font=small,labelsep=colon}
+\setcounter{tocdepth}{2}
+
+\title{Exploração de sinais de retorno a partir de holdings de fundos brasileiros\\
+\large Documento de trabalho --- NÃO faz parte do TCC}
+\author{João Paulo Zangrandi\\
+Fundação Getulio Vargas --- Escola de Economia de São Paulo (FGV--EESP)}
+\date{14 de agosto de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{\centering\small
+\textbf{Este documento é exploratório, não é parte do TCC oficial
+(\texttt{TCC\_finalV2.tex}).} Registra, com total transparência, TODOS os
+candidatos testados nesta rodada de pesquisa --- inclusive os rejeitados
+--- para evitar qualquer viés de \emph{data snooping} (testar muitas
+hipóteses e reportar só a que "deu certo"). Nenhum conteúdo daqui deve
+entrar no TCC sem antes ser discutido com o orientador.}}
+\end{center}
+
+\tableofcontents
+\newpage
+
+% ======================================================================
+\section{Motivação e escopo}
+
+A Seção 6 do TCC (``Aplicação: robô caça-replicantes'') detectou um
+fenômeno real e estatisticamente robusto --- fundos brasileiros replicam
+posições uns dos outros além do que características observáveis explicam
+--- mas, ao testar se esse padrão convertido em sinal de fluxo previsto
+prediz \emph{retorno} futuro do ativo, o resultado foi um rejeição limpa
+($R^2$ entre 0,002\% e 0,165\%, nenhuma especificação economicamente
+relevante).
+
+Este documento registra uma busca sistemática por sinais alternativos,
+extraídos da literatura acadêmica de asset pricing institucional
+(clássica e a mais recente disponível, 2024--2026), testados contra a
+mesma base de dados (painel mensal CVM 2016--2021, holdings de fundos
+brasileiros de ações). \textbf{Nenhum resultado positivo foi assumido de
+antemão} --- o critério de sucesso, do início ao fim, foi sobreviver a
+teste fora da amostra (treino $<$jan/2020, teste $\geq$jan/2020, mesma
+disciplina usada em todo o TCC).
+
+\subsection{Por que registrar os candidatos rejeitados}
+
+Testar muitas especificações e reportar só a que passou é uma armadilha
+estatística conhecida (\emph{data dredging}/\emph{p-hacking}): a 5\% de
+significância, testar 20 hipóteses independentes produz, em média, 1
+``significativa'' por puro acaso. Este documento resolve isso registrando
+\textbf{todos} os $\sim$115 testes realizados, para que qualquer resultado
+positivo seja avaliado no contexto correto --- quantas tentativas foram
+necessárias para achá-lo.
+
+% ======================================================================
+\section{Metodologia}
+
+Todo candidato foi testado em duas camadas:
+
+\begin{enumerate}
+\item \textbf{Regressão fora da amostra:} $\beta$ estimado só no período
+de treino ($<$jan/2020), aplicado fixo ao período de teste
+($\geq$jan/2020). Métrica: $R^2$ fora da amostra ($R^2_{\text{OOS}} = 1 -
+\text{SSE}_{\text{modelo}}/\text{SSE}_{\text{ingênua}}$), que pode ser
+\textbf{negativo} se o modelo piorar em relação a simplesmente prever a
+média do treino.
+\item \textbf{Long-short por quintil, Fama-MacBeth:} breakpoints de
+quintil calculados só no treino, aplicados ao teste. Comprar o quintil 5
+(sinal mais alto) e vender o quintil 1, \textbf{um spread por MÊS} (não
+por par ativo-mês) --- essencial porque retornos de ativos diferentes no
+mesmo mês são correlacionados entre si (fator de mercado comum); tratar
+cada par ativo-mês como observação independente infla artificialmente a
+significância (ver Seção~\ref{sec:armadilha}, um erro que quase produziu
+um falso positivo espetacular nesta própria exploração).
+\end{enumerate}
+
+% ======================================================================
+\section{Candidatos testados e rejeitados}
+\label{sec:rejeitados}
+
+\subsection{Flow-Induced Trading (Lou, 2012)}
+
+Pressão mecânica de compra/venda induzida por captação/resgate dos fundos
+que carregam um ativo, ponderada pelo tamanho da posição. Na amostra
+inteira parecia forte ($t$ entre $-4{,}6$ e $-6{,}1$, $p<0{,}00001$), mas
+o $\beta$ do treino é instável entre horizontes (chega a trocar de sinal)
+e o $R^2_{\text{OOS}}$ é \textbf{negativo} em 3 dos 5 horizontes
+testados.
+
+\begin{table}[h]\centering\small
+\caption{FIT (Lou 2012) --- teste fora da amostra}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Horizonte & $\beta$ (treino) & $R^2_{\text{OOS}}$ & Margem vs.\ ingênua \\
+\midrule
+$h=0$  & $-0{,}021$ & $+0{,}08\%$  & $+0{,}04\%$ \\
+$h=1$  & $+0{,}063$ & $-0{,}39\%$  & $-0{,}20\%$ \\
+$h=3$  & $-0{,}268$ & $-2{,}79\%$  & $-1{,}38\%$ \\
+$h=6$  & $-0{,}214$ & $-0{,}21\%$  & $-0{,}11\%$ \\
+$h=12$ & $-0{,}138$ & $+0{,}17\%$  & $+0{,}09\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Herding (Lakonishok-Shleifer-Vishny 1992)}
+
+Proporção de fundos compradores vs.\ vendedores de um ativo, relativa à
+média do mercado naquele mês. $R^2_{\text{OOS}}$: $h=1$: $0{,}004\%$;
+$h=3$: $-0{,}015\%$; $h=6$: $0{,}088\%$. Todos irrisórios.
+
+\subsection{Demanda agregada revelada}
+
+Variação \% do valor total (R\$) mantido pelo conjunto de fundos num
+ativo --- diferente do FIT (pressão mecânica), aqui é o que os fundos
+\emph{realmente fizeram}. $R^2_{\text{OOS}}$: $h=1$: $-0{,}08\%$; $h=3$:
+$0{,}01\%$; $h=6$: $0{,}18\%$ (melhor dos três, ainda irrisório).
+
+\subsection{Fire sale extremo (Coval-Stafford 2007)}
+
+Restrito aos 5\% de ativo-mês com pressão de venda mecânica mais extrema
+(hipótese: efeito concentrado em eventos extremos, não na média). $R^2$
+fora da amostra negativo em 3 dos 4 horizontes ($-0{,}64\%$ em $h=1$).
+
+\subsection{Sinal dos fundos-líder}
+
+Testa se o que os 1.754 fundos identificados como líderes na Seção~6 do
+TCC fazem, agregado por ativo-mês, prediz retorno --- em vez do fluxo do
+\emph{seguidor} (já testado e rejeitado no TCC). $R^2_{\text{OOS}}$ entre
+$-0{,}001\%$ e $0{,}011\%$. Nem os líderes têm sinal detectável.
+
+\subsection{Breadth of Ownership (Chen-Hong-Stein 2002)}
+
+Variação do número de fundos distintos com posição positiva no ativo
+(margem extensiva, não ponderada por R\$ --- diferente de tudo mais
+testado). $R^2_{\text{OOS}}$ negativo em todos os horizontes; Fama-MacBeth
+$p>0{,}46$ em todos.
+
+\subsection{Latent Demand (Koijen-Yogo 2019)}
+
+Resíduo do modelo de peso esperado da Etapa~1 do TCC, agregado por
+ativo-mês e ponderado por AUM --- usado direto como preditor, sem passar
+pela conversão em ``fluxo do robô''. Nível: melhor caso $p_{\text{FM}} =
+0{,}078$. Choque (variação mês a mês): melhor caso $p_{\text{FM}} =
+0{,}21$. Nada sobrevive.
+
+\subsection{Líderes ponderados por skill (Cohen-Coval-Pástor 2005)}
+
+Pondera (ou filtra ao top quintil) o sinal dos líderes pelo retorno
+acumulado de 12 meses do próprio fundo --- testa se o sinal só existe
+quando vem de gestores historicamente bons. Melhor caso: $h=1$,
+$p_{\text{FM}} = 0{,}059$ --- perto, mas não passa de 5\%, e com $\sim$50
+especificações já testadas nesse ponto, um $p\approx0{,}06$ é a taxa de
+falso-positivo esperada por acaso.
+
+\subsection{Restrição a small caps}
+
+Literatura documenta efeitos mais fortes em ações menores/menos líquidas.
+Testados FIT, demanda revelada e herding restritos ao terço de ativos com
+menor valor mantido pelos fundos. Nenhum melhora (todos $p_{\text{FM}}$
+entre $0{,}22$ e $0{,}82$).
+
+\subsection{E[FIT] --- fluxo esperado (Lou 2012, construção fiel)}
+
+Lou usa fluxo \emph{esperado} (previsto por desempenho passado do fundo),
+não realizado. $R^2_{\text{OOS}}$ positivo e consistente ($h=1$:
+$0{,}47\%$; $h=3$: $0{,}62\%$; $h=6$: $0{,}52\%$ --- único candidato com
+$R^2$ OOS consistentemente positivo antes do CIO Peer Momentum), mas
+Fama-MacBeth não confirma ($p$ entre $0{,}21$ e $0{,}95$) --- a melhora de
+ajuste não vira estratégia direcional executável.
+
+\subsection{FIT suavizado (média móvel 3 meses)}
+
+$h=3$ passa de 5\% ($t=2{,}10$, $p=0{,}048$), mas isolado entre os outros
+4 horizontes do mesmo sinal (todos $p>0{,}49$) --- padrão inconsistente
+entre horizontes vizinhos, típico de falso-positivo.
+
+\subsection{Crowding (proxy sem dado de ADV, Chincarini et al.\ 2026)}
+
+Sem dado de liquidez/volume diário, usei HHI de posse entre fundos como
+proxy. $R^2_{\text{OOS}}$ positivo e consistente ($0{,}13$--$0{,}29\%$),
+mas Fama-MacBeth não confirma (melhor caso $p=0{,}085$). Checagem
+específica do mecanismo de crash (crowding pré-COVID deveria prever queda
+maior no crash) deu o \textbf{sinal oposto} ao esperado pela teoria
+($\text{corr}=0{,}148$, $p=0{,}026$, $n=224$, evento único).
+
+\subsection{Comomentum (Lou \& Polk) --- investigado a fundo, confirmado como artefato}
+\label{sec:armadilha}
+
+Candidato com a evidência mais forte da literatura ($\sim$9\%/ano,
+identificação quase-causal), adaptado para dado mensal (a literatura
+original usa retorno semanal). \textbf{Primeira leitura pareceu
+excelente}: $h=6$, Fama-MacBeth $t=2{,}21$, $p=0{,}041$ --- passa de 5\%.
+
+Mas a magnitude (spread médio $+6{,}08$ p.p.\ por \textbf{mês}) é
+implausível --- anualizado, mais de 100\%/ano. Investigação dedicada
+revelou por quê: os ``quintis'' de comomentum dentro do decil de maior
+momentum têm entre \textbf{1 e 13 ações por mês} --- com grupos desse
+tamanho, a ``média do quintil'' é dominada por retorno idiossincrático de
+1--2 ativos, não por um padrão sistemático. Um único mês (set/2021)
+contribuiu $+43{,}6$ p.p.\ de spread sozinho. Excluir os meses do crash da
+COVID não resolve (spread continua $\sim7{,}25$pp/mês, $p=0{,}05$) ---
+confirmando que o problema é tamanho de amostra insuficiente, não um
+episódio específico.
+
+\textbf{Lição registrada:} sempre que um resultado ``significativo'' tiver
+magnitude implausível (muito maior que qualquer estratégia real
+documentada na literatura), investigar a composição da amostra antes de
+acreditar --- não basta olhar o $p$-valor.
+
+\subsection{Ownership $\times$ Momentum (interação condicional)}
+
+Hipótese (evidência de mercado chinês): momentum é mais forte em ações
+com alta propriedade institucional. \textbf{Resultado oposto ao
+hipotetizado}, e inconsistente entre horizontes --- interação negativa e
+significativa em $h=3$ ($p=0{,}037$), positiva e significativa em $h=12$
+($p=0{,}022$, sinal invertido). Testando por grupo: o spread de momentum é
+\emph{maior} no terço de \textbf{baixa} propriedade institucional
+($h=1$: $+4{,}53$pp/mês, $p=0{,}028$) do que no de alta ($+1{,}80$pp/mês,
+$p=0{,}18$) --- literalmente o oposto do paper chinês. Interpretação
+possível (não hipotetizada de início): menos capital institucional
+sofisticado pode significar menos arbitragem corroendo o efeito momentum
+--- consistente com a literatura geral de limites à arbitragem, mas não o
+mecanismo específico testado.
+
+% ======================================================================
+\section{Literatura pesquisada}
+
+Três rodadas de pesquisa (SSRN, NBER, \emph{Journal of Finance},
+\emph{Journal of Financial Economics}, \emph{Review of Financial
+Studies}, literatura brasileira), resumidas aqui; ver os arquivos
+\texttt{LOG\_LITERATURA\_RODADA[1-3].md} para o detalhe completo com
+links.
+
+\subsection{Achado mais importante: evidência externa muito recente}
+
+Dois papers de 2025--2026 (\emph{Journal of Financial Economics}) testaram
+exatamente esta classe de pergunta --- fluxo/holdings institucionais
+prevendo retorno --- em bases americanas muito maiores e mais ricas que a
+nossa:
+
+\begin{itemize}
+\item \textbf{McLean, Pontiff \& Reilly (2025)}, ``Taking Sides on Return
+Predictability'': testando 193 preditores de retorno combinados contra 9
+tipos de investidor, \textbf{nenhuma} das 6 categorias institucionais
+(incluindo fundos mútuos) tem trade que prediga retorno de forma
+confiável --- só firmas e vendedores a descoberto acertam a direção.
+\item \textbf{Li, Sokolinski \& Tamoni (2026)}: decompondo retorno de
+anomalias por tipo de investidor, o canal institucional é ``secundário e
+concentrado em anomalias específicas'' --- investidor pequeno domina.
+\end{itemize}
+
+Isso não prova que não existe sinal no Brasil, mas eleva a régua de
+ceticismo: a literatura mais rigorosa e atual está encontrando,
+independentemente deste projeto, o mesmo padrão nulo que os 15 candidatos
+rejeitados aqui sugerem.
+
+\subsection{Checagem Wardlaw (2020)}
+
+Verificado explicitamente: a métrica de fluxo usada em toda esta
+exploração (\texttt{flow\_aum} = captação/resgate \emph{diário} reportado
+diretamente pela CVM, dividido por AUM do fechamento do mês
+\textbf{anterior}) \textbf{não tem} a contaminação mecânica que Wardlaw
+(\emph{Journal of Finance} 2020) identificou na literatura clássica de
+\emph{fire sales} (onde o fluxo é back-out de variação de patrimônio, que
+embute o próprio retorno do período). Os resultados nulos encontrados
+aqui não são artefato dessa construção específica.
+
+% ======================================================================
+\section{O candidato que sobreviveu: CIO Peer Momentum}
+
+\subsection{Mecanismo}
+
+Ying (2024, \emph{Journal of Financial Economics}): ações com donos
+institucionais em comum exibem difusão gradual de informação --- o
+retorno da ``vizinhança de ownership'' (ponderado pela força da
+sobreposição de posições, medida por similaridade de cosseno ponderada
+por AUM) hoje prediz o retorno da própria ação no mês seguinte.
+Frequência mensal nativa no mecanismo --- diferente do Comomentum
+(Seção~\ref{sec:armadilha}), que exigia dado semanal e por isso deu
+artefato.
+
+\subsection{Resultados}
+
+\begin{table}[h]\centering\small
+\caption{CIO Peer Momentum --- teste fora da amostra por horizonte}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Horizonte & $R^2_{\text{OOS}}$ & Meses de teste & $t$ (Fama-MacBeth) & $p$ \\
+\midrule
+$h=1$  & $+1{,}55\%$ & 21 & $2{,}51$ & $\mathbf{0{,}021}$ \\
+$h=3$  & $+1{,}91\%$ & 18 & $0{,}76$ & $0{,}457$ \\
+$h=6$  & $-1{,}70\%$ & 16 & $0{,}47$ & $0{,}647$ \\
+$h=12$ & $-3{,}07\%$ & 10 & $0{,}47$ & $0{,}650$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Checagens de robustez (todas passaram)}
+
+\begin{enumerate}
+\item \textbf{Tamanho de amostra saudável}: mediana de 46 ações por
+quintil-mês (contra 1--13 do Comomentum) --- não é o artefato que matou o
+candidato anterior.
+\item \textbf{Sobrevive controlando pelo retorno próprio da ação} no
+mesmo mês: coeficiente do \texttt{peer\_ret} quase não muda
+($0{,}113\to0{,}105$) quando o retorno próprio entra na regressão, e o
+retorno próprio perde toda significância ($t=0{,}86$, $p=0{,}39$) ---
+evidência direta contra a hipótese de que é só comovimento mecânico
+(ressalva de Burt \& Hrdlicka 2021, \emph{JFQA}, que decompõe esse tipo de
+previsibilidade em contágio informacional genuíno vs.\ comovimento
+mecânico).
+\item \textbf{Robusto à exclusão do mês mais fino} da amostra (spread
+quase idêntico com/sem).
+\item \textbf{Direção consistente}: 71\% dos meses (15 de 21) com spread
+positivo.
+\item \textbf{Sobrevive regressão Fama-MacBeth com 3 controles
+simultâneos} (tamanho, beta, retorno próprio, coeficientes
+padronizados): $t=2{,}34$, $p=0{,}028$.
+\item \textbf{Sobrevive custo de transação agressivo}: mesmo a 150 pontos-base
+\emph{round-trip} por perna (bem acima do custo institucional típico no
+Brasil), sobra $+14{,}7\%$/ano líquido.
+\end{enumerate}
+
+\begin{table}[h]\centering\small
+\caption{Custo de transação: spread líquido, $h=1$}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Custo \emph{round-trip}/perna & Spread líquido (pp/mês) & Anualizado \\
+\midrule
+30 bps  & $3{,}55$ & $52{,}0\%$ \\
+50 bps  & $3{,}15$ & $45{,}1\%$ \\
+100 bps & $2{,}15$ & $29{,}1\%$ \\
+150 bps & $1{,}15$ & $14{,}7\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Por que não tratar isso como achado pronto}
+
+\begin{enumerate}
+\item \textbf{Magnitude implausível.} Spread bruto de $4{,}15$pp/mês
+($\sim$63\%/ano) é grande demais para ser um edge persistente e
+escalável --- as melhores anomalias documentadas na literatura acadêmica
+raramente passam de 15--20\%/ano \emph{bruto}. Historicamente, um número
+desse tamanho é sinal de amostra pequena ou período atípico, mais do que
+de descoberta genuína dessa escala.
+\item \textbf{Amostra pequena e dependente do período.} Só 21--24 meses
+de teste. Restringindo a só 2021 (excluindo o ano do crash/recuperação da
+COVID): o spread cai de $4{,}27$ para $2{,}50$pp/mês, e $p$ sobe de
+$0{,}027$ para $\mathbf{0{,}057}$ --- não passa mais de 5\%. Não dá para
+descartar que o efeito é, em boa parte, um artefato do período de
+volatilidade extrema, não um padrão estrutural do mercado brasileiro.
+\item \textbf{Falta controle por valor/\emph{book-to-market}.} Esse dado
+não existe no painel de holdings da CVM --- não foi possível descartar
+que o sinal é uma proxy de um fator de valor já conhecido.
+\item \textbf{Só significativo em $h=1$.} Consistente com a teoria
+(difusão de informação se resolve rápido), mas também consistente com
+sinal frágil que não generaliza.
+\end{enumerate}
+
+% ======================================================================
+\section{Conclusão e recomendação}
+
+Testados 16 candidatos de sinal ($\sim$115 especificações), cobrindo a
+literatura clássica (Coval-Stafford, Lou, Lakonishok-Shleifer-Vishny,
+Wermers, Chen-Hong-Stein) e a mais recente disponível (Koijen-Yogo e sua
+árvore de citações até 2025, McLean-Pontiff-Reilly 2025, Li-Sokolinski-Tamoni
+2026, Chincarini et al.\ 2026, Ying 2024). \textbf{Quinze foram rejeitados}
+com teste honesto fora da amostra. \textbf{Um (CIO Peer Momentum)
+sobreviveu} a todas as checagens de robustez aplicadas, mas carrega
+ressalvas sérias o suficiente para não ser tratado como resultado pronto.
+
+\textbf{Recomendação:} levar o CIO Peer Momentum ao orientador como pista
+de pesquisa --- não como achado a incorporar diretamente no TCC. Próximos
+passos, se decidirem seguir essa linha: (i) verificar se é possível
+estender o painel além de 2021 (mais anos de teste, menos dependência de
+um único período de crise); (ii) buscar uma fonte de dado de
+valor/\emph{book-to-market} para controle formal; (iii) considerar se o
+prazo do TCC comporta esse desvio, dado que é uma linha de pesquisa nova,
+não uma extensão direta do que já está escrito.
+
+\textbf{Para o restante da busca:} o padrão de rejeição limpa em 15 de 16
+candidatos, reforçado por evidência externa muito recente e independente
+(McLean-Pontiff-Reilly 2025; Li-Sokolinski-Tamoni 2026) de que o canal
+holdings/fluxo institucional $\to$ retorno é estruturalmente fraco mesmo
+em mercados muito mais líquidos e com muito mais dado que o brasileiro,
+é em si um resultado honesto e defensável --- consistente com, e reforça,
+a conclusão já publicada na Seção~6 do TCC.
+
+\end{document}
