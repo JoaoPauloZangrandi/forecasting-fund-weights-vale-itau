@@ -11,16 +11,20 @@
 \usepackage{placeins}
 \usepackage{longtable}
 \usepackage{float}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
 \usepackage[hidelinks]{hyperref}
 \setstretch{1.35}
 \captionsetup{font=small,labelsep=colon}
 \setcounter{tocdepth}{2}
 
-\title{Exploração de sinais de retorno a partir de holdings de fundos brasileiros\\
+\newtcolorbox{licao}[1]{colback=gray!8,colframe=gray!60,fonttitle=\bfseries,title={#1},breakable}
+
+\title{Exploração de sinal de lucro a partir de holdings de fundos brasileiros\\
 \large Documento de trabalho --- NÃO faz parte do TCC}
 \author{João Paulo Zangrandi\\
 Fundação Getulio Vargas --- Escola de Economia de São Paulo (FGV--EESP)}
-\date{14 de agosto de 2026}
+\date{15 de agosto de 2026}
 
 \begin{document}
 \maketitle
@@ -28,379 +32,641 @@ Fundação Getulio Vargas --- Escola de Economia de São Paulo (FGV--EESP)}
 \begin{center}
 \fbox{\parbox{0.9\textwidth}{\centering\small
 \textbf{Este documento é exploratório, não é parte do TCC oficial
-(\texttt{TCC\_finalV2.tex}).} Registra, com total transparência, TODOS os
-candidatos testados nesta rodada de pesquisa --- inclusive os rejeitados
---- para evitar qualquer viés de \emph{data snooping} (testar muitas
-hipóteses e reportar só a que "deu certo"). Nenhum conteúdo daqui deve
-entrar no TCC sem antes ser discutido com o orientador.}}
+(\texttt{TCC\_finalV2.tex}).} Registra, com total transparência, o processo
+completo de busca por um sinal de lucro a partir dos dados que o TCC já
+constrói --- mais de 700 especificações, quase 90 candidatos --- inclusive
+os rejeitados, e inclusive os que quase pareceram funcionar e não
+funcionavam de verdade. Nenhum conteúdo daqui deve entrar no TCC sem antes
+ser discutido com o orientador.}}
 \end{center}
 
 \tableofcontents
 \newpage
 
 % ======================================================================
-\section{Motivação e escopo}
+\section{Motivação e como ler este documento}
 
-A Seção 6 do TCC (``Aplicação: robô caça-replicantes'') detectou um
-fenômeno real e estatisticamente robusto --- fundos brasileiros replicam
-posições uns dos outros além do que características observáveis explicam
---- mas, ao testar se esse padrão convertido em sinal de fluxo previsto
-prediz \emph{retorno} futuro do ativo, o resultado foi um rejeição limpa
-($R^2$ entre 0,002\% e 0,165\%, nenhuma especificação economicamente
-relevante).
+O TCC mostra que dá para prever razoavelmente bem o \emph{peso} que um
+fundo brasileiro vai ter numa ação no mês seguinte. A pergunta natural
+depois disso é: será que essa previsibilidade serve para \textbf{ganhar
+dinheiro}? Prever o comportamento de um fundo não é a mesma coisa que
+prever o preço da ação que ele compra --- são perguntas relacionadas, mas
+diferentes, e a Seção 6 do TCC já mostrava um primeiro sinal de que a
+resposta pode ser não (o fluxo previsto dos fundos não prediz retorno da
+ação com $R^2$ acima de 0,2\%).
 
-Este documento registra uma busca sistemática por sinais alternativos,
-extraídos da literatura acadêmica de asset pricing institucional
-(clássica e a mais recente disponível, 2024--2026), testados contra a
-mesma base de dados (painel mensal CVM 2016--2021, holdings de fundos
-brasileiros de ações). \textbf{Nenhum resultado positivo foi assumido de
-antemão} --- o critério de sucesso, do início ao fim, foi sobreviver a
-teste fora da amostra (treino $<$jan/2020, teste $\geq$jan/2020, mesma
-disciplina usada em todo o TCC).
+Este documento é o registro completo de uma investigação muito mais ampla
+dessa pergunta: peguei tudo que os dados de holdings + preços permitem
+construir, pesquisei a literatura acadêmica de ponta a ponta atrás de
+mecanismos conhecidos que ligam posse institucional a retorno ou risco
+futuro, e testei cada um com o mesmo rigor usado no resto do TCC (fora da
+amostra, corte fixo treino/teste). O critério de honestidade é simples:
+\textbf{nada aqui vira ``achado'' sem sobreviver ao teste fora da amostra},
+e \textbf{todo} teste é registrado, com ou sem sucesso --- inclusive os
+casos em que um resultado parecia bom de cara e, investigando mais fundo,
+se revelou um artefato estatístico.
 
-\subsection{Por que registrar os candidatos rejeitados}
+\subsection{Por que registrar até o que não deu certo}
 
-Testar muitas especificações e reportar só a que passou é uma armadilha
-estatística conhecida (\emph{data dredging}/\emph{p-hacking}): a 5\% de
-significância, testar 20 hipóteses independentes produz, em média, 1
-``significativa'' por puro acaso. Este documento resolve isso registrando
-\textbf{todos} os $\sim$115 testes realizados, para que qualquer resultado
-positivo seja avaliado no contexto correto --- quantas tentativas foram
-necessárias para achá-lo.
+Se eu testar 100 ideias diferentes e reportar só a única que deu
+$p<0{,}05$, isso não prova nada --- é exatamente o que se espera por puro
+acaso (a 5\% de significância, 1 em cada 20 testes ``passa'' sem que exista
+efeito nenhum). É a armadilha estatística chamada \emph{data
+dredging}/\emph{p-hacking}. A defesa contra isso é registrar \textbf{tudo}
+e aplicar uma régua de significância mais dura conforme o número de testes
+cresce (correção de Bonferroni: com $N$ testes já feitos, o limiar vira
+$0{,}05/N$ em vez de $0{,}05$). Ao longo deste documento, o limiar de
+Bonferroni sobe de $0{,}05/250$ para $0{,}05/700$ conforme a contagem
+avança --- registrado em cada seção.
 
 % ======================================================================
-\section{Metodologia}
+\section{Metodologia comum a todo teste}
+\label{sec:metodologia}
 
-Todo candidato foi testado em duas camadas:
+Pense assim: se eu quiser saber se ``ações com característica X tendem a
+subir mais no mês seguinte'', a forma ingênua de testar seria juntar todas
+as observações ativo-mês numa pilha só e rodar um teste-t simples. O
+problema é que ações do \textbf{mesmo mês} sobem e descem juntas (todo o
+mercado reage aos mesmos eventos macro naquele mês) --- então essa pilha
+não tem, de verdade, tantas observações independentes quanto parece.
+Tratar 500 ações em 1 mês como 500 observações independentes é como jogar
+uma moeda 500 vezes mas anotar só o resultado do primeiro lançamento e
+repetir 500 vezes: parece muita informação, mas na prática você só tem 1
+lançamento real.
 
+A correção correta (\textbf{Fama-MacBeth}) é: a cada mês, calcular 1 único
+número resumindo o efeito daquele mês (o spread de retorno entre o
+quintil mais alto e o mais baixo da característica, por exemplo). No fim,
+sobra uma série temporal --- 1 número por mês, não 1 número por ação-mês
+--- e o teste de significância é feito \textbf{nessa série}, com o
+erro-padrão vindo da própria variação mês a mês. Isso é usado em
+\textbf{todo} teste deste documento, sem exceção, depois de um episódio
+(Seção~\ref{sec:comomentum}) mostrar concretamente o que acontece quando
+não se faz assim.
+
+Junto disso, três regras foram tratadas como inegociáveis do início ao fim:
+
+\begin{licao}{As 3 regras inegociáveis (violá-las já produziu 2 quase-falsos-positivos nesta exploração)}
 \begin{enumerate}
-\item \textbf{Regressão fora da amostra:} $\beta$ estimado só no período
-de treino ($<$jan/2020), aplicado fixo ao período de teste
-($\geq$jan/2020). Métrica: $R^2$ fora da amostra ($R^2_{\text{OOS}} = 1 -
-\text{SSE}_{\text{modelo}}/\text{SSE}_{\text{ingênua}}$), que pode ser
-\textbf{negativo} se o modelo piorar em relação a simplesmente prever a
-média do treino.
-\item \textbf{Long-short por quintil, Fama-MacBeth:} breakpoints de
-quintil calculados só no treino, aplicados ao teste. Comprar o quintil 5
-(sinal mais alto) e vender o quintil 1, \textbf{um spread por MÊS} (não
-por par ativo-mês) --- essencial porque retornos de ativos diferentes no
-mesmo mês são correlacionados entre si (fator de mercado comum); tratar
-cada par ativo-mês como observação independente infla artificialmente a
-significância (ver Seção~\ref{sec:armadilha}, um erro que quase produziu
-um falso positivo espetacular nesta própria exploração).
+\item Significância sempre via Fama-MacBeth de verdade (acima). Nunca teste-t pooled tratando ativo-mês como observação independente.
+\item Quintis/decis para carteiras long-short sempre recortados \textbf{a cada mês} (não com um corte fixo calculado no treino e aplicado ao teste) --- e sempre reportar o número mínimo de ativos por grupo-mês antes de confiar em qualquer resultado.
+\item Disciplina fora da amostra idêntica ao resto do TCC: treino $<$jan/2020, teste $\geq$jan/2020.
 \end{enumerate}
+\end{licao}
 
 % ======================================================================
-\section{Candidatos testados e rejeitados}
-\label{sec:rejeitados}
+\section{Parte I --- A busca por um sinal de RETORNO}
+\label{sec:retorno}
 
-\subsection{Flow-Induced Trading (Lou, 2012)}
+\subsection{Visão geral: 15 candidatos clássicos, 15 rejeições limpas}
 
-Pressão mecânica de compra/venda induzida por captação/resgate dos fundos
-que carregam um ativo, ponderada pelo tamanho da posição. Na amostra
-inteira parecia forte ($t$ entre $-4{,}6$ e $-6{,}1$, $p<0{,}00001$), mas
-o $\beta$ do treino é instável entre horizontes (chega a trocar de sinal)
-e o $R^2_{\text{OOS}}$ é \textbf{negativo} em 3 dos 5 horizontes
-testados.
+A primeira rodada testou a família de mecanismos mais estabelecida na
+literatura de finanças institucionais --- fluxo mecânico de fundos, herding,
+demanda revelada, breadth of ownership, demanda latente (resíduo do
+próprio modelo de peso da Etapa~1 do TCC) --- pesquisando a literatura
+clássica (Coval-Stafford 2007, Lou 2012, Lakonishok-Shleifer-Vishny 1992,
+Chen-Hong-Stein 2002, Koijen-Yogo 2019) e a mais recente disponível
+(McLean-Pontiff-Reilly 2025, Li-Sokolinski-Tamoni 2026, Chincarini et al.\
+2026). Nenhum sobreviveu ao teste fora da amostra.
 
-\begin{table}[h]\centering\small
-\caption{FIT (Lou 2012) --- teste fora da amostra}
-\begin{tabular}{@{}lrrr@{}}
+\begin{table}[H]\centering\small
+\caption{Resumo dos 12 candidatos clássicos rejeitados (retorno)}
+\begin{tabular}{@{}p{5.2cm}p{7.5cm}@{}}
 \toprule
-Horizonte & $\beta$ (treino) & $R^2_{\text{OOS}}$ & Margem vs.\ ingênua \\
+Candidato & Resultado \\
 \midrule
-$h=0$  & $-0{,}021$ & $+0{,}08\%$  & $+0{,}04\%$ \\
-$h=1$  & $+0{,}063$ & $-0{,}39\%$  & $-0{,}20\%$ \\
-$h=3$  & $-0{,}268$ & $-2{,}79\%$  & $-1{,}38\%$ \\
-$h=6$  & $-0{,}214$ & $-0{,}21\%$  & $-0{,}11\%$ \\
-$h=12$ & $-0{,}138$ & $+0{,}17\%$  & $+0{,}09\%$ \\
+Flow-Induced Trading (Lou 2012) & $R^2_{\text{OOS}}$ negativo em 3 de 5 horizontes; $\beta$ instável, chega a trocar de sinal \\
+Herding (LSV 1992) & $R^2_{\text{OOS}}$ entre $-0{,}015\%$ e $0{,}088\%$ \\
+Demanda agregada revelada & $R^2_{\text{OOS}}$ entre $-0{,}08\%$ e $0{,}18\%$ \\
+Fire sale extremo (Coval-Stafford) & $R^2_{\text{OOS}}$ negativo em 3 de 4 horizontes \\
+Sinal dos fundos-líder & $R^2_{\text{OOS}}$ entre $-0{,}001\%$ e $0{,}011\%$ \\
+Breadth of Ownership (CHS 2002) & $R^2_{\text{OOS}}$ negativo em todos; $p_{\text{FM}}>0{,}46$ \\
+Latent Demand (Koijen-Yogo) & melhor caso $p_{\text{FM}}=0{,}078$ \\
+Líderes ponderados por skill & melhor caso $p_{\text{FM}}=0{,}059$ \\
+Restrição a small caps (3 sinais) & todos $p_{\text{FM}}$ entre $0{,}22$ e $0{,}82$ \\
+E[FIT] (fluxo esperado, Lou fiel) & $R^2_{\text{OOS}}$ positivo mas $p_{\text{FM}}$ entre $0{,}21$ e $0{,}95$ \\
+FIT suavizado (média móvel) & $h=3$ isolado passa ($p=0{,}048$), inconsistente com vizinhos \\
+Ownership $\times$ Momentum & sinal oposto ao hipotetizado, inconsistente entre horizontes \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Herding (Lakonishok-Shleifer-Vishny 1992)}
+\subsection{Aprofundamento: a saga do CIO Peer Momentum}
+\label{sec:cio}
 
-Proporção de fundos compradores vs.\ vendedores de um ativo, relativa à
-média do mercado naquele mês. $R^2_{\text{OOS}}$: $h=1$: $0{,}004\%$;
-$h=3$: $-0{,}015\%$; $h=6$: $0{,}088\%$. Todos irrisórios.
+De \textbf{um} candidato entre dezenas, um se destacou --- e sua história
+é o fio condutor mais importante de todo este documento, porque passou por
+três fases muito diferentes: pareceu promissor, quase virou um
+falso-positivo por um erro metodológico sutil, foi corrigido e ficou
+\emph{mais} forte, e morreu no fim por um motivo totalmente diferente
+(iliquidez), não por falta de significância estatística.
 
-\subsection{Demanda agregada revelada}
+\subsubsection{O mecanismo}
 
-Variação \% do valor total (R\$) mantido pelo conjunto de fundos num
-ativo --- diferente do FIT (pressão mecânica), aqui é o que os fundos
-\emph{realmente fizeram}. $R^2_{\text{OOS}}$: $h=1$: $-0{,}08\%$; $h=3$:
-$0{,}01\%$; $h=6$: $0{,}18\%$ (melhor dos três, ainda irrisório).
+Ying (2024, \emph{Journal of Financial Economics}) documenta que ações com
+donos institucionais em comum exibem difusão \textbf{gradual} de
+informação: quando um fundo reage a uma notícia sobre a ação A, ele
+demora a reajustar posições nas \textbf{outras} ações (B, C, D\ldots) que
+também carrega --- então o retorno da ``vizinhança de ownership'' de uma
+ação hoje deveria prever o retorno da própria ação no mês seguinte. A
+vizinhança é medida por similaridade de cosseno entre os vetores de posição
+em R\$ de cada fundo (quanto mais parecida a carteira de fundos que possuem
+duas ações, mais ``vizinhas'' elas são).
 
-\subsection{Fire sale extremo (Coval-Stafford 2007)}
+\subsubsection{Fase 1: o achado inicial, promissor com ressalvas}
 
-Restrito aos 5\% de ativo-mês com pressão de venda mecânica mais extrema
-(hipótese: efeito concentrado em eventos extremos, não na média). $R^2$
-fora da amostra negativo em 3 dos 4 horizontes ($-0{,}64\%$ em $h=1$).
+O primeiro teste (candidato \#15, metodologia inicial) achou, em $h=1$
+(retorno do mês seguinte): $R^2_{\text{OOS}}=+1{,}55\%$ (o maior de toda a
+busca até então), Fama-MacBeth $t=2{,}51$, $p=0{,}021$. Passou em quase
+todas as checagens de robustez da época --- amostra saudável, sobrevive a
+controlar pelo retorno próprio da ação, sobrevive a 3 controles
+simultâneos (tamanho, beta, retorno próprio: $t=2{,}34$, $p=0{,}028$),
+sobrevive a custo de transação agressivo. Mas tinha duas rachaduras: a
+magnitude bruta ($4{,}15$pp/mês, $\sim$63\%/ano) era grande demais para
+ser plausível como estratégia real e persistente, e excluindo o ano de
+2020 (deixando só 2021), o resultado enfraquecia para $p=0{,}057$ --- não
+passava mais de 5\%. Foi registrado como ``candidato promissor, não achado
+pronto'' e o documento anterior a este parou por aqui.
 
-\subsection{Sinal dos fundos-líder}
+\subsubsection{Fase 2: quase um segundo falso-positivo, pego a tempo}
 
-Testa se o que os 1.754 fundos identificados como líderes na Seção~6 do
-TCC fazem, agregado por ativo-mês, prediz retorno --- em vez do fluxo do
-\emph{seguidor} (já testado e rejeitado no TCC). $R^2_{\text{OOS}}$ entre
-$-0{,}001\%$ e $0{,}011\%$. Nem os líderes têm sinal detectável.
+Ao retomar a investigação para tentar transformar esse sinal em algo
+monetizável, reconstruí a carteira long-short do CIO Peer Momentum como
+uma série de retorno de portfólio de verdade (não só um coeficiente de
+regressão) --- e o resultado bateu diferente do esperado: Sharpe muito
+mais alto do que fazia sentido crer de cara. Isso acendeu um alerta:
+por que tão diferente do teste original?
 
-\subsection{Breadth of Ownership (Chen-Hong-Stein 2002)}
+A resposta, ao comparar as duas metodologias lado a lado na mesma base de
+dados, foi desconfortavelmente familiar: o teste original (candidato
+\#15/16) formava os quintis de long-short usando \textbf{breaks fixos
+calculados no período de treino}, aplicados ao período de teste. Isso
+parece razoável à primeira vista, mas quebra quando a distribuição do
+sinal muda de regime entre treino e teste (o que aconteceu, dado que 2020
+foi um ano de volatilidade atípica): em vários meses do teste, quase
+\textbf{todas} as ações caíam no mesmo quintil, sobrando só \textbf{1
+única ação} na perna oposta.
 
-Variação do número de fundos distintos com posição positiva no ativo
-(margem extensiva, não ponderada por R\$ --- diferente de tudo mais
-testado). $R^2_{\text{OOS}}$ negativo em todos os horizontes; Fama-MacBeth
-$p>0{,}46$ em todos.
-
-\subsection{Latent Demand (Koijen-Yogo 2019)}
-
-Resíduo do modelo de peso esperado da Etapa~1 do TCC, agregado por
-ativo-mês e ponderado por AUM --- usado direto como preditor, sem passar
-pela conversão em ``fluxo do robô''. Nível: melhor caso $p_{\text{FM}} =
-0{,}078$. Choque (variação mês a mês): melhor caso $p_{\text{FM}} =
-0{,}21$. Nada sobrevive.
-
-\subsection{Líderes ponderados por skill (Cohen-Coval-Pástor 2005)}
-
-Pondera (ou filtra ao top quintil) o sinal dos líderes pelo retorno
-acumulado de 12 meses do próprio fundo --- testa se o sinal só existe
-quando vem de gestores historicamente bons. Melhor caso: $h=1$,
-$p_{\text{FM}} = 0{,}059$ --- perto, mas não passa de 5\%, e com $\sim$50
-especificações já testadas nesse ponto, um $p\approx0{,}06$ é a taxa de
-falso-positivo esperada por acaso.
-
-\subsection{Restrição a small caps}
-
-Literatura documenta efeitos mais fortes em ações menores/menos líquidas.
-Testados FIT, demanda revelada e herding restritos ao terço de ativos com
-menor valor mantido pelos fundos. Nenhum melhora (todos $p_{\text{FM}}$
-entre $0{,}22$ e $0{,}82$).
-
-\subsection{E[FIT] --- fluxo esperado (Lou 2012, construção fiel)}
-
-Lou usa fluxo \emph{esperado} (previsto por desempenho passado do fundo),
-não realizado. $R^2_{\text{OOS}}$ positivo e consistente ($h=1$:
-$0{,}47\%$; $h=3$: $0{,}62\%$; $h=6$: $0{,}52\%$ --- único candidato com
-$R^2$ OOS consistentemente positivo antes do CIO Peer Momentum), mas
-Fama-MacBeth não confirma ($p$ entre $0{,}21$ e $0{,}95$) --- a melhora de
-ajuste não vira estratégia direcional executável.
-
-\subsection{FIT suavizado (média móvel 3 meses)}
-
-$h=3$ passa de 5\% ($t=2{,}10$, $p=0{,}048$), mas isolado entre os outros
-4 horizontes do mesmo sinal (todos $p>0{,}49$) --- padrão inconsistente
-entre horizontes vizinhos, típico de falso-positivo.
-
-\subsection{Crowding (proxy sem dado de ADV, Chincarini et al.\ 2026)}
-
-Sem dado de liquidez/volume diário, usei HHI de posse entre fundos como
-proxy. $R^2_{\text{OOS}}$ positivo e consistente ($0{,}13$--$0{,}29\%$),
-mas Fama-MacBeth não confirma (melhor caso $p=0{,}085$). Checagem
-específica do mecanismo de crash (crowding pré-COVID deveria prever queda
-maior no crash) deu o \textbf{sinal oposto} ao esperado pela teoria
-($\text{corr}=0{,}148$, $p=0{,}026$, $n=224$, evento único).
-
-\subsection{Comomentum (Lou \& Polk) --- investigado a fundo, confirmado como artefato}
-\label{sec:armadilha}
-
-Candidato com a evidência mais forte da literatura ($\sim$9\%/ano,
-identificação quase-causal), adaptado para dado mensal (a literatura
-original usa retorno semanal). \textbf{Primeira leitura pareceu
-excelente}: $h=6$, Fama-MacBeth $t=2{,}21$, $p=0{,}041$ --- passa de 5\%.
-
-Mas a magnitude (spread médio $+6{,}08$ p.p.\ por \textbf{mês}) é
-implausível --- anualizado, mais de 100\%/ano. Investigação dedicada
-revelou por quê: os ``quintis'' de comomentum dentro do decil de maior
-momentum têm entre \textbf{1 e 13 ações por mês} --- com grupos desse
-tamanho, a ``média do quintil'' é dominada por retorno idiossincrático de
-1--2 ativos, não por um padrão sistemático. Um único mês (set/2021)
-contribuiu $+43{,}6$ p.p.\ de spread sozinho. Excluir os meses do crash da
-COVID não resolve (spread continua $\sim7{,}25$pp/mês, $p=0{,}05$) ---
-confirmando que o problema é tamanho de amostra insuficiente, não um
-episódio específico.
-
-\textbf{Lição registrada:} sempre que um resultado ``significativo'' tiver
-magnitude implausível (muito maior que qualquer estratégia real
-documentada na literatura), investigar a composição da amostra antes de
-acreditar --- não basta olhar o $p$-valor.
-
-\subsection{Ownership $\times$ Momentum (interação condicional)}
-
-Hipótese (evidência de mercado chinês): momentum é mais forte em ações
-com alta propriedade institucional. \textbf{Resultado oposto ao
-hipotetizado}, e inconsistente entre horizontes --- interação negativa e
-significativa em $h=3$ ($p=0{,}037$), positiva e significativa em $h=12$
-($p=0{,}022$, sinal invertido). Testando por grupo: o spread de momentum é
-\emph{maior} no terço de \textbf{baixa} propriedade institucional
-($h=1$: $+4{,}53$pp/mês, $p=0{,}028$) do que no de alta ($+1{,}80$pp/mês,
-$p=0{,}18$) --- literalmente o oposto do paper chinês. Interpretação
-possível (não hipotetizada de início): menos capital institucional
-sofisticado pode significar menos arbitragem corroendo o efeito momentum
---- consistente com a literatura geral de limites à arbitragem, mas não o
-mecanismo específico testado.
-
-% ======================================================================
-\section{Literatura pesquisada}
-
-Três rodadas de pesquisa (SSRN, NBER, \emph{Journal of Finance},
-\emph{Journal of Financial Economics}, \emph{Review of Financial
-Studies}, literatura brasileira), resumidas aqui; ver os arquivos
-\texttt{LOG\_LITERATURA\_RODADA[1-3].md} para o detalhe completo com
-links.
-
-\subsection{Achado mais importante: evidência externa muito recente}
-
-Dois papers de 2025--2026 (\emph{Journal of Financial Economics}) testaram
-exatamente esta classe de pergunta --- fluxo/holdings institucionais
-prevendo retorno --- em bases americanas muito maiores e mais ricas que a
-nossa:
-
-\begin{itemize}
-\item \textbf{McLean, Pontiff \& Reilly (2025)}, ``Taking Sides on Return
-Predictability'': testando 193 preditores de retorno combinados contra 9
-tipos de investidor, \textbf{nenhuma} das 6 categorias institucionais
-(incluindo fundos mútuos) tem trade que prediga retorno de forma
-confiável --- só firmas e vendedores a descoberto acertam a direção.
-\item \textbf{Li, Sokolinski \& Tamoni (2026)}: decompondo retorno de
-anomalias por tipo de investidor, o canal institucional é ``secundário e
-concentrado em anomalias específicas'' --- investidor pequeno domina.
-\end{itemize}
-
-Isso não prova que não existe sinal no Brasil, mas eleva a régua de
-ceticismo: a literatura mais rigorosa e atual está encontrando,
-independentemente deste projeto, o mesmo padrão nulo que os 15 candidatos
-rejeitados aqui sugerem.
-
-\subsection{Checagem Wardlaw (2020)}
-
-Verificado explicitamente: a métrica de fluxo usada em toda esta
-exploração (\texttt{flow\_aum} = captação/resgate \emph{diário} reportado
-diretamente pela CVM, dividido por AUM do fechamento do mês
-\textbf{anterior}) \textbf{não tem} a contaminação mecânica que Wardlaw
-(\emph{Journal of Finance} 2020) identificou na literatura clássica de
-\emph{fire sales} (onde o fluxo é back-out de variação de patrimônio, que
-embute o próprio retorno do período). Os resultados nulos encontrados
-aqui não são artefato dessa construção específica.
-
-% ======================================================================
-\section{O candidato que sobreviveu: CIO Peer Momentum}
-
-\subsection{Mecanismo}
-
-Ying (2024, \emph{Journal of Financial Economics}): ações com donos
-institucionais em comum exibem difusão gradual de informação --- o
-retorno da ``vizinhança de ownership'' (ponderado pela força da
-sobreposição de posições, medida por similaridade de cosseno ponderada
-por AUM) hoje prediz o retorno da própria ação no mês seguinte.
-Frequência mensal nativa no mecanismo --- diferente do Comomentum
-(Seção~\ref{sec:armadilha}), que exigia dado semanal e por isso deu
-artefato.
-
-\subsection{Resultados}
-
-\begin{table}[h]\centering\small
-\caption{CIO Peer Momentum --- teste fora da amostra por horizonte}
-\begin{tabular}{@{}lrrrr@{}}
-\toprule
-Horizonte & $R^2_{\text{OOS}}$ & Meses de teste & $t$ (Fama-MacBeth) & $p$ \\
-\midrule
-$h=1$  & $+1{,}55\%$ & 21 & $2{,}51$ & $\mathbf{0{,}021}$ \\
-$h=3$  & $+1{,}91\%$ & 18 & $0{,}76$ & $0{,}457$ \\
-$h=6$  & $-1{,}70\%$ & 16 & $0{,}47$ & $0{,}647$ \\
-$h=12$ & $-3{,}07\%$ & 10 & $0{,}47$ & $0{,}650$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Checagens de robustez (todas passaram)}
-
-\begin{enumerate}
-\item \textbf{Tamanho de amostra saudável}: mediana de 46 ações por
-quintil-mês (contra 1--13 do Comomentum) --- não é o artefato que matou o
-candidato anterior.
-\item \textbf{Sobrevive controlando pelo retorno próprio da ação} no
-mesmo mês: coeficiente do \texttt{peer\_ret} quase não muda
-($0{,}113\to0{,}105$) quando o retorno próprio entra na regressão, e o
-retorno próprio perde toda significância ($t=0{,}86$, $p=0{,}39$) ---
-evidência direta contra a hipótese de que é só comovimento mecânico
-(ressalva de Burt \& Hrdlicka 2021, \emph{JFQA}, que decompõe esse tipo de
-previsibilidade em contágio informacional genuíno vs.\ comovimento
-mecânico).
-\item \textbf{Robusto à exclusão do mês mais fino} da amostra (spread
-quase idêntico com/sem).
-\item \textbf{Direção consistente}: 71\% dos meses (15 de 21) com spread
-positivo.
-\item \textbf{Sobrevive regressão Fama-MacBeth com 3 controles
-simultâneos} (tamanho, beta, retorno próprio, coeficientes
-padronizados): $t=2{,}34$, $p=0{,}028$.
-\item \textbf{Sobrevive custo de transação agressivo}: mesmo a 150 pontos-base
-\emph{round-trip} por perna (bem acima do custo institucional típico no
-Brasil), sobra $+14{,}7\%$/ano líquido.
-\end{enumerate}
-
-\begin{table}[h]\centering\small
-\caption{Custo de transação: spread líquido, $h=1$}
+\begin{table}[H]\centering\small
+\caption{Método antigo (breaks fixos do treino): exemplos de quintis degenerados}
 \begin{tabular}{@{}lrr@{}}
 \toprule
-Custo \emph{round-trip}/perna & Spread líquido (pp/mês) & Anualizado \\
+Mês & N na perna ``curta'' & N na perna ``longa'' \\
 \midrule
-30 bps  & $3{,}55$ & $52{,}0\%$ \\
-50 bps  & $3{,}15$ & $45{,}1\%$ \\
-100 bps & $2{,}15$ & $29{,}1\%$ \\
-150 bps & $1{,}15$ & $14{,}7\%$ \\
+fev/2020 & 257 & \textbf{1} \\
+abr/2020 & \textbf{1} & 242 \\
+out/2021 & 336 & \textbf{1} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Por que não tratar isso como achado pronto}
+Isso é \textbf{exatamente} o mesmo tipo de artefato que já havia produzido
+um falso-positivo com o candidato Comomentum
+(Seção~\ref{sec:comomentum}) --- só que ninguém tinha percebido, porque o
+teste original só olhava o $t$-estatístico agregado, nunca o $N$ por
+grupo-mês.
 
-\begin{enumerate}
-\item \textbf{Magnitude implausível.} Spread bruto de $4{,}15$pp/mês
-($\sim$63\%/ano) é grande demais para ser um edge persistente e
-escalável --- as melhores anomalias documentadas na literatura acadêmica
-raramente passam de 15--20\%/ano \emph{bruto}. Historicamente, um número
-desse tamanho é sinal de amostra pequena ou período atípico, mais do que
-de descoberta genuína dessa escala.
-\item \textbf{Amostra pequena e dependente do período.} Só 21--24 meses
-de teste. Restringindo a só 2021 (excluindo o ano do crash/recuperação da
-COVID): o spread cai de $4{,}27$ para $2{,}50$pp/mês, e $p$ sobe de
-$0{,}027$ para $\mathbf{0{,}057}$ --- não passa mais de 5\%. Não dá para
-descartar que o efeito é, em boa parte, um artefato do período de
-volatilidade extrema, não um padrão estrutural do mercado brasileiro.
-\item \textbf{Falta controle por valor/\emph{book-to-market}.} Esse dado
-não existe no painel de holdings da CVM --- não foi possível descartar
-que o sinal é uma proxy de um fator de valor já conhecido.
-\item \textbf{Só significativo em $h=1$.} Consistente com a teoria
-(difusão de informação se resolve rápido), mas também consistente com
-sinal frágil que não generaliza.
-\end{enumerate}
+\subsubsection{A correção: quintil recortado a cada mês}
+
+Repetindo o teste com quintis recalculados a cada mês (padrão
+Fama-French, a prática correta), o resultado mudou de forma reveladora: os
+grupos ficaram sempre saudáveis (\textbf{mínimo de 53 ações} por perna,
+nunca degenerado), e o sinal \textbf{ficou mais forte}, não mais fraco.
+
+\begin{table}[H]\centering\small
+\caption{CIO Peer Momentum: método antigo vs.\ corrigido, $h=1$}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Métrica & Método antigo (breaks fixos) & Método corrigido (recorte mensal) \\
+\midrule
+$N$ mínimo por perna & 1 (degenerado) & 53 \\
+Sharpe (24 meses) & 1,895 (inflado por artefato) & 1,531 \\
+$p$ (24 meses) & 0,021 & 0,041 \\
+$p$ (só 2021, sem COVID) & \textbf{0,057} (não passa 5\%) & \textbf{0,026} (mais forte!) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+O padrão que antes parecia uma fraqueza --- o resultado sumir sem 2020 ---
+era, na verdade, um artefato da metodologia de corte fixo interagindo mal
+justamente com o ano atípico. Corrigido, o sinal sobrevive: Fama-MacBeth
+com controles de tamanho, beta e retorno próprio dá $t=2{,}22$,
+$p=0{,}037$; $h=3$ ($t=1{,}48$, $p=0{,}154$) e $h=6$ ($t=1{,}76$,
+$p=0{,}095$) continuam mais fracos, consistente com a teoria de que a
+difusão de informação se resolve rápido.
+
+\begin{licao}{Lição \#2: um resultado que ``enfraquece sem 2020'' pode ser o sintoma de um bug, não de fragilidade genuína}
+Antes de aceitar que um sinal só existe ``por causa da COVID'', verifique
+se o teste continua metodologicamente correto (grupos saudáveis) dentro e
+fora dessa janela. Aqui, o problema não era o período --- era que o corte
+fixo de quintil, calibrado no treino, ficava mal calibrado justamente no
+período de maior mudança de regime.
+\end{licao}
+
+\subsubsection{Fase 3: a morte por iliquidez, não por falta de significância}
+
+Com o sinal estatisticamente mais sólido do que nunca, o passo óbvio era
+testar se dava para transformá-lo em estratégia. Duas checagens mataram
+essa esperança:
+
+\textbf{Custo de transação.} Com apenas 100 pontos-base de custo
+\emph{round-trip} por perna --- não é um custo agressivo --- o resultado
+líquido já fica \textbf{negativo} ($-4{,}2\%$/ano). Só sobra algo
+realmente positivo com custo muito baixo (30bps, $+12{,}6\%$/ano),
+irrealista para o tipo de papel envolvido.
+
+\textbf{Composição da perna vendida.} Os tickers mais frequentes na perna
+que a estratégia manda vender são: CEEB3, CEED3, DOHL4, CEED4, KLBN4,
+MDNE3, CSRN3, HBOR3, RAPT3, TRIS3, CARD3, CMIG4, EVEN3, GFSA3 --- em boa
+parte, small/micro caps com aluguel de ação (necessário para venda a
+descoberto) provavelmente caro demais ou simplesmente indisponível no
+Brasil.
+
+Restringindo o universo a ações realmente líquidas (top 1/3 a 2/3 por
+posse institucional total) \textbf{desde o início}, os dois testes que
+restam contam a história completa:
+
+\begin{table}[H]\centering\small
+\caption{CIO Peer Momentum, universo restrito a ações líquidas}
+\begin{tabular}{@{}p{6.5cm}rr@{}}
+\toprule
+Versão & Resultado & Interpretação \\
+\midrule
+Long-only (só comprar o quintil top, universo líquido) &
+excesso $\approx 0$, $t\approx 0{,}02$--$0{,}21$, $p>0{,}8$ &
+sem valor nenhum \\
+Long-short (universo líquido top 33\%) &
+Sharpe $=1{,}04$, $t=1{,}48$, $p=0{,}154$ &
+perde significância \\
+Long-short (universo líquido top 50\%) &
+Sharpe $=1{,}26$, $t=1{,}79$, $p=0{,}087$ &
+perde significância \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A conclusão mais importante desses números: \textbf{o lucro inteiro do
+long-short vinha da perna vendida em papéis ilíquidos}. A perna comprada
+sozinha --- a única parte que um fundo tradicional (majoritariamente
+\emph{long-only}, como os que o TCC estuda) conseguiria de fato
+implementar --- não tem valor algum.
+
+\begin{licao}{Lição \#3: ``achado estatisticamente real'' $\neq$ ``estratégia implementável''}
+O CIO Peer Momentum é, tecnicamente, o resultado mais limpo e robusto de
+toda a busca por sinal de retorno. E mesmo assim não é um sinal de lucro
+tradeable --- porque a fonte do retorno é uma posição que a maioria dos
+fundos reais não consegue montar. Duas perguntas diferentes: ``isso é
+real?'' e ``dá para lucrar com isso?''.
+\end{licao}
+
+\subsection{Resumo dos $\sim$75 candidatos adicionais de retorno testados}
+
+Depois da correção do CIO Peer Momentum, uma rodada final testou
+praticamente todo ângulo metodológico razoável ainda não coberto,
+explicitamente relaxando a exigência de tradeabilidade (o objetivo virou
+achar \emph{qualquer} sinal estatisticamente defensável, mesmo sem ser
+implementável na prática). Seis agentes de pesquisa trabalharam em
+paralelo, cada um cobrindo uma família de mecanismos, todos seguindo as 3
+regras inegociáveis da Seção~\ref{sec:metodologia}.
+
+\begin{longtable}{@{}p{5.5cm}p{7.2cm}@{}}
+\caption{Resumo compacto de todos os ângulos adicionais testados (retorno)}\\
+\toprule
+Família de sinal & Resultado \\
+\midrule
+\endhead
+Anomalias clássicas (52-week high, reversão curto prazo, idio-vol) & nulo isoladamente; melhor interação com ownership $p=0{,}0048$, não bate Bonferroni \\
+52-week-high $\times$ HHI (double-sort) & inverteu de direção vs.\ interação com tamanho de posse; nenhuma versão bate Bonferroni \\
+Comomentum (ver Seção~\ref{sec:comomentum}) & falso-positivo identificado e descartado \\
+Stock IQ (Cao-Fang-Lee) & nulo em todas as especificações \\
+Ensemble de Machine Learning (candidato original) & nulo/fraco \\
+Grid search sistemático (108 especificações, CIO) & confirma $h=1$ robusto, $h=3$ definitivamente nulo \\
+Window dressing / calendário & nulo \\
+Persistência de performance de FUNDO & rejeitada (44 especificações) \\
+Low volatility (Brasil) & nulo isolado e interagido com ownership/CIO \\
+CIO $\times$ volatilidade prevista & interação nula ($t=0{,}07$) \\
+Combinação de 3 sinais (CIO+52wk-high+reversão) & melhor resultado da rodada, $p=0{,}030$, ainda longe de Bonferroni \\
+Choque/atenção via variação de posição & nulo limpo \\
+CIO $\times$ beta do fundo (segmentação por convicção) & inconsistente entre horizontes, ruído \\
+Best ideas / convicção crescente (Cohen-Polk-Silli) & nulo, poder estatístico baixo \\
+Ranking composto multi-sinal (3 métodos) & todos nulos; combinar sinais fracos piora o único sinal real \\
+Centralidade de rede de posse (grau, autovetor) & achado promissor revelado como confound de tamanho ($r=0{,}67$--$0{,}73$) \\
+Regime de vol $\times$ sinais existentes (breadth, herding, E[FIT], reversão) & 2 quase-acertos, ambos artefatos (ver Seção~\ref{sec:quase}) \\
+Dispersão de crenças entre fundos (DMS 2002) & nulo/invertido; variação da dispersão não sobrevive a controles \\
+Rotação setorial via fluxo institucional & nulo (proxy heurística de setor, 72\% dos tickers classificados) \\
+Pairs trading via overlap de posse (CIO) & nenhuma evidência de reversão; sinal de continuação nunca robusto \\
+ML walk-forward (XGBoost raso, refit semestral) & $R^2_{\text{OOS}}$ pequeno/negativo; nenhum long-short significativo \\
+Outros 4 choques de mercado (retorno) & nulo, confirma o padrão da COVID (Seção~\ref{sec:vol-eventos}) \\
+Tamanho médio dos fundos donos $\to$ retorno & $p$ entre 0,01 e 0,04, não bate Bonferroni, plausível efeito-tamanho disfarçado \\
+\bottomrule
+\end{longtable}
+
+\textbf{Nenhum desses $\sim$75 candidatos adicionais produziu um sinal de
+retorno novo, robusto e independente do CIO Peer Momentum.}
 
 % ======================================================================
-\section{Conclusão e recomendação}
+\section{Parte II --- A busca por um sinal de VOLATILIDADE}
+\label{sec:vol}
 
-Testados 16 candidatos de sinal ($\sim$115 especificações), cobrindo a
-literatura clássica (Coval-Stafford, Lou, Lakonishok-Shleifer-Vishny,
-Wermers, Chen-Hong-Stein) e a mais recente disponível (Koijen-Yogo e sua
-árvore de citações até 2025, McLean-Pontiff-Reilly 2025, Li-Sokolinski-Tamoni
-2026, Chincarini et al.\ 2026, Ying 2024). \textbf{Quinze foram rejeitados}
-com teste honesto fora da amostra. \textbf{Um (CIO Peer Momentum)
-sobreviveu} a todas as checagens de robustez aplicadas, mas carrega
-ressalvas sérias o suficiente para não ser tratado como resultado pronto.
+Um giro importante na investigação: em vez de perguntar ``será que
+holdings de fundos preveem \emph{para onde} o preço vai'', perguntar
+``será que preveem \emph{o quanto} o preço vai oscilar''. É uma pergunta
+diferente --- e, ao contrário de tudo na Parte I, a resposta aqui foi sim,
+de forma robusta.
 
-\textbf{Recomendação:} levar o CIO Peer Momentum ao orientador como pista
-de pesquisa --- não como achado a incorporar diretamente no TCC. Próximos
-passos, se decidirem seguir essa linha: (i) verificar se é possível
-estender o painel além de 2021 (mais anos de teste, menos dependência de
-um único período de crise); (ii) buscar uma fonte de dado de
-valor/\emph{book-to-market} para controle formal; (iii) considerar se o
-prazo do TCC comporta esse desvio, dado que é uma linha de pesquisa nova,
-não uma extensão direta do que já está escrito.
+\subsection{O mecanismo: fragilidade de posse (Greenwood \& Thesmar 2011)}
 
-\textbf{Para o restante da busca:} o padrão de rejeição limpa em 15 de 16
-candidatos, reforçado por evidência externa muito recente e independente
-(McLean-Pontiff-Reilly 2025; Li-Sokolinski-Tamoni 2026) de que o canal
-holdings/fluxo institucional $\to$ retorno é estruturalmente fraco mesmo
-em mercados muito mais líquidos e com muito mais dado que o brasileiro,
-é em si um resultado honesto e defensável --- consistente com, e reforça,
-a conclusão já publicada na Seção~6 do TCC.
+A intuição, com uma analogia: pense numa festa lotada, mas com todo mundo
+saindo por 2 portas apertadas em vez de 8 portas largas. Se algo assusta a
+multidão, a saída pelas 2 portas vira um tumulto muito pior do que se
+houvesse 8 saídas para distribuir a pressão. Uma ação com posse
+concentrada em poucos fundos grandes é como a festa das 2 portas: se um
+desses fundos precisar vender rápido (resgate, mudança de estratégia,
+crise), não tem quem absorva a venda suavemente, e o preço oscila muito
+mais. Uma ação espalhada entre centenas de fundos pequenos tem ``mais
+portas'' --- a saída de qualquer um deles pesa pouco no total.
+
+Greenwood \& Thesmar (2011, \emph{Journal of Financial Economics}) formalizam
+essa intuição e mostram, com dados americanos, que a concentração de posse
+institucional (medida por um índice tipo Herfindahl-Hirschman, HHI, sobre
+a participação de cada fundo no total detido da ação) prediz volatilidade
+futura --- \textbf{não} retorno futuro. É exatamente o mesmo mecanismo
+teórico já usado no outro TCC do autor (\texttt{forecasting-exposure-itub4},
+sobre risco de fundo-sobre-fundo), aqui replicado com um mecanismo/dado
+diferente.
+
+\subsection{Validação: da correlação simples ao benchmark rigoroso}
+
+\begin{table}[H]\centering\small
+\caption{HHI de posse $\to$ volatilidade futura, $h=12$ (Fama-MacBeth mês a mês)}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Especificação & $t$ & $p$ & Observação \\
+\midrule
+Só HHI & 8,98 & $<0{,}0001$ & 17 meses de teste válidos \\
+HHI + vol.\ passada (controle) & 3,05 & 0,0076 & sobrevive ao controle mais óbvio \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Mas será que HHI só está reproduzindo o que a própria volatilidade passada
+já diz (fato estilizado bem conhecido: vol.\ passada prediz vol.\ futura)?
+O teste decisivo foi um benchmark HAR-RV (Heterogeneous Autoregressive
+Realized Volatility --- usa 3 janelas de volatilidade passada, não só 1) e
+comparar o ganho de $R^2$ fora da amostra ao adicionar HHI:
+
+\begin{table}[H]\centering\small
+\caption{Ganho de $R^2_{\text{OOS}}$ ao adicionar HHI sobre o benchmark HAR-RV}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Horizonte & Só vol.\ 12m & HAR (3 janelas) & HAR + HHI & Ganho \\
+\midrule
+$h=3$  & 6,14\% & 6,86\% & 6,88\% & $+0{,}02$pp --- nada \\
+$h=6$  & 8,29\% & 8,96\% & 9,36\% & $+0{,}40$pp --- pequeno \\
+$h=12$ & 0,25\% & 0,20\% & 1,42\% & $+1{,}22$pp --- \textbf{$\sim$7$\times$ o benchmark} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Em horizontes curtos, a volatilidade passada já explica quase tudo que HHI
+explicaria. Mas em \textbf{12 meses}, a persistência mecânica de curto
+prazo praticamente para de funcionar --- e é exatamente aí que a
+fragilidade de posse mostra sua contribuição mais clara. Isso bate com a
+leitura teórica: fragilidade é sobre risco de \textbf{liquidação
+coordenada}, um evento de cauda que se manifesta mais em horizontes
+longos, não uma persistência de curto prazo.
+
+\subsection{Réplica em 4 outros choques de mercado brasileiro}
+\label{sec:vol-eventos}
+
+Um teste de alto poder estatístico repetiu o desenho ``HHI antes do
+choque prevendo volatilidade depois do choque'' na crise da COVID
+(fev-mar/2020, $N=217$ ações numa única regressão cross-sectional) --- e
+não achou nada de conclusivo isoladamente (queda no crash: $p=0{,}108$,
+com sinal na direção \textbf{oposta} à hipótese de \emph{fire sale}).
+Isso motivou repetir o mesmo desenho em outros 4 episódios de choque do
+mercado brasileiro, fora da COVID: Joesley Day (mai/2017), greve dos
+caminhoneiros (mai/2018), e 2 choques orgânicos identificados nos próprios
+dados (nov/2017, abr/2019).
+
+\begin{table}[H]\centering\small
+\caption{HHI pré-choque $\to$ volatilidade nos 6 meses seguintes, 4 eventos}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Evento & $t$ (regressão do evento) & $p$ \\
+\midrule
+Joesley Day (mai/2017) & 2,76 & 0,006 \\
+Greve dos caminhoneiros (mai/2018) & 1,33 & 0,180 \\
+Choque orgânico (nov/2017) & 3,26 & 0,001 \\
+Choque orgânico (abr/2019) & 2,49 & 0,014 \\
+\midrule
+\multicolumn{3}{@{}l}{Mini Fama-MacBeth entre os 4 eventos ($n=4$, $\text{df}=3$): $t=3{,}74$, $p=0{,}033$} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Sinal \textbf{positivo nos 4 eventos, sem exceção} --- e o resultado fica
+mais forte, não mais fraco, ao remover o maior outlier (\emph{leave-one-out}).
+Isso é evidência de que o mecanismo HHI$\to$volatilidade é real e não uma
+peculiaridade do episódio único da COVID, que era a limitação mais óbvia
+do achado original.
+
+\subsection{Achado novo: número de cotistas dos fundos donos}
+\label{sec:cotistas}
+
+O achado mais recente e talvez o mais surpreendente de toda a exploração
+veio de olhar para um lado diferente do problema: em vez de perguntar
+``quão concentrada é a posse de uma ação'' (HHI), perguntar ``quão
+concentrada é a \textbf{base de clientes} dos fundos que a possuem''.
+
+A intuição: um fundo com poucos cotistas grandes tem risco de resgate
+``desigual'' --- um único cliente relevante saindo pode forçar a
+liquidação de posições inteiras. Um fundo com milhares de cotistas
+pequenos tem resgates que tendem a se cancelar estatisticamente (uns
+entram, outros saem, o efeito líquido é suave). A variável construída ---
+média (ponderada pela posição em R\$) do log(1+número de cotistas) dos
+fundos donos de cada ação --- é uma medida do lado do \textbf{passivo} dos
+fundos, não da concentração de posse do lado do ativo (correlação com HHI
+é fraca, $-0{,}07$ a $-0{,}25$ conforme o corte).
+
+\begin{table}[H]\centering\small
+\caption{Número de cotistas dos fundos donos $\to$ volatilidade futura}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Horizonte & $t$ & $p$ & Observação \\
+\midrule
+$h=3$  & $-3{,}06$ & 0,0058 & não sobrevive a controles multivariados \\
+$h=6$  & $-5{,}07$ & \textbf{0,00006} & \textbf{bate Bonferroni isoladamente} \\
+$h=12$ & $-4{,}73$ & 0,00022 & muito perto de Bonferroni \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Direção: \textbf{mais} cotistas nos fundos donos $\to$ \textbf{menos}
+volatilidade futura --- exatamente a direção que a intuição de
+``resgate mais suave'' sugere. Em $h=6$ e $h=12$, o efeito sobrevive
+simultaneamente a 3 controles concorrentes (HHI, tamanho do fundo dono,
+tamanho da posição) \emph{e} ao controle mais difícil que existe para
+volatilidade futura --- a própria volatilidade passada. Sinal consistente
+em 82--86\% dos meses de teste, e continua significativo mesmo excluindo a
+COVID inteira (com poucochíssima amostra remanescente, $n=6$--$10$ meses,
+mas na mesma direção). É uma dimensão de informação genuinamente nova ---
+não é o achado de HHI reformulado.
+
+\begin{licao}{Ressalva honesta sobre este achado}
+É um resultado de \textbf{previsibilidade de risco}, não de retorno ---
+testado diretamente como preditor de retorno, deu nulo ($p$ entre 0,36 e
+0,78). E, como todo o resto desta exploração, sofre da mesma limitação de
+fundo: a amostra de teste (2016--2021) é curta, e mesmo um resultado
+``robusto dentro do que se tem'' carrega o risco de ser sorte de período
+--- o mesmo tipo de armadilha que já pegou o CIO Peer Momentum antes da
+correção metodológica.
+\end{licao}
+
+% ======================================================================
+\section{Parte III --- Tentando monetizar a previsão de volatilidade}
+\label{sec:monetizar}
+
+Prever volatilidade não é a mesma coisa que lucrar com essa previsão ---
+volatilidade é uma medida de \emph{quanto} o preço oscila, não de
+\emph{para onde}. Sem dado de opções, as formas conhecidas na literatura
+de transformar previsão de risco em vantagem financeira são limitadas.
+Pesquisa exaustiva (5 frentes em paralelo) mapeou o que existe:
+
+\begin{itemize}
+\item \textbf{Prêmio de variância ``de verdade'' (VRP) é definicionalmente
+impossível sem opções} --- depende de uma expectativa de mercado extraída
+de preço de opção (risco-neutra), que simplesmente não existe sem esse
+dado. Não é uma lacuna de dado contornável.
+\item \textbf{Caminho mais promissor na literatura}: usar a previsão de
+volatilidade para dimensionar posição (Moreira \& Muir 2017,
+\emph{Volatility-Managed Portfolios}), não para prever direção --- com um
+alerta forte da literatura (Cederburg et al.\ 2020, \emph{JFE}) de que o
+ganho desaparece quando reestimado genuinamente fora da amostra.
+\item \textbf{Betting Against Correlation} (Asness-Frazzini-Gormsen-Pedersen 2020) --- decompõe risco em correlação vs.\ volatilidade, construído só com preço à vista.
+\end{itemize}
+
+Testados empiricamente (todos usando só o período de teste, $\geq$jan/2020):
+
+\begin{table}[H]\centering\small
+\caption{Tentativas de monetizar a previsão de volatilidade}
+\begin{tabular}{@{}p{6cm}rr@{}}
+\toprule
+Desenho & Resultado & Interpretação \\
+\midrule
+Carteira \emph{tilted} por decil de HHI vs.\ equal-weight &
+Sharpe $-0{,}11$ vs.\ $-0{,}04$ & pior, não melhor \\
+Mercado escalado por HHI agregado vs.\ buy-hold &
+Sharpe $0{,}09$ vs.\ $-0{,}04$ & nominal melhor, drawdown pior, $N=24$ \\
+Vol-managed clássico (escalado por vol.\ passada, sem HHI) &
+Sharpe $-0{,}91$ & catastrófico (perdeu recuperação em V pós-COVID) \\
+Long-short baixo-HHI menos alto-HHI &
+$p=0{,}138$, sinal invertido & não significativo \\
+Betting Against Correlation (3 cortes de liquidez) &
+$p$ entre 0,31 e 0,78 & nulo \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Nenhum desenho produziu um sinal de lucro robusto} --- o mais
+``positivo'' repousa sobre 24 observações mensais dominadas por um único
+evento (COVID), poder estatístico claramente insuficiente para validar
+qualquer estratégia de portfólio com confiança.
+
+% ======================================================================
+\section{As três armadilhas evitadas: uma comparação lado a lado}
+\label{sec:quase}
+
+Três vezes nesta exploração, um resultado pareceu bom demais e, ao
+investigar a fundo, se revelou artefato. Vale olhar as três juntas, porque
+o padrão que as une é mais instrutivo do que cada uma isolada.
+
+\subsection{Armadilha \#1: Comomentum}
+\label{sec:comomentum}
+
+O candidato com a evidência mais forte na literatura original (Lou \&
+Polk, identificação quase-causal, $\sim$9\%/ano), adaptado de retorno
+semanal (o dado original) para mensal (o que temos). Primeira leitura:
+$h=6$, $t=2{,}21$, $p=0{,}041$ --- parecia passar. Mas a magnitude
+($+6{,}08$pp/\textbf{mês}, mais de 100\%/ano) era implausível.
+Investigando: os grupos de comomentum tinham entre \textbf{1 e 13 ações
+por mês} --- a ``média do grupo'' era dominada por 1--2 ativos
+idiossincráticos. Um único mês contribuiu $+43{,}6$pp de spread sozinho.
+
+\subsection{Armadilha \#2: CIO Peer Momentum (metodologia original)}
+
+Já detalhada na Seção~\ref{sec:cio}: breaks de quintil fixos calculados no
+treino, aplicados ao teste, geravam grupos de até \textbf{1 única ação} em
+vários meses do período de teste --- mesmo padrão da Armadilha \#1, só que
+sem ter sido percebido inicialmente porque o teste olhava só o
+$t$-estatístico agregado.
+
+\subsection{Armadilha \#3: centralidade de rede de posse}
+
+No meio da rodada final, um sinal de centralidade (grau ponderado de cada
+ação na rede de posse comum institucional) pareceu promissor ($h=6$
+$p=0{,}022$, $h=12$ $p=0{,}049$). Diagnóstico revelou dois problemas
+simultâneos: (i) correlação de $0{,}67$ a $0{,}73$ com o tamanho (log do
+capital total detido) --- controlando por tamanho, o efeito vira
+$p=0{,}20$ a $0{,}95$; (ii) 2 meses da COVID concentravam 42--54\% do
+spread total, e excluindo 2020 o $t$ cai de $-2{,}50$ para $-0{,}18$.
+
+\begin{table}[H]\centering\small
+\caption{As três armadilhas, lado a lado}
+\begin{tabular}{@{}p{3.3cm}p{4.5cm}p{4.5cm}@{}}
+\toprule
+Armadilha & Sinal do problema & Como foi pego \\
+\midrule
+Comomentum & magnitude implausível ($>$100\%/ano) & investigar composição de grupos pequenos \\
+CIO (original) & enfraquecia sem 2020 (parecia fragilidade genuína) & comparar metodologia de corte de quintil lado a lado \\
+Centralidade de rede & $p$ ``bom'' mas sem controle de tamanho & regressão com controle simultâneo + exclusão de sub-período \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{licao}{O padrão comum às três armadilhas}
+Em todas, o sintoma inicial era um $p$-valor convincente. Em todas, o
+problema real só aparecia ao fazer uma das três perguntas de diagnóstico:
+(1) quantas observações \emph{de verdade} sustentam cada grupo/mês? (2) a
+magnitude é economicamente plausível, comparada com o que a literatura
+documenta como \emph{recorde}? (3) o efeito sobrevive a excluir o
+sub-período mais extremo, ou desaparece com ele? Nenhuma dessas perguntas
+aparece automaticamente num teste de significância --- precisam ser feitas
+à parte, sempre.
+\end{licao}
+
+% ======================================================================
+\section{Conclusão geral e recomendação}
+
+Depois de mais de 700 especificações testadas, cobrindo praticamente todo
+ângulo metodológico razoável --- inclusive relaxar deliberadamente a
+exigência de que o sinal fosse implementável na prática --- o quadro que
+se consolidou é este:
+
+\begin{itemize}
+\item \textbf{Sinal de retorno/lucro: não encontrado.} O único candidato
+com suporte estatístico genuíno (CIO Peer Momentum, $h=1$) depende quase
+inteiramente de vender a descoberto ações ilíquidas --- não é, na prática,
+uma estratégia implementável pelos fundos que o TCC estuda.
+\item \textbf{Sinal de previsibilidade de risco: real, e cada vez mais
+robusto.} Concentração de posse institucional (HHI) prediz volatilidade
+futura em 12 meses, replicando Greenwood \& Thesmar (2011) e confirmado em
+5 episódios de choque de mercado brasileiro diferentes (COVID + 4
+outros). Um segundo preditor, independente do primeiro --- número de
+cotistas dos fundos donos --- bate o limiar de significância mais
+rigoroso aplicado nesta exploração inteira.
+\item \textbf{Nenhuma tentativa de monetizar essa previsão de risco (sem
+usar opções) produziu uma estratégia robusta}, dado o tamanho pequeno da
+amostra de teste disponível (2016--2021).
+\end{itemize}
+
+\textbf{Recomendação:} o achado de \textbf{previsibilidade} (HHI e
+cotistas $\to$ volatilidade futura) é um resultado real, bem fundamentado
+na literatura, sem precedente conhecido de aplicação ao mercado
+brasileiro --- candidato genuíno a entrar na consolidação de achados do
+TCC, como contribuição de previsibilidade de risco (não de retorno). A
+busca por um sinal de lucro tradeable, por outro lado, não teve sucesso
+apesar do esforço exaustivo --- e esse resultado nulo, tratado com o mesmo
+rigor de qualquer outro, é em si uma conclusão honesta e defensável.
 
 \end{document}
