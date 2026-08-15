@@ -1,0 +1,7 @@
+sinal,variavel,horizonte,n_meses,coef_medio,t_fm,p_fm,sig_bonferroni
+HHI nivel + delta HHI 3m -> vol futura,hhi_posse,3,23,0.0418688075358665,2.87237539890796,0.0088482478297902,FALSE
+HHI nivel + delta HHI 3m -> vol futura,delta_hhi_3m,3,23,-0.0436918656119423,-1.67539318519184,0.108013985494526,FALSE
+HHI nivel + delta HHI 3m -> vol futura,hhi_posse,6,21,0.0526794517263217,6.91307818237574,1.02939333506881e-06,TRUE
+HHI nivel + delta HHI 3m -> vol futura,delta_hhi_3m,6,21,-0.0289476815325592,-1.44406706338318,0.164203799559931,FALSE
+HHI nivel + delta HHI 3m -> vol futura,hhi_posse,12,17,0.0733413572364894,6.12009389246492,1.47754609643523e-05,TRUE
+HHI nivel + delta HHI 3m -> vol futura,delta_hhi_3m,12,17,-0.0258540335010044,-1.33945790850387,0.199138895940219,FALSE

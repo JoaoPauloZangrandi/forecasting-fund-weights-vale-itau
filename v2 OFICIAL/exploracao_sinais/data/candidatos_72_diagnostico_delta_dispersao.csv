@@ -1,0 +1,16 @@
+sinal,horizonte,n_meses,n_min_grupo_mes,spread_pp,sharpe,t_fm,p_fm,sig_bonferroni,variavel,coef_medio
+Delta dispersao 3m | so 2021 (sem COVID),1,12,41,-1.82503829553477,-2.14294889980572,-2.14294889980572,0.0553210422375441,FALSE,,
+Delta dispersao 6m | so 2021 (sem COVID),1,12,41,-1.39206777871524,-1.36522568509594,-1.36522568509594,0.199451893450005,FALSE,,
+Delta dispersao 3m | so 2021 (sem COVID),3,10,39,0.309337604457663,0.362398284049849,0.330822858292111,0.748350208646212,FALSE,,
+Delta dispersao 6m | so 2021 (sem COVID),3,10,39,-1.69023047596038,-2.16650171029919,-1.97773642934065,0.0793481949745326,FALSE,,
+Delta dispersao 3m | so 2021 (sem COVID),6,7,36,-0.430279364704814,-0.746929664892346,-0.570476954696196,0.589064051903049,FALSE,,
+Delta dispersao 6m | so 2021 (sem COVID),6,7,36,-1.26950818011406,-1.84029785914899,-1.40555070680257,0.209466976903383,FALSE,,
+Delta disp 3m + nivel disp + delta HHI (controlado),1,24,,,,-2.08817547514692,0.0480471314231432,FALSE,delta_cv_3m_z,-0.00644335888239061
+Delta disp 3m + nivel disp + delta HHI (controlado),1,24,,,,1.20803996960271,0.239307056822723,FALSE,cv_peso_ponderado_z,0.00355495062813333
+Delta disp 3m + nivel disp + delta HHI (controlado),1,24,,,,1.27682608688624,0.214404650805612,FALSE,delta_hhi_3m_z,0.00272070994512676
+Delta disp 3m + nivel disp + delta HHI (controlado),3,22,,,,0.720882100952724,0.478931038821432,FALSE,delta_cv_3m_z,0.00171250630228537
+Delta disp 3m + nivel disp + delta HHI (controlado),3,22,,,,0.865177821870925,0.396717446529678,FALSE,cv_peso_ponderado_z,0.00230732207009952
+Delta disp 3m + nivel disp + delta HHI (controlado),3,22,,,,-0.623638581685142,0.539580509445579,FALSE,delta_hhi_3m_z,-0.00210757196358025
+Delta disp 3m + nivel disp + delta HHI (controlado),6,19,,,,-1.81536974832938,0.0861650470430982,FALSE,delta_cv_3m_z,-0.00525330484439252
+Delta disp 3m + nivel disp + delta HHI (controlado),6,19,,,,1.34354813793393,0.195788324983595,FALSE,cv_peso_ponderado_z,0.00412723200592985
+Delta disp 3m + nivel disp + delta HHI (controlado),6,19,,,,0.384865143112412,0.704846969684142,FALSE,delta_hhi_3m_z,0.000996456162638879

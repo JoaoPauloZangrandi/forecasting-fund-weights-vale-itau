@@ -1,0 +1,7 @@
+sinal,horizonte,n_meses,coef_medio,t_fm,p_fm,sig_bonferroni
+Fluxo institucional setorial 1m (linear),1,24,0.000607217581493392,0.16849905701203,0.867663689990182,FALSE
+Fluxo institucional setorial 1m (linear),3,22,0.000319989841172279,0.140123447017794,0.889897740430296,FALSE
+Fluxo institucional setorial 1m (linear),6,19,0.00139829628902607,0.415294421860726,0.682834821142548,FALSE
+Fluxo institucional setorial 3m (linear),1,24,0.000434778155072349,0.148217691030991,0.883462758021052,FALSE
+Fluxo institucional setorial 3m (linear),3,22,-0.00159372714722769,-0.58675062746661,0.56362635290403,FALSE
+Fluxo institucional setorial 3m (linear),6,19,0.00234739360902432,0.642567730128703,0.5286051240489,FALSE

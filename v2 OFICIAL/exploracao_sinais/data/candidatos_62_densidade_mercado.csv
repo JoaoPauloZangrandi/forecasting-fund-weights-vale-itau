@@ -1,0 +1,3 @@
+teste,n_treino,n_teste,r2_oos_pct
+Densidade sozinha,36,23,-3.34182678342503
+Densidade + ret.passado,35,23,-4.41264649169901

@@ -1,0 +1,17 @@
+sinal,horizonte,n_meses,spread_medio_pp,t_fm,p_fm,n_min_grupo_mes,n_mediana_grupo_mes,grupo,variavel
+Centralidade-subgrupo [HHI alto (tercil 3)]: deg_avg_sub,1,24,0.567339896801338,0.573072569874576,0.57215640140185,14,17,HHI alto (tercil 3),deg_avg_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: eigen_cent_sub,1,24,0.480130651607436,0.468812474341132,0.643616870079194,14,17,HHI alto (tercil 3),eigen_cent_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: deg_avg_sub,3,22,-1.70516859351305,-1.13153118629542,0.270588142208292,14,17,HHI alto (tercil 3),deg_avg_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: eigen_cent_sub,3,22,-0.106808511935732,-0.102545545470578,0.919296577355952,14,17,HHI alto (tercil 3),eigen_cent_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: deg_avg_sub,6,19,-0.122694531378289,-0.120287099400545,0.905588207151818,14,16.5,HHI alto (tercil 3),deg_avg_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: eigen_cent_sub,6,19,-0.459824687629665,-0.426766488542659,0.674610155037815,14,16,HHI alto (tercil 3),eigen_cent_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: deg_avg_sub,12,13,-0.315336841071103,-0.243349475564722,0.811844878865256,13,15,HHI alto (tercil 3),deg_avg_sub
+Centralidade-subgrupo [HHI alto (tercil 3)]: eigen_cent_sub,12,13,0.328276260988545,0.199646251216735,0.845100366732487,13,15,HHI alto (tercil 3),eigen_cent_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: deg_avg_sub,1,24,-0.0776977196764097,-0.106167406639728,0.916370091345028,15,18,HHI baixo (tercil 1),deg_avg_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: eigen_cent_sub,1,24,-0.0978676317652696,-0.131086194244447,0.896846995740958,15,18,HHI baixo (tercil 1),eigen_cent_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: deg_avg_sub,3,22,-0.545209705107364,-0.488656973527568,0.630148720190985,15,17,HHI baixo (tercil 1),deg_avg_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: eigen_cent_sub,3,22,-0.860440639326556,-0.833023335412293,0.414205844817587,15,17,HHI baixo (tercil 1),eigen_cent_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: deg_avg_sub,6,19,-0.371912497664728,-0.468740369275845,0.64488213954458,15,16,HHI baixo (tercil 1),deg_avg_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: eigen_cent_sub,6,19,-1.1615397763936,-1.32302289489149,0.202389713736043,15,16,HHI baixo (tercil 1),eigen_cent_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: deg_avg_sub,12,13,0.971148017780524,0.657198585315709,0.523458611458686,13,15,HHI baixo (tercil 1),deg_avg_sub
+Centralidade-subgrupo [HHI baixo (tercil 1)]: eigen_cent_sub,12,13,1.13482522307416,0.848137859617325,0.412959362910103,13,15,HHI baixo (tercil 1),eigen_cent_sub
