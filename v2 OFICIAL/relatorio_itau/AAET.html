@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>AAET</title>
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  :root{
+    --bg:#FAF7F2; --ink:#1B1A17; --ink2:#4A473F; --soft:#8C8577;
+    --accent:#B1531E; --accent-tint:#F2E3D4; --line:#DED7C9;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ background:#ffffff; }
+  body{ font-family:"Segoe UI",Calibri,Arial,sans-serif; color:var(--ink); font-size:11.3pt; line-height:1.5; }
+  .page{
+    width:13.333in; height:7.5in; background:var(--bg);
+    position:relative; padding:0.5in 0.72in 0.42in; page-break-after:always; overflow:hidden;
+  }
+  .page:last-of-type{ page-break-after:auto; }
+
+  .eyebrow{ font-size:8.6pt; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:700; }
+  h1{ font-family:Cambria,Georgia,"Times New Roman",serif; font-weight:400; font-size:46pt; color:var(--ink); letter-spacing:.01em; line-height:1; margin-top:4pt; }
+  h2{ font-family:Cambria,Georgia,serif; font-weight:400; font-size:22pt; color:var(--ink); line-height:1.12; margin-top:3pt; }
+  .subhead{ font-size:12pt; color:var(--ink2); font-style:italic; margin-top:6pt; font-family:Cambria,Georgia,serif; }
+  .rule{ border:none; border-top:1px solid var(--line); margin:12pt 0; }
+  .rule-thick{ border:none; border-top:1.6px solid var(--ink); width:34px; margin:8pt 0 12pt; }
+
+  .cols{ display:flex; gap:0.55in; }
+  .col{ flex:1; min-width:0; }
+
+  h3.section{ font-size:9pt; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:7pt; }
+  p{ margin-bottom:7pt; color:var(--ink2); font-size:10.6pt; }
+  p b, li b{ color:var(--ink); font-weight:600; }
+  .lede{ font-size:11.4pt; color:var(--ink); }
+
+  ul.plain{ list-style:none; }
+  ul.plain li{ position:relative; padding-left:12pt; margin-bottom:6pt; font-size:10.3pt; color:var(--ink2); }
+  ul.plain li::before{ content:"—"; position:absolute; left:0; color:var(--accent); }
+
+  .footer{ position:absolute; left:0.72in; right:0.72in; bottom:0.22in; display:flex; justify-content:space-between;
+    font-size:7.6pt; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); border-top:1px solid var(--line); padding-top:6pt; }
+
+  /* ---------- PAGE 1 : timeline ---------- */
+  .timeline{ position:relative; padding-left:6pt; }
+  .timeline::before{ content:""; position:absolute; left:20pt; top:4pt; bottom:4pt; width:1px; background:var(--line); }
+  .tl-item{ position:relative; padding-left:44pt; margin-bottom:15pt; }
+  .tl-num{ position:absolute; left:0; top:-6pt; font-family:Cambria,Georgia,serif; font-size:19pt; color:var(--accent); width:34pt; text-align:right; font-weight:400; }
+  .tl-txt{ font-size:10.2pt; color:var(--ink2); padding-top:2pt; }
+  .tl-txt b{ color:var(--ink); }
+
+  /* ---------- PAGE 2 : chain diagram ---------- */
+  .chain{ display:flex; align-items:center; justify-content:center; gap:0; margin:20pt 0 10pt; }
+  .node{ text-align:center; min-width:118pt; }
+  .node .lbl{ font-size:10.6pt; color:var(--ink); font-weight:600; }
+  .node .sub{ font-size:8.6pt; color:var(--soft); font-style:italic; }
+  .node.hi .lbl{ color:var(--accent); }
+  .arrow{ flex:1; max-width:120pt; position:relative; height:1px; background:var(--line); margin:0 6pt; top:-2pt; }
+  .arrow::after{ content:"\2192"; position:absolute; right:-9pt; top:-9pt; color:var(--soft); font-size:12pt; }
+  .arrow .cap{ position:absolute; top:-17pt; left:50%; transform:translateX(-50%); font-size:8.4pt; color:var(--soft); white-space:nowrap; }
+
+  .compare{ display:flex; gap:.5in; margin-top:6pt; }
+  .compare .box{ flex:1; padding:10pt 14pt; border-left:2px solid var(--line); }
+  .compare .box.hi{ border-left-color:var(--accent); }
+  .compare .tag{ font-size:8pt; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); margin-bottom:3pt; }
+  .compare .box.hi .tag{ color:var(--accent); }
+  .compare .val{ font-size:10.4pt; color:var(--ink); }
+
+  .eq{ font-family:Cambria,Georgia,serif; font-style:italic; font-size:13pt; color:var(--ink); text-align:center; margin:10pt 0; }
+  .eq .op{ font-style:normal; margin:0 4pt; color:var(--ink2); }
+  .eq sub{ font-size:65%; }
+  .eq sup{ font-size:65%; font-style:normal; }
+  .frac{ display:inline-flex; flex-direction:column; text-align:center; vertical-align:middle; font-size:9.6pt; margin:0 3pt; }
+  .frac .num{ border-bottom:1px solid var(--ink); padding:0 4px 2px; }
+  .frac .den{ padding:2px 4px 0; }
+
+  /* ---------- PAGE 3 : model columns ---------- */
+  .grid3{ display:flex; gap:.42in; margin-top:2pt; }
+  .grid3 .col{ flex:1; }
+  table.mini{ width:100%; border-collapse:collapse; font-size:9.4pt; margin-top:4pt; }
+  table.mini th{ text-align:left; font-size:7.6pt; letter-spacing:.06em; text-transform:uppercase; color:var(--soft); font-weight:600; border-bottom:1px solid var(--ink); padding:4pt 6pt 5pt 0; }
+  table.mini td{ padding:5pt 6pt 5pt 0; border-bottom:1px solid var(--line); color:var(--ink2); }
+  table.mini tr.hi td{ color:var(--ink); font-weight:700; }
+  table.mini td:not(:first-child), table.mini th:not(:first-child){ text-align:right; }
+
+  /* ---------- PAGE 4 : stat callouts ---------- */
+  .stats{ display:flex; gap:.4in; margin-top:6pt; }
+  .stat{ flex:1; }
+  .stat .num{ font-family:Cambria,Georgia,serif; font-size:24pt; color:var(--ink); line-height:1; }
+  .stat.hi .num{ color:var(--accent); }
+  .stat .cap{ font-size:7.6pt; letter-spacing:.08em; text-transform:uppercase; color:var(--soft); margin-top:3pt; }
+  .chart-wrap{ margin-top:4pt; }
+  .chart-wrap img{ width:100%; display:block; }
+
+  /* misc */
+  .kicker-num{ font-family:Cambria,Georgia,serif; font-size:15pt; color:var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="page">
+  <div class="eyebrow">Desafio Quant AI 2026 &nbsp;·&nbsp; Carta de Estratégia</div>
+  <h1>Ponto Cego</h1>
+  <div class="subhead">Reversão de preço na lacuna de monitoramento institucional</div>
+  <hr class="rule">
+
+  <div class="cols">
+    <div class="col" style="flex:1.05">
+      <h3 class="section">Apresentação do Robô</h3>
+      <p class="lede"><b>Por que "Ponto Cego".</b> Ações pouco monitoradas por fundos de investimento
+      não têm quem corrija um exagero de preço rapidamente — é o ponto cego do mercado
+      institucional. O robô compra exatamente aí, e espera 3 meses para agir: é o tempo real
+      que o mercado leva para <i>enxergar</i> esse ponto cego, já que a CVM divulga a carteira
+      dos fundos com ~90 dias de defasagem. O nome descreve o quê (região sem vigilância) e o
+      como (a defasagem que define o horizonte da estratégia).</p>
+
+      <h3 class="section" style="margin-top:14pt">Conceito — Tese Central</h3>
+      <p><b>Ineficiência.</b> Reversão de curto prazo (Jegadeesh, 1990) só existe onde faltam
+      agentes sofisticados para arbitrar o exagero de preço — <i>limits-to-arbitrage</i>
+      (Shleifer &amp; Vishny, 1997). Usamos a presença institucional consolidada
+      (próxima página) como termômetro direto de quem está vigiando cada ação.</p>
+    </div>
+    <div class="col" style="flex:0.95; padding-top:4pt">
+      <h3 class="section">O Mecanismo</h3>
+      <div class="timeline">
+        <div class="tl-item"><span class="tl-num">01</span><span class="tl-txt">Uma ação sobe ou cai forte num mês</span></div>
+        <div class="tl-item"><span class="tl-num">02</span><span class="tl-txt"><b>Poucos fundos a monitoram</b> — baixa presença institucional</span></div>
+        <div class="tl-item"><span class="tl-num">03</span><span class="tl-txt">Ninguém arbitra o exagero — ele persiste</span></div>
+        <div class="tl-item"><span class="tl-num">04</span><span class="tl-txt"><b>3 meses depois</b> (defasagem real de dado CVM), o preço reverte</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer"><span>AAET</span><span>Ponto Cego — 01 / 05</span></div>
+</div>
+
+<!-- ============ PAGE 2 ============ -->
+<div class="page">
+  <div class="eyebrow">O Diferencial</div>
+  <h2>Uma base que enxerga através dos fundos</h2>
+  <hr class="rule">
+
+  <p>A maioria das análises de posse institucional no Brasil usa a carteira <b>direta</b> dos
+  fundos (CDA/CVM). Isso subestima — às vezes dramaticamente — a presença institucional real,
+  porque ignora fundos que investem em outros fundos (FIC). Nossa base é <b>consolidada
+  (look-through)</b>: reconstruímos a exposição efetiva de cada fundo a cada ação, atravessando
+  cadeias de fundo-de-fundos em até <b>20 níveis de profundidade</b>, para o universo completo
+  de fundos brasileiros, 2016–2026.</p>
+
+  <div class="chain">
+    <div class="node"><div class="lbl">Fundo A</div><div class="sub">multimercado</div></div>
+    <div class="arrow"><span class="cap">30% das cotas</span></div>
+    <div class="node"><div class="lbl">Fundo B</div><div class="sub">FIC</div></div>
+    <div class="arrow"><span class="cap">5% da carteira</span></div>
+    <div class="node hi"><div class="lbl">Ação X</div><div class="sub">ex.: VALE3</div></div>
+  </div>
+
+  <div class="compare">
+    <div class="box">
+      <div class="tag">Base direta &nbsp;(CDA ingênua)</div>
+      <div class="val">A não aparece em X</div>
+    </div>
+    <div class="box hi">
+      <div class="tag">Base Ponto Cego &nbsp;(consolidada)</div>
+      <div class="val"><b>A tem 1,5% de exposição efetiva a X</b> — via B</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <div class="cols">
+    <div class="col">
+      <h3 class="section">Fórmula &nbsp;(recursiva, até nível 20)</h3>
+      <div class="eq">E<sup>cons</sup><sub>f,i</sub> <span class="op">=</span> E<sup>direta</sup><sub>f,i</sub> <span class="op">+</span> &Sigma;<sub>g&nbsp;&isin;&nbsp;cotas&nbsp;de&nbsp;f</sub> &omega;<sub>f&rarr;g</sub>&middot;E<sup>cons</sup><sub>g,i</sub></div>
+      <div class="eq">&omega;<sub>f&rarr;g</sub> <span class="op">=</span>
+        <span class="frac"><span class="num">Valor de f em cotas de g</span><span class="den">PL de g</span></span>
+      </div>
+    </div>
+    <div class="col">
+      <h3 class="section">Por que importa aqui</h3>
+      <p>O ranking de "presença institucional" que define o universo elegível do sinal
+      (próxima página) é medido sobre <i>E<sup>cons</sup></i>, não sobre posse direta —
+      classifica corretamente ações que <i>parecem</i> desmonitoradas mas têm exposição
+      institucional oculta via FIC, e vice-versa.</p>
+    </div>
+  </div>
+
+  <div class="footer"><span>AAET</span><span>Ponto Cego — 02 / 05</span></div>
+</div>
+
+<!-- ============ PAGE 3 ============ -->
+<div class="page">
+  <div class="eyebrow">Modelagem</div>
+  <h2>Dados, sinal e teste estatístico</h2>
+  <hr class="rule">
+
+  <div class="grid3">
+    <div class="col">
+      <h3 class="section">Dados de Entrada</h3>
+      <ul class="plain">
+        <li>Retorno mensal de cada ação (2016–2026)</li>
+        <li>Exposição <b>consolidada</b> (E<sup style="font-size:70%">cons</sup>) do universo de
+        fundos brasileiros a cada ação-mês</li>
+      </ul>
+      <h3 class="section" style="margin-top:12pt">Sinal</h3>
+      <div class="eq" style="font-size:11pt; text-align:left">Presença<sub>i,t</sub> <span class="op">=</span> pctl<sub>t</sub>(&Sigma;<sub style="font-size:60%">f</sub> E<sup>cons</sup><sub>f,i,t</sub>)</div>
+      <div class="eq" style="font-size:11pt; text-align:left">s<sub>i,t</sub> <span class="op">=</span> r<sub>i,t&minus;1</sub> &nbsp;<span class="op">|</span>&nbsp; Presença<sub>i,t</sub> &le; p<sub>33</sub></div>
+    </div>
+    <div class="col">
+      <h3 class="section">Decisão</h3>
+      <ul class="plain">
+        <li>Terço de menor presença institucional</li>
+        <li>Dentro dele, quintis por s<sub style="font-size:70%">i,t</sub></li>
+        <li><b>Compra:</b> Q1 (perdedores) &nbsp;&nbsp;<b>Venda:</b> Q5 (vencedores)</li>
+        <li>Rebalanceamento mensal, holding de 3 meses</li>
+      </ul>
+      <h3 class="section" style="margin-top:12pt">Teste &nbsp;<span style="font-weight:400;color:var(--soft);font-size:8pt;text-transform:none;letter-spacing:0">(mesma régua p/ todos os candidatos)</span></h3>
+      <div class="eq" style="font-size:11pt; text-align:left">r<sub>i,t+3</sub> <span class="op">=</span> &alpha;<sub>t</sub><span class="op">+</span>&beta;<sub>t</sub>s<sub>i,t</sub><span class="op">+</span>&epsilon;<sub>i,t</sub></div>
+      <div class="eq" style="font-size:11pt; text-align:left">t&#770;<sub style="font-size:60%">NW</sub> <span class="op">=</span> &beta;&#772; / se<sub style="font-size:60%">NW</sub>(&beta;&#772;)</div>
+    </div>
+    <div class="col">
+      <h3 class="section">Resultado</h3>
+      <table class="mini">
+        <tr><th>Amostra</th><th>n meses</th><th>t (NW)</th><th>p</th></tr>
+        <tr class="hi"><td>Baixa presença</td><td>60</td><td>&minus;2,22</td><td>0,031</td></tr>
+        <tr><td>Alta presença</td><td>59</td><td>&minus;0,91</td><td>0,366</td></tr>
+        <tr><td>Sem filtro</td><td>60</td><td>&minus;1,77</td><td>0,083</td></tr>
+      </table>
+      <p style="margin-top:10pt; font-size:9.6pt">O efeito só existe na baixa presença — padrão
+      diferencial que sustenta a tese, não é ruído de uma busca isolada.</p>
+      <p style="font-size:9.6pt"><b>Sistemático:</b> cortes de quintil e universo de baixa
+      presença estimados só no treino (antes de 2020); regra 100% mecânica.</p>
+    </div>
+  </div>
+
+  <div class="footer"><span>AAET</span><span>Ponto Cego — 03 / 05</span></div>
+</div>
+
+<!-- ============ PAGE 4 ============ -->
+<div class="page">
+  <div class="eyebrow">Backtest</div>
+  <h2>Desenho, vieses e performance</h2>
+  <hr class="rule">
+
+  <div class="cols">
+    <div class="col" style="flex:0.62">
+      <h3 class="section">Desenho</h3>
+      <ul class="plain">
+        <li>Fora da amostra: fev/2020–jun/2026 (60 meses); cortes fixados só no treino pré-2020</li>
+        <li>Peso igual por perna, rebalanceamento mensal</li>
+        <li>Benchmark: Ibovespa, mesmo período exato</li>
+      </ul>
+      <h3 class="section" style="margin-top:10pt">Vieses Mitigados</h3>
+      <ul class="plain">
+        <li>Sem look-ahead — cortes nunca veem o teste</li>
+        <li>h=3 fixado <i>a priori</i> pela defasagem real do dado</li>
+        <li>Mesma régua estatística usada para <b>descartar</b> 2 outros candidatos
+        (fluxo entre fundos; concentração HHI)</li>
+      </ul>
+    </div>
+    <div class="col" style="flex:1.38">
+      <div class="chart-wrap"><img src="fig_equity.png" alt="equity curve"></div>
+      <div class="stats">
+        <div class="stat"><div class="num">50,8%</div><div class="cap">Retorno anualizado</div></div>
+        <div class="stat hi"><div class="num">0,96</div><div class="cap">Sharpe anualizado</div></div>
+        <div class="stat"><div class="num">43,8%</div><div class="cap">Max drawdown</div></div>
+        <div class="stat"><div class="num">3,10%</div><div class="cap">Alfa mensal vs. Ibov (p=0,067)</div></div>
+      </div>
+      <p style="font-size:8.6pt; margin-top:10pt; color:var(--soft)">Long-short, 60 meses.
+      Beta vs. Ibovespa = 0,29 (não distinguível de zero). Sem custo de transação/liquidez —
+      limitação assumida na próxima página.</p>
+    </div>
+  </div>
+
+  <div class="footer"><span>AAET</span><span>Ponto Cego — 04 / 05</span></div>
+</div>
+
+<!-- ============ PAGE 5 ============ -->
+<div class="page">
+  <div class="eyebrow">Fechamento</div>
+  <h2>Análise, conclusão &amp; uso de IA generativa</h2>
+  <hr class="rule">
+
+  <div class="cols">
+    <div class="col">
+      <h3 class="section">Análise dos Resultados</h3>
+      <ul class="plain">
+        <li>Sharpe (0,96) supera o Ibovespa (0,80), mas o drawdown (44%) também é maior —
+        esperado em ações pequenas e menos líquidas, onde o sinal existe</li>
+        <li>Alfa mensal positivo, p=0,067 isolado (60 obs): marginal, mas consistente com o
+        Fama–MacBeth já validado</li>
+        <li><b>Limitações:</b> sem custo de transação/liquidez (perna comprada em small caps);
+        cobertura de preço incompleta pré-2022 p/ tickers descontinuados; teste único, sem
+        correção formal de múltiplas comparações</li>
+      </ul>
+      <h3 class="section" style="margin-top:12pt">Conclusão &amp; Próximos Passos</h3>
+      <ul class="plain">
+        <li>Sinal robusto, não livre de dúvida. Próximos passos: custo de transação/liquidez
+        explícitos; sizing por volatilidade inversa (reduz drawdown); validar defasagem de
+        divulgação fundo a fundo (não é uniforme)</li>
+      </ul>
+    </div>
+    <div class="col">
+      <h3 class="section">Uso de IA Generativa</h3>
+      <p style="font-size:9.8pt">Claude (Anthropic) foi usado em todas as etapas — com
+      distinção clara entre trabalho da equipe e contribuição da IA:</p>
+      <ul class="plain">
+        <li><b>Dados</b> <i>(equipe define, IA executa):</i> reconstrução da base consolidada
+        CVM 2016–2026 e correção de 4 inconsistências reais na fonte (formato numérico,
+        estabilidade de ID de fundo, subclasses pós-reforma CVM175)</li>
+        <li><b>Hipóteses</b> <i>(IA gera, equipe julga):</i> 10+ sinais formulados e testados
+        com a mesma régua — 2 candidatos com aparência forte foram <b>descartados</b> por não
+        sobreviverem a Newey–West, disciplina aplicada de forma consistente a cada um</li>
+        <li><b>Backtest/código:</b> implementação de Fama–MacBeth, Newey–West e simulação de
+        portfólio, com verificação numérica em cada etapa</li>
+        <li><b>Limitação encontrada:</b> a IA não substitui julgamento sobre quais candidatos
+        são economicamente plausíveis — esse crivo permaneceu humano em cada decisão de
+        descarte</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer"><span>AAET</span><span>Ponto Cego — 05 / 05</span></div>
+</div>
+
+</body>
+</html>
