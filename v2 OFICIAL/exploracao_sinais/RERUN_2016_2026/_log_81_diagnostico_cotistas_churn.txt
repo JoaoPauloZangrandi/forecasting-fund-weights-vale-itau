@@ -1,0 +1,89 @@
+N ticker-mes na base combinada: 25748 
+
+===== Correlacao entre as variaveis (Pearson) =====
+                 frag_cotistas_w frag_laum_w frag_exit_rate_w    hhi_posse
+frag_cotistas_w       1.00000000  0.22651721     -0.074926167 -0.191411664
+frag_laum_w           0.22651721  1.00000000     -0.054431230 -0.197893861
+frag_exit_rate_w     -0.07492617 -0.05443123      1.000000000 -0.007986824
+hhi_posse            -0.19141166 -0.19789386     -0.007986824  1.000000000
+log_valor_total      -0.09587654  0.31049863      0.073721103 -0.518533143
+                 log_valor_total
+frag_cotistas_w      -0.09587654
+frag_laum_w           0.31049863
+frag_exit_rate_w      0.07372110
+hhi_posse            -0.51853314
+log_valor_total       1.00000000
+
+
+===== DIAGNOSTICO: frag_cotistas sobrevive controlando por HHI, tamanho dos fundos, tamanho da posicao? =====
+
+--- cotistas + HHI + tam.fundo + tam.posicao -> vol h=3 (alvo=vol_futura, 61 meses de teste) ---
+  (Intercept)            coef_medio=+0.11408  t= 26.67  p=0.00000  (n_meses=61)
+  frag_cotistas_w_z      coef_medio=-0.00305  t= -2.43  p=0.01826  (n_meses=61)
+  hhi_posse_z            coef_medio=-0.00844  t= -4.14  p=0.00011  (n_meses=61)
+  frag_laum_w_z          coef_medio=-0.00148  t= -1.24  p=0.22013  (n_meses=61)
+  log_valor_total_z      coef_medio=-0.01454  t= -6.13  p=0.00000  (n_meses=61)
+
+--- cotistas + HHI + tam.fundo + tam.posicao -> vol h=6 (alvo=vol_futura, 60 meses de teste) ---
+  (Intercept)            coef_medio=+0.12474  t= 36.46  p=0.00000  (n_meses=60)
+  frag_cotistas_w_z      coef_medio=-0.00476  t= -4.22  p=0.00008  (n_meses=60)
+  hhi_posse_z            coef_medio=-0.01028  t= -5.07  p=0.00000  (n_meses=60)
+  frag_laum_w_z          coef_medio=-0.00117  t= -1.01  p=0.31631  (n_meses=60)
+  log_valor_total_z      coef_medio=-0.01566  t= -7.20  p=0.00000  (n_meses=60)
+
+--- cotistas + HHI + tam.fundo + tam.posicao -> vol h=12 (alvo=vol_futura, 58 meses de teste) ---
+  (Intercept)            coef_medio=+0.12826  t= 45.71  p=0.00000  (n_meses=58)
+  frag_cotistas_w_z      coef_medio=-0.00500  t= -4.32  p=0.00006  (n_meses=58)
+  hhi_posse_z            coef_medio=-0.01059  t= -6.12  p=0.00000  (n_meses=58)
+  frag_laum_w_z          coef_medio=-0.00139  t= -1.48  p=0.14306  (n_meses=58)
+  log_valor_total_z      coef_medio=-0.01630  t= -8.53  p=0.00000  (n_meses=58)
+
+
+===== DIAGNOSTICO: frag_cotistas sobrevive controlando por VOLATILIDADE PASSADA (12m)? =====
+
+--- cotistas + vol.passada12m -> vol h=3 (alvo=vol_futura, 61 meses de teste) ---
+  (Intercept)            coef_medio=+0.11320  t= 26.36  p=0.00000  (n_meses=61)
+  frag_cotistas_w_z      coef_medio=-0.00032  t= -0.35  p=0.72679  (n_meses=61)
+  vol_passada12_z        coef_medio=+0.03103  t= 10.30  p=0.00000  (n_meses=61)
+
+--- cotistas + vol.passada12m -> vol h=6 (alvo=vol_futura, 60 meses de teste) ---
+  (Intercept)            coef_medio=+0.12371  t= 35.91  p=0.00000  (n_meses=60)
+  frag_cotistas_w_z      coef_medio=-0.00052  t= -0.57  p=0.57023  (n_meses=60)
+  vol_passada12_z        coef_medio=+0.03099  t= 10.01  p=0.00000  (n_meses=60)
+
+--- cotistas + vol.passada12m -> vol h=12 (alvo=vol_futura, 58 meses de teste) ---
+  (Intercept)            coef_medio=+0.12732  t= 44.60  p=0.00000  (n_meses=58)
+  frag_cotistas_w_z      coef_medio=+0.00000  t=  0.00  p=0.99659  (n_meses=58)
+  vol_passada12_z        coef_medio=+0.02871  t= 10.68  p=0.00000  (n_meses=58)
+
+
+===== DIAGNOSTICO: frag_exit_rate (churn) sobrevive aos mesmos controles? =====
+
+--- churn + HHI + vol.passada -> vol h=3 (alvo=vol_futura, 45 meses de teste) ---
+  (Intercept)            coef_medio=+0.11393  t= 21.35  p=0.00000  (n_meses=45)
+  frag_exit_rate_w_z     coef_medio=+0.00560  t=  1.71  p=0.09354  (n_meses=45)
+  hhi_posse_z            coef_medio=+0.00114  t=  0.68  p=0.49728  (n_meses=45)
+  vol_passada12_z        coef_medio=+0.02898  t=  8.22  p=0.00000  (n_meses=45)
+
+--- churn + HHI + vol.passada -> vol h=6 (alvo=vol_futura, 45 meses de teste) ---
+  (Intercept)            coef_medio=+0.12372  t= 30.52  p=0.00000  (n_meses=45)
+  frag_exit_rate_w_z     coef_medio=+0.00818  t=  2.50  p=0.01613  (n_meses=45)
+  hhi_posse_z            coef_medio=-0.00117  t= -0.68  p=0.50146  (n_meses=45)
+  vol_passada12_z        coef_medio=+0.02940  t=  9.01  p=0.00000  (n_meses=45)
+
+--- churn + HHI + vol.passada -> vol h=12 (alvo=vol_futura, 44 meses de teste) ---
+  (Intercept)            coef_medio=+0.12610  t= 43.08  p=0.00000  (n_meses=44)
+  frag_exit_rate_w_z     coef_medio=+0.00547  t=  2.12  p=0.03990  (n_meses=44)
+  hhi_posse_z            coef_medio=-0.00155  t= -1.18  p=0.24376  (n_meses=44)
+  vol_passada12_z        coef_medio=+0.02862  t= 10.91  p=0.00000  (n_meses=44)
+
+
+===== Robustez adicional: correlacao frag_cotistas com log_valor_total por SUBGRUPO de tamanho =====
+Correlacao frag_cotistas x hhi_posse dentro de cada tercil de tamanho (deve ficar baixa se sao mecanismos distintos):
+   tercil_tamanho cor_cotistas_hhi cor_cotistas_tamanho     n
+            <int>            <num>                <num> <int>
+1:              1       -0.1802830          -0.04844371  8583
+2:              2       -0.3513683          -0.04196280  8582
+3:              3       -0.4232680          -0.15886453  8583
+
+OK

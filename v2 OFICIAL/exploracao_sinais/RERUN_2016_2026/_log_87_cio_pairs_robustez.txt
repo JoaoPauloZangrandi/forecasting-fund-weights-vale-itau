@@ -1,0 +1,52 @@
+Pares brutos (top5pct, do script 84): 187185 
+Pares depois do filtro (CIO>=0.7 absoluto, n_fundos>=20 ambos os lados): 20237 
+Pares/mes (filtrado): min= 201  mediana= 357  max= 469 
+
+===== (R1) Universo liquido, CIO>=0,7 absoluto =====
+[R1_liquido_reversao] K=3 h=1 | 24 meses | ret_medio= +0.279%/mes (anualizado~  +3.4%) | t=  0.40 | p=0.6955 | N_par_mes(min/mediana)=55/350
+[R1_liquido_continuacao] K=3 h=1 | 24 meses | ret_medio= -0.279%/mes (anualizado~  -3.3%) | t= -0.40 | p=0.6955 | N_par_mes(min/mediana)=55/350
+[R1_liquido_reversao] K=3 h=3 | 24 meses | ret_medio= -0.835%/mes (anualizado~  -9.6%) | t= -1.54 | p=0.1373 | N_par_mes(min/mediana)=36/341
+[R1_liquido_continuacao] K=3 h=3 | 24 meses | ret_medio= +0.835%/mes (anualizado~ +10.5%) | t=  1.54 | p=0.1373 | N_par_mes(min/mediana)=36/341
+[R1_liquido_reversao] K=6 h=1 | 24 meses | ret_medio= -0.880%/mes (anualizado~ -10.1%) | t= -1.57 | p=0.1306 | N_par_mes(min/mediana)=42/324
+[R1_liquido_continuacao] K=6 h=1 | 24 meses | ret_medio= +0.880%/mes (anualizado~ +11.1%) | t=  1.57 | p=0.1306 | N_par_mes(min/mediana)=42/324
+[R1_liquido_reversao] K=6 h=3 | 24 meses | ret_medio= -1.328%/mes (anualizado~ -14.8%) | t= -2.13 | p=0.0441 | N_par_mes(min/mediana)=30/316
+[R1_liquido_continuacao] K=6 h=3 | 24 meses | ret_medio= +1.328%/mes (anualizado~ +17.2%) | t=  2.13 | p=0.0441 | N_par_mes(min/mediana)=30/316
+
+===== (R2) Hipotese de CONTINUACAO (espelho do script 84), universo completo top5pct =====
+[R2_completo_continuacao] K=3 h=1 | 62 meses | ret_medio= +0.494%/mes (anualizado~  +6.1%) | t=  1.58 | p=0.1193 | N_par_mes(min/mediana)=163/2178
+[R2_completo_continuacao] K=3 h=3 | 60 meses | ret_medio= -0.867%/mes (anualizado~  -9.9%) | t= -0.95 | p=0.3474 | N_par_mes(min/mediana)=140/2111
+[R2_completo_continuacao] K=6 h=1 | 62 meses | ret_medio= +0.525%/mes (anualizado~  +6.5%) | t=  1.95 | p=0.0557 | N_par_mes(min/mediana)=128/2122
+[R2_completo_continuacao] K=6 h=3 | 60 meses | ret_medio= -0.556%/mes (anualizado~  -6.5%) | t= -0.65 | p=0.5209 | N_par_mes(min/mediana)=114/2040
+
+
+===== RESUMO ORDENADO POR p_fm =====
+                       spec     K     h n_meses ret_medio_pct       t_fm
+                     <char> <num> <num>   <int>         <num>      <num>
+ 1:     R1_liquido_reversao     6     3      24    -1.3280451 -2.1299761
+ 2:  R1_liquido_continuacao     6     3      24     1.3280451  2.1299761
+ 3: R2_completo_continuacao     6     1      62     0.5249834  1.9505050
+ 4: R2_completo_continuacao     3     1      62     0.4938218  1.5801143
+ 5:     R1_liquido_reversao     6     1      24    -0.8795094 -1.5675426
+ 6:  R1_liquido_continuacao     6     1      24     0.8795094  1.5675426
+ 7:     R1_liquido_reversao     3     3      24    -0.8350398 -1.5394264
+ 8:  R1_liquido_continuacao     3     3      24     0.8350398  1.5394264
+ 9: R2_completo_continuacao     3     3      60    -0.8667404 -0.9471520
+10: R2_completo_continuacao     6     3      60    -0.5559486 -0.6458059
+11:     R1_liquido_reversao     3     1      24     0.2789446  0.3963858
+12:  R1_liquido_continuacao     3     1      24    -0.2789446 -0.3963858
+          p_fm n_par_mes_min n_par_mes_mediana
+         <num>         <int>             <num>
+ 1: 0.04409291            30             315.5
+ 2: 0.04409291            30             315.5
+ 3: 0.05571455           128            2122.0
+ 4: 0.11925261           163            2178.5
+ 5: 0.13064430            42             323.5
+ 6: 0.13064430            42             323.5
+ 7: 0.13734615            36             341.0
+ 8: 0.13734615            36             341.0
+ 9: 0.34742460           140            2111.0
+10: 0.52090897           114            2040.5
+11: 0.69547412            55             349.5
+12: 0.69547412            55             349.5
+
+OK

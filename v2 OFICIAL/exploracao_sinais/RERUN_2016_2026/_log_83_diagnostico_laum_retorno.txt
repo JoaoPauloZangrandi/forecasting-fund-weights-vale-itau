@@ -1,0 +1,22 @@
+Correlacao frag_laum_w x log_valor_total: 0.3104986 
+
+
+--- laum + tam.posicao -> retorno h=1 (alvo=retorno, 62 meses) ---
+  (Intercept)          coef_medio=+0.00533  t=  0.55  p=0.58648
+  frag_laum_w_z        coef_medio=-0.00428  t= -2.10  p=0.03971
+  log_valor_total_z    coef_medio=+0.00208  t=  0.75  p=0.45750
+
+--- laum sozinho -> retorno h=1 (alvo=retorno, 62 meses) ---
+  (Intercept)          coef_medio=+0.00533  t=  0.55  p=0.58648
+  frag_laum_w_z        coef_medio=-0.00304  t= -1.72  p=0.09100
+
+--- laum + tam.posicao -> retorno h=3 (alvo=retorno, 60 meses) ---
+  (Intercept)          coef_medio=+0.01210  t=  1.42  p=0.16180
+  frag_laum_w_z        coef_medio=-0.00547  t= -2.08  p=0.04178
+  log_valor_total_z    coef_medio=-0.00061  t= -0.22  p=0.82866
+
+--- laum sozinho -> retorno h=3 (alvo=retorno, 60 meses) ---
+  (Intercept)          coef_medio=+0.01210  t=  1.42  p=0.16180
+  frag_laum_w_z        coef_medio=-0.00562  t= -2.37  p=0.02127
+
+OK

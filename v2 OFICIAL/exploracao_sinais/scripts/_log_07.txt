@@ -1,0 +1,28 @@
+Ativos classificados como 'small cap' (terco menor por valor total mantido): 171 de 513 
+
+===== FIT (Lou), SO SMALL CAPS =====
+Obs FIT em small caps: 3454 de 16996 
+FIT small-cap                  h= 0 [linear] n_treino= 1953 n_teste=1105 beta= -0.03991 R2_OOS=  0.0754% p_full=0.1958
+FIT small-cap                  h= 0 [FM] 21 meses spread=  +0.99pp/mes t=  0.40 p=0.6922
+FIT small-cap                  h= 1 [linear] n_treino= 1950 n_teste=1092 beta=  0.13153 R2_OOS=  0.0561% p_full=0.0074
+FIT small-cap                  h= 1 [FM] 21 meses spread=  +0.38pp/mes t=  0.23 p=0.8189
+FIT small-cap                  h= 3 [linear] n_treino= 1932 n_teste= 979 beta= -0.13031 R2_OOS= -0.6911% p_full=0.1764
+FIT small-cap                  h= 3 [FM] 20 meses spread=  +0.84pp/mes t=  0.39 p=0.7010
+
+===== DEMANDA AGREGADA REVELADA, SO SMALL CAPS =====
+Demanda revelada small-cap     h= 1 [linear] n_treino= 1958 n_teste=1103 beta= -0.00264 R2_OOS= -0.5852% p_full=0.0143
+Demanda revelada small-cap     h= 1 [FM] 24 meses spread=  -1.00pp/mes t= -0.46 p=0.6469
+Demanda revelada small-cap     h= 3 [linear] n_treino= 1939 n_teste= 990 beta=  0.00085 R2_OOS= -0.0893% p_full=0.5002
+Demanda revelada small-cap     h= 3 [FM] 22 meses spread=  +0.75pp/mes t=  0.46 p=0.6471
+Demanda revelada small-cap     h= 6 [linear] n_treino= 1901 n_teste= 824 beta=  0.00116 R2_OOS= -0.0050% p_full=0.1747
+Demanda revelada small-cap     h= 6 [FM] 19 meses spread=  +1.35pp/mes t=  0.93 p=0.3627
+
+===== HERDING (LSV), SO SMALL CAPS =====
+Herding small-cap              h= 1 [linear] n_treino=  716 n_teste= 558 beta= -0.01174 R2_OOS= -0.0523% p_full=0.6281
+Herding small-cap              h= 1 [FM] 15 meses spread=  -0.79pp/mes t= -0.25 p=0.8038
+Herding small-cap              h= 3 [linear] n_treino=  704 n_teste= 501 beta=  0.00672 R2_OOS= -0.0347% p_full=0.7869
+Herding small-cap              h= 3 [FM] 14 meses spread=  -3.44pp/mes t= -1.28 p=0.2226
+Herding small-cap              h= 6 [linear] n_treino=  678 n_teste= 411 beta=  0.01398 R2_OOS=  0.4030% p_full=0.1476
+Herding small-cap              h= 6 [FM] 11 meses spread=  -2.34pp/mes t= -0.42 p=0.6800
+
+OK

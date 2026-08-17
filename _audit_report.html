@@ -1,0 +1,516 @@
+<title>Auditoria — TCC VALE3/Itaú (v2, HHI)</title>
+<style>
+  :root {
+    --paper: #f6f5f0;
+    --paper-raised: #ffffff;
+    --ink: #1b1d22;
+    --ink-soft: #52565f;
+    --ink-faint: #83868f;
+    --navy: #22364f;
+    --navy-soft: #4c6584;
+    --rule: #dbd8ce;
+    --rule-strong: #c3bfb1;
+    --critical: #a83a3a;
+    --critical-bg: #f7e9e7;
+    --high: #b3791c;
+    --high-bg: #f7eedd;
+    --medium: #7c6f2e;
+    --medium-bg: #f2f0dd;
+    --ok: #3f6b4a;
+    --ok-bg: #e6efe6;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --serif: "Palatino Linotype", "Iowan Old Style", Palatino, Georgia, serif;
+    --sans: Candara, Optima, "Noto Sans", "Segoe UI", sans-serif;
+  }
+  :root[data-theme="dark"] {
+    --paper: #14161b;
+    --paper-raised: #1b1e25;
+    --ink: #e9e7e0;
+    --ink-soft: #b3b0a6;
+    --ink-faint: #7d7b75;
+    --navy: #8fadd0;
+    --navy-soft: #6c88ab;
+    --rule: #2c2f37;
+    --rule-strong: #3c4049;
+    --critical: #e08a7d;
+    --critical-bg: #3a2521;
+    --high: #e3b567;
+    --high-bg: #3a3120;
+    --medium: #cdc078;
+    --medium-bg: #35331f;
+    --ok: #8fc09b;
+    --ok-bg: #20302a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14161b;
+      --paper-raised: #1b1e25;
+      --ink: #e9e7e0;
+      --ink-soft: #b3b0a6;
+      --ink-faint: #7d7b75;
+      --navy: #8fadd0;
+      --navy-soft: #6c88ab;
+      --rule: #2c2f37;
+      --rule-strong: #3c4049;
+      --critical: #e08a7d;
+      --critical-bg: #3a2521;
+      --high: #e3b567;
+      --high-bg: #3a3120;
+      --medium: #cdc078;
+      --medium-bg: #35331f;
+      --ok: #8fc09b;
+      --ok-bg: #20302a;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .sheet {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 64px 32px 96px;
+  }
+  .overflow-guard { overflow-x: auto; }
+
+  /* ---- Masthead ---- */
+  .masthead {
+    border-top: 3px solid var(--navy);
+    padding-top: 22px;
+    margin-bottom: 8px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  h1.title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin: 14px 0 6px;
+    text-wrap: balance;
+    color: var(--ink);
+  }
+  .subtitle {
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 26px;
+  }
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 40px;
+  }
+  .meta-strip div {
+    background: var(--paper-raised);
+    padding: 12px 16px;
+  }
+  .meta-strip .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .meta-strip .v {
+    font-size: 14.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Section headers ---- */
+  h2.section {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 22px;
+    color: var(--navy);
+    margin: 56px 0 4px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule-strong);
+    text-wrap: balance;
+  }
+  h2.section .n {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--ink-faint);
+    margin-right: 10px;
+  }
+  .section-lede {
+    color: var(--ink-soft);
+    font-size: 15px;
+    max-width: 66ch;
+    margin: 12px 0 24px;
+  }
+
+  /* ---- Executive summary ---- */
+  .verdict {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--navy);
+    padding: 20px 24px;
+    margin: 18px 0 28px;
+    font-size: 16px;
+  }
+  .verdict strong { color: var(--navy); }
+
+  .tally {
+    display: flex;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 28px;
+  }
+  .tally .cell {
+    flex: 1;
+    background: var(--paper-raised);
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .tally .num {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-variant-numeric: tabular-nums;
+    display: block;
+    line-height: 1;
+  }
+  .tally .lbl {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 6px;
+    display: block;
+  }
+  .tally .cell.critical .num { color: var(--critical); }
+  .tally .cell.high .num { color: var(--high); }
+  .tally .cell.medium .num { color: var(--medium); }
+  .tally .cell.ok .num { color: var(--ok); }
+
+  /* ---- Findings ---- */
+  .finding {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-left-width: 4px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .finding.critical { border-left-color: var(--critical); }
+  .finding.high { border-left-color: var(--high); }
+  .finding.medium { border-left-color: var(--medium); }
+  .finding.ok { border-left-color: var(--ok); }
+
+  .finding-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .chip.critical { background: var(--critical-bg); color: var(--critical); }
+  .chip.high { background: var(--high-bg); color: var(--high); }
+  .chip.medium { background: var(--medium-bg); color: var(--medium); }
+  .chip.ok { background: var(--ok-bg); color: var(--ok); }
+
+  .finding-title {
+    font-weight: 700;
+    font-size: 16px;
+    flex: 1;
+  }
+  .finding p { margin: 8px 0; font-size: 14.8px; color: var(--ink); }
+  .finding p.label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 14px 0 3px;
+  }
+  .finding code, .sheet code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    background: var(--paper);
+    padding: 1px 5px;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+  }
+  .finding .evidence {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 10px 12px;
+    color: var(--ink-soft);
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .finding .fixed-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ok);
+    font-weight: 700;
+  }
+
+  /* ---- Punch list table ---- */
+  table.punch {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  table.punch th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 8px 10px;
+  }
+  table.punch td {
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  table.punch tr:last-child td { border-bottom: none; }
+  table.punch .sev {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  table.punch .sev.critical { color: var(--critical); }
+  table.punch .sev.high { color: var(--high); }
+  table.punch .sev.medium { color: var(--medium); }
+  table.punch .sev.ok { color: var(--ok); }
+
+  /* ---- Verified-clean list ---- */
+  ul.clean-list { list-style: none; padding: 0; margin: 0; }
+  ul.clean-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14.5px;
+    display: flex;
+    gap: 10px;
+  }
+  ul.clean-list li:last-child { border-bottom: none; }
+  ul.clean-list li::before {
+    content: "✓";
+    color: var(--ok);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .sheet { padding: 40px 18px 64px; }
+    h1.title { font-size: 27px; }
+    .meta-strip { grid-template-columns: repeat(2, 1fr); }
+    .tally { flex-wrap: wrap; }
+    .tally .cell { min-width: 40%; }
+  }
+</style>
+
+<div class="sheet">
+
+  <div class="masthead">
+    <div class="eyebrow">
+      <span>Auditoria de projeto</span>
+      <span>forecasting-fund-weights-vale-itau</span>
+    </div>
+    <h1 class="title">Peso de VALE3 nos fundos brasileiros — auditoria da inclusão de HHI<sub>resto</sub> na Etapa 1</h1>
+    <p class="subtitle">Revisão de ponta a ponta do commit <code>740d3af</code> (+ correções em <code>a084e7c</code>): higiene do repositório, integridade do pipeline de dados, consistência interna do <code>TCC_finalV2.tex</code> e solidez metodológica.</p>
+    <div class="meta-strip">
+      <div><span class="k">Escopo</span><span class="v">Git, pipeline R, documento, metodologia</span></div>
+      <div><span class="k">Achados</span><span class="v">10 (1 crítico, 2 altos, 4 médios, 3 verificações)</span></div>
+      <div><span class="k">Corrigidos nesta rodada</span><span class="v">4 de 10</span></div>
+      <div><span class="k">Estado do repo</span><span class="v">Sincronizado com origin/master</span></div>
+    </div>
+  </div>
+
+  <h2 class="section">Veredito</h2>
+  <div class="verdict">
+    O pipeline está <strong>mecanicamente correto</strong> — HHI<sub>resto</sub> foi propagado sem erro pelas três etapas, os números do PDF batem com os CSVs, e o repositório está limpo (sem segredos, sem arquivos grandes demais, local e remoto sincronizados). Mas a auditoria achou <strong>um problema conceitual real</strong>: HHI<sub>resto</sub> é calculado com dado do <em>mesmo mês</em> que ele tenta explicar — diferente das outras 5 características, todas defasadas para o mês anterior — e isso contradiz uma afirmação que o próprio documento faz sobre não usar informação contemporânea. Não é um bug de código; é uma decisão de desenho que ficou sem discussão explícita.
+  </div>
+
+  <div class="tally">
+    <div class="cell critical"><span class="num">1</span><span class="lbl">Crítico</span></div>
+    <div class="cell high"><span class="num">2</span><span class="lbl">Alto</span></div>
+    <div class="cell medium"><span class="num">4</span><span class="lbl">Médio</span></div>
+    <div class="cell ok"><span class="num">3</span><span class="lbl">Verificado limpo</span></div>
+  </div>
+
+  <h2 class="section"><span class="n">01</span>Metodologia</h2>
+  <p class="section-lede">O achado que mais importa desta auditoria. Os outros três blocos (git, pipeline, documento) são checagens de higiene; este é sobre se o resultado central — HHI melhora o modelo — está medindo o que o documento diz que está medindo.</p>
+
+  <div class="finding critical">
+    <div class="finding-head">
+      <span class="chip critical">Crítico</span>
+      <span class="finding-title">HHI<sub>resto</sub> é contemporâneo, não defasado — ao contrário das outras 5 características</span>
+    </div>
+    <p>As 5 características originais (tamanho, cotistas, FIC, fluxo, beta) são todas medidas no <strong>último dia do mês anterior</strong> — o próprio <code>TCC_finalV2.tex</code> afirma isso textualmente: "nenhuma delas usa informação contemporânea ao próprio mês, o que evita viés de antecipação". HHI<sub>resto</sub>, do jeito que está implementado (script 96, idêntico ao piloto que validou a ideia), usa o peso de <em>todos os outros ativos do fundo no mesmo mês</em> que o peso-alvo que está sendo explicado.</p>
+    <p class="label">Evidência</p>
+    <div class="evidence">96_pipeline_hhi_etapa1.R:31-33
+hhi_total &lt;- d[, .(hhi_total = sum(peso^2)), by = .(cod_fundo, ym)]
+d &lt;- merge(d, hhi_total, by = c("cod_fundo","ym"))
+d[, hhi_resto := hhi_total - peso^2]
+&nbsp;&nbsp;&nbsp;&nbsp;↳ agrupado por "ym" — o MESMO mês da variável dependente peso_i,n,t
+
+29_merge_final_multiativo.R:35-37 (as outras 5, para comparação)
+d2[, l_aum := log(aum_prev)]      ↳ sufixo "_prev" = mês anterior
+d2[, flow_aum := fluxo_prev / aum_prev]</div>
+    <p>Consequência prática: parte do poder explicativo de HHI<sub>resto</sub> pode ser mecânica, não comportamental. Se um fundo concentra 70% do book num ativo este mês, sobra pouco espaço aritmético para qualquer outro peso ser grande no mesmo mês — os dois números se movem juntos por construção da carteira, não porque concentração "prevê" o peso do ativo-alvo. Isso não invalida o achado (a correlação é real e o piloto foi honesto sobre o desenho), mas enfraquece a interpretação causal que o texto atualmente sugere.</p>
+    <p><strong>Recomendação:</strong> ou (a) testar HHI<sub>resto</sub> defasado (calculado com o peso do mês <code>t−1</code>, exigindo computar essa série a mais no painel) e comparar a força do efeito, ou (b) manter a versão contemporânea mas adicionar uma frase explícita no <code>TCC_finalV2.tex</code> reconhecendo que essa característica, diferente das outras 5, não segue a mesma disciplina de defasagem — e por quê isso foi aceito (ex.: é uma característica de <em>composição de carteira</em>, não uma característica de <em>fundo</em> como as outras, então contemporaneidade é uma escolha de desenho diferente, não um descuido). Não corrigi isso automaticamente porque é uma decisão do João, não um erro de execução.</p>
+  </div>
+
+  <h2 class="section"><span class="n">02</span>Pipeline de dados</h2>
+
+  <div class="finding high">
+    <div class="finding-head">
+      <span class="chip high">Alto</span>
+      <span class="finding-title">4 scripts antigos ainda escrevem nos mesmos nomes de arquivo que os novos usam</span>
+    </div>
+    <p><code>30_cross_section_multiativo.R</code>, <code>37_erro_multiativo.R</code>, <code>42_etapa3_multiativo.R</code> e <code>44_etapa3_multiativo_gestora_multihorizonte.R</code> — a versão de 5 características, pré-HHI — gravam direto em <code>theta_multiativo.csv</code>, <code>erro_e_multiativo.csv</code>, <code>etapa3_multiativo_h1/h3.csv</code> e <code>etapa3_multiativo_gestora_multihorizonte(.csv/_longo.csv)</code>, exatamente os mesmos nomes que os scripts 96/97 agora produzem com HHI. Se qualquer um desses 4 scripts antigos for rerodado por engano — depuração, curiosidade, um "deixa eu só checar uma coisa" — ele sobrescreve silenciosamente os arquivos corretos com a versão de 5 características, sem erro, sem aviso, e os números do PDF ficam errados sem ninguém perceber até a próxima auditoria.</p>
+    <p><strong>Recomendação:</strong> adicionar um cabeçalho de aviso nesses 4 scripts ("SUPERSEDED — rodar 96/97/98 em vez deste") ou renomeá-los para deixar claro que produzem a versão antiga.</p>
+  </div>
+
+  <div class="finding medium">
+    <div class="finding-head">
+      <span class="chip medium">Médio</span>
+      <span class="finding-title">~2,2 GB de arquivos intermediários <code>_comHHI</code> ainda em disco</span>
+    </div>
+    <p>Confirmados byte-a-byte idênticos aos arquivos padrão já trocados (<code>erro_e_multiativo.csv</code>, <code>etapa3_multiativo_h1/h3.csv</code>, tabelas por gestora, θ) — não é um erro de sincronismo, só duplicação. Não afeta o git (a pasta <code>v2 OFICIAL/data/</code> já está no <code>.gitignore</code>), só ocupa espaço local.</p>
+    <p><strong>Recomendação:</strong> apagar os 7 arquivos <code>*_comHHI.csv</code> quando quiser liberar espaço — a cadeia de backup <code>*_ANTES_HHI.csv.bak</code> já preserva o estado anterior.</p>
+  </div>
+
+  <ul class="clean-list">
+    <li><code>painel_multiativo_final.csv</code> não foi tocado pelo trabalho de HHI (confirmado: mesmo tamanho, mesma data, 5/ago) — consistente com HHI ser derivado do peso em tempo de execução, não persistido na base.</li>
+    <li>Swap dos 7 arquivos padrão↔<code>_comHHI</code> confirmado byte-a-byte idêntico — nenhuma corrupção ou arquivo trocado errado.</li>
+    <li>Cadeia de backup coerente e rastreável: <code>_ANTES_LIMPEZA</code> (antes da limpeza de soma_peso) → versão atual → <code>_ANTES_HHI</code> (antes do HHI) → versão atual.</li>
+  </ul>
+
+  <h2 class="section"><span class="n">03</span>Documento (TCC_finalV2.tex)</h2>
+
+  <div class="finding ok">
+    <div class="finding-head">
+      <span class="chip ok">Corrigido</span>
+      <span class="finding-title">Texto citava a Tabela de amostra final com o número errado</span>
+    </div>
+    <p>A abertura da Seção 5 dizia "Tabela~\ref{tab:amostra}: 2.343 fundos" — mas a tabela mostra <strong>2.347</strong> (a amostra final antes da limpeza de soma_peso). Os 2.343 só aparecem depois de excluir 597 fundo-mês contaminados, um passo que o texto original não deixava explícito como a origem da diferença.</p>
+    <p class="fixed-tag">✓ Corrigido e publicado (commit a084e7c) — o texto agora explicita as duas contagens e de onde vem a diferença de 4 fundos.</p>
+  </div>
+
+  <div class="finding ok">
+    <div class="finding-head">
+      <span class="chip ok">Corrigido</span>
+      <span class="finding-title">Duas caixas de texto extrapolando a margem da página (overfull hbox)</span>
+    </div>
+    <p>A Tabela de evolução do universo (coluna de texto estreita demais para "Ampliação de ativos...") e a equação da regressão de variância (7 termos, larga demais para uma linha) extrapolavam a margem em 18pt e 40pt respectivamente — visível como texto cortado/sobreposto no PDF.</p>
+    <p class="fixed-tag">✓ Corrigido e publicado (commit a084e7c) — coluna alargada, equação quebrada em duas linhas com <code>align</code>. Zero overfull no log de compilação atual.</p>
+  </div>
+
+  <div class="finding medium">
+    <div class="finding-head">
+      <span class="chip medium">Médio</span>
+      <span class="finding-title">Figura gerada pelo script 45 (<code>_h3</code>) nunca é referenciada no PDF</span>
+    </div>
+    <p><code>fig_multihorizonte_gestora_rmse_margem_h3.pdf</code> existe, foi regerada nesta rodada, mas o <code>TCC_finalV2.tex</code> só inclui a versão <code>h1</code>. Não é um erro — só uma saída sem uso, gerada de graça pelo mesmo script.</p>
+    <p><strong>Recomendação:</strong> incluir a figura h3 como comparação, ou ignorar (custo zero de mantê-la sem uso).</p>
+  </div>
+
+  <ul class="clean-list">
+    <li>Zero labels duplicados, zero referências (<code>\ref</code>/<code>\eqref</code>) quebradas — todas resolvem para um <code>\label</code> existente.</li>
+    <li>Todas as 13 figuras referenciadas no texto existem em disco e têm data de modificação posterior ao rerun com HHI (nenhuma figura "fantasma" da versão antiga).</li>
+    <li>Amostra de números de tabela (Ibiuna, Guepardo, Itaú na Tabela de RMSE por gestora) conferida diretamente contra <code>etapa3_multiativo_gestora_multihorizonte.csv</code> — bate exato.</li>
+  </ul>
+
+  <h2 class="section"><span class="n">04</span>Git &amp; repositório</h2>
+
+  <div class="finding medium">
+    <div class="finding-head">
+      <span class="chip medium">Médio</span>
+      <span class="finding-title">18 figuras versionadas nunca referenciadas por nenhum dos 6 documentos <code>.tex</code> do repositório</span>
+    </div>
+    <p>Inclui <code>fig_persistencia_erro.pdf</code> (1,9 MB, a maior figura do repositório) — sobra da seção removida a pedido do João numa rodada anterior — e outras 17 figuras de versões anteriores dos documentos (<code>fig_theta_trajetoria.pdf</code>, <code>fig_oos_barras.pdf</code>, etc.). Checado contra os 6 arquivos <code>.tex</code> rastreados (<code>TCC_final</code>, <code>TCC_finalV2</code>, <code>docs/explanation</code>, <code>docs/results</code>, <code>v2 OFICIAL.tex</code>, <code>teste_estrategia.tex</code>) — nenhum cita esses 18 arquivos.</p>
+    <p><strong>Recomendação:</strong> baixa prioridade (não atrapalha nada, só infla o histórico do git em alguns MB) — <code>git rm</code> quando fizer uma limpeza geral.</p>
+  </div>
+
+  <div class="finding medium">
+    <div class="finding-head">
+      <span class="chip medium">Médio</span>
+      <span class="finding-title"><code>README.md</code> descreve só o script 01 — desatualizado desde o início do projeto</span>
+    </div>
+    <p>O README ainda descreve a v1 do projeto ("carregar as bases CONS e SH... não filtra Itaú, não filtra VALE, não calcula pesos"), sem nenhuma menção aos 98 scripts, ao <code>TCC_final.tex</code>/<code>TCC_finalV2.tex</code>, ou à estrutura atual do repositório.</p>
+    <p><strong>Recomendação:</strong> não é urgente para o TCC em si (o README não afeta a nota), mas vale atualizar antes de compartilhar o repositório com o orientador ou banca.</p>
+  </div>
+
+  <ul class="clean-list">
+    <li>Local e <code>origin/master</code> totalmente sincronizados (0 commits de diferença em qualquer direção).</li>
+    <li>Nenhum segredo, chave de API ou senha encontrado em arquivo versionado (varredura em <code>.R</code>/<code>.tex</code>/<code>.md</code>).</li>
+    <li>Nenhum arquivo versionado passa de poucos MB — bem abaixo do limite de 100 MB do GitHub; os CSVs grandes (até 1,7 GB) ficam corretamente fora do git via <code>.gitignore</code>.</li>
+  </ul>
+
+  <h2 class="section">Lista de ação</h2>
+  <div class="overflow-guard">
+  <table class="punch">
+    <tr><th>Severidade</th><th>Item</th><th>Status</th></tr>
+    <tr><td class="sev critical">Crítico</td><td>HHI<sub>resto</sub> contemporâneo vs. defasado — decidir e, se manter, documentar a exceção</td><td>Aguardando decisão do João</td></tr>
+    <tr><td class="sev high">Alto</td><td>Marcar scripts 30/37/42/44 como superados (risco de sobrescrita silenciosa)</td><td>Pendente</td></tr>
+    <tr><td class="sev ok">—</td><td>Corrigir número 2.343 vs. 2.347 no texto</td><td>Feito — commit a084e7c</td></tr>
+    <tr><td class="sev ok">—</td><td>Corrigir 2 overfull hbox (tabela + equação)</td><td>Feito — commit a084e7c</td></tr>
+    <tr><td class="sev medium">Médio</td><td>Apagar 7 arquivos <code>_comHHI.csv</code> (~2,2 GB) em disco</td><td>Pendente, opcional</td></tr>
+    <tr><td class="sev medium">Médio</td><td>Remover 18 figuras órfãs do git</td><td>Pendente, baixa prioridade</td></tr>
+    <tr><td class="sev medium">Médio</td><td>Atualizar <code>README.md</code></td><td>Pendente, não-bloqueante</td></tr>
+    <tr><td class="sev medium">Médio</td><td>Decidir sobre a figura <code>_h3</code> não usada</td><td>Pendente, custo zero</td></tr>
+  </table>
+  </div>
+
+  <footer>
+    <span>Auditoria conduzida por revisão direta de código, dados e git — nenhum número reportado sem verificação.</span>
+    <span>forecasting-fund-weights-vale-itau · commit a084e7c</span>
+  </footer>
+
+</div>

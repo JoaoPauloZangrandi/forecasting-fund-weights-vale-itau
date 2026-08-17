@@ -1,0 +1,17 @@
+h3 antes do filtro de posicao-poeira: 9399282 | depois: 3386143 
+Par (fundo,ativo) de maior RMSE h=3 (>=8 obs, sem posicao-poeira): 46.246.621/0001-50 / EVEN         ON      NM - EVEN3 -- RMSE = 0.40647 
+Fundo 46.246.621/0001-50 , EVEN         ON      NM - EVEN3 , h=3 -- observacoes de teste: 8 
+       ym ym_fut      peso  peso_fut    erro_oos
+    <int>  <int>     <num>     <num>       <num>
+1: 202308 202311 0.9991224 0.9993839  0.05892742
+2: 202311 202402 0.9993839 0.1735502 -0.78924339
+3: 202402 202405 0.1735502 0.9931782  0.82176893
+4: 202410 202501 0.9908302 0.9946914  0.05674721
+5: 202501 202504 0.9946914 0.9943655  0.10016220
+6: 202504 202507 0.9943655 0.9953758  0.04623436
+7: 202507 202510 0.9953758 0.9984676  0.06179863
+8: 202604 202607 0.9980725 0.9978089  0.02894085
+null device 
+          1 
+
+OK - salvo em 'fig_trajetoria_fundo_pior_rmse.pdf' (fundo 46.246.621/0001-50, EVEN3, gestora )

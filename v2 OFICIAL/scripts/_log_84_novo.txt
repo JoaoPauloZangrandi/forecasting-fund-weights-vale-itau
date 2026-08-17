@@ -1,0 +1,31 @@
+Meses de teste: 32 ( 202001 a 202503 )
+1a metade: ate 202104 | 2a metade: depois de 202104 
+
+Gestoras com >=50 obs em cada metade: 40 
+
+===== Persistencia do vies entre 1a e 2a metade do teste =====
+Correlacao (Pearson) = 0.6208
+Correlacao (Spearman, ranking) = 0.6720
+Regressao: vies_2a = 0.00014 + 0.4772 * vies_1a | R2 = 0.3854 | p(coef) = 1.921e-05
+
+Top 5 vies mais positivo na 1a metade -> o que fizeram na 2a:
+                    gestora_grupo vies_primeira vies_segunda
+                           <char>         <num>        <num>
+1:         Guepardo Investimentos       0.00410      0.00138
+2:                 Núcleo Capital       0.00135      0.00216
+3: Constellation Asset Management       0.00093      0.00065
+4:                  Real Investor       0.00093      0.00109
+5:                 Bogari Capital       0.00081      0.00014
+
+Top 5 vies mais negativo na 1a metade -> o que fizeram na 2a:
+               gestora_grupo vies_primeira vies_segunda
+                      <char>         <num>        <num>
+1:               BNP Paribas      -0.00016     -0.00028
+2:                        XP      -0.00016     -0.00019
+3:             Western Asset      -0.00019     -0.00015
+4:                     Caixa      -0.00035      0.00012
+5: Daycoval Asset Management      -0.00035     -0.00114
+null device 
+          1 
+
+OK - figura salva em fig_persistencia_vies_gestora.pdf

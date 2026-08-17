@@ -30,3 +30,6 @@ v2 OFICIAL/data/*
 *.Rproj
 Thumbs.db
 desktop.ini
+*.nav
+*.snm
+compile_log.txt

@@ -41,7 +41,7 @@ roda_horizonte <- function(h) {
   M <- merge(atual, fut, by.x = c("cod_fundo","ativo","ym_fut"),
              by.y = c("cod_fundo","ativo","ym_fut_key"))
   M[, dw := peso_fut - peso]
-  treino <- M[ym < CORTE]; teste  <- M[ym >= CORTE & ym_fut <= 202112L]
+  treino <- M[ym < CORTE]; teste  <- M[ym >= CORTE & ym_fut <= 202607L]
   fit <- lm(dw ~ 0 + d, data = treino); lam <- unname(coef(fit)["d"])
   teste[, erro_oos := dw - lam * d]
   teste[, erro_naive := dw]

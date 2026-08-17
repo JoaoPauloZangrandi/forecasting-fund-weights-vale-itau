@@ -15,6 +15,7 @@
 suppressPackageStartupMessages(library(data.table))
 DATA_DIR <- Sys.getenv("CVM_DATA_DIR", unset = "C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF")
 REPO <- Sys.getenv("PROJ_DIR", unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau")
+source(file.path(REPO, "v2 OFICIAL/scripts/config_periodo.R"))
 OUT <- file.path(REPO, "v2 OFICIAL/data/painel_multiativo_direto_completo.csv")
 
 pdate <- function(x){ x<-trimws(as.character(x)); o<-as.Date(rep(NA_character_,length(x)))
@@ -37,9 +38,14 @@ cat("Universo completo (mapa gestora):", nrow(map_gestora), "fundos\n")
 if (file.exists(OUT)) file.remove(OUT)
 total_linhas <- 0L; total_vale <- 0L; primeiro <- TRUE
 
-for (y in 2016:2021) {
+for (y in ANO_INICIO:ANO_FIM) {
   cat("== ano", y, "==\n"); flush.console()
-  cv <- fread(file.path(DATA_DIR, sprintf("cons_%d.csv", y)), encoding = "UTF-8", showProgress = FALSE)
+  # select= reduz uso de memoria (arquivos 2022+ tem 2-2.7GB, RAM da maquina e' limitada
+  # -- achado 16/08/2026: rodada sem select= travou silenciosamente por falta de memoria
+  # em algum ano >=2020, sem erro visivel no log)
+  cv <- fread(file.path(DATA_DIR, sprintf("cons_%d.csv", y)), encoding = "UTF-8", showProgress = FALSE,
+              select = c("CNPJ","Código","Tipo_Ativo","Data_Competência","Nome_Ativo",
+                         "Valor_Ativo_mil","Participação_Ativo"))
   stopifnot(all(cv$Tipo_Ativo == "Ações"))
   cv <- unique(cv)
   cv[, PESO := as.numeric(Participação_Ativo)]
@@ -70,6 +76,6 @@ for (y in 2016:2021) {
 }
 
 cat("\nTOTAL linhas gravadas:", total_linhas, "\n")
-cat("TOTAL VALE3:", total_vale, "(esperado: 96.349, igual ao R/25 -- o universo maior nao muda quem tem VALE3)\n")
-stopifnot(total_vale == 96349L)
+cat("TOTAL VALE3:", total_vale, "(esperado: 96.349 SO' se ANO_FIM==2021; ver PLANO_EXPANSAO_2021_2026.md)\n")
+if (ANO_FIM == 2021L) stopifnot(total_vale == 96349L)
 cat("\nOK - salvo em '", OUT, "'\n")

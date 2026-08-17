@@ -36,7 +36,7 @@ dev.off()
 # ---- (2) barras: RMSE dentro/fora da amostra ----
 M <- fread(file.path(REPO, "v2 OFICIAL/data/ajuste_parcial_erros.csv"))
 CORTE <- 202001L
-treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym < 202112L]
+treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym < 202607L]
 fit_tr <- lm(dw ~ 0 + d, data = treino); lam_tr <- coef(fit_tr)["d"]
 rmse <- function(x) sqrt(mean(x^2))
 

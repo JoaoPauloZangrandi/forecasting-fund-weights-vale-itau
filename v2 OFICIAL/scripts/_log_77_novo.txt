@@ -1,0 +1,23 @@
+h1 antes do filtro: 9016081 | depois: 3140040 
+
+Top 5 vies mais POSITIVO (compram mais do que o modelo preve):
+            gestora_grupo   vies_medio     n
+                   <char>        <num> <int>
+1: Guepardo Investimentos 0.0027508846  3609
+2:         Núcleo Capital 0.0017504382  7630
+3:          Real Investor 0.0010326448  4863
+4:     Franklin Templeton 0.0009021065   389
+5:   Ibiuna Investimentos 0.0007972994  6076
+
+Top 5 vies mais NEGATIVO (compram menos / vendem mais do que o modelo preve):
+               gestora_grupo    vies_medio      n
+                      <char>         <num>  <int>
+1:             Western Asset -0.0001704683  35450
+2:                        XP -0.0001817093 106183
+3:            Legacy Capital -0.0001870906   6626
+4:               BNP Paribas -0.0002248793  66719
+5: Daycoval Asset Management -0.0009153273   3342
+null device 
+          1 
+
+OK

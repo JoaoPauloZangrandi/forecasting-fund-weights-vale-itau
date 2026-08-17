@@ -1,0 +1,4 @@
+Gestoras: 43 
+Escala comum -- RMSE: 0.002 a 0.0216 | Margem: -71.8 a 6.5 
+OK - salvo em C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/figuras/fig_multihorizonte_gestora_rmse_margem.pdf ( 43 gestoras com dado em h= 1 )
+OK - salvo em C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/figuras/fig_multihorizonte_gestora_rmse_margem_h3.pdf ( 43 gestoras com dado em h= 3 )

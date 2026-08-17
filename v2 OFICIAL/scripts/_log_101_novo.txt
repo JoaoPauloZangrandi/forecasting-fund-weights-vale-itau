@@ -1,0 +1,30 @@
+Painel (universo completo, 5 caracteristicas): 39407709 linhas | 20223 fundos | 1293 ativos
+Linhas excluidas por falta de HHI defasado (sem dado em t-1): 13450153 de 39407709 (34.13%)
+Fundos: 20223 -> 19259 | Ativos: 1251
+
+Celulas (ativo,mes) com >=15 holders: 21555 | 1046 ativos distintos | 25938468 obs
+Tempo: 400.2 s | 21528 celulas estimadas | 27 celulas nao convergiram (excluidas)
+
+==== Resumo entre 21528 celulas ====
+Significancia HHI_lag: 14657 de 21528 (68.1%) | % positivo (sig): 13594/14657
+pseudo-R2 medio (piso -1): 0.5128
+
+==== Ativos com >=24 meses estimados: 238 ====
+--- por sinal do coeficiente (log-odds) ---
+b_aum    mediana=-0.04201 | % mesmo sinal que VALE3=60.1%
+b_cot    mediana= 0.12632 | % mesmo sinal que VALE3=80.3%
+b_fic    mediana=      NA | % mesmo sinal que VALE3=NA%
+b_flow   mediana= 0.29672 | % mesmo sinal que VALE3=29.4%
+b_betaf  mediana= 0.79430 | % mesmo sinal que VALE3=92.0%
+b_hhi    mediana= 0.59283 | % mesmo sinal que VALE3=88.7%
+Pseudo-R2 medio: 0.5248 
+
+
+===== COMPARACAO: 6 caracteristicas (novo) vs. 5 caracteristicas (antigo) =====
+Celulas: 21528 (novo) vs 21528 (antigo)
+pseudo-R2 medio: 0.5128 (novo) vs 0.5128 (antigo)
+[1] TRUE
+[1] TRUE
+[1] TRUE
+
+OK - theta/peso_pred/theta_media_ativo_universo_completo.csv sobrescritos com 6 caracteristicas (backup .bak salvo)

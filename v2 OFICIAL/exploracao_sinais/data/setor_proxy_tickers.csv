@@ -1,514 +1,1294 @@
 ticker,nome,setor
+AALR3,ALLIAR       ON      NM,Outros/Nao classificado
 AALR3,ALLIAR ON NM,Outros/Nao classificado
+ABCB4,ABC BRASIL   PN      N2,Outros/Nao classificado
 ABCB4,ABC BRASIL PN N2,Outros/Nao classificado
+ABEV3,AMBEV S/A    ON,Outros/Nao classificado
+ABEV3,AMBEV S/A    ON  EJ,Outros/Nao classificado
 ABEV3,AMBEV S/A ON,Outros/Nao classificado
+ADMF3,CIABRASF     ON      NM,Outros/Nao classificado
+AERI3,AERIS        ON      NM,Outros/Nao classificado
+AERI3,AERIS        ON  EG  NM,Outros/Nao classificado
 AERI3,AERIS ON NM,Outros/Nao classificado
+AESB3,AESBON,Outros/Nao classificado
+AESB3,AES BRASIL   ON      NM,Energia Eletrica
 AESB3,AES BRASIL ON NM,Energia Eletrica
+AFLT3,AFLUENTE T   ON,Telecomunicacoes
+AFLT3,AFLUENTE T   ON  EJ,Telecomunicacoes
+AFLT3,AFLUENTE T   ON  ED,Telecomunicacoes
 AFLT3,AFLUENTE T ON,Telecomunicacoes
 AFLU3,AFLUENTE ON,Telecomunicacoes
+AGRO3,BRASILAGRO   ON      NM,"Alimentos, Bebidas e Agropecuaria"
+AGRO3,BRASILAGRO   ON  ED  NM,"Alimentos, Bebidas e Agropecuaria"
 AGRO3,BRASILAGRO ON NM,"Alimentos, Bebidas e Agropecuaria"
+AGXY3,AGROGALAXY   ON      NM,"Alimentos, Bebidas e Agropecuaria"
 AGXY3,AGROGALAXY ON NM,"Alimentos, Bebidas e Agropecuaria"
+ALLD3,ALLDON,Outros/Nao classificado
+ALLD3,ALLIED       ON      NM,Outros/Nao classificado
 ALLD3,ALLIED ON NM,Outros/Nao classificado
+ALOS3,ALLOS        ON  ED  NM,Outros/Nao classificado
+ALOS3,ALLOS        ON      NM,Outros/Nao classificado
 ALPA3,ALPARGATAS ON N1,Textil e Vestuario
+ALPA3,ALPARGATAS   ON      N1,Textil e Vestuario
+ALPA4,ALPARGATAS   PN      N1,Textil e Vestuario
 ALPA4,ALPARGATAS PN N1,Textil e Vestuario
+ALPK3,ESTAPAR      ON      NM,Outros/Nao classificado
 ALPK3,ESTAPAR ON NM,Outros/Nao classificado
 ALSC3,ALIANSCE ON NM,Construcao e Imobiliario
+ALSO3,ALIANSCSONAE ON      NM,Construcao e Imobiliario
 ALSO3,ALIANSCSONAEON NM,Construcao e Imobiliario
+ALUP11,ALUPAR       UNT     N2,Energia Eletrica
+ALUP11,ALUPAR       UNT ED  N2,Energia Eletrica
 ALUP11,ALUPAR UNT N2,Energia Eletrica
+ALUP3,ALUPAR       ON      N2,Energia Eletrica
+ALUP3,ALUPAR       ON  ED  N2,Energia Eletrica
 ALUP3,ALUPAR ON N2,Energia Eletrica
+ALUP4,ALUPAR       PN  ED  N2,Energia Eletrica
+ALUP4,ALUPAR       PN      N2,Energia Eletrica
 ALUP4,ALUPAR PN N2,Energia Eletrica
+AMAR3,LOJAS MARISA ON      NM,Varejo
 AMAR3,LOJAS MARISA ON NM,Varejo
+AMBP3,AMBIPAR      ON      NM,Outros/Nao classificado
 AMBP3,AMBIPAR ON NM,Outros/Nao classificado
+AMER3,AMERICANAS   ON      NM,Varejo
+AMER3,AMERICANAS   ON  ES  NM,Varejo
 AMER3,AMERICANAS ON NM,Varejo
+AMOB3,AUTOMOB      ON      NM,Outros/Nao classificado
+ANIM3,ANIMA        ON      NM,Educacao
+ANIM3,ANIMA        ON  ATZ NM,Educacao
+ANIM3,ANIMA        ON  ED  NM,Educacao
 ANIM3,ANIMA ON NM,Educacao
+APER3,ALPER S.A.   ON,Outros/Nao classificado
 APER3,ALPER S.A. ON NM,Outros/Nao classificado
+APTI4,ALIPERTI PN,Outros/Nao classificado
+ARML3,ARMAC        ON      NM,Transporte e Logistica
 ARML3,ARMAC ON NM,Transporte e Logistica
+ARND3,ARANDU       ON      NM,Outros/Nao classificado
+ARZZ3,AREZZO CO    ON      NM,Varejo
 ARZZ3,AREZZO CO ON NM,Varejo
+ASAI3,ASAION,Outros/Nao classificado
+ASAI3,ASSAI        ON      NM,Varejo
 ASAI3,ASSAI ON NM,Varejo
+ATED3,ATOM EDUC    ON,Outros/Nao classificado
+ATMP3,ATMASA       ON,Outros/Nao classificado
 ATMP3,ATMASA ON NM,Outros/Nao classificado
 ATOM3,ATOMPAR ON,Outros/Nao classificado
+ATOM3,ATOMPAR      ON,Outros/Nao classificado
+ATOM3,ATOMPAR      ON  EC,Outros/Nao classificado
+AUAU3,PETZCOBASI   ON      NM,Varejo
+AURE3,AUREN        ON  ED  NM,Outros/Nao classificado
+AURE3,AUREN        ON      NM,Outros/Nao classificado
+AVLL3,ALPHAVILLE   ON  ES  NM,Construcao e Imobiliario
+AVLL3,ALPHAVILLE   ON      NM,Construcao e Imobiliario
 AVLL3,ALPHAVILLE ON NM,Construcao e Imobiliario
+AXIA11,AXIA ENERGIA PNC P   NM,Outros/Nao classificado
+AXIA3,AXIA ENERGIA ON      NM,Outros/Nao classificado
+AXIA5,AXIA ENERGIA PNA     N1,Outros/Nao classificado
+AXIA6,AXIA ENERGIA PNB     N1,Outros/Nao classificado
+AXIA7,AXIA ENERGIA PNC     NM,Outros/Nao classificado
 AZEV3,AZEVEDO ON,Outros/Nao classificado
+AZEV3,AZEVEDO      ON,Outros/Nao classificado
 AZEV4,AZEVEDO PN,Outros/Nao classificado
+AZEV4,AZEVEDO      PN,Outros/Nao classificado
+AZTE3,AZT ENERGIA  ON,Outros/Nao classificado
+AZUL3,AZUL         ON      N2,Transporte e Logistica
+AZUL4,AZUL         PN      N2,Transporte e Logistica
 AZUL4,AZUL PN N2,Transporte e Logistica
+AZZA3,AZZAS 2154   ON      NM,Outros/Nao classificado
+B3SA3,B3           ON  ED  NM,Outros/Nao classificado
+B3SA3,B3           ON  EJ  NM,Outros/Nao classificado
+B3SA3,B3           ON      NM,Outros/Nao classificado
+B3SA3,B3           ON  EDJ NM,Outros/Nao classificado
 B3SA3,B3 ON NM,Infraestrutura de Mercado
 BAHI3,BAHEMA ON,Outros/Nao classificado
 BALM4,BAUMER PN,Outros/Nao classificado
 BAUH4,EXCELSIOR PN,Outros/Nao classificado
+BAUH4,EXCELSIOR    PN,Outros/Nao classificado
 BAZA3,AMAZONIA ON,Bancos
+BAZA3,AMAZONIA     ON,Bancos
+BBAS3,BRASIL ON EJ NM,Outros/Nao classificado
+BBAS3,BRASIL       ON      NM,Outros/Nao classificado
+BBAS3,BRASIL       ON  EX  NM,Outros/Nao classificado
+BBAS3,BRASIL       ON  EJ  NM,Outros/Nao classificado
+BBAS3,BRASIL       ON  ERJ NM,Outros/Nao classificado
 BBAS3,BRASIL ON NM,Outros/Nao classificado
+BBDC3,BRADESCO     ON      N1,Bancos
 BBDC3,BRADESCO ON N1,Bancos
+BBDC3,BRADESCO     ON  EJ  N1,Bancos
+BBDC4,BRADESCO     PN  EJ  N1,Bancos
+BBDC4,BRADESCO     PN      N1,Bancos
 BBDC4,BRADESCO PN N1,Bancos
 BBRK3,BR BROKERS ON NM,Outros/Nao classificado
+BBRK3,BR BROKERS   ON      NM,Outros/Nao classificado
+BBSE3,BBSEGURIDADE ON      NM,Seguros
+BBSE3,BBSEGURIDADE ON  ED  NM,Seguros
+BBSE3,BBSEGURIDADE ON  EDR NM,Seguros
 BBSE3,BBSEGURIDADE ON NM,Seguros
 BBTG11,BTG PACTUAL UNT,Bancos
+BDLL4,BARDELLA PN,Outros/Nao classificado
+BDLL4,BARDELLA     PN,Outros/Nao classificado
 BEEF11,MINERVA UNIT,"Alimentos, Bebidas e Agropecuaria"
+BEEF3,MINERVA      ON      NM,"Alimentos, Bebidas e Agropecuaria"
 BEEF3,MINERVA ON NM,"Alimentos, Bebidas e Agropecuaria"
 BEES3,BANESTES ON,Bancos
+BEES3,BANESTES     ON,Bancos
+BEES3,BANESTES     ON  EJ,Bancos
+BEES4,BANESTES PN,Bancos
+BEES4,BANESTES     PN  EJ,Bancos
 BGIP4,BANESE PN,Bancos
+BHIA3,CASAS BAHIA  ON      NM,Outros/Nao classificado
+BHIA3,CASAS BAHIA  ON  ATZ NM,Outros/Nao classificado
 BIDI11,BANCO INTER UNT N2,Bancos
+BIDI11,BANCO INTER  UNT     N2,Bancos
 BIDI3,BANCO INTER ON N2,Bancos
+BIDI3,BANCO INTER  ON      N2,Bancos
 BIDI4,BANCO INTER PN N2,Bancos
+BIDI4,BANCO INTER  PN      N2,Bancos
+BIED3,BIOMA EDUC   ON      MA,Outros/Nao classificado
+BIED3,BIOMA EDUC   ON,Outros/Nao classificado
+BIOM3,BIOMM        ON      MA,Outros/Nao classificado
+BIOM3,BIOMM        ON      N2,Outros/Nao classificado
+BIOM3,BIOMM        ON,Outros/Nao classificado
 BIOM3,BIOMM ON,Outros/Nao classificado
 BKBR3,BK BRASIL ON NM,"Alimentos, Bebidas e Agropecuaria"
+BKBR3,BK BRASIL    ON      NM,"Alimentos, Bebidas e Agropecuaria"
+BLAU3,BLAUON,Outros/Nao classificado
+BLAU3,BLAU         ON      NM,Saude
+BLAU3,BLAU         ON  EJ  NM,Saude
 BLAU3,BLAU ON NM,Saude
+BMEB3,MERC BRASIL ON,Bancos
+BMEB3,MERCANTIL    ON      N1,Outros/Nao classificado
 BMEB4,MERC BRASIL PN,Bancos
+BMEB4,MERCANTIL    PN      N1,Outros/Nao classificado
 BMGB11,BANCO BMG UNT N1,Bancos
+BMGB3,BANCO BMG    ON      N1,Bancos
+BMGB4,BANCO BMG    PN      N1,Bancos
+BMGB4,BANCO BMG    PN  EJ  N1,Bancos
 BMGB4,BANCO BMG PN N1,Bancos
+BMIN4,MERC INVEST PN EG,Bancos
 BMIN4,MERC INVEST PN,Bancos
+BMKS3,BIC MONARK ON,Outros/Nao classificado
+BMKS3,BIC MONARK   ON      MP,Outros/Nao classificado
+BMOB3,BEMOBI TECH  ON      NM,Tecnologia
 BMOB3,BEMOBI TECH ON NM,Tecnologia
 BMTO4,BRASMOTOR PN,Outros/Nao classificado
 BNBR3,NORD BRASIL ON,Bancos
+BOAS3,BOA VISTA    ON      NM,Varejo
 BOAS3,BOA VISTA ON NM,Varejo
 BOBR4,BOMBRIL PN,Outros/Nao classificado
+BOBR4,BOMBRIL      PN,Outros/Nao classificado
+BPAC11,BTGP BANCO   UNT     N2,Bancos
 BPAC11,BTGP BANCO UNT,Bancos
+BPAC3,BTGP BANCO   ON      N2,Bancos
 BPAC3,BTGP BANCO ON,Bancos
+BPAC5,BTGP BANCO   PNA     N2,Bancos
 BPAC5,BTGP BANCO PNA,Bancos
+BPAN4,BANCO PAN    PN      N1,Bancos
 BPAN4,BANCO PAN PN N1,Bancos
+BPAR3,BANPARA      ON,Outros/Nao classificado
+BPAR3,BANPARA ON,Outros/Nao classificado
 BPHA3,BR PHARMA ON NM,Outros/Nao classificado
+BRAP3,BRADESPAR    ON      N1,Mineracao e Siderurgia
 BRAP3,BRADESPAR ON N1,Mineracao e Siderurgia
+BRAP4,BRADESPAR    PN      N1,Mineracao e Siderurgia
 BRAP4,BRADESPAR PN N1,Mineracao e Siderurgia
+BRAV3,BRAVA        ON      NM,Outros/Nao classificado
+BRAV3,BRAVA        ON  ED  NM,Outros/Nao classificado
+BRBI11,BR PARTNERS  UNT ED  N2,Outros/Nao classificado
+BRBI11,BR PARTNERS  UNT     N2,Outros/Nao classificado
 BRBI11,BR PARTNERS UNT N2,Outros/Nao classificado
 BRDT3,PETROBRAS DISTRIB ON,Petroleo e Gas
+BRFS3,BRF SA       ON  EJ  NM,"Alimentos, Bebidas e Agropecuaria"
+BRFS3,BRF SA       ON      NM,"Alimentos, Bebidas e Agropecuaria"
+BRFS3,BRF SA       ON  EDJ NM,"Alimentos, Bebidas e Agropecuaria"
 BRFS3,BRF SA ON NM,"Alimentos, Bebidas e Agropecuaria"
+BRGE11,ALFA CONSORC PNE,Bancos
 BRGE3,ALFA CONSORC ON,Bancos
+BRGE5,ALFA CONSORC PNA,Bancos
+BRGE6,ALFA CONSORC PNB,Bancos
+BRGE7,ALFA CONSORC PNC,Bancos
+BRGE8,ALFA CONSORC PND,Bancos
 BRIN3,BR INSURANCE ON NM,Seguros
+BRIT3,BRISANET     ON      NM,Telecomunicacoes
 BRIT3,BRISANET ON NM,Telecomunicacoes
+BRIV3,ALFA INVEST  ON,Bancos
 BRIV3,ALFA INVEST ON,Bancos
 BRIV4,ALFA INVEST PN,Bancos
+BRIV4,ALFA INVEST  PN,Bancos
+BRKM3,BRASKEM      ON      N1,Quimicos e Petroquimicos
 BRKM3,BRASKEM ON N1,Quimicos e Petroquimicos
+BRKM5,BRASKEM      PNA     N1,Quimicos e Petroquimicos
+BRKM5,BRASKEM      PNA ATZ N1,Quimicos e Petroquimicos
 BRKM5,BRASKEM PNA N1,Quimicos e Petroquimicos
+BRKM6,BRASKEM      PNB     N1,Quimicos e Petroquimicos
+BRML3,BR MALLS PAR ON      NM,Construcao e Imobiliario
 BRML3,BR MALLS PAR ON NM,Construcao e Imobiliario
 BRPR3,BR PROPERT ON NM,Construcao e Imobiliario
+BRPR3,BR PROPERT   ON,Construcao e Imobiliario
 BRSR3,BANRISUL ON N1,Bancos
+BRSR6,BANRISUL     PNB     N1,Bancos
 BRSR6,BANRISUL PNB N1,Bancos
+BRST3,BRISANET     ON      NM,Telecomunicacoes
 BSEV3,BIOSEV ON NM,Outros/Nao classificado
+BSLI3,BRB BANCO ON,Outros/Nao classificado
+BSLI4,BRB BANCO PN,Outros/Nao classificado
+BSLI4,BRB BANCO    PN,Outros/Nao classificado
 BTOW3,B2W DIGITAL ON NM,Outros/Nao classificado
 BTTL3,BATTISTELLA ON,Industria e Bens de Capital
 BTTL4,BATTISTELLA PN,Industria e Bens de Capital
 BVMF3,BMFBOVESPA ON NM,Infraestrutura de Mercado
+CALI3,CONST A LIND ON,Outros/Nao classificado
 CAMB3,CAMBUCI ON,Textil e Vestuario
+CAMB3,CAMBUCI      ON,Textil e Vestuario
+CAMB3,CAMBUCI      ON  EJ,Textil e Vestuario
+CAMB3,CAMBUCI      ON  EDJ,Textil e Vestuario
 CAMB4,CAMBUCI PN,Textil e Vestuario
+CAML3,CAMIL        ON      NM,"Alimentos, Bebidas e Agropecuaria"
+CAML3,CAMIL        ON  EDJ NM,"Alimentos, Bebidas e Agropecuaria"
 CAML3,CAMIL ON NM,"Alimentos, Bebidas e Agropecuaria"
 CARD3,CSU CARDSYST ON NM,Outros/Nao classificado
+CARD3,CSU CARDSYST ON      NM,Outros/Nao classificado
+CASH3,MELIUZ       ON      NM,Varejo
 CASH3,MELIUZ ON NM,Varejo
+CBAV3,CBA          ON      NM,Mineracao e Siderurgia
+CBAV3,CBA          ON  ATZ NM,Mineracao e Siderurgia
 CBAV3,CBA ON NM,Mineracao e Siderurgia
 CBEE3,AMPLA ENERG ON,Energia Eletrica
+CBEE3,AMPLA ENERG  ON,Energia Eletrica
 CBOH3,CBOHON,Energia Eletrica
 CCPR3,CYRE COM-CCP ON NM,Outros/Nao classificado
+CCRO3,CCR SA       ON      NM,Transporte e Logistica
+CCRO3,CCR SA       ON  ED  NM,Transporte e Logistica
 CCRO3,CCR SA ON NM,Transporte e Logistica
+CCTY3,RDVC CITY    ON      NM,Outros/Nao classificado
 CCXC3,CCX CARVAO ON NM,Outros/Nao classificado
+CEAB3,CEA MODAS    ON      NM,Varejo
+CEAB3,CEA MODAS    ON  ATZ NM,Varejo
 CEAB3,CEA MODAS ON NM,Varejo
 CEBR3,CEB ON,Energia Eletrica
+CEBR3,CEB          ON,Energia Eletrica
+CEBR3,CEB          ON  ED,Energia Eletrica
+CEBR3,CEB          ON  EJ,Energia Eletrica
+CEBR5,CEB          PNA,Energia Eletrica
+CEBR5,CEB          PNA EJ,Energia Eletrica
+CEBR5,CEB          PNA ED,Energia Eletrica
 CEBR5,CEB PNA,Energia Eletrica
+CEBR6,CEB          PNB,Energia Eletrica
+CEBR6,CEB          PNB EJ,Energia Eletrica
+CEBR6,CEB          PNB ED,Energia Eletrica
 CEBR6,CEB PNB,Energia Eletrica
+CEDO4,CEDRO PN N1,Outros/Nao classificado
+CEEB3,COELBA       ON,Energia Eletrica
+CEEB3,COELBA       ON  EJ,Energia Eletrica
 CEEB3,COELBA ON,Energia Eletrica
+CEEB5,COELBA       PNA,Energia Eletrica
+CEEB5,COELBA       PNA EJ,Energia Eletrica
 CEEB5,COELBA PNA,Energia Eletrica
 CEED3,CEEE-D ON N1,Energia Eletrica
 CEED4,CEEE-D PN N1,Energia Eletrica
+CEGR3,CEG          ON,Outros/Nao classificado
 CELP3,CELPA ON,Energia Eletrica
 CELP5,CELPA PNA,Energia Eletrica
 CEPE3,CELPE ON,Energia Eletrica
+CEPE3,CELPE        ON,Energia Eletrica
 CEPE5,CELPE PNA,Energia Eletrica
+CEPE5,CELPE        PNA,Energia Eletrica
 CEPE6,CELPE PNB,Energia Eletrica
+CEPE6,CELPE        PNB,Energia Eletrica
 CESP3,CESP ON N1,Outros/Nao classificado
+CESP3,CESP         ON      N1,Outros/Nao classificado
 CESP6,CESP PNB N1,Outros/Nao classificado
+CESP6,CESP         PNB     N1,Outros/Nao classificado
 CGAS3,COMGAS ON,Saneamento e Gas
+CGAS3,COMGAS       ON,Saneamento e Gas
+CGAS5,COMGAS       PNA,Saneamento e Gas
+CGAS5,COMGAS       PNA ED,Saneamento e Gas
+CGAS5,COMGAS       PNA EDJ,Saneamento e Gas
 CGAS5,COMGAS PNA,Saneamento e Gas
+CGRA3,GRAZZIOTIN   ON,Textil e Vestuario
+CGRA3,GRAZZIOTIN   ON  EJ,Textil e Vestuario
 CGRA3,GRAZZIOTIN ON,Textil e Vestuario
 CGRA4,GRAZZIOTIN PN,Textil e Vestuario
+CGRA4,GRAZZIOTIN   PN,Textil e Vestuario
+CGRA4,GRAZZIOTIN   PN  EJ,Textil e Vestuario
+CGRA4,GRAZZIOTIN   PN  ES,Textil e Vestuario
+CIEL3,CIELO        ON      NM,Infraestrutura de Mercado
+CIEL3,CIELO        ON,Infraestrutura de Mercado
 CIEL3,CIELO ON NM,Infraestrutura de Mercado
+CLSA3,CLSAON,Outros/Nao classificado
+CLSA3,CLEARSALE    ON      NM,Tecnologia
 CLSA3,CLEARSALE ON NM,Tecnologia
 CLSC3,CELESC ON N2,Energia Eletrica
+CLSC3,CELESC       ON      N2,Energia Eletrica
+CLSC3,CELESC       ON  EJ  N2,Energia Eletrica
 CLSC4,CELESC PN N2,Energia Eletrica
+CLSC4,CELESC       PN      N2,Energia Eletrica
+CLSC4,CELESC       PN  EJ  N2,Energia Eletrica
 CMIG3,CEMIG ON N1,Energia Eletrica
+CMIG3,CEMIG        ON      N1,Energia Eletrica
+CMIG3,CEMIG        ON  EJ  N1,Energia Eletrica
 CMIG4,CEMIG PN N1,Energia Eletrica
+CMIG4,CEMIG        PN  EJ  N1,Energia Eletrica
+CMIG4,CEMIG        PN      N1,Energia Eletrica
+CMIN3,CSN ON,Outros/Nao classificado
+CMIN3,CSNMINERACAO ON      N2,Mineracao e Siderurgia
+CMIN3,CSNMINERACAO ON  ED  N2,Mineracao e Siderurgia
 CMIN3,CSNMINERACAOON N2,Mineracao e Siderurgia
 CNTO3,CENTAURO ON NM,Varejo
+COCE11,COELCE       DIR PA,Energia Eletrica
+COCE3,COELCE       ON,Energia Eletrica
 COCE3,COELCE ON,Energia Eletrica
+COCE5,COELCE       PNA,Energia Eletrica
 COCE5,COELCE PNA,Energia Eletrica
+COGN3,COGNA ON     ON      NM,Educacao
+COGN3,COGNA ON     ON  ATZ NM,Educacao
 COGN3,COGNA ON ON NM,Educacao
+COMR3,COMERC PAR   ON,Outros/Nao classificado
+COMR3,COMERC PAR   ON  ES,Outros/Nao classificado
+CPFE3,CPFL ENERGIA ON      NM,Energia Eletrica
 CPFE3,CPFL ENERGIA ON NM,Energia Eletrica
+CPLE11,COPEL        UNT     N2,Energia Eletrica
 CPLE11,COPEL UNT N1,Energia Eletrica
 CPLE3,COPEL ON N1,Energia Eletrica
+CPLE3,COPEL        ON      N2,Energia Eletrica
+CPLE3,COPEL        ON      NM,Energia Eletrica
+CPLE5,COPEL PNA N1,Energia Eletrica
+CPLE5,COPEL        PNA     N2,Energia Eletrica
 CPLE6,COPEL PNB N1,Energia Eletrica
+CPLE6,COPEL        PNB     N2,Energia Eletrica
 CPRE3,CPFL RENOVAV ON NM,Energia Eletrica
+CRDE3,CR2          ON,Construcao e Imobiliario
 CRDE3,CR2 ON NM,Construcao e Imobiliario
 CREM3,CREMER ON NM,Outros/Nao classificado
+CRFB3,CARREFOUR BR ON      NM,Varejo
 CRFB3,CARREFOUR BR ON NM,Varejo
+CRIV3,ALFA FINANC  ON,Bancos
 CRIV3,ALFA FINANC ON,Bancos
 CRIV4,ALFA FINANC PN,Bancos
+CRIV4,ALFA FINANC  PN,Bancos
+CRPG5,CRISTAL      PNA,Outros/Nao classificado
+CRPG5,CRISTAL      PNA ED,Outros/Nao classificado
 CRPG5,CRISTAL PNA,Outros/Nao classificado
+CRPG6,CRISTAL      PNB,Outros/Nao classificado
+CRPG6,CRISTAL      PNB ED,Outros/Nao classificado
 CRPG6,CRISTAL PNB,Outros/Nao classificado
+CSAB3,SEG AL BAHIA ON,Outros/Nao classificado
 CSAB4,SEG AL BAHIA PN,Outros/Nao classificado
+CSAN3,COSAN        ON      NM,Outros/Nao classificado
+CSAN3,COSAN        ON  ATZ NM,Outros/Nao classificado
 CSAN3,COSAN ON NM,Petroleo e Gas
+CSED3,CRUZEIRO EDU ON      NM,Educacao
+CSED3,CSEDON,Outros/Nao classificado
 CSED3,CRUZEIRO EDUON NM,Educacao
+CSMG3,COPASA       ON      NM,Saneamento e Gas
+CSMG3,COPASA       ON  EDJ NM,Saneamento e Gas
+CSMG3,COPASA       ON  EJ  NM,Saneamento e Gas
 CSMG3,COPASA ON NM,Saneamento e Gas
+CSNA3,SID NACIONAL ON  ED,Mineracao e Siderurgia
 CSNA3,SID NACIONAL ON,Mineracao e Siderurgia
+CSNA3,SID NACIONAL ON  ATZ,Mineracao e Siderurgia
+CSRN3,COSERN       ON,Energia Eletrica
+CSRN3,COSERN       ON  EJ,Energia Eletrica
 CSRN3,COSERN ON,Energia Eletrica
+CSRN5,COSERN       PNA,Energia Eletrica
+CSRN5,COSERN       PNA EJ,Energia Eletrica
 CSRN5,COSERN PNA,Energia Eletrica
+CSRN6,COSERN       PNB,Energia Eletrica
+CSRN6,COSERN       PNB EJ,Energia Eletrica
 CSRN6,COSERN PNB,Energia Eletrica
+CSUD3,CSU DIGITAL  ON      NM,Outros/Nao classificado
+CSUD3,CSU DIGITAL  ON  EJ  NM,Outros/Nao classificado
 CTAX11,CONTAX UNT NM,Outros/Nao classificado
 CTAX3,CONTAX ON NM,Outros/Nao classificado
 CTIP3,CETIP ON NM,Infraestrutura de Mercado
 CTKA4,KARSTEN PN,Textil e Vestuario
 CTNM3,COTEMINAS ON,Textil e Vestuario
 CTNM4,COTEMINAS PN,Textil e Vestuario
+CTNM4,COTEMINAS    PN,Textil e Vestuario
+CTSA3,SANTANENSE   ON,Textil e Vestuario
 CTSA3,SANTANENSE ON,Textil e Vestuario
+CTSA4,SANTANENSE PN,Textil e Vestuario
+CURY3,CURY S/A     ON      NM,Construcao e Imobiliario
+CURY3,CURY S/A     ON  ED  NM,Construcao e Imobiliario
 CURY3,CURY S/A ON NM,Construcao e Imobiliario
+CVCB3,CVC BRASIL   ON      NM,Varejo
+CVCB3,CVC BRASIL   ON  ATZ NM,Varejo
 CVCB3,CVC BRASIL ON NM,Varejo
+CXSE3,CAIXA SEGURI ON      NM,Outros/Nao classificado
 CXSE3,CAIXA SEGURION NM,Outros/Nao classificado
+CYRE3,CYRELA REALT ON      NM,Construcao e Imobiliario
 CYRE3,CYRELA REALT ON NM,Construcao e Imobiliario
+CYRE4,BRAZIL REALT PN,Outros/Nao classificado
+DASA3,DASA         ON      NM,Saude
 DASA3,DASA ON NM,Saude
+DESK3,DESKTOP      ON      NM,Telecomunicacoes
 DESK3,DESKTOP ON NM,Telecomunicacoes
+DEXP3,DEXPON,Outros/Nao classificado
+DEXP3,DEXXOS PAR   ON      N1,Outros/Nao classificado
 DEXP3,DEXXOS PAR ON,Outros/Nao classificado
+DEXP4,DEXPPN,Outros/Nao classificado
+DEXP4,DEXXOS PAR   PN      N1,Outros/Nao classificado
+DHBI4,D H B        PN,Outros/Nao classificado
 DHBI4,D H B PN,Outros/Nao classificado
+DIRR3,DIRECIONAL   ON      NM,Construcao e Imobiliario
 DIRR3,DIRECIONAL ON NM,Construcao e Imobiliario
+DMFN3,DMFINANCEIRA ON,Outros/Nao classificado
 DMMO11,DOMMO ENERGIA S.A.,Petroleo e Gas
+DMMO3,DOMMO        ON,Petroleo e Gas
 DMMO3,DOMMO ON,Petroleo e Gas
+DMVF3,D1000VFARMA  ON      NM,Varejo
 DMVF3,D1000VFARMA ON NM,Varejo
+DOHL4,DOHLER       PN,Outros/Nao classificado
 DOHL4,DOHLER PN,Outros/Nao classificado
+DOTZ3,DOTZ SA      ON      NM,Tecnologia
 DOTZ3,DOTZ SA ON NM,Tecnologia
 DTEX3,DURATEX ON NM,Outros/Nao classificado
+DXCO3,DEXCO        ON      NM,Outros/Nao classificado
 DXCO3,DEXCO ON NM,Outros/Nao classificado
+EALT3,ACO ALTONA ON,Mineracao e Siderurgia
+EALT3,ACO ALTONA   ON,Mineracao e Siderurgia
+EALT4,ACO ALTONA   PN,Mineracao e Siderurgia
 EALT4,ACO ALTONA PN,Mineracao e Siderurgia
+ECOM3,ECONOMATICA  ON      NM,Outros/Nao classificado
+ECOR3,ECORODOVIAS  ON      NM,Transporte e Logistica
+ECOR3,ECORODOVIAS  ON  ED  NM,Transporte e Logistica
 ECOR3,ECORODOVIAS ON NM,Transporte e Logistica
 ECPR4,ENCORPAR PN,Energia Eletrica
 EEEL3,CEEE-GT ON N1,Energia Eletrica
+EEEL3,CEEE-T       ON,Energia Eletrica
 EEEL4,CEEE-GT PN N1,Energia Eletrica
+EEEL4,CEEE-T       PN,Energia Eletrica
+EGGY3,GRANJA FARIA ON,Outros/Nao classificado
+EGIE3,ENGIE BRASIL ON      NM,Energia Eletrica
+EGIE3,ENGIE BRASIL ON  ED  NM,Energia Eletrica
 EGIE3,ENGIE BRASIL ON NM,Energia Eletrica
+EKTR3,ELEKTRO ON EDJ,Energia Eletrica
+EKTR3,ELEKTRO      ON,Energia Eletrica
+EKTR3,ELEKTRO      ON  EJ,Energia Eletrica
+EKTR4,ELEKTRO      PN,Energia Eletrica
+EKTR4,ELEKTRO      PN  EJ,Energia Eletrica
+EKTR4,ELEKTRO      PN  ED,Energia Eletrica
 EKTR4,ELEKTRO PN,Energia Eletrica
 ELET3,ELETROBRAS ON N1,Energia Eletrica
+ELET3,ELETROBRAS   ON      N1,Energia Eletrica
+ELET5,ELETROBRAS PNA N1,Energia Eletrica
 ELET6,ELETROBRAS PNB N1,Energia Eletrica
+ELET6,ELETROBRAS   PNB     N1,Energia Eletrica
+ELMD3,ELMDON,Outros/Nao classificado
+ELMD3,ELETROMIDIA  ON      NM,Outros/Nao classificado
+ELMD3,ELETROMIDIA  ON,Outros/Nao classificado
 ELMD3,ELETROMIDIA ON NM,Outros/Nao classificado
 ELPL3,ELETROPAULO ON N2,Energia Eletrica
 ELPL4,ELETROPAULO PN N2,Energia Eletrica
+EMAE3,EMAE         ON,Energia Eletrica
 EMAE3,EMAE ON,Energia Eletrica
+EMAE4,EMAE         PN,Energia Eletrica
 EMAE4,EMAE PN,Energia Eletrica
+EMBJ3,EMBRAER      ON      NM,Transporte e Logistica
+EMBR3,EMBRAER ON EJ NM,Transporte e Logistica
+EMBR3,EMBRAER      ON      NM,Transporte e Logistica
 EMBR3,EMBRAER ON NM,Transporte e Logistica
+ENAT3,ENAUTA PART  ON      NM,Petroleo e Gas
 ENAT3,ENAUTA PART ON NM,Petroleo e Gas
+ENBR3,ENERGIAS BR  ON,Outros/Nao classificado
 ENBR3,ENERGIAS BR ON NM,Outros/Nao classificado
+ENEV3,ENEVA        ON      NM,Energia Eletrica
 ENEV3,ENEVA ON NM,Energia Eletrica
+ENGI11,ENERGISA     UNT     N2,Energia Eletrica
+ENGI11,ENERGISA     UNT ED  N2,Energia Eletrica
 ENGI11,ENERGISA UNT N2,Energia Eletrica
+ENGI3,ENGI ON,Outros/Nao classificado
+ENGI3,ENERGISA     ON      N2,Energia Eletrica
 ENGI3,ENERGISA ON N2,Energia Eletrica
+ENGI3,ENERGISA     ON  ED  N2,Energia Eletrica
+ENGI4,ENERGISA     PN      N2,Energia Eletrica
+ENGI4,ENERGISA     PN  ED  N2,Energia Eletrica
 ENGI4,ENERGISA PN N2,Energia Eletrica
+ENJU3,ENJOEI       ON      NM,Outros/Nao classificado
+ENJU3,ENJOEI       ON  ER  NM,Outros/Nao classificado
 ENJU3,ENJOEI ON NM,Outros/Nao classificado
+ENMT3,ENERGISA MT  ON,Energia Eletrica
 ENMT3,ENERGISA MT ON,Energia Eletrica
+ENMT3,ENERGISA MT  ON  ED,Energia Eletrica
+ENMT4,ENERGISA MT  PN,Energia Eletrica
 ENMT4,Energisa MT PN,Energia Eletrica
+ENMT4,ENERGISA MT  PN  ED,Energia Eletrica
+EPAR3,EMBPAR S/A   ON,Outros/Nao classificado
+EQPA3,EQTL PARA    ON,Energia Eletrica
 EQPA3,EQTL PARA ON,Energia Eletrica
+EQPA5,EQTL PARA    PNA,Energia Eletrica
 EQPA5,EQTL PARA PNA,Energia Eletrica
 EQPA7,EQTL PARA PNC,Energia Eletrica
+EQTL3,EQUATORIAL   ON      NM,Energia Eletrica
+EQTL3,EQUATORIAL   ON  ES  NM,Energia Eletrica
+EQTL3,EQUATORIAL   ON  EJS NM,Energia Eletrica
 EQTL3,EQUATORIAL ON NM,Energia Eletrica
+ESPA3,MPM ON,Outros/Nao classificado
+ESPA3,ESPACOLASER  ON      NM,Outros/Nao classificado
 ESPA3,ESPACOLASER ON NM,Outros/Nao classificado
 ESTC3,ESTACIO PART ON NM,Educacao
+ESTR4,ESTRELA PN,Outros/Nao classificado
 ETER3,ETERNIT ON NM,Outros/Nao classificado
+ETER3,ETERNIT      ON  ED  NM,Outros/Nao classificado
+ETER3,ETERNIT      ON      NM,Outros/Nao classificado
+EUCA3,EUCATEX      ON      N1,Outros/Nao classificado
 EUCA3,EUCATEX ON N1,Outros/Nao classificado
 EUCA4,EUCATEX PN N1,Outros/Nao classificado
+EUCA4,EUCATEX      PN      N1,Outros/Nao classificado
+EUFA3,EUROFARMA SA ON      M2,Outros/Nao classificado
+EVEN3,EVEN         ON      NM,Construcao e Imobiliario
+EVEN3,EVEN         ON  ED  NM,Construcao e Imobiliario
 EVEN3,EVEN ON NM,Construcao e Imobiliario
+EZTC3,EZTEC        ON      NM,Construcao e Imobiliario
+EZTC3,EZTEC        ON  ED  NM,Construcao e Imobiliario
 EZTC3,EZTEC ON NM,Construcao e Imobiliario
 FBMC4,FIBAM PN,Outros/Nao classificado
+FESA3,FERBASA ON EJ N1,Mineracao e Siderurgia
+FESA4,FERBASA PN EJ N1,Mineracao e Siderurgia
+FESA4,FERBASA      PN      N1,Mineracao e Siderurgia
 FESA4,FERBASA PN N1,Mineracao e Siderurgia
+FHER3,FER HERINGER ON      NM,Outros/Nao classificado
 FHER3,FER HERINGER ON NM,Outros/Nao classificado
 FIBR3,FIBRIA ON NM,Papel e Celulose
+FICT3,FICTORALIMEN ON,Outros/Nao classificado
+FIEI3,FICA         ON,Outros/Nao classificado
+FIQE3,UNIFIQUE     ON      NM,Telecomunicacoes
+FIQE3,UNIFIQUE     ON  EJ  NM,Telecomunicacoes
 FIQE3,UNIFIQUE ON NM,Telecomunicacoes
 FJTA4,FORJA TAURUS PN N2,Industria e Bens de Capital
+FLRY3,FLEURY       ON  ED  NM,Saude
+FLRY3,FLEURY       ON      NM,Saude
+FLRY3,FLEURY       ON  EJ  NM,Saude
 FLRY3,FLEURY ON NM,Saude
+FRAS3,FRAS-LE      ON      N1,Industria e Bens de Capital
+FRAS3,FRAS-LE      ON  EJ  N1,Industria e Bens de Capital
 FRAS3,FRAS-LE ON N1,Industria e Bens de Capital
+FRIO3,METALFRIO    ON      NM,Outros/Nao classificado
 FRIO3,METALFRIO ON NM,Outros/Nao classificado
+FRTA3,POMIFRUTAS   ON      NM,Outros/Nao classificado
 GEPA3,GER PARANAP ON,Energia Eletrica
+GEPA3,GER PARANAP  ON,Energia Eletrica
+GEPA4,GER PARANAP  PN,Energia Eletrica
 GEPA4,GER PARANAP PN,Energia Eletrica
 GETT11,GETNET BR UNT,Outros/Nao classificado
+GETT11,GETNET BR    UNT,Outros/Nao classificado
+GETT3,GETNET BR    ON,Outros/Nao classificado
 GETT3,GETNET BR ON,Outros/Nao classificado
+GETT4,GETNET BR    PN,Outros/Nao classificado
 GETT4,GETNET BR PN,Outros/Nao classificado
+GFSA3,GAFISA       ON      NM,Construcao e Imobiliario
 GFSA3,GAFISA ON NM,Construcao e Imobiliario
+GGBR3,GERDAU       ON      N1,Mineracao e Siderurgia
+GGBR3,GERDAU       ON  ED  N1,Mineracao e Siderurgia
 GGBR3,GERDAU ON N1,Mineracao e Siderurgia
+GGBR4,GERDAU       PN  ED  N1,Mineracao e Siderurgia
+GGBR4,GERDAU       PN      N1,Mineracao e Siderurgia
 GGBR4,GERDAU PN N1,Mineracao e Siderurgia
+GGPS3,GPS          ON      NM,Outros/Nao classificado
 GGPS3,GPS ON NM,Outros/Nao classificado
+GMAT3,GRUPO MATEUS ON      NM,Varejo
 GMAT3,GRUPO MATEUSON NM,Varejo
 GMEC4,Gazeta Mercantil PN,Outros/Nao classificado
 GNDI3,INTERMEDICA ON NM,Outros/Nao classificado
+GNDI3,INTERMEDICA  ON      NM,Outros/Nao classificado
 GOAU3,GERDAU MET ON N1,Mineracao e Siderurgia
+GOAU3,GERDAU MET   ON  ED  N1,Mineracao e Siderurgia
+GOAU3,GERDAU MET   ON      N1,Mineracao e Siderurgia
 GOAU4,GERDAU MET PN N1,Mineracao e Siderurgia
+GOAU4,GERDAU MET   PN  ED  N1,Mineracao e Siderurgia
+GOAU4,GERDAU MET   PN      N1,Mineracao e Siderurgia
 GOLL3,GOL ON N2,Transporte e Logistica
+GOLL3,GOL          ON      N2,Transporte e Logistica
+GOLL4,GOL          PN      N2,Transporte e Logistica
 GOLL4,GOL PN N2,Transporte e Logistica
 GPCP3,GPC PART ON,Outros/Nao classificado
+GRND3,GRENDENE     ON  ED  NM,Textil e Vestuario
+GRND3,GRENDENE     ON      NM,Textil e Vestuario
+GRND3,GRENDENE     ON  EDJ NM,Textil e Vestuario
 GRND3,GRENDENE ON NM,Textil e Vestuario
+GSHP3,GENERALSHOPP ON,Construcao e Imobiliario
 GSHP3,GENERALSHOPP ON NM,Construcao e Imobiliario
+GUAR3,GUARARAPES   ON      NM,Varejo
 GUAR3,GUARARAPES ON,Varejo
 GUAR4,GUARARAPES PN,Varejo
+HAGA3,HAGA S/A ON,Outros/Nao classificado
 HAGA4,HAGA S/A PN,Outros/Nao classificado
+HAGA4,HAGA S/A     PN,Outros/Nao classificado
+HAPV3,HAPVIDA      ON      NM,Saude
+HAPV3,HAPVIDA      ON  ATZ NM,Saude
 HAPV3,HAPVIDA ON NM,Saude
+HBOR3,HELBOR       ON      NM,Construcao e Imobiliario
 HBOR3,HELBOR ON NM,Construcao e Imobiliario
+HBRE3,HBREON,Outros/Nao classificado
+HBRE3,HBR REALTY   ON      NM,Construcao e Imobiliario
 HBRE3,HBR REALTY ON NM,Construcao e Imobiliario
+HBSA3,HIDROVIAS    ON      NM,Transporte e Logistica
 HBSA3,HIDROVIAS ON NM,Transporte e Logistica
 HEDA3,HEDAON,Outros/Nao classificado
 HGTX3,CIA HERING ON NM,Textil e Vestuario
 HGTX4,CIA HERING PN,Textil e Vestuario
+HOOT4,HOTEIS OTHON PN,Outros/Nao classificado
+HYPE3,HYPERA       ON      NM,Outros/Nao classificado
+HYPE3,HYPERA       ON  EJ  NM,Outros/Nao classificado
 HYPE3,HYPERMARCAS ON NM,Saude
 IDNT3,IDEIASNET ON NM,Outros/Nao classificado
 IDVL3,INDUSVAL ON N2,Bancos
 IDVL4,INDUSVAL PN N2,Bancos
+IFCM3,IFCM ON      NM,Outros/Nao classificado
+IFCM3,INFRACOMM    ON      NM,Telecomunicacoes
 IFCM3,INFRACOMM ON NM,Telecomunicacoes
 IGBR3,IGB S/A ON,Outros/Nao classificado
 IGTA3,IGUATEMI ON NM,Construcao e Imobiliario
+IGTI11,IGUATEMI S.A UNT     N1,Construcao e Imobiliario
+IGTI11,IGUATEMI S.A UNT ED  N1,Construcao e Imobiliario
 IGTI11,IGUATEMI S.AUNT N1,Construcao e Imobiliario
+IGTI3,IGUATEMI S.A ON      N1,Construcao e Imobiliario
+IGTI3,IGUATEMI S.A ON  ED  N1,Construcao e Imobiliario
 IGTI3,IGUATEMI S.AON N1,Construcao e Imobiliario
+IGTI4,IGUATEMI S.A PN      N1,Construcao e Imobiliario
+IGTI4,IGUATEMI S.A PN  ED  N1,Construcao e Imobiliario
+IMBI4,DOC IMBITUBA PN,Outros/Nao classificado
 IMCH3,IMC HOLDINGS ON NM,Outros/Nao classificado
+INEP3,INEPAR ON,Outros/Nao classificado
 INEP3,INEPAR ON N1,Outros/Nao classificado
+INEP3,INEPAR       ON,Outros/Nao classificado
+INEP4,INEPAR PN,Outros/Nao classificado
 INEP4,INEPAR PN N1,Outros/Nao classificado
+INTB3,INTELBRAS    ON      NM,Tecnologia
+INTB3,INTELBRAS    ON  ED  NM,Tecnologia
+INTB3,INTELBRAS    ON  EJ  NM,Tecnologia
 INTB3,INTELBRAS ON NM,Tecnologia
+IRBR3,IRBBRASIL RE ON      NM,Seguros
+IRBR3,IRBBRASIL RE ON  ATZ NM,Seguros
 IRBR3,IRBBRASIL RE ON NM,Seguros
+ISAE3,ISA ENERGIA  ON      N1,Outros/Nao classificado
+ISAE3,ISA ENERGIA  ON  ED  N1,Outros/Nao classificado
+ISAE4,ISA ENERGIA  PN      N1,Outros/Nao classificado
+ISAE4,ISA ENERGIA  PN  ED  N1,Outros/Nao classificado
 ITSA3,ITAUSA ON N1,Bancos
+ITSA3,ITAUSA       ON      N1,Bancos
+ITSA3,ITAUSA       ON  EJ  N1,Bancos
 ITSA4,ITAUSA PN N1,Bancos
+ITSA4,ITAUSA       PN  EJ  N1,Bancos
+ITSA4,ITAUSA       PN      N1,Bancos
+ITUB3,ITAUUNIBANCO ON  EJ  N1,Bancos
+ITUB3,ITAUUNIBANCO ON      N1,Bancos
 ITUB3,ITAUUNIBANCO ON N1,Bancos
+ITUB4,ITAUUNIBANCO PN  EJ  N1,Bancos
+ITUB4,ITAUUNIBANCO PN      N1,Bancos
 ITUB4,ITAUUNIBANCO PN N1,Bancos
 IVVB11,ISHARE SP500CI,Outros/Nao classificado
+JALL3,JALLESMACHAD ON      NM,Outros/Nao classificado
+JALL3,JALLON,Outros/Nao classificado
+JALL3,JALLESMACHAD ON  ED  NM,Outros/Nao classificado
 JALL3,JALLESMACHADON NM,"Alimentos, Bebidas e Agropecuaria"
 JBDU4,J B DUARTE PN,Outros/Nao classificado
+JBSS3,JBS          ON      NM,"Alimentos, Bebidas e Agropecuaria"
+JBSS3,JBS          ON  ED  NM,"Alimentos, Bebidas e Agropecuaria"
 JBSS3,JBS ON NM,"Alimentos, Bebidas e Agropecuaria"
+JFEN3,JOAO FORTES ON ES,Construcao e Imobiliario
 JFEN3,JOAO FORTES ON,Construcao e Imobiliario
+JHSF3,JHSF PART    ON      NM,Construcao e Imobiliario
+JHSF3,JHSF PART    ON  ED  NM,Construcao e Imobiliario
 JHSF3,JHSF PART ON NM,Construcao e Imobiliario
+JOPA3,JOSAPAR      ON,"Alimentos, Bebidas e Agropecuaria"
 JOPA3,JOSAPAR ON,"Alimentos, Bebidas e Agropecuaria"
+JOPA4,JOSAPAR      PN,"Alimentos, Bebidas e Agropecuaria"
 JPSA3,JEREISSATI ON,Outros/Nao classificado
 JPSA4,JEREISSATI PN,Outros/Nao classificado
+JSLG3,JSL          ON  EJ  NM,Outros/Nao classificado
+JSLG3,JSL          ON      NM,Outros/Nao classificado
 JSLG3,JSL ON NM,Transporte e Logistica
 KEPL3,KEPLER WEBER ON,Industria e Bens de Capital
+KEPL3,KEPLER WEBER ON      NM,Industria e Bens de Capital
+KEPL3,KEPLER WEBER ON  EJ  NM,Industria e Bens de Capital
+KLBN11,KLABIN S/A   UNT     N2,Papel e Celulose
 KLBN11,KLABIN S/A UNT N2,Papel e Celulose
+KLBN3,KLABIN S/A   ON      N2,Papel e Celulose
 KLBN3,KLABIN S/A ON N2,Papel e Celulose
+KLBN4,KLABIN S/A   PN      N2,Papel e Celulose
 KLBN4,KLABIN S/A PN N2,Papel e Celulose
 KROT11,KROTON UNT N2,Educacao
 KROT3,KROTON ON NM,Educacao
+KRSA3,KRSAON,Outros/Nao classificado
+KRSA3,KORA SAUDE   ON      NM,Saude
+KRSA3,KORA SAUDE   ON,Saude
 KRSA3,KORA SAUDE ON NM,Saude
 LAME3,LOJAS AMERIC ON,Varejo
+LAME3,LOJAS AMERIC ON N1,Varejo
+LAME3,LOJAS AMERIC ON      N1,Varejo
+LAME4,LOJAS AMERIC PN N1,Varejo
 LAME4,LOJAS AMERIC PN,Varejo
+LAME4,LOJAS AMERIC PN      N1,Varejo
+LAND3,TERRASANTAPA ON      NM,Construcao e Imobiliario
 LAND3,TERRASANTAPAON NM,Construcao e Imobiliario
+LAVV3,LAVVI        ON  ED  NM,Construcao e Imobiliario
+LAVV3,LAVVI        ON      NM,Construcao e Imobiliario
 LAVV3,LAVVI ON NM,Construcao e Imobiliario
 LCAM3,LOCAMERICA ON NM,Transporte e Logistica
+LCAM3,LOCAMERICA   ON  EJ  NM,Transporte e Logistica
+LEVE3,METAL LEVE   ON      NM,Industria e Bens de Capital
 LEVE3,METAL LEVE ON NM,Industria e Bens de Capital
+LIGT11,LIGHT S/A    DIR     NM,Energia Eletrica
+LIGT3,LIGHT S/A    ON      NM,Energia Eletrica
 LIGT3,LIGHT S/A ON NM,Energia Eletrica
 LINX3,LINX ON NM,Tecnologia
+LIPR3,ELETROPAR ON,Outros/Nao classificado
 LIQO3,LIQ ON NM,Outros/Nao classificado
+LIXC4,LIX DA CUNHA PN,Outros/Nao classificado
+LJQQ3,QUERO-QUERO  ON      NM,Varejo
 LJQQ3,QUERO-QUERO ON NM,Varejo
+LLIS3,LE LIS BLANC ON      NM,Varejo
 LLIS3,LE LIS BLANC ON NM,Varejo
 LLISE3,LE LIS BLANC ON NM,Varejo
 LOAR4,LOJAS ARAPUA PN,Varejo
+LOGG3,LOG COM PROP ON      NM,Transporte e Logistica
 LOGG3,LOG COM PROPON NM,Transporte e Logistica
+LOGN3,LOG-IN       ON      NM,Transporte e Logistica
 LOGN3,LOG-IN ON NM,Transporte e Logistica
+LPSB3,LOPES BRASIL ON      NM,Outros/Nao classificado
 LPSB3,LOPES BRASIL ON NM,Outros/Nao classificado
 LREN3,LOJAS RENNER ON NM,Varejo
+LREN3,LOJAS RENNER ON      NM,Varejo
+LREN3,LOJAS RENNER ON  EJ  NM,Varejo
+LUPA3,LUPATECH     ON      NM,Outros/Nao classificado
 LUPA3,LUPATECH ON NM,Outros/Nao classificado
+LUXM4,TREVISA      PN,Outros/Nao classificado
 LUXM4,TREVISA PN,Outros/Nao classificado
+LVTC3,WDC NETWORKS ON      NM,Outros/Nao classificado
 LVTC3,WDC NETWORKSON NM,Outros/Nao classificado
+LWSA3,LWSA         ON      NM,Tecnologia
 LWSA3,LOCAWEB ON NM,Tecnologia
+MAGG3,MAGNESITA SA ON  ED  NM,Mineracao e Siderurgia
 MAGG3,MAGNESITA SA ON NM,Mineracao e Siderurgia
+MAPT4,CEMEPE PN,Outros/Nao classificado
+MATD3,MATER DEI    ON      NM,Saude
 MATD3,MATER DEI ON EB NM,Saude
+MBLY11,MOBLY        DIR     NM,Outros/Nao classificado
+MBLY3,MOBLY        ON      NM,Outros/Nao classificado
+MBLY3,MOBLY        ON  ES  NM,Outros/Nao classificado
 MBLY3,MOBLY ON NM,Outros/Nao classificado
+MBRF3,MARFRIG      ON      NM,"Alimentos, Bebidas e Agropecuaria"
+MDIA3,M.DIASBRANCO ON      NM,"Alimentos, Bebidas e Agropecuaria"
+MDIA3,M.DIASBRANCO ON  ED  NM,"Alimentos, Bebidas e Agropecuaria"
 MDIA3,M.DIASBRANCO ON NM,"Alimentos, Bebidas e Agropecuaria"
+MDNE3,MOURA DUBEUX ON      NM,Construcao e Imobiliario
 MDNE3,MOURA DUBEUXON NM,Construcao e Imobiliario
+MEAL3,IMC S/A      ON      NM,Outros/Nao classificado
+MEAL3,IMC S/A      ON  ATZ NM,Outros/Nao classificado
 MEAL3,IMC S/A ON NM,Outros/Nao classificado
+MEGA3,OMEGAENERGIA ON      NM,Energia Eletrica
 MEGA3,OMEGAENERGIAON NM,Energia Eletrica
+MELK3,MELNICK      ON      NM,Construcao e Imobiliario
 MELK3,MELNICK ON NM,Construcao e Imobiliario
+MEND6,MENDES JR PNB,Outros/Nao classificado
 MERC4,MERC FINANC PN,Bancos
+MERC4,MERC FINANC  PN,Bancos
+MGEL4,MANGELS INDL PN,Outros/Nao classificado
+MGEL4,MANGELS INDL PN      N1,Outros/Nao classificado
 MGEL4,MANGELS INDL PN N1,Outros/Nao classificado
+MGLU3,MAGAZ LUIZA  ON      NM,Varejo
 MGLU3,MAGAZ LUIZA ON NM,Varejo
+MILS3,MILLS        ON  EJ  NM,Outros/Nao classificado
+MILS3,MILLS        ON      NM,Outros/Nao classificado
+MILS3,MILLS        ON  EDJ NM,Outros/Nao classificado
+MILS3,MILLS        ON  ED  NM,Outros/Nao classificado
 MILS3,MILLS ON NM,Outros/Nao classificado
+MLAS3,MULTILASER   ON      NM,Tecnologia
 MLAS3,MULTILASER ON NM,Tecnologia
 MLFT4,JEREISSATI PN,Outros/Nao classificado
+MMAQ4,MINASMAQUINA PN,Outros/Nao classificado
+MMXM3,MMX MINER    ON      NM,Mineracao e Siderurgia
 MMXM3,MMX MINER ON NM,Mineracao e Siderurgia
+MNDL3,MUNDIAL      ON,Outros/Nao classificado
 MNDL3,MUNDIAL ON,Outros/Nao classificado
 MNPR3,MINUPAR ON,Outros/Nao classificado
+MNPR3,MINUPAR      ON,Outros/Nao classificado
+MNZC3,MENEZES CORT ON,Outros/Nao classificado
+MOAR3,MONT ARANHA  ON,Outros/Nao classificado
 MOAR3,MONT ARANHA ON,Outros/Nao classificado
+MOAR3,MONT ARANHA  ON  EDJ,Outros/Nao classificado
 MODL11,MODALMAIS UNT N2,Bancos
+MODL11,MODL UNT     N2,Outros/Nao classificado
+MODL11,MODALMAIS    UNT     N2,Bancos
+MODL3,MODALMAIS    ON      NM,Bancos
+MODL3,MODLON,Outros/Nao classificado
+MODL4,MODALMAIS    PN      N2,Bancos
 MOSI3,MOSAICO SA ON NM,Tecnologia
+MOSI3,Mosaico ON NM,Tecnologia
+MOSI3,MOSAICO      ON      NM,Tecnologia
+MOTV3,MOTIVA SA    ON      NM,Outros/Nao classificado
+MOVI3,MOVIDA       ON      NM,Transporte e Logistica
 MOVI3,MOVIDA ON NM,Transporte e Logistica
 MPLU3,MULTIPLUS ON NM,Outros/Nao classificado
+MRFG3,MARFRIG      ON      NM,"Alimentos, Bebidas e Agropecuaria"
+MRFG3,MARFRIG      ON  ED  NM,"Alimentos, Bebidas e Agropecuaria"
 MRFG3,MARFRIG ON NM,"Alimentos, Bebidas e Agropecuaria"
+MRVE3,MRV          ON  ED  NM,Outros/Nao classificado
+MRVE3,MRV          ON      NM,Outros/Nao classificado
+MRVE3,MRV          ON  ATZ NM,Outros/Nao classificado
 MRVE3,MRV ON NM,Construcao e Imobiliario
+MSPA3,MELHOR SP ON,Outros/Nao classificado
+MSPA4,MELHOR SP PN,Outros/Nao classificado
 MSTR3,MASTER ON,Outros/Nao classificado
+MSTR3,MASTER       ON,Outros/Nao classificado
 MTIG4,METAL IGUACU PN,Mineracao e Siderurgia
+MTRE3,MITRE REALTY ON      NM,Construcao e Imobiliario
+MTRE3,MITRE REALTY ON  ED  NM,Construcao e Imobiliario
 MTRE3,MITRE REALTYON NM,Construcao e Imobiliario
 MTSA3,METISA ON,Outros/Nao classificado
 MTSA4,METISA PN,Outros/Nao classificado
+MTSA4,METISA       PN,Outros/Nao classificado
+MULT3,MULTIPLAN    ON      N2,Construcao e Imobiliario
+MULT3,MULTIPLAN    ON  EJ  N2,Construcao e Imobiliario
 MULT3,MULTIPLAN ON N2,Construcao e Imobiliario
+MWET4,WETZEL S/A   PN  EG,Outros/Nao classificado
 MWET4,WETZEL S/A PN,Outros/Nao classificado
 MYPK3,IOCHP-MAXION ON NM,Industria e Bens de Capital
+MYPK3,IOCHP-MAXION ON      NM,Industria e Bens de Capital
+NATU3,NATURA      ON      NM,Outros/Nao classificado
+NATU3,NATURA       ON      NM,Outros/Nao classificado
 NATU3,NATURA ON NM,Outros/Nao classificado
+NEOE3,NEOENERGIA   ON      NM,Energia Eletrica
+NEOE3,NEOENERGIA   ON,Energia Eletrica
 NEOE3,NEOENERGIA ON ATZ NM,Energia Eletrica
+NEXP3,NEXPE        ON      NM,Outros/Nao classificado
+NEXP3,NEXPE        ON,Outros/Nao classificado
+NGRD3,NEOGRID ON,Tecnologia
+NGRD3,NEOGRID      ON      NM,Tecnologia
+NGRD3,NEOGRID      ON,Tecnologia
 NGRD3,NEOGRID ON NM,Tecnologia
+NINJ3,GETNINJAS    ON      NM,Tecnologia
 NINJ3,GETNINJAS ON NM,Tecnologia
+NKEP4,NKEPPN,Outros/Nao classificado
+NTCO3,GRUPO NATURA ON      NM,Outros/Nao classificado
+NTCO3,GRUPO NATURA ON  ED  NM,Outros/Nao classificado
 NTCO3,GRUPO NATURAON NM,Outros/Nao classificado
+NUTR3,NUTRIPLANT   ON      MA,Outros/Nao classificado
+NUTR3,NUTRIPLANT ON MA,Outros/Nao classificado
+OBTC3,ORANJEBTC    ON,Outros/Nao classificado
+ODPV3,ODONTOPREV   ON      NM,Saude
+ODPV3,ODONTOPREV   ON  ED  NM,Saude
+ODPV3,ODONTOPREV   ON  EJ  NM,Saude
 ODPV3,ODONTOPREV ON NM,Saude
+OFSA3,OUROFINO S/A ON      NM,"Alimentos, Bebidas e Agropecuaria"
+OFSA3,OUROFINO S/A ON  ED  NM,"Alimentos, Bebidas e Agropecuaria"
 OFSA3,OUROFINO S/A ON NM,"Alimentos, Bebidas e Agropecuaria"
 OGSA3,NOVA OLEO ON,Petroleo e Gas
 OGXP3,OGX PETROLEO ON NM,Petroleo e Gas
+OIBR3,OI           ON      N1,Outros/Nao classificado
 OIBR3,OI ON N1,Telecomunicacoes
+OIBR4,OI           PN      N1,Outros/Nao classificado
 OIBR4,OI PN N1,Telecomunicacoes
 OMGE3,OMEGA GER ON NM,Energia Eletrica
+ONCO3,ONCOON,Outros/Nao classificado
+ONCO3,ONCOCLINICAS ON      NM,Saude
 ONCO3,ONCOCLINICASON NM,Saude
+OPCT3,OPCTON,Outros/Nao classificado
+OPCT3,OCEANPACT    ON  ED  NM,Petroleo e Gas
+OPCT3,OCEANPACT    ON      NM,Petroleo e Gas
 OPCT3,OCEANPACT ON NM,Petroleo e Gas
+OPSE3,SUDESTE S/A  ON,Outros/Nao classificado
+ORVR3,ORIZON       ON      NM,Outros/Nao classificado
 ORVR3,ORIZON ON NM,Outros/Nao classificado
 OSXB3,OSX BRASIL ON NM,Outros/Nao classificado
 PARC3,PARCORRETORA ON NM,Outros/Nao classificado
+PARD3,IHPARDINI    ON      NM,Saude
 PARD3,IHPARDINI ON NM,Saude
+PASS3,COMPASS      ON      NM,Outros/Nao classificado
+PASS3,PASSON,Outros/Nao classificado
 PASS5,PASSPN,Outros/Nao classificado
+PASS6,COMPASS      PNB,Outros/Nao classificado
+PASS6,PASSPN,Outros/Nao classificado
 PASS6,COMPASS PNB,Outros/Nao classificado
 PATI3,PANATLANTICA ON,Outros/Nao classificado
+PATI4,PANATLANTICA PN,Outros/Nao classificado
 PCAR3,P.ACUCAR-CBD ON N1,Varejo
+PCAR3,P.ACUCAR-CBD ON      NM,Varejo
 PCAR4,P.ACUCAR-CBD PN N1,Varejo
+PDGR3,PDG REALT    ON      NM,Construcao e Imobiliario
 PDGR3,PDG REALT ON NM,Construcao e Imobiliario
+PDTC3,PADTEC       ON      NM,Tecnologia
 PDTC3,PADTEC ON,Tecnologia
 PEAB3,PAR AL BAHIA ON,Outros/Nao classificado
 PEAB4,PAR AL BAHIA PN,Outros/Nao classificado
+PETR3,PETROBRAS    ON      N2,Petroleo e Gas
 PETR3,PETROBRAS ON,Petroleo e Gas
+PETR3,PETROBRAS    ON  EDJ N2,Petroleo e Gas
+PETR3,PETROBRAS    ON  ERJ N2,Petroleo e Gas
 PETR4,PETROBRAS PN,Petroleo e Gas
+PETR4,PETROBRAS    PN      N2,Petroleo e Gas
+PETR4,PETROBRAS    PN  EDJ N2,Petroleo e Gas
+PETR4,PETROBRAS    PN  ATZ N2,Petroleo e Gas
+PETR4,PETROBRAS    PN  ERJ N2,Petroleo e Gas
+PETZ3,PETZ         ON      NM,Varejo
 PETZ3,PETZ ON NM,Varejo
+PFRM3,PROFARMA     ON      NM,Saude
 PFRM3,PROFARMA ON NM,Saude
+PGMN3,PAGUE MENOS  ON      NM,Varejo
+PGMN3,PAGUE MENOS  ON  EJS NM,Varejo
 PGMN3,PAGUE MENOS ON NM,Varejo
+PINE3,PINE         ON      N2,Bancos
+PINE3,PINE         ON  EJ  N2,Bancos
+PINE4,PINE         PN      N2,Bancos
+PINE4,PINE         PN  EJ  N2,Bancos
 PINE4,PINE PN N2,Bancos
 PLAS3,PLASCAR PART ON,Outros/Nao classificado
+PLPL3,PLANOEPLANO  ON      NM,Construcao e Imobiliario
 PLPL3,PLANOEPLANO ON NM,Construcao e Imobiliario
 PMAM3,PARANAPANEMA ON NM,Mineracao e Siderurgia
+PMAM3,PARANAPANEMA ON      NM,Mineracao e Siderurgia
+PMAM3,PARANAPANEMA ON  ES  NM,Mineracao e Siderurgia
+PNVL3,DIMED        ON      NM,Varejo
 PNVL3,DIMED ON,Varejo
+PNVL3,DIMED        ON  EJ  NM,Varejo
 PNVL4,DIMED PN,Varejo
 POMO3,MARCOPOLO ON N2,Industria e Bens de Capital
+POMO3,MARCOPOLO    ON      N2,Industria e Bens de Capital
+POMO3,MARCOPOLO    ON  EDJ N2,Industria e Bens de Capital
+POMO3,MARCOPOLO    ON  EJ  N2,Industria e Bens de Capital
 POMO4,MARCOPOLO PN N2,Industria e Bens de Capital
+POMO4,MARCOPOLO    PN      N2,Industria e Bens de Capital
+POMO4,MARCOPOLO    PN  EDJ N2,Industria e Bens de Capital
+POMO4,MARCOPOLO    PN  EJ  N2,Industria e Bens de Capital
+PORT3,WILSON SONS  ON      NM,Transporte e Logistica
+PORT3,WILSON SONS  ON  ED  NM,Transporte e Logistica
+PORT3,WILSON SONS  ON,Transporte e Logistica
 PORT3,WILSON SONS ON NM,Transporte e Logistica
+POSI3,POSITIVO TEC ON      NM,Outros/Nao classificado
 POSI3,POSITIVO INF ON NM,Tecnologia
 POWE3,FOCUS ON ON NM,Outros/Nao classificado
+POWE3,FOCUS ON     ON      NM,Outros/Nao classificado
+POWE3,POWEON,Outros/Nao classificado
 PPLA11,PPLA UNT,Outros/Nao classificado
+PRIO3,PETRORIO     ON      NM,Petroleo e Gas
+PRIO3,PETRORIO     ON  ATZ NM,Petroleo e Gas
+PRIO3,PRIO         ON      NM,Outros/Nao classificado
+PRIO3,PRIO         ON  ATZ NM,Outros/Nao classificado
 PRIO3,PETRORIO ON NM,Petroleo e Gas
 PRML3,PRUMO ON NM,Transporte e Logistica
+PRNR3,PRINER       ON      NM,Transporte e Logistica
 PRNR3,PRINER ON MA,Transporte e Logistica
+PSSA3,PORTO SEGURO ON      NM,Seguros
+PSSA3,PORTO SEGURO ON  EJ  NM,Seguros
 PSSA3,PORTO SEGURO ON NM,Seguros
 PTBL3,PORTOBELLO ON NM,Outros/Nao classificado
+PTBL3,PORTOBELLO   ON      NM,Outros/Nao classificado
+PTNT3,PETTENATI ON,Outros/Nao classificado
+PTNT3,PETTENATI    ON,Outros/Nao classificado
 PTNT4,PETTENATI PN,Outros/Nao classificado
+PTNT4,PETTENATI    PN,Outros/Nao classificado
+PTSL4,PTSLPN,Outros/Nao classificado
 QGEP3,QGEP PART ON NM,Petroleo e Gas
+QUAL3,QUALICORP    ON      NM,Saude
 QUAL3,QUALICORP ON NM,Saude
 QVQP3,524 Participações,Outros/Nao classificado
+RADL3,RAIADROGASIL ON      NM,Saude
 RADL3,RAIADROGASIL ON NM,Saude
+RAIL3,RUMO S.A.    ON      NM,Transporte e Logistica
 RAIL3,RUMO S.A. ON NM,Transporte e Logistica
+RAIZ4,RAIZEN       PN      N2,Petroleo e Gas
+RAIZ4,RAIZEN       PN  ED  N2,Petroleo e Gas
 RAIZ4,RAIZEN PN N2,Petroleo e Gas
 RANI3,CELUL IRANI ON,Papel e Celulose
+RANI3,IRANI        ON      NM,Papel e Celulose
+RANI3,IRANI        ON  ED  NM,Papel e Celulose
+RAPT3,RANDON PART  ON      N1,Industria e Bens de Capital
+RAPT3,RANDON PART  ON  EJ  N1,Industria e Bens de Capital
 RAPT3,RANDON PART ON N1,Industria e Bens de Capital
 RAPT4,RANDON PART PN N1,Industria e Bens de Capital
+RAPT4,RANDON PART  PN      N1,Industria e Bens de Capital
+RAPT4,RANDON PART  PN  EJ  N1,Industria e Bens de Capital
 RCSL3,RECRUSUL ON,Outros/Nao classificado
+RCSL3,RECRUSUL     ON,Outros/Nao classificado
 RCSL4,RECRUSUL PN,Outros/Nao classificado
+RCSL4,RECRUSUL     PN,Outros/Nao classificado
+RDNI3,RNI          ON      NM,Outros/Nao classificado
+RDNI3,RNI          ON,Outros/Nao classificado
 RDNI3,RODOBENSIMOB ON NM,Construcao e Imobiliario
+RDOR3,Rede DOR ON,Outros/Nao classificado
+RDOR3,REDE D OR    ON      NM,Saude
+RDOR3,REDE D OR    ON  EJ  NM,Saude
 RDOR3,REDE D OR ON NM,Saude
+REAG3,REAGINVEST   ON      NM,Outros/Nao classificado
+RECV3,PETRORECSA   ON      NM,Petroleo e Gas
 RECV3,PETRORECSA ON NM,Petroleo e Gas
 REDE3,REDE ENERGIA ON,Energia Eletrica
+REDE3,REDE ENERGIA ON  ED,Energia Eletrica
 REDE4,REDE ENERGIA PN,Energia Eletrica
+RENT3,LOCALIZA     ON      NM,Transporte e Logistica
+RENT3,LOCALIZA     ON  EJS NM,Transporte e Logistica
+RENT3,LOCALIZA     ON  ATZ NM,Transporte e Logistica
 RENT3,LOCALIZA ON NM,Transporte e Logistica
+RENT4,LOCALIZA     PN      NM,Transporte e Logistica
+RIAA3,RIACHUELO    ON      NM,Outros/Nao classificado
 RLOG3,COSAN LOG ON NM,Petroleo e Gas
 RNEW11,RENOVA UNT N2,Energia Eletrica
+RNEW3,RENOVA       ON      N2,Energia Eletrica
 RNEW3,RENOVA ON N2,Energia Eletrica
+RNEW4,RENOVA       PN      N2,Energia Eletrica
 RNEW4,RENOVA PN N2,Energia Eletrica
 ROMI3,INDS ROMI ON NM,Industria e Bens de Capital
+ROMI3,ROMI         ON      NM,Outros/Nao classificado
+ROMI3,ROMI         ON  EJ  NM,Outros/Nao classificado
 RPAD3,ALFA HOLDING ON,Bancos
+RPAD5,ALFA HOLDING PNA,Bancos
+RPAD5,ALFA HOLDING PNA ED,Bancos
 RPAD6,ALFA HOLDING PNB,Bancos
 RPMG3,PET MANGUINH ON,Petroleo e Gas
+RRRP3,3R PETROLEUM ON      NM,Petroleo e Gas
 RRRP3,3R PETROLEUMON NM,Petroleo e Gas
+RSID3,ROSSI RESID  ON      NM,Construcao e Imobiliario
 RSID3,ROSSI RESID ON NM,Construcao e Imobiliario
 RSUL4,RIOSULENSE PN,Outros/Nao classificado
+RSUL4,RIOSULENSE   PN,Outros/Nao classificado
 RUMO3,RUMO LOG ON NM,Transporte e Logistica
+RVEE3,REVEE        ON,Outros/Nao classificado
+SALT3,GRUPO SALTA  ON      N2,Outros/Nao classificado
+SALT5,GRUPO SALTA  PNA     N2,Outros/Nao classificado
+SALT6,GRUPO SALTA  PNB     N2,Outros/Nao classificado
+SANB11,SANTANDER BR UNT,Bancos
+SANB11,SANTANDER BR UNT EJ,Bancos
+SANB11,SANTANDER BR UNT EDJ,Bancos
 SANB11,SANTANDER BR UNT N2,Bancos
+SANB3,SANTANDER BR ON,Bancos
+SANB3,SANTANDER BR ON  EJ,Bancos
+SANB3,SANTANDER BR ON  EDJ,Bancos
 SANB3,SANTANDER BR ON N2,Bancos
+SANB4,SANTANDER BR PN  EDJ,Bancos
+SANB4,SANTANDER BR PN,Bancos
+SANB4,SANTANDER BR PN  EJ,Bancos
 SANB4,SANTANDER BR PN N2,Bancos
+SAPR11,SANEPAR      UNT     N2,Saneamento e Gas
 SAPR11,SANEPAR UNT N2,Saneamento e Gas
 SAPR3,SANEPAR ON,Saneamento e Gas
+SAPR3,SANEPAR      ON      N2,Saneamento e Gas
 SAPR4,SANEPAR PN,Saneamento e Gas
+SAPR4,SANEPAR      PN      N2,Saneamento e Gas
+SAUD3,BRADSAUDE    ON      NM,Outros/Nao classificado
+SBFG3,GRUPO SBF    ON      NM,Varejo
 SBFG3,GRUPO SBF ON NM,Varejo
+SBSP3,SABESP       ON      NM,Saneamento e Gas
 SBSP3,SABESP ON NM,Saneamento e Gas
+SBSP3,SABESP       ON  EJB NM,Saneamento e Gas
+SBSP3,SABESP       ON  ATZ NM,Saneamento e Gas
+SCAR3,SAO CARLOS   ON      NM,Construcao e Imobiliario
 SCAR3,SAO CARLOS ON NM,Construcao e Imobiliario
+SCLO4,SCHLOSSER    PN,Outros/Nao classificado
 SEDU3,SOMOS EDUCA ON NM,Educacao
+SEER3,SER EDUCA    ON      NM,Educacao
 SEER3,SER EDUCA ON NM,Educacao
+SEQL3,SEQUOIA LOG  ON      NM,Transporte e Logistica
 SEQL3,SEQUOIA LOG ON NM,Transporte e Logistica
 SGAS4,WLM IND COM PN,Outros/Nao classificado
+SGPS3,SPRINGS      ON      NM,Outros/Nao classificado
+SGPS3,SPRINGS      ON,Outros/Nao classificado
 SGPS3,SPRINGS ON NM,Outros/Nao classificado
+SHOW3,TIME FOR FUN ON      NM,Outros/Nao classificado
+SHOW3,TIME FOR FUN ON,Outros/Nao classificado
 SHOW3,TIME FOR FUN ON NM,Outros/Nao classificado
 SHUL4,SCHULZ PN,Industria e Bens de Capital
+SHUL4,SCHULZ       PN,Industria e Bens de Capital
+SHUL4,SCHULZ       PN  EJ,Industria e Bens de Capital
+SIMH3,SIMPAR       ON      NM,Transporte e Logistica
+SIMH3,SIMPAR       ON  EG  NM,Transporte e Logistica
 SIMH3,SIMPAR ON NM,Transporte e Logistica
 SJHO4,Ações,Outros/Nao classificado
+SJOS4,TECEL S JOSE PN,Outros/Nao classificado
+SLCE3,SLC AGRICOLA ON      NM,"Alimentos, Bebidas e Agropecuaria"
 SLCE3,SLC AGRICOLA ON NM,"Alimentos, Bebidas e Agropecuaria"
 SLED4,SARAIVA LIVR PN N2,Outros/Nao classificado
+SLED4,SARAIVA LIVR PN ED N2,Outros/Nao classificado
+SMFT3,SMART FIT    ON      NM,"Alimentos, Bebidas e Agropecuaria"
+SMFT3,SMART FIT    ON  EJ  NM,"Alimentos, Bebidas e Agropecuaria"
 SMFT3,SMART FIT ON M2,"Alimentos, Bebidas e Agropecuaria"
 SMLE3,SMILES ON NM,Outros/Nao classificado
 SMLS3,SMILES ON NM,Outros/Nao classificado
+SMTO3,SAO MARTINHO ON      NM,"Alimentos, Bebidas e Agropecuaria"
+SMTO3,SAO MARTINHO ON  EJ  NM,"Alimentos, Bebidas e Agropecuaria"
 SMTO3,SAO MARTINHO ON NM,"Alimentos, Bebidas e Agropecuaria"
 SNSL3,SENIOR SOL ON MA,Outros/Nao classificado
+SNSY3,SANSUY ON,Outros/Nao classificado
+SNSY5,SANSUY PNA,Outros/Nao classificado
+SNSY5,SANSUY       PNA,Outros/Nao classificado
+SOJA3,BOA SAFRA    ON      NM,"Alimentos, Bebidas e Agropecuaria"
 SOJA3,BOA SAFRA ON NM,"Alimentos, Bebidas e Agropecuaria"
+SOMA3,GRUPO SOMA   ON      NM,Varejo
 SOMA3,GRUPO SOMA ON NM,Varejo
+SOND5,SONDOTECNICA PNA,Outros/Nao classificado
+SQIA3,SINQIA       ON      NM,Tecnologia
 SQIA3,SINQIA ON NM,Tecnologia
+SRNA3,SERENA       ON      NM,Outros/Nao classificado
+SRNA3,SERENA       ON,Outros/Nao classificado
 SSBR3,SIERRABRASIL ON NM,Outros/Nao classificado
+STBP3,SANTOS BRP   ON      NM,Outros/Nao classificado
+STBP3,SANTOS BRP   ON  ED  NM,Outros/Nao classificado
+STBP3,SANTOS BRP   ON  EDJ NM,Outros/Nao classificado
+STBP3,SANTOS BRP   ON  ER  NM,Outros/Nao classificado
+STBP3,SANTOS BRP   ON,Outros/Nao classificado
 STBP3,SANTOS BRP ON NM,Outros/Nao classificado
 SULA11,SUL AMERICA UNT N2,Seguros
+SULA11,SUL AMERICA  UNT EJ  N2,Seguros
 SULA3,SUL AMERICA ON N2,Seguros
+SULA4,SUL AMERICA  PN  EJ  N2,Seguros
 SULA4,SUL AMERICA PN N2,Seguros
+SULT3,SULTEPA      ON,Outros/Nao classificado
+SULT4,SULTEPA      PN,Outros/Nao classificado
+SUZB3,SUZANO S.A.  ON      NM,Papel e Celulose
 SUZB3,SUZANO PAPEL ON NM,Papel e Celulose
 SUZB5,SUZANO PAPEL PNA N1,Papel e Celulose
+SYNE3,SYN PROP TEC ON      NM,Construcao e Imobiliario
+SYNE3,SYN PROP TEC ON  ED  NM,Construcao e Imobiliario
 SYNE3,SYN PROP TECON NM,Construcao e Imobiliario
+TAEE11,TAESA        UNT     N2,Energia Eletrica
+TAEE11,TAESA        UNT EJ  N2,Energia Eletrica
+TAEE11,TAESA        UNT EDJ N2,Energia Eletrica
 TAEE11,TAESA UNT N2,Energia Eletrica
+TAEE3,TAESA        ON      N2,Energia Eletrica
+TAEE3,TAESA        ON  EJ  N2,Energia Eletrica
+TAEE3,TAESA        ON  EDJ N2,Energia Eletrica
 TAEE3,TAESA ON N2,Energia Eletrica
+TAEE4,TAESA        PN  EDJ N2,Energia Eletrica
+TAEE4,TAESA        PN      N2,Energia Eletrica
+TAEE4,TAESA        PN  EJ  N2,Energia Eletrica
 TAEE4,TAESA PN N2,Energia Eletrica
+TASA3,TAURUS ARMAS ON      N2,Industria e Bens de Capital
 TASA3,TAURUS ARMASON N2,Industria e Bens de Capital
+TASA4,TAURUS ARMAS PN      N2,Industria e Bens de Capital
 TASA4,TAURUS ARMASPN N2,Industria e Bens de Capital
 TCNO4,TECNOSOLO PN,Outros/Nao classificado
+TCSA3,TECNISA      ON      NM,Construcao e Imobiliario
 TCSA3,TECNISA ON NM,Construcao e Imobiliario
+TECN3,TECHNOS      ON      NM,Textil e Vestuario
 TECN3,TECHNOS ON NM,Textil e Vestuario
 TEKA4,TEKA PN,Outros/Nao classificado
+TELB3,TELEBRAS     ON,Telecomunicacoes
 TELB3,TELEBRAS ON,Telecomunicacoes
 TELB4,TELEBRAS PN,Telecomunicacoes
+TELB4,TELEBRAS     PN,Telecomunicacoes
+TEND3,TENDA        ON      NM,Construcao e Imobiliario
 TEND3,TENDA ON,Construcao e Imobiliario
 TESA3,TERRA SANTA ON NM,Outros/Nao classificado
+TFCO4,TRACK FIELD  PN      N2,Outros/Nao classificado
+TFCO4,TRACK FIELD  PN  EJ  N2,Outros/Nao classificado
 TFCO4,TRACK FIELD PN N2,Outros/Nao classificado
+TGMA3,TEGMA        ON      NM,Transporte e Logistica
 TGMA3,TEGMA ON NM,Transporte e Logistica
 TIET11,AES TIETE E UNT N2,Energia Eletrica
 TIET3,AES TIETE E ON N2,Energia Eletrica
 TIET4,AES TIETE E PN N2,Energia Eletrica
 TIMP3,TIM PART S/A ON NM,Telecomunicacoes
+TIMS3,TIM          ON      NM,Outros/Nao classificado
+TIMS3,TIM          ON  EJ  NM,Outros/Nao classificado
 TIMS3,TIM ON NM,Telecomunicacoes
+TKNO3,TEKNO        ON,Outros/Nao classificado
+TKNO4,TEKNO PN,Outros/Nao classificado
+TKNO4,TEKNO        PN,Outros/Nao classificado
+TKNO4,TEKNO        PN  EJ,Outros/Nao classificado
+TOKY3,GRUPO TOKY   ON      NM,Outros/Nao classificado
+TOTS3,TOTVS        ON      NM,Tecnologia
+TOTS3,TOTVS        ON  EJ  NM,Tecnologia
 TOTS3,TOTVS ON NM,Tecnologia
 TOYB3,TECTOY ON,Outros/Nao classificado
 TOYB4,TECTOY PN,Outros/Nao classificado
+TPIS3,TRIUNFO PART ON      NM,Outros/Nao classificado
 TPIS3,TRIUNFO PART ON NM,Outros/Nao classificado
+TRAD3,TC           ON      NM,Outros/Nao classificado
+TRAD3,TC           ON  EG  NM,Outros/Nao classificado
 TRAD3,TC ON NM,Outros/Nao classificado
+TRIS3,TRISUL       ON      NM,Construcao e Imobiliario
 TRIS3,TRISUL ON NM,Construcao e Imobiliario
+TRPL3,TRAN PAULIST ON      N1,Outros/Nao classificado
+TRPL4,TRAN PAULIST PN      N1,Outros/Nao classificado
 TRPL4,TRAN PAULIST PN N1,Outros/Nao classificado
 TRPN3,TARPON INV ON NM,Outros/Nao classificado
+TTEN3,3TENTOS      ON      NM,"Alimentos, Bebidas e Agropecuaria"
 TTEN3,3TENTOS ON NM,"Alimentos, Bebidas e Agropecuaria"
 TUPY3,TUPY ON NM,Industria e Bens de Capital
+TUPY3,TUPY         ON  EJ  NM,Industria e Bens de Capital
 TXRX3,TEX RENAUX ON,Textil e Vestuario
+TXRX4,TEX RENAUX PN,Textil e Vestuario
+TXRX4,RENAUXVIEW   PN,Outros/Nao classificado
+UCAS3,UNICASA      ON  EJ  NM,Outros/Nao classificado
+UCAS3,UNICASA      ON      NM,Outros/Nao classificado
 UCAS3,UNICASA ON NM,Outros/Nao classificado
+UGPA3,ULTRAPAR     ON      NM,Outros/Nao classificado
+UGPA3,ULTRAPAR     ON  ED  NM,Outros/Nao classificado
 UGPA3,ULTRAPAR ON NM,Outros/Nao classificado
 UNID3,Unidas S.A. ON,Outros/Nao classificado
+UNIP3,UNIPAR       ON,Quimicos e Petroquimicos
 UNIP3,UNIPAR ON,Quimicos e Petroquimicos
+UNIP3,UNIPAR       ON  ED,Quimicos e Petroquimicos
+UNIP5,UNIPAR PNA,Quimicos e Petroquimicos
 UNIP6,UNIPAR PNB,Quimicos e Petroquimicos
+UNIP6,UNIPAR       PNB,Quimicos e Petroquimicos
+UNIP6,UNIPAR       PNB ED,Quimicos e Petroquimicos
 USIM3,USIMINAS ON N1,Mineracao e Siderurgia
+USIM3,USIMINAS     ON      N1,Mineracao e Siderurgia
+USIM5,USIMINAS     PNA     N1,Mineracao e Siderurgia
+USIM5,USIMINAS     PNA ATZ N1,Mineracao e Siderurgia
 USIM5,USIMINAS PNA N1,Mineracao e Siderurgia
 USIM6,USIMINAS PNB N1,Mineracao e Siderurgia
 VALE3,VALE ON N1,Mineracao e Siderurgia
+VALE3,VALE         ON  ATZ NM,Mineracao e Siderurgia
+VALE3,VALE         ON      NM,Mineracao e Siderurgia
 VALE5,VALE PNA N1,Mineracao e Siderurgia
+VAMO3,VAMOS        ON      NM,Transporte e Logistica
 VAMO3,VAMOS ON NM,Transporte e Logistica
+VBBR3,VIBRA        ON      NM,Outros/Nao classificado
+VBBR3,VIBRA        ON  EJ  NM,Outros/Nao classificado
 VBBR3,VIBRA ON NM,Outros/Nao classificado
+VIIA3,VIA          ON      NM,Outros/Nao classificado
 VIIA3,VIA ON NM,Varejo
+VITT3,VITTIA       ON      NM,"Alimentos, Bebidas e Agropecuaria"
+VITT3,VITTIA       ON  EJ  NM,"Alimentos, Bebidas e Agropecuaria"
 VITT3,VITTIA ON NM,"Alimentos, Bebidas e Agropecuaria"
+VIVA3,VIVARA S.A.  ON      NM,Varejo
 VIVA3,VIVARA S.A. ON NM,Varejo
+VIVR3,VIVER        ON      NM,Outros/Nao classificado
+VIVR3,VIVER        ON  ES  NM,Outros/Nao classificado
 VIVR3,VIVER ON NM,Outros/Nao classificado
+VIVT3,TELEF BRASIL ON  EJ,Telecomunicacoes
 VIVT3,TELEF BRASIL ON,Telecomunicacoes
 VIVT4,TELEF BRASIL PN,Telecomunicacoes
 VLID11,VALID ON,Outros/Nao classificado
+VLID3,VALID        ON      NM,Outros/Nao classificado
+VLID3,VALID        ON  EJ  NM,Outros/Nao classificado
 VLID3,VALID ON NM,Outros/Nao classificado
 VPSC4,VARIG SERV PN,Outros/Nao classificado
 VPTA4,VARIG TRANSP PN,Outros/Nao classificado
+VRGL3,VRGLINHAS   ON,Outros/Nao classificado
+VSTE3,VESTE        ON      NM,Outros/Nao classificado
+VTRU3,VITRUEDUCA   ON      NM,Outros/Nao classificado
+VULC3,VULCABRAS    ON      NM,Textil e Vestuario
+VULC3,VULCABRAS    ON  ED  NM,Textil e Vestuario
 VULC3,VULCABRAS ON,Textil e Vestuario
 VVAR11,VIAVAREJO UNT N2,Outros/Nao classificado
 VVAR3,VIAVAREJO ON N2,Outros/Nao classificado
 VVAR4,VIAVAREJO PN N2,Outros/Nao classificado
+VVEO3,VIVEO        ON      NM,Outros/Nao classificado
 VVEO3,VIVEO ON NM,Outros/Nao classificado
+WDCN3,WDC NETWORKS ON      NM,Outros/Nao classificado
+WEGE3,WEG          ON      NM,Industria e Bens de Capital
+WEGE3,WEG          ON  EJ  NM,Industria e Bens de Capital
 WEGE3,WEG ON NM,Industria e Bens de Capital
+WEST3,WESTON,Outros/Nao classificado
+WEST3,WESTWING     ON  EG  NM,Outros/Nao classificado
+WEST3,WESTWING     ON      NM,Outros/Nao classificado
+WEST3,WESTWING     ON  ER  NM,Outros/Nao classificado
 WEST3,WESTWING ON NM,Outros/Nao classificado
+WHRL3,WHIRLPOOL    ON,Industria e Bens de Capital
+WHRL3,WHIRLPOOL    ON  ED,Industria e Bens de Capital
 WHRL3,WHIRLPOOL ON,Industria e Bens de Capital
+WHRL4,WHIRLPOOL    PN  ED,Industria e Bens de Capital
+WHRL4,WHIRLPOOL    PN,Industria e Bens de Capital
 WHRL4,WHIRLPOOL PN,Industria e Bens de Capital
+WIZC3,WIZ CO       ON      NM,Outros/Nao classificado
+WIZS3,WIZ S.A.     ON      NM,Outros/Nao classificado
 WIZS3,WIZ S.A. ON NM,Outros/Nao classificado
+WLMM4,WLM IND COM  PN,Outros/Nao classificado
+WLMM4,WLM IND COM  PN  EJ,Outros/Nao classificado
 WLMM4,WLM IND COM PN,Outros/Nao classificado
+YDUQ3,YDUQS PART   ON      NM,Educacao
 YDUQ3,YDUQS PART ON NM,Educacao
+ZAMP3,ZAMP S.A.    ON,Outros/Nao classificado

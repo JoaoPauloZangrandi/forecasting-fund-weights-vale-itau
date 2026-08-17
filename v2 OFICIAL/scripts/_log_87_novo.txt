@@ -1,0 +1,22 @@
+Gestoras com dispersao estimavel (n>=100): 43 
+Gestoras com caracteristicas completas: 40 
+
+===== Correlacoes: dispersao do erro (dp_erro) vs. caracteristicas de gestora =====
+dp_erro x beta medio do fundo   : corr = 0.3917
+dp_erro x tamanho medio (l_aum)  : corr = 0.1252
+dp_erro x concentracao (HHI)     : corr = 0.5613
+
+R2 (beta)  = 0.1534 | R2 (tamanho) = 0.0157 | R2 (HHI) = 0.3150
+
+===== Regressao multipla (as 3 caracteristicas juntas) =====
+                 Estimate   Std. Error    t value    Pr(>|t|)
+(Intercept) -0.0100644825 0.0101892894 -0.9877512 0.329867170
+beta_fundo   0.0007659368 0.0023026197  0.3326371 0.741337531
+l_aum        0.0008280257 0.0005590699  1.4810773 0.147286145
+hhi_medio    0.0599012020 0.0180131679  3.3254119 0.002039878
+R2 (multipla) = 0.3604
+null device 
+          1 
+
+OK - fig_explica_variancia_gestora.pdf salva
+OK

@@ -1,0 +1,12 @@
+Mensagen de aviso:
+In prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
+  'big.mark' e 'decimal.mark' são ambos '.', o que pode ser confuso
+Mensagen de aviso:
+In prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
+  'big.mark' e 'decimal.mark' são ambos '.', o que pode ser confuso
+null device 
+          1 
+Fig 4 OK
+null device 
+          1 
+Fig 5 OK

@@ -12,6 +12,7 @@
 suppressPackageStartupMessages(library(data.table))
 DATA_DIR <- Sys.getenv("CVM_DATA_DIR", unset = "C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF")
 REPO <- Sys.getenv("PROJ_DIR", unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau")
+source(file.path(REPO, "v2 OFICIAL/scripts/config_periodo.R"))
 
 pdate <- function(x){ x<-trimws(as.character(x)); o<-as.Date(rep(NA_character_,length(x)))
   for(f in c("%Y-%m-%d","%d/%m/%Y")){m<-is.na(o);if(!any(m))break;o[m]<-as.Date(x[m],format=f)};o }
@@ -28,25 +29,29 @@ gestora_grupo <- function(x) {
   out
 }
 
-# ---- passo 1: uniao de todos os fundos com posicao em acoes, 2016-2021 -----
+# ---- passo 1: uniao de todos os fundos com posicao em acoes, ANO_INICIO-ANO_FIM -----
 todos <- character(0)
-for (y in 2016:2021) {
+for (y in ANO_INICIO:ANO_FIM) {
   cv <- fread(file.path(DATA_DIR, sprintf("cons_%d.csv", y)), encoding = "UTF-8", showProgress = FALSE,
               select = "Código")
   todos <- union(todos, unique(as.character(cv$Código)))
   rm(cv); gc(FALSE)
 }
-cat("Universo completo (qualquer posicao em acoes, 2016-2021):", length(todos), "fundos\n")
+cat(sprintf("Universo completo (qualquer posicao em acoes, %d-%d): %d fundos\n", ANO_INICIO, ANO_FIM, length(todos)))
 
 atual <- unique(fread(file.path(REPO, "v2 OFICIAL/data/painel_todas_gestoras_2016_2021.csv"))$cod_fundo)
 novos <- setdiff(todos, as.character(atual))
 cat("Fundos ja no painel atual (ja tiveram VALE3):", length(intersect(todos, as.character(atual))), "\n")
 cat("Fundos NOVOS (nunca tiveram VALE3):", length(novos), "\n")
-stopifnot(length(todos) == 3254L, length(novos) == 434L)
+# NOTA (prep 15/08/2026): este stopifnot so' e' valido pro range original
+# 2016:2021 (3254/434). Com ANO_FIM > 2021, ele VAI FALHAR -- e' esperado,
+# nao e' bug (ver PLANO_EXPANSAO_2021_2026.md, "asserts que vao quebrar").
+# Comentar/ajustar o valor esperado quando ANO_FIM mudar.
+if (ANO_FIM == 2021L) stopifnot(length(todos) == 3254L, length(novos) == 434L)
 
 # ---- passo 2: mapear cod_fundo -> gestora_grupo/cnpj/nome pra TODOS --------
 sh_all <- list()
-for (y in 2016:2021) {
+for (y in ANO_INICIO:ANO_FIM) {
   sh <- fread(file.path(DATA_DIR, sprintf("SH_%d.csv", y)), encoding = "UTF-8", showProgress = FALSE,
               select = c("COD_FUNDO","CNPJ","NOME_FUNDO","GESTORA","DATA"))
   sh <- sh[as.character(COD_FUNDO) %in% todos]

@@ -31,13 +31,35 @@
 # =============================================================================
 suppressPackageStartupMessages(library(data.table))
 REPO <- Sys.getenv("PROJ_DIR", unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau")
+source(file.path(REPO, "v2 OFICIAL/scripts/config_periodo.R"))
 RAWDIR <- file.path(REPO, "data/raw/cotahist")
 
 sucessores <- c("KROT3", "COGN3", "LCAM3", "MEAL3", "LLIS3", "HGTX3")
+# NOTA (prep 15/08/2026): este mapa de sucessores e' 100% manual, pesquisado
+# um por um pro periodo 2016-2021 (ver cabecalho). Eventos societarios
+# NOVOS entre 2022-2026 (fusoes, IPOs, trocas de ticker) NAO estao cobertos
+# aqui -- precisam da MESMA pesquisa manual antes de confiar no resultado
+# desse script pro periodo estendido. Ver PLANO_EXPANSAO_2021_2026.md,
+# secao 0.3.
+#
+# ACHADO 16/08/2026 (script 56 rodado com ANO_FIM=2026): dos 37 tickers do
+# painel sem NENHUMA cotacao na COTAHIST (2016-2026), 23 sao os ja' documentados
+# acima (5 resolvidos + 18 genuinamente ausentes). Os outros 14 sao NOVOS,
+# especificos do periodo 2022-2026, e ainda NAO foram pesquisados (bloqueado
+# por limite de busca web da sessao que gerou este arquivo): COMR3, PTSL3,
+# PTSL4, CGOS3, NKEP4, EUFA3, OPSE3, SALT3, SALT5, SALT6, MNZC3, AXIA11,
+# VRGL3, BMGB3. Documentado como pendencia de pesquisa manual (decisao do
+# Joao, 16/08/2026: aceitar a lacuna por ora, sao 14 de 660 tickers do
+# painel = 2,1%, mesma ordem de grandeza dos 18 originais que tambem
+# permaneceram irresolvidos por serem de baixa liquidez/peso). PRIORIDADE
+# antes de fechar o relatorio final: pesquisar esses 14 (uma sessao com
+# orcamento de busca web disponivel resolve isso rapido) e adicionar ao
+# mapa `sucessores`/`mapa_simples` abaixo do mesmo jeito que os outros 5.
 
-res <- vector("list", 6)
-for (i in seq_along(2016:2021)) {
-  y <- (2016:2021)[i]
+anos <- ANO_INICIO:ANO_FIM
+res <- vector("list", length(anos))
+for (i in seq_along(anos)) {
+  y <- anos[i]
   con <- file(file.path(RAWDIR, sprintf("COTAHIST_A%d.TXT", y)), "r")
   lines <- readLines(con, n = -1L, encoding = "latin1"); close(con)
   lines <- lines[substr(lines, 1, 2) == "01"]

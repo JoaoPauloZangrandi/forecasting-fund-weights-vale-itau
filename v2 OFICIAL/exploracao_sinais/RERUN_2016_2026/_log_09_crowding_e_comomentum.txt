@@ -1,0 +1,26 @@
+===== (L) CROWDING (proxy HHI de posse, sem dado de ADV) =====
+Ativo-mes com crowding calculavel: 28019 
+Crowding (HHI posse)           h= 1 [linear] n_tr= 7683 n_te=19255 beta=  0.01341 R2_OOS= -0.0127% p_full=0.5542
+Crowding (HHI posse)           h= 1 [FM] 61 meses spread=  -0.15pp/mes t= -0.20 p=0.8425
+Crowding (HHI posse)           h= 3 [linear] n_tr= 7630 n_te=18467 beta=  0.01522 R2_OOS= -0.0044% p_full=0.8501
+Crowding (HHI posse)           h= 3 [FM] 60 meses spread=  +0.40pp/mes t=  0.67 p=0.5026
+Crowding (HHI posse)           h= 6 [linear] n_tr= 7545 n_te=17658 beta=  0.02255 R2_OOS= -0.0096% p_full=0.6333
+Crowding (HHI posse)           h= 6 [FM] 58 meses spread=  +1.42pp/mes t=  1.20 p=0.2345
+
+----- Checagem especifica: crowding pre-COVID prediz queda no crash? -----
+Crowding (jan/2020) vs retorno acumulado fev-abr/2020 (n=224): corr=0.1484 | coef=0.1699 t=2.235 p=0.0264
+
+===== (M) COMOMENTUM (comovimento de residuo dentro do decil de momentum) =====
+Mensagen de aviso:
+In dcast.data.table(precos, ymk ~ ticker, value.var = "retorno") :
+  'fun.aggregate' é NULL, mas foram encontradas combinações duplicadas de linha/coluna, então usando length() por padrão. Isso é, as variáveis [ymk, ticker] usadas em 'formula' não identificam de forma única as linhas na entrada 'data'. Em tais casos, 'fun.aggregate' é usado para derivar um único valor representativo para cada combinação na data.table de saída, por exemplo somando ou tirando a média (fun.aggregate=sum ou fun.aggregate=mean, respectivamente). Verifique a tabela resultante por valores maiores do que 1 para ver quais combinações não foram únicas. Veja ?dcast.data.table para mais detalhes.
+Mensagen de aviso:
+In dcast.data.table(precos_resid, ymk ~ ticker, value.var = "retorno_resid") :
+  'fun.aggregate' é NULL, mas foram encontradas combinações duplicadas de linha/coluna, então usando length() por padrão. Isso é, as variáveis [ymk, ticker] usadas em 'formula' não identificam de forma única as linhas na entrada 'data'. Em tais casos, 'fun.aggregate' é usado para derivar um único valor representativo para cada combinação na data.table de saída, por exemplo somando ou tirando a média (fun.aggregate=sum ou fun.aggregate=mean, respectivamente). Verifique a tabela resultante por valores maiores do que 1 para ver quais combinações não foram únicas. Veja ?dcast.data.table para mais detalhes.
+Mensagen de aviso:
+In set(x, j = name, value = value) :
+  Tentado atribuir NULL a coluna 'ym', mas essa coluna não existe para remover
+Ativo-mes com comomentum calculavel (dentro do top decil momentum): 65 
+Poucas observacoes de comomentum pra testar com confianca
+
+OK

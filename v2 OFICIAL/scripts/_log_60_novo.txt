@@ -1,0 +1,24 @@
+[config_periodo.R] Range de anos ativo: 2016:2026
+Fundos-alvo (universo completo): 23649 
+ano 2016 cotas lidas: 436773 
+ano 2017 cotas lidas: 434805 
+ano 2018 cotas lidas: 454054 
+ano 2019 cotas lidas: 497965 
+ano 2020 cotas lidas: 580138 
+ano 2021 cotas lidas: 683978 
+ano 2022 cotas lidas: 4267199 
+ano 2023 cotas lidas: 4388876 
+ano 2024 cotas lidas: 4384310 
+ano 2025 cotas lidas: 3945717 
+ano 2026 cotas lidas: 2266842 
+
+Fundo-mes com cota: 1082919 | com retorno calculavel: 1059270 
+Resumo do retorno mensal do fundo (bruto, antes do filtro de sanidade):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max.       NA's 
+-1.000e+00  0.000e+00  0.000e+00  1.011e+05  0.000e+00  8.667e+10      23649 
+Fundo-mes com retorno>200% ou <-90% (evento nao-economico: erro de digitacao ou desdobramento/grupamento de cotas nao ajustado), excluidos: 264 
+Resumo do retorno mensal do fundo (apos filtro de sanidade):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+-0.8992 -0.0023  0.0085  0.0066  0.0172  1.9362   23649 
+
+OK - salvo em 'v2 OFICIAL/data/retorno_fundo_mensal.csv'

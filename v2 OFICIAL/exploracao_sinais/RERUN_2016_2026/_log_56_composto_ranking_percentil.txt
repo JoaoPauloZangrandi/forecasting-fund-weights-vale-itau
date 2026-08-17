@@ -1,0 +1,51 @@
+
+
+========================= HORIZONTE h=1 =========================
+Direcao fixada no TREINO -- dem_pct_w: - | EFIT: -
+Cobertura: top3=5208 | top5=5206 | all8(>=6 sinais)=17714 ticker-meses no teste
+score_top3                       h=1 24 meses n_min= 11 spread=  -0.62pp/mes Sharpe=-0.31 t= -0.44 p=0.66370 %pos=58% | Bonf:nao
+score_top5                       h=1 24 meses n_min= 11 spread=  -1.15pp/mes Sharpe=-0.73 t= -1.03 p=0.31487 %pos=54% | Bonf:nao
+score_all8                       h=1 46 meses n_min= 12 spread=  -0.45pp/mes Sharpe=-0.45 t= -0.87 p=0.38780 %pos=41% | Bonf:nao
+
+
+========================= HORIZONTE h=3 =========================
+Direcao fixada no TREINO -- dem_pct_w: + | EFIT: -
+Cobertura: top3=5158 | top5=5156 | all8(>=6 sinais)=16764 ticker-meses no teste
+score_top3                       h=3 24 meses n_min= 11 spread=  -0.55pp/mes Sharpe=-0.29 t= -0.42 p=0.68112 %pos=54% | Bonf:nao
+score_top5                       h=3 24 meses n_min= 11 spread=  +0.35pp/mes Sharpe= 0.26 t=  0.37 p=0.71162 %pos=58% | Bonf:nao
+score_all8                       h=3 45 meses n_min= 12 spread=  +0.81pp/mes Sharpe= 0.36 t=  0.69 p=0.49314 %pos=62% | Bonf:nao
+
+
+========================= HORIZONTE h=6 =========================
+Direcao fixada no TREINO -- dem_pct_w: + | EFIT: -
+Cobertura: top3=5086 | top5=5084 | all8(>=6 sinais)=16095 ticker-meses no teste
+score_top3                       h=6 24 meses n_min= 11 spread=  +0.85pp/mes Sharpe= 0.58 t=  0.82 p=0.41980 %pos=50% | Bonf:nao
+score_top5                       h=6 24 meses n_min= 11 spread=  -0.19pp/mes Sharpe=-0.18 t= -0.25 p=0.80551 %pos=62% | Bonf:nao
+score_all8                       h=6 44 meses n_min= 12 spread=  +0.52pp/mes Sharpe= 0.35 t=  0.67 p=0.50667 %pos=59% | Bonf:nao
+
+
+===== RESUMO GERAL (ordenado por p) =====
+        sinal horizonte n_meses n_min_grupo_mes  spread_pp     sharpe
+       <char>     <num>   <int>           <int>      <num>      <num>
+1: score_top5         1      24              11 -1.1472931 -0.7265556
+2: score_all8         1      46              12 -0.4500411 -0.4454110
+3: score_top3         6      24              11  0.8507319  0.5808892
+4: score_all8         3      45              12  0.8070489  0.3568802
+5: score_all8         6      44              12  0.5185031  0.3497060
+6: score_top3         1      24              11 -0.6214841 -0.3114715
+7: score_top3         3      24              11 -0.5489290 -0.2942967
+8: score_top5         3      24              11  0.3460838  0.2646561
+9: score_top5         6      24              11 -0.1931513 -0.1761305
+         t_fm      p_fm pct_meses_positivo sig_bonferroni
+        <num>     <num>              <num>         <lgcl>
+1: -1.0275048 0.3148683           54.16667          FALSE
+2: -0.8720658 0.3878018           41.30435          FALSE
+3:  0.8215013 0.4197952           50.00000          FALSE
+4:  0.6910956 0.4931357           62.22222          FALSE
+5:  0.6696361 0.5066699           59.09091          FALSE
+6: -0.4404872 0.6636965           58.33333          FALSE
+7: -0.4161985 0.6811229           54.16667          FALSE
+8:  0.3742803 0.7116243           58.33333          FALSE
+9: -0.2490862 0.8055050           62.50000          FALSE
+
+OK

@@ -1,0 +1,20 @@
+Linhas por sinal (antes do merge final):
+  precos (52wh/rev/idio): 49347 
+  HHI (fit_ativo_mes):    13537 
+  CIO peer_ret:           29833 
+  breadth delta:          25987 
+  demanda agregada:       26046 
+  EFIT:                   13585 
+
+Painel composto final: 55265 linhas (ticker-mes)
+Cobertura de cada sinal (n. celulas nao-NA):
+  prox_52w_high     47784 (86.5%)
+  reversao          52026 (94.1%)
+  idio_vol_12m      47798 (86.5%)
+  hhi_posse         13537 (24.5%)
+  peer_ret          33983 (61.5%)
+  delta_breadth_w   28815 (52.1%)
+  dem_pct_w         28864 (52.2%)
+  EFIT              13585 (24.6%)
+
+OK -- salvo em composto_painel_sinais.csv

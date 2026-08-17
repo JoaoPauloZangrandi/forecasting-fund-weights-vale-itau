@@ -1,0 +1,65 @@
+Painel: 8415673 linhas | 2576 fundos | 513 ativos
+Obs com peso_prev/aum/fluxo validos: 7619241 
+Celulas ativo-mes com FIT calculavel: 16996 
+Distribuicao de FIT:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-1.388985 -0.005542  0.001867  0.008429  0.019099  0.460182 
+Distribuicao de n_fundos por celula:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    1.0    26.0   430.5   448.3   772.0  1587.0 
+
+OK - salvo em 'fit_ativo_mes.csv'
+
+===== Retorno ~ FIT, por horizonte (amostra completa) =====
+h= 0: n=  16387 | coef=   -0.143736 | t= -5.713 | p=0.0000 | R2=0.19878%
+h= 1: n=  16289 | coef=   -0.129570 | t= -5.301 | p=0.0000 | R2=0.17224%
+h= 3: n=  15501 | coef=   -0.002322 | t= -0.093 | p=0.9257 | R2=0.00006%
+h= 6: n=  14337 | coef=   -0.159633 | t= -6.144 | p=0.0000 | R2=0.26264%
+h=12: n=  12224 | coef=   -0.125033 | t= -4.580 | p=0.0000 | R2=0.17131%
+
+===== Restrito a FLUXO EXTREMO (top/bottom decil de |FIT|, h=0 e h=3) =====
+h=0, extremos (n=3278, 20% da amostra): coef=-0.113043 | t=-4.065 | p=0.0000 | R2=0.5018%
+h=3, extremos (n=3101, 20% da amostra): coef=-0.017063 | t=-0.549 | p=0.5833 | R2=0.0097%
+
+===== Restrito a posse CONCENTRADA (top tercil de hhi_posse, h=0 e h=3) =====
+h=0, concentrados (n=5463): coef=-0.072227 | t=-2.074 | p=0.0382 | R2=0.0787%
+h=3, concentrados (n=5168): coef=-0.036812 | t=-1.087 | p=0.2770 | R2=0.0229%
+
+===== Retorno medio por quintil de FIT, todos os horizontes =====
+h=0:    quintil retorno_medio     n
+     <int>         <num> <int>
+1:       1   0.019641227  3278
+2:       2   0.021426241  4044
+3:       3   0.022900661  2510
+4:       4   0.010392742  3277
+5:       5   0.001223821  3278
+h=1:    quintil retorno_medio     n
+     <int>         <num> <int>
+1:       1  0.0198905381  3258
+2:       2  0.0145532190  3993
+3:       3  0.0191899778  2522
+4:       4  0.0140403596  3258
+5:       5 -0.0003717379  3258
+h=3:    quintil retorno_medio     n
+     <int>         <num> <int>
+1:       1    0.01380399  3101
+2:       2    0.01079160  3465
+3:       3    0.01446396  2735
+4:       4    0.01746861  3100
+5:       5    0.01288510  3100
+h=6:    quintil retorno_medio     n
+     <int>         <num> <int>
+1:       1   0.024019945  2868
+2:       2   0.014433077  2986
+3:       3   0.011620754  2748
+4:       4   0.015458610  2867
+5:       5   0.006179853  2868
+h=12:    quintil retorno_medio     n
+     <int>         <num> <int>
+1:       1   0.025212603  2445
+2:       2   0.019649543  2445
+3:       3   0.009047942  2444
+4:       4   0.002694231  2445
+5:       5   0.007700610  2445
+
+OK

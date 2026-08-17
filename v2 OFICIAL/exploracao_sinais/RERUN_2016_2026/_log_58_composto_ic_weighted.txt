@@ -1,0 +1,66 @@
+
+
+========================= HORIZONTE h=1 =========================
+IC medio no TREINO (Spearman, mensal, media dos meses):
+  s_peer     IC_treino=+0.0281
+  s_hhi      IC_treino=+0.0147
+  s_52wh     IC_treino=+0.0713
+  s_rev      IC_treino=-0.0017
+  s_idiovol  IC_treino=-0.0650
+  s_breadth  IC_treino=-0.0018
+  s_dem      IC_treino=+0.0447
+  s_efit     IC_treino=+0.0140
+Sinais 'fortes' no treino (|IC|>mediana=0.0214): s_peer, s_52wh, s_idiovol, s_dem
+COMPOSTO(IC-weighted,all8)       h=1 46 meses n_min= 12 spread=  +0.99pp/mes Sharpe= 0.56 t=  1.09 p=0.27940 | Bonf:nao
+COMPOSTO(IC-weighted,so fortes)  h=1 46 meses n_min= 12 spread=  +1.11pp/mes Sharpe= 0.63 t=  1.24 p=0.22138 | Bonf:nao
+
+
+========================= HORIZONTE h=3 =========================
+IC medio no TREINO (Spearman, mensal, media dos meses):
+  s_peer     IC_treino=+0.0110
+  s_hhi      IC_treino=+0.0090
+  s_52wh     IC_treino=+0.0871
+  s_rev      IC_treino=-0.0391
+  s_idiovol  IC_treino=-0.0643
+  s_breadth  IC_treino=+0.0043
+  s_dem      IC_treino=+0.0157
+  s_efit     IC_treino=+0.0329
+Sinais 'fortes' no treino (|IC|>mediana=0.0243): s_52wh, s_rev, s_idiovol, s_efit
+COMPOSTO(IC-weighted,all8)       h=3 45 meses n_min= 12 spread=  -3.92pp/mes Sharpe=-0.58 t= -1.12 p=0.26961 | Bonf:nao
+COMPOSTO(IC-weighted,so fortes)  h=3 25 meses n_min=  9 spread=  -0.74pp/mes Sharpe=-0.36 t= -0.52 p=0.61100 | Bonf:nao
+
+
+========================= HORIZONTE h=6 =========================
+IC medio no TREINO (Spearman, mensal, media dos meses):
+  s_peer     IC_treino=+0.0431
+  s_hhi      IC_treino=-0.0035
+  s_52wh     IC_treino=+0.0888
+  s_rev      IC_treino=-0.0400
+  s_idiovol  IC_treino=-0.0448
+  s_breadth  IC_treino=+0.0018
+  s_dem      IC_treino=+0.0376
+  s_efit     IC_treino=+0.0212
+Sinais 'fortes' no treino (|IC|>mediana=0.0388): s_peer, s_52wh, s_rev, s_idiovol
+COMPOSTO(IC-weighted,all8)       h=6 44 meses n_min= 12 spread=  +2.07pp/mes Sharpe= 1.28 t=  2.46 p=0.01810 | Bonf:nao
+COMPOSTO(IC-weighted,so fortes)  h=6 58 meses n_min= 13 spread=  +0.62pp/mes Sharpe= 0.22 t=  0.48 p=0.63276 | Bonf:nao
+
+
+===== RESUMO GERAL (ordenado por p) =====
+                             sinal horizonte n_meses n_min_grupo_mes  spread_pp
+                            <char>     <num>   <int>           <int>      <num>
+1:      COMPOSTO(IC-weighted,all8)         6      44              12  2.0723964
+2: COMPOSTO(IC-weighted,so fortes)         1      46              12  1.1060580
+3:      COMPOSTO(IC-weighted,all8)         3      45              12 -3.9158530
+4:      COMPOSTO(IC-weighted,all8)         1      46              12  0.9859852
+5: COMPOSTO(IC-weighted,so fortes)         3      25               9 -0.7389700
+6: COMPOSTO(IC-weighted,so fortes)         6      58              13  0.6242349
+       sharpe       t_fm       p_fm sig_bonferroni
+        <num>      <num>      <num>         <lgcl>
+1:  1.2833537  2.4574352 0.01810185          FALSE
+2:  0.6333698  1.2400683 0.22137760          FALSE
+3: -0.5773656 -1.1180636 0.26960730          FALSE
+4:  0.5592044  1.0948607 0.27940331          FALSE
+5: -0.3570702 -0.5153864 0.61099808          FALSE
+6:  0.2185312  0.4804373 0.63275527          FALSE
+
+OK

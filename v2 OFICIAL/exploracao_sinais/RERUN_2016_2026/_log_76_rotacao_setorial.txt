@@ -1,0 +1,5 @@
+Tickers classificados em setor: 860 em 19 setores
+Error in vecseq(f__, len__, if (allow.cartesian || notjoin || !anyDuplicated(f__,  : 
+  A junção resulta em 85689 linhas, o que é mais do que 49589 = nrow(x) + nrow(i). Verifique se há valores de chave duplicados em i, cada um dos quais se junta ao mesmo grupo em x repetidamente. Se estiver correto, tente by=.EACHI para executar j para cada grupo e evitar uma grande alocação. Se tiver certeza de que deseja continuar, execute novamente com allow.cartesian=TRUE. Caso contrário, procure esta mensagem de erro no FAQ, Wiki, Stack Overflow e rastreador de problemas do data.table para obter conselhos.
+Calls: merge -> merge.data.table -> [ -> [.data.table -> vecseq
+Execução interrompida

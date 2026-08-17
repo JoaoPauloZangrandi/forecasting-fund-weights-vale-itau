@@ -1,0 +1,96 @@
+===== Eventos testados =====
+                             nome mes_evento mes_pre mes_pos_ini mes_pos3_fim
+                           <char>      <int>   <num>       <num>        <num>
+1:         Joesley Day (mai/2017)     201705  201704      201706       201708
+2: Greve caminhoneiros (mai/2018)     201805  201804      201806       201808
+3:       Choque organico nov/2017     201711  201710      201712       201802
+4:       Choque organico abr/2019     201904  201903      201905       201907
+   mes_pos6_fim
+          <num>
+1:       201711
+2:       201811
+3:       201805
+4:       201910
+
+N total (empilhado, 4 eventos): 851
+                           evento     N
+                           <char> <int>
+1:         Joesley Day (mai/2017)   207
+2: Greve caminhoneiros (mai/2018)   220
+3:       Choque organico nov/2017   212
+4:       Choque organico abr/2019   212
+
+
+========== EVENTO: Joesley Day (mai/2017) (N=207) ==========
+  alvo=ret_evento   coef_hhi= +0.05407  t=  1.35  p=0.1798  N=207
+  alvo=ret_pos3     coef_hhi= -0.06281  t= -0.90  p=0.3666  N=207
+  alvo=vol_pos6     coef_hhi= +0.04609  t=  2.76  p=0.0064  N=207
+   quintil_hhi     n ret_evento_medio ret_pos3_medio vol_pos6_media
+         <int> <int>            <num>          <num>          <num>
+1:           1    42     -0.030516005      0.1533602     0.07924122
+2:           2    41     -0.009717323      0.1812216     0.08057292
+3:           3    41     -0.045413429      0.1688831     0.09391531
+4:           4    41     -0.007896726      0.1159053     0.09791700
+5:           5    42     -0.010646983      0.1268053     0.09852749
+
+
+========== EVENTO: Greve caminhoneiros (mai/2018) (N=220) ==========
+  alvo=ret_evento   coef_hhi= +0.00235  t=  0.04  p=0.9678  N=220
+  alvo=ret_pos3     coef_hhi= -0.11207  t= -1.70  p=0.0906  N=220
+  alvo=vol_pos6     coef_hhi= +0.03941  t=  1.33  p=0.1845  N=220
+   quintil_hhi     n ret_evento_medio ret_pos3_medio vol_pos6_media
+         <int> <int>            <num>          <num>          <num>
+1:           1    44      -0.10324256   -0.010415944      0.1067803
+2:           2    44      -0.10133812   -0.008570955      0.1172033
+3:           3    44      -0.09062376   -0.036760898      0.1295791
+4:           4    44      -0.07033323   -0.025525028      0.1307461
+5:           5    44      -0.12516957   -0.047868807      0.1311097
+
+
+========== EVENTO: Choque organico nov/2017 (N=212) ==========
+  alvo=ret_evento   coef_hhi= -0.06497  t= -1.76  p=0.0804  N=212
+  alvo=ret_pos3     coef_hhi= -0.04453  t= -0.59  p=0.5548  N=212
+  alvo=vol_pos6     coef_hhi= +0.06216  t=  3.26  p=0.0013  N=212
+   quintil_hhi     n ret_evento_medio ret_pos3_medio vol_pos6_media
+         <int> <int>            <num>          <num>          <num>
+1:           1    43      -0.03276999     0.16599182     0.09912967
+2:           2    42      -0.03518019     0.14868147     0.09960214
+3:           3    42      -0.02753640     0.08864945     0.08325015
+4:           4    42      -0.03592521     0.10538511     0.11487199
+5:           5    43      -0.05830206     0.13402637     0.13131695
+
+
+========== EVENTO: Choque organico abr/2019 (N=212) ==========
+  alvo=ret_evento   coef_hhi= -0.20093  t= -2.85  p=0.0048  N=212
+  alvo=ret_pos3     coef_hhi= +0.23185  t=  1.39  p=0.1650  N=212
+  alvo=vol_pos6     coef_hhi= +0.11757  t=  2.49  p=0.0137  N=212
+   quintil_hhi     n ret_evento_medio ret_pos3_medio vol_pos6_media
+         <int> <int>            <num>          <num>          <num>
+1:           1    43      0.001872903     0.10224702     0.07847673
+2:           2    42      0.038113323     0.18008438     0.07342523
+3:           3    42     -0.002117769     0.09903945     0.10258160
+4:           4    42     -0.006052012     0.13965410     0.10243617
+5:           5    43     -0.038254245     0.17620025     0.11268727
+
+
+===== (b) MINI FAMA-MACBETH ENTRE EVENTOS (n=4 eventos, df=3) =====
+Combina os 4 coeficientes cross-sectionais (1 por evento) como se fossem
+a serie temporal do Fama-MacBeth padrao -- evento e a unidade independente,
+nao ticker-evento. Poder estatistico muito baixo (n=4), reportado com essa ressalva.
+
+alvo=ret_evento   coefs_por_evento=[0.0541, 0.0024, -0.0650, -0.2009]  media=-0.05237  dp=0.11038  t= -0.95  p=0.4127
+alvo=ret_pos3     coefs_por_evento=[-0.0628, -0.1121, -0.0445, 0.2319]  media=+0.00311  dp=0.15514  t=  0.04  p=0.9705
+alvo=vol_pos6     coefs_por_evento=[0.0461, 0.0394, 0.0622, 0.1176]  media=+0.06631  dp=0.03549  t=  3.74  p=0.0334
+
+
+===== (c) POOLED com efeito fixo de evento + erro clusterizado por evento =====
+(checagem de robustez adicional -- so 4 clusters, cluster-robust SE assintotico
+ nao e confiavel com tao poucos clusters; reportado por transparencia, nao como
+ evidencia principal)
+
+alvo=ret_evento   coef_hhi= -0.02396  t_cluster= -0.57  p_cluster=0.5658  N_total=851
+alvo=ret_pos3     coef_hhi= -0.03577  t_cluster= -0.88  p_cluster=0.3802  N_total=851
+alvo=vol_pos6     coef_hhi= +0.05760  t_cluster=  5.66  p_cluster=0.0000  N_total=851
+
+
+OK

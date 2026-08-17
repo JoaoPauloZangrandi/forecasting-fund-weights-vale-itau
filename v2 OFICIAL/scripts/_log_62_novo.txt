@@ -1,0 +1,21 @@
+
+h=1: treino 3648355 obs | teste 9016081 obs | teste com dw_corrigido: 8809263 (97.7%)
+lambda treino, h=1 -- bruto: 0.0704 | corrigido: 0.0715
+
+h=3: treino 3410691 obs | teste 9399282 obs | teste com dw_corrigido: 9142897 (97.3%)
+lambda treino, h=3 -- bruto: 0.1473 | corrigido: 0.1469
+
+===== RMSE fora da amostra, por ativo, h=1 (bruto vs corrigido) =====
+Ativos com >=100 obs de teste: 734 
+Mediana margem BRUTO: 0.19 % | mediana margem CORRIGIDO: -0.42 %
+Ajuste parcial vence ingenua (bruto): 54 % | (corrigido): 45.2 %
+
+===== VALE3 especifico, h=1 =====
+                ativo n_obs rmse_naive_bruto rmse_oos_bruto rmse_naive_corr
+               <char> <int>            <num>          <num>           <num>
+1: VALE ON N1 - VALE3 64345       0.01475156     0.01473783      0.01424982
+   rmse_oos_corr margem_bruto margem_corr
+           <num>        <num>       <num>
+1:    0.01414988   0.09303408   0.7012968
+
+OK - salvo em 'v2 OFICIAL/data/etapa3_universo_completo_h1.csv' / '_h3.csv' / '_por_ativo_h1.csv'

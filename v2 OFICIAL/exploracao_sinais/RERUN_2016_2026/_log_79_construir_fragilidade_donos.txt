@@ -1,0 +1,32 @@
+Carregando painel completo (pode demorar, ~8.4M linhas)...
+N linhas apos filtro: 38864786 
+Calculando churn (saida de posicoes) por fundo-mes...
+N fundo-mes com churn calculado: 440958 
+Resumo exit_rate:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00000 0.05556 0.14876 0.42280 1.00000 1.00000 
+Agregando por acao-mes (ponderado por valor da posicao)...
+N ticker-mes final: 25748 
+Resumo das caracteristicas:
+ frag_laum_medio frag_flow_medio      frag_cotistas_medio frag_exit_rate_medio
+ Min.   :15.43   Min.   :-0.9638046   Min.   : 0.6932     Min.   :0.0000      
+ 1st Qu.:19.44   1st Qu.:-0.0153458   1st Qu.: 3.0268     1st Qu.:0.0452      
+ Median :20.05   Median :-0.0025722   Median : 3.8385     Median :0.0706      
+ Mean   :19.94   Mean   : 0.0001963   Mean   : 3.8224     Mean   :0.0829      
+ 3rd Qu.:20.53   3rd Qu.: 0.0105734   3rd Qu.: 4.5771     3rd Qu.:0.1004      
+ Max.   :24.24   Max.   : 0.6670815   Max.   :10.6195     Max.   :0.8979      
+                                                          NA's   :5093        
+
+Correlacao entre caracteristicas (Pearson):
+                     frag_laum_medio frag_flow_medio frag_cotistas_medio
+frag_laum_medio           1.00000000      0.03333188          0.21247741
+frag_flow_medio           0.03333188      1.00000000          0.11956355
+frag_cotistas_medio       0.21247741      0.11956355          1.00000000
+frag_exit_rate_medio     -0.05636103      0.02135302         -0.06809345
+                     frag_exit_rate_medio
+frag_laum_medio               -0.05636103
+frag_flow_medio                0.02135302
+frag_cotistas_medio           -0.06809345
+frag_exit_rate_medio           1.00000000
+
+OK

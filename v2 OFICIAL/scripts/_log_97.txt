@@ -1,0 +1,23 @@
+Celulas (ativo,mes) com >=15 holders: 13946 
+Tempo: 71 s | 13925 celulas estimadas | 21 celulas nao convergiram (excluidas)
+
+==== Resumo entre 13925 celulas (ativo,mes) ====
+--- coeficiente padronizado (log-odds), mediana e % positivo ---
+b_aum    mediana= -0.01672 | % positivo=46.8%
+b_cot    mediana=  0.12059 | % positivo=70.9%
+b_fic    mediana=  0.01990 | % positivo=51.7%
+b_flow   mediana=  0.05587 | % positivo=54.1%
+b_betaf  mediana=  0.72417 | % positivo=85.3%
+b_hhi    mediana=  0.49498 | % positivo=87.3%
+--- APE (pontos percentuais), mediana e % positivo ---
+ape_aum  mediana=-0.000002 | % positivo=46.8%
+ape_cot  mediana= 0.000094 | % positivo=70.9%
+ape_fic  mediana= 0.000001 | % positivo=51.6%
+ape_flow mediana= 0.000034 | % positivo=54.1%
+ape_betaf mediana= 0.000992 | % positivo=85.3%
+ape_hhi  mediana= 0.000515 | % positivo=87.3%
+
+Significancia HHI: 10145 de 13925 (72.9%) | pseudo-R2 medio (com piso -1)=0.5261
+
+Ativos com >=24 meses estimados: 235 
+OK

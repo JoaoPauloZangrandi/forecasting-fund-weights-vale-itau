@@ -1,0 +1,21 @@
+[config_periodo.R] Range de anos ativo: 2016:2026
+Universo bruto: 23649 | Amostra final (5 caract.): 20223 | Excluidos: 3426 
+
+Dos 3426 excluidos:
+ - nunca tem as 4 caracteristicas do Informe Diario completas ao mesmo tempo: 285 (8.3%)
+ - tem as 4, mas nunca chegam a ter beta_fundo: 3141 (91.7%)
+ano 2016 lido
+ano 2017 lido
+ano 2018 lido
+ano 2019 lido
+ano 2020 lido
+ano 2021 lido
+ano 2022 lido
+ano 2023 lido
+ano 2024 lido
+ano 2025 lido
+ano 2026 lido
+
+Dos 3141 sem beta: 1957 (62.3%) tem menos de 252 dias de cota valida (fundo jovem demais); 1184 (37.7%) acumulam 252+ dias mas mesmo assim nao geram beta (ex.: janela sem par completo com o Ibovespa, ou fundo encerrado logo apos).
+
+OK

@@ -1,0 +1,559 @@
+=== RODANDO scripts/45_fig_multihorizonte_gestora_rmse_margem.R ===
+Gestoras: 40 
+Escala comum -- RMSE: 5e-04 a 0.0235 | Margem: -6.5 a 8.1 
+OK - salvo em C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/figuras/fig_multihorizonte_gestora_rmse_margem.pdf ( 40 gestoras com dado em h= 1 )
+OK - salvo em C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/figuras/fig_multihorizonte_gestora_rmse_margem_h3.pdf ( 40 gestoras com dado em h= 3 )
+=== FIM scripts/45_fig_multihorizonte_gestora_rmse_margem.R (exit 0) ===
+=== RODANDO scripts/74_figuras_dinamica_erro_tcc.R ===
+h1: 3686060 obs | 40 gestoras
+h3: 3085454 obs | 40 gestoras
+null device 
+          1 
+Figura A OK
+null device 
+          1 
+Figura B OK
+
+OK - 2 figuras salvas em 'v2 OFICIAL/figuras/'
+=== FIM scripts/74_figuras_dinamica_erro_tcc.R (exit 0) ===
+=== RODANDO scripts/75_figura_margem_dinamica.R ===
+h1:  23 meses de teste | margem media: 1.61 %
+h3:  21 meses de teste | margem media: 3.43 %
+null device 
+          1 
+
+OK - salvo em 'fig_margem_dinamica_mensal.pdf'
+=== FIM scripts/75_figura_margem_dinamica.R (exit 0) ===
+=== RODANDO scripts/77_figura_vies_dinamico_gestora.R ===
+h1 antes do filtro: 3686060 | depois: 1459640 
+
+Top 5 vies mais POSITIVO (compram mais do que o modelo preve):
+                    gestora_grupo   vies_medio     n
+                           <char>        <num> <int>
+1:         Guepardo Investimentos 0.0036350384  2557
+2:                 Núcleo Capital 0.0019285228  4828
+3: Constellation Asset Management 0.0011353827  6926
+4:                  Real Investor 0.0010895255  2576
+5:           Ibiuna Investimentos 0.0009250626  2178
+
+Top 5 vies mais NEGATIVO (compram menos / vendem mais do que o modelo preve):
+               gestora_grupo    vies_medio     n
+                      <char>         <num> <int>
+1:                     Caixa -0.0001601702 26024
+2:               BNP Paribas -0.0001863184 39838
+3:                        XP -0.0002193636 55545
+4:       Kinea Investimentos -0.0003285305  2231
+5: Daycoval Asset Management -0.0006076151  1759
+null device 
+          1 
+
+OK
+=== FIM scripts/77_figura_vies_dinamico_gestora.R (exit 0) ===
+=== RODANDO scripts/78_figura_beta_vs_erro.R ===
+h1 antes do filtro: 3686060 | depois (so celulas com posicao de verdade): 1459640 
+Fundos com >=6 obs de teste (pos filtro): 1912 
+Amostra final (RMSE + beta, pos filtro): 1912 fundos
+
+Correlacao RMSE vs beta bruto (pos filtro): 0.484 
+Correlacao RMSE vs |beta-1| (pos filtro): -0.474 
+
+Regressao RMSE ~ beta: coef= 0.00742  p= 9.3e-113  R2= 0.2341 
+null device 
+          1 
+
+OK
+=== FIM scripts/78_figura_beta_vs_erro.R (exit 0) ===
+=== RODANDO scripts/80_figura_ranking_horizontes.R ===
+Gestoras (bruto): 40 
+Gestoras completas nos 4 horizontes (usadas no slopegraph): 40 
+
+Correlacao de Spearman entre ranks:
+           rank_h1   rank_h3   rank_h6  rank_h12
+rank_h1  1.0000000 0.9716698 0.9455910 0.8878049
+rank_h3  0.9716698 1.0000000 0.9834897 0.9395872
+rank_h6  0.9455910 0.9834897 1.0000000 0.9686679
+rank_h12 0.8878049 0.9395872 0.9686679 1.0000000
+
+Gestoras rotuladas: Ibiuna Investimentos, Guepardo Investimentos, AZ Quest, Plural, Gávea Investimentos, TNA Gestão Patrimonial 
+null device 
+          1 
+
+OK
+=== FIM scripts/80_figura_ranking_horizontes.R (exit 0) ===
+=== RODANDO scripts/82_etapa3_multiativo_janela_expansiva.R ===
+Base h=1 (multiativo): 7262533 obs
+Meses de teste: 23 ( 202001 a 202111 )
+mes 202001 processado ( 0.8 s )
+mes 202002 processado ( 1.5 s )
+mes 202003 processado ( 2.2 s )
+mes 202004 processado ( 3 s )
+mes 202005 processado ( 3.7 s )
+mes 202006 processado ( 4.5 s )
+mes 202007 processado ( 5.1 s )
+mes 202008 processado ( 5.9 s )
+mes 202009 processado ( 6.7 s )
+mes 202010 processado ( 7.5 s )
+mes 202011 processado ( 8.4 s )
+mes 202012 processado ( 9.3 s )
+mes 202101 processado ( 10.2 s )
+mes 202102 processado ( 11.1 s )
+mes 202103 processado ( 12.3 s )
+mes 202104 processado ( 13 s )
+mes 202105 processado ( 14.1 s )
+mes 202106 processado ( 15.2 s )
+mes 202107 processado ( 16.2 s )
+mes 202108 processado ( 17.4 s )
+mes 202109 processado ( 18.4 s )
+mes 202110 processado ( 19.6 s )
+mes 202111 processado ( 21 s )
+
+===== Lambda mes a mes (janela expansiva, multiativo h=1) =====
+        ym n_treino     lambda
+     <int>    <int>      <num>
+ 1: 202001  3576473 0.08080989
+ 2: 202002  3701651 0.08086549
+ 3: 202003  3827770 0.08309718
+ 4: 202004  3956881 0.08360453
+ 5: 202005  4087056 0.08277636
+ 6: 202006  4219073 0.08246763
+ 7: 202007  4354234 0.08264461
+ 8: 202008  4494276 0.08216259
+ 9: 202009  4632632 0.08140348
+10: 202010  4777480 0.08081314
+11: 202011  4923881 0.08092226
+12: 202012  5071362 0.08041531
+13: 202101  5224248 0.08071031
+14: 202102  5381582 0.08079405
+15: 202103  5548856 0.08059122
+16: 202104  5723364 0.08047238
+17: 202105  5904938 0.08024093
+18: 202106  6086907 0.08016829
+19: 202107  6271041 0.07958610
+20: 202108  6459339 0.07952375
+21: 202109  6653373 0.07922431
+22: 202110  6853900 0.07908623
+23: 202111  7054063 0.07883441
+        ym n_treino     lambda
+
+Lambda fixo (treino < 2020-01, script 42) = 0.0808
+Lambda expansiva: min = 0.0788 | max = 0.0836 | ultimo mes = 0.0788
+
+===== Desempenho FORA da amostra (2020-2021, multiativo h=1) =====
+RMSE lambda fixo       = 0.003817
+RMSE janela expansiva  = 0.003817
+RMSE ingenua           = 0.003882
+
+Razao RMSE fixo/ingenua      = 0.9833
+Razao RMSE expansiva/ingenua = 0.9833
+
+Fixo vence a ingenua em 23 dos 23 meses | Expansiva vence em 23 dos 23 meses
+        ym rmse_fixo rmse_expansiva rmse_naive vence_fixo vence_expansiva
+     <int>     <num>          <num>      <num>     <lgcl>          <lgcl>
+ 1: 202001   0.00441        0.00441    0.00448       TRUE            TRUE
+ 2: 202002   0.00626        0.00626    0.00642       TRUE            TRUE
+ 3: 202003   0.00420        0.00419    0.00432       TRUE            TRUE
+ 4: 202004   0.00381        0.00382    0.00383       TRUE            TRUE
+ 5: 202005   0.00378        0.00378    0.00385       TRUE            TRUE
+ 6: 202006   0.00401        0.00401    0.00410       TRUE            TRUE
+ 7: 202007   0.00360        0.00360    0.00364       TRUE            TRUE
+ 8: 202008   0.00314        0.00315    0.00316       TRUE            TRUE
+ 9: 202009   0.00362        0.00362    0.00364       TRUE            TRUE
+10: 202010   0.00408        0.00408    0.00415       TRUE            TRUE
+11: 202011   0.00355        0.00355    0.00359       TRUE            TRUE
+12: 202012   0.00383        0.00383    0.00393       TRUE            TRUE
+13: 202101   0.00354        0.00354    0.00362       TRUE            TRUE
+14: 202102   0.00419        0.00419    0.00424       TRUE            TRUE
+15: 202103   0.00334        0.00334    0.00341       TRUE            TRUE
+16: 202104   0.00356        0.00356    0.00362       TRUE            TRUE
+17: 202105   0.00331        0.00331    0.00338       TRUE            TRUE
+18: 202106   0.00338        0.00338    0.00340       TRUE            TRUE
+19: 202107   0.00352        0.00352    0.00359       TRUE            TRUE
+20: 202108   0.00403        0.00403    0.00408       TRUE            TRUE
+21: 202109   0.00367        0.00367    0.00373       TRUE            TRUE
+22: 202110   0.00366        0.00366    0.00371       TRUE            TRUE
+23: 202111   0.00338        0.00338    0.00342       TRUE            TRUE
+        ym rmse_fixo rmse_expansiva rmse_naive vence_fixo vence_expansiva
+
+Correlacao de Spearman do ranking de dificuldade por gestora (fixo vs expansiva), 40 gestoras: 1.0000
+
+OK - salvo em 'v2 OFICIAL/data/etapa3_multiativo_janela_expansiva_*.csv'
+=== FIM scripts/82_etapa3_multiativo_janela_expansiva.R (exit 0) ===
+=== RODANDO scripts/84_persistencia_vies_gestora.R ===
+Meses de teste: 23 ( 202001 a 202111 )
+1a metade: ate 202012 | 2a metade: depois de 202012 
+
+Gestoras com >=50 obs em cada metade: 39 
+
+===== Persistencia do vies entre 1a e 2a metade do teste =====
+Correlacao (Pearson) = 0.7111
+Correlacao (Spearman, ranking) = 0.6745
+Regressao: vies_2a = 0.00005 + 0.6909 * vies_1a | R2 = 0.5057 | p(coef) = 3.908e-07
+
+Top 5 vies mais positivo na 1a metade -> o que fizeram na 2a:
+                    gestora_grupo vies_primeira vies_segunda
+                           <char>         <num>        <num>
+1:         Guepardo Investimentos       0.00447      0.00256
+2:                 Núcleo Capital       0.00109      0.00294
+3:                  Real Investor       0.00100      0.00119
+4:                 Bogari Capital       0.00094      0.00065
+5: Constellation Asset Management       0.00089      0.00128
+
+Top 5 vies mais negativo na 1a metade -> o que fizeram na 2a:
+               gestora_grupo vies_primeira vies_segunda
+                      <char>         <num>        <num>
+1:             Western Asset      -0.00010     -0.00014
+2:             Atmos Capital      -0.00011      0.00013
+3:                     Caixa      -0.00022     -0.00011
+4:                        XP      -0.00025     -0.00019
+5: Daycoval Asset Management      -0.00043     -0.00072
+null device 
+          1 
+
+OK - figura salva em fig_persistencia_vies_gestora.pdf
+=== FIM scripts/84_persistencia_vies_gestora.R (exit 0) ===
+=== RODANDO scripts/85_correcao_vies_fora_amostra.R ===
+1a metade: ate 202012 | 2a metade: depois de 202012 
+Gestoras com vies estimavel (>=50 obs na 1a metade): 40 
+Obs de 2a metade cobertas por essas gestoras: 786686 de 786686 
+
+===== RMSE na 2a metade: ajuste parcial puro vs. com correcao de vies =====
+RMSE sem correcao      = 0.005642
+RMSE com correcao vies = 0.005639
+Melhora = 0.05%
+
+Gestoras (n>=20 na 2a metade) que MELHORAM com a correcao: 26 de 39
+
+Melhores melhoras:
+                    gestora_grupo rmse_puro rmse_corr melhora_pct
+                           <char>     <num>     <num>       <num>
+1:                  Real Investor   0.00430   0.00414         3.8
+2:                 Núcleo Capital   0.00911   0.00882         3.2
+3:                         Plural   0.00095   0.00094         1.5
+4: Constellation Asset Management   0.00719   0.00709         1.4
+5:         Guepardo Investimentos   0.01359   0.01348         0.8
+
+Piores (correcao atrapalha mais):
+            gestora_grupo rmse_puro rmse_corr melhora_pct
+                   <char>     <num>     <num>       <num>
+1:               AZ Quest   0.01300   0.01303        -0.2
+2:           Occam Brasil   0.00505   0.00505        -0.2
+3: Absolute Investimentos   0.00734   0.00736        -0.4
+4:         Dahlia Capital   0.00327   0.00329        -0.6
+5:    Kinea Investimentos   0.00823   0.00829        -0.8
+
+Para referencia -- RMSE ingenua (mesmas obs) = 0.005736
+
+OK
+=== FIM scripts/85_correcao_vies_fora_amostra.R (exit 0) ===
+=== RODANDO scripts/86_decomposicao_e_persistencia_variancia.R ===
+Base (h1, filtrada): 1459640 obs
+
+===== Decomposicao RMSE^2 = vies^2 + variancia, por gestora ( 40 gestoras) =====
+Media do % do RMSE^2 explicado pelo vies^2, entre gestoras: 0.60%
+Mediana: 0.15% | Maximo: 3.87% (gestora: Real Investor)
+                    gestora_grupo    rmse pct_vies
+                           <char>   <num>    <num>
+1:                  Real Investor 0.00554     3.87
+2:         Guepardo Investimentos 0.01934     3.53
+3:                 Núcleo Capital 0.01045     3.40
+4:                         Plural 0.00090     2.54
+5: Constellation Asset Management 0.00740     2.36
+6:                 Bogari Capital 0.00553     2.05
+7:         Claritas Investimentos 0.00673     1.07
+8:              ARX Investimentos 0.00791     0.74
+
+Pooled (todas as obs juntas): vies^2/RMSE^2 = 0.001%
+null device 
+          1 
+
+OK - fig_decomposicao_vies_variancia.pdf salva
+
+1a metade: ate 202012 | 2a metade: depois de 202012 
+Gestoras com >=50 obs em cada metade: 39 
+
+===== Persistencia do DESVIO-PADRAO do erro entre metades do teste =====
+Correlacao (Pearson) = 0.8603
+Correlacao (Spearman) = 0.9324
+R2 = 0.7402 | p(coef) = 2.227e-12
+(Para comparacao: persistencia do VIES no script 84 foi corr=0,832, R2=0,693)
+null device 
+          1 
+OK - fig_persistencia_dp_gestora.pdf salva
+
+OK - tudo salvo
+=== FIM scripts/86_decomposicao_e_persistencia_variancia.R (exit 0) ===
+=== RODANDO scripts/87_explica_variancia_gestora.R ===
+Gestoras com dispersao estimavel (n>=100): 40 
+Gestoras com caracteristicas completas: 40 
+
+===== Correlacoes: dispersao do erro (dp_erro) vs. caracteristicas de gestora =====
+dp_erro x beta medio do fundo   : corr = 0.4810
+dp_erro x tamanho medio (l_aum)  : corr = 0.1350
+dp_erro x concentracao (HHI)     : corr = 0.6885
+
+R2 (beta)  = 0.2314 | R2 (tamanho) = 0.0182 | R2 (HHI) = 0.4740
+
+===== Regressao multipla (as 3 caracteristicas juntas) =====
+                 Estimate   Std. Error    t value     Pr(>|t|)
+(Intercept) -0.0117810714 0.0099382385 -1.1854285 2.436141e-01
+beta_fundo   0.0016964810 0.0022259299  0.7621448 4.509383e-01
+l_aum        0.0008421706 0.0005459055  1.5427042 1.316482e-01
+hhi_medio    0.0857109978 0.0188364512  4.5502731 5.884824e-05
+R2 (multipla) = 0.5188
+null device 
+          1 
+
+OK - fig_explica_variancia_gestora.pdf salva
+OK
+=== FIM scripts/87_explica_variancia_gestora.R (exit 0) ===
+=== RODANDO scripts/88_concentracao_mes_a_mes.R ===
+Pares fundo-mes com erro: 34962 | com HHI: 85191 
+
+===== A) HHI contemporaneo (mes t) vs erro (mes t) =====
+Pares fundo-mes: 34962 | fundos distintos: 1925 
+Correlacao (Pearson) = 0.4174 | (Spearman) = 0.7990
+
+===== B) HHI DEFASADO (mes t-1) vs erro (mes t) =====
+Pares fundo-mes: 34962 | fundos distintos: 1925 
+Correlacao (Pearson) = 0.4352 | (Spearman) = 0.7959
+
+===== C) DENTRO DO FUNDO (demeaned): fundos com >=10 meses =====
+Fundos: 1576 | pares fundo-mes: 33282 
+Correlacao (Pearson) = 0.0556 | (Spearman) = 0.1010
+Mensagen de aviso:
+In prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
+  'big.mark' e 'decimal.mark' são ambos '.', o que pode ser confuso
+Mensagens de aviso:
+1: In prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
+  'big.mark' e 'decimal.mark' são ambos '.', o que pode ser confuso
+2: In title(...) :
+  for 'B) Defasada (t-1 → t)' in 'mbcsToSbcs': -> substituted for → (U+2192)
+Mensagen de aviso:
+In prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
+  'big.mark' e 'decimal.mark' são ambos '.', o que pode ser confuso
+null device 
+          1 
+
+OK - fig_concentracao_mes_a_mes.pdf salva
+OK
+=== FIM scripts/88_concentracao_mes_a_mes.R (exit 0) ===
+=== RODANDO scripts/92_figura_trajetoria_fundo_v2.R ===
+Fundo 396303 (Guepardo), JSLG3, h=3 -- observacoes de teste: 2 
+       ym ym_fut       peso   peso_fut     erro_oos
+    <int>  <int>      <num>      <num>        <num>
+1: 202001 202004 0.69518430 0.03754606 -0.563472154
+2: 202002 202005 0.03402229 0.03639027  0.005579823
+null device 
+          1 
+
+OK - salvo em 'fig_trajetoria_fundo_guepardo_jslg3.pdf'
+=== FIM scripts/92_figura_trajetoria_fundo_v2.R (exit 0) ===
+=== RODANDO scripts/93_gera_latex_tabelas_9_10.R ===
+===== TABELA 9 (RMSE) =====
+Ibiuna Investimentos & 6 & $0{,}01461$ & $0{,}02348$ & $0{,}02742$ & $0{,}03336$ \\
+Guepardo Investimentos & 10 & $0{,}01429$ & $0{,}02322$ & $0{,}03384$ & $0{,}05699$ \\
+AZ Quest & 22 & $0{,}01088$ & $0{,}01449$ & $0{,}01630$ & $0{,}01835$ \\
+Núcleo Capital & 17 & $0{,}01045$ & $0{,}01833$ & $0{,}02504$ & $0{,}03588$ \\
+Squadra Investimentos & 14 & $0{,}01010$ & $0{,}01397$ & $0{,}01698$ & $0{,}02165$ \\
+Forpus Capital & 3 & $0{,}00994$ & $0{,}01291$ & $0{,}01510$ & $0{,}00969$ \\
+Truxt Investimentos & 29 & $0{,}00807$ & $0{,}01254$ & $0{,}01585$ & $0{,}01944$ \\
+Sharp Capital & 34 & $0{,}00789$ & $0{,}01284$ & $0{,}01695$ & $0{,}02112$ \\
+ARX Investimentos & 11 & $0{,}00785$ & $0{,}01082$ & $0{,}01259$ & $0{,}01517$ \\
+Kinea Investimentos & 4 & $0{,}00708$ & $0{,}01152$ & $0{,}01521$ & $0{,}01601$ \\
+Constellation Asset Management & 25 & $0{,}00696$ & $0{,}01386$ & $0{,}01841$ & $0{,}02789$ \\
+Opportunity & 19 & $0{,}00680$ & $0{,}01050$ & $0{,}01342$ & $0{,}01558$ \\
+Atmos Capital & 28 & $0{,}00614$ & $0{,}01000$ & $0{,}01338$ & $0{,}01700$ \\
+SPX Capital & 35 & $0{,}00613$ & $0{,}00911$ & $0{,}01156$ & $0{,}01301$ \\
+Verde Asset Management & 14 & $0{,}00602$ & $0{,}01023$ & $0{,}01299$ & $0{,}01656$ \\
+Absolute Investimentos & 7 & $0{,}00560$ & $0{,}00824$ & $0{,}01049$ & $0{,}01265$ \\
+Daycoval Asset Management & 5 & $0{,}00555$ & $0{,}00724$ & $0{,}00717$ & $0{,}00807$ \\
+JGP & 40 & $0{,}00555$ & $0{,}00775$ & $0{,}00894$ & $0{,}01072$ \\
+Kapitalo Investimentos & 22 & $0{,}00534$ & $0{,}00577$ & $0{,}00690$ & $0{,}00818$ \\
+Bogari Capital & 14 & $0{,}00534$ & $0{,}00933$ & $0{,}01211$ & $0{,}01612$ \\
+Real Investor & 5 & $0{,}00497$ & $0{,}00932$ & $0{,}01427$ & $0{,}01783$ \\
+Credit Suisse & 64 & $0{,}00487$ & $0{,}00669$ & $0{,}00795$ & $0{,}00899$ \\
+Claritas Investimentos & 10 & $0{,}00482$ & $0{,}00704$ & $0{,}00789$ & $0{,}00837$ \\
+Caixa & 27 & $0{,}00462$ & $0{,}00682$ & $0{,}00888$ & $0{,}01140$ \\
+Western Asset & 26 & $0{,}00436$ & $0{,}00697$ & $0{,}00958$ & $0{,}01246$ \\
+Bradesco Asset Management & 270 & $0{,}00425$ & $0{,}00594$ & $0{,}00708$ & $0{,}00844$ \\
+BB Asset Management & 103 & $0{,}00415$ & $0{,}00644$ & $0{,}00808$ & $0{,}00989$ \\
+Vinci Partners & 47 & $0{,}00414$ & $0{,}00628$ & $0{,}00741$ & $0{,}00838$ \\
+Occam Brasil & 26 & $0{,}00412$ & $0{,}00670$ & $0{,}00764$ & $0{,}00996$ \\
+Santander Brasil Asset Management & 70 & $0{,}00389$ & $0{,}00539$ & $0{,}00622$ & $0{,}00724$ \\
+BTG Pactual & 136 & $0{,}00387$ & $0{,}00581$ & $0{,}00678$ & $0{,}00846$ \\
+Safra Asset Management & 135 & $0{,}00331$ & $0{,}00466$ & $0{,}00556$ & $0{,}00621$ \\
+BNP Paribas & 42 & $0{,}00301$ & $0{,}00437$ & $0{,}00538$ & $0{,}00725$ \\
+XP & 81 & $0{,}00291$ & $0{,}00435$ & $0{,}00523$ & $0{,}00722$ \\
+Itau & 436 & $0{,}00257$ & $0{,}00378$ & $0{,}00459$ & $0{,}00541$ \\
+Julius Baer Family Office & 56 & $0{,}00253$ & $0{,}00348$ & $0{,}00434$ & $0{,}00536$ \\
+Dahlia Capital & 18 & $0{,}00245$ & $0{,}00420$ & $0{,}00545$ & $0{,}00628$ \\
+TNA Gestão Patrimonial & 29 & $0{,}00151$ & $0{,}00218$ & $0{,}00282$ & $0{,}00389$ \\
+Gávea Investimentos & 17 & $0{,}00144$ & $0{,}00265$ & $0{,}00363$ & $0{,}00468$ \\
+Plural & 1 & $0{,}00050$ & $0{,}00081$ & $0{,}00105$ & $0{,}00137$ \\
+
+
+===== TABELA 10 (MARGEM) =====
+Ibiuna Investimentos & $3{,}7\%$ & $8{,}1\%$ & $8{,}6\%$ & $15{,}2\%$ \\
+Guepardo Investimentos & $0{,}8\%$ & $0{,}3\%$ & $-0{,}9\%$ & $-2{,}2\%$ \\
+AZ Quest & $3{,}4\%$ & $7{,}5\%$ & $10{,}6\%$ & $16{,}7\%$ \\
+Núcleo Capital & $-1{,}6\%$ & $-3{,}2\%$ & $-3{,}4\%$ & $-7{,}5\%$ \\
+Squadra Investimentos & $0{,}5\%$ & $0{,}0\%$ & $-1{,}0\%$ & $-3{,}0\%$ \\
+Forpus Capital & $2{,}4\%$ & $5{,}0\%$ & $8{,}4\%$ & $19{,}1\%$ \\
+Truxt Investimentos & $1{,}8\%$ & $4{,}1\%$ & $6{,}4\%$ & $14{,}2\%$ \\
+Sharp Capital & $1{,}4\%$ & $4{,}3\%$ & $8{,}6\%$ & $15{,}7\%$ \\
+ARX Investimentos & $2{,}1\%$ & $4{,}4\%$ & $7{,}0\%$ & $7{,}5\%$ \\
+Kinea Investimentos & $1{,}8\%$ & $4{,}0\%$ & $9{,}0\%$ & $9{,}9\%$ \\
+Constellation Asset Management & $-0{,}9\%$ & $-0{,}2\%$ & $2{,}3\%$ & $3{,}3\%$ \\
+Opportunity & $1{,}6\%$ & $4{,}0\%$ & $6{,}7\%$ & $10{,}3\%$ \\
+Atmos Capital & $-0{,}0\%$ & $2{,}7\%$ & $5{,}2\%$ & $12{,}4\%$ \\
+SPX Capital & $2{,}9\%$ & $7{,}3\%$ & $11{,}9\%$ & $20{,}1\%$ \\
+Verde Asset Management & $0{,}4\%$ & $1{,}4\%$ & $2{,}9\%$ & $-1{,}1\%$ \\
+Absolute Investimentos & $1{,}5\%$ & $3{,}3\%$ & $5{,}5\%$ & $4{,}9\%$ \\
+Daycoval Asset Management & $3{,}2\%$ & $6{,}4\%$ & $9{,}2\%$ & $14{,}6\%$ \\
+JGP & $2{,}3\%$ & $4{,}2\%$ & $5{,}0\%$ & $8{,}4\%$ \\
+Kapitalo Investimentos & $3{,}0\%$ & $6{,}3\%$ & $7{,}5\%$ & $8{,}0\%$ \\
+Bogari Capital & $-1{,}1\%$ & $-0{,}6\%$ & $-0{,}0\%$ & $-5{,}6\%$ \\
+Real Investor & $-2{,}6\%$ & $-0{,}2\%$ & $0{,}6\%$ & $6{,}0\%$ \\
+Credit Suisse & $2{,}5\%$ & $5{,}0\%$ & $8{,}5\%$ & $15{,}2\%$ \\
+Claritas Investimentos & $1{,}7\%$ & $6{,}3\%$ & $11{,}3\%$ & $19{,}5\%$ \\
+Caixa & $1{,}8\%$ & $4{,}2\%$ & $7{,}0\%$ & $9{,}7\%$ \\
+Western Asset & $1{,}0\%$ & $3{,}1\%$ & $5{,}5\%$ & $5{,}9\%$ \\
+Bradesco Asset Management & $2{,}0\%$ & $3{,}7\%$ & $4{,}8\%$ & $4{,}3\%$ \\
+BB Asset Management & $1{,}1\%$ & $2{,}7\%$ & $3{,}8\%$ & $5{,}0\%$ \\
+Vinci Partners & $0{,}8\%$ & $3{,}1\%$ & $7{,}1\%$ & $19{,}5\%$ \\
+Occam Brasil & $2{,}3\%$ & $4{,}9\%$ & $8{,}1\%$ & $10{,}7\%$ \\
+Santander Brasil Asset Management & $2{,}1\%$ & $4{,}3\%$ & $5{,}7\%$ & $7{,}3\%$ \\
+BTG Pactual & $1{,}4\%$ & $2{,}7\%$ & $3{,}9\%$ & $4{,}4\%$ \\
+Safra Asset Management & $2{,}0\%$ & $3{,}2\%$ & $5{,}7\%$ & $8{,}5\%$ \\
+BNP Paribas & $0{,}0\%$ & $-1{,}1\%$ & $-3{,}4\%$ & $-7{,}1\%$ \\
+XP & $-3{,}1\%$ & $-6{,}5\%$ & $-9{,}8\%$ & $-11{,}7\%$ \\
+Itau & $2{,}0\%$ & $4{,}6\%$ & $6{,}6\%$ & $8{,}4\%$ \\
+Julius Baer Family Office & $1{,}5\%$ & $3{,}0\%$ & $4{,}5\%$ & $6{,}6\%$ \\
+Dahlia Capital & $2{,}4\%$ & $5{,}7\%$ & $8{,}6\%$ & $10{,}6\%$ \\
+TNA Gestão Patrimonial & $-0{,}3\%$ & $-1{,}8\%$ & $-2{,}2\%$ & $1{,}0\%$ \\
+Gávea Investimentos & $2{,}1\%$ & $4{,}3\%$ & $8{,}5\%$ & $11{,}1\%$ \\
+Plural & $-3{,}3\%$ & $-5{,}2\%$ & $-4{,}5\%$ & $-8{,}3\%$ \\
+
+
+Gestoras sem VALE3/Legacy check -- quantas tem NA em h3/h6/h12?
+data.table vazia (0 linhas e 5 colunas): gestora_grupo,rmse_h1,rmse_h3,rmse_h6,rmse_h12
+=== FIM scripts/93_gera_latex_tabelas_9_10.R (exit 0) ===
+=== RODANDO scripts/94_auditoria_completa_dados.R ===
+============================================================================== 
+(A) PAINEL MULTIATIVO FINAL (pos-limpeza)
+============================================================================== 
+Linhas: 8224848 | Fundos: 2343 | Ativos: 501 
+
+--- Peso individual ---
+Peso negativo: 0 
+Peso > 1: 0 
+Peso NA/NaN/Inf: 0 
+
+--- Soma de peso por fundo-mes (ja deveria estar <=105% em todos) ---
+Max soma_peso: 1.0489 
+Pares com soma_peso > 1,05: 0 (deveria ser 0)
+Pares com soma_peso > 1,01: 296 
+
+--- AUM / cotistas / fluxo ---
+AUM <= 0: 0 
+AUM NA/Inf: 0 
+Cotistas <= 0: 0 
+Cotistas NA: 0 
+flow_aum NA/Inf: 0 
+flow_aum extremo (|flow_aum| > 2, ou seja fluxo > 200% do AUM num mes): 80 
+    cod_fundo     ym  aum_prev cotistas_prev fluxo_prev   flow_aum beta_fundo
+        <int>  <int>     <num>         <int>      <num>      <num>      <num>
+ 1:    400556 202108  136604.4             1  -85000000 -622.23494  0.1522844
+ 2:    384496 201908  197095.3             1  -51738931 -262.50723  0.8889681
+ 3:    474428 202011  280041.4             3  -58458859 -208.75080  0.8941193
+ 4:    502693 202105  128562.5             6   -7910770  -61.53249  1.0170940
+ 5:    387479 201707 1717725.8            16  -78413047  -45.64934  0.1571925
+ 6:    264849 201810  100000.0             1   -4214240  -42.14240  0.9147898
+ 7:    408034 202008  234727.9             1   -9580000  -40.81321  1.0450764
+ 8:    408026 202008  188769.4             1   -5940000  -31.46696  0.8855932
+ 9:    210404 202112 1412872.6             1  -44000000  -31.14223  0.9566478
+10:    486736 202109 1246644.4             4  -38489224  -30.87426  0.5715749
+       l_aum    l_cot
+       <num>    <num>
+ 1: 11.82484 0.000000
+ 2: 12.19144 0.000000
+ 3: 12.54269 1.098612
+ 4: 11.76417 1.791759
+ 5: 14.35651 2.772589
+ 6: 11.51293 0.000000
+ 7: 12.36618 0.000000
+ 8: 12.14828 0.000000
+ 9: 14.16114 0.000000
+10: 14.03597 1.386294
+
+--- beta_fundo ---
+beta_fundo NA/Inf: 0 
+beta_fundo extremo (|beta| > 5): 0 
+Resumo beta_fundo:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-0.5916  0.1114  0.4154  0.4858  0.8822  2.8352 
+
+--- Linhas duplicadas (cod_fundo, ativo, ym) ---
+Combinacoes duplicadas: 0 
+
+--- Periodo ---
+Range de ym: 201701 a 202112 
+Linhas fora de 2016-01 a 2021-12: 0 
+
+--- is_fic ---
+is_fic NA: 0 
+is_fic fora de {0,1}: 0 
+============================================================================== 
+
+(B) PAINEL PREDETERMINADO (VALE3-Itau)
+============================================================================== 
+Linhas: 11532 | Fundos: 308 
+
+--- peso_vale3 individual ---
+peso_vale3 negativo: 0 
+peso_vale3 > 1: 0 
+peso_vale3 NA/Inf: 0 
+Resumo peso_vale3:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+0.000000 0.002208 0.012560 0.029766 0.049351 0.235754 
+
+--- AUM / cotistas / fluxo ---
+AUM <= 0: 0 
+AUM NA/Inf: 322 (ja excluidas pelo filtro is.finite(l_aum) a jusante)
+Cotistas <= 0: 0 
+flow_aum extremo (|flow_aum| > 2): 9 
+
+--- beta_fundo ---
+beta_fundo NA/Inf: 3080 (esperado -- fundos sem 252 pregoes de historico)
+beta_fundo extremo (|beta| > 5): 0 
+Resumo beta_fundo:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+-0.2712  0.1099  0.5897  0.5223  0.9279  1.2713    3080 
+
+--- Linhas duplicadas (cod_fundo, ym) ---
+Combinacoes duplicadas: 0 
+
+--- Periodo ---
+Range de ym: 201601 a 202112 
+
+
+===== FIM DA AUDITORIA =====
+=== FIM scripts/94_auditoria_completa_dados.R (exit 0) ===
+=== RODANDO scripts/95_regressao_completa_variancia.R ===
+Gestoras na regressao completa: 40 
+
+===== Regressao com as 5 caracteristicas da Etapa 1 + concentracao (versao final, no TCC) =====
+Caracteristicas calculadas SO com dado de treino (<2020-01), predeterminadas.
+                 Estimate   Std. Error      t value    Pr(>|t|)
+(Intercept) -1.425564e-02 0.0110170618 -1.293960446 0.204662207
+beta_fundo   2.032128e-03 0.0024930816  0.815107048 0.420855106
+l_aum        9.876670e-04 0.0006439937  1.533659496 0.134645883
+l_cot        3.173390e-06 0.0005162627  0.006146851 0.995132563
+pct_fic     -5.382766e-04 0.0018851451 -0.285535886 0.777018251
+flow_aum    -9.360026e-03 0.0065881600 -1.420734433 0.164774573
+hhi_medio    8.318367e-02 0.0199376195  4.172196649 0.000205845
+R2: 0.5496934 
+
+OK
+=== FIM scripts/95_regressao_completa_variancia.R (exit 0) ===
+LOTE FASE 2 (HHI DEFASADO) COMPLETO

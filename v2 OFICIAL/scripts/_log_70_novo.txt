@@ -1,0 +1,30 @@
+Ativo-mes com sinal (fluxo liquido): 8535 
+Com valor_total disponivel: 8535 de 8535 
+
+Obs finais (fluxo,retorno_fut) validas: 8535 
+
+===== (a) Regressao simples: retorno(t+1) ~ fluxo(t) =====
+                 Estimate   Std. Error    t value     Pr(>|t|)
+(Intercept)  1.285106e-02 1.418408e-03  9.0602021 1.591845e-19
+fluxo_pct   -4.838093e-08 5.131153e-08 -0.9428862 3.457658e-01
+R2: 1e-04 
+
+--- comparacao: sinal SEM eco do lider (so' lambda*d) ---
+                     Estimate   Std. Error  t value     Pr(>|t|)
+(Intercept)      1.372137e-02 1.441263e-03 9.520380 2.202858e-21
+fluxo_normal_pct 1.930355e-06 5.807171e-07 3.324089 8.908156e-04
+R2: 0.00129 
+
+===== (b) Quintis por fluxo_pct, retorno medio subsequente =====
+   quintil     n fluxo_pct_medio retorno_medio retorno_mediano
+     <int> <int>           <num>         <num>           <num>
+1:       1  1707     -20025.4850   0.016506994     0.014193412
+2:       2  1707      -2480.5462   0.009368572     0.003418160
+3:       3  1707       -150.0702   0.010894745     0.005937235
+4:       4  1707       1391.9689   0.008038523     0.004611837
+5:       5  1707      20756.4413   0.019471047     0.016798880
+
+Diferenca quintil 5 (mais comprado) - quintil 1 (mais vendido), retorno medio: 0.00296 
+Teste t (quintil5 vs quintil1): diferenca = 0.00296 | p-valor = 0.531 
+
+OK - salvo em 'v2 OFICIAL/data/teste_fluxo_prediz_retorno.csv'

@@ -1,0 +1,50 @@
+Fundo-meses de retorno disponiveis: 136297 | fundos distintos: 3254 
+===== (A) PERSISTENCIA RAW: varias janelas de formacao x varios horizontes =====
+Persist-3m                     h= 1 [10grp] n_tr= 74767 n_te=48683 R2_OOS= -0.047% | 23 meses spread=  -0.83pp/mes t= -0.95 p=0.35055
+Persist-3m                     h= 3 [10grp] n_tr= 73780 n_te=43568 R2_OOS=  2.225% | 21 meses spread=  -0.56pp/mes t= -0.56 p=0.58113
+Persist-3m                     h= 6 [10grp] n_tr= 72433 n_te=36209 R2_OOS=  0.232% | 18 meses spread=  +1.10pp/mes t=  1.19 p=0.24982
+Persist-3m                     h=12 [10grp] n_tr= 69973 n_te=22650 R2_OOS= -3.555% | 12 meses spread=  +0.48pp/mes t=  0.40 p=0.69413
+Persist-6m                     h= 1 [10grp] n_tr= 67999 n_te=46395 R2_OOS= -0.020% | 23 meses spread=  -0.02pp/mes t= -0.02 p=0.98417
+Persist-6m                     h= 3 [10grp] n_tr= 67148 n_te=41492 R2_OOS=  0.082% | 21 meses spread=  +0.73pp/mes t=  0.85 p=0.40449
+Persist-6m                     h= 6 [10grp] n_tr= 65942 n_te=34467 R2_OOS= -1.209% | 18 meses spread=  +0.01pp/mes t=  0.01 p=0.99427
+Persist-6m                     h=12 [10grp] n_tr= 63700 n_te=21534 R2_OOS=  0.800% | 12 meses spread=  -0.62pp/mes t= -0.40 p=0.69893
+Persist-12m                    h= 1 [10grp] n_tr= 55616 n_te=42135 R2_OOS= -0.309% | 23 meses spread=  -0.85pp/mes t= -0.73 p=0.47438
+Persist-12m                    h= 3 [10grp] n_tr= 54944 n_te=37677 R2_OOS=  2.655% | 21 meses spread=  +0.35pp/mes t=  0.37 p=0.71173
+Persist-12m                    h= 6 [10grp] n_tr= 53953 n_te=31280 R2_OOS=  0.270% | 18 meses spread=  -0.39pp/mes t= -0.41 p=0.68351
+Persist-12m                    h=12 [10grp] n_tr= 52119 n_te=19585 R2_OOS=  3.105% | 12 meses spread=  -0.79pp/mes t= -1.48 p=0.16565
+Persist-24m                    h= 1 [10grp] n_tr= 33965 n_te=35628 R2_OOS= -0.011% | 23 meses spread=  -0.26pp/mes t= -0.24 p=0.81152
+Persist-24m                    h= 3 [10grp] n_tr= 33556 n_te=31986 R2_OOS= -3.930% | 21 meses spread=  +1.03pp/mes t=  1.32 p=0.20299
+Persist-24m                    h= 6 [10grp] n_tr= 32974 n_te=26740 R2_OOS=  1.400% | 18 meses spread=  +0.48pp/mes t=  0.67 p=0.51302
+Persist-24m                    h=12 [10grp] n_tr= 31920 n_te=17032 R2_OOS= -5.411% | 12 meses spread=  -1.06pp/mes t= -1.44 p=0.17809
+Persist-36m                    h= 1 [10grp] n_tr= 15631 n_te=31632 R2_OOS= -1.060% | 23 meses spread=  -1.12pp/mes t= -0.99 p=0.33512
+Persist-36m                    h= 3 [10grp] n_tr= 15461 n_te=28520 R2_OOS=  1.578% | 21 meses spread=  +0.40pp/mes t=  0.46 p=0.64726
+Persist-36m                    h= 6 [10grp] n_tr= 15237 n_te=23969 R2_OOS=  0.922% | 18 meses spread=  +0.44pp/mes t=  0.69 p=0.50098
+Persist-36m                    h=12 [10grp] n_tr= 14828 n_te=15355 R2_OOS=  0.591% | 12 meses spread=  +0.50pp/mes t=  0.58 p=0.57438
+
+
+===== RESUMO (A): ordenado por p_fm =====
+          sinal horizonte n_meses spread_pp  t_fm    p_fm
+         <char>     <num>   <int>     <num> <num>   <num>
+ 1: Persist-12m        12      12     -0.79 -1.48 0.16565
+ 2: Persist-24m        12      12     -1.06 -1.44 0.17809
+ 3: Persist-24m         3      21      1.03  1.32 0.20299
+ 4:  Persist-3m         6      18      1.10  1.19 0.24982
+ 5: Persist-36m         1      23     -1.12 -0.99 0.33512
+ 6:  Persist-3m         1      23     -0.83 -0.95 0.35055
+ 7:  Persist-6m         3      21      0.73  0.85 0.40449
+ 8: Persist-12m         1      23     -0.85 -0.73 0.47438
+ 9: Persist-36m         6      18      0.44  0.69 0.50098
+10: Persist-24m         6      18      0.48  0.67 0.51302
+11: Persist-36m        12      12      0.50  0.58 0.57438
+12:  Persist-3m         3      21     -0.56 -0.56 0.58113
+13: Persist-36m         3      21      0.40  0.46 0.64726
+14: Persist-12m         6      18     -0.39 -0.41 0.68351
+15:  Persist-3m        12      12      0.48  0.40 0.69413
+16:  Persist-6m        12      12     -0.62 -0.40 0.69893
+17: Persist-12m         3      21      0.35  0.37 0.71173
+18: Persist-24m         1      23     -0.26 -0.24 0.81152
+19:  Persist-6m         1      23     -0.02 -0.02 0.98417
+20:  Persist-6m         6      18      0.01  0.01 0.99427
+          sinal horizonte n_meses spread_pp  t_fm    p_fm
+
+OK -- parte (A) completa

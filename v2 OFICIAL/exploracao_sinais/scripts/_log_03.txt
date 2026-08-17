@@ -1,0 +1,51 @@
+===== (D) O QUE OS LIDERES FAZEM PREDIZ RETORNO? =====
+Fundos-lider distintos: 1754 
+Obs (fundo,ativo,mes) dos lideres: 6991362 
+Sinal lideres, h=1: n_treino=7166 n_teste=5839 | beta=0.04798 | R2_OOS=-0.0010% | [full: coef=-2.47527 t=-1.402 p=0.1608]
+Sinal lideres, h=3: n_treino=7124 n_teste=5437 | beta=0.65282 | R2_OOS=0.0070% | [full: coef=1.55065 t=0.854 p=0.3931]
+Sinal lideres, h=6: n_treino=7044 n_teste=4503 | beta=-2.70486 | R2_OOS=0.0114% | [full: coef=-2.66298 t=-1.452 p=0.1465]
+
+
+===== (E) LONG-SHORT POR QUINTIL, FORA DA AMOSTRA =====
+Demanda agregada revelada           h= 1 | long-short (Q5-Q1) OOS = +0.0194 (1.94 p.p.) | p=0.0034 | n_teste=7041
+Demanda agregada revelada           h= 3 | long-short (Q5-Q1) OOS = -0.0075 (-0.75 p.p.) | p=0.2280 | n_teste=6313
+Demanda agregada revelada           h= 6 | long-short (Q5-Q1) OOS = +0.0378 (3.78 p.p.) | p=0.0000 | n_teste=5250
+Demanda agregada revelada           h=12 | long-short (Q5-Q1) OOS = -0.0178 (-1.78 p.p.) | p=0.0190 | n_teste=3319
+FIT (Lou)                           h= 0 | long-short (Q5-Q1) OOS = -0.0653 (-6.53 p.p.) | p=0.0000 | n_teste=7115
+FIT (Lou)                           h= 1 | long-short (Q5-Q1) OOS = -0.0801 (-8.01 p.p.) | p=0.0000 | n_teste=7028
+FIT (Lou)                           h= 6 | long-short (Q5-Q1) OOS = -0.0066 (-0.66 p.p.) | p=0.2593 | n_teste=5238
+FIT (Lou)                           h=12 | long-short (Q5-Q1) OOS = -0.0129 (-1.29 p.p.) | p=0.0536 | n_teste=3307
+Herding (LSV)                       h= 1 | long-short (Q5-Q1) OOS = +0.0091 (0.91 p.p.) | p=0.2072 | n_teste=6040
+Herding (LSV)                       h= 3 | long-short (Q5-Q1) OOS = -0.0003 (-0.03 p.p.) | p=0.9605 | n_teste=5403
+Herding (LSV)                       h= 6 | long-short (Q5-Q1) OOS = +0.0068 (0.68 p.p.) | p=0.3119 | n_teste=4473
+
+
+===== RESUMO LONG-SHORT (ordenado por spread) =====
+                        sinal horizonte    spread_oos   spread_pp      p_valor
+                       <char>     <num>         <num>       <num>        <num>
+ 1: Demanda agregada revelada         6  0.0378453462  3.78453462 2.781862e-09
+ 2: Demanda agregada revelada         1  0.0193954008  1.93954008 3.394924e-03
+ 3:             Herding (LSV)         1  0.0090895043  0.90895043 2.072287e-01
+ 4:             Herding (LSV)         6  0.0068067403  0.68067403 3.118976e-01
+ 5:             Herding (LSV)         3 -0.0003328726 -0.03328726 9.604615e-01
+ 6:                 FIT (Lou)         6 -0.0065820766 -0.65820766 2.592941e-01
+ 7: Demanda agregada revelada         3 -0.0074927879 -0.74927879 2.279805e-01
+ 8:                 FIT (Lou)        12 -0.0129174292 -1.29174292 5.356037e-02
+ 9: Demanda agregada revelada        12 -0.0177839959 -1.77839959 1.896667e-02
+10:                 FIT (Lou)         0 -0.0653352786 -6.53352786 1.117299e-20
+11:                 FIT (Lou)         1 -0.0800766954 -8.00766954 1.003455e-22
+    n_teste
+      <int>
+ 1:    5250
+ 2:    7041
+ 3:    6040
+ 4:    4473
+ 5:    5403
+ 6:    5238
+ 7:    6313
+ 8:    3307
+ 9:    3319
+10:    7115
+11:    7028
+
+OK

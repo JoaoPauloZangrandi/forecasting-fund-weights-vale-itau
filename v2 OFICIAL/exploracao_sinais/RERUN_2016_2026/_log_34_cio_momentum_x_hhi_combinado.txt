@@ -1,0 +1,9 @@
+===== Long-short CIO Peer Momentum: puro vs. pesado por (inverso) HHI =====
+Long-short CIO puro (equal-weight)       Sharpe=  0.479 | vol_anual= 13.04% | ret_anual=   6.25% | maxDD= -28.96% | N=62
+Long-short CIO + tilt inverso-HHI        Sharpe=  0.064 | vol_anual= 16.08% | ret_anual=   1.03% | maxDD= -37.29% | N=62
+
+===== Long-only top-quintile CIO: equal-weight vs. inverso-HHI =====
+Long-only top-CIO (equal-weight)         Sharpe=  0.239 | vol_anual= 26.91% | ret_anual=   6.42% | maxDD= -45.98% | N=62
+Long-only top-CIO (tilt inverso-HHI)     Sharpe=  0.181 | vol_anual= 27.37% | ret_anual=   4.95% | maxDD= -46.49% | N=62
+
+OK

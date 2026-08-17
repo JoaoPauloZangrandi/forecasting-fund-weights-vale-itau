@@ -1,0 +1,49 @@
+===== CIO peer momentum, h=1, SO MESES DE FIM DE TRIMESTRE (mar/jun/set/dez) =====
+Obs em meses de fim de trimestre: 9489 | outros meses: 19655 
+CIO (SO fim-trimestre)                   h=1 [FM] 15 meses spread=  +0.39pp/mes t=  0.29 p=0.7771
+CIO (SO nao-fim-trimestre)               h=1 [FM] 39 meses spread=  +2.31pp/mes t=  1.69 p=0.0997
+
+===== CIO peer momentum, h=1, SO MES DE DEZEMBRO (fechamento anual, window dressing mais forte) =====
+Obs em dezembro: 1795 
+CIO (SO dezembro): so 3 meses, resultado fraco
+CIO (SO dezembro)                        h=1 [FM]  3 meses spread=  -0.46pp/mes t= -0.20 p=0.8571
+
+===== Efeito de JANEIRO (reversao pos-window-dressing)? peer_ret medido em DEZ prediz retorno de JAN =====
+Spread medio (Q5-Q1) especificamente dez->jan, mes a mes:
+        ym quintil retorno_medio     n
+     <int>   <int>         <num> <int>
+ 1: 201712       1   0.019912642    29
+ 2: 201712       2   0.078682140    44
+ 3: 201712       3   0.054652999   141
+ 4: 201712       4   0.072506172    53
+ 5: 201812       1   0.110600980   128
+ 6: 201812       2   0.097346588   115
+ 7: 201812       3   0.101919878    18
+ 8: 201812       4   0.005499155     9
+ 9: 201812       5  -0.488372093     1
+10: 201912       1   0.076099039     4
+11: 201912       2   0.050000000     2
+12: 201912       3  -0.024520138     2
+13: 201912       4   0.020509520    99
+14: 201912       5   0.033848421   160
+15: 202012       3  -0.045841712    37
+16: 202012       4  -0.020739212   227
+17: 202012       5   0.011800281    19
+18: 202112       1   0.035578531    19
+19: 202112       2   0.087426179    21
+20: 202112       3   0.041813468    31
+21: 202112       4   0.106301132     9
+22: 202112       5   0.057102029     3
+23: 202412       1   0.055768869   310
+24: 202412       2   0.050178668     5
+25: 202412       3   0.041531281     5
+26: 202412       4  -0.071855775     3
+27: 202412       5   0.006715559     2
+28: 202512       1   0.074981820   211
+29: 202512       2   0.088523840    46
+30: 202512       3   0.072606200    32
+31: 202512       4   0.051098433     6
+32: 202512       5   0.088821386     4
+        ym quintil retorno_medio     n
+
+OK

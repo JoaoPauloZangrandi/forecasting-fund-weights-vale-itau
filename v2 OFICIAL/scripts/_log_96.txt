@@ -1,0 +1,47 @@
+Painel (ja limpo de soma_peso>105%): 8224848 linhas | 2343 fundos
+HHI_resto: min = 0 | max = 0.9671645 
+Celulas (ativo,mes) com >=15 holders: 13946 
+Tempo Etapa 1/erro/theta (uma passada, 6 caracteristicas): 69.1 s | 21 celulas nao convergiram | n_erro = 8208201 | n_theta = 13925 
+h=1: treino 3707575 | teste 3740054 | lambda=0.0793 | RMSE ajuste=0.003856 | RMSE naive=0.003922
+h=3: treino 3472197 | teste 3132554 | lambda=0.1689 | RMSE ajuste=0.005610 | RMSE naive=0.005813
+h=6: treino 3265363 | teste 2439979 | lambda=0.2513 | RMSE ajuste=0.006804 | RMSE naive=0.007177
+h=12: treino 2990068 | teste 1386245 | lambda=0.3818 | RMSE ajuste=0.008179 | RMSE naive=0.008828
+
+
+===== COMPARACAO: 5 caracteristicas (atual) vs. 6 (com HHI_resto) =====
+RMSE agregado h=1: 5-carac=0.003859 | 6-carac(HHI)=0.003856 (dif=-0.073%)
+RMSE agregado h=3: 5-carac=0.005619 | 6-carac(HHI)=0.005610 (dif=-0.156%)
+
+Celulas com z_hhi significativo (|t|>1,96): 10145 de 13925 (72.9%)
+Sinal do coef. de HHI quando significativo: 9682 positivos, 463 negativos
+Coef. padronizado do HHI (b_hhi): mediana=0.4950 | % positivo (todas celulas)=87.3% | pseudo-R2 medio=-Inf
+
+Gestoras com MAIOR melhora no RMSE h=1 (6-carac vs 5-carac):
+                gestora_grupo rmse_h1_orig rmse_h1_hhi dif_pct_h1
+                       <char>        <num>       <num>      <num>
+ 1:    Guepardo Investimentos      0.01444     0.01428      -1.09
+ 2:                        XP      0.00293     0.00292      -0.49
+ 3:      Ibiuna Investimentos      0.01478     0.01474      -0.27
+ 4:                  AZ Quest      0.01096     0.01094      -0.23
+ 5:    Claritas Investimentos      0.00481     0.00480      -0.19
+ 6: Daycoval Asset Management      0.00582     0.00581      -0.18
+ 7:               SPX Capital      0.00613     0.00612      -0.17
+ 8:             Credit Suisse      0.00503     0.00502      -0.15
+ 9: Bradesco Asset Management      0.00430     0.00430      -0.15
+10:    Absolute Investimentos      0.00562     0.00561      -0.14
+
+Gestoras com MAIOR piora (ou menor melhora) no RMSE h=1:
+             gestora_grupo rmse_h1_orig rmse_h1_hhi dif_pct_h1
+                    <char>        <num>       <num>      <num>
+ 1:                 Plural      0.00050     0.00050       0.15
+ 2: Verde Asset Management      0.00600     0.00601       0.16
+ 3:          Western Asset      0.00435     0.00436       0.17
+ 4:            BTG Pactual      0.00391     0.00391       0.20
+ 5:         Bogari Capital      0.00532     0.00533       0.25
+ 6:          Sharp Capital      0.00801     0.00803       0.28
+ 7:          Real Investor      0.00485     0.00488       0.46
+ 8:            BNP Paribas      0.00300     0.00302       0.50
+ 9:         Vinci Partners      0.00420     0.00423       0.72
+10:         Legacy Capital      0.00798     0.00805       0.77
+
+OK - pipeline com HHI completa

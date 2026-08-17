@@ -1,0 +1,159 @@
+Pares significativos: 1229196 
+
+===== TOP 20 fundos-hub (mais conexoes com gestoras DIFERENTES) =====
+    cod_fundo                           gestora n_conexoes
+        <int>                            <char>      <int>
+ 1:    359051 Santander Brasil Asset Management       5169
+ 2:    328936         Julius Baer Family Office       5819
+ 3:    358606 Santander Brasil Asset Management       5042
+ 4:    331333 Santander Brasil Asset Management       4999
+ 5:    173967         Julius Baer Family Office       5760
+ 6:    173959         Julius Baer Family Office       5689
+ 7:    295507         Julius Baer Family Office       5670
+ 8:    433772                       BTG Pactual       4720
+ 9:    314161                       BTG Pactual       5053
+10:    346179         Bradesco Asset Management       4916
+11:    405051         Bradesco Asset Management       4865
+12:    344771                       BTG Pactual       4707
+13:    483958            Safra Asset Management       4519
+14:    168092         Julius Baer Family Office       4242
+15:    259373         Julius Baer Family Office       4779
+16:    214523         Julius Baer Family Office       4761
+17:    366730         Bradesco Asset Management       3849
+18:    331155                       BTG Pactual       3854
+19:    349151                     Credit Suisse       3867
+20:    389765               BB Asset Management       4189
+    cod_fundo                           gestora n_conexoes
+    n_conexoes_mesma_gestora n_conexoes_gestora_diferente n_ativos_distintos
+                       <int>                        <int>              <int>
+ 1:                      365                         4804                124
+ 2:                     1025                         4794                120
+ 3:                      354                         4688                124
+ 4:                      312                         4687                 57
+ 5:                     1145                         4615                129
+ 6:                     1168                         4521                126
+ 7:                     1156                         4514                126
+ 8:                      345                         4375                 58
+ 9:                      782                         4271                110
+10:                      647                         4269                 55
+11:                      653                         4212                 55
+12:                      566                         4141                107
+13:                      562                         3957                 63
+14:                      299                         3943                 89
+15:                      867                         3912                117
+16:                      984                         3777                113
+17:                       79                         3770                 74
+18:                       89                         3765                 74
+19:                      135                         3732                 74
+20:                      465                         3724                130
+    n_conexoes_mesma_gestora n_conexoes_gestora_diferente n_ativos_distintos
+    n_gestoras_parceiras_distintas
+                             <int>
+ 1:                             36
+ 2:                             33
+ 3:                             36
+ 4:                             32
+ 5:                             35
+ 6:                             35
+ 7:                             36
+ 8:                             32
+ 9:                             31
+10:                             34
+11:                             34
+12:                             32
+13:                             33
+14:                             33
+15:                             35
+16:                             36
+17:                             31
+18:                             31
+19:                             31
+20:                             36
+    n_gestoras_parceiras_distintas
+
+===== TOP 20 pares de GESTORA com mais conexoes fundo-fundo significativas =====
+                                                        par_gestora
+                                                             <char>
+ 1:                              Bradesco Asset Management <-> Itau
+ 2:                                 Itau <-> Safra Asset Management
+ 3:                                            BTG Pactual <-> Itau
+ 4:                              Itau <-> Julius Baer Family Office
+ 5:                                                     Itau <-> XP
+ 6:                      Itau <-> Santander Brasil Asset Management
+ 7:                                            Itau <-> SPX Capital
+ 8:                                          Credit Suisse <-> Itau
+ 9:                                    BB Asset Management <-> Itau
+10:                                 Itau <-> TNA Gestão Patrimonial
+11:                                          Atmos Capital <-> Itau
+12:                                                    Itau <-> JGP
+13:                                            BNP Paribas <-> Itau
+14:            Bradesco Asset Management <-> Safra Asset Management
+15:                                 Itau <-> Kapitalo Investimentos
+16:                          BTG Pactual <-> Safra Asset Management
+17:                       Bradesco Asset Management <-> BTG Pactual
+18:                                         Itau <-> Vinci Partners
+19: Bradesco Asset Management <-> Santander Brasil Asset Management
+20:         Bradesco Asset Management <-> Julius Baer Family Office
+                                                        par_gestora
+    n_pares_fundo n_ativos_distintos n_fundos_distintos
+            <int>              <int>              <int>
+ 1:         59359                186                646
+ 2:         55552                166                543
+ 3:         42017                164                549
+ 4:         31252                162                460
+ 5:         27903                137                480
+ 6:         26913                164                496
+ 7:         22183                 80                356
+ 8:         18809                147                455
+ 9:         17055                160                529
+10:         16309                112                409
+11:         14256                 53                310
+12:         13397                 81                387
+13:         13000                127                450
+14:         10733                159                351
+15:         10107                 57                333
+16:          9618                153                235
+17:          9053                164                355
+18:          8764                130                414
+19:          7977                158                291
+20:          7353                158                264
+    n_pares_fundo n_ativos_distintos n_fundos_distintos
+
+===== Pares com lideranca CLARA (assimetria>0,2 E forca do lider>0,5): 81400 de 1229196 =====
+Desses, cross-gestora: 62450 
+                     ativo  lider seguidor forca_lideranca assimetria
+                    <char>  <int>    <int>           <num>      <num>
+ 1: IGUATEMI ON NM - IGTA3 348600   248096           0.999      0.685
+ 2:    CIELO ON NM - CIEL3  12882   389668           0.999      0.818
+ 3: IGUATEMI ON NM - IGTA3 348600   359424           0.998      0.632
+ 4: IGUATEMI ON NM - IGTA3 348600    96040           0.998      0.773
+ 5:     AZUL PN N2 - AZUL4  12882   378100           0.998      0.764
+ 6:    CIELO ON NM - CIEL3  12882   241016           0.998      0.806
+ 7:     AZUL PN N2 - AZUL4  12882   378097           0.998      0.777
+ 8:   SABESP ON NM - SBSP3 512249    99597           0.997      0.779
+ 9:   SABESP ON NM - SBSP3 512834    99597           0.997      0.792
+10:     AZUL PN N2 - AZUL4  12882   367990           0.997      0.784
+11:   SABESP ON NM - SBSP3 505269    99597           0.997      0.815
+12:   SABESP ON NM - SBSP3  49336   369160           0.996      0.982
+13:   SMILES ON NM - SMLS3  12882   174513           0.996      0.490
+14:   SMILES ON NM - SMLS3  12882   174505           0.996      0.568
+15:   SABESP ON NM - SBSP3 501417    99597           0.995      0.813
+    mesma_gestora
+           <lgcl>
+ 1:         FALSE
+ 2:         FALSE
+ 3:         FALSE
+ 4:         FALSE
+ 5:         FALSE
+ 6:         FALSE
+ 7:         FALSE
+ 8:         FALSE
+ 9:         FALSE
+10:         FALSE
+11:         FALSE
+12:          TRUE
+13:          TRUE
+14:          TRUE
+15:         FALSE
+
+OK - salvo 'resumo_fundos_hub.csv', 'resumo_pares_gestora.csv', 'pares_lideranca_clara.csv'

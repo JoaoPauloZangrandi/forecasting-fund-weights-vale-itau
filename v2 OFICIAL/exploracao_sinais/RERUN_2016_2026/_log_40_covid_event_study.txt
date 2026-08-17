@@ -1,0 +1,80 @@
+Meses disponiveis 2019-10 a 2021-01:
+ [1] 201910 201911 201912 202001 202002 202003 202004 202005 202006 202007
+[11] 202008 202009 202010 202011 202012 202101
+
+Acoes com HHI valido em 201912: 222
+N final no evento: 217 acoes
+
+===== HHI (dez/2019) prevendo queda durante o crash (fev+mar/2020) =====
+
+Call:
+lm(formula = ret_crash ~ hhi_posse, data = ev)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.39082 -0.10963 -0.01059  0.12152  0.49517 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.39721    0.01319 -30.117   <2e-16 ***
+hhi_posse    0.12744    0.07891   1.615    0.108    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1621 on 215 degrees of freedom
+Multiple R-squared:  0.01198,	Adjusted R-squared:  0.007389 
+F-statistic: 2.608 on 1 and 215 DF,  p-value: 0.1078
+
+
+===== HHI (dez/2019) prevendo retorno na recuperacao (abr-dez/2020) =====
+
+Call:
+lm(formula = ret_recup ~ hhi_posse, data = ev)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8321 -0.4224 -0.1940  0.2574  2.9263 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  0.64478    0.05224  12.342   <2e-16 ***
+hhi_posse   -0.12386    0.31257  -0.396    0.692    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6422 on 215 degrees of freedom
+Multiple R-squared:  0.0007298,	Adjusted R-squared:  -0.003918 
+F-statistic: 0.157 on 1 and 215 DF,  p-value: 0.6923
+
+
+===== HHI (dez/2019) prevendo volatilidade pos-crash (abr-dez/2020) =====
+
+Call:
+lm(formula = vol_pos_crash ~ hhi_posse, data = ev)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.11087 -0.04411 -0.02042  0.02933  0.37350 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 0.125891   0.005338  23.584   <2e-16 ***
+hhi_posse   0.033982   0.031938   1.064    0.289    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.06561 on 215 degrees of freedom
+Multiple R-squared:  0.005238,	Adjusted R-squared:  0.0006112 
+F-statistic: 1.132 on 1 and 215 DF,  p-value: 0.2885
+
+
+===== Por quintil de HHI: media do retorno no crash e na recuperacao =====
+   quintil_hhi     n ret_crash_medio ret_recup_medio vol_pos_crash_media
+         <int> <int>           <num>           <num>               <num>
+1:           1    44      -0.4060149       0.7451835           0.1249242
+2:           2    43      -0.3991884       0.7006761           0.1274317
+3:           3    43      -0.3897984       0.4481178           0.1160899
+4:           4    43      -0.3704615       0.5497642           0.1319344
+5:           5    44      -0.3619689       0.7185289           0.1444616
+
+OK

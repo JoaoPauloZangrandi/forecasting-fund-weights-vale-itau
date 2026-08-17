@@ -1,0 +1,60 @@
+
+
+========== h=3 (n=21529) ==========
+
+SO crowding, h=3 -- 61 meses de regressao cross-sectional valida
+  hhi_posse            coef_medio= -0.055299 | t(FM)=  -0.88 | p(FM)=0.38495 | (61 meses)
+
+SO vol passada, h=3 -- 61 meses de regressao cross-sectional valida
+  vol_passada_12m      coef_medio= +0.264745 | t(FM)=   3.86 | p(FM)=0.00028 | (61 meses)
+
+OS DOIS (Fama-MacBeth correto), h=3 -- 61 meses de regressao cross-sectional valida
+  hhi_posse            coef_medio= -0.073138 | t(FM)=  -1.15 | p(FM)=0.25497 | (61 meses)
+  vol_passada_12m      coef_medio= +0.260246 | t(FM)=   3.73 | p(FM)=0.00043 | (61 meses)
+
+
+========== h=6 (n=21389) ==========
+
+SO crowding, h=6 -- 60 meses de regressao cross-sectional valida
+  hhi_posse            coef_medio= -0.167536 | t(FM)=  -1.87 | p(FM)=0.06582 | (60 meses)
+
+SO vol passada, h=6 -- 60 meses de regressao cross-sectional valida
+  vol_passada_12m      coef_medio= +0.129322 | t(FM)=   1.02 | p(FM)=0.31182 | (60 meses)
+
+OS DOIS (Fama-MacBeth correto), h=6 -- 60 meses de regressao cross-sectional valida
+  hhi_posse            coef_medio= -0.190241 | t(FM)=  -2.11 | p(FM)=0.03872 | (60 meses)
+  vol_passada_12m      coef_medio= +0.126514 | t(FM)=   0.99 | p(FM)=0.32842 | (60 meses)
+
+
+========== h=12 (n=20814) ==========
+
+SO crowding, h=12 -- 58 meses de regressao cross-sectional valida
+  hhi_posse            coef_medio= -0.148541 | t(FM)=  -2.10 | p(FM)=0.03972 | (58 meses)
+
+SO vol passada, h=12 -- 58 meses de regressao cross-sectional valida
+  vol_passada_12m      coef_medio= +0.012807 | t(FM)=   0.08 | p(FM)=0.93485 | (58 meses)
+
+OS DOIS (Fama-MacBeth correto), h=12 -- 58 meses de regressao cross-sectional valida
+  hhi_posse            coef_medio= -0.152289 | t(FM)=  -2.13 | p(FM)=0.03711 | (58 meses)
+  vol_passada_12m      coef_medio= +0.007977 | t(FM)=   0.05 | p(FM)=0.95997 | (58 meses)
+
+
+===== RESUMO FINAL: crowding sobrevive ao controle, com Fama-MacBeth de verdade? =====
+                            sinal  variavel horizonte n_meses  coef_medio
+                           <char>    <char>     <num>   <int>       <num>
+1:                    SO crowding hhi_posse         3      61 -0.05529904
+2: OS DOIS (Fama-MacBeth correto) hhi_posse         3      61 -0.07313847
+3:                    SO crowding hhi_posse         6      60 -0.16753586
+4: OS DOIS (Fama-MacBeth correto) hhi_posse         6      60 -0.19024070
+5:                    SO crowding hhi_posse        12      58 -0.14854090
+6: OS DOIS (Fama-MacBeth correto) hhi_posse        12      58 -0.15228863
+        t_fm       p_fm
+       <num>      <num>
+1: -0.875202 0.38495416
+2: -1.149349 0.25497328
+3: -1.874443 0.06582277
+4: -2.114353 0.03872075
+5: -2.104867 0.03972283
+6: -2.134524 0.03711298
+
+OK

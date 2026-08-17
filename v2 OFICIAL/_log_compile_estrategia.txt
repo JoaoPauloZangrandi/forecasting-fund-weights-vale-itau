@@ -1,0 +1,167 @@
+Rc files read (in order):
+  NONE
+Latexmk: This is Latexmk, John Collins, 9 March 2026. Version 4.88.
+Latexmk: applying rule 'pdflatex'...
+Rule 'pdflatex':  Reasons for rerun
+Changed files or newly in use/created:
+  teste_estrategia.tex
+Category 'changed_user':
+  teste_estrategia.tex
+
+------------
+Run number 1 of rule 'pdflatex'
+------------
+------------
+Running 'pdflatex  -interaction=nonstopmode -halt-on-error -recorder  "teste_estrategia.tex"'
+------------
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex.fmt)
+ restricted \write18 enabled.
+entering extended mode
+(teste_estrategia.tex
+LaTeX2e <2023-11-01> patch level 1
+L3 programming layer <2024-01-04>
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\fontenc.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
+*************************************
+* Local config file bblopts.cfg used
+*
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/babel-portuges\brazil.l
+df))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsmath.sty
+For additional information on amsmath, use the `?' option.
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amstext.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsgen.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsbsy.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsmath\amsopn.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amssymb.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\amsfonts.sty))
+ (C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/caption\caption3.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.c
+fg)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
+)))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/setspace\setspace.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+) (C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/placeins\placeins.sty
+) (C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/tools\longtable.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/float\float.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.s
+ty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefine
+keys.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.s
+ty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds
+.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro
+.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettit
+lestring.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
+)))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc
+.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty)
+
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfil
+echeck.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquec
+ounter.sty)))
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdf
+tex.def) (teste_estrategia.aux)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/caption\ltcaption.sty)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
+ii
+[Loading MPS to PDF converter (version 2006.09.02).]
+)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-b
+ase.sty
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.c
+fg)) (teste_estrategia.out) (teste_estrategia.out)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/base\t1cmtt.fd)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd)
+(C:\Users\joaoz\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd)
+(teste_estrategia.toc) [1{C:/Users/joaoz/AppData/Local/MiKTeX/fonts/map/pdftex/
+pdftex.map}] [2] [3] [4 <./figuras_estrategia/fig1_margem_bruto_vs_corrigido.pd
+f>] [5 <./figuras_estrategia/fig2_top_pares_gestora.pdf>] [6 <./figuras_estrate
+gia/fig3_top_compra_venda.pdf>] [7 <./figuras_estrategia/fig5_dispersao_fluxo_r
+etorno.pdf>]
+Underfull \hbox (badness 4765) in paragraph at lines 354--355
+[]\T1/cmr/m/n/10 Seção 5, 1.272.131 pa-res,
+
+Underfull \hbox (badness 1635) in paragraph at lines 355--355
+[]\T1/cmr/m/n/10 Validado \T1/cmr/m/it/10 den-tro da
+[8 <./figuras_estrategia/fig4_quintis_retorno.pdf>] [9] (teste_estrategia.aux) 
+)
+(see the transcript file for additional information) <C:\Users\joaoz\AppData\Lo
+cal\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\joaoz\AppD
+ata\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0700.pk> <C:\Users\joao
+z\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\User
+s\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1095.pk> <C
+:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.
+pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ect
+i1000.pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi6
+00\ectt1000.pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/e
+c/dpi600\ecrm1000.pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfour/jkna
+ppen/ec/dpi600\ecbx1000.pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk/ljfou
+r/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fonts/pk
+/ljfour/jknappen/ec/dpi600\ectt1095.pk> <C:\Users\joaoz\AppData\Local\MiKTeX\fo
+nts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\joaoz\AppData\Local\MiK
+TeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\joaoz\AppData\Loc
+al\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk><C:/Users/joaoz/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/joa
+oz/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/
+Users/joaoz/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.
+pfb><C:/Users/joaoz/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
+m/cmmib10.pfb><C:/Users/joaoz/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmr10.pfb><C:/Users/joaoz/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmr7.pfb><C:/Users/joaoz/AppData/Local/Programs/MiKTeX/font
+s/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/joaoz/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Users/joaoz/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Users/joaoz/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on teste_estrategia.pdf (9 pages, 834684 bytes).
+Transcript written on teste_estrategia.log.
+Latexmk: Getting log file 'teste_estrategia.log'
+Latexmk: Examining 'teste_estrategia.fls'
+Latexmk: Examining 'teste_estrategia.log'
+Latexmk: Log file says output to 'teste_estrategia.pdf'
+Latexmk: All targets (teste_estrategia.pdf) are up-to-date
+

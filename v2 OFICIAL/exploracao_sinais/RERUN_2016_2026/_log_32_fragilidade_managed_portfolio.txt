@@ -1,0 +1,21 @@
+Painel base: 24771 obs (ticker-mes), 98 meses, 453 tickers
+
+===== DESENHO B: fragility-tilted (peso inverso ao decil de HHI) vs equal-weight =====
+Tilt por HHI  : Sharpe=0.285 | vol_anual=27.23% | ret_anual=7.75% | max_DD=-41.87%
+Equal-weight  : Sharpe=0.237 | vol_anual=26.56% | ret_anual=6.30% | max_DD=-40.54%
+Correlacao tilt x ew: 0.988 | N meses teste: 62
+
+===== DESENHO A: fragility-managed market timing vs buy-hold vs vol-managed classico =====
+ret_buyhold        Sharpe=0.237 | vol_anual=26.56% | ret_anual=6.30% | max_DD=-40.54%
+ret_hhi_managed    Sharpe=0.186 | vol_anual=38.12% | ret_anual=7.07% | max_DD=-59.84%
+ret_vol_managed    Sharpe=-0.061 | vol_anual=28.93% | ret_anual=-1.76% | max_DD=-52.11%
+N meses teste: 62
+
+===== DESENHO C: long-short fragilidade (baixo-HHI menos alto-HHI) =====
+Media mensal: 0.0054 | t=0.49 | p=0.6258 | N=62 meses
+Skewness do spread: 4.864  (negativo = assinatura de 'seguro contra choque', tipo Schneider-Wagner-Zechner 2020)
+Correlacao spread x retorno de mercado contemporaneo: 0.057
+Media do spread em 1/3 dos meses de MAIOR vol de mercado passada: 0.0163 (n=21)
+Media do spread no resto dos meses (menor vol passada)         : -0.0002 (n=41)
+
+OK

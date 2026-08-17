@@ -1,0 +1,8 @@
+===== ALVO 1: RETORNO FUTURO =====
+
+Tamanho medio dos fundos donos (log AUM)         h=1 [linear]  beta=+0.00201 R2_OOS= -0.054% p_full=0.0009
+Tamanho medio dos fundos donos (log AUM)         h=1 [FM-recut] 62 meses n_min= 14 spread=-0.477pp t= -1.21 p=0.2293
+Error in cut.default(x, quantile(x, 0:5/5, na.rm = TRUE), include.lowest = TRUE) : 
+  'breaks' não são únicos
+Calls: fama_macbeth_recut -> [ -> [.data.table -> cut -> cut.default
+Execução interrompida

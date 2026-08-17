@@ -1,0 +1,12 @@
+h1: 9016081 obs | 43 gestoras
+h3: 9399282 obs | 43 gestoras
+Dificeis (maior RMSE h1): Guepardo Investimentos, AZ Quest, Squadra Investimentos 
+Faceis (menor RMSE h1): Gávea Investimentos, Legacy Capital, TNA Gestão Patrimonial 
+null device 
+          1 
+Figura A OK
+null device 
+          1 
+Figura B OK
+
+OK - 2 figuras salvas em 'v2 OFICIAL/figuras/'

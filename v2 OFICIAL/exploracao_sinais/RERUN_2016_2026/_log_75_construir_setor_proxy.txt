@@ -1,0 +1,28 @@
+Tickers unicos: 1293 
+
+Distribuicao de setores atribuidos:
+setor
+Alimentos, Bebidas e Agropecuaria                            Bancos 
+                               49                                97 
+         Construcao e Imobiliario                          Educacao 
+                               81                                17 
+                 Energia Eletrica       Industria e Bens de Capital 
+                              168                                46 
+        Infraestrutura de Mercado            Mineracao e Siderurgia 
+                                6                                51 
+                 Papel e Celulose                    Petroleo e Gas 
+                               13                                34 
+         Quimicos e Petroquimicos                  Saneamento e Gas 
+                               13                                20 
+                            Saude                           Seguros 
+                               35                                16 
+                       Tecnologia                  Telecomunicacoes 
+                               32                                26 
+               Textil e Vestuario            Transporte e Logistica 
+                               36                                54 
+                           Varejo                              <NA> 
+                               66                               433 
+
+860 de 1293 tickers (66.5%) classificados em algum setor.
+
+OK -- salvo em setor_proxy_tickers.csv

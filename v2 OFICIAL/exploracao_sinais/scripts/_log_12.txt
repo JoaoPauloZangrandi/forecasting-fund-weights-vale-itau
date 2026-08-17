@@ -1,0 +1,40 @@
+Ativo-mes com momentum + ownership rank disponiveis: 15621 
+===== (O) Momentum x Ownership institucional, interacao =====
+h= 1: n_tr= 9131 n_te=6346 | R2_OOS=-0.3311% | coef_interacao(treino)=-0.01200
+  [amostra inteira] coeficientes:
+            Estimate Std. Error  t value Pr(>|t|)
+(Intercept)  0.02184    0.00304  7.19410  0.00000
+mom_12m      0.01360    0.00420  3.24227  0.00119
+own_rank     0.00016    0.00536  0.02996  0.97610
+mom_x_own   -0.01200    0.00753 -1.59305  0.11118
+h= 3: n_tr= 9066 n_te=5719 | R2_OOS=-0.3448% | coef_interacao(treino)=-0.01750
+  [amostra inteira] coeficientes:
+            Estimate Std. Error  t value Pr(>|t|)
+(Intercept)  0.01383    0.00338  4.09308  0.00004
+mom_12m      0.00908    0.00466  1.94639  0.05164
+own_rank    -0.00193    0.00597 -0.32257  0.74703
+mom_x_own   -0.01750    0.00839 -2.08586  0.03702
+h= 6: n_tr= 8958 n_te=4817 | R2_OOS=-0.0913% | coef_interacao(treino)=0.00149
+  [amostra inteira] coeficientes:
+            Estimate Std. Error  t value Pr(>|t|)
+(Intercept)  0.02770    0.00357  7.75243  0.00000
+mom_12m      0.00230    0.00493  0.46551  0.64158
+own_rank    -0.01290    0.00631 -2.04558  0.04083
+mom_x_own    0.00149    0.00886  0.16843  0.86625
+h=12: n_tr= 8758 n_te=3113 | R2_OOS= 0.2361% | coef_interacao(treino)=0.02107
+  [amostra inteira] coeficientes:
+            Estimate Std. Error  t value Pr(>|t|)
+(Intercept)  0.03121    0.00371  8.40524  0.00000
+mom_12m     -0.00826    0.00512 -1.61409  0.10654
+own_rank    -0.02103    0.00654 -3.21404  0.00131
+mom_x_own    0.02107    0.00919  2.29323  0.02186
+
+===== Momentum (Q5-Q1) SEPARADO por tercil de ownership =====
+Momentum spread, ownership=ALTA   h= 1 | 24 meses | spread= +1.80pp/mes | t= 1.38 | p=0.1810
+Momentum spread, ownership=BAIXA  h= 1 | 24 meses | spread= +4.53pp/mes | t= 2.34 | p=0.0284
+Momentum spread, ownership=ALTA   h= 3 | 22 meses | spread= +1.40pp/mes | t= 0.78 | p=0.4462
+Momentum spread, ownership=BAIXA  h= 3 | 22 meses | spread= +2.63pp/mes | t= 2.13 | p=0.0453
+Momentum spread, ownership=ALTA   h= 6 | 19 meses | spread= -1.40pp/mes | t=-0.89 | p=0.3862
+Momentum spread, ownership=BAIXA  h= 6 | 19 meses | spread= +1.72pp/mes | t= 1.02 | p=0.3208
+
+OK

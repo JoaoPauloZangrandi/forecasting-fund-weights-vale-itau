@@ -1,0 +1,26 @@
+Ativo-mes com segmento definido: 25933 | segmentos distintos: 9 
+Obs (fundo,acao,mes) com segmento+skill disponiveis: 7600702 
+Obs com desvio calculavel (>=2 acoes do fundo no segmento): 7526268 
+Ativo-mes com Stock IQ calculavel (>=10 fundos): 12593 
+
+===== STOCK IQ: teste fora da amostra, h=1 a h=4 (igual ao paper original) =====
+Stock IQ        h=1 [linear] n_tr= 7154 n_te=5217 beta=  0.00631 R2_OOS=  0.0000% p_full=0.7994
+   [N por quintil-mes] min=1 mediana=32 max=74
+Stock IQ        h=1 [FM] 24 meses spread=  -0.81pp/mes t= -0.79 p=0.4352
+Stock IQ        h=2 [linear] n_tr= 7126 n_te=5206 beta= -0.51136 R2_OOS= -0.0048% p_full=0.8237
+   [N por quintil-mes] min=1 mediana=32 max=74
+Stock IQ        h=2 [FM] 24 meses spread=  -1.61pp/mes t= -1.83 p=0.0797
+Stock IQ        h=3 [linear] n_tr= 7098 n_te=5184 beta= -0.20747 R2_OOS= -0.0024% p_full=0.7726
+   [N por quintil-mes] min=1 mediana=33 max=74
+Stock IQ        h=3 [FM] 23 meses spread=  +0.78pp/mes t=  0.84 p=0.4112
+Stock IQ        h=4 [linear] n_tr= 7067 n_te=5159 beta=  1.69706 R2_OOS=  0.0122% p_full=0.2029
+   [N por quintil-mes] min=1 mediana=32 max=74
+Stock IQ        h=4 [FM] 24 meses spread=  +1.05pp/mes t=  1.52 p=0.1414
+Stock IQ        h=6 [linear] n_tr= 7014 n_te=5111 beta= -0.37858 R2_OOS=  0.0014% p_full=0.7917
+   [N por quintil-mes] min=1 mediana=31 max=74
+Stock IQ        h=6 [FM] 24 meses spread=  -0.06pp/mes t= -0.08 p=0.9396
+Stock IQ        h=12 [linear] n_tr= 6853 n_te=4936 beta= -0.02312 R2_OOS= -0.0000% p_full=0.8937
+   [N por quintil-mes] min=1 mediana=31 max=71
+Stock IQ        h=12 [FM] 24 meses spread=  -0.24pp/mes t= -0.28 p=0.7808
+
+OK

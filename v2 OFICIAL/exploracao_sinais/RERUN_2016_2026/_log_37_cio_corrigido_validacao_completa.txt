@@ -1,0 +1,43 @@
+===== 1) Fama-MacBeth: peer_ret sobrevive controlando tamanho/beta/retorno proprio? =====
+
+So' peer_ret (62 meses):
+  peer_ret_z       coef_medio= +0.00097 | t=  0.52 | p=0.6077
+
+peer_ret + tamanho + beta + retorno proprio (62 meses):
+  peer_ret_z       coef_medio= +0.00114 | t=  0.70 | p=0.4867
+  tamanho_z        coef_medio= +0.00021 | t=  0.07 | p=0.9418
+  beta_z           coef_medio= -0.00678 | t= -1.45 | p=0.1510
+  ret_proprio_z    coef_medio= -0.00018 | t= -0.06 | p=0.9510
+
+===== 2) Long-short com re-corte mensal, para varios horizontes =====
+h=1: 62 meses | Sharpe=0.727 | media=0.854%/mes (10.2%/ano) | t=1.65 | p=0.1037 | n_min_perna=17
+h=3: 60 meses | Sharpe=0.306 | media=0.428%/mes (5.1%/ano) | t=0.68 | p=0.4963 | n_min_perna=17
+h=6: 58 meses | Sharpe=0.292 | media=0.363%/mes (4.4%/ano) | t=0.64 | p=0.5232 | n_min_perna=16
+
+===== Custo de transacao (h=1, magnitude CORRIGIDA) =====
+Spread bruto: 0.854%/mes (10.2%/ano)
+  Custo 30bps round-trip/perna: liquido=0.254%/mes (3.0%/ano)
+  Custo 50bps round-trip/perna: liquido=-0.146%/mes (-1.8%/ano)
+  Custo 100bps round-trip/perna: liquido=-1.146%/mes (-13.8%/ano)
+  Custo 150bps round-trip/perna: liquido=-2.146%/mes (-25.8%/ano)
+
+===== 3) Tickers mais frequentes na perna VENDIDA (Q1) em h=1, 24 meses =====
+    ticker     N
+    <char> <int>
+ 1:  DOHL4    27
+ 2:  CEED4    25
+ 3:  CEEB3    23
+ 4:  TASA3    23
+ 5:  MNPR3    22
+ 6:  MTRE3    22
+ 7:  OIBR4    22
+ 8:  BPAC3    21
+ 9:  CBEE3    21
+10:  CTNM4    21
+11:  KLBN3    21
+12:  AMAR3    20
+13:  BOBR4    20
+14:  CEED3    20
+15:  HBOR3    20
+
+OK

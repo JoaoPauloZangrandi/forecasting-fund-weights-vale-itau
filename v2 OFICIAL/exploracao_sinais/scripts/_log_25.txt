@@ -1,0 +1,44 @@
+===== LOW VOLATILITY, sozinha (LONG baixa vol, SHORT alta vol -- inverte sinal do quintil) =====
+Low-vol (Q5=baixa)             h=1 24 meses spread=  -1.25pp/mes (~ -14.0%/ano) t= -0.79 p=0.43812 | Bonferroni:nao
+Low-vol (Q5=baixa)             h=3 22 meses spread=  -1.81pp/mes (~ -19.7%/ano) t= -1.17 p=0.25552 | Bonferroni:nao
+Low-vol (Q5=baixa)             h=6 19 meses spread=  -0.17pp/mes (~  -2.0%/ano) t= -0.12 p=0.90737 | Bonferroni:nao
+Low-vol (Q5=baixa)             h=12 13 meses spread=  -0.36pp/mes (~  -4.2%/ano) t= -0.23 p=0.82486 | Bonferroni:nao
+
+===== LOW VOLATILITY x OWNERSHIP institucional =====
+Low-vol|BAIXA-own              h=1 24 meses spread=  -1.47pp/mes (~ -16.3%/ano) t= -0.75 p=0.46304 | Bonferroni:nao
+Low-vol|ALTA-own               h=1 22 meses spread=  +0.31pp/mes (~  +3.7%/ano) t=  0.18 p=0.85893 | Bonferroni:nao
+Low-vol|BAIXA-own              h=3 22 meses spread=  -1.93pp/mes (~ -20.8%/ano) t= -0.94 p=0.36037 | Bonferroni:nao
+Low-vol|ALTA-own               h=3 20 meses spread=  -1.53pp/mes (~ -16.8%/ano) t= -0.99 p=0.33282 | Bonferroni:nao
+
+===== COMBINACAO: Low-vol + CIO Peer Momentum (dupla filtragem) =====
+CIO dentro de Low-vol          h=1 17 meses spread=  +1.59pp/mes (~ +20.8%/ano) t=  1.76 p=0.09718 | Bonferroni:nao
+CIO dentro de Low-vol          h=3 15 meses spread=  +0.06pp/mes (~  +0.7%/ano) t=  0.03 p=0.97335 | Bonferroni:nao
+
+
+===== RESUMO =====
+                    sinal horizonte n_meses spread_pp  t_fm    p_fm
+                   <char>     <num>   <int>     <num> <num>   <num>
+ 1: CIO dentro de Low-vol         1      17      1.59  1.76 0.09718
+ 2:    Low-vol (Q5=baixa)         3      22     -1.81 -1.17 0.25552
+ 3:      Low-vol|ALTA-own         3      20     -1.53 -0.99 0.33282
+ 4:     Low-vol|BAIXA-own         3      22     -1.93 -0.94 0.36037
+ 5:    Low-vol (Q5=baixa)         1      24     -1.25 -0.79 0.43812
+ 6:     Low-vol|BAIXA-own         1      24     -1.47 -0.75 0.46304
+ 7:    Low-vol (Q5=baixa)        12      13     -0.36 -0.23 0.82486
+ 8:      Low-vol|ALTA-own         1      22      0.31  0.18 0.85893
+ 9:    Low-vol (Q5=baixa)         6      19     -0.17 -0.12 0.90737
+10: CIO dentro de Low-vol         3      15      0.06  0.03 0.97335
+    sig_bonferroni
+            <lgcl>
+ 1:          FALSE
+ 2:          FALSE
+ 3:          FALSE
+ 4:          FALSE
+ 5:          FALSE
+ 6:          FALSE
+ 7:          FALSE
+ 8:          FALSE
+ 9:          FALSE
+10:          FALSE
+
+OK

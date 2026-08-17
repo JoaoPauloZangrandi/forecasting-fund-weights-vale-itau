@@ -1,0 +1,114 @@
+===== (1) Reconfirmando baseline h=6 e ALTO-HHI(mediana) h=6, com a serie de spreads mensais =====
+Reversao|baseline                        h=6 19 meses n_min= 42 spread= -2.404pp/mes (  -25.3%/ano) Sharpe=-2.66 t= -3.35 p=0.00356 | Bonf:nao
+Reversao|ALTO-HHI(mediana)               h=6 19 meses n_min= 22 spread= -2.966pp/mes (  -30.3%/ano) Sharpe=-3.50 t= -4.40 p=0.00034 | Bonf:nao
+
+Serie de spreads mensais (baseline h=6):
+Chave: <ym>
+        ym           q1          q5       spread
+     <int>        <num>       <num>        <num>
+ 1: 202001  0.096197217  0.03452821 -0.061669007
+ 2: 202002 -0.009653177 -0.01538453 -0.005731351
+ 3: 202003 -0.016432768 -0.04495927 -0.028526505
+ 4: 202004  0.003109192 -0.01490279 -0.018011979
+ 5: 202005  0.140093766  0.15000362  0.009909851
+ 6: 202006  0.068424722  0.04216476 -0.026259963
+ 7: 202007 -0.033773094 -0.04416408 -0.010390983
+ 8: 202008  0.025344288 -0.06946962 -0.094813905
+ 9: 202009  0.064411311  0.07838349  0.013972180
+10: 202010  0.119714978  0.09297662 -0.026738354
+11: 202011  0.021989311  0.02814841  0.006159097
+12: 202012  0.067827179  0.02614040 -0.041686783
+13: 202101 -0.015362991 -0.05947462 -0.044111627
+14: 202102 -0.023060104 -0.06356880 -0.040508695
+15: 202103 -0.062898124 -0.11208159 -0.049183469
+16: 202104 -0.127557905 -0.08189740  0.045660510
+17: 202105 -0.003497271 -0.05087457 -0.047377301
+18: 202106  0.074906993  0.05717738 -0.017729612
+19: 202107 -0.072371910 -0.09201009 -0.019638178
+
+Serie de spreads mensais (ALTO-HHI h=6):
+Chave: <ym>
+        ym            q1          q5       spread
+     <int>         <num>       <num>        <num>
+ 1: 202001  5.353324e-02 -0.01120484 -0.064738084
+ 2: 202002  3.088757e-05 -0.01234349 -0.012374382
+ 3: 202003 -5.101043e-03 -0.06128041 -0.056179367
+ 4: 202004  3.127840e-02 -0.02777532 -0.059053715
+ 5: 202005  1.430641e-01  0.12427588 -0.018788271
+ 6: 202006  7.266684e-02  0.03926567 -0.033401168
+ 7: 202007 -9.058630e-03 -0.03193226 -0.022873629
+ 8: 202008  1.181180e-02 -0.08408732 -0.095899117
+ 9: 202009  9.159005e-02  0.08611021 -0.005479836
+10: 202010  1.324966e-01  0.12209201 -0.010404638
+11: 202011 -4.075699e-03  0.01391249  0.017988189
+12: 202012  7.432981e-02  0.02634614 -0.047983670
+13: 202101 -1.816006e-02 -0.06405260 -0.045892545
+14: 202102 -1.175083e-02 -0.06336441 -0.051613579
+15: 202103 -8.834977e-02 -0.08169473  0.006655044
+16: 202104 -1.002964e-01 -0.09126622  0.009030170
+17: 202105 -3.259780e-02 -0.07729686 -0.044699058
+18: 202106  7.036152e-02  0.05317872 -0.017182797
+19: 202107 -8.033137e-02 -0.09099475 -0.010663389
+
+===== (2) Um mes domina o spread? (baseline) =====
+Media total (todos os 19 meses): -0.0240
+  sem 202001: media = -0.0219 (contribuicao do mes: -0.0021)
+  sem 202002: media = -0.0251 (contribuicao do mes: +0.0010)
+  sem 202003: media = -0.0238 (contribuicao do mes: -0.0002)
+  sem 202004: media = -0.0244 (contribuicao do mes: +0.0003)
+  sem 202005: media = -0.0259 (contribuicao do mes: +0.0019)
+  sem 202006: media = -0.0239 (contribuicao do mes: -0.0001)
+  sem 202007: media = -0.0248 (contribuicao do mes: +0.0008)
+  sem 202008: media = -0.0201 (contribuicao do mes: -0.0039)
+  sem 202009: media = -0.0261 (contribuicao do mes: +0.0021)
+  sem 202010: media = -0.0239 (contribuicao do mes: -0.0002)
+  sem 202011: media = -0.0257 (contribuicao do mes: +0.0017)
+  sem 202012: media = -0.0231 (contribuicao do mes: -0.0010)
+  sem 202101: media = -0.0229 (contribuicao do mes: -0.0011)
+  sem 202102: media = -0.0231 (contribuicao do mes: -0.0009)
+  sem 202103: media = -0.0226 (contribuicao do mes: -0.0014)
+  sem 202104: media = -0.0279 (contribuicao do mes: +0.0039)
+  sem 202105: media = -0.0227 (contribuicao do mes: -0.0013)
+  sem 202106: media = -0.0244 (contribuicao do mes: +0.0004)
+  sem 202107: media = -0.0243 (contribuicao do mes: +0.0002)
+
+===== (3) Robustez excluindo 2020 inteiro (so' 2021+) =====
+Reversao|baseline SO 2021+               h=6  7 meses n_min= 42 spread= -2.470pp/mes (  -25.9%/ano) Sharpe=-2.55 t= -1.95 p=0.09960 | Bonf:nao
+Reversao|ALTO-HHI SO 2021+               h=6  7 meses n_min= 22 spread= -2.205pp/mes (  -23.5%/ano) Sharpe=-3.00 t= -2.29 p=0.06204 | Bonf:nao
+
+===== (4) So' meses de 2020 (pra comparar) =====
+Reversao|baseline SO 2020                h=6 12 meses n_min= 43 spread= -2.365pp/mes (  -25.0%/ano) Sharpe=-2.61 t= -2.61 p=0.02424 | Bonf:nao
+
+===== (5) Formation window de 3 meses (retorno acumulado t-2 a t, sinal invertido) -- mais proximo da literatura classica de momentum =====
+Reversao(formacao 3m)|baseline           h=6 19 meses n_min= 42 spread= -1.163pp/mes (  -13.1%/ano) Sharpe=-1.10 t= -1.39 p=0.18232 | Bonf:nao
+Reversao(formacao 3m)|ALTO-HHI           h=6 19 meses n_min= 21 spread= -1.192pp/mes (  -13.4%/ano) Sharpe=-0.96 t= -1.21 p=0.24063 | Bonf:nao
+
+===== (6) Verificando outros horizontes com a MESMA janela de formacao 1m (h=1,2,3,4,5,6,9,12) pra ver se o padrao decai suavemente ou aparece isolado em h=6 =====
+Reversao|baseline                        h=1 24 meses n_min= 44 spread= -0.366pp/mes (   -4.3%/ano) Sharpe=-0.18 t= -0.26 p=0.79698 | Bonf:nao
+Reversao|baseline                        h=2 23 meses n_min= 44 spread= -1.771pp/mes (  -19.3%/ano) Sharpe=-1.44 t= -1.99 p=0.05863 | Bonf:nao
+Reversao|baseline                        h=3 22 meses n_min= 44 spread= +0.199pp/mes (   +2.4%/ano) Sharpe= 0.12 t=  0.16 p=0.87053 | Bonf:nao
+Reversao|baseline                        h=4 21 meses n_min= 43 spread= -0.422pp/mes (   -4.9%/ano) Sharpe=-0.34 t= -0.44 p=0.66189 | Bonf:nao
+Reversao|baseline                        h=5 20 meses n_min= 43 spread= -2.354pp/mes (  -24.9%/ano) Sharpe=-1.90 t= -2.46 p=0.02382 | Bonf:nao
+Reversao|baseline                        h=6 19 meses n_min= 42 spread= -2.404pp/mes (  -25.3%/ano) Sharpe=-2.66 t= -3.35 p=0.00356 | Bonf:nao
+Reversao|baseline                        h=9 16 meses n_min= 40 spread= +0.584pp/mes (   +7.2%/ano) Sharpe= 0.45 t=  0.52 p=0.61345 | Bonf:nao
+Reversao|baseline                        h=12 13 meses n_min= 37 spread= +0.521pp/mes (   +6.4%/ano) Sharpe= 0.55 t=  0.57 p=0.57931 | Bonf:nao
+
+Padrao entre horizontes (deveria ser suave se for sinal real, nao isolado):
+   horizonte  spread_pp       t_fm        p_fm
+       <num>      <num>      <num>       <num>
+1:         1 -0.3660580 -0.2602644 0.796975696
+2:         2 -1.7705478 -1.9945612 0.058627043
+3:         3  0.1994140  0.1649935 0.870527051
+4:         4 -0.4219084 -0.4438903 0.661887254
+5:         5 -2.3541906 -2.4564590 0.023824179
+6:         6 -2.4035583 -3.3501093 0.003564065
+7:         9  0.5842667  0.5158964 0.613447111
+8:        12  0.5213416  0.5698264 0.579307218
+
+===== (7) Fama-MacBeth regressao continua (nao quintil), controlando HHI simultaneamente, h=6 =====
+Meses com regressao valida: 19
+  rev_z      coef_medio= -0.00816 | t= -3.18 | p=0.0052
+  hhi_z      coef_medio= +0.00660 | t=  1.84 | p=0.0821
+  inter_z    coef_medio= -0.00145 | t= -0.46 | p=0.6489
+
+OK

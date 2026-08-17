@@ -1,0 +1,512 @@
+=== RODANDO scripts/58_merge_final_universo_completo.R (Wed Aug 12 15:59:05     2026) ===
+Painel multiativo (universo completo): 10743850 linhas
+Apos merge AUM/cotistas/fluxo/FIC: 10743850 linhas (deve ser igual a antes)
+Apos merge beta_fundo: 10743850 linhas (deve ser igual a antes)
+
+Apos exigir as 5 caracteristicas completas: 8371607 linhas | 2572 fundos | 513 ativos
+VALE3 na amostra final (universo completo): 72845 (pipeline original tinha 8.335 no universo VALE3-ancorado -- comparar de perto)
+
+OK - salvo em 'v2 OFICIAL/data/painel_universo_completo_final.csv'
+=== FIM scripts/58_merge_final_universo_completo.R (exit 0) (Wed Aug 12 15:59:15     2026) ===
+=== RODANDO scripts/59_cross_section_universo_completo.R (Wed Aug 12 15:59:15     2026) ===
+Painel: 8371607 linhas | 2572 fundos | 513 ativos
+Fundo-meses unicos p/ padronizacao: 90283 
+
+Celulas (ativo,mes) com >=15 holders: 13958 | 430 ativos distintos | 8360464 obs
+Tempo: 57.7 s | 13939 celulas estimadas | 19 celulas nao convergiram (excluidas)
+
+==== Ativos com >=24 meses estimados: 236 ====
+--- por sinal do coeficiente (log-odds) ---
+b_aum    mediana=-0.05049 | % mesmo sinal que VALE3=64.0%
+b_cot    mediana= 0.14602 | % mesmo sinal que VALE3=75.8%
+b_fic    mediana=-0.09351 | % mesmo sinal que VALE3=59.3%
+b_flow   mediana= 0.22270 | % mesmo sinal que VALE3=35.2%
+b_betaf  mediana= 1.04930 | % mesmo sinal que VALE3=97.5%
+Pseudo-R2 medio: 0.4473 
+
+OK - salvo em 'theta_universo_completo.csv', 'peso_pred_universo_completo.csv' e 'theta_media_ativo_universo_completo.csv'
+=== FIM scripts/59_cross_section_universo_completo.R (exit 0) (Wed Aug 12 16:00:18     2026) ===
+=== RODANDO scripts/61_ajuste_parcial_universo_completo.R (Wed Aug 12 16:00:18     2026) ===
+Base peso_pred: 8353207 obs
+Pares (t,t+1) disponiveis: 7576853 
+
+Cobertura de retorno de ativo: 7555316 de 7576853  (99.7%)
+Cobertura de retorno de fundo: 7576696 de 7576853  (100.0%)
+
+Pares com dw_corrigido calculavel (precisa de r_ativo E retorno_fundo): 7555159  de 7576853 (99.7%)
+
+===== Amostra comum (so onde dw_corrigido existe), n = 7555159 =====
+lambda SEM correcao mecanica  = 0.0640 (R2=0.0301)
+lambda COM correcao mecanica  = 0.0639 (R2=0.0323)
+
+Diferenca (corrigido - bruto): -0.0001 (-0.1% do valor bruto)
+
+[referencia] lambda SEM correcao, amostra INTEIRA (n=7576853) = 0.0635
+
+OK - salvo em 'v2 OFICIAL/data/ajuste_parcial_universo_completo_h1.csv'
+=== FIM scripts/61_ajuste_parcial_universo_completo.R (exit 0) (Wed Aug 12 16:00:38     2026) ===
+=== RODANDO scripts/62_etapa3_universo_completo.R (Wed Aug 12 16:00:38     2026) ===
+
+h=1: treino 3763877 obs | teste 3812976 obs | teste com dw_corrigido: 3801929 (99.7%)
+lambda treino, h=1 -- bruto: 0.0642 | corrigido: 0.0659
+
+h=3: treino 3523020 obs | teste 3191934 obs | teste com dw_corrigido: 3187210 (99.9%)
+lambda treino, h=3 -- bruto: 0.1324 | corrigido: 0.1324
+
+===== RMSE fora da amostra, por ativo, h=1 (bruto vs corrigido) =====
+Ativos com >=100 obs de teste: 343 
+Mediana margem BRUTO: 1.52 % | mediana margem CORRIGIDO: 0.99 %
+Ajuste parcial vence ingenua (bruto): 73.5 % | (corrigido): 61.5 %
+
+===== VALE3 especifico, h=1 =====
+                ativo n_obs rmse_naive_bruto rmse_oos_bruto rmse_naive_corr
+               <char> <int>            <num>          <num>           <num>
+1: VALE ON N1 - VALE3 32164       0.01501607     0.01483515      0.01443199
+   rmse_oos_corr margem_bruto margem_corr
+           <num>        <num>       <num>
+1:    0.01412518     1.204823    2.125877
+
+OK - salvo em 'v2 OFICIAL/data/etapa3_universo_completo_h1.csv' / '_h3.csv' / '_por_ativo_h1.csv'
+=== FIM scripts/62_etapa3_universo_completo.R (exit 0) (Wed Aug 12 16:01:01     2026) ===
+=== RODANDO scripts/63_pares_replicantes.R (Wed Aug 12 16:01:01     2026) ===
+Base de erro (u), antes do filtro de posicao-poeira: 7555159 obs
+Apos filtro de posicao-poeira (peso mediano celula >=0,1%): 3108905 obs | 351 ativos
+Ativos com >=2 fundos (apos filtro): 344 
+... 25 de 344 ativos | 8 s
+... 50 de 344 ativos | 13 s
+... 75 de 344 ativos | 16 s
+... 100 de 344 ativos | 16 s
+... 125 de 344 ativos | 18 s
+... 150 de 344 ativos | 18 s
+... 175 de 344 ativos | 19 s
+... 200 de 344 ativos | 20 s
+... 225 de 344 ativos | 23 s
+... 250 de 344 ativos | 24 s
+... 275 de 344 ativos | 25 s
+... 300 de 344 ativos | 25 s
+... 325 de 344 ativos | 25 s
+Tempo total: 0.4 min
+
+Pares com >= 12 meses em comum E |corr_contemp|>= 0.6 : 1833580 
+
+OK - salvo em 'C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/data/pares_replicantes_bruto.csv' (1833580 pares)
+=== FIM scripts/63_pares_replicantes.R (exit 0) (Wed Aug 12 16:01:34     2026) ===
+=== RODANDO scripts/64_significancia_pares_replicantes.R (Wed Aug 12 16:01:35     2026) ===
+Pares pre-filtrados (|corr_contemp|>=0,6, ja SEM posicao-poeira): 1833580 
+
+Pares com p_bh < 0,05 (contemporaneo): 1272131 de 1833580 pre-filtrados
+Maior |corr_contemp| que NAO foi significativo: 0.795 
+Menor |corr_contemp| que FOI significativo: 0.6 
+
+===== Distribuicao mesma-gestora vs gestora-diferente (entre significativos) =====
+   mesma_gestora      N
+          <lgcl>  <int>
+1:          TRUE 463856
+2:         FALSE 808275
+Entre os 1833580 pre-filtrados (antes de exigir significancia):
+   mesma_gestora       N
+          <lgcl>   <int>
+1:          TRUE  544319
+2:         FALSE 1289261
+
+===== Top 15 pares mais correlacionados (contemporaneo, significativos) =====
+                         ativo fundo_a fundo_b n_meses_contemp corr_contemp
+                        <char>   <int>   <int>           <int>        <num>
+ 1:       PETROBRAS ON - PETR3  396941  397520              19            1
+ 2:         VALE ON N1 - VALE3  369187  438014              31            1
+ 3:    LOJAS AMERIC PN - LAME4  427306  466964              13            1
+ 4:       BRF SA ON NM - BRFS3  443654  443689              13            1
+ 5:    CEA MODAS ON NM - CEAB3   19062   44776              16            1
+ 6: P.ACUCAR-CBD PN N1 - PCAR4  407798  408271              28            1
+ 7:      EMBRAER ON NM - EMBR3  427306  467537              12            1
+ 8:         VALE ON N1 - VALE3  412414  445551              39            1
+ 9: ITAUUNIBANCO PN N1 - ITUB4  412414  445541              40            1
+10:         VALE ON N1 - VALE3  369187  434639              33            1
+11:   ELETROBRAS ON N1 - ELET3  427306  466964              13            1
+12:          TIM ON NM - TIMS3  227684  337072              14            1
+13: IRBBRASIL RE ON NM - IRBR3  407798  408271              23            1
+14:         VALE ON N1 - VALE3  438014  445551              39            1
+15: ITAUUNIBANCO PN N1 - ITUB4  369187  473669              16            1
+                    gestora_a                 gestora_b mesma_gestora      p_bh
+                       <char>                    <char>        <lgcl>     <num>
+ 1:             Sharp Capital    Safra Asset Management         FALSE  3.64e-55
+ 2:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  3.62e-93
+ 3:               SPX Capital               SPX Capital          TRUE  1.01e-33
+ 4:    Safra Asset Management    Safra Asset Management          TRUE  2.80e-33
+ 5: Bradesco Asset Management Bradesco Asset Management          TRUE  2.42e-42
+ 6: Bradesco Asset Management Bradesco Asset Management          TRUE  2.23e-79
+ 7:               SPX Capital               SPX Capital          TRUE  7.19e-30
+ 8:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 5.54e-112
+ 9:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 2.76e-114
+10:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  1.76e-93
+11:               SPX Capital               SPX Capital          TRUE  1.73e-32
+12:    Safra Asset Management    Safra Asset Management          TRUE  1.64e-35
+13: Bradesco Asset Management Bradesco Asset Management          TRUE  2.74e-62
+14:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 1.68e-109
+15:    Kapitalo Investimentos Bradesco Asset Management         FALSE  5.43e-41
+
+OK - salvo em 'v2 OFICIAL/data/pares_replicantes_significativos.csv' (1272131 pares)
+=== FIM scripts/64_significancia_pares_replicantes.R (exit 0) (Wed Aug 12 16:01:37     2026) ===
+=== RODANDO scripts/65_resumo_pares_replicantes.R (Wed Aug 12 16:01:37     2026) ===
+Pares significativos: 1272131 
+
+===== TOP 20 fundos-hub (mais conexoes com gestoras DIFERENTES) =====
+    cod_fundo                           gestora n_conexoes
+        <int>                            <char>      <int>
+ 1:    331333 Santander Brasil Asset Management       5312
+ 2:    328936         Julius Baer Family Office       5883
+ 3:    359051 Santander Brasil Asset Management       5111
+ 4:    173967         Julius Baer Family Office       5813
+ 5:    358606 Santander Brasil Asset Management       5012
+ 6:    433772                       BTG Pactual       5008
+ 7:    295507         Julius Baer Family Office       5721
+ 8:    173959         Julius Baer Family Office       5712
+ 9:    346179         Bradesco Asset Management       5209
+10:    314161                       BTG Pactual       5135
+11:    405051         Bradesco Asset Management       5036
+12:    483958            Safra Asset Management       4784
+13:    344771                       BTG Pactual       4704
+14:    259373         Julius Baer Family Office       4941
+15:    168092         Julius Baer Family Office       4334
+16:    156337            Safra Asset Management       4885
+17:    366730         Bradesco Asset Management       3991
+18:    331155                       BTG Pactual       3993
+19:    440906                       BTG Pactual       4552
+20:    349151                     Credit Suisse       4006
+    cod_fundo                           gestora n_conexoes
+    n_conexoes_mesma_gestora n_conexoes_gestora_diferente n_ativos_distintos
+                       <int>                        <int>              <int>
+ 1:                      334                         4978                 62
+ 2:                     1036                         4847                123
+ 3:                      372                         4739                126
+ 4:                     1151                         4662                131
+ 5:                      366                         4646                126
+ 6:                      371                         4637                 61
+ 7:                     1172                         4549                128
+ 8:                     1169                         4543                130
+ 9:                      690                         4519                 58
+10:                      756                         4379                110
+11:                      682                         4354                 56
+12:                      599                         4185                 65
+13:                      557                         4147                106
+14:                      875                         4066                119
+15:                      309                         4025                 91
+16:                      968                         3917                 64
+17:                       90                         3901                 77
+18:                       95                         3898                 77
+19:                      675                         3877                103
+20:                      141                         3865                 77
+    n_conexoes_mesma_gestora n_conexoes_gestora_diferente n_ativos_distintos
+    n_gestoras_parceiras_distintas
+                             <int>
+ 1:                             34
+ 2:                             32
+ 3:                             36
+ 4:                             35
+ 5:                             36
+ 6:                             35
+ 7:                             33
+ 8:                             34
+ 9:                             35
+10:                             30
+11:                             35
+12:                             34
+13:                             33
+14:                             34
+15:                             33
+16:                             33
+17:                             30
+18:                             29
+19:                             30
+20:                             30
+    n_gestoras_parceiras_distintas
+
+===== TOP 20 pares de GESTORA com mais conexoes fundo-fundo significativas =====
+                                                        par_gestora
+                                                             <char>
+ 1:                              Bradesco Asset Management <-> Itau
+ 2:                                 Itau <-> Safra Asset Management
+ 3:                                            BTG Pactual <-> Itau
+ 4:                              Itau <-> Julius Baer Family Office
+ 5:                                                     Itau <-> XP
+ 6:                      Itau <-> Santander Brasil Asset Management
+ 7:                                            Itau <-> SPX Capital
+ 8:                                          Credit Suisse <-> Itau
+ 9:                                    BB Asset Management <-> Itau
+10:                                 Itau <-> TNA Gestão Patrimonial
+11:                                          Atmos Capital <-> Itau
+12:                                            BNP Paribas <-> Itau
+13:                                                    Itau <-> JGP
+14:            Bradesco Asset Management <-> Safra Asset Management
+15:                                 Itau <-> Kapitalo Investimentos
+16:                          BTG Pactual <-> Safra Asset Management
+17:                       Bradesco Asset Management <-> BTG Pactual
+18:                                         Itau <-> Vinci Partners
+19: Bradesco Asset Management <-> Santander Brasil Asset Management
+20:                                   Safra Asset Management <-> XP
+                                                        par_gestora
+    n_pares_fundo n_ativos_distintos n_fundos_distintos
+            <int>              <int>              <int>
+ 1:         61621                186                648
+ 2:         59980                169                543
+ 3:         43442                163                543
+ 4:         32067                162                458
+ 5:         29085                140                481
+ 6:         28442                162                491
+ 7:         23021                 85                364
+ 8:         19357                139                453
+ 9:         17521                165                529
+10:         16139                111                416
+11:         14658                 54                309
+12:         13942                128                453
+13:         13747                 83                395
+14:         11462                159                346
+15:         10513                 56                340
+16:          9958                152                233
+17:          9286                165                354
+18:          8992                130                416
+19:          8192                158                288
+20:          7645                115                189
+    n_pares_fundo n_ativos_distintos n_fundos_distintos
+
+===== Pares com lideranca CLARA (assimetria>0,2 E forca do lider>0,5): 74596 de 1272131 =====
+Desses, cross-gestora: 58133 
+                         ativo  lider seguidor forca_lideranca assimetria
+                        <char>  <int>    <int>           <num>      <num>
+ 1:     IGUATEMI ON NM - IGTA3 348600    96040           0.998      0.645
+ 2:      MINERVA ON NM - BEEF3 194931   248096           0.998      0.854
+ 3:     IGUATEMI ON NM - IGTA3 348600   359424           0.997      0.714
+ 4:      MINERVA ON NM - BEEF3  21636   248096           0.997      0.873
+ 5:         AZUL PN N2 - AZUL4  12882   378100           0.997      0.715
+ 6:        CIELO ON NM - CIEL3  12882   241016           0.996      0.211
+ 7:         AZUL PN N2 - AZUL4  12882   378097           0.996      0.740
+ 8:     IGUATEMI ON NM - IGTA3 348600   363121           0.995      0.592
+ 9:         AZUL PN N2 - AZUL4  12882   367990           0.995      0.748
+10:       SMILES ON NM - SMLS3  12882   174513           0.993      0.542
+11:        CIELO ON NM - CIEL3 248096    12882           0.993      0.774
+12:         AZUL PN N2 - AZUL4  12882   428604           0.993      0.443
+13: BR MALLS PAR ON NM - BRML3  12882   217549           0.993      0.949
+14:   CVC BRASIL ON NM - CVCB3 248096   455105           0.993      0.759
+15:       SMILES ON NM - SMLS3  12882   248045           0.993      0.776
+    mesma_gestora
+           <lgcl>
+ 1:         FALSE
+ 2:         FALSE
+ 3:         FALSE
+ 4:         FALSE
+ 5:         FALSE
+ 6:         FALSE
+ 7:         FALSE
+ 8:         FALSE
+ 9:         FALSE
+10:          TRUE
+11:         FALSE
+12:         FALSE
+13:         FALSE
+14:          TRUE
+15:         FALSE
+
+OK - salvo 'resumo_fundos_hub.csv', 'resumo_pares_gestora.csv', 'pares_lideranca_clara.csv'
+=== FIM scripts/65_resumo_pares_replicantes.R (exit 0) (Wed Aug 12 16:01:40     2026) ===
+=== RODANDO scripts/66_beta_pares_lideranca.R (Wed Aug 12 16:01:40     2026) ===
+Base de erro (u), pos filtro de posicao-poeira: 3108905 obs
+Pares de lideranca clara: 74596 
+Observacoes mes-a-mes pareadas (lider,seguidor,ativo,mes): 1532468 
+
+Pares com beta calculavel: 74596 de 74596 
+Resumo de beta (v2, exato):
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-188.6654    0.1481    0.6229    1.2163    1.5002  146.9849 
+
+Pares com |beta|>10 (implausivel): 2524 de 74596 (3.38%)
+
+OK - salvo em 'v2 OFICIAL/data/pares_lideranca_beta.csv' (72072 pares)
+=== FIM scripts/66_beta_pares_lideranca.R (exit 0) (Wed Aug 12 16:01:48     2026) ===
+=== RODANDO scripts/67_previsao_ajustada_seguidor.R (Wed Aug 12 16:01:48     2026) ===
+Pares lider->seguidor (com beta): 72072 
+Pares (seguidor,ativo) distintos, apos escolher 1 lider cada: 19423 
+  (de 72072 candidatos brutos -- 73.1 % eram (seguidor,ativo) com mais de 1 lider)
+
+Obs (seguidor,ativo,mes) com lider observado no MESMO mes: 374516 
+
+Resumo do termo 'eco do lider' (quanto o ajuste muda a previsao normal):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-2.675e-01 -5.973e-04 -6.002e-05 -1.158e-04  3.260e-04  1.363e-01 
+
+Resumo da previsao SEM ajuste (so lambda*d):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-3.262e-02 -1.122e-04  6.850e-05 -1.963e-05  3.095e-04  4.328e-02 
+Resumo da previsao AJUSTADA (com eco):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-2.910e-01 -5.400e-04  1.698e-05 -1.355e-04  4.925e-04  1.382e-01 
+
+RMSE sem ajuste (so lambda*d): 0.00621
+RMSE com ajuste (lambda*d + eco): 0.00410
+Melhora: 33.9%
+
+OK - salvo em 'v2 OFICIAL/data/previsao_ajustada_seguidor.csv' (374516 obs)
+=== FIM scripts/67_previsao_ajustada_seguidor.R (exit 0) (Wed Aug 12 16:01:52     2026) ===
+=== RODANDO scripts/68_sinal_robo_reais_agregado.R (Wed Aug 12 16:01:52     2026) ===
+Previsoes ajustadas (seguidor,ativo,mes): 374516 
+Com AUM disponivel: 374516 de 374516  (100.0%)
+
+===== Agregacao por GESTORA (soma de fluxo previsto, por ativo-mes) =====
+Linhas (gestora,ativo,mes): 71839 
+
+===== NET DE MERCADO por ATIVO-MES (soma de TODAS as gestoras) =====
+
+--- Top 10 maior pressao COMPRADORA liquida (qualquer ativo-mes) ---
+                           ativo     ym fluxo_liquido_reais n_fundos n_gestoras
+                          <char>  <int>               <num>    <int>      <int>
+ 1:         PETROBRAS ON - PETR3 202001             1710.23      269         18
+ 2: PETROBRAS DISTRIB ON - BRDT3 202106             1404.09      486         23
+ 3:  BANCO INTER UNT N2 - BIDI11 202104              841.59      251         20
+ 4:         PETROBRAS PN - PETR4 201811              642.07       91         14
+ 5:         PETROBRAS ON - PETR3 201905              610.45      179         18
+ 6:   ITAUUNIBANCO PN N1 - ITUB4 201901              590.85      158         19
+ 7:    GRUPO NATURAON NM - NTCO3 202009              586.52      355         25
+ 8:    GRUPO NATURAON NM - NTCO3 201912              509.69      185         19
+ 9:   ITAUUNIBANCO PN N1 - ITUB4 202101              479.08      272         21
+10:   ITAUUNIBANCO PN N1 - ITUB4 202108              462.27      258         20
+
+--- Top 10 maior pressao VENDEDORA liquida (qualquer ativo-mes) ---
+                           ativo     ym fluxo_liquido_reais n_fundos n_gestoras
+                          <char>  <int>               <num>    <int>      <int>
+ 1: PETROBRAS DISTRIB ON - BRDT3 202105             -852.90      430         23
+ 2:   ITAUUNIBANCO PN N1 - ITUB4 201902             -781.28      162         20
+ 3:         PETROBRAS PN - PETR4 201812             -730.05       87         14
+ 4:           VALE ON N1 - VALE3 202103             -702.99      223         21
+ 5:         PETROBRAS ON - PETR3 202111             -683.93      355         22
+ 6:   ITAUUNIBANCO PN N1 - ITUB4 202105             -562.86      270         19
+ 7:   ITAUUNIBANCO PN N1 - ITUB4 201812             -505.47      161         20
+ 8:         AMBEV S/A ON - ABEV3 202110             -424.00      164         18
+ 9:         PETROBRAS ON - PETR3 202002             -420.86      282         22
+10:             B3 ON NM - B3SA3 202002             -420.45       95         18
+
+--- Resumo geral do fluxo liquido (em R$ milhoes) ---
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-852.89957   -2.44467   -0.01634   -1.67918    1.06344 1710.22823 
+
+OK - salvo 'sinal_robo_fundo_nivel.csv', 'sinal_robo_por_gestora.csv', 'sinal_robo_net_mercado.csv'
+=== FIM scripts/68_sinal_robo_reais_agregado.R (exit 0) (Wed Aug 12 16:01:55     2026) ===
+=== RODANDO scripts/69_figuras_teste_estrategia.R (Wed Aug 12 16:01:55     2026) ===
+null device 
+          1 
+Fig 1 OK - 340 ativos plotados
+null device 
+          1 
+Fig 2 OK - 10 pares de gestora plotados
+null device 
+          1 
+Fig 3 OK - 10 casos plotados
+
+OK - 3 figuras salvas em 'v2 OFICIAL/figuras_estrategia/'
+=== FIM scripts/69_figuras_teste_estrategia.R (exit 0) (Wed Aug 12 16:01:55     2026) ===
+=== RODANDO scripts/70_teste_fluxo_prediz_retorno.R (Wed Aug 12 16:01:55     2026) ===
+Ativo-mes com sinal (fluxo liquido): 8585 
+Com valor_total disponivel: 8585 de 8585 
+
+Obs finais (fluxo,retorno_fut) validas: 8585 
+
+===== (a) Regressao simples: retorno(t+1) ~ fluxo(t) =====
+                 Estimate   Std. Error   t value     Pr(>|t|)
+(Intercept)  1.337290e-02 1.406044e-03  9.511007 2.404997e-21
+fluxo_pct   -8.557497e-08 4.843137e-08 -1.766933 7.727502e-02
+R2: 0.00036 
+
+--- comparacao: sinal SEM eco do lider (so' lambda*d) ---
+                     Estimate   Std. Error  t value     Pr(>|t|)
+(Intercept)      1.389426e-02 1.423092e-03 9.763429 2.113117e-22
+fluxo_normal_pct 7.080954e-07 3.294770e-07 2.149150 3.165041e-02
+R2: 0.00054 
+
+===== (b) Quintis por fluxo_pct, retorno medio subsequente =====
+   quintil     n fluxo_pct_medio retorno_medio retorno_mediano
+     <int> <int>           <num>         <num>           <num>
+1:       1  1717     -22135.5185   0.015057740     0.010136704
+2:       2  1717      -2859.1609   0.009248276     0.005247376
+3:       3  1717       -230.8955   0.011075505     0.001659751
+4:       4  1717       1305.1806   0.011455094     0.007773852
+5:       5  1717      21314.7042   0.020250861     0.019300362
+
+Diferenca quintil 5 (mais comprado) - quintil 1 (mais vendido), retorno medio: 0.00519 
+Teste t (quintil5 vs quintil1): diferenca = 0.00519 | p-valor = 0.271 
+
+OK - salvo em 'v2 OFICIAL/data/teste_fluxo_prediz_retorno.csv'
+=== FIM scripts/70_teste_fluxo_prediz_retorno.R (exit 0) (Wed Aug 12 16:01:57     2026) ===
+=== RODANDO scripts/71_teste_fluxo_retorno_restrito.R (Wed Aug 12 16:01:57     2026) ===
+Base original (R/70): 8585 obs
+Ativos com margem corrigida positiva (Etapa 3, h=1): 215 de 360 
+Obs apos restringir a ativos com margem positiva: 5958 de 8585 
+
+===== (a) Regressao restrita: retorno(t+1) ~ fluxo(t), so ativos com margem>0 =====
+                 Estimate   Std. Error   t value     Pr(>|t|)
+(Intercept)  1.523122e-02 1.689606e-03  9.014659 2.616721e-19
+fluxo_pct   -1.069081e-07 5.337946e-08 -2.002794 4.524465e-02
+R2: 0.00067 
+
+--- sinal SEM eco, restrito ---
+                     Estimate   Std. Error  t value     Pr(>|t|)
+(Intercept)      1.545757e-02 1.696398e-03 9.111992 1.084825e-19
+fluxo_normal_pct 6.271886e-07 4.462851e-07 1.405354 1.599682e-01
+R2: 0.00033 
+
+===== (b) Quintis, restrito =====
+   quintil     n retorno_medio retorno_mediano
+     <int> <int>         <num>           <num>
+1:       1  1192    0.01538345     0.009790986
+2:       2  1191    0.01106381     0.002257822
+3:       3  1192    0.01077921     0.002705638
+4:       4  1191    0.01514081     0.010813701
+5:       5  1192    0.02387235     0.020787068
+
+Diferenca quintil5-quintil1: 0.00849 | p-valor: 0.137 
+
+OK - salvo
+=== FIM scripts/71_teste_fluxo_retorno_restrito.R (exit 0) (Wed Aug 12 16:01:58     2026) ===
+=== RODANDO scripts/72_figuras_teste_retorno.R (Wed Aug 12 16:01:58     2026) ===
+null device 
+          1 
+Fig 4 OK
+null device 
+          1 
+Fig 5 OK
+=== FIM scripts/72_figuras_teste_retorno.R (exit 0) (Wed Aug 12 16:01:58     2026) ===
+=== RODANDO scripts/73_tentativas_salvar_sinal.R (Wed Aug 12 16:01:58     2026) ===
+Base: 8585 obs | 59 meses
+
+===== (A) Com efeito fixo de mes =====
+Com eco:   coef= -9.04e-08  p= 0.0207  R2= 0.0006232 
+Sem eco:   coef= 3.79e-07  p= 0.154  R2= 0.000237 
+
+===== (B) So' top 20% |fluxo_pct| (conviccao forte), n = 1717 =====
+Com eco:   coef= -9.44e-08  p= 0.0771  R2= 0.001822 
+    decil     n retorno_medio
+    <int> <int>         <num>
+ 1:     1   172   0.043299854
+ 2:     2   172   0.033150372
+ 3:     3   171   0.018646694
+ 4:     4   172   0.001025783
+ 5:     5   172   0.022115510
+ 6:     6   171   0.020406344
+ 7:     7   172   0.039696325
+ 8:     8   171   0.030267730
+ 9:     9   172   0.039717785
+10:    10   172   0.011890891
+Decil 10 (mais comprado) - decil 1 (mais vendido) [dentro dos extremos]: diff= -0.03141  p= 0.121 
+
+===== (C) Sem eco + FE mes + so extremos, n = 1717 =====
+coef= 2.76e-07  p= 0.367  R2= 0.0004741 
+
+===== RESUMO COMPARATIVO =====
+Especificacao                                       coef    p-valor      R2(%)
+Original, com eco (R/70)                        -8.9e-08      0.071      0.038
+Original, sem eco (R/70)                         7.6e-07      0.023       0.06
+A: FE mes, com eco                             -9.04e-08      0.021     0.0623
+A: FE mes, sem eco                              3.79e-07      0.154     0.0237
+B: so extremos (top20%), com eco               -9.44e-08      0.077     0.1822
+C: sem eco + FE mes + extremos                  2.76e-07      0.367     0.0474
+
+OK
+=== FIM scripts/73_tentativas_salvar_sinal.R (exit 0) (Wed Aug 12 16:01:59     2026) ===
+CADEIA TESTE_ESTRATEGIA COMPLETA

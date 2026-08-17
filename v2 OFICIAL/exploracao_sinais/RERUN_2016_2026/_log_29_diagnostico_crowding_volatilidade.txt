@@ -1,0 +1,64 @@
+===== Correlacao crowding vs vol PASSADA (contemporaneo) =====
+Correlacao (Pearson): 0.0424 
+Correlacao (Spearman): 0.0996 
+
+
+
+========== HORIZONTE h=3 (n=21529 obs) ==========
+
+--- (1) SO crowding, h=3 --- (n_tr=7220 n_te=14309, R2_OOS=-0.081%)
+            Estimate Std. Error   t value Pr(>|t|)
+(Intercept) 0.105059   0.002025 51.891354 0.000000
+hhi_posse   0.013128   0.009614  1.365463 0.172122
+
+--- (2) SO vol passada, h=3 --- (n_tr=7220 n_te=14309, R2_OOS=-0.589%)
+                Estimate Std. Error  t value Pr(>|t|)
+(Intercept)     0.089458   0.001941 46.08227        0
+vol_passada_12m 0.133872   0.008135 16.45526        0
+
+--- (3) OS DOIS JUNTOS, h=3 --- (n_tr=7220 n_te=14309, R2_OOS=-0.336%)
+                Estimate Std. Error   t value Pr(>|t|)
+(Intercept)     0.088680   0.002246 39.483807 0.000000
+hhi_posse       0.006590   0.009563  0.689082 0.490779
+vol_passada_12m 0.133638   0.008143 16.412068 0.000000
+
+
+========== HORIZONTE h=6 (n=21389 obs) ==========
+
+--- (1) SO crowding, h=6 --- (n_tr=7164 n_te=14225, R2_OOS=-0.106%)
+            Estimate Std. Error  t value Pr(>|t|)
+(Intercept) 0.118098   0.002177 54.25047 0.000000
+hhi_posse   0.006132   0.010389  0.59030 0.554996
+
+--- (2) SO vol passada, h=6 --- (n_tr=7164 n_te=14225, R2_OOS=0.079%)
+                Estimate Std. Error  t value Pr(>|t|)
+(Intercept)     0.097281   0.002202 44.18124        0
+vol_passada_12m 0.169579   0.010403 16.30134        0
+
+--- (3) OS DOIS JUNTOS, h=6 --- (n_tr=7164 n_te=14225, R2_OOS=0.181%)
+                 Estimate Std. Error   t value Pr(>|t|)
+(Intercept)      0.097449   0.002508 38.862409 0.000000
+hhi_posse       -0.001442   0.010335 -0.139478 0.889074
+vol_passada_12m  0.169644   0.010414 16.290744 0.000000
+
+
+========== HORIZONTE h=12 (n=20814 obs) ==========
+
+--- (1) SO crowding, h=12 --- (n_tr=7044 n_te=13770, R2_OOS=-0.152%)
+            Estimate Std. Error   t value Pr(>|t|)
+(Intercept) 0.124090   0.002023 61.349697 0.000000
+hhi_posse   0.005255   0.009709  0.541255 0.588338
+
+--- (2) SO vol passada, h=12 --- (n_tr=7044 n_te=13770, R2_OOS=0.207%)
+                Estimate Std. Error  t value Pr(>|t|)
+(Intercept)     0.095501   0.002547 37.49458        0
+vol_passada_12m 0.232966   0.015547 14.98453        0
+
+--- (3) OS DOIS JUNTOS, h=12 --- (n_tr=7044 n_te=13770, R2_OOS=0.187%)
+                 Estimate Std. Error   t value Pr(>|t|)
+(Intercept)      0.096030   0.002749 34.937113 0.000000
+hhi_posse       -0.004960   0.009681 -0.512274 0.608465
+vol_passada_12m  0.233528   0.015586 14.983146 0.000000
+
+
+OK

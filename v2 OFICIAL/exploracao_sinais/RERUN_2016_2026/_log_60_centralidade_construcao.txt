@@ -1,0 +1,21 @@
+Meses no painel: 98 
+Calculando centralidade mes a mes (matriz por mes, pode demorar)...
+Tempo: 166.5 s
+Ativo-mes com centralidade calculavel: 30121 | n_tickers_mes mediano: 319 
+Ativo-mes com delta calculavel (mes calendario consecutivo): 24096 
+
+Resumo deg_avg:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.00000 0.02069 0.04740 0.05327 0.07931 0.19815 
+
+Resumo eigen_cent:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0663  0.2505  0.2992  0.4840  1.0000 
+
+Resumo densidade (por mes):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.02050 0.02893 0.06229 0.05444 0.06918 0.07812 
+
+Correlacao deg_avg x eigen_cent (nivel, pooled): 0.866 
+
+OK

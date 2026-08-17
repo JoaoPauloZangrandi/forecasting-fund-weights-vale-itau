@@ -1,0 +1,17 @@
+
+--- Universo liquido top 50% (n_medio=53) ---
+BAC (long baixa-corr, short alta-corr), liq top50% Sharpe=  0.394 | ret_anual=  12.12% | maxDD= -26.10% | t= 0.89 | p=0.3744 | N=62
+Long-only baixa-corr MENOS benchmark, liq top50% Sharpe=  0.378 | ret_anual=   7.52% | maxDD= -14.74% | t= 0.86 | p=0.3935 | N=62
+
+--- Universo liquido top 67% (n_medio=71) ---
+BAC (long baixa-corr, short alta-corr), liq top67% Sharpe=  0.311 | ret_anual=   8.00% | maxDD= -32.06% | t= 0.71 | p=0.4817 | N=62
+Long-only baixa-corr MENOS benchmark, liq top67% Sharpe=  0.313 | ret_anual=   4.99% | maxDD= -18.30% | t= 0.71 | p=0.4798 | N=62
+
+--- Universo liquido top 100% (n_medio=101) ---
+BAC (long baixa-corr, short alta-corr), liq top100% Sharpe=  0.158 | ret_anual=   3.52% | maxDD= -42.27% | t= 0.36 | p=0.7208 | N=62
+Long-only baixa-corr MENOS benchmark, liq top100% Sharpe=  0.189 | ret_anual=   2.53% | maxDD= -22.83% | t= 0.43 | p=0.6690 | N=62
+
+===== Extra: HHI prediz CORRELACAO futura? (conecta com Lou-Polk Comomentum/Greenwood-Thesmar) =====
+HHI_t -> correlacao futura (t+1): coef_medio=-0.2258 | t=-13.70 | p=0.0000 | (62 meses)
+
+OK

@@ -1,0 +1,76 @@
+Calculando volatilidade futura para h=3,6,12...
+h=3: 27677 | h=6: 27123 | h=12: 26023 
+Crowding(HHI)             h= 3 n_tr= 7669 n_te=5907 R2_OOS= -0.025% | 23 meses spread(vol Q5-Q1)=+0.01953 t=  4.30 p=0.00029 | Bonf:nao
+CIO(nivel)                h= 3 n_tr= 9576 n_te=6825 R2_OOS= -1.315% | 20 meses spread(vol Q5-Q1)=+0.00707 t=  0.48 p=0.63406 | Bonf:nao
+CIO(magnitude-abs)        h= 3 n_tr= 9576 n_te=6825 R2_OOS=  0.943% | 19 meses spread(vol Q5-Q1)=+0.03241 t=  2.52 p=0.02155 | Bonf:nao
+FIT(nivel)                h= 3 n_tr= 9244 n_te=6663 R2_OOS= -0.532% | 23 meses spread(vol Q5-Q1)=+0.01198 t=  1.16 p=0.25837 | Bonf:nao
+FIT(magnitude-abs)        h= 3 n_tr= 9244 n_te=6663 R2_OOS=  1.667% | 23 meses spread(vol Q5-Q1)=+0.01745 t=  2.05 p=0.05261 | Bonf:nao
+Herding(nivel)            h= 3 n_tr= 7264 n_te=5720 R2_OOS=  0.031% | 23 meses spread(vol Q5-Q1)=-0.00739 t= -1.20 p=0.24440 | Bonf:nao
+Herding(magnitude-abs)    h= 3 n_tr= 7264 n_te=5720 R2_OOS= -0.162% | 23 meses spread(vol Q5-Q1)=+0.00836 t=  2.15 p=0.04282 | Bonf:nao
+Crowding(HHI)             h= 6 n_tr= 7614 n_te=5265 R2_OOS=  0.381% | 21 meses spread(vol Q5-Q1)=+0.02379 t=  8.67 p=0.00000 | Bonf:SIM
+CIO(nivel)                h= 6 n_tr= 9500 n_te=6094 R2_OOS= -0.497% | 18 meses spread(vol Q5-Q1)=+0.00528 t=  0.38 p=0.70531 | Bonf:nao
+CIO(magnitude-abs)        h= 6 n_tr= 9500 n_te=6094 R2_OOS=  0.775% | 17 meses spread(vol Q5-Q1)=+0.02044 t=  2.13 p=0.04879 | Bonf:nao
+FIT(nivel)                h= 6 n_tr= 9170 n_te=5942 R2_OOS=  0.880% | 21 meses spread(vol Q5-Q1)=+0.00466 t=  0.53 p=0.60012 | Bonf:nao
+FIT(magnitude-abs)        h= 6 n_tr= 9170 n_te=5942 R2_OOS=  2.497% | 21 meses spread(vol Q5-Q1)=+0.01002 t=  1.98 p=0.06120 | Bonf:nao
+Herding(nivel)            h= 6 n_tr= 7211 n_te=5088 R2_OOS= -0.075% | 21 meses spread(vol Q5-Q1)=-0.00326 t= -0.54 p=0.59268 | Bonf:nao
+Herding(magnitude-abs)    h= 6 n_tr= 7211 n_te=5088 R2_OOS=  0.287% | 21 meses spread(vol Q5-Q1)=+0.01313 t=  3.32 p=0.00341 | Bonf:nao
+Crowding(HHI)             h=12 n_tr= 7495 n_te=4022 R2_OOS=  0.961% | 17 meses spread(vol Q5-Q1)=+0.02882 t= 14.03 p=0.00000 | Bonf:SIM
+CIO(nivel)                h=12 n_tr= 9353 n_te=4668 R2_OOS= -0.013% | 14 meses spread(vol Q5-Q1)=-0.00738 t= -0.46 p=0.64998 | Bonf:nao
+CIO(magnitude-abs)        h=12 n_tr= 9353 n_te=4668 R2_OOS=  0.112% | 13 meses spread(vol Q5-Q1)=+0.01763 t=  1.55 p=0.14749 | Bonf:nao
+FIT(nivel)                h=12 n_tr= 9026 n_te=4554 R2_OOS=  0.060% | 17 meses spread(vol Q5-Q1)=+0.00127 t=  0.14 p=0.89182 | Bonf:nao
+FIT(magnitude-abs)        h=12 n_tr= 9026 n_te=4554 R2_OOS=  1.810% | 17 meses spread(vol Q5-Q1)=+0.00462 t=  0.85 p=0.41047 | Bonf:nao
+Herding(nivel)            h=12 n_tr= 7096 n_te=3884 R2_OOS= -0.069% | 17 meses spread(vol Q5-Q1)=-0.00331 t= -0.55 p=0.58784 | Bonf:nao
+Herding(magnitude-abs)    h=12 n_tr= 7096 n_te=3884 R2_OOS=  1.095% | 17 meses spread(vol Q5-Q1)=+0.01628 t=  4.60 p=0.00029 | Bonf:nao
+
+
+===== RESUMO GERAL, ordenado por p_fm =====
+                     sinal horizonte n_meses r2_oos_pct  t_fm    p_fm
+                    <char>     <num>   <int>      <num> <num>   <num>
+ 1:          Crowding(HHI)        12      17      0.961 14.03 0.00000
+ 2:          Crowding(HHI)         6      21      0.381  8.67 0.00000
+ 3:          Crowding(HHI)         3      23     -0.025  4.30 0.00029
+ 4: Herding(magnitude-abs)        12      17      1.095  4.60 0.00029
+ 5: Herding(magnitude-abs)         6      21      0.287  3.32 0.00341
+ 6:     CIO(magnitude-abs)         3      19      0.943  2.52 0.02155
+ 7: Herding(magnitude-abs)         3      23     -0.162  2.15 0.04282
+ 8:     CIO(magnitude-abs)         6      17      0.775  2.13 0.04879
+ 9:     FIT(magnitude-abs)         3      23      1.667  2.05 0.05261
+10:     FIT(magnitude-abs)         6      21      2.497  1.98 0.06120
+11:     CIO(magnitude-abs)        12      13      0.112  1.55 0.14749
+12:         Herding(nivel)         3      23      0.031 -1.20 0.24440
+13:             FIT(nivel)         3      23     -0.532  1.16 0.25837
+14:     FIT(magnitude-abs)        12      17      1.810  0.85 0.41047
+15:         Herding(nivel)        12      17     -0.069 -0.55 0.58784
+16:         Herding(nivel)         6      21     -0.075 -0.54 0.59268
+17:             FIT(nivel)         6      21      0.880  0.53 0.60012
+18:             CIO(nivel)         3      20     -1.315  0.48 0.63406
+19:             CIO(nivel)        12      14     -0.013 -0.46 0.64998
+20:             CIO(nivel)         6      18     -0.497  0.38 0.70531
+21:             FIT(nivel)        12      17      0.060  0.14 0.89182
+                     sinal horizonte n_meses r2_oos_pct  t_fm    p_fm
+    sig_bonferroni
+            <lgcl>
+ 1:           TRUE
+ 2:           TRUE
+ 3:          FALSE
+ 4:          FALSE
+ 5:          FALSE
+ 6:          FALSE
+ 7:          FALSE
+ 8:          FALSE
+ 9:          FALSE
+10:          FALSE
+11:          FALSE
+12:          FALSE
+13:          FALSE
+14:          FALSE
+15:          FALSE
+16:          FALSE
+17:          FALSE
+18:          FALSE
+19:          FALSE
+20:          FALSE
+21:          FALSE
+    sig_bonferroni
+
+OK

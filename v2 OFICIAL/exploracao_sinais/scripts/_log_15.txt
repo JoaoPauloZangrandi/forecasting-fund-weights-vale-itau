@@ -1,0 +1,22 @@
+Obs com todos os controles disponiveis: 15562 
+
+===== (P) FAMA-MACBETH COM CONTROLES (regressao cross-sectional mes a mes) =====
+Meses com regressao valida: 24 
+
+Coeficiente medio (Fama-MacBeth) de cada variavel, controlando pelas outras 3:
+  peer_ret_z       media=+0.00556 | t=  2.34 | p=0.0283 | (24 meses)
+  log_tamanho_z    media=-0.00758 | t= -2.36 | p=0.0270 | (24 meses)
+  beta_z           media=-0.00301 | t= -0.69 | p=0.4973 | (24 meses)
+  ret_proprio_z    media=-0.00455 | t= -0.88 | p=0.3893 | (24 meses)
+
+
+===== (Q) CUSTO DE TRANSACAO -- quanto sobra do spread bruto? =====
+Spread BRUTO medio: 4.15 pp/mes (62.9%/ano)
+
+Premissa: rebalanceamento mensal completo (~100% turnover cada perna), custo round-trip aplicado 1x/mes por perna (long+short):
+  Custo 30bps round-trip/perna -> custo total 0.60pp/mes -> spread LIQUIDO = 3.55pp/mes (52.0%/ano)
+  Custo 50bps round-trip/perna -> custo total 1.00pp/mes -> spread LIQUIDO = 3.15pp/mes (45.1%/ano)
+  Custo 100bps round-trip/perna -> custo total 2.00pp/mes -> spread LIQUIDO = 2.15pp/mes (29.1%/ano)
+  Custo 150bps round-trip/perna -> custo total 3.00pp/mes -> spread LIQUIDO = 1.15pp/mes (14.7%/ano)
+
+OK

@@ -1,0 +1,7 @@
+Ativo-mes com os 2 sinais disponiveis: 13513 
+CIO+E[FIT] combinado      h= 1 [FM] 24 meses spread= +1.47pp/mes t= 2.29 p=0.0313
+CIO+E[FIT] combinado      h= 2 [FM] 23 meses spread= +0.44pp/mes t= 0.47 p=0.6419
+CIO+E[FIT] combinado      h= 3 [FM] 22 meses spread= +1.03pp/mes t= 1.50 p=0.1495
+CIO+E[FIT] combinado      h= 6 [FM] 19 meses spread= +0.68pp/mes t= 1.03 p=0.3148
+
+OK

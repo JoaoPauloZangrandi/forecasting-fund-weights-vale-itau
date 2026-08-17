@@ -1,0 +1,198 @@
+
+
+========================= HORIZONTE h=1 =========================
+
+--- FM_multipla|top3(peer+hhi+52wh) h=1: 24 meses com regressao valida (n_min=55, n_med=226) ---
+R2 medio (in-sample cross-secional, mes a mes): 7.902% (mediana 5.203%)
+  s_peer     coef_medio= +0.00396  t=  1.97  p=0.06058 
+  s_hhi      coef_medio= -0.01187  t= -2.11  p=0.04556 
+  s_52wh     coef_medio= +0.00222  t=  0.37  p=0.71320 
+
+--- FM_multipla|all8 h=1: 24 meses com regressao valida (n_min=55, n_med=226) ---
+R2 medio (in-sample cross-secional, mes a mes): 12.714% (mediana 8.691%)
+  s_peer     coef_medio= +0.00402  t=  1.91  p=0.06848 
+  s_hhi      coef_medio= -0.01139  t= -2.22  p=0.03640 
+  s_52wh     coef_medio= +0.00025  t=  0.05  p=0.96349 
+  s_rev      coef_medio= -0.00247  t= -0.73  p=0.47076 
+  s_idiovol  coef_medio= -0.00232  t= -0.57  p=0.57704 
+  s_breadth  coef_medio= +0.00059  t=  0.21  p=0.83552 
+  s_dem      coef_medio= -0.00210  t= -0.73  p=0.47364 
+  s_efit     coef_medio= +0.00081  t=  0.29  p=0.77563 
+
+R2 medio de cada sinal SOZINHO (mesma amostra do all8, univariada):
+  s_peer     R2 medio = 0.940%
+  s_hhi      R2 medio = 3.307%
+  s_52wh     R2 medio = 3.880%
+  s_rev      R2 medio = 1.506%
+  s_idiovol  R2 medio = 2.237%
+  s_breadth  R2 medio = 1.679%
+  s_dem      R2 medio = 1.308%
+  s_efit     R2 medio = 0.865%
+
+Pesos do TREINO (all8): s_peer=0.0047, s_hhi=-0.0020, s_52wh=-0.0012, s_rev=0.0001, s_idiovol=-0.0053, s_breadth=0.0007, s_dem=0.0018, s_efit=-0.0059
+COMPOSTO(pesos regressao treino,all8) h=1 24 meses n_min= 11 spread=  +0.46pp/mes Sharpe= 0.30 t=  0.43 p=0.67027 | Bonf:nao
+COMPOSTO(pesos regressao treino,top3) h=1 24 meses n_min= 11 spread=  +1.16pp/mes Sharpe= 1.35 t=  1.91 p=0.06856 | Bonf:nao
+
+
+========================= HORIZONTE h=3 =========================
+
+--- FM_multipla|top3(peer+hhi+52wh) h=3: 24 meses com regressao valida (n_min=55, n_med=224) ---
+R2 medio (in-sample cross-secional, mes a mes): 7.678% (mediana 5.268%)
+  s_peer     coef_medio= +0.00249  t=  1.06  p=0.30081 
+  s_hhi      coef_medio= -0.00912  t= -1.74  p=0.09523 
+  s_52wh     coef_medio= -0.00020  t= -0.04  p=0.96790 
+
+--- FM_multipla|all8 h=3: 24 meses com regressao valida (n_min=55, n_med=224) ---
+R2 medio (in-sample cross-secional, mes a mes): 12.861% (mediana 12.397%)
+  s_peer     coef_medio= +0.00307  t=  1.23  p=0.23240 
+  s_hhi      coef_medio= -0.00838  t= -1.50  p=0.14628 
+  s_52wh     coef_medio= +0.00034  t=  0.07  p=0.94647 
+  s_rev      coef_medio= -0.00009  t= -0.03  p=0.98023 
+  s_idiovol  coef_medio= +0.00099  t=  0.20  p=0.84531 
+  s_breadth  coef_medio= -0.00243  t= -1.08  p=0.29229 
+  s_dem      coef_medio= +0.00086  t=  0.28  p=0.77984 
+  s_efit     coef_medio= +0.00260  t=  1.20  p=0.24302 
+
+R2 medio de cada sinal SOZINHO (mesma amostra do all8, univariada):
+  s_peer     R2 medio = 1.441%
+  s_hhi      R2 medio = 3.208%
+  s_52wh     R2 medio = 3.742%
+  s_rev      R2 medio = 2.167%
+  s_idiovol  R2 medio = 2.476%
+  s_breadth  R2 medio = 0.398%
+  s_dem      R2 medio = 1.396%
+  s_efit     R2 medio = 1.068%
+
+Pesos do TREINO (all8): s_peer=-0.0132, s_hhi=-0.0053, s_52wh=0.0005, s_rev=0.0071, s_idiovol=-0.0021, s_breadth=-0.0013, s_dem=-0.0032, s_efit=-0.0094
+COMPOSTO(pesos regressao treino,all8) h=3 24 meses n_min= 11 spread=  -0.26pp/mes Sharpe=-0.15 t= -0.21 p=0.83243 | Bonf:nao
+COMPOSTO(pesos regressao treino,top3) h=3 24 meses n_min= 11 spread=  -0.49pp/mes Sharpe=-0.35 t= -0.49 p=0.62753 | Bonf:nao
+
+
+========================= HORIZONTE h=6 =========================
+
+--- FM_multipla|top3(peer+hhi+52wh) h=6: 24 meses com regressao valida (n_min=54, n_med=219) ---
+R2 medio (in-sample cross-secional, mes a mes): 7.499% (mediana 5.350%)
+  s_peer     coef_medio= +0.00033  t=  0.13  p=0.90159 
+  s_hhi      coef_medio= -0.00750  t= -2.41  p=0.02440 
+  s_52wh     coef_medio= +0.00725  t=  1.45  p=0.15920 
+
+--- FM_multipla|all8 h=6: 24 meses com regressao valida (n_min=54, n_med=219) ---
+R2 medio (in-sample cross-secional, mes a mes): 11.556% (mediana 10.301%)
+  s_peer     coef_medio= +0.00011  t=  0.04  p=0.96833 
+  s_hhi      coef_medio= -0.00926  t= -2.49  p=0.02058 
+  s_52wh     coef_medio= +0.00306  t=  0.57  p=0.57348 
+  s_rev      coef_medio= -0.00423  t= -1.69  p=0.10454 
+  s_idiovol  coef_medio= -0.00473  t= -1.69  p=0.10435 
+  s_breadth  coef_medio= -0.00141  t= -0.81  p=0.42788 
+  s_dem      coef_medio= +0.00224  t=  1.03  p=0.31154 
+  s_efit     coef_medio= +0.00279  t=  0.83  p=0.41758 
+
+R2 medio de cada sinal SOZINHO (mesma amostra do all8, univariada):
+  s_peer     R2 medio = 1.136%
+  s_hhi      R2 medio = 1.765%
+  s_52wh     R2 medio = 4.954%
+  s_rev      R2 medio = 1.390%
+  s_idiovol  R2 medio = 1.448%
+  s_breadth  R2 medio = 0.400%
+  s_dem      R2 medio = 0.797%
+  s_efit     R2 medio = 1.064%
+
+Pesos do TREINO (all8): s_peer=0.0225, s_hhi=-0.0046, s_52wh=0.0010, s_rev=0.0005, s_idiovol=0.0020, s_breadth=-0.0012, s_dem=-0.0006, s_efit=-0.0022
+COMPOSTO(pesos regressao treino,all8) h=6 24 meses n_min= 11 spread=  +1.19pp/mes Sharpe= 1.40 t=  1.98 p=0.05971 | Bonf:nao
+COMPOSTO(pesos regressao treino,top3) h=6 24 meses n_min= 11 spread=  +1.05pp/mes Sharpe= 1.06 t=  1.50 p=0.14751 | Bonf:nao
+
+
+===== COEFICIENTES DA REGRESSAO MULTIPLA (ordenado por p) =====
+                             modelo horizonte  variavel n_meses    coef_medio
+                             <char>     <num>    <char>   <int>         <num>
+ 1:                FM_multipla|all8         6     s_hhi      24 -9.261172e-03
+ 2: FM_multipla|top3(peer+hhi+52wh)         6     s_hhi      24 -7.501583e-03
+ 3:                FM_multipla|all8         1     s_hhi      24 -1.138711e-02
+ 4: FM_multipla|top3(peer+hhi+52wh)         1     s_hhi      24 -1.187076e-02
+ 5: FM_multipla|top3(peer+hhi+52wh)         1    s_peer      24  3.964092e-03
+ 6:                FM_multipla|all8         1    s_peer      24  4.020838e-03
+ 7: FM_multipla|top3(peer+hhi+52wh)         3     s_hhi      24 -9.119479e-03
+ 8:                FM_multipla|all8         6 s_idiovol      24 -4.731380e-03
+ 9:                FM_multipla|all8         6     s_rev      24 -4.233004e-03
+10:                FM_multipla|all8         3     s_hhi      24 -8.384119e-03
+11: FM_multipla|top3(peer+hhi+52wh)         6    s_52wh      24  7.250440e-03
+12:                FM_multipla|all8         3    s_peer      24  3.068792e-03
+13:                FM_multipla|all8         3    s_efit      24  2.599453e-03
+14:                FM_multipla|all8         3 s_breadth      24 -2.431199e-03
+15: FM_multipla|top3(peer+hhi+52wh)         3    s_peer      24  2.491561e-03
+16:                FM_multipla|all8         6     s_dem      24  2.235473e-03
+17:                FM_multipla|all8         6    s_efit      24  2.793225e-03
+18:                FM_multipla|all8         6 s_breadth      24 -1.407861e-03
+19:                FM_multipla|all8         1     s_rev      24 -2.465161e-03
+20:                FM_multipla|all8         1     s_dem      24 -2.102760e-03
+21:                FM_multipla|all8         6    s_52wh      24  3.062277e-03
+22:                FM_multipla|all8         1 s_idiovol      24 -2.321982e-03
+23: FM_multipla|top3(peer+hhi+52wh)         1    s_52wh      24  2.216917e-03
+24:                FM_multipla|all8         1    s_efit      24  8.116640e-04
+25:                FM_multipla|all8         3     s_dem      24  8.636831e-04
+26:                FM_multipla|all8         1 s_breadth      24  5.907565e-04
+27:                FM_multipla|all8         3 s_idiovol      24  9.927953e-04
+28: FM_multipla|top3(peer+hhi+52wh)         6    s_peer      24  3.274709e-04
+29:                FM_multipla|all8         3    s_52wh      24  3.427516e-04
+30:                FM_multipla|all8         1    s_52wh      24  2.495642e-04
+31: FM_multipla|top3(peer+hhi+52wh)         3    s_52wh      24 -2.038299e-04
+32:                FM_multipla|all8         6    s_peer      24  1.102196e-04
+33:                FM_multipla|all8         3     s_rev      24 -9.300688e-05
+                             modelo horizonte  variavel n_meses    coef_medio
+           t_fm       p_fm r2_medio_pct sig_bonferroni
+          <num>      <num>        <num>         <lgcl>
+ 1: -2.48700003 0.02057513    11.556119          FALSE
+ 2: -2.40913811 0.02439591     7.498569          FALSE
+ 3: -2.22197222 0.03640396    12.714137          FALSE
+ 4: -2.11414082 0.04555512     7.902309          FALSE
+ 5:  1.97346240 0.06057570     7.902309          FALSE
+ 6:  1.91151038 0.06847816    12.714137          FALSE
+ 7: -1.73999377 0.09522627     7.677521          FALSE
+ 8: -1.69100115 0.10434502    11.556119          FALSE
+ 9: -1.68998956 0.10454085    11.556119          FALSE
+10: -1.50364608 0.14628085    12.860977          FALSE
+11:  1.45492990 0.15920181     7.498569          FALSE
+12:  1.22655444 0.23239914    12.860977          FALSE
+13:  1.19826527 0.24301582    12.860977          FALSE
+14: -1.07781470 0.29229143    12.860977          FALSE
+15:  1.05851800 0.30081028     7.677521          FALSE
+16:  1.03476523 0.31153655    11.556119          FALSE
+17:  0.82547992 0.41757949    11.556119          FALSE
+18: -0.80710076 0.42787642    11.556119          FALSE
+19: -0.73333280 0.47076468    12.714137          FALSE
+20: -0.72854182 0.47363526    12.714137          FALSE
+21:  0.57108553 0.57348011    11.556119          FALSE
+22: -0.56575884 0.57703623    12.714137          FALSE
+23:  0.37213411 0.71319980     7.902309          FALSE
+24:  0.28839729 0.77562573    12.714137          FALSE
+25:  0.28282872 0.77983797    12.860977          FALSE
+26:  0.20999754 0.83551872    12.714137          FALSE
+27:  0.19731836 0.84531180    12.860977          FALSE
+28:  0.12501921 0.90159465     7.498569          FALSE
+29:  0.06787874 0.94646881    12.860977          FALSE
+30:  0.04628100 0.96348578    12.714137          FALSE
+31: -0.04068443 0.96789859     7.677521          FALSE
+32:  0.04014156 0.96832668    11.556119          FALSE
+33: -0.02504760 0.98023305    12.860977          FALSE
+           t_fm       p_fm r2_medio_pct sig_bonferroni
+
+
+===== SCORES COMPOSTOS COM PESOS DO TREINO (ordenado por p) =====
+                                   sinal horizonte n_meses n_min_grupo_mes
+                                  <char>     <num>   <int>           <int>
+1: COMPOSTO(pesos regressao treino,all8)         6      24              11
+2: COMPOSTO(pesos regressao treino,top3)         1      24              11
+3: COMPOSTO(pesos regressao treino,top3)         6      24              11
+4: COMPOSTO(pesos regressao treino,top3)         3      24              11
+5: COMPOSTO(pesos regressao treino,all8)         1      24              11
+6: COMPOSTO(pesos regressao treino,all8)         3      24              11
+    spread_pp     sharpe       t_fm       p_fm sig_bonferroni
+        <num>      <num>      <num>      <num>         <lgcl>
+1:  1.1934068  1.4005699  1.9807049 0.05970654          FALSE
+2:  1.1583282  1.3512058  1.9108936 0.06856119          FALSE
+3:  1.0502860  1.0598553  1.4988617 0.14751074          FALSE
+4: -0.4911841 -0.3477477 -0.4917895 0.62752910          FALSE
+5:  0.4625234  0.3049674  0.4312891 0.67027373          FALSE
+6: -0.2562506 -0.1513267 -0.2140082 0.83242653          FALSE
+
+OK

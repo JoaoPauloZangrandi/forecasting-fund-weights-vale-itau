@@ -1,0 +1,66 @@
+Ticker-mes com peer_ret + HHI disponiveis: 25111 
+===== Baseline: CIO peer momentum SEM condicionar (referencia, teste ym>=2020) =====
+CIO|baseline(sem cond.)                h=1 62 meses n_min_grupo-mes= 15 spread=  +0.50pp/mes (  +6.2%/ano) t=  1.04 p=0.30389 | Bonf:nao
+CIO|baseline(sem cond.)                h=3 60 meses n_min_grupo-mes= 15 spread=  -0.02pp/mes (  -0.2%/ano) t= -0.03 p=0.97887 | Bonf:nao
+CIO|baseline(sem cond.)                h=6 58 meses n_min_grupo-mes= 14 spread=  +0.28pp/mes (  +3.5%/ano) t=  0.59 p=0.56049 | Bonf:nao
+
+===== CIO peer momentum condicionado a TERCIL de HHI (re-cortado por mes) =====
+CIO|BAIXO-HHI(vol.prev.baixa)          h=1 62 meses n_min_grupo-mes=  5 spread=  -3.15pp/mes ( -31.9%/ano) t= -1.03 p=0.30725 | Bonf:nao
+CIO|ALTO-HHI(vol.prev.alta)            h=1 62 meses n_min_grupo-mes=  5 spread=  +0.86pp/mes ( +10.8%/ano) t=  1.17 p=0.24778 | Bonf:nao
+CIO|BAIXO-HHI(vol.prev.baixa)          h=3 60 meses n_min_grupo-mes=  5 spread=  +0.91pp/mes ( +11.4%/ano) t=  0.82 p=0.41762 | Bonf:nao
+CIO|ALTO-HHI(vol.prev.alta)            h=3 60 meses n_min_grupo-mes=  5 spread=  -0.20pp/mes (  -2.4%/ano) t= -0.29 p=0.77364 | Bonf:nao
+CIO|BAIXO-HHI(vol.prev.baixa)          h=6 58 meses n_min_grupo-mes=  5 spread=  -0.50pp/mes (  -5.8%/ano) t= -0.64 p=0.52565 | Bonf:nao
+CIO|ALTO-HHI(vol.prev.alta)            h=6 58 meses n_min_grupo-mes=  5 spread=  +0.00pp/mes (  +0.0%/ano) t=  0.00 p=0.99996 | Bonf:nao
+
+===== CIO peer momentum condicionado a MEDIANA de HHI (re-cortado por mes) =====
+CIO|BAIXO-HHI(mediana)                 h=1 62 meses n_min_grupo-mes=  8 spread=  -0.26pp/mes (  -3.1%/ano) t= -0.38 p=0.70508 | Bonf:nao
+CIO|ALTO-HHI(mediana)                  h=1 62 meses n_min_grupo-mes=  8 spread=  +0.89pp/mes ( +11.2%/ano) t=  1.62 p=0.11012 | Bonf:nao
+CIO|BAIXO-HHI(mediana)                 h=3 60 meses n_min_grupo-mes=  7 spread=  +0.31pp/mes (  +3.8%/ano) t=  0.36 p=0.72370 | Bonf:nao
+CIO|ALTO-HHI(mediana)                  h=3 60 meses n_min_grupo-mes=  8 spread=  +0.07pp/mes (  +0.9%/ano) t=  0.13 p=0.90000 | Bonf:nao
+CIO|BAIXO-HHI(mediana)                 h=6 58 meses n_min_grupo-mes=  7 spread=  +0.09pp/mes (  +1.1%/ano) t=  0.14 p=0.88661 | Bonf:nao
+CIO|ALTO-HHI(mediana)                  h=6 58 meses n_min_grupo-mes=  7 spread=  +0.34pp/mes (  +4.2%/ano) t=  0.54 p=0.59100 | Bonf:nao
+
+===== Regressao FM formal: retorno ~ peer_ret_z + hhi_z + peer_ret_z:hhi_z (h=1) =====
+Meses com regressao valida: 62
+  peer_z     coef_medio= -0.00108 | t= -0.47 | p=0.6435
+  hhi_z      coef_medio= +0.00014 | t=  0.05 | p=0.9627
+  inter_z    coef_medio= +0.00139 | t=  1.03 | p=0.3086
+
+
+===== RESUMO (ordenado por p) =====
+                            sinal horizonte n_meses n_min_grupo_mes
+                           <char>     <num>   <int>           <int>
+ 1:         CIO|ALTO-HHI(mediana)         1      62               8
+ 2:   CIO|ALTO-HHI(vol.prev.alta)         1      62               5
+ 3:       CIO|baseline(sem cond.)         1      62              15
+ 4: CIO|BAIXO-HHI(vol.prev.baixa)         1      62               5
+ 5: CIO|BAIXO-HHI(vol.prev.baixa)         3      60               5
+ 6: CIO|BAIXO-HHI(vol.prev.baixa)         6      58               5
+ 7:       CIO|baseline(sem cond.)         6      58              14
+ 8:         CIO|ALTO-HHI(mediana)         6      58               7
+ 9:        CIO|BAIXO-HHI(mediana)         1      62               8
+10:        CIO|BAIXO-HHI(mediana)         3      60               7
+11:   CIO|ALTO-HHI(vol.prev.alta)         3      60               5
+12:        CIO|BAIXO-HHI(mediana)         6      58               7
+13:         CIO|ALTO-HHI(mediana)         3      60               8
+14:       CIO|baseline(sem cond.)         3      60              15
+15:   CIO|ALTO-HHI(vol.prev.alta)         6      58               5
+        spread_pp          t_fm      p_fm sig_bonferroni
+            <num>         <num>     <num>         <lgcl>
+ 1:  8.910662e-01  1.621265e+00 0.1101191          FALSE
+ 2:  8.578795e-01  1.166934e+00 0.2477786          FALSE
+ 3:  4.995294e-01  1.036858e+00 0.3038949          FALSE
+ 4: -3.145998e+00 -1.029623e+00 0.3072522          FALSE
+ 5:  9.068566e-01  8.162805e-01 0.4176233          FALSE
+ 6: -4.952082e-01 -6.385871e-01 0.5256492          FALSE
+ 7:  2.839524e-01  5.855477e-01 0.5604907          FALSE
+ 8:  3.426366e-01  5.404349e-01 0.5910027          FALSE
+ 9: -2.638043e-01 -3.802479e-01 0.7050823          FALSE
+10:  3.091917e-01  3.552061e-01 0.7237019          FALSE
+11: -2.041725e-01 -2.889431e-01 0.7736377          FALSE
+12:  9.089764e-02  1.432359e-01 0.8866091          FALSE
+13:  7.181816e-02  1.261993e-01 0.9000032          FALSE
+14: -1.594384e-02 -2.659354e-02 0.9788737          FALSE
+15:  4.324384e-05  5.414311e-05 0.9999570          FALSE
+
+OK

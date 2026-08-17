@@ -38,7 +38,7 @@ for (i in seq_along(horizontes)) {
   M[, dw := peso_fut - peso]
 
   treino <- M[ym < CORTE]
-  teste  <- M[ym >= CORTE & ym_fut <= 202112L]
+  teste  <- M[ym >= CORTE & ym_fut <= 202607L]
   cat(sprintf("\nh=%d: treino %d obs | teste %d obs\n", h, nrow(treino), nrow(teste)))
 
   fit <- lm(dw ~ 0 + d, data = treino)

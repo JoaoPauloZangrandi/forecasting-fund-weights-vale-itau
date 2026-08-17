@@ -1,0 +1,23 @@
+Fundo-meses com skill_12m calculavel: 100412 
+Fundos-lider distintos: 1754 
+Obs de lideres com skill_12m disponivel: 6991204 de 6991362 
+
+===== (H1) Sinal dos lideres, PONDERADO pela skill (retorno 12m) =====
+h=1 [linear] R2_OOS=0.1039% p=0.0002
+h=1 [FM] 23 meses spread=-1.00pp/mes t=-1.05 p=0.3041
+h=3 [linear] R2_OOS=0.0148% p=0.2259
+h=3 [FM] 22 meses spread=1.12pp/mes t=1.71 p=0.1020
+h=6 [linear] R2_OOS=-0.0310% p=0.0570
+h=6 [FM] 19 meses spread=0.56pp/mes t=0.74 p=0.4674
+
+===== (H2) Sinal, SO' lideres do top quintil de skill_12m (por mes) =====
+Obs de lideres top-quintil skill: 1397994 
+h=1 [linear] R2_OOS=0.0244% p=0.0076
+h=1 [FM] 23 meses spread=-1.80pp/mes t=-1.99 p=0.0587
+h=3 [linear] R2_OOS=0.0829% p=0.0046
+h=3 [FM] 22 meses spread=0.40pp/mes t=0.50 p=0.6255
+h=6 [linear] R2_OOS=-0.0676% p=0.0157
+h=6 [FM] 19 meses spread=-0.31pp/mes t=-0.47 p=0.6450
+
+
+OK

@@ -1,0 +1,133 @@
+Meses de teste em 2021 (excluindo todo 2020): 37 
+
+===== (1) Delta dispersao 3m/6m -> retorno, RESTRITO A 2021 (sem COVID) =====
+Delta dispersao 3m | so 2021 (sem COVID)       h=1 37 meses n_min= 13 spread(Q5-Q1)= -0.331pp/mes (  -3.9%/ano) Sharpe=-0.37 t= -0.65 p=0.52099 | Bonf:nao
+Delta dispersao 6m | so 2021 (sem COVID)       h=1 37 meses n_min= 13 spread(Q5-Q1)= +0.132pp/mes (  +1.6%/ano) Sharpe= 0.12 t=  0.21 p=0.83835 | Bonf:nao
+Delta dispersao 3m | so 2021 (sem COVID)       h=3 36 meses n_min= 13 spread(Q5-Q1)= -0.759pp/mes (  -8.7%/ano) Sharpe=-0.21 t= -0.37 p=0.71493 | Bonf:nao
+Delta dispersao 6m | so 2021 (sem COVID)       h=3 36 meses n_min= 13 spread(Q5-Q1)= -0.432pp/mes (  -5.1%/ano) Sharpe=-0.12 t= -0.20 p=0.83946 | Bonf:nao
+Delta dispersao 3m | so 2021 (sem COVID)       h=6 35 meses n_min= 11 spread(Q5-Q1)= +0.475pp/mes (  +5.9%/ano) Sharpe= 0.36 t=  0.61 p=0.54673 | Bonf:nao
+Delta dispersao 6m | so 2021 (sem COVID)       h=6 35 meses n_min= 11 spread(Q5-Q1)= -0.429pp/mes (  -5.0%/ano) Sharpe=-0.38 t= -0.65 p=0.51706 | Bonf:nao
+
+Correlacao delta_cv_3m x delta_hhi_3m: 0.169 
+(Se alta, os dois angulos A e B estao pegando o mesmo fenomeno subjacente.)
+
+===== (2) Delta dispersao 3m sobrevive controlando por nivel de dispersao E delta_HHI 3m? =====
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=1 var=delta_cv_3m_z    coef_medio= -0.00144 t= -0.60 p=0.54894 (49 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=1 var=cv_peso_ponderado_z coef_medio= +0.00101 t=  0.31 p=0.76041 (49 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=1 var=delta_hhi_3m_z   coef_medio= +0.00195 t=  1.14 p=0.26155 (49 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=3 var=delta_cv_3m_z    coef_medio= -0.00034 t= -0.08 p=0.93285 (48 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=3 var=cv_peso_ponderado_z coef_medio= +0.00442 t=  1.13 p=0.26523 (48 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=3 var=delta_hhi_3m_z   coef_medio= -0.00352 t= -1.38 p=0.17478 (48 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=6 var=delta_cv_3m_z    coef_medio= +0.00217 t=  0.61 p=0.54652 (47 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=6 var=cv_peso_ponderado_z coef_medio= -0.00096 t= -0.41 p=0.68591 (47 meses) | Bonf:nao
+  [FM linear] Delta disp 3m + nivel disp + delta HHI (controlado) h=6 var=delta_hhi_3m_z   coef_medio= +0.00081 t=  0.51 p=0.61525 (47 meses) | Bonf:nao
+
+===== (3) Contribuicao mes-a-mes do spread, delta_cv_3m -> retorno h=6 (melhor caso) =====
+        ym            q1           q5       spread
+     <int>         <num>        <num>        <num>
+ 1: 202107  0.0514203708  0.223628862  0.172208491
+ 2: 202211  0.0710008413  0.158399576  0.087398734
+ 3: 202401  0.0989960680  0.026468206 -0.072527862
+ 4: 202405 -0.0543077821  0.011036278  0.065344060
+ 5: 202010  0.1156350712  0.051448809 -0.064186262
+ 6: 202503 -0.0067699372  0.056288639  0.063058577
+ 7: 202008  0.0064796993 -0.051809209 -0.058288908
+ 8: 202308 -0.0132879869  0.039252701  0.052540687
+ 9: 202004  0.0108567968 -0.037770207 -0.048627004
+10: 202001  0.1103116626  0.062135590 -0.048176073
+11: 202110 -0.0551004120 -0.102230199 -0.047129787
+12: 202504 -0.0331910606  0.012148762  0.045339822
+13: 202507  0.0923287483  0.049466032 -0.042862716
+14: 202402  0.0448110439  0.086428756  0.041617712
+15: 202111  0.0160374586 -0.024843490 -0.040880948
+16: 202404  0.0045336697 -0.034824560 -0.039358229
+17: 202105 -0.0486320738 -0.013920462  0.034711611
+18: 202009  0.0875500206  0.054861238 -0.032688783
+19: 202109  0.0939961235  0.062161816 -0.031834308
+20: 202112 -0.1260249667 -0.156875058 -0.030850091
+21: 202012  0.0461560065  0.019523935 -0.026632071
+22: 202506  0.0110187510 -0.014953173 -0.025971924
+23: 202206 -0.0202268771  0.004598002  0.024824879
+24: 202509 -0.0600526178 -0.036213194  0.023839424
+25: 202305  0.1497269403  0.126836131 -0.022890809
+26: 202203 -0.0051840460  0.015789122  0.020973168
+27: 202103 -0.0440147110 -0.064837394 -0.020822683
+28: 202101 -0.0528410853 -0.072928747 -0.020087662
+29: 202510 -0.0166865057 -0.036739256 -0.020052750
+30: 202003 -0.0580162093 -0.039052567  0.018963643
+31: 202106  0.0674974778  0.049359939 -0.018137539
+32: 202302 -0.0564272680 -0.073214675 -0.016787407
+33: 202005  0.1873248493  0.170673969 -0.016650881
+34: 202011 -0.0006366272  0.015580470  0.016217098
+35: 202201  0.0678491215  0.051748179 -0.016100943
+36: 202407  0.0670507608  0.054445635 -0.012605125
+37: 202209 -0.0139466951 -0.001865751  0.012080944
+38: 202512 -0.0496820683 -0.037712244  0.011969824
+39: 202006  0.0726444340  0.063258676 -0.009385758
+40: 202002  0.0097060135  0.002076442 -0.007629572
+41: 202102 -0.0412828437 -0.033660734  0.007622110
+42: 202104 -0.0989529069 -0.105698857 -0.006745950
+43: 202410  0.0426424041  0.036141277 -0.006501127
+44: 202007 -0.0374797604 -0.042930251 -0.005450491
+45: 202311 -0.0501906056 -0.053818301 -0.003627695
+46: 202501 -0.0624369797 -0.064868675 -0.002431695
+47: 202108 -0.0447020051 -0.043655626  0.001046380
+        ym            q1           q5       spread
+
+Media geral: -0.247pp | maior contribuicao isolada: 17.221pp (11% da media somada)
+
+
+===== RESUMO (ordenado por p) =====
+                                                  sinal horizonte n_meses
+                                                 <char>     <num>   <int>
+ 1: Delta disp 3m + nivel disp + delta HHI (controlado)         3      48
+ 2: Delta disp 3m + nivel disp + delta HHI (controlado)         1      49
+ 3: Delta disp 3m + nivel disp + delta HHI (controlado)         3      48
+ 4:            Delta dispersao 6m | so 2021 (sem COVID)         6      35
+ 5:            Delta dispersao 3m | so 2021 (sem COVID)         1      37
+ 6: Delta disp 3m + nivel disp + delta HHI (controlado)         6      47
+ 7:            Delta dispersao 3m | so 2021 (sem COVID)         6      35
+ 8: Delta disp 3m + nivel disp + delta HHI (controlado)         1      49
+ 9: Delta disp 3m + nivel disp + delta HHI (controlado)         6      47
+10: Delta disp 3m + nivel disp + delta HHI (controlado)         6      47
+11:            Delta dispersao 3m | so 2021 (sem COVID)         3      36
+12: Delta disp 3m + nivel disp + delta HHI (controlado)         1      49
+13:            Delta dispersao 6m | so 2021 (sem COVID)         1      37
+14:            Delta dispersao 6m | so 2021 (sem COVID)         3      36
+15: Delta disp 3m + nivel disp + delta HHI (controlado)         3      48
+    n_min_grupo_mes  spread_pp     sharpe        t_fm      p_fm sig_bonferroni
+              <int>      <num>      <num>       <num>     <num>         <lgcl>
+ 1:              NA         NA         NA -1.37784773 0.1747756          FALSE
+ 2:              NA         NA         NA  1.13611057 0.2615509          FALSE
+ 3:              NA         NA         NA  1.12755051 0.2652333          FALSE
+ 4:              11 -0.4291973 -0.3833539 -0.65470148 0.5170649          FALSE
+ 5:              13 -0.3308738 -0.3691304 -0.64817161 0.5209870          FALSE
+ 6:              NA         NA         NA  0.60747689 0.5465218          FALSE
+ 7:              11  0.4753405  0.3564559  0.60876443 0.5467267          FALSE
+ 8:              NA         NA         NA -0.60362080 0.5489379          FALSE
+ 9:              NA         NA         NA  0.50603623 0.6152479          FALSE
+10:              NA         NA         NA -0.40697583 0.6859133          FALSE
+11:              13 -0.7591611 -0.2125906 -0.36821780 0.7149286          FALSE
+12:              NA         NA         NA  0.30668187 0.7604120          FALSE
+13:              13  0.1318734  0.1170202  0.20548080 0.8383540          FALSE
+14:              13 -0.4322804 -0.1178318 -0.20409071 0.8394647          FALSE
+15:              NA         NA         NA -0.08471265 0.9328497          FALSE
+               variavel    coef_medio
+                 <char>         <num>
+ 1:      delta_hhi_3m_z -0.0035222815
+ 2:      delta_hhi_3m_z  0.0019526171
+ 3: cv_peso_ponderado_z  0.0044204178
+ 4:                <NA>            NA
+ 5:                <NA>            NA
+ 6:       delta_cv_3m_z  0.0021662216
+ 7:                <NA>            NA
+ 8:       delta_cv_3m_z -0.0014384715
+ 9:      delta_hhi_3m_z  0.0008132690
+10: cv_peso_ponderado_z -0.0009617784
+11:                <NA>            NA
+12: cv_peso_ponderado_z  0.0010066505
+13:                <NA>            NA
+14:                <NA>            NA
+15:       delta_cv_3m_z -0.0003386055
+
+OK

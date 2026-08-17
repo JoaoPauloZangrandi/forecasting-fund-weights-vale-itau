@@ -20,7 +20,7 @@ REPO <- Sys.getenv("PROJ_DIR", unset = "C:/Users/joaoz/forecasting-fund-weights-
 
 M <- fread(file.path(REPO, "v2 OFICIAL/data/ajuste_parcial_universo_completo_h1.csv"))
 M[, cod_fundo := as.character(cod_fundo)]
-lam <- 0.0690  # atualizado 12/08/2026 apos corte soma_peso subir de 105% p/ 150% (era 0.0677)
+lam <- 0.0444  # atualizado 16/08/2026 apos corrigir retorno_fundo_mensal.csv (estava sem cobertura 2022-2026, dw_corrigido ficava NA e truncava a amostra em 202111; era 0.0690)
 M[, u := dw_corrigido - lam * d]
 M <- M[!is.na(u)]
 

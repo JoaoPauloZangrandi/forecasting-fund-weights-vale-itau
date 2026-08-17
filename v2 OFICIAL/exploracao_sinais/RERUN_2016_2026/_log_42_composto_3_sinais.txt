@@ -1,0 +1,60 @@
+Ticker-mes com os 3 sinais disponiveis: 27687 
+
+===== h=1: sinais individuais (referencia, teste ym>=2020) =====
+individual|peer_ret            h=1 62 meses n_min= 13 spread=  +0.65pp/mes (  +8.1%/ano) Sharpe= 0.54 t=  1.23 p=0.22283 | Bonf:nao
+individual|prox_52w_high       h=1 43 meses n_min= 13 spread=  +1.20pp/mes ( +15.4%/ano) Sharpe= 0.55 t=  1.04 p=0.30223 | Bonf:nao
+individual|reversao            h=1 62 meses n_min= 13 spread=  +0.79pp/mes (  +9.9%/ano) Sharpe= 0.30 t=  0.67 p=0.50448 | Bonf:nao
+
+===== h=1: regressao FM multipla (3 sinais juntos, mes a mes) =====
+Meses com regressao valida: 62
+  peer_z     coef_medio= +0.00129 | t=  0.79 | p=0.4305
+  high_z     coef_medio= +0.00788 | t=  2.81 | p=0.0066
+  rev_z      coef_medio= +0.00374 | t=  1.38 | p=0.1728
+
+Pesos estimados no TREINO (ym<2020): peer=0.0064 high=0.0013 rev=-0.0009
+COMPOSTO(pesos do treino)      h=1 62 meses n_min= 13 spread=  +0.81pp/mes ( +10.1%/ano) Sharpe= 0.54 t=  1.23 p=0.22343 | Bonf:nao
+COMPOSTO(soma simples, sem peso) h=1 62 meses n_min= 13 spread=  +1.27pp/mes ( +16.3%/ano) Sharpe= 0.93 t=  2.12 p=0.03812 | Bonf:nao
+
+===== h=3: sinais individuais (referencia, teste ym>=2020) =====
+individual|peer_ret            h=3 60 meses n_min= 12 spread=  +0.48pp/mes (  +6.0%/ano) Sharpe= 0.34 t=  0.76 p=0.45125 | Bonf:nao
+individual|prox_52w_high       h=3 42 meses n_min= 12 spread=  -0.96pp/mes ( -10.9%/ano) Sharpe=-0.31 t= -0.58 p=0.56801 | Bonf:nao
+individual|reversao            h=3 60 meses n_min= 12 spread=  +0.02pp/mes (  +0.2%/ano) Sharpe= 0.01 t=  0.02 p=0.98357 | Bonf:nao
+
+===== h=3: regressao FM multipla (3 sinais juntos, mes a mes) =====
+Meses com regressao valida: 60
+  peer_z     coef_medio= +0.00431 | t=  2.10 | p=0.0398
+  high_z     coef_medio= -0.00633 | t= -0.62 | p=0.5361
+  rev_z      coef_medio= -0.00373 | t= -0.52 | p=0.6051
+
+Pesos estimados no TREINO (ym<2020): peer=-0.0119 high=0.0001 rev=0.0026
+COMPOSTO(pesos do treino)      h=3 60 meses n_min= 12 spread=  -0.70pp/mes (  -8.1%/ano) Sharpe=-0.48 t= -1.08 p=0.28612 | Bonf:nao
+COMPOSTO(soma simples, sem peso) h=3 60 meses n_min= 12 spread=  +0.22pp/mes (  +2.6%/ano) Sharpe= 0.08 t=  0.18 p=0.85530 | Bonf:nao
+
+
+===== RESUMO (ordenado por p) =====
+                               sinal horizonte n_meses n_min_grupo_mes
+                              <char>     <num>   <int>           <int>
+ 1: COMPOSTO(soma simples, sem peso)         1      62              13
+ 2:              individual|peer_ret         1      62              13
+ 3:        COMPOSTO(pesos do treino)         1      62              13
+ 4:        COMPOSTO(pesos do treino)         3      60              12
+ 5:         individual|prox_52w_high         1      43              13
+ 6:              individual|peer_ret         3      60              12
+ 7:              individual|reversao         1      62              13
+ 8:         individual|prox_52w_high         3      42              12
+ 9: COMPOSTO(soma simples, sem peso)         3      60              12
+10:              individual|reversao         3      60              12
+     spread_pp       sharpe        t_fm       p_fm sig_bonferroni
+         <num>        <num>       <num>      <num>         <lgcl>
+ 1:  1.2656773  0.932469236  2.11953081 0.03812332          FALSE
+ 2:  0.6489121  0.541821566  1.23157683 0.22283406          FALSE
+ 3:  0.8056744  0.541117972  1.22997754 0.22342814          FALSE
+ 4: -0.6998666 -0.481388730 -1.07641792 0.28612230          FALSE
+ 5:  1.2015089  0.551773474  1.04449033 0.30223319          FALSE
+ 6:  0.4832362  0.339149257  0.75836079 0.45125382          FALSE
+ 7:  0.7921382  0.295389785  0.67142993 0.50448151          FALSE
+ 8: -0.9568210 -0.307691829 -0.57563870 0.56800566          FALSE
+ 9:  0.2174847  0.081912727  0.18316243 0.85529856          FALSE
+10:  0.0154056  0.009246644  0.02067613 0.98357378          FALSE
+
+OK

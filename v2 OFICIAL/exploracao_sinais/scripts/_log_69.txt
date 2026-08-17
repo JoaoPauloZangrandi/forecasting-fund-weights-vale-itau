@@ -1,0 +1,84 @@
+===== (1) Reconstruindo ALTO-HHI(tercil) h=1, serie de spreads mes a mes =====
+EFIT|ALTO-HHI(tercil)          h=1 [5grp] 24 meses n_min= 15 spread= +2.878pp/mes (  +40.6%/ano) Sharpe= 2.49 t=  3.52 p=0.00185 | Bonf:nao
+Chave: <ym>
+        ym      q_baixo       q_alto       spread
+     <int>        <num>        <num>        <num>
+ 1: 202001 -0.123254349 -0.039255501  0.083998848
+ 2: 202002 -0.273931550 -0.332819855 -0.058888305
+ 3: 202003  0.196601442  0.180134309 -0.016467133
+ 4: 202004  0.049545796  0.032217519 -0.017328277
+ 5: 202005  0.191866826  0.218528008  0.026661182
+ 6: 202006  0.012721898  0.034313625  0.021591726
+ 7: 202007 -0.009263523  0.034298447  0.043561970
+ 8: 202008 -0.082708188 -0.048421817  0.034286371
+ 9: 202009 -0.026745825  0.002065658  0.028811483
+10: 202010  0.130031004  0.152911985  0.022880981
+11: 202011  0.054855834  0.149047866  0.094192033
+12: 202012 -0.050589614 -0.011692432  0.038897182
+13: 202101 -0.060892458  0.016547712  0.077440170
+14: 202102  0.097138340  0.105697935  0.008559595
+15: 202103  0.118250703  0.220354325  0.102103622
+16: 202104 -0.024163602  0.062224399  0.086388001
+17: 202105 -0.010476085  0.053446357  0.063922442
+18: 202106 -0.053852459 -0.054886513 -0.001034054
+19: 202107 -0.019207500 -0.006842618  0.012364882
+20: 202108 -0.084878872 -0.066401532  0.018477340
+21: 202109 -0.131970960 -0.101640967  0.030329992
+22: 202110 -0.052693609 -0.047097388  0.005596221
+23: 202111  0.076208606  0.059576789 -0.016631817
+24: 202112 -0.064326812 -0.063271038  0.001055774
+        ym      q_baixo       q_alto       spread
+
+===== (2) Contribuicao mes-a-mes ao spread =====
+Media total (24 meses): 0.0288
+  sem 202001: media = +0.0264 (contribuicao: +0.0024) | n_min naquele mes: verificar acima
+  sem 202002: media = +0.0326 (contribuicao: -0.0038) | n_min naquele mes: verificar acima
+  sem 202003: media = +0.0307 (contribuicao: -0.0020) | n_min naquele mes: verificar acima
+  sem 202004: media = +0.0308 (contribuicao: -0.0020) | n_min naquele mes: verificar acima
+  sem 202005: media = +0.0289 (contribuicao: -0.0001) | n_min naquele mes: verificar acima
+  sem 202006: media = +0.0291 (contribuicao: -0.0003) | n_min naquele mes: verificar acima
+  sem 202007: media = +0.0281 (contribuicao: +0.0006) | n_min naquele mes: verificar acima
+  sem 202008: media = +0.0285 (contribuicao: +0.0002) | n_min naquele mes: verificar acima
+  sem 202009: media = +0.0288 (contribuicao: +0.0000) | n_min naquele mes: verificar acima
+  sem 202010: media = +0.0290 (contribuicao: -0.0003) | n_min naquele mes: verificar acima
+  sem 202011: media = +0.0259 (contribuicao: +0.0028) | n_min naquele mes: verificar acima
+  sem 202012: media = +0.0283 (contribuicao: +0.0004) | n_min naquele mes: verificar acima
+  sem 202101: media = +0.0267 (contribuicao: +0.0021) | n_min naquele mes: verificar acima
+  sem 202102: media = +0.0297 (contribuicao: -0.0009) | n_min naquele mes: verificar acima
+  sem 202103: media = +0.0256 (contribuicao: +0.0032) | n_min naquele mes: verificar acima
+  sem 202104: media = +0.0263 (contribuicao: +0.0025) | n_min naquele mes: verificar acima
+  sem 202105: media = +0.0273 (contribuicao: +0.0015) | n_min naquele mes: verificar acima
+  sem 202106: media = +0.0301 (contribuicao: -0.0013) | n_min naquele mes: verificar acima
+  sem 202107: media = +0.0295 (contribuicao: -0.0007) | n_min naquele mes: verificar acima
+  sem 202108: media = +0.0292 (contribuicao: -0.0004) | n_min naquele mes: verificar acima
+  sem 202109: media = +0.0287 (contribuicao: +0.0001) | n_min naquele mes: verificar acima
+  sem 202110: media = +0.0298 (contribuicao: -0.0010) | n_min naquele mes: verificar acima
+  sem 202111: media = +0.0308 (contribuicao: -0.0020) | n_min naquele mes: verificar acima
+  sem 202112: media = +0.0300 (contribuicao: -0.0012) | n_min naquele mes: verificar acima
+
+===== (3) Robustez excluindo 2020 (SO 2021+) =====
+EFIT|ALTO-HHI SO 2021+         h=1 [5grp] 12 meses n_min= 15 spread= +3.238pp/mes (  +46.6%/ano) Sharpe= 2.84 t=  2.84 p=0.01614 | Bonf:nao
+EFIT|ALTO-HHI SO 2020          h=1 [5grp] 12 meses n_min= 15 spread= +2.518pp/mes (  +34.8%/ano) Sharpe= 2.07 t=  2.07 p=0.06241 | Bonf:nao
+
+===== (4) Decil em vez de quintil (efeito mais extremo nos extremos?) =====
+EFIT|ALTO-HHI(tercil), decil   h=1 [10grp] 24 meses n_min=  8 spread= +4.632pp/mes (  +72.2%/ano) Sharpe= 2.73 t=  3.86 p=0.00079 | Bonf:nao
+
+===== (5) Regressao FM continua com interacao EFIT x HHI, TODOS os meses de teste, h=1 =====
+Meses com regressao valida: 24
+  efit_z     coef_medio= +0.00680 | t=  1.48 | p=0.1530
+  hhi_z      coef_medio= +0.00662 | t=  2.49 | p=0.0205
+  inter_z    coef_medio= -0.00117 | t= -0.40 | p=0.6934
+
+===== (6) Checando se ALTO-HHI(tercil) e' so' um proxy de TAMANHO (acoes grandes = mais fundos = HHI mais baixo tipicamente, mas confirmar) =====
+Correlacao HHI x log(valor_total) dentro do tercil ALTO-HHI: -0.364 
+N medio de fundos no tercil ALTO-HHI: NA | tercil BAIXO-HHI: NA 
+Mensagens de aviso:
+1: In mean.default(m[tercil_hhi == 3]$n_fundos, na.rm = TRUE) :
+  argumento não é numérico nem lógico: retornando NA
+2: In mean.default(m[tercil_hhi == 1]$n_fundos, na.rm = TRUE) :
+  argumento não é numérico nem lógico: retornando NA
+
+===== (7) Consistencia direcional: % de meses com spread positivo =====
+ALTO-HHI(tercil) h=1: 79.2% dos 24 meses com spread positivo
+
+OK

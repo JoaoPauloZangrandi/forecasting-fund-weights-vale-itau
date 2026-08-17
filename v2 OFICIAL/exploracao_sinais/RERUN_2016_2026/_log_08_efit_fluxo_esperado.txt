@@ -1,0 +1,28 @@
+===== (J) E[FIT]: fluxo esperado (previsto por skill passado do fundo) =====
+Fundo-meses com flow_aum + skill defasado disponiveis: 90860 
+1o estagio (flow_aum ~ skill_12m, so treino): coef= 0.06689  R2= 5e-05 
+Celulas ativo-mes com E[FIT] calculavel: 13585 
+E[FIT] (fluxo esperado)        h= 0 [linear] n_tr= 7283 n_te=6125 beta= -0.08858 R2_OOS=  0.0226% p_full=0.0002
+E[FIT] (fluxo esperado)        h= 0 [FM] 21 meses spread=  +0.12pp/mes t=  0.06 p=0.9491
+E[FIT] (fluxo esperado)        h= 1 [linear] n_tr= 7278 n_te=5934 beta= -0.73098 R2_OOS=  0.8423% p_full=0.0000
+E[FIT] (fluxo esperado)        h= 1 [FM] 20 meses spread=  -0.47pp/mes t= -0.28 p=0.7815
+E[FIT] (fluxo esperado)        h= 3 [linear] n_tr= 7225 n_te=5881 beta= -1.12148 R2_OOS=  0.7250% p_full=0.0000
+E[FIT] (fluxo esperado)        h= 3 [FM] 20 meses spread=  -2.03pp/mes t= -1.47 p=0.1568
+E[FIT] (fluxo esperado)        h= 6 [linear] n_tr= 7140 n_te=5800 beta= -0.35000 R2_OOS= -0.4464% p_full=0.7464
+E[FIT] (fluxo esperado)        h= 6 [FM] 21 meses spread=  -0.71pp/mes t= -0.53 p=0.6013
+E[FIT] (fluxo esperado)        h=12 [linear] n_tr= 6980 n_te=5625 beta=  0.06686 R2_OOS= -0.0201% p_full=0.0089
+E[FIT] (fluxo esperado)        h=12 [FM] 21 meses spread=  -1.13pp/mes t= -0.68 p=0.5053
+
+===== (K) FIT suavizado (media movel 3 meses) =====
+FIT suavizado (MA3)            h= 0 [linear] n_tr= 8588 n_te=6869 beta=  0.07509 R2_OOS= -0.4277% p_full=0.0000
+FIT suavizado (MA3)            h= 0 [FM] 23 meses spread=  +0.86pp/mes t=  0.51 p=0.6136
+FIT suavizado (MA3)            h= 1 [linear] n_tr= 8577 n_te=6597 beta=  0.02632 R2_OOS= -0.0977% p_full=0.0000
+FIT suavizado (MA3)            h= 1 [FM] 22 meses spread=  -0.38pp/mes t= -0.25 p=0.8053
+FIT suavizado (MA3)            h= 3 [linear] n_tr= 8521 n_te=6554 beta= -0.45353 R2_OOS= -4.4472% p_full=0.0471
+FIT suavizado (MA3)            h= 3 [FM] 23 meses spread=  +2.43pp/mes t=  2.57 p=0.0176
+FIT suavizado (MA3)            h= 6 [linear] n_tr= 8420 n_te=6483 beta= -0.08501 R2_OOS= -0.3379% p_full=0.0396
+FIT suavizado (MA3)            h= 6 [FM] 23 meses spread=  +0.01pp/mes t=  0.01 p=0.9951
+FIT suavizado (MA3)            h=12 [linear] n_tr= 8251 n_te=6303 beta= -0.33693 R2_OOS= -1.7551% p_full=0.0473
+FIT suavizado (MA3)            h=12 [FM] 22 meses spread=  +0.66pp/mes t=  0.53 p=0.6003
+
+OK

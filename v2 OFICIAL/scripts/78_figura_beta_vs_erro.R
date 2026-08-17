@@ -14,7 +14,15 @@ REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 FIG <- file.path(REPO, "v2 OFICIAL/figuras")
 
 h1 <- fread(file.path(REPO, "v2 OFICIAL/data/etapa3_multiativo_h1.csv"))
+h1[, cod_fundo := as.character(cod_fundo)]
+# CRITICO (achado 16/08/2026): desde a expansao 2022-2026, fundos genuinamente
+# novos usam CNPJ (string) como cod_fundo em vez do ID numerico da Economatica
+# -- arquivos que por acaso so' contem fundos antigos (100% numericos) sao
+# auto-detectados como integer pelo fread, quebrando merge com arquivos que
+# tem os dois tipos misturados (sempre character). Forcar character sempre
+# que cod_fundo aparece, em qualquer script que fizer merge por essa coluna.
 pp <- fread(file.path(REPO, "v2 OFICIAL/data/painel_multiativo_final.csv"), select=c("cod_fundo","ativo","peso"))
+pp[, cod_fundo := as.character(cod_fundo)]
 cel <- pp[, .(peso_mediano = median(peso)), by = .(cod_fundo, ativo)]
 h1f <- merge(h1, cel[peso_mediano >= 0.001], by = c("cod_fundo","ativo"))
 cat("h1 antes do filtro:", nrow(h1), "| depois (so celulas com posicao de verdade):", nrow(h1f), "\n")
@@ -24,6 +32,7 @@ por_fundo <- por_fundo[n_obs >= 6]
 cat("Fundos com >=6 obs de teste (pos filtro):", nrow(por_fundo), "\n")
 
 beta <- fread(file.path(REPO, "v2 OFICIAL/data/beta_fundo_universo_completo.csv"))
+beta[, cod_fundo := as.character(cod_fundo)]
 beta_medio <- beta[, .(beta_medio = mean(beta_fundo)), by = cod_fundo]
 m <- merge(por_fundo, beta_medio, by="cod_fundo")
 cat("Amostra final (RMSE + beta, pos filtro):", nrow(m), "fundos\n")

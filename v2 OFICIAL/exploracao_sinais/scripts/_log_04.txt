@@ -1,0 +1,19 @@
+FIT (Lou)                      h= 0 | 24 meses | spread medio=-0.0003 (-0.03 p.p./mes) | t(FM)= -0.02 | p(FM)=0.9813 | % meses positivo=46%
+FIT (Lou)                      h= 1 | 24 meses | spread medio=+0.0223 (2.23 p.p./mes) | t(FM)=  1.72 | p(FM)=0.0985 | % meses positivo=58%
+FIT (Lou)                      h= 3 | 22 meses | spread medio=+0.0184 (1.84 p.p./mes) | t(FM)=  1.69 | p(FM)=0.1053 | % meses positivo=64%
+FIT (Lou)                      h= 6 | 19 meses | spread medio=+0.0038 (0.38 p.p./mes) | t(FM)=  0.31 | p(FM)=0.7580 | % meses positivo=42%
+FIT (Lou)                      h=12 | 13 meses | spread medio=+0.0056 (0.56 p.p./mes) | t(FM)=  0.50 | p(FM)=0.6286 | % meses positivo=38%
+Demanda agregada revelada      h= 1 | 24 meses | spread medio=+0.0031 (0.31 p.p./mes) | t(FM)=  0.28 | p(FM)=0.7822 | % meses positivo=58%
+Demanda agregada revelada      h= 3 | 22 meses | spread medio=+0.0067 (0.67 p.p./mes) | t(FM)=  0.93 | p(FM)=0.3624 | % meses positivo=64%
+Demanda agregada revelada      h= 6 | 19 meses | spread medio=+0.0188 (1.88 p.p./mes) | t(FM)=  2.03 | p(FM)=0.0572 | % meses positivo=74%
+Demanda agregada revelada      h=12 | 13 meses | spread medio=-0.0050 (-0.50 p.p./mes) | t(FM)= -0.39 | p(FM)=0.7028 | % meses positivo=46%
+Herding (LSV)                  h= 1 | 24 meses | spread medio=+0.0046 (0.46 p.p./mes) | t(FM)=  0.46 | p(FM)=0.6494 | % meses positivo=58%
+Herding (LSV)                  h= 3 | 22 meses | spread medio=+0.0028 (0.28 p.p./mes) | t(FM)=  0.26 | p(FM)=0.7977 | % meses positivo=64%
+Herding (LSV)                  h= 6 | 19 meses | spread medio=+0.0055 (0.55 p.p./mes) | t(FM)=  0.75 | p(FM)=0.4645 | % meses positivo=58%
+
+
+===== RESUMO FAMA-MACBETH (ordenado por |t|) =====
+Error in setorderv(x, cols, order, na.last) : 
+  algumas colunas não estão na data.table: [abs]
+Calls: setorder -> setorderv -> stopf -> raise_condition -> signal
+Execução interrompida

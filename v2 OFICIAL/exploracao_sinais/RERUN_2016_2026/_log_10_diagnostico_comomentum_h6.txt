@@ -1,0 +1,20 @@
+Mensagen de aviso:
+In dcast.data.table(precos_resid, ymk ~ ticker, value.var = "retorno_resid") :
+  'fun.aggregate' é NULL, mas foram encontradas combinações duplicadas de linha/coluna, então usando length() por padrão. Isso é, as variáveis [ymk, ticker] usadas em 'formula' não identificam de forma única as linhas na entrada 'data'. Em tais casos, 'fun.aggregate' é usado para derivar um único valor representativo para cada combinação na data.table de saída, por exemplo somando ou tirando a média (fun.aggregate=sum ou fun.aggregate=mean, respectivamente). Verifique a tabela resultante por valores maiores do que 1 para ver quais combinações não foram únicas. Veja ?dcast.data.table para mais detalhes.
+n distintos ATIVOS no teste (h=6, top-momentum): 6 
+meses de teste distintos: 5 
+
+===== Composicao por mes (quintil 1 vs 5), n de acoes =====
+Chave: <ym>
+       ym     1
+    <int> <int>
+1: 202001     1
+2: 202002     1
+3: 202012     1
+4: 202303     1
+
+===== Spread MES A MES (Q5 - Q1), pra ver se e' concentrado =====
+Error in setnames(sm, c("1", "5"), c("q1", "q5")) : 
+  Itens de 'old' não encontrados nos nomes das colunas: [5]. Considere skip_absent=TRUE.
+Calls: setnames -> stopf -> raise_condition -> signal
+Execução interrompida

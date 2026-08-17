@@ -1,0 +1,93 @@
+Ativo-mes com TODAS as 12 features disponiveis: 29417 
+Features usadas: peer_ret, hhi_posse, prox_52w_high, reversao, idio_vol_12m, delta_breadth_w, dem_pct_w, EFIT, mom_12m, log_tamanho, deg_avg, eigen_cent 
+
+h=1: 24 meses de teste, 4 refits (a cada 6 meses)
+  refit em ym=202001: n_treino=5696 (val=1193) melhor_iter=103 | previu 6 meses (202001 a 202006)
+  refit em ym=202007: n_treino=6686 (val=1425) melhor_iter=299 | previu 6 meses (202007 a 202012)
+  refit em ym=202101: n_treino=7703 (val=1716) melhor_iter=219 | previu 6 meses (202101 a 202106)
+  refit em ym=202107: n_treino=8969 (val=1819) melhor_iter=226 | previu 6 meses (202107 a 202112)
+h=1: R2_OOS walk-forward (5133 obs, 4 refits) = 2.0685%
+  importancia media das features (entre refits):
+            Feature gain_medio n_refits_apareceu
+             <char>      <num>             <int>
+ 1:        peer_ret 0.39407081                 4
+ 2:            EFIT 0.12134265                 4
+ 3:   prox_52w_high 0.07577121                 4
+ 4:         mom_12m 0.07465144                 4
+ 5:    idio_vol_12m 0.07381799                 4
+ 6:        reversao 0.06639097                 4
+ 7:       dem_pct_w 0.05320519                 4
+ 8: delta_breadth_w 0.04062433                 4
+ 9:      eigen_cent 0.02980225                 4
+10:         deg_avg 0.02885870                 4
+11:     log_tamanho 0.02133567                 4
+12:       hhi_posse 0.02012880                 4
+  Long-short (FM, quintil recortado por mes): 24 meses, spread=0.794%/mes, t=0.94, p=0.3570 | N_quintil-mes(min/mediana)=11/45
+
+h=3: 24 meses de teste, 4 refits (a cada 6 meses)
+  refit em ym=202001: n_treino=5656 (val=1180) melhor_iter=272 | previu 6 meses (202001 a 202006)
+  refit em ym=202007: n_treino=6635 (val=1419) melhor_iter=155 | previu 6 meses (202007 a 202012)
+  refit em ym=202101: n_treino=7650 (val=1707) melhor_iter=185 | previu 6 meses (202101 a 202106)
+  refit em ym=202107: n_treino=8908 (val=1798) melhor_iter=162 | previu 6 meses (202107 a 202112)
+h=3: R2_OOS walk-forward (5087 obs, 4 refits) = -16.3304%
+  importancia media das features (entre refits):
+            Feature gain_medio n_refits_apareceu
+             <char>      <num>             <int>
+ 1:            EFIT 0.27819849                 4
+ 2:        peer_ret 0.27718789                 4
+ 3:         mom_12m 0.10531661                 4
+ 4:        reversao 0.08251390                 4
+ 5:   prox_52w_high 0.07806910                 4
+ 6: delta_breadth_w 0.03754827                 4
+ 7:    idio_vol_12m 0.03689368                 4
+ 8:       dem_pct_w 0.02533198                 4
+ 9:         deg_avg 0.02347286                 4
+10:      eigen_cent 0.02198756                 4
+11:     log_tamanho 0.02153117                 4
+12:       hhi_posse 0.01194850                 4
+  Long-short (FM, quintil recortado por mes): 24 meses, spread=-1.320%/mes, t=-1.57, p=0.1312 | N_quintil-mes(min/mediana)=11/45
+
+h=6: 24 meses de teste, 4 refits (a cada 6 meses)
+  refit em ym=202001: n_treino=5587 (val=1164) melhor_iter=211 | previu 6 meses (202001 a 202006)
+  refit em ym=202007: n_treino=6549 (val=1411) melhor_iter=92 | previu 6 meses (202007 a 202012)
+  refit em ym=202101: n_treino=7559 (val=1691) melhor_iter=94 | previu 6 meses (202101 a 202106)
+  refit em ym=202107: n_treino=8806 (val=1759) melhor_iter=264 | previu 6 meses (202107 a 202112)
+h=6: R2_OOS walk-forward (5015 obs, 4 refits) = -12.0352%
+  importancia media das features (entre refits):
+            Feature gain_medio n_refits_apareceu
+             <char>      <num>             <int>
+ 1:        peer_ret 0.35388567                 4
+ 2:            EFIT 0.18922035                 4
+ 3:        reversao 0.08114336                 4
+ 4:     log_tamanho 0.06313857                 4
+ 5:       dem_pct_w 0.05845785                 4
+ 6:         mom_12m 0.05649294                 4
+ 7:   prox_52w_high 0.04555628                 4
+ 8: delta_breadth_w 0.04254169                 4
+ 9:      eigen_cent 0.03159054                 4
+10:    idio_vol_12m 0.03146614                 4
+11:       hhi_posse 0.02517307                 4
+12:         deg_avg 0.02133353                 4
+  Long-short (FM, quintil recortado por mes): 24 meses, spread=0.974%/mes, t=1.37, p=0.1832 | N_quintil-mes(min/mediana)=11/44
+
+
+===== RESUMO FINAL (R2_OOS) =====
+   horizonte n_obs n_refits r2_oos_pct
+       <num> <int>    <int>      <num>
+1:         1  5133        4   2.068513
+2:         3  5087        4 -16.330445
+3:         6  5015        4 -12.035218
+
+===== RESUMO FINAL (Fama-MacBeth long-short) =====
+   horizonte n_meses_fm spread_pct       t_fm      p_fm n_quintil_mes_min
+       <num>      <int>      <num>      <num>     <num>             <int>
+1:         1         24  0.7936623  0.9399616 0.3570051                11
+2:         3         24 -1.3198623 -1.5652274 0.1311858                11
+3:         6         24  0.9743526  1.3724302 0.1831664                11
+   n_quintil_mes_mediana
+                   <num>
+1:                    45
+2:                    45
+3:                    44
+
+OK

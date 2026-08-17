@@ -1,0 +1,47 @@
+Distribuicao de tercil_beta (deve ser ~1/3 cada):
+
+     1      2      3 
+155637 155574 155610 
+
+Calculando rede CIO restrita a tercil BAIXO beta_fundo (fundos conservadores)...
+   26777 ticker-mes | n_peers medio: 60.8 | minimo: 5 | tempo: 64.9 s
+Calculando rede CIO restrita a tercil ALTO beta_fundo (fundos agressivos)...
+   25971 ticker-mes | n_peers medio: 54.2 | minimo: 5 | tempo: 41.2 s
+
+===== CIO Peer Momentum: rede BAIXO-beta vs ALTO-beta vs baseline (todos os fundos) =====
+CIO|rede BAIXO-beta(conservador) h=1 62 meses n_min= 17 spread=  +0.06pp/mes (  +0.7%/ano) Sharpe= 0.06 t=  0.14 p=0.88877 | Bonf:nao
+CIO|rede ALTO-beta(agressivo)    h=1 62 meses n_min= 14 spread=  +0.70pp/mes (  +8.8%/ano) Sharpe= 0.70 t=  1.58 p=0.11920 | Bonf:nao
+CIO|rede COMPLETA(baseline)      h=1 62 meses n_min= 17 spread=  +0.85pp/mes ( +10.7%/ano) Sharpe= 0.73 t=  1.65 p=0.10371 | Bonf:nao
+CIO|rede BAIXO-beta(conservador) h=3 60 meses n_min= 16 spread=  +0.20pp/mes (  +2.4%/ano) Sharpe= 0.20 t=  0.44 p=0.66282 | Bonf:nao
+CIO|rede ALTO-beta(agressivo)    h=3 60 meses n_min= 14 spread=  -1.16pp/mes ( -13.1%/ano) Sharpe=-0.41 t= -0.93 p=0.35847 | Bonf:nao
+CIO|rede COMPLETA(baseline)      h=3 60 meses n_min= 17 spread=  +0.43pp/mes (  +5.3%/ano) Sharpe= 0.31 t=  0.68 p=0.49630 | Bonf:nao
+CIO|rede BAIXO-beta(conservador) h=6 58 meses n_min= 16 spread=  +2.05pp/mes ( +27.5%/ano) Sharpe= 0.80 t=  1.75 p=0.08586 | Bonf:nao
+CIO|rede ALTO-beta(agressivo)    h=6 58 meses n_min= 13 spread=  +0.01pp/mes (  +0.1%/ano) Sharpe= 0.00 t=  0.01 p=0.99177 | Bonf:nao
+CIO|rede COMPLETA(baseline)      h=6 58 meses n_min= 16 spread=  +0.36pp/mes (  +4.4%/ano) Sharpe= 0.29 t=  0.64 p=0.52319 | Bonf:nao
+
+
+===== RESUMO (ordenado por p) =====
+                              sinal horizonte n_meses n_min_grupo_mes
+                             <char>     <num>   <int>           <int>
+1: CIO|rede BAIXO-beta(conservador)         6      58              16
+2:      CIO|rede COMPLETA(baseline)         1      62              17
+3:    CIO|rede ALTO-beta(agressivo)         1      62              14
+4:    CIO|rede ALTO-beta(agressivo)         3      60              14
+5:      CIO|rede COMPLETA(baseline)         3      60              17
+6:      CIO|rede COMPLETA(baseline)         6      58              16
+7: CIO|rede BAIXO-beta(conservador)         3      60              16
+8: CIO|rede BAIXO-beta(conservador)         1      62              17
+9:    CIO|rede ALTO-beta(agressivo)         6      58              13
+      spread_pp       sharpe        t_fm       p_fm sig_bonferroni
+          <num>        <num>       <num>      <num>         <lgcl>
+1:  2.047546477  0.795062746  1.74793299 0.08586045          FALSE
+2:  0.854108171  0.726704403  1.65182112 0.10371015          FALSE
+3:  0.702140750  0.695258496  1.58034362 0.11920007          FALSE
+4: -1.161230767 -0.413904312 -0.92551818 0.35846670          FALSE
+5:  0.428326853  0.306146481  0.68456434 0.49629931          FALSE
+6:  0.363473065  0.292202653  0.64240295 0.52318713          FALSE
+7:  0.198689667  0.195983463  0.43823234 0.66281825          FALSE
+8:  0.060665739  0.061786212  0.14044193 0.88877356          FALSE
+9:  0.006735468  0.004710206  0.01035531 0.99177396          FALSE
+
+OK

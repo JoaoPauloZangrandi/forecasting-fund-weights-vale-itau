@@ -1,0 +1,102 @@
+N ticker-mes com delta_hhi_3m/6m calculado: 15791 
+Resumo delta_hhi_3m:
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max.       NA's 
+-0.9078936 -0.0072263  0.0001235 -0.0007978  0.0075371  0.9794393         19 
+Resumo delta_hhi_6m:
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max.       NA's 
+-0.9022103 -0.0109892  0.0000508 -0.0017332  0.0109737  0.9698198         19 
+
+===== TESTE 1: quintil, delta_hhi_3m -> retorno =====
+Delta HHI 3m (nivel abs.)              h=1 39 meses n_min= 13 spread(Q5-Q1)= -0.405pp/mes (  -4.7%/ano) Sharpe=-0.41 t= -0.73 p=0.46906 | Bonf:nao
+Delta HHI 3m (nivel abs.)              h=3 39 meses n_min= 13 spread(Q5-Q1)= -1.524pp/mes ( -16.8%/ano) Sharpe=-0.41 t= -0.73 p=0.46853 | Bonf:nao
+Delta HHI 3m (nivel abs.)              h=6 39 meses n_min= 11 spread(Q5-Q1)= +0.384pp/mes (  +4.7%/ano) Sharpe= 0.29 t=  0.52 p=0.60284 | Bonf:nao
+
+===== TESTE 1b: quintil, delta_hhi_6m -> retorno =====
+Delta HHI 6m (nivel abs.)              h=1 39 meses n_min= 13 spread(Q5-Q1)= -0.233pp/mes (  -2.8%/ano) Sharpe=-0.21 t= -0.37 p=0.71007 | Bonf:nao
+Delta HHI 6m (nivel abs.)              h=3 39 meses n_min= 13 spread(Q5-Q1)= -2.124pp/mes ( -22.7%/ano) Sharpe=-0.59 t= -1.06 p=0.29740 | Bonf:nao
+Delta HHI 6m (nivel abs.)              h=6 39 meses n_min= 11 spread(Q5-Q1)= +0.169pp/mes (  +2.1%/ano) Sharpe= 0.13 t=  0.23 p=0.81637 | Bonf:nao
+
+===== TESTE 1c: quintil, delta_hhi_3m PERCENTUAL (relativo ao nivel de partida) =====
+Delta HHI 3m (%)                       h=1 39 meses n_min= 13 spread(Q5-Q1)= -0.420pp/mes (  -4.9%/ano) Sharpe=-0.47 t= -0.84 p=0.40524 | Bonf:nao
+Delta HHI 3m (%)                       h=3 39 meses n_min= 13 spread(Q5-Q1)= -1.176pp/mes ( -13.2%/ano) Sharpe=-0.32 t= -0.57 p=0.56956 | Bonf:nao
+Delta HHI 3m (%)                       h=6 39 meses n_min= 11 spread(Q5-Q1)= -0.350pp/mes (  -4.1%/ano) Sharpe=-0.32 t= -0.58 p=0.56436 | Bonf:nao
+
+===== TESTE 2: Fama-MacBeth linear, delta HHI sozinho =====
+  [FM linear] Delta HHI 3m sozinho         h=1 var=delta_hhi_3m_z     coef_medio= +0.00130 t=  0.71 p=0.48507 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 6m sozinho         h=1 var=delta_hhi_6m_z     coef_medio= +0.00226 t=  0.77 p=0.44738 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m sozinho         h=3 var=delta_hhi_3m_z     coef_medio= -0.00208 t= -0.56 p=0.58087 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 6m sozinho         h=3 var=delta_hhi_6m_z     coef_medio= -0.00276 t= -0.61 p=0.54590 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m sozinho         h=6 var=delta_hhi_3m_z     coef_medio= +0.00164 t=  0.74 p=0.46369 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 6m sozinho         h=6 var=delta_hhi_6m_z     coef_medio= +0.00391 t=  0.75 p=0.45505 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m sozinho         h=12 var=delta_hhi_3m_z     coef_medio= +0.00054 t=  0.22 p=0.82914 (38 meses) | Bonf:nao
+  [FM linear] Delta HHI 6m sozinho         h=12 var=delta_hhi_6m_z     coef_medio= -0.00034 t= -0.14 p=0.88729 (38 meses) | Bonf:nao
+
+===== TESTE 3: controlado por NIVEL de HHI (angulo B e' sobre trajetoria, nao nivel -- sera' que sobrevive junto?) =====
+  [FM linear] Delta HHI 3m + nivel HHI (controlado) h=1 var=delta_hhi_3m_z     coef_medio= +0.00067 t=  0.32 p=0.75029 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m + nivel HHI (controlado) h=1 var=hhi_posse_z        coef_medio= +0.00474 t=  1.26 p=0.21383 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m + nivel HHI (controlado) h=3 var=delta_hhi_3m_z     coef_medio= -0.00246 t= -0.82 p=0.41757 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m + nivel HHI (controlado) h=3 var=hhi_posse_z        coef_medio= -0.00026 t= -0.08 p=0.93804 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m + nivel HHI (controlado) h=6 var=delta_hhi_3m_z     coef_medio= +0.00114 t=  0.55 p=0.58771 (39 meses) | Bonf:nao
+  [FM linear] Delta HHI 3m + nivel HHI (controlado) h=6 var=hhi_posse_z        coef_medio= +0.00339 t=  1.27 p=0.21114 (39 meses) | Bonf:nao
+
+
+===== RESUMO QUINTIL (ordenado por p) =====
+                       sinal horizonte n_meses n_min_grupo_mes  spread_pp
+                      <char>     <num>   <int>           <int>      <num>
+1: Delta HHI 6m (nivel abs.)         3      39              13 -2.1243475
+2:          Delta HHI 3m (%)         1      39              13 -0.4197541
+3: Delta HHI 3m (nivel abs.)         3      39              13 -1.5240644
+4: Delta HHI 3m (nivel abs.)         1      39              13 -0.4046850
+5:          Delta HHI 3m (%)         6      39              11 -0.3501941
+6:          Delta HHI 3m (%)         3      39              13 -1.1762238
+7: Delta HHI 3m (nivel abs.)         6      39              11  0.3840602
+8: Delta HHI 6m (nivel abs.)         1      39              13 -0.2331264
+9: Delta HHI 6m (nivel abs.)         6      39              11  0.1694364
+       sharpe       t_fm      p_fm sig_bonferroni
+        <num>      <num>     <num>         <lgcl>
+1: -0.5860530 -1.0565221 0.2974005          FALSE
+2: -0.4668724 -0.8416662 0.4052406          FALSE
+3: -0.4061576 -0.7322110 0.4685321          FALSE
+4: -0.4056707 -0.7313333 0.4690617          FALSE
+5: -0.3225392 -0.5814658 0.5643601          FALSE
+6: -0.3182233 -0.5736852 0.5695609          FALSE
+7:  0.2910531  0.5247034 0.6028373          FALSE
+8: -0.2077720 -0.3745664 0.7100652          FALSE
+9:  0.1297096  0.2338373 0.8163665          FALSE
+
+
+===== RESUMO LINEAR (ordenado por p) =====
+                                    sinal horizonte       variavel n_meses
+                                   <char>     <num>         <char>   <int>
+ 1: Delta HHI 3m + nivel HHI (controlado)         6    hhi_posse_z      39
+ 2: Delta HHI 3m + nivel HHI (controlado)         1    hhi_posse_z      39
+ 3: Delta HHI 3m + nivel HHI (controlado)         3 delta_hhi_3m_z      39
+ 4:                  Delta HHI 6m sozinho         1 delta_hhi_6m_z      39
+ 5:                  Delta HHI 6m sozinho         6 delta_hhi_6m_z      39
+ 6:                  Delta HHI 3m sozinho         6 delta_hhi_3m_z      39
+ 7:                  Delta HHI 3m sozinho         1 delta_hhi_3m_z      39
+ 8:                  Delta HHI 6m sozinho         3 delta_hhi_6m_z      39
+ 9:                  Delta HHI 3m sozinho         3 delta_hhi_3m_z      39
+10: Delta HHI 3m + nivel HHI (controlado)         6 delta_hhi_3m_z      39
+11: Delta HHI 3m + nivel HHI (controlado)         1 delta_hhi_3m_z      39
+12:                  Delta HHI 3m sozinho        12 delta_hhi_3m_z      38
+13:                  Delta HHI 6m sozinho        12 delta_hhi_6m_z      38
+14: Delta HHI 3m + nivel HHI (controlado)         3    hhi_posse_z      39
+       coef_medio        t_fm      p_fm sig_bonferroni
+            <num>       <num>     <num>         <lgcl>
+ 1:  0.0033895402  1.27189184 0.2111406          FALSE
+ 2:  0.0047413557  1.26429052 0.2138258          FALSE
+ 3: -0.0024570479 -0.81956851 0.4175731          FALSE
+ 4:  0.0022642202  0.76775341 0.4473784          FALSE
+ 5:  0.0039130034  0.75475326 0.4550495          FALSE
+ 6:  0.0016353221  0.74025494 0.4636947          FALSE
+ 7:  0.0012978296  0.70507142 0.4850654          FALSE
+ 8: -0.0027629721 -0.60938293 0.5458972          FALSE
+ 9: -0.0020811265 -0.55687985 0.5808748          FALSE
+10:  0.0011380499  0.54681058 0.5877058          FALSE
+11:  0.0006741199  0.32056805 0.7502940          FALSE
+12:  0.0005446085  0.21733965 0.8291377          FALSE
+13: -0.0003358691 -0.14271876 0.8872867          FALSE
+14: -0.0002647504 -0.07825515 0.9380357          FALSE
+
+OK

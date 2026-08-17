@@ -1,0 +1,20 @@
+===== (B) ASSIMETRIA (decil 1 sozinho vs decil 10 sozinho, cada vs. media do resto) =====
+  h=1 DECIL 1 (piores) excesso medio=+0.63pp/mes t=1.40 p=0.1750 (n=23 meses)
+  h=1 DECIL 10 (melhores) excesso medio=-0.22pp/mes t=-0.28 p=0.7789 (n=23 meses)
+  h=3 DECIL 1 (piores) excesso medio=+0.15pp/mes t=0.37 p=0.7143 (n=21 meses)
+  h=3 DECIL 10 (melhores) excesso medio=+0.51pp/mes t=0.81 p=0.4253 (n=21 meses)
+  h=6 DECIL 1 (piores) excesso medio=+0.26pp/mes t=0.68 p=0.5060 (n=18 meses)
+  h=6 DECIL 10 (melhores) excesso medio=-0.12pp/mes t=-0.19 p=0.8493 (n=18 meses)
+
+===== (C) PERSISTENCIA DE ALFA (ajustado por risco) =====
+Persist-alfa                   h=1 23 meses spread=  +1.51pp/mes t=  1.78 p=0.08947
+Persist-alfa                   h=3 21 meses spread=  +0.31pp/mes t=  0.53 p=0.60337
+Persist-alfa                   h=6 18 meses spread=  +0.41pp/mes t=  0.59 p=0.56134
+
+===== (D) PERSISTENCIA CONDICIONAL EM TAMANHO DO FUNDO =====
+Persist-PEQUENOS               h=1 23 meses spread=  +0.16pp/mes t=  0.11 p=0.91005
+Persist-GRANDES                h=1 23 meses spread=  -2.06pp/mes t= -1.57 p=0.12998
+Persist-PEQUENOS               h=3 21 meses spread=  +0.22pp/mes t=  0.21 p=0.83601
+Persist-GRANDES                h=3 21 meses spread=  -0.20pp/mes t= -0.20 p=0.84055
+
+OK

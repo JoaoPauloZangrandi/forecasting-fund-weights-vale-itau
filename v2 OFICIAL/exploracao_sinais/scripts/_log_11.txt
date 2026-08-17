@@ -1,0 +1,18 @@
+Meses no painel: 60 
+Calculando CIO peer return mes a mes (pode demorar, matriz por mes)...
+Tempo: 34.5 s
+Ativo-mes com peer_ret calculavel: 17281 | n_peers medio: 58.4 | n_peers minimo: 5 
+CIO peer momentum              h= 1 [linear] n_tr= 9592 n_te=7185 beta=  0.11577 R2_OOS=  1.5467% p_full=0.0000
+   [checagem N por quintil-mes] min=1 | mediana=46 | max=339
+CIO peer momentum              h= 1 [FM] 21 meses spread=  +4.45pp/mes (anualizado~ +68.7%) t=  2.51 p=0.0209
+CIO peer momentum              h= 3 [linear] n_tr= 9530 n_te=6454 beta= -0.21669 R2_OOS=  1.9103% p_full=0.0000
+   [checagem N por quintil-mes] min=1 | mediana=61 | max=336
+CIO peer momentum              h= 3 [FM] 18 meses spread=  +1.93pp/mes (anualizado~ +25.8%) t=  0.76 p=0.4572
+CIO peer momentum              h= 6 [linear] n_tr= 9430 n_te=5372 beta=  0.35776 R2_OOS= -1.7014% p_full=0.0000
+   [checagem N por quintil-mes] min=1 | mediana=46 | max=269
+CIO peer momentum              h= 6 [FM] 16 meses spread=  +0.73pp/mes (anualizado~  +9.1%) t=  0.47 p=0.6472
+CIO peer momentum              h=12 [linear] n_tr= 9236 n_te=3371 beta=  0.20069 R2_OOS= -3.0712% p_full=0.0000
+   [checagem N por quintil-mes] min=1 | mediana=79 | max=265
+CIO peer momentum              h=12 [FM] 10 meses spread=  +0.74pp/mes (anualizado~  +9.2%) t=  0.47 p=0.6495
+
+OK

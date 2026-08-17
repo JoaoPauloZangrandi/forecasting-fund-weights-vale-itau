@@ -1,0 +1,75 @@
+Ticker-mes com choque de posse calculavel (n_fundos>=10): 24158 
+Correlacao choque_bruto x choque_corrigido: 0.989 
+Correlacao choque_bruto x retorno proprio (deveria ser alta se Wardlaw estiver certo): 0.106 
+Correlacao choque_corrigido x retorno proprio (deveria ser bem menor apos a correcao): 0.032 
+
+
+########## Choque posse|BRUTO(contaminado) ##########
+Choque posse|BRUTO(contaminado)        h=1 [5grp] 60 meses n_min= 14 spread= +0.748pp/mes (   +9.4%/ano) Sharpe= 0.52 t=  1.16 p=0.25164 | Bonf:nao
+Choque posse|BRUTO(contaminado)        h=1 [10grp] 59 meses n_min=  7 spread= +0.025pp/mes (   +0.3%/ano) Sharpe= 0.01 t=  0.03 p=0.97872 | Bonf:nao
+Choque posse|BRUTO(contaminado)        h=3 [5grp] 59 meses n_min= 13 spread= +0.027pp/mes (   +0.3%/ano) Sharpe= 0.02 t=  0.04 p=0.97209 | Bonf:nao
+Choque posse|BRUTO(contaminado)        h=3 [10grp] 58 meses n_min=  7 spread= -0.394pp/mes (   -4.6%/ano) Sharpe=-0.23 t= -0.51 p=0.61393 | Bonf:nao
+Choque posse|BRUTO(contaminado)        h=6 [5grp] 57 meses n_min= 12 spread= +1.046pp/mes (  +13.3%/ano) Sharpe= 0.76 t=  1.67 p=0.10124 | Bonf:nao
+Choque posse|BRUTO(contaminado)        h=6 [10grp] 57 meses n_min=  6 spread= +1.478pp/mes (  +19.2%/ano) Sharpe= 0.94 t=  2.06 p=0.04435 | Bonf:nao
+
+
+########## Choque posse|CORRIGIDO(Wardlaw-safe) ##########
+Choque posse|CORRIGIDO(Wardlaw-safe)   h=1 [5grp] 61 meses n_min= 14 spread= +0.321pp/mes (   +3.9%/ano) Sharpe= 0.31 t=  0.71 p=0.48300 | Bonf:nao
+Choque posse|CORRIGIDO(Wardlaw-safe)   h=1 [10grp] 60 meses n_min=  7 spread= +0.207pp/mes (   +2.5%/ano) Sharpe= 0.19 t=  0.43 p=0.66855 | Bonf:nao
+Choque posse|CORRIGIDO(Wardlaw-safe)   h=3 [5grp] 59 meses n_min= 13 spread= -0.116pp/mes (   -1.4%/ano) Sharpe=-0.12 t= -0.26 p=0.79310 | Bonf:nao
+Choque posse|CORRIGIDO(Wardlaw-safe)   h=3 [10grp] 59 meses n_min=  7 spread= -0.462pp/mes (   -5.4%/ano) Sharpe=-0.34 t= -0.75 p=0.45393 | Bonf:nao
+Choque posse|CORRIGIDO(Wardlaw-safe)   h=6 [5grp] 57 meses n_min= 12 spread= +0.290pp/mes (   +3.5%/ano) Sharpe= 0.29 t=  0.63 p=0.52998 | Bonf:nao
+Choque posse|CORRIGIDO(Wardlaw-safe)   h=6 [10grp] 57 meses n_min=  6 spread= -0.112pp/mes (   -1.3%/ano) Sharpe=-0.09 t= -0.20 p=0.84483 | Bonf:nao
+
+
+===== Diagnostico extra: choque de posse (dez/2019) x retorno no crash (fev+mar/2020) =====
+N ações com choque dez/2019 + retorno no crash: 216 
+  choque_bruto_w        : corr=-0.138 (p=0.0438, n=216)
+  choque_corrigido_w    : corr=-0.111 (p=0.1060, n=216)
+
+
+===== RESUMO GERAL (ordenado por p) =====
+                                   sinal horizonte n_grupos n_meses
+                                  <char>     <num>    <num>   <int>
+ 1:      Choque posse|BRUTO(contaminado)         6       10      57
+ 2:      Choque posse|BRUTO(contaminado)         6        5      57
+ 3:      Choque posse|BRUTO(contaminado)         1        5      60
+ 4: Choque posse|CORRIGIDO(Wardlaw-safe)         3       10      59
+ 5: Choque posse|CORRIGIDO(Wardlaw-safe)         1        5      61
+ 6: Choque posse|CORRIGIDO(Wardlaw-safe)         6        5      57
+ 7:      Choque posse|BRUTO(contaminado)         3       10      58
+ 8: Choque posse|CORRIGIDO(Wardlaw-safe)         1       10      60
+ 9: Choque posse|CORRIGIDO(Wardlaw-safe)         3        5      59
+10: Choque posse|CORRIGIDO(Wardlaw-safe)         6       10      57
+11:      Choque posse|BRUTO(contaminado)         3        5      59
+12:      Choque posse|BRUTO(contaminado)         1       10      59
+    n_min_grupo_mes   spread_pp      sharpe        t_fm       p_fm
+              <int>       <num>       <num>       <num>      <num>
+ 1:               6  1.47782708  0.94383765  2.05704646 0.04435071
+ 2:              12  1.04640638  0.76453649  1.66626865 0.10124452
+ 3:              14  0.74815035  0.51775611  1.15773786 0.25163639
+ 4:               7 -0.46191030 -0.34001790 -0.75394066 0.45393489
+ 5:              14  0.32075633  0.31307975  0.70587739 0.48299623
+ 6:              12  0.28964825  0.28996763  0.63196979 0.52997829
+ 7:               7 -0.39449349 -0.23072975 -0.50725575 0.61393240
+ 8:               7  0.20735460  0.19243282  0.43029287 0.66855034
+ 9:              13 -0.11567097 -0.11883363 -0.26349643 0.79310186
+10:               6 -0.11244737 -0.09022032 -0.19663063 0.84482848
+11:              13  0.02658189  0.01584669  0.03513774 0.97209056
+12:               7  0.02466278  0.01207980  0.02678522 0.97872299
+    sig_bonferroni
+            <lgcl>
+ 1:          FALSE
+ 2:          FALSE
+ 3:          FALSE
+ 4:          FALSE
+ 5:          FALSE
+ 6:          FALSE
+ 7:          FALSE
+ 8:          FALSE
+ 9:          FALSE
+10:          FALSE
+11:          FALSE
+12:          FALSE
+
+OK

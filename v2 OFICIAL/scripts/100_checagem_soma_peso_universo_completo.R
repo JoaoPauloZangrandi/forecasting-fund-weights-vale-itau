@@ -62,8 +62,11 @@ print(anomalos[1:min(20,.N), .(cod_fundo, ano, mes, soma_peso = round(soma_peso,
 fwrite(soma, file.path(REPO, "v2 OFICIAL/data/checagem_soma_peso_universo_completo.csv"))
 
 # =============================================================================
-# LIMPEZA: exclui fundo-mes com soma_peso > 105%, grava por cima do nome
-# padrao (backup do original preservado)
+# LIMPEZA: exclui fundo-mes com soma_peso > LIM (150%, ver definicao de LIM
+# no topo do script -- corrigido 15/08/2026, comentario antigo dizia 105%
+# mas o codigo ja usava a variavel LIM=1.50 corretamente desde 12/08/2026;
+# so' o comentario estava desatualizado), grava por cima do nome padrao
+# (backup do original preservado)
 # =============================================================================
 cat("\n\n===== LIMPEZA =====\n")
 bad <- soma[soma_peso > LIM, .(cod_fundo, ano, mes)]

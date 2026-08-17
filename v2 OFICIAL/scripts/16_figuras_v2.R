@@ -85,7 +85,7 @@ dev.off()
 meta <- readRDS(file.path(REPO, "v2 OFICIAL/data/v2_oos_meta.rds"))
 lam_tr <- meta$lam_treino; CORTE <- meta$corte
 M <- fread(file.path(REPO, "v2 OFICIAL/data/v2_ajuste_parcial.csv"))
-treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym < 202112L]
+treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym < 202607L]
 rmse <- function(x) sqrt(mean(x^2))
 mat <- matrix(c(rmse(treino$dw - lam_tr*treino$d), rmse(treino$dw),
                 rmse(teste$dw - lam_tr*teste$d), rmse(teste$dw)), nrow = 2)

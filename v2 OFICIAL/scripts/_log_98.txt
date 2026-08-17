@@ -1,0 +1,26 @@
+erro_e_multiativo.csv (com HHI): 8208201 obs
+
+===== ETAPA 1: estatisticas do erro e (6 caracteristicas, com HHI) =====
+N = 8208201
+Media = 0.00000000
+Desvio-padrao = 0.0105
+Mediana = -0.0003
+Minimo / Maximo = -0.658 / 0.988
+% de obs com e>0 = 26.1%
+Assimetria = 7.05
+Curtose = 436.19 (normal=3)
+Previsoes (peso_pred) fora de [0,1]: 0 de 8208201
+
+===== ETAPA 2: ajuste parcial pooled, amostra completa =====
+Pares de meses consecutivos: 7447629
+Lambda (pooled, amostra completa) = 0.0779
+N (erro u) = 7447629
+Media(u) = -0.00003481
+Desvio-padrao(u) = 0.0043
+Mediana(u) = -0.0000
+Minimo / Maximo = -0.611 / 0.592
+% de obs com u>0 = 33.4%
+Assimetria = 0.71
+Curtose = 521.20 (normal=3)
+
+OK

@@ -1,0 +1,30 @@
+=========================================================================
+VERIFICACAO: HHI -> vol futura, SO' CROWDING, os 3 horizontes principais
+=========================================================================
+
+SO' crowding, h=3 -- 61 meses de regressao cross-sectional valida
+  hhi_posse      | NAIVE: t=  0.851 p=0.398341  ||  NEWEY-WEST(lag=2): t=  0.693 p=0.490700  || autocorr.lag1=0.403
+
+SO' crowding, h=6 -- 60 meses de regressao cross-sectional valida
+  hhi_posse      | NAIVE: t=  0.192 p=0.848185  ||  NEWEY-WEST(lag=5): t=  0.098 p=0.922397  || autocorr.lag1=0.787
+
+SO' crowding, h=12 -- 58 meses de regressao cross-sectional valida
+  hhi_posse      | NAIVE: t=  0.415 p=0.679939  ||  NEWEY-WEST(lag=11): t=  0.164 p=0.870156  || autocorr.lag1=0.861
+
+=========================================================================
+VERIFICACAO: HHI + vol passada (controle), os 3 horizontes
+=========================================================================
+
+HHI + vol passada, h=3 -- 61 meses de regressao cross-sectional valida
+  hhi_posse      | NAIVE: t= -1.149 p=0.254973  ||  NEWEY-WEST(lag=2): t= -1.121 p=0.266633  || autocorr.lag1=0.048
+  vol_passada_12m | NAIVE: t=  3.730 p=0.000426  ||  NEWEY-WEST(lag=2): t=  3.260 p=0.001837  || autocorr.lag1=0.201
+
+HHI + vol passada, h=6 -- 60 meses de regressao cross-sectional valida
+  hhi_posse      | NAIVE: t= -2.114 p=0.038721  ||  NEWEY-WEST(lag=5): t= -1.215 p=0.229099  || autocorr.lag1=0.753
+  vol_passada_12m | NAIVE: t=  0.985 p=0.328423  ||  NEWEY-WEST(lag=5): t=  0.569 p=0.571809  || autocorr.lag1=0.690
+
+HHI + vol passada, h=12 -- 58 meses de regressao cross-sectional valida
+  hhi_posse      | NAIVE: t= -2.135 p=0.037113  ||  NEWEY-WEST(lag=11): t= -1.209 p=0.231531  || autocorr.lag1=0.758
+  vol_passada_12m | NAIVE: t=  0.050 p=0.959974  ||  NEWEY-WEST(lag=11): t=  0.023 p=0.981691  || autocorr.lag1=0.843
+
+OK

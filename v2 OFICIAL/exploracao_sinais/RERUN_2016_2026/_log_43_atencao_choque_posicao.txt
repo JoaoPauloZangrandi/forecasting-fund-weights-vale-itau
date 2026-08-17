@@ -1,0 +1,51 @@
+Ticker-mes com iniciacao_liquida (n_donos_prev>=10): 25748 
+Resumo iniciacao_liquida:
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-1.00000 -0.30042 -0.01295 -0.13508  0.02551 61.18182 
+
+Ticker-mes com choque_valor_z valido: 19750 
+Resumo choque_valor_z:
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-171.3251   -0.5994   -0.1193   -0.1460    0.4410   56.8375 
+
+===== SINAL 1: iniciacao liquida -> retorno futuro =====
+Iniciacao liquida              h= 1 46 meses n_min= 15 spread=  +0.54pp/mes (  +6.7%/ano) Sharpe= 0.58 t=  1.14 p=0.25964 | Bonf:nao
+Iniciacao liquida              h= 3 45 meses n_min= 14 spread=  +0.23pp/mes (  +2.8%/ano) Sharpe= 0.25 t=  0.49 p=0.62688 | Bonf:nao
+Iniciacao liquida              h= 6 44 meses n_min= 14 spread=  +0.26pp/mes (  +3.2%/ano) Sharpe= 0.32 t=  0.61 p=0.54404 | Bonf:nao
+
+===== SINAL 2: choque de valor (z-score proprio do ticker) -> retorno futuro =====
+Choque de valor (z proprio)    h= 1 62 meses n_min= 11 spread=  -0.14pp/mes (  -1.7%/ano) Sharpe=-0.13 t= -0.28 p=0.77666 | Bonf:nao
+Choque de valor (z proprio)    h= 3 60 meses n_min= 11 spread=  -0.00pp/mes (  -0.1%/ano) Sharpe=-0.00 t= -0.01 p=0.99351 | Bonf:nao
+Choque de valor (z proprio)    h= 6 58 meses n_min= 10 spread=  -0.71pp/mes (  -8.2%/ano) Sharpe=-0.21 t= -0.45 p=0.65221 | Bonf:nao
+
+===== SINAL 2b: MAGNITUDE do choque de valor (|z|) -> retorno futuro =====
+Choque de valor (magnitude |z|) h= 1 62 meses n_min= 11 spread=  +0.06pp/mes (  +0.7%/ano) Sharpe= 0.07 t=  0.16 p=0.87049 | Bonf:nao
+Choque de valor (magnitude |z|) h= 3 60 meses n_min= 11 spread=  +0.38pp/mes (  +4.6%/ano) Sharpe= 0.43 t=  0.96 p=0.33958 | Bonf:nao
+Choque de valor (magnitude |z|) h= 6 58 meses n_min= 10 spread=  -0.78pp/mes (  -9.0%/ano) Sharpe=-0.61 t= -1.34 p=0.18552 | Bonf:nao
+
+
+===== RESUMO (ordenado por p) =====
+                             sinal horizonte n_meses n_min_grupo_mes
+                            <char>     <num>   <int>           <int>
+1: Choque de valor (magnitude |z|)         6      58              10
+2:               Iniciacao liquida         1      46              15
+3: Choque de valor (magnitude |z|)         3      60              11
+4:               Iniciacao liquida         6      44              14
+5:               Iniciacao liquida         3      45              14
+6:     Choque de valor (z proprio)         6      58              10
+7:     Choque de valor (z proprio)         1      62              11
+8: Choque de valor (magnitude |z|)         1      62              11
+9:     Choque de valor (z proprio)         3      60              11
+      spread_pp       sharpe         t_fm      p_fm sig_bonferroni
+          <num>        <num>        <num>     <num>         <lgcl>
+1: -0.783184973 -0.609567658 -1.340124941 0.1855225          FALSE
+2:  0.544864664  0.583094780  1.141635450 0.2596443          FALSE
+3:  0.376808629  0.430576944  0.962799317 0.3395778          FALSE
+4:  0.264851358  0.319385931  0.611577496 0.5440374          FALSE
+5:  0.230642947  0.252806594  0.489557864 0.6268787          FALSE
+6: -0.714135368 -0.206087303 -0.453079706 0.6522114          FALSE
+7: -0.144764840 -0.125355759 -0.284937437 0.7766573          FALSE
+8:  0.060828329  0.072031238  0.163729185 0.8704856          FALSE
+9: -0.004377286 -0.003650984 -0.008163849 0.9935138          FALSE
+
+OK

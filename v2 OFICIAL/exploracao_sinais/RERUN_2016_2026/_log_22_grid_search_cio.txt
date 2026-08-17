@@ -1,0 +1,42 @@
+Pre-computando matrizes CIO por mes (uma vez, reaproveitada em todas as especificacoes)...
+Tempo pre-computo: 213.2 s | 98 meses
+
+Total de combinacoes de construcao do sinal: 36 
+  ... 20 especificacoes testadas
+  ... 40 especificacoes testadas
+  ... 60 especificacoes testadas
+  ... 80 especificacoes testadas
+  ... 100 especificacoes testadas
+
+===== RESUMO: quantas especificacoes por horizonte passam de p<0,05 (Fama-MacBeth)? =====
+       h total sig_5pct sig_10pct
+   <num> <int>    <int>     <int>
+1:     1    36        8        16
+2:     2    36        0         0
+3:     3    36        1         1
+
+===== Especificacoes com p<0,05, por horizonte =====
+   piso_pct min_peers ponderado     h n_treino n_teste r2_oos_pct n_meses
+      <num>     <num>    <lgcl> <num>    <int>   <int>      <num>   <int>
+1:     0.80         3      TRUE     1     9597   19565  0.1481276      55
+2:     0.75         3      TRUE     1     9597   19565  0.1475986      55
+3:     0.80         5      TRUE     1     9592   19552  0.1484442      54
+4:     0.75         5      TRUE     1     9592   19552  0.1480243      54
+5:     0.70         3      TRUE     1     9597   19565  0.1479117      55
+6:     0.60         3      TRUE     1     9597   19565  0.1487464      55
+7:     0.90         3      TRUE     1     9597   19565  0.1452541      56
+8:     0.70         5      TRUE     1     9592   19552  0.1477970      54
+9:     0.75        10     FALSE     3     9450   18450  0.1715084      11
+   spread_pp     t_fm       p_fm
+       <num>    <num>      <num>
+1:  2.042239 2.235459 0.02954330
+2:  2.010979 2.196932 0.03233660
+3:  2.386169 2.191793 0.03280940
+4:  2.345737 2.160950 0.03523809
+5:  1.980943 2.141607 0.03675379
+6:  2.024264 2.112208 0.03930955
+7:  1.993137 2.065893 0.04356204
+8:  2.220899 2.032560 0.04712070
+9:  6.342326 2.482146 0.03242347
+
+OK -- total de especificacoes testadas nesta grade: 108 

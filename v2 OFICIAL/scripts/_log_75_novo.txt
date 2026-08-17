@@ -1,0 +1,6 @@
+h1:  32 meses de teste | margem media: 0.81 %
+h3:  33 meses de teste | margem media: 0.32 %
+null device 
+          1 
+
+OK - salvo em 'fig_margem_dinamica_mensal.pdf'

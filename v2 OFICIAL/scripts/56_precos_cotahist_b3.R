@@ -21,11 +21,12 @@
 # =============================================================================
 suppressPackageStartupMessages(library(data.table))
 REPO <- Sys.getenv("PROJ_DIR", unset = "C:/Users/joaoz/forecasting-fund-weights-vale-itau")
+source(file.path(REPO, "v2 OFICIAL/scripts/config_periodo.R"))
 RAWDIR <- file.path(REPO, "data/raw/cotahist")
 dir.create(RAWDIR, recursive = TRUE, showWarnings = FALSE)
 
 # ---- passo 1: baixar + descompactar os anos que faltam ---------------------
-for (y in 2016:2021) {
+for (y in ANO_INICIO:ANO_FIM) {
   zipf <- file.path(RAWDIR, sprintf("COTAHIST_A%d.ZIP", y))
   txtf <- file.path(RAWDIR, sprintf("COTAHIST_A%d.TXT", y))
   if (!file.exists(txtf)) {
@@ -45,9 +46,10 @@ todos_ativos <- unique(trimws(sub(".*- ", "",
                select = "ativo")$ativo))))
 cat("\nTickers-alvo (painel multiativo):", length(todos_ativos), "\n")
 
-res <- vector("list", 6)
-for (i in seq_along(2016:2021)) {
-  y <- (2016:2021)[i]
+anos <- ANO_INICIO:ANO_FIM
+res <- vector("list", length(anos))
+for (i in seq_along(anos)) {
+  y <- anos[i]
   cat("== parseando", y, "==\n"); flush.console()
   con <- file(file.path(RAWDIR, sprintf("COTAHIST_A%d.TXT", y)), "r")
   lines <- readLines(con, n = -1L, encoding = "latin1"); close(con)

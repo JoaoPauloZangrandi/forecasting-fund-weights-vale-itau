@@ -1,0 +1,38 @@
+
+===== (A) HERDING (LSV) =====
+Herding (LSV), h=1                       | n_treino=  7280 n_teste=12798 | beta(treino)=  0.01593 | R2_OOS=     NaN% | [amostra inteira: coef=0.01177 t=3.189 p=0.0014]
+Herding (LSV), h=3                       | n_treino=  7227 n_teste=12279 | beta(treino)= -0.00300 | R2_OOS=     NaN% | [amostra inteira: coef=0.01590 t=1.449 p=0.1474]
+Herding (LSV), h=6                       | n_treino=  7142 n_teste=11835 | beta(treino)=  0.01047 | R2_OOS=     NaN% | [amostra inteira: coef=0.01111 t=2.872 p=0.0041]
+
+===== (B) DEMANDA AGREGADA REVELADA (delta valor_total) =====
+Demanda agregada revelada, h=1           | n_treino=  9280 n_teste=15148 | beta(treino)= -0.00334 | R2_OOS= -0.1314% | [amostra inteira: coef=0.00036 t=0.396 p=0.6922]
+Demanda agregada revelada, h=3           | n_treino=  9219 n_teste=14417 | beta(treino)=  0.00080 | R2_OOS= -0.0006% | [amostra inteira: coef=0.00009 t=0.038 p=0.9696]
+Demanda agregada revelada, h=6           | n_treino=  9117 n_teste=13901 | beta(treino)=  0.00349 | R2_OOS= -0.0253% | [amostra inteira: coef=0.00178 t=1.872 p=0.0612]
+
+===== (C) FIRE SALE ESPECIFICO (resgate extremo + posicao concentrada) =====
+Ativo-mes com pressao de venda extrema (FIT <= P5 = -0.0298 ): 850 
+Fire sale extremo (P5), h=1              | n_treino=   334 n_teste=  391 | beta(treino)=  0.21192 | R2_OOS=  1.5664% | [amostra inteira: coef=0.22332 t=4.953 p=0.0000]
+   retorno medio apos venda extrema, h=1: 0.0289 (n=725)
+Fire sale extremo (P5), h=3              | n_treino=   324 n_teste=  423 | beta(treino)= -0.15560 | R2_OOS= -0.6996% | [amostra inteira: coef=-0.13096 t=-2.930 p=0.0035]
+   retorno medio apos venda extrema, h=3: 0.0340 (n=747)
+Fire sale extremo (P5), h=6              | n_treino=   315 n_teste=  473 | beta(treino)= -0.14712 | R2_OOS=  2.5338% | [amostra inteira: coef=-0.19769 t=-3.867 p=0.0001]
+   retorno medio apos venda extrema, h=6: 0.0017 (n=788)
+Fire sale extremo (P5), h=12             | n_treino=   309 n_teste=  456 | beta(treino)= -0.03598 | R2_OOS=  0.5884% | [amostra inteira: coef=-0.08633 t=-1.929 p=0.0541]
+   retorno medio apos venda extrema, h=12: 0.0195 (n=765)
+
+
+===== RESUMO GERAL =====
+                             sinal n_teste r2_oos_pct p_full
+                            <char>   <int>      <num>  <num>
+ 1:             Herding (LSV), h=1   12798        NaN 0.0014
+ 2:             Herding (LSV), h=3   12279        NaN 0.1474
+ 3:             Herding (LSV), h=6   11835        NaN 0.0041
+ 4: Demanda agregada revelada, h=1   15148     -0.131 0.6922
+ 5: Demanda agregada revelada, h=3   14417     -0.001 0.9696
+ 6: Demanda agregada revelada, h=6   13901     -0.025 0.0612
+ 7:    Fire sale extremo (P5), h=1     391      1.566 0.0000
+ 8:    Fire sale extremo (P5), h=3     423     -0.700 0.0035
+ 9:    Fire sale extremo (P5), h=6     473      2.534 0.0001
+10:   Fire sale extremo (P5), h=12     456      0.588 0.0541
+
+OK

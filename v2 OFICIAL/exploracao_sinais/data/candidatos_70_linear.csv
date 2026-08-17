@@ -1,18 +1,18 @@
 sinal,horizonte,variavel,n_meses,coef_medio,t_fm,p_fm,sig_bonferroni
-"Dispersao (CV peso, simples) sozinha",1,cv_peso_z,24,0.000921491239944045,0.41008003620791,0.685541948013869,FALSE
-"Dispersao (CV peso, ponderado) sozinha",1,cv_peso_ponderado_z,24,0.00231290490193005,1.04435018228421,0.307176210494223,FALSE
-"Dispersao (CV peso, simples) sozinha",3,cv_peso_z,22,0.00441694045042451,2.47821222600609,0.0217781124726164,FALSE
-"Dispersao (CV peso, ponderado) sozinha",3,cv_peso_ponderado_z,22,0.00566847322505561,3.05958035906455,0.00595140483748094,FALSE
-"Dispersao (CV peso, simples) sozinha",6,cv_peso_z,19,0.00211610548854852,1.10258412201307,0.284732014206438,FALSE
-"Dispersao (CV peso, ponderado) sozinha",6,cv_peso_ponderado_z,19,0.00212803685508924,1.06630190196974,0.300381351401312,FALSE
-"Dispersao (CV peso, simples) sozinha",12,cv_peso_z,13,0.00389120442596188,1.4132549494374,0.182991973293296,FALSE
-"Dispersao (CV peso, ponderado) sozinha",12,cv_peso_ponderado_z,13,0.00494550748866546,1.86945608329643,0.0861490740716246,FALSE
-Dispersao + n_fundos + HHI (controlado),1,cv_peso_ponderado_z,24,0.000137438236525203,0.0693835304595865,0.945284057102819,FALSE
-Dispersao + n_fundos + HHI (controlado),1,n_fundos_z,24,-0.00179871440715531,-0.471640857294561,0.641626670292793,FALSE
-Dispersao + n_fundos + HHI (controlado),1,hhi_posse_z,24,0.00459307334768843,1.51767877096131,0.142721727867944,FALSE
-Dispersao + n_fundos + HHI (controlado),3,cv_peso_ponderado_z,22,0.00383102621204892,2.2151505108809,0.0379371610745097,FALSE
-Dispersao + n_fundos + HHI (controlado),3,n_fundos_z,22,0.00121841246021729,0.251101991424094,0.804175938650685,FALSE
-Dispersao + n_fundos + HHI (controlado),3,hhi_posse_z,22,0.00610921303757237,1.54917247756381,0.13628001236223,FALSE
-Dispersao + n_fundos + HHI (controlado),6,cv_peso_ponderado_z,19,-0.000281594541183049,-0.170272814807538,0.866694821551906,FALSE
-Dispersao + n_fundos + HHI (controlado),6,n_fundos_z,19,-0.000328614736730291,-0.10387437002665,0.918417675580211,FALSE
-Dispersao + n_fundos + HHI (controlado),6,hhi_posse_z,19,0.00641051961603138,1.83130379139867,0.083659080814834,FALSE
+"Dispersao (CV peso, simples) sozinha",1,cv_peso_z,62,0.000394340278478348,0.176165578536142,0.860747410704579,FALSE
+"Dispersao (CV peso, ponderado) sozinha",1,cv_peso_ponderado_z,62,-0.000381395787126443,-0.182804850469,0.855557358427716,FALSE
+"Dispersao (CV peso, simples) sozinha",3,cv_peso_z,60,0.00226620472623268,0.984529011349207,0.328875764936696,FALSE
+"Dispersao (CV peso, ponderado) sozinha",3,cv_peso_ponderado_z,60,0.00248528202491235,1.16201112077702,0.249910096019183,FALSE
+"Dispersao (CV peso, simples) sozinha",6,cv_peso_z,58,0.000827357053229418,0.31763270824325,0.751924249246107,FALSE
+"Dispersao (CV peso, ponderado) sozinha",6,cv_peso_ponderado_z,58,-0.000797345430315291,-0.426712055070085,0.671196462776288,FALSE
+"Dispersao (CV peso, simples) sozinha",12,cv_peso_z,55,0.00158521380043619,0.819180942344022,0.416283992780834,FALSE
+"Dispersao (CV peso, ponderado) sozinha",12,cv_peso_ponderado_z,55,0.000210202464042895,0.123375308348644,0.902267976864025,FALSE
+Dispersao + n_fundos + HHI (controlado),1,cv_peso_ponderado_z,62,-0.000107647788585567,-0.0542090975758152,0.956945725272615,FALSE
+Dispersao + n_fundos + HHI (controlado),1,n_fundos_z,62,0.00304758917497381,0.760846926201305,0.449679689200837,FALSE
+Dispersao + n_fundos + HHI (controlado),1,hhi_posse_z,62,0.00031196725289003,0.162364239529221,0.871555680242032,FALSE
+Dispersao + n_fundos + HHI (controlado),3,cv_peso_ponderado_z,60,0.00217465236139667,1.02589718740286,0.309127871957446,FALSE
+Dispersao + n_fundos + HHI (controlado),3,n_fundos_z,60,0.000376702656954623,0.151009313736321,0.880483499487738,FALSE
+Dispersao + n_fundos + HHI (controlado),3,hhi_posse_z,60,0.000343521652219947,0.144966448810557,0.885231457050886,FALSE
+Dispersao + n_fundos + HHI (controlado),6,cv_peso_ponderado_z,58,-0.000518367077317195,-0.207554629225715,0.836316503238684,FALSE
+Dispersao + n_fundos + HHI (controlado),6,n_fundos_z,58,-0.0007517695356562,-0.420457455612596,0.67573223852733,FALSE
+Dispersao + n_fundos + HHI (controlado),6,hhi_posse_z,58,-0.00124219099811941,-0.495170245198749,0.622383490064044,FALSE

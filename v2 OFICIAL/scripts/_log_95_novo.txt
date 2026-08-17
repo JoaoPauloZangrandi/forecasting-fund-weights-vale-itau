@@ -1,0 +1,15 @@
+Gestoras na regressao completa: 40 
+
+===== Regressao com as 5 caracteristicas da Etapa 1 + concentracao (versao final, no TCC) =====
+Caracteristicas calculadas SO com dado de treino (<2020-01), predeterminadas.
+                 Estimate   Std. Error    t value    Pr(>|t|)
+(Intercept) -0.0067166773 0.0111526810 -0.6022478 0.551125280
+beta_fundo   0.0004191923 0.0026345623  0.1591127 0.874549901
+l_aum        0.0005350337 0.0006493843  0.8239092 0.415906355
+l_cot        0.0003254753 0.0005283511  0.6160210 0.542106796
+pct_fic      0.0021313353 0.0018992634  1.1221905 0.269880461
+flow_aum    -0.0064545901 0.0065307262 -0.9883419 0.330176977
+hhi_medio    0.0619604081 0.0192864174  3.2126448 0.002933435
+R2: 0.402675 
+
+OK

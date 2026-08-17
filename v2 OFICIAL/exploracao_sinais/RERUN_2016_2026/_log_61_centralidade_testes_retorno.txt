@@ -1,0 +1,90 @@
+Centralidade: grau ponderado (nivel) h= 1 [linear] n_tr= 9707 n_te=19729 beta=  0.04672 R2_OOS= -0.0000% p_full=0.0900
+Centralidade: grau ponderado (nivel) h= 1 [FM re-corte mensal] 62 meses spread= -0.111pp/mes (anualizado~  -1.3%) t= -0.25 p=0.8054 | N_grupo-mes: min=17 mediana=66 | %meses positivo=48%
+Centralidade: autovetor (nivel) h= 1 [linear] n_tr= 9707 n_te=19729 beta=  0.00151 R2_OOS= -0.0022% p_full=0.1917
+Centralidade: autovetor (nivel) h= 1 [FM re-corte mensal] 62 meses spread= -0.271pp/mes (anualizado~  -3.2%) t= -0.57 p=0.5699 | N_grupo-mes: min=17 mediana=66 | %meses positivo=45%
+Centralidade: grau ponderado (delta m/m) h= 1 [linear] n_tr= 9268 n_te=14292 beta=  0.16662 R2_OOS=  0.0405% p_full=0.0125
+Centralidade: grau ponderado (delta m/m) h= 1 [FM re-corte mensal] 46 meses spread= +0.446pp/mes (anualizado~  +5.5%) t=  1.11 p=0.2745 | N_grupo-mes: min=16 mediana=64 | %meses positivo=52%
+Centralidade: autovetor (delta m/m) h= 1 [linear] n_tr= 9268 n_te=14292 beta=  0.04364 R2_OOS= -0.0615% p_full=0.3548
+Centralidade: autovetor (delta m/m) h= 1 [FM re-corte mensal] 46 meses spread= +0.408pp/mes (anualizado~  +5.0%) t=  0.96 p=0.3432 | N_grupo-mes: min=16 mediana=64 | %meses positivo=59%
+Centralidade: grau ponderado (nivel) h= 3 [linear] n_tr= 9645 n_te=18815 beta= -0.07703 R2_OOS= -0.0168% p_full=0.7076
+Centralidade: grau ponderado (nivel) h= 3 [FM re-corte mensal] 60 meses spread= +0.657pp/mes (anualizado~  +8.2%) t=  0.61 p=0.5472 | N_grupo-mes: min=17 mediana=65 | %meses positivo=52%
+Centralidade: autovetor (nivel) h= 3 [linear] n_tr= 9645 n_te=18815 beta= -0.01808 R2_OOS= -0.0198% p_full=0.3420
+Centralidade: autovetor (nivel) h= 3 [FM re-corte mensal] 60 meses spread= +0.691pp/mes (anualizado~  +8.6%) t=  0.63 p=0.5316 | N_grupo-mes: min=17 mediana=65 | %meses positivo=48%
+Centralidade: grau ponderado (delta m/m) h= 3 [linear] n_tr= 9208 n_te=13672 beta=  0.13864 R2_OOS=  0.0004% p_full=0.4648
+Centralidade: grau ponderado (delta m/m) h= 3 [FM re-corte mensal] 45 meses spread= +0.168pp/mes (anualizado~  +2.0%) t=  0.50 p=0.6167 | N_grupo-mes: min=16 mediana=63 | %meses positivo=51%
+Centralidade: autovetor (delta m/m) h= 3 [linear] n_tr= 9208 n_te=13672 beta= -0.00299 R2_OOS= -0.0018% p_full=0.0991
+Centralidade: autovetor (delta m/m) h= 3 [FM re-corte mensal] 45 meses spread= +1.610pp/mes (anualizado~ +21.1%) t=  1.13 p=0.2627 | N_grupo-mes: min=16 mediana=63 | %meses positivo=64%
+Centralidade: grau ponderado (nivel) h= 6 [linear] n_tr= 9545 n_te=17999 beta= -0.07079 R2_OOS= -0.0230% p_full=0.1879
+Centralidade: grau ponderado (nivel) h= 6 [FM re-corte mensal] 58 meses spread= -0.163pp/mes (anualizado~  -1.9%) t= -0.37 p=0.7097 | N_grupo-mes: min=16 mediana=64 | %meses positivo=52%
+Centralidade: autovetor (nivel) h= 6 [linear] n_tr= 9545 n_te=17999 beta= -0.01100 R2_OOS=  0.0138% p_full=0.0256
+Centralidade: autovetor (nivel) h= 6 [FM re-corte mensal] 58 meses spread= -0.274pp/mes (anualizado~  -3.2%) t= -0.59 p=0.5608 | N_grupo-mes: min=16 mediana=64 | %meses positivo=47%
+Centralidade: grau ponderado (delta m/m) h= 6 [linear] n_tr= 9107 n_te=13228 beta=  0.09145 R2_OOS=  0.0072% p_full=0.5157
+Centralidade: grau ponderado (delta m/m) h= 6 [FM re-corte mensal] 44 meses spread= +0.257pp/mes (anualizado~  +3.1%) t=  0.63 p=0.5304 | N_grupo-mes: min=15 mediana=62 | %meses positivo=55%
+Centralidade: autovetor (delta m/m) h= 6 [linear] n_tr= 9107 n_te=13228 beta=  0.00930 R2_OOS=  0.0191% p_full=0.0292
+Centralidade: autovetor (delta m/m) h= 6 [FM re-corte mensal] 44 meses spread= +0.644pp/mes (anualizado~  +8.0%) t=  1.35 p=0.1833 | N_grupo-mes: min=15 mediana=62 | %meses positivo=61%
+Centralidade: grau ponderado (nivel) h=12 [linear] n_tr= 9351 n_te=16631 beta= -0.06641 R2_OOS= -0.1546% p_full=0.8907
+Centralidade: grau ponderado (nivel) h=12 [FM re-corte mensal] 55 meses spread= +0.089pp/mes (anualizado~  +1.1%) t=  0.19 p=0.8499 | N_grupo-mes: min=12 mediana=62 | %meses positivo=51%
+Centralidade: autovetor (nivel) h=12 [linear] n_tr= 9351 n_te=16631 beta= -0.00710 R2_OOS= -0.0061% p_full=0.3241
+Centralidade: autovetor (nivel) h=12 [FM re-corte mensal] 55 meses spread= +0.182pp/mes (anualizado~  +2.2%) t=  0.36 p=0.7196 | N_grupo-mes: min=12 mediana=62 | %meses positivo=58%
+Centralidade: grau ponderado (delta m/m) h=12 [linear] n_tr= 8922 n_te=12575 beta= -0.00343 R2_OOS= -0.0003% p_full=0.9358
+Centralidade: grau ponderado (delta m/m) h=12 [FM re-corte mensal] 43 meses spread= -0.035pp/mes (anualizado~  -0.4%) t= -0.08 p=0.9342 | N_grupo-mes: min=12 mediana=61 | %meses positivo=47%
+Centralidade: autovetor (delta m/m) h=12 [linear] n_tr= 8922 n_te=12575 beta= -0.00724 R2_OOS= -0.0101% p_full=0.4466
+Centralidade: autovetor (delta m/m) h=12 [FM re-corte mensal] 43 meses spread= -0.030pp/mes (anualizado~  -0.4%) t= -0.07 p=0.9477 | N_grupo-mes: min=12 mediana=61 | %meses positivo=44%
+
+===== Resumo ordenado por p_fm (mais promissores primeiro) =====
+                                       sinal horizonte n_meses spread_medio_pp
+                                      <char>     <num>   <int>           <num>
+ 1:      Centralidade: autovetor (delta m/m)         6      44      0.64424197
+ 2:      Centralidade: autovetor (delta m/m)         3      45      1.61041112
+ 3: Centralidade: grau ponderado (delta m/m)         1      46      0.44618102
+ 4:      Centralidade: autovetor (delta m/m)         1      46      0.40822106
+ 5: Centralidade: grau ponderado (delta m/m)         6      44      0.25741375
+ 6:          Centralidade: autovetor (nivel)         3      60      0.69070958
+ 7:     Centralidade: grau ponderado (nivel)         3      60      0.65733351
+ 8:          Centralidade: autovetor (nivel)         6      58     -0.27432377
+ 9:          Centralidade: autovetor (nivel)         1      62     -0.27132786
+10: Centralidade: grau ponderado (delta m/m)         3      45      0.16752143
+11:     Centralidade: grau ponderado (nivel)         6      58     -0.16272651
+12:          Centralidade: autovetor (nivel)        12      55      0.18224331
+13:     Centralidade: grau ponderado (nivel)         1      62     -0.11140094
+14:     Centralidade: grau ponderado (nivel)        12      55      0.08945091
+15: Centralidade: grau ponderado (delta m/m)        12      43     -0.03532157
+16:      Centralidade: autovetor (delta m/m)        12      43     -0.03019471
+           t_fm      p_fm n_min_grupo_mes n_mediana_grupo_mes
+          <num>     <num>           <int>               <num>
+ 1:  1.35232032 0.1833425              15                62.5
+ 2:  1.13445465 0.2627467              16                63.0
+ 3:  1.10614989 0.2745402              16                64.0
+ 4:  0.95806241 0.3431506              16                64.0
+ 5:  0.63248588 0.5304185              15                62.5
+ 6:  0.62933456 0.5315595              17                65.0
+ 7:  0.60551336 0.5471602              17                65.0
+ 8: -0.58515103 0.5607556              16                64.0
+ 9: -0.57130190 0.5698940              17                65.5
+10:  0.50414852 0.6166723              16                63.0
+11: -0.37414968 0.7096812              16                64.0
+12:  0.36084468 0.7196234              12                62.0
+13: -0.24739987 0.8054296              17                66.0
+14:  0.19019037 0.8498731              12                62.0
+15: -0.08303870 0.9342153              12                61.0
+16: -0.06596106 0.9477218              12                61.0
+    pct_meses_positivo
+                 <num>
+ 1:          0.6136364
+ 2:          0.6444444
+ 3:          0.5217391
+ 4:          0.5869565
+ 5:          0.5454545
+ 6:          0.4833333
+ 7:          0.5166667
+ 8:          0.4655172
+ 9:          0.4516129
+10:          0.5111111
+11:          0.5172414
+12:          0.5818182
+13:          0.4838710
+14:          0.5090909
+15:          0.4651163
+16:          0.4418605
+
+OK

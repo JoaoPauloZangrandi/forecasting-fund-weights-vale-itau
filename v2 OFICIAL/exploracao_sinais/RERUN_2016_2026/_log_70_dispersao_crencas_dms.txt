@@ -1,0 +1,112 @@
+Linhas fundo-ativo-mes (peso>0): 37553299 
+Ticker-mes com dispersao calculada (n_fundos>=10): 25111 
+Resumo cv_peso (simples):
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0342  2.1607  3.1182  4.4620  5.0011 60.3964 
+Resumo cv_peso_ponderado (por AUM):
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+  0.02505   1.99962   2.98330   4.65449   5.07870 192.65143 
+Correlacao cv_peso x cv_peso_ponderado: 0.711 
+Correlacao cv_peso x n_fundos (checar se dispersao nao e' so' um proxy de breadth): 0.153 
+
+Correlacao cv_peso x hhi_posse: 0.237 
+Correlacao cv_peso_ponderado x hhi_posse: 0.291 
+
+===== TESTE 1: quintil (Q5=alta dispersao, Q1=baixa) -> retorno, cv_peso simples =====
+Dispersao (CV peso, simples)           h=1 62 meses n_min= 15 spread(Q5-Q1)= +0.256pp/mes (  +3.1%/ano) Sharpe= 0.23 t=  0.53 p=0.60076 | Bonf:nao
+Dispersao (CV peso, simples)           h=3 60 meses n_min= 15 spread(Q5-Q1)= +0.252pp/mes (  +3.1%/ano) Sharpe= 0.23 t=  0.51 p=0.61306 | Bonf:nao
+Dispersao (CV peso, simples)           h=6 58 meses n_min= 14 spread(Q5-Q1)= +0.747pp/mes (  +9.3%/ano) Sharpe= 0.27 t=  0.60 p=0.55044 | Bonf:nao
+Dispersao (CV peso, simples)           h=12 55 meses n_min= 12 spread(Q5-Q1)= +0.506pp/mes (  +6.2%/ano) Sharpe= 0.38 t=  0.81 p=0.42132 | Bonf:nao
+
+===== TESTE 1b: quintil, cv_peso ponderado por AUM do fundo =====
+Dispersao (CV peso, ponderado AUM)     h=1 62 meses n_min= 15 spread(Q5-Q1)= +0.601pp/mes (  +7.5%/ano) Sharpe= 0.52 t=  1.19 p=0.23777 | Bonf:nao
+Dispersao (CV peso, ponderado AUM)     h=3 60 meses n_min= 15 spread(Q5-Q1)= +0.604pp/mes (  +7.5%/ano) Sharpe= 0.52 t=  1.17 p=0.24830 | Bonf:nao
+Dispersao (CV peso, ponderado AUM)     h=6 58 meses n_min= 14 spread(Q5-Q1)= +1.037pp/mes ( +13.2%/ano) Sharpe= 0.39 t=  0.86 p=0.39478 | Bonf:nao
+Dispersao (CV peso, ponderado AUM)     h=12 55 meses n_min= 12 spread(Q5-Q1)= +0.452pp/mes (  +5.6%/ano) Sharpe= 0.46 t=  0.98 p=0.33096 | Bonf:nao
+
+===== TESTE 2: Fama-MacBeth linear, dispersao sozinha =====
+  [FM linear] Dispersao (CV peso, simples) sozinha h=1 var=cv_peso_z              coef_medio= +0.00039 t=  0.18 p=0.86075 (62 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, ponderado) sozinha h=1 var=cv_peso_ponderado_z    coef_medio= -0.00038 t= -0.18 p=0.85556 (62 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, simples) sozinha h=3 var=cv_peso_z              coef_medio= +0.00227 t=  0.98 p=0.32888 (60 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, ponderado) sozinha h=3 var=cv_peso_ponderado_z    coef_medio= +0.00249 t=  1.16 p=0.24991 (60 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, simples) sozinha h=6 var=cv_peso_z              coef_medio= +0.00083 t=  0.32 p=0.75192 (58 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, ponderado) sozinha h=6 var=cv_peso_ponderado_z    coef_medio= -0.00080 t= -0.43 p=0.67120 (58 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, simples) sozinha h=12 var=cv_peso_z              coef_medio= +0.00159 t=  0.82 p=0.41628 (55 meses) | Bonf:nao
+  [FM linear] Dispersao (CV peso, ponderado) sozinha h=12 var=cv_peso_ponderado_z    coef_medio= +0.00021 t=  0.12 p=0.90227 (55 meses) | Bonf:nao
+
+===== TESTE 3: controle multivariado -- dispersao sobrevive controlando por breadth (n_fundos) e concentracao (hhi_posse)? =====
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=1 var=cv_peso_ponderado_z    coef_medio= -0.00011 t= -0.05 p=0.95695 (62 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=1 var=n_fundos_z             coef_medio= +0.00305 t=  0.76 p=0.44968 (62 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=1 var=hhi_posse_z            coef_medio= +0.00031 t=  0.16 p=0.87156 (62 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=3 var=cv_peso_ponderado_z    coef_medio= +0.00217 t=  1.03 p=0.30913 (60 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=3 var=n_fundos_z             coef_medio= +0.00038 t=  0.15 p=0.88048 (60 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=3 var=hhi_posse_z            coef_medio= +0.00034 t=  0.14 p=0.88523 (60 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=6 var=cv_peso_ponderado_z    coef_medio= -0.00052 t= -0.21 p=0.83632 (58 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=6 var=n_fundos_z             coef_medio= -0.00075 t= -0.42 p=0.67573 (58 meses) | Bonf:nao
+  [FM linear] Dispersao + n_fundos + HHI (controlado) h=6 var=hhi_posse_z            coef_medio= -0.00124 t= -0.50 p=0.62238 (58 meses) | Bonf:nao
+
+
+===== RESUMO QUINTIL (ordenado por p) =====
+                                sinal horizonte n_meses n_min_grupo_mes
+                               <char>     <num>   <int>           <int>
+1: Dispersao (CV peso, ponderado AUM)         1      62              15
+2: Dispersao (CV peso, ponderado AUM)         3      60              15
+3: Dispersao (CV peso, ponderado AUM)        12      55              12
+4: Dispersao (CV peso, ponderado AUM)         6      58              14
+5:       Dispersao (CV peso, simples)        12      55              12
+6:       Dispersao (CV peso, simples)         6      58              14
+7:       Dispersao (CV peso, simples)         1      62              15
+8:       Dispersao (CV peso, simples)         3      60              15
+   spread_pp    sharpe      t_fm      p_fm sig_bonferroni
+       <num>     <num>     <num>     <num>         <lgcl>
+1: 0.6011541 0.5245337 1.1922811 0.2377686          FALSE
+2: 0.6036217 0.5214622 1.1660248 0.2482964          FALSE
+3: 0.4517491 0.4582356 0.9810238 0.3309560          FALSE
+4: 1.0371998 0.3900270 0.8574682 0.3947772          FALSE
+5: 0.5064091 0.3784967 0.8103131 0.4213170          FALSE
+6: 0.7466234 0.2732187 0.6006669 0.5504429          FALSE
+7: 0.2556278 0.2314318 0.5260516 0.6007598          FALSE
+8: 0.2516431 0.2273696 0.5084139 0.6130590          FALSE
+
+
+===== RESUMO LINEAR (ordenado por p) =====
+                                      sinal horizonte            variavel
+                                     <char>     <num>              <char>
+ 1:  Dispersao (CV peso, ponderado) sozinha         3 cv_peso_ponderado_z
+ 2: Dispersao + n_fundos + HHI (controlado)         3 cv_peso_ponderado_z
+ 3:    Dispersao (CV peso, simples) sozinha         3           cv_peso_z
+ 4:    Dispersao (CV peso, simples) sozinha        12           cv_peso_z
+ 5: Dispersao + n_fundos + HHI (controlado)         1          n_fundos_z
+ 6: Dispersao + n_fundos + HHI (controlado)         6         hhi_posse_z
+ 7:  Dispersao (CV peso, ponderado) sozinha         6 cv_peso_ponderado_z
+ 8: Dispersao + n_fundos + HHI (controlado)         6          n_fundos_z
+ 9:    Dispersao (CV peso, simples) sozinha         6           cv_peso_z
+10: Dispersao + n_fundos + HHI (controlado)         6 cv_peso_ponderado_z
+11:  Dispersao (CV peso, ponderado) sozinha         1 cv_peso_ponderado_z
+12:    Dispersao (CV peso, simples) sozinha         1           cv_peso_z
+13: Dispersao + n_fundos + HHI (controlado)         1         hhi_posse_z
+14: Dispersao + n_fundos + HHI (controlado)         3          n_fundos_z
+15: Dispersao + n_fundos + HHI (controlado)         3         hhi_posse_z
+16:  Dispersao (CV peso, ponderado) sozinha        12 cv_peso_ponderado_z
+17: Dispersao + n_fundos + HHI (controlado)         1 cv_peso_ponderado_z
+    n_meses    coef_medio       t_fm      p_fm sig_bonferroni
+      <int>         <num>      <num>     <num>         <lgcl>
+ 1:      60  0.0024852820  1.1620111 0.2499101          FALSE
+ 2:      60  0.0021746524  1.0258972 0.3091279          FALSE
+ 3:      60  0.0022662047  0.9845290 0.3288758          FALSE
+ 4:      55  0.0015852138  0.8191809 0.4162840          FALSE
+ 5:      62  0.0030475892  0.7608469 0.4496797          FALSE
+ 6:      58 -0.0012421910 -0.4951702 0.6223835          FALSE
+ 7:      58 -0.0007973454 -0.4267121 0.6711965          FALSE
+ 8:      58 -0.0007517695 -0.4204575 0.6757322          FALSE
+ 9:      58  0.0008273571  0.3176327 0.7519242          FALSE
+10:      58 -0.0005183671 -0.2075546 0.8363165          FALSE
+11:      62 -0.0003813958 -0.1828049 0.8555574          FALSE
+12:      62  0.0003943403  0.1761656 0.8607474          FALSE
+13:      62  0.0003119673  0.1623642 0.8715557          FALSE
+14:      60  0.0003767027  0.1510093 0.8804835          FALSE
+15:      60  0.0003435217  0.1449664 0.8852315          FALSE
+16:      55  0.0002102025  0.1233753 0.9022680          FALSE
+17:      62 -0.0001076478 -0.0542091 0.9569457          FALSE
+
+OK

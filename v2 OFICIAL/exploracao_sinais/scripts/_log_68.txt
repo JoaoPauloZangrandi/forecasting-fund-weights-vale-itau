@@ -1,0 +1,88 @@
+Ticker-mes com choque corrigido + HHI: 13566 
+
+
+########## Choque posse(corrigido) ##########
+Choque posse(corrigido)|baseline               h=1 24 meses n_min= 44 spread= +0.719pp/mes (   +9.0%/ano) Sharpe= 0.89 t=  1.26 p=0.21970 | Bonf:nao
+Choque posse(corrigido)|BAIXO-HHI(tercil)      h=1 24 meses n_min= 15 spread= +0.597pp/mes (   +7.4%/ano) Sharpe= 0.51 t=  0.72 p=0.47992 | Bonf:nao
+Choque posse(corrigido)|ALTO-HHI(tercil)       h=1 24 meses n_min= 15 spread= +0.611pp/mes (   +7.6%/ano) Sharpe= 0.48 t=  0.68 p=0.50295 | Bonf:nao
+Choque posse(corrigido)|BAIXO-HHI(mediana)     h=1 24 meses n_min= 22 spread= +0.272pp/mes (   +3.3%/ano) Sharpe= 0.23 t=  0.32 p=0.75208 | Bonf:nao
+Choque posse(corrigido)|ALTO-HHI(mediana)      h=1 24 meses n_min= 22 spread= +0.640pp/mes (   +8.0%/ano) Sharpe= 0.55 t=  0.77 p=0.44787 | Bonf:nao
+Choque posse(corrigido)|baseline               h=3 22 meses n_min= 44 spread= +0.832pp/mes (  +10.5%/ano) Sharpe= 0.93 t=  1.26 p=0.22182 | Bonf:nao
+Choque posse(corrigido)|BAIXO-HHI(tercil)      h=3 22 meses n_min= 15 spread= +0.520pp/mes (   +6.4%/ano) Sharpe= 0.43 t=  0.58 p=0.57020 | Bonf:nao
+Choque posse(corrigido)|ALTO-HHI(tercil)       h=3 22 meses n_min= 15 spread= +1.620pp/mes (  +21.3%/ano) Sharpe= 1.37 t=  1.86 p=0.07767 | Bonf:nao
+Choque posse(corrigido)|BAIXO-HHI(mediana)     h=3 22 meses n_min= 22 spread= +0.489pp/mes (   +6.0%/ano) Sharpe= 0.36 t=  0.48 p=0.63487 | Bonf:nao
+Choque posse(corrigido)|ALTO-HHI(mediana)      h=3 22 meses n_min= 22 spread= +1.007pp/mes (  +12.8%/ano) Sharpe= 0.96 t=  1.30 p=0.20824 | Bonf:nao
+Choque posse(corrigido)|baseline               h=6 19 meses n_min= 42 spread= +0.646pp/mes (   +8.0%/ano) Sharpe= 0.77 t=  0.97 p=0.34611 | Bonf:nao
+Choque posse(corrigido)|BAIXO-HHI(tercil)      h=6 19 meses n_min= 14 spread= -0.109pp/mes (   -1.3%/ano) Sharpe=-0.09 t= -0.11 p=0.91324 | Bonf:nao
+Choque posse(corrigido)|ALTO-HHI(tercil)       h=6 19 meses n_min= 14 spread= +0.229pp/mes (   +2.8%/ano) Sharpe= 0.23 t=  0.29 p=0.77801 | Bonf:nao
+Choque posse(corrigido)|BAIXO-HHI(mediana)     h=6 19 meses n_min= 21 spread= +0.139pp/mes (   +1.7%/ano) Sharpe= 0.10 t=  0.12 p=0.90315 | Bonf:nao
+Choque posse(corrigido)|ALTO-HHI(mediana)      h=6 19 meses n_min= 21 spread= +0.986pp/mes (  +12.5%/ano) Sharpe= 1.01 t=  1.27 p=0.21945 | Bonf:nao
+
+
+########## Choque posse|MAGNITUDE(|choque|) ##########
+Choque posse|MAGNITUDE(|choque|)|baseline      h=1 24 meses n_min= 44 spread= -0.295pp/mes (   -3.5%/ano) Sharpe=-0.45 t= -0.64 p=0.53095 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(tercil) h=1 24 meses n_min= 15 spread= -0.229pp/mes (   -2.7%/ano) Sharpe=-0.21 t= -0.29 p=0.77309 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(tercil) h=1 24 meses n_min= 15 spread= -0.515pp/mes (   -6.0%/ano) Sharpe=-0.36 t= -0.51 p=0.61555 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(mediana) h=1 24 meses n_min= 22 spread= -0.441pp/mes (   -5.2%/ano) Sharpe=-0.50 t= -0.71 p=0.48752 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(mediana) h=1 24 meses n_min= 22 spread= +0.428pp/mes (   +5.3%/ano) Sharpe= 0.38 t=  0.53 p=0.59810 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|baseline      h=3 22 meses n_min= 44 spread= +0.855pp/mes (  +10.8%/ano) Sharpe= 0.98 t=  1.33 p=0.19756 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(tercil) h=3 22 meses n_min= 15 spread= +1.180pp/mes (  +15.1%/ano) Sharpe= 1.21 t=  1.64 p=0.11567 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(tercil) h=3 22 meses n_min= 15 spread= +0.637pp/mes (   +7.9%/ano) Sharpe= 0.29 t=  0.40 p=0.69473 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(mediana) h=3 22 meses n_min= 22 spread= +1.372pp/mes (  +17.8%/ano) Sharpe= 1.41 t=  1.91 p=0.06996 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(mediana) h=3 22 meses n_min= 22 spread= +0.750pp/mes (   +9.4%/ano) Sharpe= 0.51 t=  0.69 p=0.49512 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|baseline      h=6 19 meses n_min= 42 spread= +0.663pp/mes (   +8.2%/ano) Sharpe= 0.64 t=  0.81 p=0.42806 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(tercil) h=6 19 meses n_min= 14 spread= +1.800pp/mes (  +23.9%/ano) Sharpe= 1.42 t=  1.78 p=0.09186 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(tercil) h=6 19 meses n_min= 14 spread= +0.259pp/mes (   +3.2%/ano) Sharpe= 0.16 t=  0.21 p=0.83845 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(mediana) h=6 19 meses n_min= 21 spread= +1.432pp/mes (  +18.6%/ano) Sharpe= 1.23 t=  1.55 p=0.13792 | Bonf:nao
+Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(mediana) h=6 19 meses n_min= 21 spread= +0.611pp/mes (   +7.6%/ano) Sharpe= 0.46 t=  0.58 p=0.57197 | Bonf:nao
+
+
+===== RESUMO GERAL (ordenado por p, top 20) =====
+                                                  sinal horizonte n_meses
+                                                 <char>     <num>   <int>
+ 1: Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(mediana)         3      22
+ 2:            Choque posse(corrigido)|ALTO-HHI(tercil)         3      22
+ 3:  Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(tercil)         6      19
+ 4:  Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(tercil)         3      22
+ 5: Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(mediana)         6      19
+ 6:           Choque posse|MAGNITUDE(|choque|)|baseline         3      22
+ 7:           Choque posse(corrigido)|ALTO-HHI(mediana)         3      22
+ 8:           Choque posse(corrigido)|ALTO-HHI(mediana)         6      19
+ 9:                    Choque posse(corrigido)|baseline         1      24
+10:                    Choque posse(corrigido)|baseline         3      22
+11:                    Choque posse(corrigido)|baseline         6      19
+12:           Choque posse|MAGNITUDE(|choque|)|baseline         6      19
+13:           Choque posse(corrigido)|ALTO-HHI(mediana)         1      24
+14:           Choque posse(corrigido)|BAIXO-HHI(tercil)         1      24
+15: Choque posse|MAGNITUDE(|choque|)|BAIXO-HHI(mediana)         1      24
+16:  Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(mediana)         3      22
+17:            Choque posse(corrigido)|ALTO-HHI(tercil)         1      24
+18:           Choque posse|MAGNITUDE(|choque|)|baseline         1      24
+19:           Choque posse(corrigido)|BAIXO-HHI(tercil)         3      22
+20:  Choque posse|MAGNITUDE(|choque|)|ALTO-HHI(mediana)         6      19
+                                                  sinal horizonte n_meses
+    n_min_grupo_mes  spread_pp     sharpe       t_fm       p_fm sig_bonferroni
+              <int>      <num>      <num>      <num>      <num>         <lgcl>
+ 1:              22  1.3718392  1.4102377  1.9094709 0.06995838          FALSE
+ 2:              15  1.6202006  1.3701265  1.8551600 0.07766676          FALSE
+ 3:              14  1.8003473  1.4150683  1.7805885 0.09186449          FALSE
+ 4:              15  1.1799337  1.2120296  1.6410958 0.11567073          FALSE
+ 5:              21  1.4323963  1.2339093  1.5526352 0.13791551          FALSE
+ 6:              44  0.8554443  0.9827913  1.3307058 0.19755532          FALSE
+ 7:              22  1.0072036  0.9588982  1.2983544 0.20824394          FALSE
+ 8:              21  0.9861714  1.0111399  1.2723231 0.21944954          FALSE
+ 9:              44  0.7185517  0.8921584  1.2617025 0.21970195          FALSE
+10:              44  0.8321972  0.9298781  1.2590609 0.22182456          FALSE
+11:              42  0.6462788  0.7688956  0.9675058 0.34611215          FALSE
+12:              42  0.6625711  0.6443680  0.8108120 0.42806468          FALSE
+13:              22  0.6404486  0.5460195  0.7721882 0.44786538          FALSE
+14:              15  0.5970461  0.5077781  0.7181066 0.47992307          FALSE
+15:              22 -0.4412374 -0.4989361 -0.7056022 0.48752125          FALSE
+16:              22  0.7499846  0.5127526  0.6942704 0.49512231          FALSE
+17:              15  0.6114526  0.4812215  0.6805500 0.50295028          FALSE
+18:              44 -0.2948780 -0.4498351 -0.6361628 0.53095059          FALSE
+19:              15  0.5200737  0.4260051  0.5768136 0.57019753          FALSE
+20:              21  0.6114747  0.4574863  0.5756576 0.57197397          FALSE
+    n_min_grupo_mes  spread_pp     sharpe       t_fm       p_fm sig_bonferroni
+
+OK

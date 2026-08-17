@@ -1,0 +1,22 @@
+Painel: 8224848 linhas
+Linhas sem HHI defasado disponivel (fundo sem dado no mes t-1, ex. primeiro mes): 211441 de 8224848 (2.57%)
+HHI_resto_lag: min = 0 | max = 0.9671645 
+
+Amostra comum (com HHI defasado disponivel): 8013407 linhas
+
+Celulas (ativo,mes) com >=15 holders, amostra comum: 13715 
+
+===== A) SO CONTEMPORANEO =====
+Celulas OK: 13695 | nao convergiram: 20
+z_hhi (contemporaneo): significativo em 9907/13695 (72.3%) | positivo quando sig: 9435/9907
+
+===== B) SO DEFASADO =====
+Celulas OK: 13697 | nao convergiram: 18
+z_hhi_lag (defasado): significativo em 9874/13697 (72.1%) | positivo quando sig: 9404/9874
+
+===== C) OS DOIS JUNTOS =====
+Celulas OK: 13694 | nao convergiram: 21
+z_hhi (contemporaneo): significativo em 7516/13694 (54.9%) | positivo quando sig: 4874/7516
+z_hhi_lag (defasado): significativo em 7265/13694 (53.1%) | positivo quando sig: 4233/7265
+
+OK

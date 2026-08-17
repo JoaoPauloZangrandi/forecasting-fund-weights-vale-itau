@@ -24,7 +24,8 @@ suppressPackageStartupMessages(library(data.table))
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 
 d <- fread(file.path(REPO, "v2 OFICIAL/data/painel_multiativo_final.csv"))
-cat("Painel (ja limpo de soma_peso>105%):", nrow(d), "linhas |", uniqueN(d$cod_fundo), "fundos\n")
+cat("Painel (ja limpo de soma_peso>150%, corrigido 15/08/2026 -- comentario antigo dizia 105%):",
+    nrow(d), "linhas |", uniqueN(d$cod_fundo), "fundos\n")
 
 addm <- function(ym, k) { tot <- (ym %/% 100L)*12L + (ym %% 100L - 1L) + k; (tot %/% 12L)*100L + (tot %% 12L) + 1L }
 
@@ -131,7 +132,7 @@ roda_horizonte <- function(h) {
   atual <- E[, .(cod_fundo, gestora_grupo, ativo, ym, d, peso, ym_fut = addm(ym, h))]
   M <- merge(atual, fut, by.x = c("cod_fundo","ativo","ym_fut"), by.y = c("cod_fundo","ativo","ym_fut_key"))
   M[, dw := peso_fut - peso]
-  treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym_fut <= 202112L]
+  treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym_fut <= 202607L]
   fit <- lm(dw ~ 0 + d, data = treino); lam <- unname(coef(fit)["d"])
   teste[, erro_oos := dw - lam * d]; teste[, erro_naive := dw]; teste[, horizonte := h]
   cat(sprintf("h=%d: treino %d | teste %d | lambda=%.4f | RMSE ajuste=%.6f | RMSE naive=%.6f\n",

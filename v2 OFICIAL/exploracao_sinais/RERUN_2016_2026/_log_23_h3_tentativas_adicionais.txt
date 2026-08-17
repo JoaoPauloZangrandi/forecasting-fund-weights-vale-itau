@@ -1,0 +1,22 @@
+===== (X) CIO SUAVIZADO (media movel 2-3 meses), h=3 =====
+peer_ret_ma2                   h=3 [ng=5] 55 meses spread=  +0.62pp/mes t=  0.45 p=0.65760 | p<0,05:nao | p<Bonferroni(0.00020):nao
+peer_ret_ma3                   h=3 [ng=5] 56 meses spread=  +2.53pp/mes t=  1.83 p=0.07316 | p<0,05:nao | p<Bonferroni(0.00020):nao
+
+===== (Y) DECIS em vez de quintis, h=3, sinal original =====
+CIO decis                      h=3 [ng=10] 45 meses spread=  +0.56pp/mes t=  0.42 p=0.67746 | p<0,05:nao | p<Bonferroni(0.00020):nao
+
+===== (Z) CIO NEUTRO EM TAMANHO (residuo apos tirar efeito de log_tamanho), h=1 e h=3 =====
+CIO neutro-tamanho             h=1 [ng=5] 62 meses spread=  +0.56pp/mes t=  1.21 p=0.23029 | p<0,05:nao | p<Bonferroni(0.00020):nao
+CIO neutro-tamanho             h=3 [ng=5] 60 meses spread=  +0.26pp/mes t=  0.44 p=0.66446 | p<0,05:nao | p<Bonferroni(0.00020):nao
+
+
+===== RESUMO: algum resultado passa do limiar Bonferroni (p< 2e-04 )? =====
+                sinal horizonte    p_fm sig_5pct sig_bonferroni
+               <char>     <num>   <num>   <lgcl>         <lgcl>
+1:       peer_ret_ma2         3 0.65760    FALSE          FALSE
+2:       peer_ret_ma3         3 0.07316    FALSE          FALSE
+3:          CIO decis         3 0.67746    FALSE          FALSE
+4: CIO neutro-tamanho         1 0.23029    FALSE          FALSE
+5: CIO neutro-tamanho         3 0.66446    FALSE          FALSE
+
+OK

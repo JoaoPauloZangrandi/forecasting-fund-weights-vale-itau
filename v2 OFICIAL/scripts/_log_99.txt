@@ -1,0 +1,20 @@
+Painel (ja limpo de soma_peso>105%): 8224848 linhas | 2343 fundos
+Linhas excluidas por falta de HHI defasado (sem dado em t-1): 211441 de 8224848 (2.57%)
+Fundos: 2343 -> 2296
+Celulas (ativo,mes) com >=15 holders: 13715 
+Tempo Etapa 1/erro/theta (HHI defasado): 74.3 s | 18 celulas nao convergiram | n_erro = 7997296 | n_theta = 13697 
+
+==== Resumo entre 13697 celulas ====
+Significancia HHI_lag: 9874 de 13697 (72.1%) | % positivo (sig): 9404/9874
+pseudo-R2 medio (piso -1): 0.5245
+h=1: treino 3576473 | teste 3686060 | lambda=0.0808 | RMSE ajuste=0.003817 | RMSE naive=0.003882
+h=3: treino 3343212 | teste 3085454 | lambda=0.1689 | RMSE ajuste=0.005543 | RMSE naive=0.005741
+h=6: treino 3146986 | teste 2403714 | lambda=0.2532 | RMSE ajuste=0.006730 | RMSE naive=0.007097
+h=12: treino 2883839 | teste 1364645 | lambda=0.3855 | RMSE ajuste=0.008104 | RMSE naive=0.008735
+
+
+===== COMPARACAO: HHI defasado vs. contemporaneo vs. 5-caracteristicas =====
+RMSE h=1: HHI defasado=0.003817 | HHI contemporaneo (live)=0.003856 (dif=-1.006%)
+RMSE h=3: HHI defasado=0.005543 | HHI contemporaneo (live)=0.005610 (dif=-1.195%)
+
+OK - pipeline com HHI defasado completa

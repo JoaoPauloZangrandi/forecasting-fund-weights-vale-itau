@@ -71,7 +71,7 @@ cat("Combinacoes duplicadas:", nrow(dup), "\n")
 
 cat("\n--- Periodo ---\n")
 cat("Range de ym:", min(pp$ym), "a", max(pp$ym), "\n")
-fora <- pp[ym < 201601 | ym > 202112]
+fora <- pp[ym < 201601 | ym > 202607]
 cat("Linhas fora de 2016-01 a 2021-12:", nrow(fora), "\n")
 
 cat("\n--- is_fic ---\n")

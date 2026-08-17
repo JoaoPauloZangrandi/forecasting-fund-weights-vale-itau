@@ -1,0 +1,18 @@
+
+[tamanho_1D] ativo-mes calculavel: 14035
+StockIQ-tamanho_1D   h= 1 [linear] R2_OOS=  0.0051% p_full=0.2559
+   [N por quintil-mes] mediana=38
+StockIQ-tamanho_1D   h= 1 [FM] 24 meses spread=  +0.30pp/mes t=  0.33 p=0.7449
+StockIQ-tamanho_1D   h= 3 [linear] R2_OOS=  0.0039% p_full=0.3242
+   [N por quintil-mes] mediana=40
+StockIQ-tamanho_1D   h= 3 [FM] 24 meses spread=  +0.59pp/mes t=  1.01 p=0.3226
+
+[momentum_1D] ativo-mes calculavel: 12675
+StockIQ-momentum_1D  h= 1 [linear] R2_OOS=  0.0033% p_full=0.2300
+   [N por quintil-mes] mediana=46
+StockIQ-momentum_1D  h= 1 [FM] 23 meses spread=  -0.41pp/mes t= -0.40 p=0.6901
+StockIQ-momentum_1D  h= 3 [linear] R2_OOS=  0.0237% p_full=0.0898
+   [N por quintil-mes] mediana=45
+StockIQ-momentum_1D  h= 3 [FM] 23 meses spread=  +1.65pp/mes t=  1.07 p=0.2977
+
+OK

@@ -22,7 +22,7 @@ M[, dw := peso_fut - peso]
 cat("Base h=1 (multiativo):", nrow(M), "obs\n")
 
 CORTE <- 202001L
-meses_teste <- sort(unique(M[ym >= CORTE & ym_fut <= 202112L]$ym))
+meses_teste <- sort(unique(M[ym >= CORTE & ym_fut <= 202607L]$ym))
 cat("Meses de teste:", length(meses_teste), "(", min(meses_teste), "a", max(meses_teste), ")\n")
 
 rmse <- function(x) sqrt(mean(x^2))

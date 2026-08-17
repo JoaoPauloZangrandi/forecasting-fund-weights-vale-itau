@@ -1,0 +1,11 @@
+null device 
+          1 
+Fig 1 OK - 716 ativos plotados
+null device 
+          1 
+Fig 2 OK - 10 pares de gestora plotados
+null device 
+          1 
+Fig 3 OK - 10 casos plotados
+
+OK - 3 figuras salvas em 'v2 OFICIAL/figuras_estrategia/'

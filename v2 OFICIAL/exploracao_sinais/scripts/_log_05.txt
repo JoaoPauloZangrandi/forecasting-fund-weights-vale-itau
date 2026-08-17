@@ -1,0 +1,64 @@
+===== (F) BREADTH OF OWNERSHIP (Chen-Hong-Stein 2002) =====
+Ativo-mes com breadth calculavel: 16994 | breadth media: 480 
+Breadth h= 1 [linear] beta=-0.00176 R2_OOS=-0.0140% p_full=0.9032
+Breadth h= 1 [Fama-MacBeth] 24 meses, spread=0.20pp/mes, t=0.26, p=0.7989
+Breadth h= 3 [linear] beta=0.00187 R2_OOS=-0.0010% p_full=0.5149
+Breadth h= 3 [Fama-MacBeth] 22 meses, spread=-0.57pp/mes, t=-0.74, p=0.4682
+Breadth h= 6 [linear] beta=-0.00098 R2_OOS=-0.0271% p_full=0.2472
+Breadth h= 6 [Fama-MacBeth] 19 meses, spread=0.43pp/mes, t=0.51, p=0.6186
+Breadth h=12 [linear] beta=-0.00415 R2_OOS=-0.0178% p_full=0.2079
+Breadth h=12 [Fama-MacBeth] 13 meses, spread=0.14pp/mes, t=0.18, p=0.8625
+
+===== (G) LATENT DEMAND (residuo agregado, ponderado por AUM) =====
+Ativo-mes com latent demand calculavel: 13723 
+Latent demand (nivel) h= 1 [linear] beta=5.03905 R2_OOS=-0.0830% p_full=0.4808
+Latent demand (nivel) h= 1 [Fama-MacBeth] 24 meses, spread=-0.80pp/mes, t=-1.03, p=0.3143
+Latent demand (nivel) h= 3 [linear] beta=-1.59618 R2_OOS=0.0094% p_full=0.3057
+Latent demand (nivel) h= 3 [Fama-MacBeth] 22 meses, spread=-1.35pp/mes, t=-1.86, p=0.0776
+Latent demand (nivel) h= 6 [linear] beta=3.52340 R2_OOS=-0.0810% p_full=0.8974
+Latent demand (nivel) h= 6 [Fama-MacBeth] 19 meses, spread=-0.47pp/mes, t=-0.75, p=0.4638
+Latent demand (nivel) h=12 [linear] beta=3.85617 R2_OOS=-0.1716% p_full=0.8904
+Latent demand (nivel) h=12 [Fama-MacBeth] 13 meses, spread=-0.19pp/mes, t=-0.21, p=0.8390
+Latent demand (choque) h= 1 [linear] beta=14.50971 R2_OOS=0.0097% p_full=0.0148
+Latent demand (choque) h= 1 [Fama-MacBeth] 24 meses, spread=0.65pp/mes, t=1.28, p=0.2125
+Latent demand (choque) h= 3 [linear] beta=-15.38572 R2_OOS=-0.1628% p_full=0.3603
+Latent demand (choque) h= 3 [Fama-MacBeth] 22 meses, spread=-0.13pp/mes, t=-0.29, p=0.7749
+Latent demand (choque) h= 6 [linear] beta=1.23380 R2_OOS=0.0031% p_full=0.6675
+Latent demand (choque) h= 6 [Fama-MacBeth] 19 meses, spread=0.19pp/mes, t=0.33, p=0.7487
+Latent demand (choque) h=12 [linear] beta=21.64328 R2_OOS=-0.2417% p_full=0.0083
+Latent demand (choque) h=12 [Fama-MacBeth] 13 meses, spread=-0.05pp/mes, t=-0.06, p=0.9520
+
+
+===== RESUMO LINEAR =====
+                     sinal horizonte r2_oos_pct p_full
+                    <char>     <num>      <num>  <num>
+ 1:   Breadth of ownership         1     -0.014 0.9032
+ 2:   Breadth of ownership         3     -0.001 0.5149
+ 3:   Breadth of ownership         6     -0.027 0.2472
+ 4:   Breadth of ownership        12     -0.018 0.2079
+ 5:  Latent demand (nivel)         1     -0.083 0.4808
+ 6:  Latent demand (nivel)         3      0.009 0.3057
+ 7:  Latent demand (nivel)         6     -0.081 0.8974
+ 8:  Latent demand (nivel)        12     -0.172 0.8904
+ 9: Latent demand (choque)         1      0.010 0.0148
+10: Latent demand (choque)         3     -0.163 0.3603
+11: Latent demand (choque)         6      0.003 0.6675
+12: Latent demand (choque)        12     -0.242 0.0083
+
+===== RESUMO FAMA-MACBETH =====
+                     sinal horizonte spread_medio_pp  t_fm   p_fm
+                    <char>     <num>           <num> <num>  <num>
+ 1:   Breadth of ownership         1           0.203  0.26 0.7989
+ 2:   Breadth of ownership         3          -0.575 -0.74 0.4682
+ 3:   Breadth of ownership         6           0.429  0.51 0.6186
+ 4:   Breadth of ownership        12           0.136  0.18 0.8625
+ 5:  Latent demand (nivel)         1          -0.802 -1.03 0.3143
+ 6:  Latent demand (nivel)         3          -1.351 -1.86 0.0776
+ 7:  Latent demand (nivel)         6          -0.473 -0.75 0.4638
+ 8:  Latent demand (nivel)        12          -0.188 -0.21 0.8390
+ 9: Latent demand (choque)         1           0.650  1.28 0.2125
+10: Latent demand (choque)         3          -0.135 -0.29 0.7749
+11: Latent demand (choque)         6           0.187  0.33 0.7487
+12: Latent demand (choque)        12          -0.050 -0.06 0.9520
+
+OK

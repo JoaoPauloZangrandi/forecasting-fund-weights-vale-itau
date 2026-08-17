@@ -1,0 +1,33 @@
+Meses com densidade calculada: 98 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.02050 0.02893 0.06229 0.05444 0.06918 0.07812 
+
+Treino: 36 meses | Teste: 61 meses
+Densidade -> retorno mercado(t+1): beta_treino=1.1818 | R2_OOS=-2.993%
+
+Regressao plena (amostra inteira, so' contexto -- NAO e' o teste OOS):
+                Estimate Std. Error    t value  Pr(>|t|)
+(Intercept) -0.005349849 0.01974495 -0.2709477 0.7870191
+densidade    0.321467316 0.34212013  0.9396329 0.3497889
+
+Mesma regressao, erro-padrao Newey-West (lag=3):
+
+t test of coefficients:
+
+              Estimate Std. Error t value Pr(>|t|)
+(Intercept) -0.0053498  0.0140773 -0.3800   0.7048
+densidade    0.3214673  0.2849626  1.1281   0.2621
+
+
+----- Controlando por retorno de mercado passado (so' treino, contexto) -----
+                       Estimate Std. Error   t value  Pr(>|t|)
+(Intercept)         -0.06839102  0.0769276 -0.889031 0.3806210
+densidade            1.48948259  1.1632401  1.280460 0.2095873
+ret_mercado_passado -0.26105261  0.1792110 -1.456678 0.1549485
+
+Densidade + ret.passado -> R2_OOS=-9.384% (vs -2.993% so' densidade)
+
+----- Densidade(t) x |retorno de mercado(t)| (vol contemporanea) -----
+Correlacao (nivel): 0.162
+
+OK

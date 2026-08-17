@@ -1,0 +1,22 @@
+Pares lider->seguidor (com beta): 78117 
+Pares (seguidor,ativo) distintos, apos escolher 1 lider cada: 19031 
+  (de 78117 candidatos brutos -- 75.6 % eram (seguidor,ativo) com mais de 1 lider)
+
+Obs (seguidor,ativo,mes) com lider observado no MESMO mes: 364848 
+
+Resumo do termo 'eco do lider' (quanto o ajuste muda a previsao normal):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-1.647e-01 -5.131e-04 -3.395e-05 -9.049e-05  3.340e-04  1.541e-01 
+
+Resumo da previsao SEM ajuste (so lambda*d):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-2.492e-02 -7.902e-05  3.808e-05 -1.840e-05  1.857e-04  2.131e-02 
+Resumo da previsao AJUSTADA (com eco):
+      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
+-1.716e-01 -5.051e-04  1.238e-05 -1.089e-04  4.370e-04  1.555e-01 
+
+RMSE sem ajuste (so lambda*d): 0.00623
+RMSE com ajuste (lambda*d + eco): 0.00405
+Melhora: 34.9%
+
+OK - salvo em 'v2 OFICIAL/data/previsao_ajustada_seguidor.csv' (364848 obs)

@@ -1,10 +1,10 @@
 modelo,horizonte,n_treino,n_teste,r2_oos_pct
-Benchmark: so vol_12m (ja testado),3,7220,5103,6.140868526816
-Benchmark HAR (3 janelas de vol),3,7220,5103,6.85774918766606
-HAR + CROWDING (fragilidade),3,7220,5103,6.8774720768125
-Benchmark: so vol_12m (ja testado),6,7164,4580,8.28784500050516
-Benchmark HAR (3 janelas de vol),6,7164,4580,8.95566089490228
-HAR + CROWDING (fragilidade),6,7164,4580,9.35755773819384
-Benchmark: so vol_12m (ja testado),12,7044,3582,0.253625535371216
-Benchmark HAR (3 janelas de vol),12,7044,3582,0.200236588442948
-HAR + CROWDING (fragilidade),12,7044,3582,1.42153088275739
+Benchmark: so vol_12m (ja testado),3,7220,14309,-0.588959220711294
+Benchmark HAR (3 janelas de vol),3,7220,14309,-3.46045365938301
+HAR + CROWDING (fragilidade),3,7220,14309,-3.0784233239147
+Benchmark: so vol_12m (ja testado),6,7164,14225,0.0787289421823045
+Benchmark HAR (3 janelas de vol),6,7164,14225,-1.58409441317771
+HAR + CROWDING (fragilidade),6,7164,14225,-1.37816891004452
+Benchmark: so vol_12m (ja testado),12,7044,13770,0.206783483130601
+Benchmark HAR (3 janelas de vol),12,7044,13770,-0.119419044592806
+HAR + CROWDING (fragilidade),12,7044,13770,-0.101246682223

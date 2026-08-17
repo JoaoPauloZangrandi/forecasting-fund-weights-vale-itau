@@ -1,0 +1,50 @@
+===== Montando features =====
+Ativo-mes com TODAS as features disponiveis: 12155 
+
+h=1: n_treino=6829 n_teste=5251
+  melhor iteracao: 99 
+  R2_OOS (XGBoost, 7 features) = -2.3376%
+  importancia das features:
+       Feature       Gain      Cover  Frequency
+        <char>      <num>      <num>      <num>
+1:    peer_ret 0.20559296 0.21455660 0.17001546
+2:     mom_12m 0.20546960 0.21322702 0.18701700
+3:   hhi_posse 0.16417361 0.07528646 0.12828439
+4:    HM_sinal 0.13251342 0.19458517 0.16383308
+5:   dem_pct_w 0.12956603 0.13970285 0.15301391
+6:    stock_iq 0.08735956 0.08267694 0.09582689
+7: log_tamanho 0.07532482 0.07996495 0.10200927
+  Long-short (Fama-MacBeth): 23 meses, spread=-0.37pp/mes, t=-0.26, p=0.7947
+
+h=3: n_treino=6775 n_teste=4727
+  melhor iteracao: 176 
+  R2_OOS (XGBoost, 7 features) = -8.2932%
+  importancia das features:
+       Feature       Gain      Cover  Frequency
+        <char>      <num>      <num>      <num>
+1:    peer_ret 0.30057662 0.21341363 0.20816733
+2:     mom_12m 0.23227793 0.28319165 0.22509960
+3:    HM_sinal 0.12194052 0.15464772 0.14043825
+4: log_tamanho 0.10757409 0.09595314 0.12948207
+5:   dem_pct_w 0.08786196 0.10586281 0.11454183
+6:   hhi_posse 0.08129423 0.08077296 0.09561753
+7:    stock_iq 0.06847465 0.06615809 0.08665339
+  Long-short (Fama-MacBeth): 16 meses, spread=-1.94pp/mes, t=-1.02, p=0.3233
+
+h=6: n_treino=6692 n_teste=3971
+  melhor iteracao: 236 
+  R2_OOS (XGBoost, 7 features) = -3.0558%
+  importancia das features:
+       Feature       Gain      Cover  Frequency
+        <char>      <num>      <num>      <num>
+1:    peer_ret 0.26320280 0.20387845 0.20087977
+2:   dem_pct_w 0.16691055 0.19002315 0.16495601
+3:     mom_12m 0.15559848 0.18919097 0.17008798
+4: log_tamanho 0.12182041 0.15533191 0.13856305
+5:   hhi_posse 0.10898330 0.09221538 0.11510264
+6:    HM_sinal 0.10787363 0.11000115 0.12609971
+7:    stock_iq 0.07561085 0.05935899 0.08431085
+  Long-short (Fama-MacBeth): 13 meses, spread=-3.69pp/mes, t=-1.66, p=0.1233
+
+
+OK

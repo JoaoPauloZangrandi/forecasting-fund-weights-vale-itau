@@ -1,0 +1,32 @@
+1a metade: ate 202104 | 2a metade: depois de 202104 
+Gestoras com vies estimavel (>=50 obs na 1a metade): 40 
+Obs de 2a metade cobertas por essas gestoras: 1491523 de 2147967 
+
+===== RMSE na 2a metade: ajuste parcial puro vs. com correcao de vies =====
+RMSE sem correcao      = 0.006771
+RMSE com correcao vies = 0.006769
+Melhora = 0.02%
+
+Gestoras (n>=20 na 2a metade) que MELHORAM com a correcao: 27 de 40
+
+Melhores melhoras:
+            gestora_grupo rmse_puro rmse_corr melhora_pct
+                   <char>     <num>     <num>       <num>
+1:          Real Investor   0.00416   0.00402         3.4
+2:         Núcleo Capital   0.00808   0.00783         3.1
+3: Verde Asset Management   0.00506   0.00504         0.5
+4:  Squadra Investimentos   0.00876   0.00872         0.5
+5:      ARX Investimentos   0.00771   0.00767         0.4
+
+Piores (correcao atrapalha mais):
+            gestora_grupo rmse_puro rmse_corr melhora_pct
+                   <char>     <num>     <num>       <num>
+1:    Truxt Investimentos   0.01080   0.01082        -0.2
+2: Claritas Investimentos   0.00548   0.00549        -0.3
+3:                  Caixa   0.00515   0.00517        -0.4
+4:         Bogari Capital   0.00568   0.00572        -0.7
+5: Guepardo Investimentos   0.01326   0.01346        -1.5
+
+Para referencia -- RMSE ingenua (mesmas obs) = 0.006786
+
+OK

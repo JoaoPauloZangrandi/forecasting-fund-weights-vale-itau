@@ -1,0 +1,14 @@
+===== TESTE FORA DA AMOSTRA: FIT prediz retorno? (treino<2020-01, teste>=2020-01) =====
+h= 0: n_treino=  9272 n_teste= 7115 | beta(treino)= -0.02112 | RMSE modelo=0.16362 RMSE ingenua=0.16369 | margem=  0.04% | R2_OOS= 0.0836%
+h= 1: n_treino=  9261 n_teste= 6846 | beta(treino)=  0.06272 | RMSE modelo=0.16467 RMSE ingenua=0.16430 | margem= -0.23% | R2_OOS=-0.4534%
+h= 3: n_treino=  9201 n_teste= 6800 | beta(treino)= -0.26760 | RMSE modelo=0.14828 RMSE ingenua=0.14668 | margem= -1.09% | R2_OOS=-2.1970%
+h= 6: n_treino=  9099 n_teste= 6725 | beta(treino)= -0.21405 | RMSE modelo=0.14339 RMSE ingenua=0.14239 | margem= -0.70% | R2_OOS=-1.4067%
+h=12: n_treino=  8917 n_teste= 6545 | beta(treino)= -0.13814 | RMSE modelo=0.14027 RMSE ingenua=0.14002 | margem= -0.18% | R2_OOS=-0.3611%
+
+===== SENSIBILIDADE A OUTLIERS: mesma coisa, winsorizando FIT e retorno em 1%/99% =====
+h= 0 (winsorizado): beta(treino)= -0.01057 | R2_OOS= 0.0362% | [amostra inteira, so' referencia] coef=-0.191878 t=-6.087 p=0.0000
+h= 1 (winsorizado): beta(treino)= -0.01417 | R2_OOS= 0.0969% | [amostra inteira, so' referencia] coef=-0.332568 t=-10.548 p=0.0000
+h= 6 (winsorizado): beta(treino)= -0.25041 | R2_OOS=-1.8760% | [amostra inteira, so' referencia] coef=0.036420 t=1.139 p=0.2547
+h=12 (winsorizado): beta(treino)= -0.23455 | R2_OOS=-0.9775% | [amostra inteira, so' referencia] coef=-0.074387 t=-2.289 p=0.0221
+
+OK

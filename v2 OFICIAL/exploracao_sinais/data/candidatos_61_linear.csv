@@ -1,17 +1,17 @@
 sinal,horizonte,r2_oos_pct,p_full
-Centralidade: grau ponderado (nivel),1,-0.118242381216604,0.115320201574603
-Centralidade: autovetor (nivel),1,-0.0346527599329294,0.000519736015616762
-Centralidade: grau ponderado (delta m/m),1,0.0522149364606372,0.0144833862309727
-Centralidade: autovetor (delta m/m),1,-0.00177325697658937,0.0317170045765996
-Centralidade: grau ponderado (nivel),3,-0.0365511421398068,0.0862912175058386
-Centralidade: autovetor (nivel),3,0.0781344082374735,6.72344968733873e-05
-Centralidade: grau ponderado (delta m/m),3,-0.0364877824649446,0.79809814571788
-Centralidade: autovetor (delta m/m),3,-0.00240146757375381,0.775314841318027
-Centralidade: grau ponderado (nivel),6,0.154105064487653,0.000985602280315056
-Centralidade: autovetor (nivel),6,0.255314093879455,2.4540477321629e-05
-Centralidade: grau ponderado (delta m/m),6,-0.00940664271875669,0.768527143243793
-Centralidade: autovetor (delta m/m),6,0.0235781279178005,0.13356228536227
-Centralidade: grau ponderado (nivel),12,0.234457732661186,0.00143406449760168
-Centralidade: autovetor (nivel),12,0.219676367033006,0.00125020250439716
-Centralidade: grau ponderado (delta m/m),12,-0.000500034120509696,0.919786796958079
-Centralidade: autovetor (delta m/m),12,0.00793533661583856,0.529046438454793
+Centralidade: grau ponderado (nivel),1,-1.35394987887949e-05,0.0899942441432783
+Centralidade: autovetor (nivel),1,-0.00220789934042287,0.191695098435103
+Centralidade: grau ponderado (delta m/m),1,0.0404864026458451,0.0125403733434447
+Centralidade: autovetor (delta m/m),1,-0.0614872526988775,0.354793416922108
+Centralidade: grau ponderado (nivel),3,-0.0167726942668089,0.707607356517075
+Centralidade: autovetor (nivel),3,-0.0197958484511984,0.341994791291603
+Centralidade: grau ponderado (delta m/m),3,0.000356790821487429,0.464833442287882
+Centralidade: autovetor (delta m/m),3,-0.00180983431428139,0.0991249583682783
+Centralidade: grau ponderado (nivel),6,-0.0230338096175897,0.187860804184035
+Centralidade: autovetor (nivel),6,0.0138258477045516,0.025646333266704
+Centralidade: grau ponderado (delta m/m),6,0.00718397381699321,0.515684245065196
+Centralidade: autovetor (delta m/m),6,0.0191125048245477,0.0292271663089848
+Centralidade: grau ponderado (nivel),12,-0.15463331824459,0.890654609087427
+Centralidade: autovetor (nivel),12,-0.00612048634656137,0.32408171586095
+Centralidade: grau ponderado (delta m/m),12,-0.000344077296032808,0.935826218425179
+Centralidade: autovetor (delta m/m),12,-0.010136367523228,0.446595523284711

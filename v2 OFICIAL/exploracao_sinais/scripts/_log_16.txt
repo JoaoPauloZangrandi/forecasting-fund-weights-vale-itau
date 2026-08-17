@@ -1,0 +1,9 @@
+===== (R) CIO peer momentum, h=2 =====
+   [N por quintil-mes] min=1 mediana=46 max=338
+CIO peer momentum              h=2 [FM] 20 meses spread=  +0.84pp/mes t=  0.51 p=0.6149
+
+===== (S) CIO peer momentum -> retorno ACUMULADO (t+1 a t+3) =====
+   [N por quintil-mes] min=1 mediana=61 max=336
+CIO peer momentum              h=acum-1a3 [FM] 18 meses spread=  +8.12pp/mes t=  2.04 p=0.0576
+
+OK

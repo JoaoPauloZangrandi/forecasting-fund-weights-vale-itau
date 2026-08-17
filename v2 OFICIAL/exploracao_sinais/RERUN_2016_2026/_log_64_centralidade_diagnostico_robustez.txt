@@ -1,0 +1,166 @@
+===== (A) Controle por tamanho =====
+Correlacao deg_avg x log_tamanho (pooled): 0.467 
+Correlacao eigen_cent x log_tamanho (pooled): 0.624 
+[A] deg_avg                                h= 1 [FM] 62 meses spread= -0.111pp/mes t= -0.25 p=0.8054 | N min/mediana=17/66
+[A] eigen_cent                             h= 1 [FM] 62 meses spread= -0.271pp/mes t= -0.57 p=0.5699 | N min/mediana=17/66
+[A] deg_avg_neutro                         h= 1 [FM] 62 meses spread= +0.065pp/mes t=  0.19 p=0.8464 | N min/mediana=17/66
+[A] eigen_cent_neutro                      h= 1 [FM] 62 meses spread= +0.085pp/mes t=  0.30 p=0.7663 | N min/mediana=17/66
+[A] deg_avg                                h= 3 [FM] 60 meses spread= +0.657pp/mes t=  0.61 p=0.5472 | N min/mediana=17/65
+[A] eigen_cent                             h= 3 [FM] 60 meses spread= +0.691pp/mes t=  0.63 p=0.5316 | N min/mediana=17/65
+[A] deg_avg_neutro                         h= 3 [FM] 60 meses spread= +0.938pp/mes t=  0.93 p=0.3560 | N min/mediana=17/65
+[A] eigen_cent_neutro                      h= 3 [FM] 60 meses spread= +0.107pp/mes t=  0.32 p=0.7530 | N min/mediana=17/65
+[A] deg_avg                                h= 6 [FM] 58 meses spread= -0.163pp/mes t= -0.37 p=0.7097 | N min/mediana=16/64
+[A] eigen_cent                             h= 6 [FM] 58 meses spread= -0.274pp/mes t= -0.59 p=0.5608 | N min/mediana=16/64
+[A] deg_avg_neutro                         h= 6 [FM] 58 meses spread= +0.263pp/mes t=  0.86 p=0.3955 | N min/mediana=16/64
+[A] eigen_cent_neutro                      h= 6 [FM] 58 meses spread= -0.077pp/mes t= -0.23 p=0.8209 | N min/mediana=16/64
+[A] deg_avg                                h=12 [FM] 55 meses spread= +0.089pp/mes t=  0.19 p=0.8499 | N min/mediana=12/62
+[A] eigen_cent                             h=12 [FM] 55 meses spread= +0.182pp/mes t=  0.36 p=0.7196 | N min/mediana=12/62
+[A] deg_avg_neutro                         h=12 [FM] 55 meses spread= +0.355pp/mes t=  1.02 p=0.3137 | N min/mediana=12/62
+[A] eigen_cent_neutro                      h=12 [FM] 55 meses spread= -0.138pp/mes t= -0.42 p=0.6756 | N min/mediana=12/62
+
+===== (B) Composicao mes-a-mes do spread (autovetor nivel) =====
+[B] eigen_cent                             h= 6 [FM] 58 meses spread= -0.274pp/mes t= -0.59 p=0.5608 | N min/mediana=16/64
+
+h=6 -- spread por mes (ordenado, mais negativo primeiro):
+        ym spread_pp
+     <int>     <num>
+ 1: 202010     -7.79
+ 2: 202104     -7.51
+ 3: 202009     -7.46
+ 4: 202012     -5.97
+ 5: 202210     -5.95
+ 6: 202208     -5.44
+ 7: 202310     -5.13
+ 8: 202205     -4.58
+ 9: 202110     -4.40
+10: 202112     -4.37
+11: 202011     -4.18
+12: 202004     -3.42
+13: 202501     -2.94
+14: 202003     -1.87
+15: 202307     -1.86
+16: 202405     -1.85
+17: 202008     -1.73
+18: 202203     -1.71
+19: 202211     -1.55
+20: 202006     -1.33
+21: 202007     -1.26
+22: 202506     -1.15
+23: 202303     -0.92
+24: 202106     -0.86
+25: 202005     -0.85
+26: 202302     -0.44
+27: 202108     -0.33
+28: 202002     -0.30
+29: 202509     -0.13
+30: 202101     -0.07
+31: 202311     -0.07
+32: 202103      0.06
+33: 202512      0.15
+34: 202404      0.23
+35: 202503      0.48
+36: 202107      0.53
+37: 202308      0.93
+38: 202111      0.93
+39: 202109      0.94
+40: 202206      0.96
+41: 202510      1.19
+42: 202301      1.40
+43: 202102      1.51
+44: 202306      1.91
+45: 202407      2.08
+46: 202001      2.51
+47: 202105      2.85
+48: 202409      2.98
+49: 202412      3.14
+50: 202209      3.38
+51: 202502      3.62
+52: 202401      4.66
+53: 202201      4.83
+54: 202402      4.88
+55: 202507      4.89
+56: 202504      6.50
+57: 202410      6.76
+58: 202305      7.20
+        ym spread_pp
+Top-2 meses mais negativos somam 96.2% do total (-15.30pp de -15.91pp)
+[B] eigen_cent                             h=12 [FM] 55 meses spread= +0.182pp/mes t=  0.36 p=0.7196 | N min/mediana=12/62
+
+h=12 -- spread por mes (ordenado, mais negativo primeiro):
+        ym spread_pp
+     <int>     <num>
+ 1: 202004     -8.91
+ 2: 202003     -7.84
+ 3: 202010     -6.33
+ 4: 202104     -5.73
+ 5: 202006     -5.36
+ 6: 202111     -4.75
+ 7: 202407     -4.64
+ 8: 202012     -3.56
+ 9: 202112     -3.42
+10: 202007     -3.33
+11: 202106     -3.25
+12: 202209     -2.34
+13: 202101     -2.27
+14: 202503     -1.90
+15: 202311     -1.89
+16: 202001     -1.76
+17: 202310     -1.75
+18: 202412     -1.69
+19: 202002     -1.46
+20: 202405     -1.39
+21: 202208     -1.15
+22: 202402     -0.84
+23: 202008     -0.08
+24: 202401      0.21
+25: 202210      0.23
+26: 202203      0.31
+27: 202109      0.32
+28: 202201      0.41
+29: 202009      0.50
+30: 202102      0.68
+31: 202103      0.69
+32: 202301      0.77
+33: 202206      0.84
+34: 202302      1.11
+35: 202305      1.36
+36: 202409      1.58
+37: 202105      1.67
+38: 202303      1.68
+39: 202306      1.83
+40: 202506      2.16
+41: 202504      2.33
+42: 202205      2.64
+43: 202005      2.80
+44: 202507      3.03
+45: 202502      3.09
+46: 202011      3.75
+47: 202308      4.13
+48: 202307      4.16
+49: 202501      4.25
+50: 202410      4.75
+51: 202107      4.81
+52: 202404      6.53
+53: 202110      7.18
+54: 202211      7.58
+55: 202108      8.30
+        ym spread_pp
+Top-2 meses mais negativos somam -167.2% do total (-16.76pp de 10.02pp)
+
+===== (C) Robustez: rank percentual dentro do mes (em vez de nivel bruto) =====
+[C] deg_avg_rank                           h= 1 [FM] 62 meses spread= -0.111pp/mes t= -0.25 p=0.8054 | N min/mediana=17/66
+[C] eigen_cent_rank                        h= 1 [FM] 62 meses spread= -0.271pp/mes t= -0.57 p=0.5699 | N min/mediana=17/66
+[C] deg_avg_rank                           h= 3 [FM] 60 meses spread= +0.657pp/mes t=  0.61 p=0.5472 | N min/mediana=17/65
+[C] eigen_cent_rank                        h= 3 [FM] 60 meses spread= +0.691pp/mes t=  0.63 p=0.5316 | N min/mediana=17/65
+[C] deg_avg_rank                           h= 6 [FM] 58 meses spread= -0.163pp/mes t= -0.37 p=0.7097 | N min/mediana=16/64
+[C] eigen_cent_rank                        h= 6 [FM] 58 meses spread= -0.274pp/mes t= -0.59 p=0.5608 | N min/mediana=16/64
+[C] deg_avg_rank                           h=12 [FM] 55 meses spread= +0.089pp/mes t=  0.19 p=0.8499 | N min/mediana=12/62
+[C] eigen_cent_rank                        h=12 [FM] 55 meses spread= +0.182pp/mes t=  0.36 p=0.7196 | N min/mediana=12/62
+
+===== (D) Excluindo 2020 inteiro (so' 2021+) =====
+[D sem 2020] deg_avg                       h= 6 [FM] 46 meses spread= +0.295pp/mes t=  0.64 p=0.5270 | N min/mediana=16/65
+[D sem 2020] eigen_cent                    h= 6 [FM] 46 meses spread= +0.386pp/mes t=  0.76 p=0.4483 | N min/mediana=16/65
+[D sem 2020] deg_avg                       h=12 [FM] 43 meses spread= +0.704pp/mes t=  1.41 p=0.1666 | N min/mediana=12/64
+[D sem 2020] eigen_cent                    h=12 [FM] 43 meses spread= +0.968pp/mes t=  1.92 p=0.0615 | N min/mediana=12/63
+
+OK

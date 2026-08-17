@@ -1,0 +1,54 @@
+Pre-computando matrizes CIO por mes (uma vez, reaproveitada em todas as especificacoes)...
+Tempo pre-computo: 38.2 s | 60 meses
+
+Total de combinacoes de construcao do sinal: 36 
+  ... 20 especificacoes testadas
+  ... 40 especificacoes testadas
+  ... 60 especificacoes testadas
+  ... 80 especificacoes testadas
+  ... 100 especificacoes testadas
+
+===== RESUMO: quantas especificacoes por horizonte passam de p<0,05 (Fama-MacBeth)? =====
+       h total sig_5pct sig_10pct
+   <num> <int>    <int>     <int>
+1:     1    36       11        14
+2:     2    36        0         0
+3:     3    36        4         4
+
+===== Especificacoes com p<0,05, por horizonte =====
+    piso_pct min_peers ponderado     h n_treino n_teste r2_oos_pct n_meses
+       <num>     <num>    <lgcl> <num>    <int>   <int>      <num>   <int>
+ 1:     0.70         3      TRUE     1     9597    7185   1.547359      22
+ 2:     0.75         3      TRUE     1     9597    7185   1.531411      22
+ 3:     0.80         3      TRUE     1     9597    7185   1.521614      22
+ 4:     0.60         3      TRUE     1     9597    7185   1.538237      22
+ 5:     0.75         5      TRUE     1     9592    7185   1.546743      21
+ 6:     0.70         5      TRUE     1     9592    7185   1.562873      21
+ 7:     0.80         5      TRUE     1     9592    7185   1.538781      21
+ 8:     0.90         3      TRUE     1     9597    7185   1.456751      22
+ 9:     0.50         3      TRUE     1     9597    7185   1.545306      22
+10:     0.60         5      TRUE     1     9592    7185   1.540554      21
+11:     0.50         5      TRUE     1     9592    7185   1.542160      21
+12:     0.70         3     FALSE     3     9535    6454   2.237718       8
+13:     0.60         3     FALSE     3     9535    6454   2.233557       8
+14:     0.75         3     FALSE     3     9535    6454   2.191965       8
+15:     0.50         3     FALSE     3     9535    6454   2.173447       7
+    spread_pp      t_fm        p_fm
+        <num>     <num>       <num>
+ 1:  4.015649  3.240014 0.003921470
+ 2:  3.888856  3.180684 0.004500649
+ 3:  3.793490  3.096735 0.005463964
+ 4:  3.889280  2.901986 0.008526270
+ 5:  4.454220  2.506724 0.020930732
+ 6:  4.441745  2.496907 0.021374211
+ 7:  4.417998  2.471634 0.022556733
+ 8:  3.184076  2.452261 0.023027538
+ 9:  2.963784  2.413704 0.025007545
+10:  4.305912  2.297787 0.032496119
+11:  4.189308  2.246212 0.036144478
+12: -4.934983 -3.736366 0.007297476
+13: -5.281540 -3.530759 0.009588046
+14: -7.167296 -2.683924 0.031360496
+15: -3.277521 -2.700214 0.035565873
+
+OK -- total de especificacoes testadas nesta grade: 108 

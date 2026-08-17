@@ -1,0 +1,88 @@
+Ativo-mes com features (reduzido): 43762 
+
+===== (R1) FEATURE SET REDUZIDO (top-3: peer_ret, EFIT, mom_12m), refit 6m =====
+[R1_top3_refit6m] h=1: n_obs=5133 n_refits=4 R2_OOS=1.4489% | FM: spread=0.764%/mes t=0.93 p=0.3640
+  importancia:
+    Feature gain_medio
+     <char>      <num>
+1: peer_ret  0.5751433
+2:     EFIT  0.2413861
+3:  mom_12m  0.1834706
+[R1_top3_refit6m] h=3: n_obs=5087 n_refits=4 R2_OOS=-18.0800% | FM: spread=-0.560%/mes t=-0.74 p=0.4692
+  importancia:
+    Feature gain_medio
+     <char>      <num>
+1: peer_ret  0.4050378
+2:     EFIT  0.3445612
+3:  mom_12m  0.2504010
+[R1_top3_refit6m] h=6: n_obs=5015 n_refits=4 R2_OOS=-11.8025% | FM: spread=0.291%/mes t=0.40 p=0.6955
+  importancia:
+    Feature gain_medio
+     <char>      <num>
+1: peer_ret  0.5269240
+2:     EFIT  0.3215758
+3:  mom_12m  0.1515002
+
+===== (R2) FEATURE SET COMPLETO, refit mais fino (3 meses) =====
+[R2_completo_refit3m] h=1: n_obs=5133 n_refits=8 R2_OOS=2.0124% | FM: spread=1.077%/mes t=1.34 p=0.1923
+  importancia:
+           Feature gain_medio
+            <char>      <num>
+1:        peer_ret 0.46086236
+2:            EFIT 0.12176837
+3:   prox_52w_high 0.08348588
+4:         mom_12m 0.08057236
+5:    idio_vol_12m 0.07010358
+6:        reversao 0.06738631
+7:       dem_pct_w 0.04827580
+8: delta_breadth_w 0.04180928
+9:       hhi_posse 0.02573607
+[R2_completo_refit3m] h=3: n_obs=5087 n_refits=8 R2_OOS=-16.2457% | FM: spread=-1.215%/mes t=-1.47 p=0.1556
+  importancia:
+           Feature gain_medio
+            <char>      <num>
+1:            EFIT 0.32892252
+2:        peer_ret 0.32677170
+3:         mom_12m 0.09337328
+4:        reversao 0.08382373
+5:   prox_52w_high 0.05589358
+6: delta_breadth_w 0.03791639
+7:    idio_vol_12m 0.03218157
+8:       dem_pct_w 0.02336715
+9:       hhi_posse 0.01775009
+[R2_completo_refit3m] h=6: n_obs=5015 n_refits=8 R2_OOS=-8.5700% | FM: spread=0.288%/mes t=0.31 p=0.7608
+  importancia:
+           Feature gain_medio
+            <char>      <num>
+1:        peer_ret 0.37328336
+2:            EFIT 0.22053679
+3:        reversao 0.08048874
+4:         mom_12m 0.07321203
+5:       dem_pct_w 0.07144682
+6: delta_breadth_w 0.05150119
+7:   prox_52w_high 0.04795786
+8:       hhi_posse 0.04383913
+9:    idio_vol_12m 0.03773407
+
+
+===== RESUMO FINAL =====
+                   tag horizonte n_obs n_refits r2_oos_pct
+                <char>     <num> <int>    <int>      <num>
+1:     R1_top3_refit6m         1  5133        4   1.448899
+2:     R1_top3_refit6m         3  5087        4 -18.079968
+3:     R1_top3_refit6m         6  5015        4 -11.802541
+4: R2_completo_refit3m         1  5133        8   2.012364
+5: R2_completo_refit3m         3  5087        8 -16.245710
+6: R2_completo_refit3m         6  5015        8  -8.570000
+
+===== FM FINAL =====
+                   tag horizonte n_meses_fm spread_pct       t_fm      p_fm
+                <char>     <num>      <int>      <num>      <num>     <num>
+1:     R1_top3_refit6m         1         24  0.7642967  0.9260715 0.3640247
+2:     R1_top3_refit6m         3         24 -0.5604197 -0.7359973 0.4691726
+3:     R1_top3_refit6m         6         24  0.2909454  0.3963785 0.6954794
+4: R2_completo_refit3m         1         24  1.0765569  1.3433109 0.1922766
+5: R2_completo_refit3m         3         24 -1.2149887 -1.4679925 0.1556499
+6: R2_completo_refit3m         6         24  0.2882070  0.3080901 0.7607867
+
+OK

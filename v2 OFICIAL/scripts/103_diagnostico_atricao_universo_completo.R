@@ -10,6 +10,7 @@
 suppressPackageStartupMessages(library(data.table))
 REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 DATA_DIR <- "C:/Users/joaoz/Downloads/Consolidado_MF/Consolidado_MF"
+source(file.path(REPO, "v2 OFICIAL/scripts/config_periodo.R"))
 
 bruto <- unique(as.character(fread(file.path(REPO, "v2 OFICIAL/data/universo_completo_gestora.csv"))$cod_fundo))
 final <- unique(fread(file.path(REPO, "v2 OFICIAL/data/painel_universo_completo_final.csv"))$cod_fundo)
@@ -35,7 +36,7 @@ pdate <- function(x){ x<-trimws(as.character(x)); o<-as.Date(rep(NA_character_,l
   for(f in c("%Y-%m-%d","%d/%m/%Y")){m<-is.na(o);if(!any(m))break;o[m]<-as.Date(x[m],format=f)};o }
 
 sh_all <- list()
-for (y in 2016:2021) {
+for (y in ANO_INICIO:ANO_FIM) {
   sh <- fread(file.path(DATA_DIR, sprintf("SH_%d.csv", y)), encoding = "UTF-8", showProgress = FALSE,
               select = c("COD_FUNDO","DATA","COTA"))
   sh[, COD_FUNDO := as.character(COD_FUNDO)]

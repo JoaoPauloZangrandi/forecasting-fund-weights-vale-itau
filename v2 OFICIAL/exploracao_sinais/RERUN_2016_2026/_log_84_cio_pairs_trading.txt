@@ -1,0 +1,91 @@
+Meses no painel: 98 
+Extraindo pares CIO top 1%/mes (pode demorar, matriz por mes)...
+Tempo: 168.4 s
+Pares extraidos (top 1%, CIO>=0.3): 37498 | CIO medio: 0.875 | CIO mediano: 0.915 
+Pares por mes: min= 205  mediana= 349.5  max= 570 
+
+Extraindo tambem corte mais frouxo (top 5%, CIO>=0.15) para robustez...
+Pares extraidos (top 5%, CIO>=0.15): 187185 
+[FM-regressao] top1pct    K=3 h=1 | 62 meses | beta_medio=  -0.0237 | t= -1.47 | p=0.1473 | N_par_mes(min/mediana)=28/432
+[FM-portfolio,todos os pares] top1pct    K=3 h=1 | 62 meses | ret_medio= +0.054%/mes (anualizado~  +0.6%) | t=  0.17 | p=0.8673 | N_par_mes(min/mediana)=28/432
+[FM-portfolio,top-tercil |spread|] top1pct    K=3 h=1 | 62 meses | ret_medio= +0.454%/mes (anualizado~  +5.6%) | t=  0.69 | p=0.4954 | N_par_mes(min/mediana)=9/144
+[FM-regressao] top1pct    K=3 h=3 | 60 meses | beta_medio=  -0.0028 | t= -0.18 | p=0.8587 | N_par_mes(min/mediana)=28/418
+[FM-portfolio,todos os pares] top1pct    K=3 h=3 | 60 meses | ret_medio= +0.013%/mes (anualizado~  +0.2%) | t=  0.04 | p=0.9709 | N_par_mes(min/mediana)=28/418
+[FM-portfolio,top-tercil |spread|] top1pct    K=3 h=3 | 60 meses | ret_medio= +0.331%/mes (anualizado~  +4.0%) | t=  0.49 | p=0.6274 | N_par_mes(min/mediana)=9/139
+[FM-regressao] top1pct    K=6 h=1 | 62 meses | beta_medio=   0.0158 | t=  1.45 | p=0.1532 | N_par_mes(min/mediana)=28/428
+[FM-portfolio,todos os pares] top1pct    K=6 h=1 | 62 meses | ret_medio= -0.403%/mes (anualizado~  -4.7%) | t= -1.36 | p=0.1778 | N_par_mes(min/mediana)=28/428
+[FM-portfolio,top-tercil |spread|] top1pct    K=6 h=1 | 62 meses | ret_medio= -1.268%/mes (anualizado~ -14.2%) | t= -1.98 | p=0.0528 | N_par_mes(min/mediana)=9/142
+[FM-regressao] top1pct    K=6 h=3 | 60 meses | beta_medio=   0.0140 | t=  1.14 | p=0.2578 | N_par_mes(min/mediana)=26/408
+[FM-portfolio,todos os pares] top1pct    K=6 h=3 | 60 meses | ret_medio= -0.074%/mes (anualizado~  -0.9%) | t= -0.21 | p=0.8373 | N_par_mes(min/mediana)=26/408
+[FM-portfolio,top-tercil |spread|] top1pct    K=6 h=3 | 60 meses | ret_medio= -0.581%/mes (anualizado~  -6.7%) | t= -0.72 | p=0.4741 | N_par_mes(min/mediana)=9/136
+[FM-regressao] top5pct    K=3 h=1 | 62 meses | beta_medio=   0.0155 | t=  1.22 | p=0.2262 | N_par_mes(min/mediana)=163/2178
+[FM-portfolio,todos os pares] top5pct    K=3 h=1 | 62 meses | ret_medio= -0.494%/mes (anualizado~  -5.8%) | t= -1.58 | p=0.1193 | N_par_mes(min/mediana)=163/2178
+[FM-portfolio,top-tercil |spread|] top5pct    K=3 h=1 | 62 meses | ret_medio= -0.718%/mes (anualizado~  -8.3%) | t= -1.20 | p=0.2350 | N_par_mes(min/mediana)=54/726
+[FM-regressao] top5pct    K=3 h=3 | 60 meses | beta_medio=  -0.0226 | t= -0.78 | p=0.4384 | N_par_mes(min/mediana)=140/2111
+[FM-portfolio,todos os pares] top5pct    K=3 h=3 | 60 meses | ret_medio= +0.867%/mes (anualizado~ +10.9%) | t=  0.95 | p=0.3474 | N_par_mes(min/mediana)=140/2111
+[FM-portfolio,top-tercil |spread|] top5pct    K=3 h=3 | 60 meses | ret_medio= +1.172%/mes (anualizado~ +15.0%) | t=  1.04 | p=0.3039 | N_par_mes(min/mediana)=47/704
+[FM-regressao] top5pct    K=6 h=1 | 62 meses | beta_medio=   0.0197 | t=  2.35 | p=0.0218 | N_par_mes(min/mediana)=128/2122
+[FM-portfolio,todos os pares] top5pct    K=6 h=1 | 62 meses | ret_medio= -0.525%/mes (anualizado~  -6.1%) | t= -1.95 | p=0.0557 | N_par_mes(min/mediana)=128/2122
+[FM-portfolio,top-tercil |spread|] top5pct    K=6 h=1 | 62 meses | ret_medio= -1.155%/mes (anualizado~ -13.0%) | t= -2.12 | p=0.0378 | N_par_mes(min/mediana)=43/708
+[FM-regressao] top5pct    K=6 h=3 | 60 meses | beta_medio=  -0.0055 | t= -0.22 | p=0.8259 | N_par_mes(min/mediana)=114/2040
+[FM-portfolio,todos os pares] top5pct    K=6 h=3 | 60 meses | ret_medio= +0.556%/mes (anualizado~  +6.9%) | t=  0.65 | p=0.5209 | N_par_mes(min/mediana)=114/2040
+[FM-portfolio,top-tercil |spread|] top5pct    K=6 h=3 | 60 meses | ret_medio= +0.558%/mes (anualizado~  +6.9%) | t=  0.39 | p=0.7003 | N_par_mes(min/mediana)=38/680
+
+
+===== RESUMO ORDENADO POR p_fm =====
+      corte     K     h                     tipo n_meses  estatistica
+     <char> <num> <num>                   <char>   <int>        <num>
+ 1: top5pct     6     1           regressao_beta      62  0.019734381
+ 2: top5pct     6     1 portfolio_top_tercil_div      62 -1.154552441
+ 3: top1pct     6     1 portfolio_top_tercil_div      62 -1.267954109
+ 4: top5pct     6     1          portfolio_todos      62 -0.524983370
+ 5: top5pct     3     1          portfolio_todos      62 -0.493821815
+ 6: top1pct     3     1           regressao_beta      62 -0.023669557
+ 7: top1pct     6     1           regressao_beta      62  0.015849546
+ 8: top1pct     6     1          portfolio_todos      62 -0.403160036
+ 9: top5pct     3     1           regressao_beta      62  0.015496844
+10: top5pct     3     1 portfolio_top_tercil_div      62 -0.718465887
+11: top1pct     6     3           regressao_beta      60  0.014019501
+12: top5pct     3     3 portfolio_top_tercil_div      60  1.172065380
+13: top5pct     3     3          portfolio_todos      60  0.866740433
+14: top5pct     3     3           regressao_beta      60 -0.022569059
+15: top1pct     6     3 portfolio_top_tercil_div      60 -0.580599761
+16: top1pct     3     1 portfolio_top_tercil_div      62  0.454416591
+17: top5pct     6     3          portfolio_todos      60  0.555948624
+18: top1pct     3     3 portfolio_top_tercil_div      60  0.330877055
+19: top5pct     6     3 portfolio_top_tercil_div      60  0.558109152
+20: top5pct     6     3           regressao_beta      60 -0.005509395
+21: top1pct     6     3          portfolio_todos      60 -0.073637141
+22: top1pct     3     3           regressao_beta      60 -0.002770923
+23: top1pct     3     1          portfolio_todos      62  0.053510407
+24: top1pct     3     3          portfolio_todos      60  0.012554549
+      corte     K     h                     tipo n_meses  estatistica
+           t_fm       p_fm n_par_mes_min n_par_mes_mediana
+          <num>      <num>         <int>             <num>
+ 1:  2.35396357 0.02181144           128            2122.0
+ 2: -2.12271107 0.03784500            43             707.5
+ 3: -1.97526991 0.05276718             9             142.5
+ 4: -1.95050499 0.05571455           128            2122.0
+ 5: -1.58011427 0.11925261           163            2178.5
+ 6: -1.46796905 0.14725036            28             432.5
+ 7:  1.44626674 0.15322130            28             427.5
+ 8: -1.36333144 0.17778894            28             427.5
+ 9:  1.22253844 0.22620674           163            2178.5
+10: -1.19943121 0.23499856            54             726.0
+11:  1.14272959 0.25776690            26             408.0
+12:  1.03716012 0.30389339            47             703.5
+13:  0.94715199 0.34742460           140            2111.0
+14: -0.78011429 0.43844212           140            2111.0
+15: -0.72049007 0.47406831             9             136.0
+16:  0.68581442 0.49542850             9             144.0
+17:  0.64580594 0.52090897           114            2040.5
+18:  0.48789906 0.62742960             9             139.0
+19:  0.38680075 0.70029535            38             680.0
+20: -0.22092015 0.82591737           114            2040.5
+21: -0.20621007 0.83733676            26             408.0
+22: -0.17885793 0.85866204            28             418.0
+23:  0.16783946 0.86726480            28             432.5
+24:  0.03661732 0.97091375            28             418.0
+           t_fm       p_fm n_par_mes_min n_par_mes_mediana
+
+OK

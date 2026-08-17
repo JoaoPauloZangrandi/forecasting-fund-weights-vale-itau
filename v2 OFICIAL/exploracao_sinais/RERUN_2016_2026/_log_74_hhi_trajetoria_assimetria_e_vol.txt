@@ -1,0 +1,78 @@
+
+===== (i) SO ativos com concentracao CRESCENTE (delta_hhi_3m>0): magnitude -> retorno =====
+N ticker-mes (crescente): 8014 
+|Delta HHI 3m>0 (crescente), magnitude         h=1 39 meses n_min=  6 spread(Q5-Q1)= +0.088pp/mes (  +1.1%/ano) Sharpe= 0.08 t=  0.14 p=0.88893 | Bonf:nao
+|Delta HHI 3m>0 (crescente), magnitude         h=3 39 meses n_min=  7 spread(Q5-Q1)= +0.727pp/mes (  +9.1%/ano) Sharpe= 0.36 t=  0.64 p=0.52301 | Bonf:nao
+|Delta HHI 3m>0 (crescente), magnitude         h=6 39 meses n_min=  6 spread(Q5-Q1)= -0.120pp/mes (  -1.4%/ano) Sharpe=-0.09 t= -0.16 p=0.86994 | Bonf:nao
+
+===== (i-b) SO ativos com concentracao CAINDO (delta_hhi_3m<0): magnitude -> retorno =====
+N ticker-mes (caindo): 7758 
+|Delta HHI 3m<0 (caindo), magnitude            h=1 39 meses n_min=  7 spread(Q5-Q1)= -0.668pp/mes (  -7.7%/ano) Sharpe=-0.51 t= -0.93 p=0.35934 | Bonf:nao
+|Delta HHI 3m<0 (caindo), magnitude            h=3 39 meses n_min=  6 spread(Q5-Q1)= +0.666pp/mes (  +8.3%/ano) Sharpe= 0.46 t=  0.83 p=0.41287 | Bonf:nao
+|Delta HHI 3m<0 (caindo), magnitude            h=6 39 meses n_min=  6 spread(Q5-Q1)= -0.748pp/mes (  -8.6%/ano) Sharpe=-0.62 t= -1.12 p=0.26894 | Bonf:nao
+
+===== (i-c) Dummy direcao (crescente vs caindo) -> retorno, media por mes =====
+Dummy direcao (crescente-caindo)           h=1 39 meses spread= -0.255pp/mes Sharpe=-0.43 t= -0.78 p=0.44071 | Bonf:nao
+Dummy direcao (crescente-caindo)           h=3 39 meses spread= -0.824pp/mes Sharpe=-0.43 t= -0.77 p=0.44537 | Bonf:nao
+Dummy direcao (crescente-caindo)           h=6 39 meses spread= -0.117pp/mes Sharpe=-0.17 t= -0.30 p=0.76389 | Bonf:nao
+
+
+===== RESUMO (i) ASSIMETRIA (ordenado por p) =====
+                                    sinal horizonte n_meses n_min_grupo_mes
+                                   <char>     <num>   <int>           <int>
+1:    |Delta HHI 3m<0 (caindo), magnitude         6      39               6
+2:    |Delta HHI 3m<0 (caindo), magnitude         1      39               7
+3:    |Delta HHI 3m<0 (caindo), magnitude         3      39               6
+4:   Dummy direcao HHI (crescente-caindo)         1      39              NA
+5:   Dummy direcao HHI (crescente-caindo)         3      39              NA
+6: |Delta HHI 3m>0 (crescente), magnitude         3      39               7
+7:   Dummy direcao HHI (crescente-caindo)         6      39              NA
+8: |Delta HHI 3m>0 (crescente), magnitude         6      39               6
+9: |Delta HHI 3m>0 (crescente), magnitude         1      39               6
+     spread_pp      sharpe       t_fm      p_fm sig_bonferroni
+         <num>       <num>      <num>     <num>         <lgcl>
+1: -0.74847709 -0.62232419 -1.1219109 0.2689397          FALSE
+2: -0.66759880 -0.51468073 -0.9278539 0.3593397          FALSE
+3:  0.66572499  0.45926621  0.8279539 0.4128664          FALSE
+4: -0.25494160 -0.43220475 -0.7791682 0.4407063          FALSE
+5: -0.82393255 -0.42777688 -0.7711857 0.4453659          FALSE
+6:  0.72695814  0.35760627  0.6446839 0.5230052          FALSE
+7: -0.11668167 -0.16781841 -0.3025389 0.7638912          FALSE
+8: -0.11965330 -0.09144279 -0.1648508 0.8699352          FALSE
+9:  0.08796387  0.07799305  0.1406040 0.8889255          FALSE
+
+
+===== (ii) BONUS: Delta HHI + nivel HHI -> volatilidade futura (Fama-MacBeth) =====
+
+-- h=3 (n=15398) --
+  hhi_posse        h=3 coef_medio= +0.026982 | t(FM)=   2.04 | p(FM)=0.04796 | (39 meses) | Bonf:nao
+  delta_hhi_3m     h=3 coef_medio= -0.016176 | t(FM)=  -0.61 | p(FM)=0.54474 | (39 meses) | Bonf:nao
+
+-- h=6 (n=15251) --
+  hhi_posse        h=6 coef_medio= +0.026537 | t(FM)=   2.98 | p(FM)=0.00506 | (39 meses) | Bonf:nao
+  delta_hhi_3m     h=6 coef_medio= -0.030351 | t(FM)=  -0.79 | p(FM)=0.43405 | (39 meses) | Bonf:nao
+
+-- h=12 (n=15202) --
+  hhi_posse        h=12 coef_medio= +0.028268 | t(FM)=   2.98 | p(FM)=0.00506 | (39 meses) | Bonf:nao
+  delta_hhi_3m     h=12 coef_medio= -0.013960 | t(FM)=  -0.46 | p(FM)=0.64529 | (39 meses) | Bonf:nao
+
+
+===== RESUMO (ii) DELTA HHI -> VOLATILIDADE (ordenado por p) =====
+                                    sinal     variavel horizonte n_meses
+                                   <char>       <char>     <num>   <int>
+1: HHI nivel + delta HHI 3m -> vol futura    hhi_posse         6      39
+2: HHI nivel + delta HHI 3m -> vol futura    hhi_posse        12      39
+3: HHI nivel + delta HHI 3m -> vol futura    hhi_posse         3      39
+4: HHI nivel + delta HHI 3m -> vol futura delta_hhi_3m         6      39
+5: HHI nivel + delta HHI 3m -> vol futura delta_hhi_3m         3      39
+6: HHI nivel + delta HHI 3m -> vol futura delta_hhi_3m        12      39
+    coef_medio       t_fm        p_fm sig_bonferroni
+         <num>      <num>       <num>         <lgcl>
+1:  0.02653699  2.9760949 0.005055654          FALSE
+2:  0.02826837  2.9754973 0.005063623          FALSE
+3:  0.02698234  2.0437157 0.047958694          FALSE
+4: -0.03035129 -0.7906628 0.434047836          FALSE
+5: -0.01617647 -0.6111532 0.544737002          FALSE
+6: -0.01395983 -0.4640061 0.645290620          FALSE
+
+OK

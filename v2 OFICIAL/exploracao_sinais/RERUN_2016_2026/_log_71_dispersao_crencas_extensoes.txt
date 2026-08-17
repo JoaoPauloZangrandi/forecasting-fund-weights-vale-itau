@@ -1,0 +1,53 @@
+
+===== (i) Dispersao restrita a small caps (terco de menor valor total mantido) =====
+N ticker-mes no terco small: 8401 | mediana ativos distintos/mes: 84 
+Dispersao (ponderada) | small caps         h=1 62 meses n_min=  5 spread(Q5-Q1)= +0.782pp/mes (  +9.8%/ano) Sharpe= 0.38 t=  0.87 p=0.39008 | Bonf:nao
+Dispersao (ponderada) | small caps         h=3 60 meses n_min=  4 spread(Q5-Q1)= +1.222pp/mes ( +15.7%/ano) Sharpe= 0.45 t=  1.00 p=0.31920 | Bonf:nao
+Dispersao (ponderada) | small caps         h=6 58 meses n_min=  4 spread(Q5-Q1)= -1.550pp/mes ( -17.1%/ano) Sharpe=-0.78 t= -1.71 p=0.09279 | Bonf:nao
+
+===== (i-b) Dispersao restrita a large caps (terco de maior valor total mantido, comparacao) =====
+Dispersao (ponderada) | large caps         h=1 62 meses n_min=  5 spread(Q5-Q1)= +0.555pp/mes (  +6.9%/ano) Sharpe= 0.63 t=  1.43 p=0.15760 | Bonf:nao
+Dispersao (ponderada) | large caps         h=3 60 meses n_min=  5 spread(Q5-Q1)= +3.566pp/mes ( +52.3%/ano) Sharpe= 0.47 t=  1.05 p=0.29769 | Bonf:nao
+Dispersao (ponderada) | large caps         h=6 58 meses n_min=  5 spread(Q5-Q1)= +0.328pp/mes (  +4.0%/ano) Sharpe= 0.34 t=  0.74 p=0.45963 | Bonf:nao
+
+===== (ii) Variacao da dispersao (delta_cv_ponderado, 3m e 6m) -> retorno futuro =====
+N ticker-mes com delta_cv calculado: 18315 
+Delta dispersao 3m (desacordo crescente)   h=1 49 meses n_min= 13 spread(Q5-Q1)= -0.293pp/mes (  -3.5%/ano) Sharpe=-0.32 t= -0.65 p=0.51968 | Bonf:nao
+Delta dispersao 3m (desacordo crescente)   h=3 48 meses n_min= 13 spread(Q5-Q1)= -0.863pp/mes (  -9.9%/ano) Sharpe=-0.28 t= -0.55 p=0.58392 | Bonf:nao
+Delta dispersao 3m (desacordo crescente)   h=6 47 meses n_min= 11 spread(Q5-Q1)= -0.247pp/mes (  -2.9%/ano) Sharpe=-0.20 t= -0.39 p=0.70043 | Bonf:nao
+Delta dispersao 6m (desacordo crescente)   h=1 49 meses n_min= 13 spread(Q5-Q1)= +0.105pp/mes (  +1.3%/ano) Sharpe= 0.09 t=  0.19 p=0.84993 | Bonf:nao
+Delta dispersao 6m (desacordo crescente)   h=3 48 meses n_min= 13 spread(Q5-Q1)= -0.736pp/mes (  -8.5%/ano) Sharpe=-0.23 t= -0.46 p=0.64831 | Bonf:nao
+Delta dispersao 6m (desacordo crescente)   h=6 47 meses n_min= 11 spread(Q5-Q1)= -0.579pp/mes (  -6.7%/ano) Sharpe=-0.57 t= -1.14 p=0.26207 | Bonf:nao
+
+
+===== RESUMO (ordenado por p) =====
+                                       sinal horizonte n_meses n_min_grupo_mes
+                                      <char>     <num>   <int>           <int>
+ 1:       Dispersao (ponderada) | small caps         6      58               4
+ 2:       Dispersao (ponderada) | large caps         1      62               5
+ 3: Delta dispersao 6m (desacordo crescente)         6      47              11
+ 4:       Dispersao (ponderada) | large caps         3      60               5
+ 5:       Dispersao (ponderada) | small caps         3      60               4
+ 6:       Dispersao (ponderada) | small caps         1      62               5
+ 7:       Dispersao (ponderada) | large caps         6      58               5
+ 8: Delta dispersao 3m (desacordo crescente)         1      49              13
+ 9: Delta dispersao 3m (desacordo crescente)         3      48              13
+10: Delta dispersao 6m (desacordo crescente)         3      48              13
+11: Delta dispersao 3m (desacordo crescente)         6      47              11
+12: Delta dispersao 6m (desacordo crescente)         1      49              13
+     spread_pp      sharpe       t_fm       p_fm sig_bonferroni
+         <num>       <num>      <num>      <num>         <lgcl>
+ 1: -1.5496945 -0.77760416 -1.7095506 0.09278845          FALSE
+ 2:  0.5553442  0.62945200  1.4307635 0.15760106          FALSE
+ 3: -0.5787077 -0.57373556 -1.1354554 0.26206619          FALSE
+ 4:  3.5658726  0.46987526  1.0506730 0.29769335          FALSE
+ 5:  1.2217594  0.44926026  1.0045765 0.31920319          FALSE
+ 6:  0.7817991  0.38082959  0.8656372 0.39008100          FALSE
+ 7:  0.3278663  0.33864717  0.7445105 0.45962625          FALSE
+ 8: -0.2929633 -0.32097975 -0.6486121 0.51968032          FALSE
+ 9: -0.8628321 -0.27573486 -0.5514697 0.58392421          FALSE
+10: -0.7356655 -0.22952651 -0.4590530 0.64831214          FALSE
+11: -0.2471615 -0.19562674 -0.3871565 0.70042584          FALSE
+12:  0.1047072  0.09413754  0.1902262 0.84993414          FALSE
+
+OK

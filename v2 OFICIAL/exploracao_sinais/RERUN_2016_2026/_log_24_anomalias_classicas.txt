@@ -1,0 +1,81 @@
+===== (AA) 52-WEEK HIGH =====
+52-week high                   h=1 62 meses spread=  +1.15pp/mes t=  1.51 p=0.13690 | Bonferroni:nao
+52-week high                   h=3 60 meses spread=  +0.23pp/mes t=  0.33 p=0.74337 | Bonferroni:nao
+52-week high                   h=6 58 meses spread=  +1.39pp/mes t=  1.58 p=0.12023 | Bonferroni:nao
+
+===== (BB) REVERSAO DE CURTO PRAZO =====
+Reversao curto prazo           h=1 62 meses spread=  +1.17pp/mes t=  1.51 p=0.13533 | Bonferroni:nao
+Reversao curto prazo           h=3 60 meses spread=  -2.84pp/mes t= -1.76 p=0.08275 | Bonferroni:nao
+Reversao curto prazo           h=6 58 meses spread=  +1.05pp/mes t=  1.73 p=0.08907 | Bonferroni:nao
+
+===== (CC) VOLATILIDADE IDIOSSINCRATICA =====
+Idio-vol                       h=1 62 meses spread=  -0.92pp/mes t= -1.44 p=0.15582 | Bonferroni:nao
+Idio-vol                       h=3 60 meses spread=  -0.40pp/mes t= -0.55 p=0.58723 | Bonferroni:nao
+Idio-vol                       h=6 58 meses spread=  -1.15pp/mes t= -1.81 p=0.07592 | Bonferroni:nao
+
+===== INTERACAO: as 3 anomalias sao MAIS FORTES em BAIXA ownership institucional? =====
+prox_52w_high|BAIXA-own        h=1 61 meses spread=  +2.29pp/mes t=  2.21 p=0.03103 | Bonferroni:nao
+prox_52w_high|ALTA-own         h=1 61 meses spread=  +0.67pp/mes t=  0.54 p=0.58871 | Bonferroni:nao
+prox_52w_high|BAIXA-own        h=3 60 meses spread=  +0.60pp/mes t=  0.53 p=0.60151 | Bonferroni:nao
+prox_52w_high|ALTA-own         h=3 59 meses spread=  -0.34pp/mes t= -0.24 p=0.81150 | Bonferroni:nao
+ret_mes_anterior|BAIXA-own     h=1 62 meses spread=  +3.10pp/mes t=  2.34 p=0.02278 | Bonferroni:nao
+ret_mes_anterior|ALTA-own      h=1 61 meses spread=  +0.59pp/mes t=  0.66 p=0.51045 | Bonferroni:nao
+ret_mes_anterior|BAIXA-own     h=3 60 meses spread=  -3.48pp/mes t= -2.16 p=0.03516 | Bonferroni:nao
+ret_mes_anterior|ALTA-own      h=3 59 meses spread=  -8.36pp/mes t= -0.90 p=0.37147 | Bonferroni:nao
+idio_vol_12m|BAIXA-own         h=1 62 meses spread=  -1.25pp/mes t= -1.19 p=0.23871 | Bonferroni:nao
+idio_vol_12m|ALTA-own          h=1 62 meses spread=  +1.05pp/mes t=  0.65 p=0.51532 | Bonferroni:nao
+idio_vol_12m|BAIXA-own         h=3 60 meses spread=  -0.63pp/mes t= -0.57 p=0.57075 | Bonferroni:nao
+idio_vol_12m|ALTA-own          h=3 60 meses spread=  -0.36pp/mes t= -0.51 p=0.60993 | Bonferroni:nao
+
+
+===== RESUMO GERAL =====
+                         sinal horizonte n_meses spread_pp  t_fm    p_fm
+                        <char>     <num>   <int>     <num> <num>   <num>
+ 1: ret_mes_anterior|BAIXA-own         1      62      3.10  2.34 0.02278
+ 2:    prox_52w_high|BAIXA-own         1      61      2.29  2.21 0.03103
+ 3: ret_mes_anterior|BAIXA-own         3      60     -3.48 -2.16 0.03516
+ 4:                   Idio-vol         6      58     -1.15 -1.81 0.07592
+ 5:       Reversao curto prazo         3      60     -2.84 -1.76 0.08275
+ 6:       Reversao curto prazo         6      58      1.05  1.73 0.08907
+ 7:               52-week high         6      58      1.39  1.58 0.12023
+ 8:       Reversao curto prazo         1      62      1.17  1.51 0.13533
+ 9:               52-week high         1      62      1.15  1.51 0.13690
+10:                   Idio-vol         1      62     -0.92 -1.44 0.15582
+11:     idio_vol_12m|BAIXA-own         1      62     -1.25 -1.19 0.23871
+12:  ret_mes_anterior|ALTA-own         3      59     -8.36 -0.90 0.37147
+13:  ret_mes_anterior|ALTA-own         1      61      0.59  0.66 0.51045
+14:      idio_vol_12m|ALTA-own         1      62      1.05  0.65 0.51532
+15:     idio_vol_12m|BAIXA-own         3      60     -0.63 -0.57 0.57075
+16:                   Idio-vol         3      60     -0.40 -0.55 0.58723
+17:     prox_52w_high|ALTA-own         1      61      0.67  0.54 0.58871
+18:    prox_52w_high|BAIXA-own         3      60      0.60  0.53 0.60151
+19:      idio_vol_12m|ALTA-own         3      60     -0.36 -0.51 0.60993
+20:               52-week high         3      60      0.23  0.33 0.74337
+21:     prox_52w_high|ALTA-own         3      59     -0.34 -0.24 0.81150
+                         sinal horizonte n_meses spread_pp  t_fm    p_fm
+    sig_bonferroni
+            <lgcl>
+ 1:          FALSE
+ 2:          FALSE
+ 3:          FALSE
+ 4:          FALSE
+ 5:          FALSE
+ 6:          FALSE
+ 7:          FALSE
+ 8:          FALSE
+ 9:          FALSE
+10:          FALSE
+11:          FALSE
+12:          FALSE
+13:          FALSE
+14:          FALSE
+15:          FALSE
+16:          FALSE
+17:          FALSE
+18:          FALSE
+19:          FALSE
+20:          FALSE
+21:          FALSE
+    sig_bonferroni
+
+OK

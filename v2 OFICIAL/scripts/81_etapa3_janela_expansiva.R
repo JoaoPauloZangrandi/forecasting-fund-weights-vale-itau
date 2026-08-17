@@ -22,7 +22,7 @@ REPO <- "C:/Users/joaoz/forecasting-fund-weights-vale-itau"
 
 M <- fread(file.path(REPO, "v2 OFICIAL/data/v2_ajuste_parcial.csv"))
 CORTE <- 202001L
-meses_teste <- sort(unique(M[ym >= CORTE & ym < 202112L]$ym))
+meses_teste <- sort(unique(M[ym >= CORTE & ym < 202607L]$ym))
 cat("Meses de teste:", length(meses_teste), "(", min(meses_teste), "a", max(meses_teste), ")\n")
 
 rmse <- function(x) sqrt(mean(x^2))

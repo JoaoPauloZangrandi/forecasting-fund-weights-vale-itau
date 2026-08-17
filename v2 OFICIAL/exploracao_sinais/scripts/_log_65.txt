@@ -1,0 +1,130 @@
+Ticker-mes com HHI calculavel (n_fundos>=10): 14149 
+
+===== Construindo Breadth of ownership =====
+===== Construindo Herding (LSV) =====
+===== Construindo E[FIT] (fluxo esperado) =====
+1o estagio (so treino): coef= 0.06689  R2= 5e-05 
+===== Construindo Reversao de curto prazo =====
+
+
+########## SINAL: Breadth of ownership (n=13712 ticker-mes com HHI) ##########
+Breadth of ownership|baseline              h=1 24 meses n_min= 44 spread= +0.300pp/mes (   +3.7%/ano) Sharpe= 0.29 t=  0.41 p=0.68450 | Bonf:nao
+Breadth of ownership|BAIXO-HHI(tercil)     h=1 24 meses n_min= 14 spread= +0.303pp/mes (   +3.7%/ano) Sharpe= 0.22 t=  0.31 p=0.76044 | Bonf:nao
+Breadth of ownership|ALTO-HHI(tercil)      h=1 23 meses n_min= 13 spread= -0.609pp/mes (   -7.1%/ano) Sharpe=-0.36 t= -0.49 p=0.62746 | Bonf:nao
+Breadth of ownership|BAIXO-HHI(mediana)    h=1 24 meses n_min= 22 spread= +0.589pp/mes (   +7.3%/ano) Sharpe= 0.38 t=  0.54 p=0.59516 | Bonf:nao
+Breadth of ownership|ALTO-HHI(mediana)     h=1 24 meses n_min= 20 spread= +0.695pp/mes (   +8.7%/ano) Sharpe= 0.53 t=  0.76 p=0.45746 | Bonf:nao
+Breadth of ownership|baseline              h=3 22 meses n_min= 44 spread= -0.124pp/mes (   -1.5%/ano) Sharpe=-0.13 t= -0.17 p=0.86717 | Bonf:nao
+Breadth of ownership|BAIXO-HHI(tercil)     h=3 22 meses n_min= 14 spread= -0.365pp/mes (   -4.3%/ano) Sharpe=-0.24 t= -0.33 p=0.74666 | Bonf:nao
+Breadth of ownership|ALTO-HHI(tercil)      h=3 21 meses n_min= 13 spread= -0.874pp/mes (  -10.0%/ano) Sharpe=-0.64 t= -0.84 p=0.40812 | Bonf:nao
+Breadth of ownership|BAIXO-HHI(mediana)    h=3 22 meses n_min= 22 spread= +0.548pp/mes (   +6.8%/ano) Sharpe= 0.37 t=  0.50 p=0.62112 | Bonf:nao
+Breadth of ownership|ALTO-HHI(mediana)     h=3 22 meses n_min= 20 spread= -0.220pp/mes (   -2.6%/ano) Sharpe=-0.20 t= -0.27 p=0.79186 | Bonf:nao
+Breadth of ownership|baseline              h=6 19 meses n_min= 42 spread= +0.211pp/mes (   +2.6%/ano) Sharpe= 0.19 t=  0.24 p=0.81284 | Bonf:nao
+Breadth of ownership|BAIXO-HHI(tercil)     h=6 19 meses n_min= 14 spread= +0.043pp/mes (   +0.5%/ano) Sharpe= 0.04 t=  0.05 p=0.96053 | Bonf:nao
+Breadth of ownership|ALTO-HHI(tercil)      h=6 18 meses n_min= 14 spread= +0.905pp/mes (  +11.4%/ano) Sharpe= 0.60 t=  0.73 p=0.47254 | Bonf:nao
+Breadth of ownership|BAIXO-HHI(mediana)    h=6 19 meses n_min= 21 spread= +0.213pp/mes (   +2.6%/ano) Sharpe= 0.15 t=  0.19 p=0.85086 | Bonf:nao
+Breadth of ownership|ALTO-HHI(mediana)     h=6 19 meses n_min= 20 spread= +0.641pp/mes (   +8.0%/ano) Sharpe= 0.49 t=  0.62 p=0.54468 | Bonf:nao
+
+
+########## SINAL: Herding (LSV) (n=13522 ticker-mes com HHI) ##########
+Herding (LSV)|baseline                     h=1 24 meses n_min= 43 spread= +0.659pp/mes (   +8.2%/ano) Sharpe= 0.50 t=  0.71 p=0.48368 | Bonf:nao
+Herding (LSV)|BAIXO-HHI(tercil)            h=1 24 meses n_min= 15 spread= +0.411pp/mes (   +5.1%/ano) Sharpe= 0.24 t=  0.34 p=0.73489 | Bonf:nao
+Herding (LSV)|ALTO-HHI(tercil)             h=1 24 meses n_min= 15 spread= -0.131pp/mes (   -1.6%/ano) Sharpe=-0.07 t= -0.09 p=0.92674 | Bonf:nao
+Herding (LSV)|BAIXO-HHI(mediana)           h=1 24 meses n_min= 22 spread= +1.426pp/mes (  +18.5%/ano) Sharpe= 0.96 t=  1.36 p=0.18796 | Bonf:nao
+Herding (LSV)|ALTO-HHI(mediana)            h=1 24 meses n_min= 22 spread= -0.308pp/mes (   -3.6%/ano) Sharpe=-0.19 t= -0.27 p=0.78979 | Bonf:nao
+Herding (LSV)|baseline                     h=3 22 meses n_min= 43 spread= +0.296pp/mes (   +3.6%/ano) Sharpe= 0.22 t=  0.29 p=0.77248 | Bonf:nao
+Herding (LSV)|BAIXO-HHI(tercil)            h=3 22 meses n_min= 14 spread= +0.232pp/mes (   +2.8%/ano) Sharpe= 0.14 t=  0.19 p=0.85206 | Bonf:nao
+Herding (LSV)|ALTO-HHI(tercil)             h=3 22 meses n_min= 14 spread= +0.030pp/mes (   +0.4%/ano) Sharpe= 0.02 t=  0.02 p=0.98179 | Bonf:nao
+Herding (LSV)|BAIXO-HHI(mediana)           h=3 22 meses n_min= 21 spread= +1.068pp/mes (  +13.6%/ano) Sharpe= 0.63 t=  0.85 p=0.40642 | Bonf:nao
+Herding (LSV)|ALTO-HHI(mediana)            h=3 22 meses n_min= 22 spread= +0.065pp/mes (   +0.8%/ano) Sharpe= 0.04 t=  0.05 p=0.96042 | Bonf:nao
+Herding (LSV)|baseline                     h=6 19 meses n_min= 42 spread= +0.783pp/mes (   +9.8%/ano) Sharpe= 0.86 t=  1.09 p=0.29135 | Bonf:nao
+Herding (LSV)|BAIXO-HHI(tercil)            h=6 19 meses n_min= 14 spread= +0.855pp/mes (  +10.8%/ano) Sharpe= 0.48 t=  0.61 p=0.55151 | Bonf:nao
+Herding (LSV)|ALTO-HHI(tercil)             h=6 19 meses n_min= 14 spread= +0.619pp/mes (   +7.7%/ano) Sharpe= 0.47 t=  0.60 p=0.55784 | Bonf:nao
+Herding (LSV)|BAIXO-HHI(mediana)           h=6 19 meses n_min= 21 spread= +1.034pp/mes (  +13.1%/ano) Sharpe= 0.76 t=  0.95 p=0.35325 | Bonf:nao
+Herding (LSV)|ALTO-HHI(mediana)            h=6 19 meses n_min= 21 spread= +0.676pp/mes (   +8.4%/ano) Sharpe= 0.75 t=  0.95 p=0.35687 | Bonf:nao
+
+
+########## SINAL: E[FIT] (fluxo esperado) (n=13518 ticker-mes com HHI) ##########
+E[FIT] (fluxo esperado)|baseline           h=1 24 meses n_min= 43 spread= +1.282pp/mes (  +16.5%/ano) Sharpe= 1.49 t=  2.10 p=0.04675 | Bonf:nao
+E[FIT] (fluxo esperado)|BAIXO-HHI(tercil)  h=1 24 meses n_min= 15 spread= +1.679pp/mes (  +22.1%/ano) Sharpe= 1.18 t=  1.67 p=0.10752 | Bonf:nao
+E[FIT] (fluxo esperado)|ALTO-HHI(tercil)   h=1 24 meses n_min= 15 spread= +2.878pp/mes (  +40.6%/ano) Sharpe= 2.49 t=  3.52 p=0.00185 | Bonf:nao
+E[FIT] (fluxo esperado)|BAIXO-HHI(mediana) h=1 24 meses n_min= 22 spread= +2.266pp/mes (  +30.9%/ano) Sharpe= 1.68 t=  2.37 p=0.02661 | Bonf:nao
+E[FIT] (fluxo esperado)|ALTO-HHI(mediana)  h=1 24 meses n_min= 22 spread= +2.057pp/mes (  +27.7%/ano) Sharpe= 1.77 t=  2.50 p=0.01995 | Bonf:nao
+E[FIT] (fluxo esperado)|baseline           h=3 22 meses n_min= 43 spread= +0.982pp/mes (  +12.4%/ano) Sharpe= 1.23 t=  1.67 p=0.11005 | Bonf:nao
+E[FIT] (fluxo esperado)|BAIXO-HHI(tercil)  h=3 22 meses n_min= 14 spread= +0.016pp/mes (   +0.2%/ano) Sharpe= 0.01 t=  0.01 p=0.98854 | Bonf:nao
+E[FIT] (fluxo esperado)|ALTO-HHI(tercil)   h=3 22 meses n_min= 14 spread= +2.302pp/mes (  +31.4%/ano) Sharpe= 1.48 t=  2.00 p=0.05866 | Bonf:nao
+E[FIT] (fluxo esperado)|BAIXO-HHI(mediana) h=3 22 meses n_min= 21 spread= +0.718pp/mes (   +9.0%/ano) Sharpe= 0.50 t=  0.68 p=0.50368 | Bonf:nao
+E[FIT] (fluxo esperado)|ALTO-HHI(mediana)  h=3 22 meses n_min= 22 spread= +1.987pp/mes (  +26.6%/ano) Sharpe= 1.39 t=  1.88 p=0.07416 | Bonf:nao
+E[FIT] (fluxo esperado)|baseline           h=6 19 meses n_min= 42 spread= +0.997pp/mes (  +12.6%/ano) Sharpe= 0.83 t=  1.05 p=0.30865 | Bonf:nao
+E[FIT] (fluxo esperado)|BAIXO-HHI(tercil)  h=6 19 meses n_min= 14 spread= -0.620pp/mes (   -7.2%/ano) Sharpe=-0.58 t= -0.73 p=0.47461 | Bonf:nao
+E[FIT] (fluxo esperado)|ALTO-HHI(tercil)   h=6 19 meses n_min= 14 spread= +2.694pp/mes (  +37.6%/ano) Sharpe= 1.39 t=  1.75 p=0.09670 | Bonf:nao
+E[FIT] (fluxo esperado)|BAIXO-HHI(mediana) h=6 19 meses n_min= 21 spread= -0.086pp/mes (   -1.0%/ano) Sharpe=-0.07 t= -0.09 p=0.92998 | Bonf:nao
+E[FIT] (fluxo esperado)|ALTO-HHI(mediana)  h=6 19 meses n_min= 21 spread= +1.783pp/mes (  +23.6%/ano) Sharpe= 1.14 t=  1.43 p=0.17000 | Bonf:nao
+
+
+########## SINAL: Reversao curto prazo (n=13882 ticker-mes com HHI) ##########
+Reversao curto prazo|baseline              h=1 24 meses n_min= 44 spread= -0.366pp/mes (   -4.3%/ano) Sharpe=-0.18 t= -0.26 p=0.79698 | Bonf:nao
+Reversao curto prazo|BAIXO-HHI(tercil)     h=1 24 meses n_min= 15 spread= +1.008pp/mes (  +12.8%/ano) Sharpe= 0.51 t=  0.73 p=0.47526 | Bonf:nao
+Reversao curto prazo|ALTO-HHI(tercil)      h=1 24 meses n_min= 15 spread= -0.008pp/mes (   -0.1%/ano) Sharpe=-0.00 t= -0.00 p=0.99652 | Bonf:nao
+Reversao curto prazo|BAIXO-HHI(mediana)    h=1 24 meses n_min= 22 spread= +0.036pp/mes (   +0.4%/ano) Sharpe= 0.02 t=  0.03 p=0.97822 | Bonf:nao
+Reversao curto prazo|ALTO-HHI(mediana)     h=1 24 meses n_min= 22 spread= -0.807pp/mes (   -9.3%/ano) Sharpe=-0.32 t= -0.46 p=0.65310 | Bonf:nao
+Reversao curto prazo|baseline              h=3 22 meses n_min= 44 spread= +0.199pp/mes (   +2.4%/ano) Sharpe= 0.12 t=  0.16 p=0.87053 | Bonf:nao
+Reversao curto prazo|BAIXO-HHI(tercil)     h=3 22 meses n_min= 15 spread= -0.939pp/mes (  -10.7%/ano) Sharpe=-0.40 t= -0.54 p=0.59458 | Bonf:nao
+Reversao curto prazo|ALTO-HHI(tercil)      h=3 22 meses n_min= 15 spread= +1.968pp/mes (  +26.3%/ano) Sharpe= 1.01 t=  1.37 p=0.18574 | Bonf:nao
+Reversao curto prazo|BAIXO-HHI(mediana)    h=3 22 meses n_min= 22 spread= -1.042pp/mes (  -11.8%/ano) Sharpe=-0.48 t= -0.65 p=0.52419 | Bonf:nao
+Reversao curto prazo|ALTO-HHI(mediana)     h=3 22 meses n_min= 22 spread= +2.098pp/mes (  +28.3%/ano) Sharpe= 1.38 t=  1.86 p=0.07623 | Bonf:nao
+Reversao curto prazo|baseline              h=6 19 meses n_min= 42 spread= -2.404pp/mes (  -25.3%/ano) Sharpe=-2.66 t= -3.35 p=0.00356 | Bonf:nao
+Reversao curto prazo|BAIXO-HHI(tercil)     h=6 19 meses n_min= 14 spread= -1.203pp/mes (  -13.5%/ano) Sharpe=-0.64 t= -0.81 p=0.43028 | Bonf:nao
+Reversao curto prazo|ALTO-HHI(tercil)      h=6 19 meses n_min= 14 spread= -2.110pp/mes (  -22.6%/ano) Sharpe=-2.55 t= -3.21 p=0.00482 | Bonf:nao
+Reversao curto prazo|BAIXO-HHI(mediana)    h=6 19 meses n_min= 21 spread= -1.779pp/mes (  -19.4%/ano) Sharpe=-1.21 t= -1.52 p=0.14608 | Bonf:nao
+Reversao curto prazo|ALTO-HHI(mediana)     h=6 19 meses n_min= 21 spread= -2.961pp/mes (  -30.3%/ano) Sharpe=-3.41 t= -4.29 p=0.00045 | Bonf:nao
+
+
+===== RESUMO GERAL (ordenado por p, top 20) =====
+                                         sinal horizonte n_meses
+                                        <char>     <num>   <int>
+ 1:     Reversao curto prazo|ALTO-HHI(mediana)         6      19
+ 2:   E[FIT] (fluxo esperado)|ALTO-HHI(tercil)         1      24
+ 3:              Reversao curto prazo|baseline         6      19
+ 4:      Reversao curto prazo|ALTO-HHI(tercil)         6      19
+ 5:  E[FIT] (fluxo esperado)|ALTO-HHI(mediana)         1      24
+ 6: E[FIT] (fluxo esperado)|BAIXO-HHI(mediana)         1      24
+ 7:           E[FIT] (fluxo esperado)|baseline         1      24
+ 8:   E[FIT] (fluxo esperado)|ALTO-HHI(tercil)         3      22
+ 9:  E[FIT] (fluxo esperado)|ALTO-HHI(mediana)         3      22
+10:     Reversao curto prazo|ALTO-HHI(mediana)         3      22
+11:   E[FIT] (fluxo esperado)|ALTO-HHI(tercil)         6      19
+12:  E[FIT] (fluxo esperado)|BAIXO-HHI(tercil)         1      24
+13:           E[FIT] (fluxo esperado)|baseline         3      22
+14:    Reversao curto prazo|BAIXO-HHI(mediana)         6      19
+15:  E[FIT] (fluxo esperado)|ALTO-HHI(mediana)         6      19
+16:      Reversao curto prazo|ALTO-HHI(tercil)         3      22
+17:           Herding (LSV)|BAIXO-HHI(mediana)         1      24
+18:                     Herding (LSV)|baseline         6      19
+19:           E[FIT] (fluxo esperado)|baseline         6      19
+20:           Herding (LSV)|BAIXO-HHI(mediana)         6      19
+                                         sinal horizonte n_meses
+    n_min_grupo_mes  spread_pp     sharpe      t_fm         p_fm sig_bonferroni
+              <int>      <num>      <num>     <num>        <num>         <lgcl>
+ 1:              21 -2.9607051 -3.4056064 -4.285294 0.0004453864          FALSE
+ 2:              15  2.8782093  2.4868331  3.516913 0.0018501599          FALSE
+ 3:              42 -2.4035583 -2.6623969 -3.350109 0.0035640653          FALSE
+ 4:              14 -2.1100165 -2.5532807 -3.212808 0.0048246790          FALSE
+ 5:              22  2.0574195  1.7684755  2.501002 0.0199499763          FALSE
+ 6:              22  2.2662681  1.6751567  2.369029 0.0266105905          FALSE
+ 7:              43  1.2817053  1.4859879  2.101504 0.0467530498          FALSE
+ 8:              14  2.3024770  1.4766960  1.999456 0.0586630791          FALSE
+ 9:              22  1.9866727  1.3879015  1.879227 0.0741635984          FALSE
+10:              22  2.0982841  1.3773424  1.864930 0.0762275508          FALSE
+11:              14  2.6937920  1.3927589  1.752516 0.0967014382          FALSE
+12:              15  1.6792704  1.1842457  1.674776 0.1075235279          FALSE
+13:              43  0.9815219  1.2322884  1.668526 0.1100541120          FALSE
+14:              21 -1.7790268 -1.2073501 -1.519215 0.1460781375          FALSE
+15:              21  1.7829787  1.1360222  1.429463 0.1699980978          FALSE
+16:              15  1.9677083  1.0104139  1.368107 0.1857403809          FALSE
+17:              22  1.4264884  0.9595273  1.356977 0.1879578385          FALSE
+18:              42  0.7831033  0.8639051  1.087057 0.2913546423          FALSE
+19:              42  0.9970524  0.8326126  1.047681 0.3086504739          FALSE
+20:              21  1.0341906  0.7573008  0.952916 0.3532548542          FALSE
+    n_min_grupo_mes  spread_pp     sharpe      t_fm         p_fm sig_bonferroni
+
+OK
