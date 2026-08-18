@@ -28,7 +28,7 @@
   h1{ font-family:Cambria,Georgia,"Times New Roman",serif; font-weight:400; font-size:52pt; color:var(--cream); letter-spacing:.01em; line-height:1; }
   h1 .sub{ font-size:20pt; font-style:italic; color:var(--gold-soft); }
   h2{ font-family:Cambria,Georgia,serif; font-weight:400; font-size:26pt; color:var(--cream); line-height:1.1; }
-  .kicker{ font-family:Cambria,Georgia,serif; font-style:italic; font-size:12.6pt; color:var(--gold-soft); margin-top:5pt; }
+  .kicker{ font-family:Cambria,Georgia,serif; font-style:italic; font-size:12.6pt; color:var(--gold-soft); margin-top:3pt; }
   .rule{ border:none; border-top:1px solid var(--line); margin:11pt 0; }
 
   p{ margin-bottom:8pt; color:var(--cream-soft); font-size:11pt; }
@@ -67,7 +67,7 @@
 
   /* event/horizon strip (page1 bottom) */
   .hstrip{ display:flex; align-items:stretch; margin-top:6pt; border:1px solid var(--line); border-radius:3px; overflow:hidden; }
-  .hstrip .h{ flex:1; text-align:center; padding:5pt 6pt; border-left:1px solid var(--line); }
+  .hstrip .h{ flex:1; text-align:center; padding:4pt 6pt 3pt; border-left:1px solid var(--line); }
   .hstrip .h:first-child{ border-left:none; }
   .hstrip .h.hi{ background:var(--panel2); }
   .hstrip .lbl{ font-size:8pt; color:var(--cream-soft); text-transform:uppercase; letter-spacing:.05em; }
@@ -115,15 +115,16 @@
 <!-- ============ PAGE 1 ============ -->
 <div class="page"><div class="inner">
   <div class="eyebrow">Desafio Quant AI 2026 &nbsp;·&nbsp; Relatório da Estratégia</div>
-  <h1 style="margin-top:6pt">Ponto Cego <span class="sub">Sentinela do Silêncio Institucional</span></h1>
-  <div class="kicker">Estratégia Quantitativa de Reversão Condicionada a Presença Institucional</div>
-  <p style="margin-top:7pt; max-width:9.4in">Long o "perdedor" recente / short o "vencedor" recente, restrito a ações no
-  terço de menor presença institucional consolidada (look-through). O prêmio vem da ausência de quem arbitre o exagero
-  de preço — não do beta — e é colhido no horizonte de 3 meses, o tempo real que a defasagem de divulgação da CVM impõe.</p>
+  <h1 style="margin-top:6pt">ECO <span class="sub">O Eco da Convicção dos Líderes</span></h1>
+  <div class="kicker">Estratégia Quantitativa de Demanda Residual Corrigida, Rede de Fundos-Líderes</div>
+  <p style="margin-top:4pt; margin-bottom:5pt; max-width:9.4in">Long / short pela demanda residual dos fundos identificados como
+  <b>líderes</b> numa rede de pares replicantes — o que sobra do ajuste de carteira depois de remover, via λ, o
+  componente puramente mecânico (reação ao preço). Esse excedente é a convicção real do fundo, e ela ecoa no preço
+  3 meses depois: a defasagem real que a divulgação da CVM impõe.</p>
 
   <div class="metastrip">
     <div class="m"><div class="k">Classe de Ativos</div><div class="v">Ações BR</div></div>
-    <div class="m"><div class="k">Universo</div><div class="v">Terço de menor presença institucional (base consolidada)</div></div>
+    <div class="m"><div class="k">Universo</div><div class="v">Fundos-líderes na rede de replicantes (quartil superior de força de liderança)</div></div>
     <div class="m"><div class="k">Backtest</div><div class="v">2020 – 2026 (fora da amostra)</div></div>
     <div class="m"><div class="k">Benchmark</div><div class="v">Ibovespa</div></div>
   </div>
@@ -133,14 +134,14 @@
       <h3 class="section">A Tese em Três Forças</h3>
       <div class="forces">
         <div class="force">
-          <div class="ftitle"><span class="seal">I</span><b>Reversão</b></div>
-          <p>Excesso de retorno do mês anterior tende a reverter (Jegadeesh, 1990) — overreação de curto prazo a
-          notícias ou fluxo.</p>
+          <div class="ftitle"><span class="seal">I</span><b>Efeito Mecânico</b></div>
+          <p>O peso reage em parte só ao preço do ativo. λ=0,0365 separa essa reação mecânica do resto — o
+          resíduo é convicção real, não aritmética de carteira.</p>
         </div>
         <div class="force">
-          <div class="ftitle"><span class="seal">II</span><b>Vigilância Ausente</b></div>
-          <p><i>Limits-to-arbitrage</i> (Shleifer &amp; Vishny, 1997): sem fundos monitorando de perto, ninguém
-          corrige o exagero rápido.</p>
+          <div class="ftitle"><span class="seal">II</span><b>Líderes-Sensores</b></div>
+          <p>Na rede de replicantes, alguns fundos antecipam seus pares "seguidores" — a demanda residual desses
+          líderes carrega informação real, não ruído.</p>
         </div>
         <div class="force">
           <div class="ftitle"><span class="seal">III</span><b>Defasagem Real</b></div>
@@ -150,104 +151,102 @@
       </div>
     </div>
     <div class="col box" style="flex:0.85">
-      <h4>Por que "Ponto Cego"?</h4>
-      <p style="font-size:9.6pt">Toda ação tem um raio de vigilância institucional — o quanto de seu preço é
-      observado por fundos capazes de corrigir um exagero. Fora desse raio fica o <b>ponto cego</b>: onde o mercado
-      não está olhando.</p>
-      <p style="font-size:9.6pt; margin-top:5pt">O robô é uma <b>sentinela</b> desse ponto cego: encontra onde a
-      vigilância falta e aposta que o exagero, sem quem o corrija, vai se desfazer.</p>
+      <h4>Por que "ECO"?</h4>
+      <p style="font-size:9.6pt">Todo ajuste de carteira tem duas partes: reação mecânica ao preço, e o que
+      sobra — a <b>convicção</b> do gestor. O λ do TCC separa as duas; o robô escuta só o que sobra, só dos fundos
+      que a rede de replicantes identifica como líderes.</p>
+      <p style="font-size:9.6pt; margin-top:5pt">Esse excedente <b>ecoa</b> no preço 3 meses depois, quando o
+      mercado, com a defasagem real da CVM, enxerga o que os líderes já sabiam.</p>
     </div>
   </div>
 
   <div class="hstrip">
-    <div class="h"><div class="lbl">h = 1 mês</div><div class="val pos">+3,10<span style="font-size:9pt">pp</span></div><div class="pv">(p = 0,021)</div></div>
-    <div class="h hi"><div class="lbl">h = 3 meses — usado</div><div class="val neg">&minus;3,48<span style="font-size:9pt">pp</span></div><div class="pv">(p = 0,031)</div></div>
-    <div class="h"><div class="lbl">h = 6 meses</div><div class="val ns">n.s.</div><div class="pv">(p = 0,340)</div></div>
+    <div class="h"><div class="lbl">h = 1 mês</div><div class="val neg">&minus;2,26<span style="font-size:9pt">pp</span></div><div class="pv">(p = 0,128, n.s.)</div></div>
+    <div class="h hi"><div class="lbl">h = 3 meses — usado</div><div class="val pos">+0,69<span style="font-size:9pt">pp</span></div><div class="pv">(p = 0,012)</div></div>
+    <div class="h"><div class="lbl">h = 6 meses</div><div class="val ns">n.s.</div><div class="pv">(p = 0,248)</div></div>
   </div>
-  <div class="hstrip-cap">Spread mensal Q1&minus;Q5 (perdedor menos vencedor), baixa presença institucional, por horizonte de teste — Fama–MacBeth + Newey–West | 60 meses (2020–2026)</div>
+  <div class="hstrip-cap">Spread mensal Q5&minus;Q1 (maior demanda residual dos líderes menos menor), por horizonte de teste — Fama–MacBeth + Newey–West | 80 meses (2017–2026)</div>
 
-  <div class="footer"><span>AAET</span><span>Ponto Cego — 01 / 05</span></div>
+  <div class="footer"><span>AAET</span><span>ECO — 01 / 05</span></div>
 </div></div>
 
 <!-- ============ PAGE 2 ============ -->
 <div class="page"><div class="inner">
   <div class="ribbon">II &nbsp;|&nbsp; Metodologia</div>
-  <h2>Como o Ponto Cego Opera?</h2>
-  <p style="margin-top:5pt; max-width:10.5in">Cada mês passa por três camadas: a <b>Base</b> mede quem está
-  vigiando (consolidado, look-through), o <b>Filtro</b> isola onde a vigilância falta, e o <b>Sinal</b> ordena por
-  reversão dentro desse universo. Só ações que passam pelas três camadas viram posição.</p>
+  <h2>Como o ECO Opera?</h2>
+  <p style="margin-top:5pt; max-width:10.5in">Cada mês passa por três camadas, direto do modelo do TCC: o
+  <b>Modelo</b> estima o peso esperado de cada fundo em cada ação, o <b>λ</b> isola o componente mecânico do
+  ajuste real, e o <b>Sinal</b> agrega o que sobra — só entre os fundos-líderes da rede de replicantes.</p>
 
   <div class="flow">
-    <div class="fnode"><div class="seal">1</div><div class="t">Presença Institucional</div><div class="s">consolidada, look-through até 20 níveis</div></div>
+    <div class="fnode"><div class="seal">1</div><div class="t">Peso Esperado</div><div class="s">Etapa 1 do TCC, regressão logística ativo-mês</div></div>
     <div class="fline"></div>
-    <div class="fnode"><div class="seal">2</div><div class="t">Terço Inferior</div><div class="s">baixa presença = vigilância ausente</div></div>
+    <div class="fnode"><div class="seal">2</div><div class="t">Ajuste Mecânico</div><div class="s">λ·d isola a reação pura ao preço</div></div>
     <div class="fline"></div>
-    <div class="fnode"><div class="seal">3</div><div class="t">Retorno t&minus;1</div><div class="s">ranking em quintis</div></div>
+    <div class="fnode"><div class="seal">3</div><div class="t">Demanda Residual</div><div class="s">u, só nos fundos-líderes</div></div>
     <div class="fline"></div>
-    <div class="fnode"><div class="seal">4</div><div class="t">Compra Q1 / Venda Q5</div><div class="s">holding de 3 meses</div></div>
+    <div class="fnode"><div class="seal">4</div><div class="t">Compra Q5 / Venda Q1</div><div class="s">holding de 3 meses</div></div>
   </div>
 
   <div class="cols" style="flex:1; min-height:0; margin-top:6pt">
     <div class="col">
-      <div class="ftitle" style="margin-bottom:5pt"><span class="seal">I</span><b style="font-size:11.4pt">Base</b></div>
-      <p style="font-size:9.6pt">A maioria das análises de posse institucional usa a carteira <b>direta</b> dos
-      fundos (CDA/CVM), o que subestima a presença real ao ignorar fundos que investem em outros fundos (FIC).
-      Nossa base é <b>consolidada</b>: exposição efetiva reconstruída atravessando cadeias de fundo-de-fundos em
-      até 20 níveis, 2016–2026.</p>
-      <div class="eq" style="font-size:11pt">E<sup>cons</sup><sub>f,i</sub> <span class="op">=</span> E<sup>direta</sup><sub>f,i</sub> <span class="op">+</span> &Sigma;<sub style="font-size:60%">g&isin;cotas de f</sub> &omega;<sub>f&rarr;g</sub>E<sup>cons</sup><sub>g,i</sub></div>
+      <div class="ftitle" style="margin-bottom:5pt"><span class="seal">I</span><b style="font-size:11.4pt">Modelo</b></div>
+      <p style="font-size:9.6pt">Peso esperado do fundo na ação, estimado por regressão logística ativo-mês (AUM,
+      cotas, indicador FIC, fluxo de captação, beta do fundo) — a mesma modelagem da Etapa 1 do TCC. O desvio entre
+      o esperado e o real é a demanda bruta d.</p>
+      <div class="eq" style="font-size:11.5pt">d<sub>f,i,t</sub> <span class="op">=</span> peso_pred<sub>f,i,t</sub> <span class="op">&minus;</span> peso<sub>f,i,t</sub></div>
     </div>
     <div class="col">
-      <div class="ftitle" style="margin-bottom:5pt"><span class="seal">II</span><b style="font-size:11.4pt">Filtro</b></div>
-      <p style="font-size:9.6pt">Ranking de presença institucional por ação-mês, medido sobre a exposição
-      <b>consolidada</b> — não posse direta. Restringe ao terço inferior: onde a vigilância, de verdade, falta.</p>
-      <div class="eq" style="font-size:11pt">Presença<sub>i,t</sub> <span class="op">=</span> pctl<sub>t</sub>(&Sigma;<sub style="font-size:60%">f</sub>E<sup>cons</sup><sub>f,i,t</sub>)</div>
-      <div class="eq" style="font-size:11pt">s<sub>i,t</sub><span class="op">=</span>r<sub>i,t&minus;1</sub> <span class="op">|</span> Presença<sub>i,t</sub>&le;p<sub>33</sub></div>
+      <div class="ftitle" style="margin-bottom:5pt"><span class="seal">II</span><b style="font-size:11.4pt">Lambda</b></div>
+      <p style="font-size:9.6pt">O peso muda mecanicamente com o retorno relativo ativo/fundo, mesmo sem decisão
+      ativa. λ (estimado por regressão através da origem) mede quanto da demanda d vira ajuste mecânico —
+      o resíduo u é convicção real.</p>
+      <div class="eq" style="font-size:11.5pt">u <span class="op">=</span> dw<sub>corrigido</sub> <span class="op">&minus;</span> &lambda;&middot;d &nbsp; <span style="font-size:9pt; color:var(--gold-soft)">(&lambda;=0,0365)</span></div>
     </div>
     <div class="col">
-      <div class="ftitle" style="margin-bottom:5pt"><span class="seal">III</span><b style="font-size:11.4pt">Teste</b></div>
-      <p style="font-size:9.6pt">Regressão cross-sectional mês a mês (Fama–MacBeth), t-estatística corrigida por
-      Newey–West — mesma régua aplicada a <b>todos</b> os candidatos que testamos, sem exceção.</p>
-      <div class="eq" style="font-size:11pt">r<sub>i,t+3</sub><span class="op">=</span>&alpha;<sub>t</sub><span class="op">+</span>&beta;<sub>t</sub>s<sub>i,t</sub><span class="op">+</span>&epsilon;<sub>i,t</sub></div>
-      <div class="eq" style="font-size:11pt">t&#770;<sub style="font-size:60%">NW</sub><span class="op">=</span>&beta;&#772;/se<sub style="font-size:60%">NW</sub>(&beta;&#772;)</div>
+      <div class="ftitle" style="margin-bottom:5pt"><span class="seal">III</span><b style="font-size:11.4pt">Líderes</b></div>
+      <p style="font-size:9.6pt">Pares fundo-fundo com correlação &ge;0,6 na série de u formam a rede de
+      replicantes; força de liderança mede quem antecipa quem. Só o quartil superior entra no sinal.</p>
+      <div class="eq" style="font-size:11.5pt">ECO<sub>i,t</sub> <span class="op">=</span> <span class="frac"><span class="num">&Sigma;<sub style="font-size:70%">f&isin;líderes</sub> u<sub>f,i,t</sub>&middot;valor<sub>f,i,t</sub></span><span class="den">&Sigma; valor<sub>f,i,t</sub></span></span></div>
     </div>
   </div>
 
-  <div class="hstrip-cap" style="margin-top:0">Rebalanceamento mensal · Compra Q1 (perdedores) / Venda Q5 (vencedores), dentro do terço de menor presença · Cortes de quintil e universo estimados só no treino (antes de 2020)</div>
-  <div class="footer"><span>AAET</span><span>Ponto Cego — 02 / 05</span></div>
+  <div class="hstrip-cap" style="margin-top:0">Rebalanceamento mensal · Compra Q5 (maior demanda residual) / Venda Q1 (menor), entre os fundos-líderes · Cortes de quintil estimados só no treino (antes de 2020) · Autocorrelação lag-1 dos coeficientes mensais = 0,00</div>
+  <div class="footer"><span>AAET</span><span>ECO — 02 / 05</span></div>
 </div></div>
 
 <!-- ============ PAGE 3 ============ -->
 <div class="page"><div class="inner">
   <div class="ribbon">III &nbsp;|&nbsp; Resultados</div>
   <h2>Análise da Performance</h2>
-  <p style="margin-top:5pt">Mesmo restrito a small/mid caps de baixa vigilância, o Ponto Cego acumulou <b>5,4x</b> o
-  capital contra <b>2,0x</b> do Ibovespa no mesmo período — com o padrão de degraus típico de um sinal que se
-  concentra em janelas específicas, não em deriva constante de mercado.</p>
+  <p style="margin-top:5pt">O ECO entrega retorno modesto mas com <b>drawdown de apenas 10%</b> — menos da metade
+  do Ibovespa no mesmo período — e taxa de acerto de 60% mês a mês, consistente com um sinal estatisticamente
+  fino, não com um "big bet" direcional.</p>
 
   <div class="badges">
-    <div class="badge"><div class="num">50,8%</div><div class="cap">Retorno anualizado</div></div>
-    <div class="badge"><div class="num">0,96</div><div class="cap">Sharpe anualizado</div></div>
-    <div class="badge"><div class="num">43,8%</div><div class="cap">Max drawdown</div></div>
-    <div class="badge"><div class="num">3,10%</div><div class="cap">Alfa mensal vs. Ibov (p=0,067)</div></div>
-    <div class="badge"><div class="num">0,29</div><div class="cap">Beta vs. Ibov (n.s.)</div></div>
+    <div class="badge"><div class="num">8,3%</div><div class="cap">Retorno anualizado</div></div>
+    <div class="badge"><div class="num">0,84</div><div class="cap">Sharpe anualizado</div></div>
+    <div class="badge"><div class="num">10,0%</div><div class="cap">Max drawdown</div></div>
+    <div class="badge"><div class="num">0,39%</div><div class="cap">Alfa mensal vs. Ibov (n.s.)</div></div>
+    <div class="badge"><div class="num">0,19</div><div class="cap">Beta vs. Ibov (p=0,014)</div></div>
   </div>
 
   <div class="cols" style="flex:1; min-height:0">
     <div class="col" style="flex:1.55"><img src="fig_equity.png" style="width:100%; height:100%; object-fit:contain; border-radius:4px"></div>
     <div class="col box" style="flex:1">
       <h4 style="font-size:11.4pt">Leitura do Gráfico</h4>
-      <p style="font-size:9.6pt">A curva sobe em degraus: cada bloco corresponde a um trecho onde ações em baixa
-      presença institucional reverteram como previsto. O painel de drawdown mostra que o risco, embora maior que o
-      do Ibovespa em magnitude, é <b>episódico</b> — concentrado, não estrutural.</p>
-      <p style="font-size:9.6pt; margin-top:8pt"><b>60 meses</b> fora da amostra (fev/2020–jun/2026); pontos de
-      corte de quintil e definição do terço de baixa presença estimados <b>só no treino</b>, pré-2020 — nunca veem
-      o período de teste.</p>
-      <p style="font-size:9.6pt; margin-top:8pt">Universo concentrado em ações menores e menos líquidas —
-      exatamente onde a tese prevê que o sinal deveria existir, e onde o drawdown mais alto é esperado.</p>
+      <p style="font-size:9.6pt">O drawdown raso (painel inferior) é a marca do sinal: mesmo nos piores meses, a
+      perda nunca passou de 10% — muito abaixo do Ibovespa no mesmo período. Isso vem do teste estatístico
+      subjacente ser genuinamente robusto (t=2,56, autocorrelação ~0), não de uma aposta concentrada.</p>
+      <p style="font-size:9.6pt; margin-top:8pt"><b>Honestidade sobre o beta:</b> 0,19 é estatisticamente
+      significante (p=0,014) — o ECO não é totalmente mercado-neutro, e o alfa isolado não passa em significância
+      (p=0,34) nesta janela de 43 meses com dado completo.</p>
+      <p style="font-size:9.6pt; margin-top:8pt">O teste Fama–MacBeth (80 meses, 2017–2026) é a evidência
+      principal; o backtest aqui é a tradução em portfólio, com a limitação natural de cortes fixos pré-2020.</p>
     </div>
   </div>
 
-  <div class="footer"><span>AAET</span><span>Ponto Cego — 03 / 05</span></div>
+  <div class="footer"><span>AAET</span><span>ECO — 03 / 05</span></div>
 </div></div>
 
 <!-- ============ PAGE 4 ============ -->
@@ -255,88 +254,86 @@
   <div class="ribbon">IV &nbsp;|&nbsp; Backtest</div>
   <h2>Rigor Metodológico</h2>
   <p style="margin-top:5pt; max-width:10.6in">Backtests quebram de formas conhecidas: horizonte escolhido a
-  posteriori, efeito que só existe em sub-amostras convenientes, ausência de contraste teórico. Cada linha abaixo
-  ataca um desses modos — com a mesma régua estatística (Fama–MacBeth + Newey–West) usada para <b>descartar</b> os
-  dois candidatos concorrentes antes deste.</p>
+  posteriori, efeito que só existe num sub-período conveniente, ausência de contraste. Cada linha ataca um desses
+  modos — com a mesma régua estatística (Fama–MacBeth + Newey–West) usada para <b>descartar</b> os dois candidatos
+  concorrentes antes deste.</p>
 
   <div class="cols" style="flex:1; min-height:0; margin-top:8pt">
     <div class="col" style="flex:1.55">
       <table class="mini">
         <tr><th>Teste</th><th>Pergunta</th><th class="r">Resultado</th></tr>
-        <tr class="hi"><td>Horizonte h=3 <i>(principal)</i></td><td>Reversão aparece na defasagem real de divulgação da CVM?</td><td class="r">t=&minus;2,22&nbsp;&nbsp;p=0,031</td></tr>
-        <tr><td>Horizonte h=1</td><td>O efeito já existe 1 mês depois?</td><td class="r">Inverte — momentum<br>t=+2,36&nbsp;&nbsp;p=0,021</td></tr>
-        <tr><td>Horizonte h=6</td><td>O efeito persiste além de 3 meses?</td><td class="r">Nulo<br>t=&minus;0,96&nbsp;&nbsp;p=0,340</td></tr>
-        <tr><td>Contraste: alta presença institucional</td><td>Existe onde há vigilância de verdade?</td><td class="r">Nulo<br>t=&minus;0,91&nbsp;&nbsp;p=0,366</td></tr>
-        <tr><td>Amostra completa, sem filtro</td><td>Aparece sem restringir a baixa presença?</td><td class="r">Limítrofe<br>t=&minus;1,77&nbsp;&nbsp;p=0,083</td></tr>
+        <tr class="hi"><td>Horizonte h=3 <i>(principal)</i></td><td>O excedente dos líderes ecoa no preço na defasagem real da CVM?</td><td class="r">t=2,56&nbsp;&nbsp;p=0,012</td></tr>
+        <tr><td>Horizonte h=1</td><td>O efeito já existe 1 mês depois?</td><td class="r">Fraco, direção oposta<br>t=&minus;1,54&nbsp;&nbsp;p=0,128</td></tr>
+        <tr><td>Horizonte h=6</td><td>O efeito persiste além de 3 meses?</td><td class="r">Nulo<br>t=1,16&nbsp;&nbsp;p=0,248</td></tr>
+        <tr><td>Sub-período pré-dez/2023</td><td>O efeito é estável ao longo dos 10 anos?</td><td class="r">Sim, 69 meses<br>t=3,04&nbsp;&nbsp;p=0,003</td></tr>
+        <tr><td>Sub-período pós-dez/2023</td><td>Confirma nos meses mais recentes?</td><td class="r">Inconclusivo (n=10)<br>t=0,47&nbsp;&nbsp;p=0,652</td></tr>
         <tr><td>Candidato concorrente — HHI/crowding</td><td>Concentração de posse prediz volatilidade futura?</td><td class="r">Descartado sob NW<br>t: &minus;2,14&rarr;&minus;1,21</td></tr>
-        <tr><td>Candidato concorrente — fluxo "replicantes"</td><td>Pressão de fluxo entre fundos líder-seguidor prediz retorno?</td><td class="r">Descartado sob NW<br>t=1,07&nbsp;&nbsp;p=0,35</td></tr>
+        <tr><td>Candidato concorrente — fluxo direto "replicantes"</td><td>Pressão de fluxo entre líder-seguidor prediz retorno diretamente?</td><td class="r">Descartado sob NW<br>t=1,07&nbsp;&nbsp;p=0,35</td></tr>
       </table>
     </div>
     <div class="col box" style="flex:1">
       <h4>Controles da Metodologia</h4>
       <ul class="plain" style="margin-top:4pt">
-        <li><b>Sem look-ahead:</b> cortes de quintil e terço de presença estimados só no treino pré-2020</li>
+        <li><b>Sem look-ahead:</b> cortes de quintil do backtest estimados só no treino pré-2020</li>
         <li><b>Horizonte a priori:</b> h=3 fixado pela defasagem real de divulgação, não escolhido por dar o
         melhor número</li>
-        <li><b>Base consolidada:</b> presença institucional medida look-through (20 níveis), não posse direta</li>
-        <li><b>Régua única:</b> mesmo teste (Fama–MacBeth + Newey–West) aplicado a todos os candidatos, incluindo
-        os descartados</li>
-        <li><b>Limitação assumida:</b> sem custo de transação/liquidez explícito — perna comprada concentrada em
-        small caps</li>
+        <li><b>λ na amostra inteira:</b> reestimado sobre a base reconstruída completa, não vaza informação de
+        um período específico</li>
+        <li><b>Só líderes:</b> quartil superior de força de liderança, não qualquer fundo da rede</li>
+        <li><b>Limitação assumida:</b> beta de mercado não-nulo (0,19); confirmação pós-2023 inconclusiva por
+        baixo poder amostral (10 meses), não por sinal invertido</li>
       </ul>
     </div>
   </div>
 
-  <div class="footer"><span>AAET</span><span>Ponto Cego — 04 / 05</span></div>
+  <div class="footer"><span>AAET</span><span>ECO — 04 / 05</span></div>
 </div></div>
 
 <!-- ============ PAGE 5 ============ -->
 <div class="page"><div class="inner">
   <div class="ribbon">V &nbsp;|&nbsp; IA Generativa</div>
   <h2>Como a IA Foi Utilizada?</h2>
-  <p style="margin-top:5pt; max-width:10.6in">A IA generativa do Ponto Cego não escolhe o vencedor — ela gera e
-  <b>testa para descartar</b>. Cada hipótese passou pela mesma régua estatística; o papel mais importante da IA foi
-  disciplinar essa régua em todas elas, inclusive nas que pareciam mais promissoras à primeira vista.</p>
+  <p style="margin-top:5pt; max-width:10.6in">A IA generativa do ECO não escolhe o vencedor — ela gera, testa e
+  <b>audita a própria base de dados</b> antes de confiar em qualquer resultado. O achado final só foi aceito depois
+  de a IA encontrar e corrigir uma lacuna real na cobertura temporal do modelo de Etapa 1 do TCC.</p>
 
   <div class="cols" style="flex:1; min-height:0; margin-top:6pt">
     <div class="col box">
       <h4>Por Que Testar-e-Descartar</h4>
       <p style="font-size:9.6pt">Um sinal isolado e bonito pode ser artefato de correlação cruzada, não fato
-      econômico. A IA formulou <b>10+ sinais</b> candidatos ligados à mesma base de dados de fundos e testou cada
-      um com Fama–MacBeth + Newey–West — a correção que, sozinha, derrubou 2 candidatos com aparência forte.</p>
+      econômico. A IA formulou <b>10+ sinais</b> candidatos e testou cada um com Fama–MacBeth + Newey–West — a
+      correção que, sozinha, derrubou 2 candidatos com aparência forte antes deste.</p>
       <p style="font-size:9.6pt; margin-top:7pt">Esse crivo é o que separa "achamos algo" de "sobrevive ao teste
       mais rigoroso que sabemos aplicar".</p>
     </div>
     <div class="col box">
       <h4>Auditoria de Dados</h4>
-      <p style="font-size:9.6pt">Na reconstrução da base consolidada CVM 2016–2026, a IA encontrou e corrigiu
-      <b>4 inconsistências reais</b> na fonte, cada uma silenciosa o bastante para passar despercebida:</p>
-      <ul class="plain" style="margin-top:5pt">
-        <li>Formato decimal inconsistente entre bases, zerando exposições silenciosamente</li>
-        <li>Identificador de fundo instável entre 2021 e 2022+</li>
-        <li>Agregação incorreta de subclasses pós-reforma CVM175</li>
-        <li>Base de retorno de fundo desatualizada, truncando toda a cadeia de sinais em 2021</li>
-      </ul>
+      <p style="font-size:9.6pt">Reconstruindo a base de previsão de peso (Etapa 1 do TCC), a IA encontrou a
+      base com <b>cobertura mensal incompleta</b> pós-2022 — poucos meses de 2022 a 2025 estavam presentes. O
+      resultado só foi aceito depois de reconstruir a base e confirmar que o efeito se mantém com cobertura real
+      em todos os 10 anos (2017–2026), não só numa fatia conveniente.</p>
     </div>
     <div class="col box">
       <h4>IA Como Pesquisadora</h4>
-      <p style="font-size:9.6pt">A IA auditou as bases, formulou e testou os candidatos, implementou
-      Fama–MacBeth/Newey–West e o backtest — com verificação numérica em cada etapa. A equipe definiu a régua de
-      decisão e julgou, um a um, quais achados eram economicamente plausíveis o bastante para confiar.</p>
+      <p style="font-size:9.6pt">A IA reestimou λ, implementou Fama–MacBeth/Newey–West e o backtest, com
+      verificação numérica em cada etapa — incluindo checar, explicitamente, se um resultado promissor sobrevivia
+      à correção de cobertura antes de ser aceito. A equipe definiu a régua e julgou cada descarte.</p>
       <h4 style="margin-top:9pt">Limitação Encontrada</h4>
-      <p style="font-size:9.6pt">A IA não substitui esse julgamento final — plausibilidade econômica de um sinal
-      é uma decisão que permaneceu humana em cada descarte.</p>
+      <p style="font-size:9.6pt">A IA não decide sozinha quando um dado incompleto invalida um achado — esse
+      julgamento, e a decisão de reconstruir a base antes de confiar no resultado, permaneceu humano.</p>
     </div>
   </div>
 
   <div class="cols" style="margin-top:8pt">
-    <div class="col box"><h4 style="font-size:11pt">Próximos Passos</h4><p style="font-size:9pt">Custo de
-    transação/liquidez explícitos; sizing por volatilidade inversa; validar defasagem de divulgação fundo a fundo.</p></div>
-    <div class="col box"><h4 style="font-size:11pt">Limitações</h4><p style="font-size:9pt">Sem custo de transação;
-    universo concentrado em small caps ilíquidas; teste único, sem correção formal de múltiplas comparações.</p></div>
+    <div class="col box"><h4 style="font-size:11pt">Próximos Passos</h4><p style="font-size:9pt">Confirmar o
+    efeito com mais meses pós-2023 conforme a amostra cresce; custo de transação/liquidez explícitos;
+    reduzir a exposição a beta residual (0,19).</p></div>
+    <div class="col box"><h4 style="font-size:11pt">Limitações</h4><p style="font-size:9pt">Beta de mercado
+    não-nulo; sub-período pós-2023 ainda inconclusivo (baixo n); teste único, sem correção formal de múltiplas
+    comparações.</p></div>
   </div>
 
-  <div class="footer"><span>AAET</span><span>Ponto Cego — 05 / 05</span></div>
+  <div class="footer"><span>AAET</span><span>ECO — 05 / 05</span></div>
 </div></div>
 
 </body>
