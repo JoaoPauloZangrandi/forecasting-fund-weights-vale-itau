@@ -1,36 +1,21 @@
-Base de erro (u), antes do filtro de posicao-poeira: 12447044 obs
-Apos filtro de posicao-poeira (peso mediano celula >=0,1%): 4608319 obs | 717 ativos
-Ativos com >=2 fundos (apos filtro): 707 
-... 25 de 707 ativos | 5 s
-... 50 de 707 ativos | 6 s
-... 75 de 707 ativos | 9 s
-... 100 de 707 ativos | 12 s
-... 125 de 707 ativos | 13 s
-... 150 de 707 ativos | 14 s
-... 175 de 707 ativos | 15 s
-... 200 de 707 ativos | 15 s
-... 225 de 707 ativos | 15 s
-... 250 de 707 ativos | 16 s
-... 275 de 707 ativos | 16 s
-... 300 de 707 ativos | 16 s
-... 325 de 707 ativos | 17 s
-... 350 de 707 ativos | 17 s
-... 375 de 707 ativos | 17 s
-... 400 de 707 ativos | 24 s
-... 425 de 707 ativos | 33 s
-... 450 de 707 ativos | 36 s
-... 475 de 707 ativos | 37 s
-... 500 de 707 ativos | 39 s
-... 525 de 707 ativos | 39 s
-... 550 de 707 ativos | 40 s
-... 575 de 707 ativos | 45 s
-... 600 de 707 ativos | 47 s
-... 625 de 707 ativos | 47 s
-... 650 de 707 ativos | 47 s
-... 675 de 707 ativos | 48 s
-... 700 de 707 ativos | 48 s
-Tempo total: 0.8 min
+Base de erro (u), antes do filtro de posicao-poeira: 7422621 obs
+Apos filtro de posicao-poeira (peso mediano celula >=0,1%): 3067111 obs | 347 ativos
+Ativos com >=2 fundos (apos filtro): 341 
+... 25 de 341 ativos | 9 s
+... 50 de 341 ativos | 15 s
+... 75 de 341 ativos | 18 s
+... 100 de 341 ativos | 19 s
+... 125 de 341 ativos | 20 s
+... 150 de 341 ativos | 21 s
+... 175 de 341 ativos | 22 s
+... 200 de 341 ativos | 23 s
+... 225 de 341 ativos | 26 s
+... 250 de 341 ativos | 27 s
+... 275 de 341 ativos | 27 s
+... 300 de 341 ativos | 28 s
+... 325 de 341 ativos | 28 s
+Tempo total: 0.5 min
 
-Pares com >= 12 meses em comum E |corr_contemp|>= 0.6 : 1783172 
+Pares com >= 12 meses em comum E |corr_contemp|>= 0.6 : 1808886 
 
-OK - salvo em 'C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/data/pares_replicantes_bruto.csv' (1783172 pares)
+OK - salvo em 'C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/data/pares_replicantes_bruto.csv' (1808886 pares)

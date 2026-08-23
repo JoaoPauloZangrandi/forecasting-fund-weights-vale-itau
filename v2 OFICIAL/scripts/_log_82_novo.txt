@@ -1,37 +1,28 @@
-Base h=1 (multiativo): 12664436 obs
-Meses de teste: 32 ( 202001 a 202503 )
-mes 202001 processado ( 2.2 s )
-mes 202002 processado ( 2.9 s )
-mes 202003 processado ( 4 s )
-mes 202004 processado ( 5.1 s )
-mes 202005 processado ( 5.9 s )
-mes 202006 processado ( 7.1 s )
-mes 202007 processado ( 7.9 s )
-mes 202008 processado ( 8.9 s )
-mes 202009 processado ( 10.7 s )
-mes 202010 processado ( 11.6 s )
-mes 202011 processado ( 13.1 s )
-mes 202012 processado ( 14.4 s )
-mes 202101 processado ( 15.9 s )
-mes 202102 processado ( 17.2 s )
-mes 202103 processado ( 18 s )
-mes 202104 processado ( 19 s )
-mes 202105 processado ( 21.3 s )
-mes 202106 processado ( 22.3 s )
-mes 202107 processado ( 23.3 s )
-mes 202108 processado ( 24.4 s )
-mes 202109 processado ( 25.5 s )
-mes 202110 processado ( 27.8 s )
-mes 202111 processado ( 28.7 s )
-mes 202112 processado ( 29.8 s )
-mes 202209 processado ( 31.5 s )
-mes 202210 processado ( 32.4 s )
-mes 202302 processado ( 37.9 s )
-mes 202306 processado ( 40.1 s )
-mes 202307 processado ( 46.1 s )
-mes 202501 processado ( 49 s )
-mes 202502 processado ( 56.6 s )
-mes 202503 processado ( 58.7 s )
+Base h=1 (multiativo): 7444169 obs
+Meses de teste: 23 ( 202001 a 202111 )
+mes 202001 processado ( 0.6 s )
+mes 202002 processado ( 1.2 s )
+mes 202003 processado ( 1.6 s )
+mes 202004 processado ( 2.3 s )
+mes 202005 processado ( 2.9 s )
+mes 202006 processado ( 3.5 s )
+mes 202007 processado ( 4.1 s )
+mes 202008 processado ( 4.6 s )
+mes 202009 processado ( 5.3 s )
+mes 202010 processado ( 6 s )
+mes 202011 processado ( 6.7 s )
+mes 202012 processado ( 7.4 s )
+mes 202101 processado ( 8.1 s )
+mes 202102 processado ( 8.9 s )
+mes 202103 processado ( 9.8 s )
+mes 202104 processado ( 10.5 s )
+mes 202105 processado ( 11.4 s )
+mes 202106 processado ( 12.4 s )
+mes 202107 processado ( 13.3 s )
+mes 202108 processado ( 14.3 s )
+mes 202109 processado ( 15.1 s )
+mes 202110 processado ( 16.1 s )
+mes 202111 processado ( 17.2 s )
 
 ===== Lambda mes a mes (janela expansiva, multiativo h=1) =====
         ym n_treino     lambda
@@ -59,29 +50,20 @@ mes 202503 processado ( 58.7 s )
 21: 202109  6814825 0.06950795
 22: 202110  7022503 0.06935855
 23: 202111  7229162 0.06927398
-24: 202112  7444169 0.06897808
-25: 202209  7460650 0.06893442
-26: 202210  7633551 0.06841587
-27: 202302  7806345 0.06816064
-28: 202306  8795983 0.05946816
-29: 202307  9792408 0.05243839
-30: 202501 10800395 0.04999998
-31: 202502 11513804 0.05024474
-32: 202503 12114784 0.04568470
         ym n_treino     lambda
 
 Lambda fixo (treino < 2020-01, script 42) = 0.0704
-Lambda expansiva: min = 0.0457 | max = 0.0726 | ultimo mes = 0.0457
+Lambda expansiva: min = 0.0693 | max = 0.0726 | ultimo mes = 0.0693
 
 ===== Desempenho FORA da amostra (2020-2021, multiativo h=1) =====
-RMSE lambda fixo       = 0.004111
-RMSE janela expansiva  = 0.004090
-RMSE ingenua           = 0.004111
+RMSE lambda fixo       = 0.004033
+RMSE janela expansiva  = 0.004033
+RMSE ingenua           = 0.004095
 
-Razao RMSE fixo/ingenua      = 1.0001
-Razao RMSE expansiva/ingenua = 0.9948
+Razao RMSE fixo/ingenua      = 0.9848
+Razao RMSE expansiva/ingenua = 0.9849
 
-Fixo vence a ingenua em 27 dos 32 meses | Expansiva vence em 28 dos 32 meses
+Fixo vence a ingenua em 23 dos 23 meses | Expansiva vence em 23 dos 23 meses
         ym rmse_fixo rmse_expansiva rmse_naive vence_fixo vence_expansiva
      <int>     <num>          <num>      <num>     <lgcl>          <lgcl>
  1: 202001   0.00457        0.00457    0.00463       TRUE            TRUE
@@ -107,17 +89,8 @@ Fixo vence a ingenua em 27 dos 32 meses | Expansiva vence em 28 dos 32 meses
 21: 202109   0.00394        0.00394    0.00399       TRUE            TRUE
 22: 202110   0.00392        0.00392    0.00398       TRUE            TRUE
 23: 202111   0.00354        0.00354    0.00358       TRUE            TRUE
-24: 202112   0.00768        0.00768    0.00771       TRUE            TRUE
-25: 202209   0.00434        0.00434    0.00438       TRUE            TRUE
-26: 202210   0.00523        0.00523    0.00528       TRUE            TRUE
-27: 202302   0.00358        0.00357    0.00350      FALSE           FALSE
-28: 202306   0.00309        0.00304    0.00296      FALSE           FALSE
-29: 202307   0.00348        0.00345    0.00347      FALSE            TRUE
-30: 202501   0.00515        0.00513    0.00524       TRUE            TRUE
-31: 202502   0.00510        0.00501    0.00493      FALSE           FALSE
-32: 202503   0.00482        0.00474    0.00474      FALSE           FALSE
         ym rmse_fixo rmse_expansiva rmse_naive vence_fixo vence_expansiva
 
-Correlacao de Spearman do ranking de dificuldade por gestora (fixo vs expansiva), 43 gestoras: 0.9946
+Correlacao de Spearman do ranking de dificuldade por gestora (fixo vs expansiva), 40 gestoras: 1.0000
 
 OK - salvo em 'v2 OFICIAL/data/etapa3_multiativo_janela_expansiva_*.csv'

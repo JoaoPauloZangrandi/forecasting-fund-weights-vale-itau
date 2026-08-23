@@ -1,22 +1,22 @@
-Pares lider->seguidor (com beta): 78117 
-Pares (seguidor,ativo) distintos, apos escolher 1 lider cada: 19031 
-  (de 78117 candidatos brutos -- 75.6 % eram (seguidor,ativo) com mais de 1 lider)
+Pares lider->seguidor (com beta): 76521 
+Pares (seguidor,ativo) distintos, apos escolher 1 lider cada: 18752 
+  (de 76521 candidatos brutos -- 75.5 % eram (seguidor,ativo) com mais de 1 lider)
 
-Obs (seguidor,ativo,mes) com lider observado no MESMO mes: 364848 
+Obs (seguidor,ativo,mes) com lider observado no MESMO mes: 359861 
 
 Resumo do termo 'eco do lider' (quanto o ajuste muda a previsao normal):
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--1.647e-01 -5.131e-04 -3.395e-05 -9.049e-05  3.340e-04  1.541e-01 
+-1.663e-01 -5.757e-04 -5.035e-05 -1.073e-04  3.296e-04  1.515e-01 
 
 Resumo da previsao SEM ajuste (so lambda*d):
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--2.492e-02 -7.902e-05  3.808e-05 -1.840e-05  1.857e-04  2.131e-02 
+-3.872e-02 -1.229e-04  5.698e-05 -3.249e-05  2.799e-04  4.541e-02 
 Resumo da previsao AJUSTADA (com eco):
       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--1.716e-01 -5.051e-04  1.238e-05 -1.089e-04  4.370e-04  1.555e-01 
+-1.771e-01 -5.419e-04  1.654e-05 -1.398e-04  4.818e-04  1.538e-01 
 
-RMSE sem ajuste (so lambda*d): 0.00623
-RMSE com ajuste (lambda*d + eco): 0.00405
-Melhora: 34.9%
+RMSE sem ajuste (so lambda*d): 0.00612
+RMSE com ajuste (lambda*d + eco): 0.00403
+Melhora: 34.2%
 
-OK - salvo em 'v2 OFICIAL/data/previsao_ajustada_seguidor.csv' (364848 obs)
+OK - salvo em 'v2 OFICIAL/data/previsao_ajustada_seguidor.csv' (359861 obs)

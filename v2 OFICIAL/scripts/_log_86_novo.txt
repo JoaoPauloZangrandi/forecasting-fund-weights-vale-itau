@@ -1,32 +1,32 @@
-Base (h1, filtrada): 3140040 obs
+Base (h1, filtrada): 1552376 obs
 
-===== Decomposicao RMSE^2 = vies^2 + variancia, por gestora ( 43 gestoras) =====
-Media do % do RMSE^2 explicado pelo vies^2, entre gestoras: 0.47%
-Mediana: 0.16% | Maximo: 4.37% (gestora: Real Investor)
+===== Decomposicao RMSE^2 = vies^2 + variancia, por gestora ( 40 gestoras) =====
+Media do % do RMSE^2 explicado pelo vies^2, entre gestoras: 0.46%
+Mediana: 0.12% | Maximo: 2.99% (gestora: Real Investor)
                     gestora_grupo    rmse pct_vies
                            <char>   <num>    <num>
-1:                  Real Investor 0.00494     4.37
-2:                 Núcleo Capital 0.00956     3.35
-3:         Guepardo Investimentos 0.01779     2.39
-4:             Franklin Templeton 0.00763     1.40
-5:         Verde Asset Management 0.00560     0.81
-6: Constellation Asset Management 0.00875     0.71
-7:              ARX Investimentos 0.00765     0.67
-8:      Daycoval Asset Management 0.01136     0.65
+1:                  Real Investor 0.00547     2.99
+2:         Guepardo Investimentos 0.01929     2.92
+3:                 Núcleo Capital 0.01037     2.63
+4:                         Plural 0.00090     2.15
+5: Constellation Asset Management 0.00735     1.66
+6:                 Bogari Capital 0.00549     1.39
+7:         Claritas Investimentos 0.00672     0.73
+8:              ARX Investimentos 0.00792     0.50
 
-Pooled (todas as obs juntas): vies^2/RMSE^2 = 0.010%
+Pooled (todas as obs juntas): vies^2/RMSE^2 = 0.000%
 null device 
           1 
 
 OK - fig_decomposicao_vies_variancia.pdf salva
 
-1a metade: ate 202104 | 2a metade: depois de 202104 
+1a metade: ate 202012 | 2a metade: depois de 202012 
 Gestoras com >=50 obs em cada metade: 40 
 
 ===== Persistencia do DESVIO-PADRAO do erro entre metades do teste =====
-Correlacao (Pearson) = 0.6486
-Correlacao (Spearman) = 0.6750
-R2 = 0.4207 | p(coef) = 6.01e-06
+Correlacao (Pearson) = 0.8510
+Correlacao (Spearman) = 0.9445
+R2 = 0.7242 | p(coef) = 3.511e-12
 (Para comparacao: persistencia do VIES no script 84 foi corr=0,832, R2=0,693)
 null device 
           1 

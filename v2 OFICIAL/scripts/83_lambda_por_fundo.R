@@ -21,7 +21,7 @@ print(table(cut(n_por_fundo$N, breaks = c(0,5,10,20,40,100), right = TRUE)))
 
 CORTE <- 202001L
 treino <- M[ym < CORTE]
-teste  <- M[ym >= CORTE & ym < 202607L]
+teste  <- M[ym >= CORTE & ym < 202112L]
 
 rmse <- function(x) sqrt(mean(x^2))
 

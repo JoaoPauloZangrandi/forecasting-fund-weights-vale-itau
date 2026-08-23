@@ -1,12 +1,12 @@
-Base de erro (u), pos filtro de posicao-poeira: 4608319 obs
-Pares de lideranca clara: 81400 
-Observacoes mes-a-mes pareadas (lider,seguidor,ativo,mes): 1630107 
+Base de erro (u), pos filtro de posicao-poeira: 3067111 obs
+Pares de lideranca clara: 79538 
+Observacoes mes-a-mes pareadas (lider,seguidor,ativo,mes): 1569124 
 
-Pares com beta calculavel: 81400 de 81400 
+Pares com beta calculavel: 79538 de 79538 
 Resumo de beta (v2, exato):
-     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
--141.9900    0.1484    0.6284    1.0590    1.5161  152.8037 
+    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+-90.9615   0.1485   0.6184   1.0280   1.4459 151.4400 
 
-Pares com |beta|>10 (implausivel): 3283 de 81400 (4.03%)
+Pares com |beta|>10 (implausivel): 3017 de 79538 (3.79%)
 
-OK - salvo em 'v2 OFICIAL/data/pares_lideranca_beta.csv' (78117 pares)
+OK - salvo em 'v2 OFICIAL/data/pares_lideranca_beta.csv' (76521 pares)

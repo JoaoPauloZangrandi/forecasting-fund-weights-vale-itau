@@ -1,28 +1,28 @@
-Painel (universo completo, 5 caracteristicas): 39407709 linhas | 20223 fundos | 1293 ativos
-Linhas excluidas por falta de HHI defasado (sem dado em t-1): 13450153 de 39407709 (34.13%)
-Fundos: 20223 -> 19259 | Ativos: 1251
+Painel (universo completo, 5 caracteristicas): 8415673 linhas | 2576 fundos | 513 ativos
+Linhas excluidas por falta de HHI defasado (sem dado em t-1): 203379 de 8415673 (2.42%)
+Fundos: 2576 -> 2507 | Ativos: 512
 
-Celulas (ativo,mes) com >=15 holders: 21555 | 1046 ativos distintos | 25938468 obs
-Tempo: 400.2 s | 21528 celulas estimadas | 27 celulas nao convergiram (excluidas)
+Celulas (ativo,mes) com >=15 holders: 13740 | 430 ativos distintos | 8201258 obs
+Tempo: 70.8 s | 13723 celulas estimadas | 17 celulas nao convergiram (excluidas)
 
-==== Resumo entre 21528 celulas ====
-Significancia HHI_lag: 14657 de 21528 (68.1%) | % positivo (sig): 13594/14657
-pseudo-R2 medio (piso -1): 0.5128
+==== Resumo entre 13723 celulas ====
+Significancia HHI_lag: 10210 de 13723 (74.4%) | % positivo (sig): 9767/10210
+pseudo-R2 medio (piso -1): 0.5314
 
-==== Ativos com >=24 meses estimados: 238 ====
+==== Ativos com >=24 meses estimados: 233 ====
 --- por sinal do coeficiente (log-odds) ---
-b_aum    mediana=-0.04201 | % mesmo sinal que VALE3=60.1%
-b_cot    mediana= 0.12632 | % mesmo sinal que VALE3=80.3%
-b_fic    mediana=      NA | % mesmo sinal que VALE3=NA%
-b_flow   mediana= 0.29672 | % mesmo sinal que VALE3=29.4%
-b_betaf  mediana= 0.79430 | % mesmo sinal que VALE3=92.0%
-b_hhi    mediana= 0.59283 | % mesmo sinal que VALE3=88.7%
-Pseudo-R2 medio: 0.5248 
+b_aum    mediana=-0.02686 | % mesmo sinal que VALE3=57.5%
+b_cot    mediana= 0.14417 | % mesmo sinal que VALE3=79.0%
+b_fic    mediana=-0.07643 | % mesmo sinal que VALE3=59.2%
+b_flow   mediana= 0.30226 | % mesmo sinal que VALE3=28.8%
+b_betaf  mediana= 0.75891 | % mesmo sinal que VALE3=92.3%
+b_hhi    mediana= 0.44838 | % mesmo sinal que VALE3=10.3%
+Pseudo-R2 medio: 0.5296 
 
 
 ===== COMPARACAO: 6 caracteristicas (novo) vs. 5 caracteristicas (antigo) =====
-Celulas: 21528 (novo) vs 21528 (antigo)
-pseudo-R2 medio: 0.5128 (novo) vs 0.5128 (antigo)
+Celulas: 13723 (novo) vs 27440 (antigo)
+pseudo-R2 medio: 0.5314 (novo) vs 0.4352 (antigo)
 [1] TRUE
 [1] TRUE
 [1] TRUE

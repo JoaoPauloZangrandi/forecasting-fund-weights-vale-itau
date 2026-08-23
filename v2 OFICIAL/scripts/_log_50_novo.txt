@@ -1,0 +1,31 @@
+[config_periodo.R] Range de anos ativo: 2016:2021
+Universo completo (qualquer posicao em acoes, 2016-2021): 3254 fundos
+Fundos ja no painel atual (ja tiveram VALE3): 2820 
+Fundos NOVOS (nunca tiveram VALE3): 434 
+ano 2016 - linhas SH lidas (universo completo): 422016 
+ano 2017 - linhas SH lidas (universo completo): 412483 
+ano 2018 - linhas SH lidas (universo completo): 423313 
+ano 2019 - linhas SH lidas (universo completo): 454981 
+ano 2020 - linhas SH lidas (universo completo): 517455 
+ano 2021 - linhas SH lidas (universo completo): 595360 
+
+Total linhas SH (universo completo, 2016-2021): 2825608 
+Fundos mapeados (gestora mais frequente): 3254 de 3254 no universo completo
+
+Dos 3254 mapeados, 434 sao novos (nunca tiveram VALE3)
+
+Gestoras dos 434 fundos novos (top 10 por numero de fundos):
+                gestora_grupo fundos
+                       <char>  <int>
+ 1: Bradesco Asset Management     60
+ 2:                      Itau     48
+ 3:       BB Asset Management     48
+ 4:               BTG Pactual     42
+ 5:    Safra Asset Management     40
+ 6:                        XP     30
+ 7:            Bogari Capital     24
+ 8:    Guepardo Investimentos     14
+ 9:            Núcleo Capital     12
+10: Julius Baer Family Office     12
+
+OK - salvo em 'v2 OFICIAL/data/universo_completo_gestora.csv'

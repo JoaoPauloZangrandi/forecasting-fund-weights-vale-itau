@@ -1,0 +1,17 @@
+Fundo-meses no painel (universo completo): 10820545 | CNPJs distintos: 3228 
+Meses (t-1) necessarios: 72 ( 201512 - 202111 )
+AVISO: nao achei C:/Users/joaoz/forecasting-fund-weights-vale-itau/data/raw/inf_diario_fi_201512.csv 
+... lido 12 de 72 meses
+... lido 24 de 72 meses
+... lido 36 de 72 meses
+... lido 48 de 72 meses
+... lido 60 de 72 meses
+... lido 72 de 72 meses
+
+Linhas do Informe Diario filtradas: 2736286 
+Fundo x mes(t-1) com AUM/cotistas/fluxo extraidos: 132297 
+
+Fundo-meses SEM dado predeterminado (t-1) disponivel: 3168 de 124132 (2.6%)
+FIC: 75555 | FI: 48577 fundo-meses
+
+OK - salvo em 'v2 OFICIAL/data/features_predeterminado_completo.csv'

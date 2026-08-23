@@ -1,54 +1,54 @@
-Pares pre-filtrados (|corr_contemp|>=0,6, ja SEM posicao-poeira): 1783172 
+Pares pre-filtrados (|corr_contemp|>=0,6, ja SEM posicao-poeira): 1808886 
 
-Pares com p_bh < 0,05 (contemporaneo): 1229196 de 1783172 pre-filtrados
-Maior |corr_contemp| que NAO foi significativo: 0.797 
+Pares com p_bh < 0,05 (contemporaneo): 1248772 de 1808886 pre-filtrados
+Maior |corr_contemp| que NAO foi significativo: 0.796 
 Menor |corr_contemp| que FOI significativo: 0.6 
 
 ===== Distribuicao mesma-gestora vs gestora-diferente (entre significativos) =====
    mesma_gestora      N
           <lgcl>  <int>
-1:          TRUE 450047
-2:         FALSE 779149
-Entre os 1783172 pre-filtrados (antes de exigir significancia):
+1:          TRUE 454840
+2:         FALSE 793932
+Entre os 1808886 pre-filtrados (antes de exigir significancia):
    mesma_gestora       N
           <lgcl>   <int>
-1:          TRUE  528964
-2:         FALSE 1254208
+1:          TRUE  535729
+2:         FALSE 1273157
 
 ===== Top 15 pares mais correlacionados (contemporaneo, significativos) =====
                          ativo fundo_a fundo_b n_meses_contemp corr_contemp
                         <char>   <int>   <int>           <int>        <num>
  1:         VALE ON N1 - VALE3  369187  438014              30            1
- 2:    BRADESPAR PN N1 - BRAP4  324647  452289              12            1
- 3:   ELETROBRAS ON N1 - ELET3  427306  466964              12            1
- 4:          TIM ON NM - TIMS3  227684  337072              14            1
+ 2:       PETROBRAS ON - PETR3  396941  397520              19            1
+ 3:       BRF SA ON NM - BRFS3  443654  443689              13            1
+ 4:    CEA MODAS ON NM - CEAB3   19062   44776              16            1
  5:    LOJAS AMERIC PN - LAME4  427306  466964              12            1
- 6:         VALE ON N1 - VALE3  369187  434639              32            1
- 7:    CEA MODAS ON NM - CEAB3   19062   44776              16            1
+ 6:   ELETROBRAS ON N1 - ELET3  427306  466964              12            1
+ 7: P.ACUCAR-CBD PN N1 - PCAR4  407798  408271              27            1
  8: ITAUUNIBANCO PN N1 - ITUB4  412414  445541              39            1
- 9:       BRF SA ON NM - BRFS3  443654  443689              13            1
-10:       CCR SA ON NM - CCRO3  427306  466964              12            1
-11:    LOJAS AMERIC PN - LAME4  427306  467537              12            1
-12:       AMBEV S/A ON - ABEV3  345679  352608              12            1
-13: CPFL ENERGIA ON NM - CPFE3  331163  427306              18            1
+ 9:         VALE ON N1 - VALE3  369187  434639              32            1
+10:    BRADESPAR PN N1 - BRAP4  324647  452289              12            1
+11:          TIM ON NM - TIMS3  227684  337072              14            1
+12: IRBBRASIL RE ON NM - IRBR3  407798  408271              23            1
+13:         VALE ON N1 - VALE3  412414  438014              41            1
 14: ITAUUNIBANCO PN N1 - ITUB4  369187  473669              15            1
-15:         VALE ON N1 - VALE3  412414  438014              43            1
+15:    SID NACIONAL ON - CSNA3  269735  433241              19            1
                     gestora_a                 gestora_b mesma_gestora      p_bh
                        <char>                    <char>        <lgcl>     <num>
- 1:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  5.55e-96
- 2:                       JGP                       JGP          TRUE  8.75e-32
- 3:               SPX Capital               SPX Capital          TRUE  1.67e-31
- 4:    Safra Asset Management    Safra Asset Management          TRUE  7.30e-38
- 5:               SPX Capital               SPX Capital          TRUE  2.25e-31
- 6:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  1.92e-95
- 7: Bradesco Asset Management Bradesco Asset Management          TRUE  1.97e-43
- 8:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 2.95e-115
- 9:    Safra Asset Management    Safra Asset Management          TRUE  1.46e-33
-10:               SPX Capital               SPX Capital          TRUE  2.68e-30
-11:               SPX Capital               SPX Capital          TRUE  2.77e-30
-12:       BB Asset Management       BB Asset Management          TRUE  3.67e-30
-13:               SPX Capital               SPX Capital          TRUE  1.16e-48
-14:    Kapitalo Investimentos Bradesco Asset Management         FALSE  2.67e-39
-15:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 6.34e-125
+ 1:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  2.02e-90
+ 2:             Sharp Capital    Safra Asset Management         FALSE  1.18e-54
+ 3:    Safra Asset Management    Safra Asset Management          TRUE  5.48e-33
+ 4: Bradesco Asset Management Bradesco Asset Management          TRUE  4.07e-42
+ 5:               SPX Capital               SPX Capital          TRUE  8.72e-30
+ 6:               SPX Capital               SPX Capital          TRUE  1.09e-29
+ 7: Bradesco Asset Management Bradesco Asset Management          TRUE  2.25e-75
+ 8:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 6.79e-111
+ 9:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  4.90e-90
+10:                       JGP                       JGP          TRUE  2.16e-29
+11:    Safra Asset Management    Safra Asset Management          TRUE  1.93e-35
+12: Bradesco Asset Management Bradesco Asset Management          TRUE  2.64e-62
+13:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 2.38e-115
+14:    Kapitalo Investimentos Bradesco Asset Management         FALSE  4.94e-38
+15:       BB Asset Management       BB Asset Management          TRUE  1.12e-49
 
-OK - salvo em 'v2 OFICIAL/data/pares_replicantes_significativos.csv' (1229196 pares)
+OK - salvo em 'v2 OFICIAL/data/pares_replicantes_significativos.csv' (1248772 pares)

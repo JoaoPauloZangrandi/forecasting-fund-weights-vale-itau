@@ -1,0 +1,19 @@
+[config_periodo.R] Range de anos ativo: 2016:2021
+Fundos-alvo (universo completo): 3254 
+ano 2016 cotas lidas: 422016 
+ano 2017 cotas lidas: 412483 
+ano 2018 cotas lidas: 423313 
+ano 2019 cotas lidas: 454981 
+ano 2020 cotas lidas: 517455 
+ano 2021 cotas lidas: 595360 
+
+Retornos diarios de cota calculados: 2822354 obs | 3254 fundos
+Obs casadas com Ibovespa: 2781703 
+
+Fundo-meses com beta_fundo estimado (bruto): 99978 
+ATENCAO: excluindo 19 fundo-meses com |beta_fundo|>5 (artefato de cota esparsa/irregular, nao beta real) --- fundos: 235083, 371890, 371955, 550396 
+Fundo-meses com beta_fundo (apos filtro de sanidade): 99959 de 99978 
+beta_fundo: min -1.391 | media 0.464 | max 2.835 
+Fundos distintos com beta_fundo em algum mes: 2633 de 3254 
+
+OK - salvo em 'v2 OFICIAL/data/beta_fundo_universo_completo.csv'

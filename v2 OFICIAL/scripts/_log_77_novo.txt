@@ -1,22 +1,22 @@
-h1 antes do filtro: 9016081 | depois: 3140040 
+h1 antes do filtro: 3795814 | depois: 1552376 
 
 Top 5 vies mais POSITIVO (compram mais do que o modelo preve):
-            gestora_grupo   vies_medio     n
-                   <char>        <num> <int>
-1: Guepardo Investimentos 0.0027508846  3609
-2:         Núcleo Capital 0.0017504382  7630
-3:          Real Investor 0.0010326448  4863
-4:     Franklin Templeton 0.0009021065   389
-5:   Ibiuna Investimentos 0.0007972994  6076
+                    gestora_grupo   vies_medio     n
+                           <char>        <num> <int>
+1:         Guepardo Investimentos 0.0032938129  2567
+2:                 Núcleo Capital 0.0016829069  5557
+3:                  Real Investor 0.0009469106  2576
+4: Constellation Asset Management 0.0009458943  6926
+5:           Ibiuna Investimentos 0.0007574188  3986
 
 Top 5 vies mais NEGATIVO (compram menos / vendem mais do que o modelo preve):
-               gestora_grupo    vies_medio      n
-                      <char>         <num>  <int>
-1:             Western Asset -0.0001704683  35450
-2:                        XP -0.0001817093 106183
-3:            Legacy Capital -0.0001870906   6626
-4:               BNP Paribas -0.0002248793  66719
-5: Daycoval Asset Management -0.0009153273   3342
+                       gestora_grupo    vies_medio     n
+                              <char>         <num> <int>
+1: Santander Brasil Asset Management -0.0001829038 62730
+2:                             Caixa -0.0001967471 27869
+3:                       BNP Paribas -0.0002068892 42353
+4:               Kinea Investimentos -0.0004122626  2231
+5:         Daycoval Asset Management -0.0007011559  1759
 null device 
           1 
 

@@ -1,14 +1,14 @@
-Gestoras (bruto): 43 
-Gestoras completas nos 4 horizontes (usadas no slopegraph): 43 
+Gestoras (bruto): 40 
+Gestoras completas nos 4 horizontes (usadas no slopegraph): 40 
 
 Correlacao de Spearman entre ranks:
            rank_h1   rank_h3   rank_h6  rank_h12
-rank_h1  1.0000000 0.8840230 0.8254304 0.7991543
-rank_h3  0.8840230 1.0000000 0.9699487 0.9261552
-rank_h6  0.8254304 0.9699487 1.0000000 0.9649653
-rank_h12 0.7991543 0.9261552 0.9649653 1.0000000
+rank_h1  1.0000000 0.9675422 0.9356473 0.9116323
+rank_h3  0.9675422 1.0000000 0.9834897 0.9694184
+rank_h6  0.9356473 0.9834897 1.0000000 0.9904315
+rank_h12 0.9116323 0.9694184 0.9904315 1.0000000
 
-Gestoras rotuladas: Guepardo Investimentos, AZ Quest, Squadra Investimentos, TNA Gestão Patrimonial, Legacy Capital, Gávea Investimentos 
+Gestoras rotuladas: Guepardo Investimentos, Ibiuna Investimentos, AZ Quest, Plural, Gávea Investimentos, TNA Gestão Patrimonial 
 null device 
           1 
 

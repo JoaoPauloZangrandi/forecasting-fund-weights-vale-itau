@@ -16,7 +16,9 @@
 # resultado so' por este arquivo existir).
 # =============================================================================
 ANO_INICIO <- 2016L
-ANO_FIM    <- 2026L   # Atualizado 16/08/2026: SH/cons 2022-2026 reconstruidos do dado CVM
-                       # (ver PLANO_EXPANSAO_2021_2026.md, secao "Reconstrucao CVM x Economatica")
+ANO_FIM    <- 2021L   # Revertido 23/08/2026: sem verdade-base (Economatica) pra validar
+                       # 2022-2026 reconstruido de dado publico da CVM -- teto de erro de
+                       # 9-18%/fundo so' foi confirmado pra 2019-2021 (ver PLANO_EXPANSAO_2021_2026.md).
+                       # TCC volta a usar so' o range com dado original da Economatica.
 
 cat(sprintf("[config_periodo.R] Range de anos ativo: %d:%d\n", ANO_INICIO, ANO_FIM))

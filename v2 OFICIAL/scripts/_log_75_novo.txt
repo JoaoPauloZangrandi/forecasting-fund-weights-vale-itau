@@ -1,5 +1,5 @@
-h1:  32 meses de teste | margem media: 0.81 %
-h3:  33 meses de teste | margem media: 0.32 %
+h1:  23 meses de teste | margem media: 1.48 %
+h3:  21 meses de teste | margem media: 3.13 %
 null device 
           1 
 

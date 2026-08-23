@@ -1,16 +1,16 @@
-Pares fundo-mes com erro: 112767 | com HHI: 469369 
+Pares fundo-mes com erro: 37458 | com HHI: 90906 
 
 ===== A) HHI contemporaneo (mes t) vs erro (mes t) =====
-Pares fundo-mes: 112767 | fundos distintos: 15969 
-Correlacao (Pearson) = 0.4782 | (Spearman) = 0.8259
+Pares fundo-mes: 37458 | fundos distintos: 2060 
+Correlacao (Pearson) = 0.4816 | (Spearman) = 0.8001
 
 ===== B) HHI DEFASADO (mes t-1) vs erro (mes t) =====
-Pares fundo-mes: 112767 | fundos distintos: 15969 
-Correlacao (Pearson) = 0.5086 | (Spearman) = 0.8216
+Pares fundo-mes: 37458 | fundos distintos: 2060 
+Correlacao (Pearson) = 0.4944 | (Spearman) = 0.7967
 
 ===== C) DENTRO DO FUNDO (demeaned): fundos com >=10 meses =====
-Fundos: 1899 | pares fundo-mes: 50093 
-Correlacao (Pearson) = 0.1535 | (Spearman) = 0.1193
+Fundos: 1690 | pares fundo-mes: 35712 
+Correlacao (Pearson) = 0.0749 | (Spearman) = 0.1070
 Mensagen de aviso:
 In prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L,  :
   'big.mark' e 'decimal.mark' são ambos '.', o que pode ser confuso

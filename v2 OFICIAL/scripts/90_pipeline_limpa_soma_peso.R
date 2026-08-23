@@ -82,7 +82,7 @@ roda_horizonte <- function(h) {
   atual <- E[, .(cod_fundo, gestora_grupo, ativo, ym, d, peso, ym_fut = addm(ym, h))]
   M <- merge(atual, fut, by.x = c("cod_fundo","ativo","ym_fut"), by.y = c("cod_fundo","ativo","ym_fut_key"))
   M[, dw := peso_fut - peso]
-  treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym_fut <= 202607L]
+  treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym_fut <= 202112L]
   fit <- lm(dw ~ 0 + d, data = treino); lam <- unname(coef(fit)["d"])
   teste[, erro_oos := dw - lam * d]; teste[, erro_naive := dw]; teste[, horizonte := h]
   cat(sprintf("h=%d: treino %d | teste %d | lambda=%.4f | RMSE ajuste=%.6f | RMSE naive=%.6f\n",

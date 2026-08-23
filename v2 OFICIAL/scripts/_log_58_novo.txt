@@ -1,10 +1,8 @@
-Painel multiativo (universo completo): 55622901 linhas
-Apos merge AUM/cotistas/fluxo/FIC: 55622901 linhas (deve ser igual a antes)
-Apos merge beta_fundo: 55622901 linhas (deve ser igual a antes)
-Mensagen de aviso:
-In log(aum_prev) : NaNs produzidos
+Painel multiativo (universo completo): 10818395 linhas
+Apos merge AUM/cotistas/fluxo/FIC: 10818395 linhas (deve ser igual a antes)
+Apos merge beta_fundo: 10818395 linhas (deve ser igual a antes)
 
-Apos exigir as 5 caracteristicas completas: 39407709 linhas | 20223 fundos | 1293 ativos
-VALE3 na amostra final (universo completo): 249889 (pipeline original tinha 8.335 no universo VALE3-ancorado -- comparar de perto)
+Apos exigir as 5 caracteristicas completas: 8415673 linhas | 2576 fundos | 513 ativos
+VALE3 na amostra final (universo completo): 73263 (pipeline original tinha 8.335 no universo VALE3-ancorado -- comparar de perto)
 
 OK - salvo em 'v2 OFICIAL/data/painel_universo_completo_final.csv'

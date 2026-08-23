@@ -1,0 +1,16 @@
+Painel: 39407709 linhas | 20223 fundos | 1293 ativos
+Fundo-meses unicos p/ padronizacao: 469369 
+
+Celulas (ativo,mes) com >=15 holders: 27478 | 1085 ativos distintos | 39382612 obs
+Tempo: 487 s | 27440 celulas estimadas | 38 celulas nao convergiram (excluidas)
+
+==== Ativos com >=24 meses estimados: 503 ====
+--- por sinal do coeficiente (log-odds) ---
+b_aum    mediana=-0.11779 | % mesmo sinal que VALE3=74.8%
+b_cot    mediana= 0.17399 | % mesmo sinal que VALE3=80.3%
+b_fic    mediana=      NA | % mesmo sinal que VALE3=NA%
+b_flow   mediana= 0.26768 | % mesmo sinal que VALE3=32.0%
+b_betaf  mediana= 1.10003 | % mesmo sinal que VALE3=98.0%
+Pseudo-R2 medio: 0.4306 
+
+OK - salvo em 'theta_universo_completo.csv', 'peso_pred_universo_completo.csv' e 'theta_media_ativo_universo_completo.csv'

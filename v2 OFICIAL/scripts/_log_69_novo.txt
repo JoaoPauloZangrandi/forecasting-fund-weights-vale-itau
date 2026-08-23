@@ -1,6 +1,6 @@
 null device 
           1 
-Fig 1 OK - 716 ativos plotados
+Fig 1 OK - 343 ativos plotados
 null device 
           1 
 Fig 2 OK - 10 pares de gestora plotados

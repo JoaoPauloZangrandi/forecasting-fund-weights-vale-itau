@@ -46,7 +46,7 @@ roda_horizonte <- function(h) {
   M[, dw_corrigido := peso_fut - peso_mecanico]
 
   treino <- M[ym < CORTE]
-  teste  <- M[ym >= CORTE & ym_fut <= 202607L]
+  teste  <- M[ym >= CORTE & ym_fut <= 202112L]
   cat(sprintf("\nh=%d: treino %d obs | teste %d obs | teste com dw_corrigido: %d (%.1f%%)\n",
               h, nrow(treino), nrow(teste), teste[!is.na(dw_corrigido),.N],
               100*teste[!is.na(dw_corrigido),.N]/nrow(teste)))

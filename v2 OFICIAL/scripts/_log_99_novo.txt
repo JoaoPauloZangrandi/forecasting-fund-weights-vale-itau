@@ -1,18 +1,18 @@
-Painel (ja limpo de soma_peso>150%, corrigido 15/08/2026 -- comentario antigo dizia 105%): 39407709 linhas | 20223 fundos
-Linhas excluidas por falta de HHI defasado (sem dado em t-1): 13450153 de 39407709 (34.13%)
-Fundos: 20223 -> 19259
-Celulas (ativo,mes) com >=15 holders: 21555 
-Tempo Etapa 1/erro/theta (HHI defasado): 335.9 s | 27 celulas nao convergiram | n_erro = 25928621 | n_theta = 21528 
+Painel (ja limpo de soma_peso>150%, corrigido 15/08/2026 -- comentario antigo dizia 105%): 8415673 linhas | 2576 fundos
+Linhas excluidas por falta de HHI defasado (sem dado em t-1): 203379 de 8415673 (2.42%)
+Fundos: 2576 -> 2507
+Celulas (ativo,mes) com >=15 holders: 13740 
+Tempo Etapa 1/erro/theta (HHI defasado): 69.4 s | 17 celulas nao convergiram | n_erro = 8195278 | n_theta = 13723 
 
-==== Resumo entre 21528 celulas ====
-Significancia HHI_lag: 14657 de 21528 (68.1%) | % positivo (sig): 13594/14657
-pseudo-R2 medio (piso -1): 0.5128
-h=1: treino 3648355 | teste 9016081 | lambda=0.0704 | RMSE ajuste=0.004111 | RMSE naive=0.004111
-h=3: treino 3410691 | teste 9399282 | lambda=0.1473 | RMSE ajuste=0.005973 | RMSE naive=0.005849
-h=6: treino 3207327 | teste 6636861 | lambda=0.2205 | RMSE ajuste=0.007506 | RMSE naive=0.007364
-h=12: treino 2938054 | teste 3510426 | lambda=0.3382 | RMSE ajuste=0.009741 | RMSE naive=0.009428
+==== Resumo entre 13723 celulas ====
+Significancia HHI_lag: 10210 de 13723 (74.4%) | % positivo (sig): 9767/10210
+pseudo-R2 medio (piso -1): 0.5314
+h=1: treino 3648355 | teste 3795814 | lambda=0.0704 | RMSE ajuste=0.004033 | RMSE naive=0.004095
+h=3: treino 3410691 | teste 3178952 | lambda=0.1473 | RMSE ajuste=0.005850 | RMSE naive=0.006040
+h=6: treino 3207327 | teste 2473502 | lambda=0.2205 | RMSE ajuste=0.007097 | RMSE naive=0.007454
+h=12: treino 2938054 | teste 1401778 | lambda=0.3382 | RMSE ajuste=0.008546 | RMSE naive=0.009198
 
-RMSE h=1: 0.004111 | h=3: 0.005973 | h=6: 0.007506 | h=12: 0.009741
-RMSE ingenua h=1: 0.004111 | h=3: 0.005849 | h=6: 0.007364 | h=12: 0.009428
+RMSE h=1: 0.004033 | h=3: 0.005850 | h=6: 0.007097 | h=12: 0.008546
+RMSE ingenua h=1: 0.004095 | h=3: 0.006040 | h=6: 0.007454 | h=12: 0.009198
 
 OK - pipeline Etapa 1 + Etapa 3 (universo completo, 6 caracteristicas) completa

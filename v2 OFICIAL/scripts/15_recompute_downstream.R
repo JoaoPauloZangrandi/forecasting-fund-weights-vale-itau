@@ -63,7 +63,7 @@ fwrite(por_mes_u, file.path(REPO, "v2 OFICIAL/data/v2_ajuste_parcial_por_mes.csv
 meses_ord <- sort(unique(M$ym))
 cat("\nMeses cobertos pelo painel de ajuste parcial:", min(meses_ord), "-", max(meses_ord), "\n")
 CORTE <- 202001L
-treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym < 202607L]
+treino <- M[ym < CORTE]; teste <- M[ym >= CORTE & ym < 202112L]
 cat("Treino:", nrow(treino), "obs (", min(treino$ym), "-", max(treino$ym), ") | Teste:", nrow(teste),
     "obs (", min(teste$ym), "-", max(teste$ym), ")\n")
 

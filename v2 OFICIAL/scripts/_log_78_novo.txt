@@ -1,11 +1,11 @@
-h1 antes do filtro: 9016081 | depois (so celulas com posicao de verdade): 3140040 
-Fundos com >=6 obs de teste (pos filtro): 14994 
-Amostra final (RMSE + beta, pos filtro): 14994 fundos
+h1 antes do filtro: 3795814 | depois (so celulas com posicao de verdade): 1552376 
+Fundos com >=6 obs de teste (pos filtro): 2039 
+Amostra final (RMSE + beta, pos filtro): 2039 fundos
 
-Correlacao RMSE vs beta bruto (pos filtro): 0.377 
-Correlacao RMSE vs |beta-1| (pos filtro): -0.342 
+Correlacao RMSE vs beta bruto (pos filtro): 0.449 
+Correlacao RMSE vs |beta-1| (pos filtro): -0.437 
 
-Regressao RMSE ~ beta: coef= 0.01013  p= 0  R2= 0.1423 
+Regressao RMSE ~ beta: coef= 0.00754  p= 7.43e-102  R2= 0.2018 
 null device 
           1 
 

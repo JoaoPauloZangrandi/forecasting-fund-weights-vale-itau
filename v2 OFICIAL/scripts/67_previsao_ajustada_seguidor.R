@@ -32,7 +32,7 @@ cat("  (de", nrow(beta_tab), "candidatos brutos --",
 # ---- base de erro (u) por (fundo,ativo,ym), mesma de sempre ----------------
 M <- fread(file.path(REPO, "v2 OFICIAL/data/ajuste_parcial_universo_completo_h1.csv"))
 M[, cod_fundo := as.character(cod_fundo)]
-lam <- 0.0444  # atualizado 16/08/2026 apos corrigir retorno_fundo_mensal.csv (estava sem cobertura 2022-2026, dw_corrigido ficava NA e truncava a amostra em 202111; era 0.0690)
+lam <- 0.0690  # revertido 23/08/2026: pipeline de volta a 2016-2021 (sem 2022-2026), lambda original confirmado pelo log_61 fresco
 M[, u := dw_corrigido - lam * d]
 M <- M[!is.na(u)]
 

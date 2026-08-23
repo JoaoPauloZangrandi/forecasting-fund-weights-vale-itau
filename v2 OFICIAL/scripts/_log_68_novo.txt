@@ -1,41 +1,41 @@
-Previsoes ajustadas (seguidor,ativo,mes): 364848 
-Com AUM disponivel: 364848 de 364848  (100.0%)
+Previsoes ajustadas (seguidor,ativo,mes): 359861 
+Com AUM disponivel: 359861 de 359861  (100.0%)
 
 ===== Agregacao por GESTORA (soma de fluxo previsto, por ativo-mes) =====
-Linhas (gestora,ativo,mes): 71121 
+Linhas (gestora,ativo,mes): 70595 
 
 ===== NET DE MERCADO por ATIVO-MES (soma de TODAS as gestoras) =====
 
 --- Top 10 maior pressao COMPRADORA liquida (qualquer ativo-mes) ---
                            ativo     ym fluxo_liquido_reais n_fundos n_gestoras
                           <char>  <int>               <num>    <int>      <int>
- 1:         PETROBRAS ON - PETR3 202001             2046.86      264         19
- 2: PETROBRAS DISTRIB ON - BRDT3 202106             1678.86      490         23
- 3:  BANCO INTER UNT N2 - BIDI11 202104              866.51      225         20
- 4:   ITAUUNIBANCO PN N1 - ITUB4 202106              761.48      285         18
- 5:   ITAUUNIBANCO PN N1 - ITUB4 201901              555.46      171         17
- 6:         PETROBRAS ON - PETR3 201905              538.58      171         20
- 7:           VALE ON N1 - VALE3 202104              534.74      230         21
- 8:         PETROBRAS PN - PETR4 201811              521.54       72         14
- 9:           VALE ON N1 - VALE3 201707              425.25      197         16
-10:         FIBRIA ON NM - FIBR3 201806              404.99      114         16
+ 1:         PETROBRAS ON - PETR3 202001             2031.85      290         19
+ 2: PETROBRAS DISTRIB ON - BRDT3 202106             1441.74      485         23
+ 3:  BANCO INTER UNT N2 - BIDI11 202104              842.14      238         20
+ 4:   ITAUUNIBANCO PN N1 - ITUB4 202106              722.84      275         18
+ 5:   ITAUUNIBANCO PN N1 - ITUB4 201901              571.18      166         16
+ 6:           VALE ON N1 - VALE3 201806              543.25      179         18
+ 7:         PETROBRAS ON - PETR3 201905              521.95      179         21
+ 8:         PETROBRAS PN - PETR4 201811              458.64       78         15
+ 9:         FIBRIA ON NM - FIBR3 201806              421.70      114         15
+10:           VALE ON N1 - VALE3 201707              408.69      198         17
 
 --- Top 10 maior pressao VENDEDORA liquida (qualquer ativo-mes) ---
                            ativo     ym fluxo_liquido_reais n_fundos n_gestoras
                           <char>  <int>               <num>    <int>      <int>
- 1:           VALE ON N1 - VALE3 202103            -1036.55      230         22
- 2: PETROBRAS DISTRIB ON - BRDT3 202105             -995.89      445         23
- 3:   ITAUUNIBANCO PN N1 - ITUB4 201902             -728.01      178         19
- 4:         PETROBRAS ON - PETR3 202002             -662.65      280         23
- 5:           VALE ON N1 - VALE3 202011             -659.63      219         22
- 6:           VALE ON N1 - VALE3 202101             -611.06      243         23
- 7:         PETROBRAS PN - PETR4 202111             -549.85      189         22
- 8:   ITAUUNIBANCO PN N1 - ITUB4 201812             -484.64      174         17
- 9:         PETROBRAS PN - PETR4 201812             -455.47       71         14
-10:           VALE ON N1 - VALE3 202105             -454.57      227         21
+ 1: PETROBRAS DISTRIB ON - BRDT3 202105             -885.73      439         23
+ 2:   ITAUUNIBANCO PN N1 - ITUB4 201902             -753.32      171         18
+ 3:           VALE ON N1 - VALE3 202103             -634.43      202         20
+ 4:         PETROBRAS ON - PETR3 202002             -599.66      308         23
+ 5:         PETROBRAS PN - PETR4 202111             -571.41      184         23
+ 6:           VALE ON N1 - VALE3 202101             -550.84      229         21
+ 7:         PETROBRAS PN - PETR4 201812             -518.90       77         15
+ 8:   ITAUUNIBANCO PN N1 - ITUB4 201812             -506.19      170         16
+ 9:           VALE ON N1 - VALE3 201807             -499.99      165         18
+10:         PETROBRAS ON - PETR3 202111             -489.32      227         21
 
 --- Resumo geral do fluxo liquido (em R$ milhoes) ---
-      Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
--1.037e+03 -2.231e+00 -1.032e-02 -1.413e+00  1.118e+00  2.047e+03 
+     Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+-885.7348   -2.4790   -0.0146   -1.7167    1.1581 2031.8512 
 
 OK - salvo 'sinal_robo_fundo_nivel.csv', 'sinal_robo_por_gestora.csv', 'sinal_robo_net_mercado.csv'

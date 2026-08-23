@@ -1,5 +1,5 @@
-[config_periodo.R] Range de anos ativo: 2016:2026
-Universo completo (mapa gestora): 23649 fundos
+[config_periodo.R] Range de anos ativo: 2016:2021
+Universo completo (mapa gestora): 3254 fundos
 [1] TRUE
 == ano 2016 ==
    1231597 linhas (so posicao direta) | 1700 fundos | 323 ativos | VALE3: 11355 | sem gestora: 0 
@@ -13,23 +13,13 @@ Universo completo (mapa gestora): 23649 fundos
    2150581 linhas (so posicao direta) | 2218 fundos | 354 ativos | VALE3: 19885 | sem gestora: 0 
 == ano 2021 ==
    2963404 linhas (so posicao direta) | 2516 fundos | 422 ativos | VALE3: 22164 | sem gestora: 0 
-== ano 2022 ==
-   12747963 linhas (so posicao direta) | 17019 fundos | 597 ativos | VALE3: 64930 | sem gestora: 0 
-== ano 2023 ==
-   13418029 linhas (so posicao direta) | 16786 fundos | 689 ativos | VALE3: 74256 | sem gestora: 0 
-== ano 2024 ==
-   9732274 linhas (so posicao direta) | 17376 fundos | 569 ativos | VALE3: 59345 | sem gestora: 0 
-== ano 2025 ==
-   7467145 linhas (so posicao direta) | 15498 fundos | 621 ativos | VALE3: 43351 | sem gestora: 0 
-== ano 2026 ==
-   1459995 linhas (so posicao direta) | 10230 fundos | 450 ativos | VALE3: 7685 | sem gestora: 0 
 Mensagens de aviso:
 1: In eval(jsub, SDenv, parent.frame()) : NAs introduzidos por coerção
 2: In eval(jsub, SDenv, parent.frame()) : NAs introduzidos por coerção
 3: In eval(jsub, SDenv, parent.frame()) : NAs introduzidos por coerção
 4: In eval(jsub, SDenv, parent.frame()) : NAs introduzidos por coerção
 
-TOTAL linhas gravadas: 55645951 
-TOTAL VALE3: 345916 (esperado: 96.349 SO' se ANO_FIM==2021; ver PLANO_EXPANSAO_2021_2026.md)
+TOTAL linhas gravadas: 10820545 
+TOTAL VALE3: 96349 (esperado: 96.349 SO' se ANO_FIM==2021; ver PLANO_EXPANSAO_2021_2026.md)
 
 OK - salvo em ' C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/data/painel_multiativo_direto_completo.csv '

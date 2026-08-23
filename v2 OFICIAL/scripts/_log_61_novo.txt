@@ -1,17 +1,17 @@
-Base peso_pred: 25928621 obs
-Pares (t,t+1) disponiveis: 12664436 
+Base peso_pred: 8195278 obs
+Pares (t,t+1) disponiveis: 7444169 
 
-Cobertura de retorno de ativo: 12447203 de 12664436  (98.3%)
-Cobertura de retorno de fundo: 12664277 de 12664436  (100.0%)
+Cobertura de retorno de ativo: 7422778 de 7444169  (99.7%)
+Cobertura de retorno de fundo: 7444012 de 7444169  (100.0%)
 
-Pares com dw_corrigido calculavel (precisa de r_ativo E retorno_fundo): 12447044  de 12664436 (98.3%)
+Pares com dw_corrigido calculavel (precisa de r_ativo E retorno_fundo): 7422621  de 7444169 (99.7%)
 
-===== Amostra comum (so onde dw_corrigido existe), n = 12447044 =====
-lambda SEM correcao mecanica  = 0.0444 (R2=0.0206)
-lambda COM correcao mecanica  = 0.0444 (R2=0.0219)
+===== Amostra comum (so onde dw_corrigido existe), n = 7422621 =====
+lambda SEM correcao mecanica  = 0.0691 (R2=0.0320)
+lambda COM correcao mecanica  = 0.0690 (R2=0.0342)
 
-Diferenca (corrigido - bruto): -0.0000 (-0.0% do valor bruto)
+Diferenca (corrigido - bruto): -0.0001 (-0.2% do valor bruto)
 
-[referencia] lambda SEM correcao, amostra INTEIRA (n=12664436) = 0.0436
+[referencia] lambda SEM correcao, amostra INTEIRA (n=7444169) = 0.0690
 
 OK - salvo em 'v2 OFICIAL/data/ajuste_parcial_universo_completo_h1.csv'

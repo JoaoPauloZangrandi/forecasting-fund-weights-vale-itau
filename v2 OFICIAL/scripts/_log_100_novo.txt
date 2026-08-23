@@ -1,59 +1,59 @@
-Painel universo completo (bruto): 55645951 linhas | 23527 fundos
-Total de pares fundo-mes: 639944 
+Painel universo completo (bruto): 10820545 linhas | 3228 fundos
+Total de pares fundo-mes: 124132 
 
 ===== Distribuicao da soma de peso por fundo-mes =====
-    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
- 0.00000  0.07053  0.19461  0.36127  0.68945 37.43921 
-Pares fundo-mes com soma_peso > 1.01 : 6289 (0.983%)
-Pares fundo-mes com soma_peso > 1.05 : 4275 (0.668%)
-Pares fundo-mes com soma_peso > 1.10 : 2833 (0.443%)
-Pares fundo-mes com soma_peso > 1.25 : 1267 (0.198%)
-Pares fundo-mes com soma_peso > 1.50 : 471 (0.074%)
-Pares fundo-mes com soma_peso > 2.00 : 95 (0.015%)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.1373  0.6057  0.5229  0.8784  5.8930 
+Pares fundo-mes com soma_peso > 1.01 : 1681 (1.354%)
+Pares fundo-mes com soma_peso > 1.05 : 1072 (0.864%)
+Pares fundo-mes com soma_peso > 1.10 : 634 (0.511%)
+Pares fundo-mes com soma_peso > 1.25 : 191 (0.154%)
+Pares fundo-mes com soma_peso > 1.50 : 34 (0.027%)
+Pares fundo-mes com soma_peso > 2.00 : 12 (0.010%)
 
 ===== Fundos distintos afetados (soma_peso > 1,10) =====
-Fundos distintos: 567 de 23527 
+Fundos distintos: 134 de 3228 
 
 ===== Comparando com a trilha multiativo (597 fundo-mes / 73 fundos ja conhecidos) =====
-Fundos contaminados (>105%) nesta base: 133 
+Fundos contaminados (>105%) nesta base: 23 
 Desses, quantos JA apareciam na trilha multiativo: 9 
-Fundos contaminados NOVOS (so existem no universo completo, nunca auditados antes): 124 
+Fundos contaminados NOVOS (so existem no universo completo, nunca auditados antes): 14 
 
 ===== Confirmando o caso 292826 (Vinci Partners) especificamente =====
    cod_fundo   ano   mes soma_peso n_ativos
-      <char> <int> <int>     <num>    <int>
+       <int> <int> <int>     <num>    <int>
 1:    292826  2021     4  4.773170       30
 2:    292826  2021     3  4.983707       31
 
 ===== Os 20 casos mais extremos =====
-             cod_fundo   ano   mes soma_peso n_ativos
-                <char> <int> <int>     <num>    <int>
- 1: 41.888.252/0001-86  2022     6     37.44      187
- 2: 43.761.719/0001-58  2022     5      7.81       28
- 3:             527106  2020     4      5.89       26
- 4: 41.884.595/0001-72  2022     5      5.78      184
- 5: 41.907.843/0001-53  2022     5      5.40      182
- 6: 41.907.811/0001-58  2022     5      5.38      182
- 7:             292826  2021     3      4.98       31
- 8: 18.832.847/0001-06  2025     3      4.82       10
- 9:             292826  2021     4      4.77       30
-10: 18.832.847/0001-06  2025     4      4.71       11
-11: 18.832.847/0001-06  2025     7      4.53       12
-12:             324809  2018     7      4.51       30
-13: 18.832.847/0001-06  2025     6      4.45       12
-14: 18.832.847/0001-06  2025    12      4.38       11
-15: 54.407.607/0001-10  2026     3      4.13      118
-16: 48.554.248/0001-20  2023     1      4.06       55
-17: 18.832.847/0001-06  2025     1      3.91        9
-18: 18.832.847/0001-06  2025     2      3.77        9
-19: 18.832.847/0001-06  2025    10      3.67       13
-20:             480886  2018    11      3.66       84
-             cod_fundo   ano   mes soma_peso n_ativos
+    cod_fundo   ano   mes soma_peso n_ativos
+        <int> <int> <int>     <num>    <int>
+ 1:    527106  2020     4      5.89       26
+ 2:    292826  2021     3      4.98       31
+ 3:    292826  2021     4      4.77       30
+ 4:    324809  2018     7      4.51       30
+ 5:    480886  2018    11      3.66       84
+ 6:    559113  2020    10      2.97       15
+ 7:    604331  2021     6      2.95       56
+ 8:    293067  2017     1      2.89        7
+ 9:    476072  2018    11      2.85       23
+10:    499943  2019     6      2.62       48
+11:    326143  2016     8      2.07       16
+12:    572853  2021     1      2.04      102
+13:    526150  2020     6      1.93      148
+14:    514144  2019    11      1.74       33
+15:    326143  2016    11      1.72       26
+16:    326143  2016     4      1.71        7
+17:    290912  2019     8      1.66      153
+18:    469254  2019    10      1.65      101
+19:    474282  2019    10      1.65      105
+20:    591831  2021     6      1.65       57
+    cod_fundo   ano   mes soma_peso n_ativos
 
 
 ===== LIMPEZA =====
-Fundo-mes excluidos (soma_peso > 1.50): 471 de 639944 (0.074%)
-Painel limpo: 55622901 linhas ( 23050 removidas ) | 23526 fundos
+Fundo-mes excluidos (soma_peso > 1.50): 34 de 124132 (0.027%)
+Painel limpo: 10818395 linhas ( 2150 removidas ) | 3228 fundos
 [1] TRUE
 
 OK - painel_multiativo_direto_completo.csv sobrescrito (limpo); backup em painel_multiativo_direto_completo_ANTES_LIMPEZA.csv.bak 

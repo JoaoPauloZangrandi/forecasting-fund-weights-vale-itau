@@ -1,27 +1,26 @@
-erro_e_multiativo.csv (com HHI): 25928621 obs
+erro_e_multiativo.csv (com HHI): 8195278 obs
 
 ===== ETAPA 1: estatisticas do erro e (6 caracteristicas, com HHI) =====
-N = 25928621
+N = 8195278
 Media = 0.00000001
-Desvio-padrao = 0.0155
+Desvio-padrao = 0.0117
 Mediana = -0.0004
-Minimo / Maximo = -0.999 / 0.996
-% de obs com e>0 = 21.3%
-Assimetria = 20.99
-Curtose = 1328.27 (normal=3)
-Previsoes (peso_pred) fora de [0,1]: 0 de 25928621
+Minimo / Maximo = -0.688 / 0.985
+% de obs com e>0 = 25.4%
+Assimetria = 11.96
+Curtose = 774.47 (normal=3)
+Previsoes (peso_pred) fora de [0,1]: 0 de 8195278
 
 ===== ETAPA 2: ajuste parcial pooled, amostra completa =====
-Pares de meses consecutivos: 12664436
-Lambda (pooled, amostra completa) = 0.0436
-N (erro u) = 12664436
-Media(u) = -0.00003515
-Desvio-padrao(u) = 0.0044
+Pares de meses consecutivos: 7444169
+Lambda (pooled, amostra completa) = 0.0690
+N (erro u) = 7444169
+Media(u) = -0.00004117
+Desvio-padrao(u) = 0.0045
 Mediana(u) = -0.0000
-Minimo / Maximo = -0.915 / 0.798
-% de obs com u>0 = 33.7%
-Assimetria = -0.17
-Curtose = 1971.31 (normal=3)
-Error in fwrite(M, file.path(REPO, "v2 OFICIAL/data/erro_u_multiativo.csv")) : 
-  No space left on device: 'C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/data/erro_u_multiativo.csv'
-Execução interrompida
+Minimo / Maximo = -0.892 / 0.592
+% de obs com u>0 = 33.4%
+Assimetria = -1.48
+Curtose = 892.04 (normal=3)
+
+OK
