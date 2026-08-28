@@ -172,7 +172,8 @@ em que $x_{i,n,t}$ reúne seis características do fundo (Seção~\ref{sec:dados
 AUM), número de cotistas (log), indicador de fundo de cotas (FIC), fluxo de captação/resgate
 sobre o patrimônio, beta do próprio fundo, e a concentração do restante da carteira
 ($\text{HHI}_{\text{resto}}$, definida na equação~\eqref{eq:hhi-resto} abaixo) --- todas
-padronizadas, exceto o indicador de FIC, e todas medidas no fechamento do mês anterior
+padronizadas, exceto o indicador de FIC e o fluxo de captação/resgate sobre o patrimônio, e
+todas medidas no fechamento do mês anterior
 ($t-1$), sem exceção. $\theta_{n,t}$ é o vetor de coeficientes daquele ativo naquele mês,
 estimado por máxima verossimilhança (regressão logística quase-binomial), separadamente para
 cada célula (ativo, mês) com número mínimo de fundos detentores, sem nenhuma etapa de agregação
@@ -242,8 +243,8 @@ boa quanto?
 Toda esta seção usa a base final da Tabela~\ref{tab:amostra} (2.507 fundos, 41 grupos de
 gestora, 512 ativos, 8.212.294 observações, 59 meses) --- uma única base do início ao fim. A
 Etapa 1 é estimada célula a célula (ativo, mês), com exigência mínima de 15 fundos holders por
-célula; com o corte de qualidade de dado mais permissivo (soma\_peso $>150\%$ em vez de
-$>105\%$, Seção~\ref{sec:dados}), o único fundo do grupo Legacy Capital passa a contribuir com
+célula; com o corte de qualidade de dado da Seção~\ref{sec:dados} (soma\_peso $>150\%$), o
+único fundo do grupo Legacy Capital passa a contribuir com
 exatamente uma célula (dez/2021), insuficiente pra aparecer em qualquer tabela desta seção que
 agregue por gestora ao longo do tempo --- Etapa 2 e 3 exigem pares de meses consecutivos, que
 esse fundo não tem --- resultado:
@@ -713,6 +714,17 @@ corrigida do efeito mecânico do preço (dividendos, desdobramentos), para isola
 de valorização passiva. Preço disponível para 519 dos 536 ativos do universo bruto (96,8\%;
 99,65\% do peso agregado).
 
+Como checagem adicional --- não uma mudança de especificação --- o coeficiente de beta do fundo
+($\theta^{bf}$), já positivo em 88,2\% das 13.723 células agregadas
+(Seção~\ref{sec:resultados}, Tabela~\ref{tab:theta}), é reestimado por ativo (média temporal, só
+ativos com $\geq$24 meses de coeficiente estimado) e comparado em sinal ao de VALE3 --- o ativo
+em que este projeto estimou pela primeira vez o modelo da equação~\eqref{eq:cs}, antes de
+generalizar para o universo completo. Entre os 233 ativos com histórico suficiente, 92,3\% têm o
+coeficiente médio de beta do fundo com o mesmo sinal que VALE3 (script
+\texttt{101\_cross\_section\_universo\_completo\_hhi.R}) --- a mais consistente das seis
+características, evidência de que a relação positiva entre beta do fundo e peso na carteira
+generaliza bem além do ativo original.
+
 \FloatBarrier
 \subsection{Correção de efeito mecânico do preço}
 
@@ -775,7 +787,7 @@ h=3 & 0,1473 & 0,1469 & --- & --- \\
 
 \begin{figure}[h]\centering
 \includegraphics[width=0.68\textwidth]{fig1_margem_bruto_vs_corrigido.pdf}
-\caption{Margem vs.\ ingênua ($h=1$), com e sem correção mecânica, por ativo (340 elegíveis,
+\caption{Margem vs.\ ingênua ($h=1$), com e sem correção mecânica, por ativo (343 elegíveis,
 $\geq$100 obs.\ de teste), colorido pela fonte do preço. Fonte: script
 \texttt{69\_figuras\_teste\_estrategia.R}.}
 \label{fig:margem-fonte}
@@ -815,7 +827,7 @@ m = 31.907.281 \text{ testes}
 \label{tab:pares}
 \begin{tabular}{@{}lr@{}}
 \toprule
-Ativos elegíveis (pós filtro de poeira) & 340 \\
+Ativos elegíveis (pós filtro de poeira) & 341 \\
 Pares com $|$correlação$|\geq0{,}6$ & 1.808.886 \\
 \textbf{Pares significativos} ($p_{\text{ajustado}}<0{,}05$) & \textbf{1.248.772} \\
 \quad --- mesma gestora / gestoras diferentes & 454.840 (36\%) / 793.932 (64\%) \\
@@ -897,8 +909,8 @@ acima. Antes de falar em estratégia, o fluxo previsto precisa prever retorno de
 \end{equation}
 Fluxo normalizado pelo valor total da posição (não R\$ bruto) --- senão o teste só capturaria
 ``ativo grande tem fluxo grande'', não poder preditivo de verdade. Rodado em duas versões do
-sinal (com e sem o eco do líder) e duas amostras (completa; restrita aos 212 ativos com margem
-positiva na Etapa~3, de 359 elegíveis, na hipótese de que ruído dos ativos onde o modelo não
+sinal (com e sem o eco do líder) e duas amostras (completa; restrita aos 227 ativos com margem
+positiva na Etapa~3, de 360 elegíveis, na hipótese de que ruído dos ativos onde o modelo não
 funciona bem estivesse diluindo o teste).
 
 \begin{table}[h]\centering\small
