@@ -29,6 +29,37 @@ Orientador: Prof.\ Mauricio Ferraresi}
 \begin{document}
 \maketitle
 
+\begin{center}
+\textbf{\large Resumo}
+\end{center}
+\noindent
+Este trabalho propõe e testa um modelo de fator dinâmico para o peso de ações na carteira de
+fundos de investimento brasileiros, em três etapas: uma cross-section mensal, célula a célula
+(ativo, mês), que estima o peso de cada fundo em função de seis características observáveis
+(tamanho, cotistas, indicador de fundo de cotas, fluxo de captação/resgate, beta do fundo e
+concentração do restante da carteira); um mecanismo de ajuste parcial que modela a velocidade de
+convergência da posição observada ao alvo estimado; e um esquema fora da amostra que testa o
+valor preditivo genuíno do modelo. A base cobre todo o universo de fundos CVM com posição em
+ações entre 2016 e 2021 (2.507 fundos, 41 grupos de gestora, 512 ativos, 8,2 milhões de
+observações). O ajuste parcial estimado ($\widehat\lambda=0{,}069$) vence a previsão ingênua fora
+da amostra nos quatro horizontes testados, com margem crescente. O trabalho aplica essa estrutura
+de erro à detecção de pares de fundos que replicam carteira --- 1,25 milhão de pares
+estatisticamente significativos após correção de Benjamini--Hochberg sobre 31,9 milhões de
+testes --- e testa se o fluxo previsto a partir desse padrão prediz retorno futuro do ativo,
+premissa de qualquer estratégia de \emph{demand-based asset pricing}. O teste é rejeitado: o
+sinal não tem poder explicativo economicamente relevante ($R^2$ entre $0{,}002\%$ e $0{,}165\%$)
+em nenhuma especificação testada. A principal contribuição do trabalho é distinguir, com o mesmo
+rigor metodológico, dois achados que a literatura de fluxo de fundos frequentemente trata como um
+só: a existência de replicação de carteira entre fundos, e sua tradutibilidade em sinal de
+negociação lucrativo --- o primeiro validado, o segundo testado e rejeitado.
+
+\bigskip
+\noindent
+\textbf{Palavras-chave:} fundos de investimento; peso de carteira; ajuste parcial; demand-based
+asset pricing; fluxo de fundos.
+
+\newpage
+
 \tableofcontents
 \newpage
 
