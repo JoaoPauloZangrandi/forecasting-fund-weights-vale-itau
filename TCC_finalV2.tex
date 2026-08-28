@@ -34,8 +34,58 @@ Orientador: Prof.\ Mauricio Ferraresi}
 
 % ======================================================================
 \section{Introdução}
+\label{sec:introducao}
 
-\emph{[Seção a ser escrita por último.]}
+Fundos de investimento brasileiros movimentam trilhões de reais em ativos e são, para boa parte
+das ações negociadas na B3, um bloco de investidores de porte suficiente para que sua carteira
+não seja um detalhe irrelevante para o preço. A pergunta que motiva este trabalho é simples de
+enunciar e difícil de responder com rigor: o que explica o peso que um fundo carrega em cada
+ativo, e essa carteira --- ou sua variação --- ajuda a prever o retorno futuro do próprio ativo?
+A primeira metade da pergunta é o território da literatura de \emph{demand-based asset pricing}
+\cite{koijen2019}: características observáveis do investidor institucional (tamanho, mandato,
+histórico) predizem sistematicamente sua carteira. A segunda metade --- será que essa demanda
+prevista tem poder de precificação --- é testada com menos frequência, e quase nunca no mesmo
+desenho que estima a primeira.
+
+Este trabalho propõe um modelo de três etapas (Seção~\ref{sec:metodologia}) para responder às
+duas metades dessa pergunta com o mesmo dado, do início ao fim, para o universo de fundos
+brasileiros com posição em ações entre 2016 e 2021 (2.507 fundos, 41 grupos de gestora, 512
+ativos, Seção~\ref{sec:dados}). Na primeira etapa, o peso de cada fundo em cada ativo é modelado
+por regressão logística em função de seis características do fundo --- tamanho, cotistas, fundo
+de cotas, fluxo de captação/resgate, beta e concentração do restante da carteira --- estimada
+célula a célula (ativo, mês), sem nenhuma agregação temporal por cima. Na segunda, um mecanismo
+de ajuste parcial modela a velocidade com que a posição observada converge a esse alvo. Na
+terceira, o modelo inteiro é testado fora da amostra, num corte temporal único, contra uma
+previsão ingênua.
+
+Esse desenho é aplicado (Seção~\ref{sec:aplicacao}) a uma pergunta concreta: fundos de gestoras
+diferentes que erram de forma sincronizada, além do que suas características observáveis
+explicam, formam pares de replicação de carteira? A resposta é sim, e estatisticamente robusta
+mesmo depois de corrigir milhões de comparações múltiplas. O passo seguinte --- converter esse
+padrão num sinal de fluxo previsto e perguntar se ele prediz retorno futuro do ativo, a premissa
+de qualquer estratégia de \emph{demand-based asset pricing} --- é testado até o fim e rejeitado:
+o sinal não tem poder preditivo economicamente relevante nesta amostra, neste desenho. Os dois
+resultados são reportados com o mesmo rigor, não porque o segundo seja menos interessante, mas
+porque a literatura de fluxo de fundos frequentemente trata ``existe o padrão'' e ``dá para
+lucrar com ele'' como a mesma pergunta (Seção~\ref{sec:revisao}) --- e este trabalho mostra que
+não são.
+
+A contribuição deste trabalho é, portanto, menos um resultado isolado e mais a cadeia completa,
+testada de ponta a ponta com dado público da CVM: característica do fundo $\to$ peso previsto
+$\to$ ajuste parcial $\to$ desempenho fora da amostra $\to$ sinal de negociação $\to$ retorno.
+Cada elo é testado separadamente, e o resultado negativo do último elo é registrado com o mesmo
+peso do positivo --- uma disciplina que a literatura revisada na Seção~\ref{sec:revisao} nem
+sempre segue.
+
+O restante deste trabalho está organizado da seguinte forma. A Seção~\ref{sec:revisao} revisa a
+literatura de precificação baseada em demanda, comportamento de fluxo de fundos e modelos de
+ajuste parcial. A Seção~\ref{sec:dados} descreve as fontes de dado público da CVM e a construção
+da amostra. A Seção~\ref{sec:metodologia} formaliza as três etapas do modelo. A
+Seção~\ref{sec:resultados} apresenta os resultados de cada etapa, com ênfase no desempenho fora
+da amostra e na heterogeneidade entre gestoras. A Seção~\ref{sec:aplicacao} aplica o modelo à
+detecção de pares replicantes e testa, na Seção~\ref{sec:teste-decisivo}, se o sinal resultante
+prediz retorno --- o teste decisivo do trabalho. A Seção~\ref{sec:conclusao} conclui, com uma
+discussão das limitações e extensões futuras.
 
 % ======================================================================
 \section{Revisão de literatura}
@@ -1072,6 +1122,7 @@ separadamente, em vez de assumir que o segundo decorre do primeiro.
 % ======================================================================
 \FloatBarrier
 \section{Conclusão}
+\label{sec:conclusao}
 
 Este trabalho propôs e testou, de ponta a ponta, um modelo de fator dinâmico para o peso de
 ações na carteira de fundos de investimento brasileiros: uma etapa de corte transversal
