@@ -13,6 +13,7 @@
 \usepackage{longtable}
 \usepackage{float}
 \usepackage[hidelinks]{hyperref}
+\usepackage[alf]{abntex2cite}
 \graphicspath{{v2 OFICIAL/figuras/}{v2 OFICIAL/figuras_estrategia/}}
 \setstretch{1.4}
 \captionsetup{font=small,labelsep=colon}
@@ -38,11 +39,90 @@ Orientador: Prof.\ Mauricio Ferraresi}
 
 % ======================================================================
 \section{Revisão de literatura}
+\label{sec:revisao}
 
-\emph{[Seção a ser desenvolvida após indicação de referências pelo orientador. Áreas de
-inserção previstas: precificação de ativos baseada em demanda (\emph{demand-based asset
-pricing}); comportamento de fundos de investimento e efeitos de fluxo; modelos de ajuste
-parcial em finanças corporativas e de portfólio.]}
+\emph{[Rascunho preparado sem indicação prévia de referências pelo orientador --- a pedido dele,
+para servir de ponto de partida à revisão. Sujeito a revisão e complementação após seus
+comentários.]}
+
+Este trabalho conecta três correntes da literatura de finanças que raramente aparecem juntas no
+mesmo desenho empírico: precificação de ativos baseada em demanda, comportamento de fluxo de
+fundos de investimento, e modelos de ajuste parcial aplicados a decisões de portfólio. Cada uma
+contribui uma peça do desenho de três etapas descrito na Seção~\ref{sec:metodologia} --- e,
+juntas, expõem a lacuna que este trabalho tenta preencher: a maior parte dessa literatura foi
+construída e testada no mercado americano; evidência equivalente para o mercado brasileiro,
+ligando característica do fundo a peso previsto e peso previsto a retorno futuro do ativo numa
+mesma base de dados, é escassa.
+
+\subsection{Precificação de ativos baseada em demanda}
+
+A premissa de que a demanda de investidores institucionais por ativos específicos afeta preço de
+forma economicamente relevante --- não apenas ruído absorvido por arbitradores perfeitamente
+elásticos --- ganha formalização mais completa em \citeonline{koijen2019}, que estimam um sistema
+de demanda a partir das carteiras de diferentes tipos de investidor institucional americano e
+mostram que a elasticidade de demanda observada é ordens de grandeza menor do que modelos de
+mercado eficiente sem fricção preveem: quando instituições rebalanceiam, o preço se move. A
+Etapa~1 deste trabalho (Seção~\ref{sec:metodologia}) responde a uma versão mais restrita da mesma
+pergunta --- o que explica a carteira observada de um fundo, célula a célula (ativo, mês)? ---
+com uma especificação de corte transversal mais simples (regressão logística por característica
+do fundo) do que o sistema de demanda completo de \citeonline{koijen2019}, mas com a mesma lógica
+de fundo: características observáveis do investidor predizem a carteira, e essa previsão é o
+ponto de partida para qualquer pergunta sobre efeito em preço. A Seção~\ref{sec:teste-decisivo}
+testa esse elo diretamente --- será que o desvio da carteira prevista por essas características
+prediz retorno futuro? --- com identificação mais fraca do que a variação em índices que
+\citeonline{koijen2019} explora, mas aplicada a um mercado onde essa pergunta específica ainda
+não tinha resposta.
+
+\subsection{Comportamento de fundos de investimento e efeitos de fluxo}
+
+Uma literatura anterior e mais extensa documenta que o fluxo de fundos de investimento --- não
+só sua carteira em nível --- move preço. \citeonline{lakonishok1992} estão entre os primeiros a
+quantificar o efeito de negociação institucional em bloco sobre preço e a propor uma medida de
+\emph{herding} (fundos negociando na mesma direção, no mesmo ativo, no mesmo período) que se
+tornou padrão na literatura seguinte; \citeonline{wermers1999} aplica essa medida a fundos
+mútuos americanos e encontra herding moderado, mas concentrado em ações pequenas e de
+crescimento, com efeito de preço mensurável nos trimestres seguintes --- precursor direto da
+pergunta que a Seção~\ref{sec:aplicacao} faz para fundos brasileiros. \citeonline{coval2007} e
+\citeonline{edelen2001} deslocam o foco para o mecanismo: fundos que sofrem resgate (ou recebem
+captação) grande são forçados a vender (ou comprar) posições existentes por razões não
+relacionadas a informação sobre o ativo, criando pressão de preço que reverte parcialmente ---
+\emph{fire sales} no primeiro caso, efeito agregado de fluxo trimestral no segundo.
+\citeonline{lou2012} formaliza essa ideia num sinal de retorno esperado: fluxo previsto (a partir
+de fluxo passado do fundo e sua carteira) prediz retorno futuro do ativo, com poder fora da
+amostra economicamente relevante --- o resultado que a Seção~\ref{sec:teste-decisivo} deste
+trabalho tenta replicar, com desenho mais granular (par a par entre fundos replicantes, não fluxo
+agregado por característica), e não encontra. \citeonline{gompers2001},
+\citeonline{chevalier1997} e \citeonline{sirri1998} completam o quadro do lado da demanda: características do
+fundo (tamanho, estilo, fluxo passado, sensibilidade de fluxo a desempenho) explicam
+sistematicamente sua carteira e seu comportamento de negociação, o que motiva diretamente a
+escolha das seis características da Etapa~1 deste trabalho (Tabela~\ref{tab:theta}) --- tamanho,
+cotistas, indicador de fundo de cotas, fluxo/AUM, beta do fundo e concentração da carteira são,
+em essência, uma adaptação dessas características ao dado disponível na CVM.
+
+\subsection{Modelos de ajuste parcial em finanças corporativas e de portfólio}
+
+O mecanismo de ajuste parcial (equação~\eqref{eq:pa}) --- a ideia de que um agente não salta
+instantaneamente para seu alvo, mas fecha uma fração fixa da distância a cada período --- vem
+originalmente da literatura de estrutura de capital: \citeonline{fama2002} e
+\citeonline{flannery2006} estimam a velocidade com que empresas convergem à sua alavancagem-alvo
+e encontram ajuste lento e heterogêneo entre firmas, um padrão que este trabalho replica em outro
+contexto --- $\widehat\lambda\approx0{,}07$ (Seção~\ref{sec:resultados}) implica que um fundo
+fecha, em média, só cerca de $7\%$ da distância ao seu peso-alvo por mês, e a heterogeneidade
+entre gestoras (Tabela~\ref{tab:rmse-gestora}) espelha a heterogeneidade entre firmas já
+documentada por essa literatura. Mais próximo da aplicação aqui, \citeonline{calvet2009} modelam
+diretamente o rebalanceamento de portfólio de investidores individuais suecos como ajuste parcial
+em direção a um peso-alvo e mostram que a maioria dos investidores rebalanceia ativamente, mas de
+forma incompleta e heterogênea --- o mesmo padrão qualitativo encontrado na Etapa~3 deste
+trabalho (persistência de variância entre gestoras, $R^2=0{,}72$, Seção~\ref{sec:resultados}),
+agora estimado para fundos institucionais brasileiros em vez de investidores individuais suecos,
+com o alvo definido por características do fundo (Etapa~1) em vez de um alvo de alocação
+exógeno.
+
+Nenhuma dessas três correntes, isoladamente, testa a cadeia completa --- característica do fundo
+$\to$ peso previsto $\to$ ajuste parcial $\to$ desempenho fora da amostra $\to$ sinal de
+negociação $\to$ retorno --- na mesma base de dados. É essa cadeia completa, com cada etapa
+testada e reportada mesmo quando o resultado é negativo (Seção~\ref{sec:teste-decisivo}), que
+este trabalho propõe como contribuição, aplicada ao mercado de fundos de investimento brasileiro.
 
 % ======================================================================
 \section{Dados}
@@ -898,8 +978,8 @@ do universo --- ainda não é um sinal de demanda de mercado completo.
 \label{sec:teste-decisivo}
 
 Tudo até aqui prevê \emph{mudança de peso dos fundos}. Uma estratégia long/short aposta em
-\emph{retorno do ativo}. A teoria de \emph{demand-based asset pricing} diz que pressão de
-compra empurra preço para cima --- mas isso nunca tinha sido testado com o sinal construído
+\emph{retorno do ativo}. A teoria de \emph{demand-based asset pricing} \cite{koijen2019} diz que
+pressão de compra empurra preço para cima --- mas isso nunca tinha sido testado com o sinal construído
 acima. Antes de falar em estratégia, o fluxo previsto precisa prever retorno de verdade:
 \begin{equation}
 \text{retorno}_{i,t+1} = \alpha + \beta_{\text{ret}}\cdot\text{fluxo\_pct}_{i,t} + \varepsilon_{i,t+1},
@@ -1060,5 +1140,8 @@ nenhum sinal baseado em fluxo de fundos poderia prever retorno no mercado brasil
 naturais incluem combinar múltiplos líderes por par seguidor-ativo em vez de escolher só o mais
 forte, testar o sinal em frequência diferente da mensal, e ampliar a cobertura de preço para
 reduzir o ruído identificado na Seção~\ref{sec:aplicacao} antes de repetir o teste decisivo.
+
+% ======================================================================
+\bibliography{referencias}
 
 \end{document}
