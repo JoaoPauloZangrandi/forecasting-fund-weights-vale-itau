@@ -1,14 +1,14 @@
 Pares pre-filtrados (|corr_contemp|>=0,6, ja SEM posicao-poeira): 1808886 
 
-Pares com p_bh < 0,05 (contemporaneo): 1248772 de 1808886 pre-filtrados
-Maior |corr_contemp| que NAO foi significativo: 0.796 
+Pares com p_bh < 0,05 (contemporaneo): 1285366 de 1808886 pre-filtrados
+Maior |corr_contemp| que NAO foi significativo: 0.786 
 Menor |corr_contemp| que FOI significativo: 0.6 
 
 ===== Distribuicao mesma-gestora vs gestora-diferente (entre significativos) =====
    mesma_gestora      N
           <lgcl>  <int>
-1:          TRUE 454840
-2:         FALSE 793932
+1:          TRUE 461190
+2:         FALSE 824176
 Entre os 1808886 pre-filtrados (antes de exigir significancia):
    mesma_gestora       N
           <lgcl>   <int>
@@ -35,20 +35,20 @@ Entre os 1808886 pre-filtrados (antes de exigir significancia):
 15:    SID NACIONAL ON - CSNA3  269735  433241              19            1
                     gestora_a                 gestora_b mesma_gestora      p_bh
                        <char>                    <char>        <lgcl>     <num>
- 1:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  2.02e-90
- 2:             Sharp Capital    Safra Asset Management         FALSE  1.18e-54
- 3:    Safra Asset Management    Safra Asset Management          TRUE  5.48e-33
- 4: Bradesco Asset Management Bradesco Asset Management          TRUE  4.07e-42
- 5:               SPX Capital               SPX Capital          TRUE  8.72e-30
- 6:               SPX Capital               SPX Capital          TRUE  1.09e-29
- 7: Bradesco Asset Management Bradesco Asset Management          TRUE  2.25e-75
- 8:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 6.79e-111
- 9:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  4.90e-90
-10:                       JGP                       JGP          TRUE  2.16e-29
-11:    Safra Asset Management    Safra Asset Management          TRUE  1.93e-35
-12: Bradesco Asset Management Bradesco Asset Management          TRUE  2.64e-62
-13:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 2.38e-115
-14:    Kapitalo Investimentos Bradesco Asset Management         FALSE  4.94e-38
-15:       BB Asset Management       BB Asset Management          TRUE  1.12e-49
+ 1:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  1.69e-90
+ 2:             Sharp Capital    Safra Asset Management         FALSE  9.85e-55
+ 3:    Safra Asset Management    Safra Asset Management          TRUE  4.58e-33
+ 4: Bradesco Asset Management Bradesco Asset Management          TRUE  3.40e-42
+ 5:               SPX Capital               SPX Capital          TRUE  7.28e-30
+ 6:               SPX Capital               SPX Capital          TRUE  9.10e-30
+ 7: Bradesco Asset Management Bradesco Asset Management          TRUE  1.88e-75
+ 8:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 5.67e-111
+ 9:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE  4.10e-90
+10:                       JGP                       JGP          TRUE  1.80e-29
+11:    Safra Asset Management    Safra Asset Management          TRUE  1.61e-35
+12: Bradesco Asset Management Bradesco Asset Management          TRUE  2.20e-62
+13:    Kapitalo Investimentos    Kapitalo Investimentos          TRUE 1.99e-115
+14:    Kapitalo Investimentos Bradesco Asset Management         FALSE  4.13e-38
+15:       BB Asset Management       BB Asset Management          TRUE  9.35e-50
 
-OK - salvo em 'v2 OFICIAL/data/pares_replicantes_significativos.csv' (1248772 pares)
+OK - salvo em 'v2 OFICIAL/data/pares_replicantes_significativos.csv' (1285366 pares)

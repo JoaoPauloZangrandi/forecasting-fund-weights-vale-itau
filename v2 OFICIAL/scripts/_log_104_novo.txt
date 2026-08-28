@@ -1,0 +1,29 @@
+
+
+=====================================================================
+Amostra: completa (8.383 obs, script 70) | n = 8395 | ativos = 205 | meses = 58 
+=====================================================================
+
+--- Sinal COM eco do lider ---
+  coef = -5.4972e-08 | n meses c/ regressao valida (FM) = 58
+  p-valor  i.i.d.=0.2836 | cluster-ativo=0.4538 | cluster-mes=0.4900 | two-way=0.4660 | Fama-MacBeth=0.4266
+
+--- Sinal SEM eco (so' lambda*d) ---
+  coef = 1.3732e-06 | n meses c/ regressao valida (FM) = 58
+  p-valor  i.i.d.=0.0003 | cluster-ativo=0.0005 | cluster-mes=0.0021 | two-way=0.0022 | Fama-MacBeth=0.0300
+
+
+=====================================================================
+Amostra: restrita a margem>0 (script 71) | n = 6167 | ativos = 138 | meses = 58 
+=====================================================================
+
+--- Sinal COM eco do lider ---
+  coef = 2.1775e-08 | n meses c/ regressao valida (FM) = 58
+  p-valor  i.i.d.=0.7007 | cluster-ativo=0.7314 | cluster-mes=0.7771 | two-way=0.7655 | Fama-MacBeth=0.6376
+
+--- Sinal SEM eco (so' lambda*d) ---
+  coef = 1.0331e-06 | n meses c/ regressao valida (FM) = 58
+  p-valor  i.i.d.=0.0393 | cluster-ativo=0.0503 | cluster-mes=0.0403 | two-way=0.0631 | Fama-MacBeth=0.1663
+
+
+OK - robustez de clustering concluida (nenhum arquivo novo salvo, so' console)

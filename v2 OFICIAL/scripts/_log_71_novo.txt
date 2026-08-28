@@ -1,28 +1,28 @@
-Base original (R/70): 8383 obs
+Base original (R/70): 8395 obs
 Ativos com margem corrigida positiva (Etapa 3, h=1): 227 de 360 
-Obs apos restringir a ativos com margem positiva: 6160 de 8383 
+Obs apos restringir a ativos com margem positiva: 6167 de 8395 
 
 ===== (a) Regressao restrita: retorno(t+1) ~ fluxo(t), so ativos com margem>0 =====
                 Estimate   Std. Error   t value     Pr(>|t|)
-(Intercept) 1.532076e-02 1.667736e-03 9.1865634 5.438346e-20
-fluxo_pct   1.926491e-08 5.731485e-08 0.3361243 7.367886e-01
+(Intercept) 1.541036e-02 1.664630e-03 9.2575279 2.829761e-20
+fluxo_pct   2.177544e-08 5.665521e-08 0.3843502 7.007321e-01
 R2: 2e-05 
 
 --- sinal SEM eco, restrito ---
                      Estimate   Std. Error  t value     Pr(>|t|)
-(Intercept)      1.580346e-02 1.681446e-03 9.398731 7.611902e-21
-fluxo_normal_pct 1.124382e-06 5.084407e-07 2.211432 2.704254e-02
-R2: 0.00079 
+(Intercept)      1.586292e-02 1.678696e-03 9.449553 4.720912e-21
+fluxo_normal_pct 1.033112e-06 5.010554e-07 2.061871 3.926183e-02
+R2: 0.00069 
 
 ===== (b) Quintis, restrito =====
    quintil     n retorno_medio retorno_mediano
      <int> <int>         <num>           <num>
-1:       1  1232   0.016253136     0.011263235
-2:       2  1232   0.009424091     0.003331006
-3:       3  1232   0.013754178     0.005932271
-4:       4  1232   0.012255492     0.006746745
-5:       5  1232   0.024904669     0.019082342
+1:       1  1234    0.01372691     0.010118769
+2:       2  1233    0.01216330     0.005657709
+3:       3  1233    0.01191899     0.005181163
+4:       4  1233    0.01346228     0.006697924
+5:       5  1234    0.02575496     0.020404157
 
-Diferenca quintil5-quintil1: 0.00865 | p-valor: 0.116 
+Diferenca quintil5-quintil1: 0.01203 | p-valor: 0.0293 
 
 OK - salvo

@@ -1,0 +1,14 @@
+Apos filtro de posicao-poeira: 3067111 obs | 347 ativos
+Ativos com >=2 fundos: 341 
+Tempo: 14.8 s
+
+===== VALIDACAO =====
+Pares com |corr|>=0,6 (este script, sem demeaning): 1808886 
+Pares em pares_replicantes_bruto.csv (R/63, ja salvo): 1808886 
+(devem ser IGUAIS -- confirma que a logica deste script bate com o R/63)
+
+===== N_TESTES_TOTAL ATUALIZADO =====
+Valor antigo (arquivo orfao, timestamp 30/jul, PRE-revert 2016-2021): 31907281 
+Valor correto e atual (dado 2016-2021 pos-revert, 23/ago): 26653449 
+
+OK - n_testes_total_fase4.csv SOBRESCRITO com o valor correto e atual.

@@ -1,74 +1,74 @@
-Pares significativos: 1248772 
+Pares significativos: 1285366 
 
 ===== TOP 20 fundos-hub (mais conexoes com gestoras DIFERENTES) =====
     cod_fundo                           gestora n_conexoes
         <int>                            <char>      <int>
- 1:    331333 Santander Brasil Asset Management       5226
- 2:    359051 Santander Brasil Asset Management       5162
- 3:    328936         Julius Baer Family Office       5801
- 4:    173967         Julius Baer Family Office       5833
- 5:    358606 Santander Brasil Asset Management       5041
- 6:    433772                       BTG Pactual       4968
- 7:    173959         Julius Baer Family Office       5739
- 8:    295507         Julius Baer Family Office       5699
- 9:    346179         Bradesco Asset Management       5163
-10:    314161                       BTG Pactual       5097
-11:    405051         Bradesco Asset Management       4984
-12:    483958            Safra Asset Management       4724
-13:    344771                       BTG Pactual       4663
-14:    259373         Julius Baer Family Office       4819
-15:    168092         Julius Baer Family Office       4240
-16:    156337            Safra Asset Management       4813
-17:    366730         Bradesco Asset Management       3876
-18:    214523         Julius Baer Family Office       4777
-19:    331155                       BTG Pactual       3866
-20:    349151                     Credit Suisse       3898
+ 1:    331333 Santander Brasil Asset Management       5345
+ 2:    359051 Santander Brasil Asset Management       5281
+ 3:    328936         Julius Baer Family Office       5916
+ 4:    358606 Santander Brasil Asset Management       5169
+ 5:    173967         Julius Baer Family Office       5936
+ 6:    173959         Julius Baer Family Office       5865
+ 7:    433772                       BTG Pactual       5071
+ 8:    295507         Julius Baer Family Office       5805
+ 9:    346179         Bradesco Asset Management       5275
+10:    314161                       BTG Pactual       5215
+11:    405051         Bradesco Asset Management       5073
+12:    483958            Safra Asset Management       4836
+13:    344771                       BTG Pactual       4758
+14:    259373         Julius Baer Family Office       4902
+15:    168092         Julius Baer Family Office       4303
+16:    156337            Safra Asset Management       4881
+17:    214523         Julius Baer Family Office       4879
+18:    366730         Bradesco Asset Management       3927
+19:    333980            Safra Asset Management       4848
+20:    389765               BB Asset Management       4290
     cod_fundo                           gestora n_conexoes
     n_conexoes_mesma_gestora n_conexoes_gestora_diferente n_ativos_distintos
                        <int>                        <int>              <int>
- 1:                      323                         4903                 61
- 2:                      368                         4794                126
- 3:                     1018                         4783                122
- 4:                     1143                         4690                130
- 5:                      358                         4683                126
- 6:                      368                         4600                 61
- 7:                     1167                         4572                127
- 8:                     1169                         4530                126
- 9:                      684                         4479                 58
-10:                      773                         4324                110
-11:                      672                         4312                 56
-12:                      589                         4135                 65
-13:                      562                         4101                105
-14:                      869                         3950                119
-15:                      300                         3940                 88
-16:                      959                         3854                 64
-17:                       81                         3795                 74
-18:                      985                         3792                113
-19:                       88                         3778                 74
-20:                      135                         3763                 74
+ 1:                      327                         5018                 61
+ 2:                      376                         4905                126
+ 3:                     1031                         4885                122
+ 4:                      361                         4808                126
+ 5:                     1152                         4784                130
+ 6:                     1172                         4693                128
+ 7:                      380                         4691                 61
+ 8:                     1177                         4628                126
+ 9:                      690                         4585                 58
+10:                      789                         4426                110
+11:                      677                         4396                 56
+12:                      608                         4228                 65
+13:                      572                         4186                105
+14:                      874                         4028                119
+15:                      303                         4000                 89
+16:                      961                         3920                 64
+17:                      994                         3885                113
+18:                       84                         3843                 74
+19:                     1016                         3832                 66
+20:                      461                         3829                128
     n_conexoes_mesma_gestora n_conexoes_gestora_diferente n_ativos_distintos
     n_gestoras_parceiras_distintas
                              <int>
- 1:                             32
+ 1:                             33
  2:                             36
- 3:                             34
- 4:                             35
- 5:                             36
- 6:                             32
- 7:                             36
+ 3:                             35
+ 4:                             36
+ 5:                             35
+ 6:                             36
+ 7:                             32
  8:                             36
  9:                             34
-10:                             32
+10:                             33
 11:                             34
-12:                             33
-13:                             34
-14:                             34
-15:                             33
-16:                             33
-17:                             29
-18:                             37
-19:                             29
-20:                             30
+12:                             36
+13:                             35
+14:                             35
+15:                             34
+16:                             34
+17:                             37
+18:                             30
+19:                             31
+20:                             36
     n_gestoras_parceiras_distintas
 
 ===== TOP 20 pares de GESTORA com mais conexoes fundo-fundo significativas =====
@@ -93,34 +93,34 @@ Pares significativos: 1248772
 17:                       Bradesco Asset Management <-> BTG Pactual
 18:                                         Itau <-> Vinci Partners
 19: Bradesco Asset Management <-> Santander Brasil Asset Management
-20:                                   Safra Asset Management <-> XP
+20:         Bradesco Asset Management <-> Julius Baer Family Office
                                                         par_gestora
     n_pares_fundo n_ativos_distintos n_fundos_distintos
             <int>              <int>              <int>
- 1:         60308                190                638
- 2:         58981                165                535
- 3:         43004                164                536
- 4:         31441                163                450
- 5:         28407                138                468
- 6:         27725                165                485
- 7:         22405                 81                353
- 8:         19168                145                446
- 9:         17472                158                520
-10:         15991                111                405
-11:         14433                 53                304
-12:         13602                127                448
-13:         13567                 82                387
-14:         11277                161                346
-15:         10348                 56                334
-16:          9986                153                228
-17:          9178                164                349
-18:          8876                128                408
-19:          8091                160                290
-20:          7532                111                186
+ 1:         62417                192                638
+ 2:         60556                167                535
+ 3:         44518                166                537
+ 4:         32315                164                453
+ 5:         29309                138                471
+ 6:         28590                165                486
+ 7:         23090                 81                358
+ 8:         19849                146                449
+ 9:         18159                159                520
+10:         16374                113                408
+11:         14821                 53                307
+12:         14041                128                448
+13:         13966                 82                392
+14:         11726                161                348
+15:         10613                 58                337
+16:         10273                153                228
+17:          9562                165                351
+18:          9128                129                409
+19:          8437                160                296
+20:          7756                159                272
     n_pares_fundo n_ativos_distintos n_fundos_distintos
 
-===== Pares com lideranca CLARA (assimetria>0,2 E forca do lider>0,5): 79538 de 1248772 =====
-Desses, cross-gestora: 61134 
+===== Pares com lideranca CLARA (assimetria>0,2 E forca do lider>0,5): 84724 de 1285366 =====
+Desses, cross-gestora: 65514 
                          ativo  lider seguidor forca_lideranca assimetria
                         <char>  <int>    <int>           <num>      <num>
  1:     IGUATEMI ON NM - IGTA3 348600    96040           0.998      0.824

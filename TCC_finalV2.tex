@@ -39,15 +39,15 @@ fundos de investimento brasileiros, em três etapas: uma cross-section mensal, c
 (tamanho, cotistas, indicador de fundo de cotas, fluxo de captação/resgate, beta do fundo e
 concentração do restante da carteira); um mecanismo de ajuste parcial que modela a velocidade de
 convergência da posição observada ao alvo estimado; e um esquema fora da amostra que testa o
-valor preditivo genuíno do modelo. A base cobre todo o universo de fundos CVM com posição em
-ações entre 2016 e 2021 (2.507 fundos, 41 grupos de gestora, 512 ativos, 8,2 milhões de
-observações). O ajuste parcial estimado ($\widehat\lambda=0{,}069$) vence a previsão ingênua fora
-da amostra nos quatro horizontes testados, com margem crescente. O trabalho aplica essa estrutura
-de erro à detecção de pares de fundos que replicam carteira --- 1,25 milhão de pares
-estatisticamente significativos após correção de Benjamini--Hochberg sobre 31,9 milhões de
-testes --- e testa se o fluxo previsto a partir desse padrão prediz retorno futuro do ativo,
-premissa de qualquer estratégia de \emph{demand-based asset pricing}. O teste é rejeitado: o
-sinal não tem poder explicativo economicamente relevante ($R^2$ entre $0{,}002\%$ e $0{,}165\%$)
+valor preditivo genuíno do modelo. A amostra final cobre 2.507 fundos, 41 grupos de gestora e 512
+ativos de um universo bruto CVM ainda maior (fev/2017 a dez/2021, 8,2 milhões de observações). O
+ajuste parcial estimado ($\widehat\lambda=0{,}069$) vence a previsão ingênua fora da amostra nos
+quatro horizontes testados, com margem crescente. O trabalho aplica essa estrutura de erro à
+detecção de pares de fundos que replicam carteira --- 1,29 milhão de pares estatisticamente
+significativos após correção de Benjamini--Hochberg sobre 26,7 milhões de testes --- e testa se o
+fluxo previsto a partir desse padrão prediz retorno futuro do ativo, premissa de qualquer
+estratégia de \emph{demand-based asset pricing}. O teste é rejeitado: o sinal não tem poder
+explicativo economicamente relevante ($R^2$ entre $0{,}002\%$ e $0{,}154\%$)
 em nenhuma especificação testada. A principal contribuição do trabalho é distinguir, com o mesmo
 rigor metodológico, dois achados que a literatura de fluxo de fundos frequentemente trata como um
 só: a existência de replicação de carteira entre fundos, e sua tradutibilidade em sinal de
@@ -79,9 +79,9 @@ prevista tem poder de precificação --- é testada com menos frequência, e qua
 desenho que estima a primeira.
 
 Este trabalho propõe um modelo de três etapas (Seção~\ref{sec:metodologia}) para responder às
-duas metades dessa pergunta com o mesmo dado, do início ao fim, para o universo de fundos
-brasileiros com posição em ações entre 2016 e 2021 (2.507 fundos, 41 grupos de gestora, 512
-ativos, Seção~\ref{sec:dados}). Na primeira etapa, o peso de cada fundo em cada ativo é modelado
+duas metades dessa pergunta com o mesmo dado, do início ao fim, para 2.507 fundos brasileiros com
+posição em ações, 41 grupos de gestora e 512 ativos (fev/2017 a dez/2021,
+Seção~\ref{sec:dados}). Na primeira etapa, o peso de cada fundo em cada ativo é modelado
 por regressão logística em função de seis características do fundo --- tamanho, cotistas, fundo
 de cotas, fluxo de captação/resgate, beta e concentração do restante da carteira --- estimada
 célula a célula (ativo, mês), sem nenhuma agregação temporal por cima. Na segunda, um mecanismo
@@ -186,8 +186,9 @@ O mecanismo de ajuste parcial (equação~\eqref{eq:pa}) --- a ideia de que um ag
 instantaneamente para seu alvo, mas fecha uma fração fixa da distância a cada período --- vem
 originalmente da literatura de estrutura de capital: \citeonline{fama2002} e
 \citeonline{flannery2006} estimam a velocidade com que empresas convergem à sua alavancagem-alvo
-e encontram ajuste lento e heterogêneo entre firmas, um padrão que este trabalho replica em outro
-contexto --- $\widehat\lambda\approx0{,}07$ (Seção~\ref{sec:resultados}) implica que um fundo
+e documentam heterogeneidade substancial entre firmas nessa velocidade --- padrão qualitativo que
+este trabalho replica em outro contexto --- $\widehat\lambda\approx0{,}07$ (Seção~\ref{sec:resultados})
+implica que um fundo
 fecha, em média, só cerca de $7\%$ da distância ao seu peso-alvo por mês, e a heterogeneidade
 entre gestoras (Tabela~\ref{tab:rmse-gestora}) espelha a heterogeneidade entre firmas já
 documentada por essa literatura. Mais próximo da aplicação aqui, \citeonline{calvet2009} modelam
@@ -333,9 +334,14 @@ em que $x_{i,n,t}$ reúne seis características do fundo (Seção~\ref{sec:dados
 AUM), número de cotistas (log), indicador de fundo de cotas (FIC), fluxo de captação/resgate
 sobre o patrimônio, beta do próprio fundo, e a concentração do restante da carteira
 ($\text{HHI}_{\text{resto}}$, definida na equação~\eqref{eq:hhi-resto} abaixo) --- todas
-padronizadas, exceto o indicador de FIC e o fluxo de captação/resgate sobre o patrimônio, e
-todas medidas no fechamento do mês anterior
-($t-1$), sem exceção. $\theta_{n,t}$ é o vetor de coeficientes daquele ativo naquele mês,
+padronizadas, exceto o indicador de FIC e o fluxo de captação/resgate sobre o patrimônio.
+Tamanho, cotistas, fluxo e $\text{HHI}_{\text{resto}}$ são medidos no fechamento do mês anterior
+($t-1$); o beta do fundo é a exceção --- a janela móvel de 252 pregões termina no fechamento do
+próprio mês $t$ da observação, não de $t-1$. Isso não vaza informação futura (o peso em $t$ e o
+beta em $t$ usam dado disponível até o mesmo fechamento), mas introduz uma via de endogeneidade
+mecânica que as outras cinco características não têm, já que o retorno da cota do fundo em $t$
+é função, em parte, das próprias posições que o modelo tenta explicar naquele mês --- ver
+discussão na Seção~\ref{sec:conclusao}. $\theta_{n,t}$ é o vetor de coeficientes daquele ativo naquele mês,
 estimado por máxima verossimilhança (regressão logística quase-binomial), separadamente para
 cada célula (ativo, mês) com número mínimo de fundos detentores, sem nenhuma etapa de agregação
 temporal por cima: cada $\theta_{n,t}$ é o resultado de uma única regressão de corte
@@ -576,11 +582,10 @@ média $3{,}13\%$). Fonte: script \texttt{75\_figura\_margem\_dinamica.R}.}
 \includegraphics[width=0.78\textwidth]{fig_trajetoria_fundo_pior_rmse.pdf}
 \caption{Peso real vs.\ previsto ($h=3$), fundo 406724 (Squadra Investimentos), EQTL3 --- o par
 fundo-ativo de maior RMSE fora da amostra entre os que têm posição de verdade (sem
-posição-poeira). Diferente do exemplo de "desmonte abrupto" da versão anterior deste documento:
-aqui o peso fica persistentemente concentrado (entre $97\%$ e $99{,}9\%$ do patrimônio) ao longo
-de todo o período de teste, e é justamente essa concentração extrema e permanente --- não
-capturada plenamente pelas 6 características --- que o ajuste parcial sistematicamente não
-acerta. Fonte: script \texttt{92\_figura\_trajetoria\_fundo\_v2.R}.}
+posição-poeira). O peso fica persistentemente concentrado (entre $97\%$ e $99{,}9\%$ do
+patrimônio) ao longo de todo o período de teste, e é justamente essa concentração extrema e
+permanente --- não capturada plenamente pelas 6 características --- que o ajuste parcial
+sistematicamente não acerta. Fonte: script \texttt{92\_figura\_trajetoria\_fundo\_v2.R}.}
 \label{fig:trajetoria-fundo}
 \end{figure}
 
@@ -884,7 +889,13 @@ generalizar para o universo completo. Entre os 233 ativos com histórico suficie
 coeficiente médio de beta do fundo com o mesmo sinal que VALE3 (script
 \texttt{101\_cross\_section\_universo\_completo\_hhi.R}) --- a mais consistente das seis
 características, evidência de que a relação positiva entre beta do fundo e peso na carteira
-generaliza bem além do ativo original.
+generaliza bem além do ativo original. Ressalva: essa comparação é descritiva, não um teste de
+hipótese --- as mesmas 233 células comparadas contra as outras cinco características (não só
+beta) dão 57,5\% (tamanho), 79,0\% (cotistas), 59,2\% (FIC), 28,8\% (fluxo) e 10,3\%
+($\text{HHI}_{\text{resto}}$, o mais atípico em relação a VALE3), sem $p$-valor nem hipótese nula
+definida, e usando um único ativo de referência escolhido pela história do projeto, não por
+critério estatístico. O beta do fundo ainda é a característica mais consistente entre as seis,
+mas o dado sustenta ``mais consistente'', não uma alegação de significância formal.
 
 \FloatBarrier
 \subsection{Correção de efeito mecânico do preço}
@@ -978,7 +989,7 @@ qualquer correlação --- sem ele, o resultado fica dominado por séries quase-z
 instáveis. Correção de múltiplas comparações (Benjamini--Hochberg):
 \begin{equation}
 p_{\text{ajustado},(k)} = \min_{j\geq k}\left(p_{(j)}\cdot\frac{m}{j}\right), \qquad
-m = 31.907.281 \text{ testes}
+m = 26.653.449 \text{ testes}
 \label{eq:bh}
 \end{equation}
 
@@ -990,9 +1001,9 @@ m = 31.907.281 \text{ testes}
 \toprule
 Ativos elegíveis (pós filtro de poeira) & 341 \\
 Pares com $|$correlação$|\geq0{,}6$ & 1.808.886 \\
-\textbf{Pares significativos} ($p_{\text{ajustado}}<0{,}05$) & \textbf{1.248.772} \\
-\quad --- mesma gestora / gestoras diferentes & 454.840 (36\%) / 793.932 (64\%) \\
-\textbf{Pares com liderança clara} (assimetria $>0{,}2$) & \textbf{79.538} (61.134 cross-gestora) \\
+\textbf{Pares significativos} ($p_{\text{ajustado}}<0{,}05$) & \textbf{1.285.366} \\
+\quad --- mesma gestora / gestoras diferentes & 461.190 (36\%) / 824.176 (64\%) \\
+\textbf{Pares com liderança clara} (assimetria $>0{,}2$ e força $>0{,}5$) & \textbf{84.724} (65.514 cross-gestora) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1007,9 +1018,24 @@ $\div$ pares possíveis entre as duas gestoras). Fonte: script
 
 Pela contagem bruta, Itaú domina (425 fundos, quase o dobro do 2º maior) --- artefato de
 tamanho. Normalizado (Figura~\ref{fig:pares-gestora}), quem domina são \textbf{boutiques
-menores}: Atmos $\leftrightarrow$ TNA (taxa 2,81), Squadra $\leftrightarrow$ TNA (1,86),
-Julius Baer $\leftrightarrow$ SPX Capital (1,74) --- consistente com replicação entre gestoras de
+menores}: Atmos $\leftrightarrow$ TNA (taxa 2,85), Squadra $\leftrightarrow$ TNA (1,89),
+Julius Baer $\leftrightarrow$ SPX Capital (1,77) --- consistente com replicação entre gestoras de
 estilo próximo, não só efeito de escala.
+
+\paragraph{Checagem de robustez: choque comum ao ativo.} A correlação acima usa o erro $u$ bruto
+--- dois fundos que seguram o mesmo ativo podem aparecer correlacionados só por compartilhar um
+choque daquele ativo-mês não capturado pelas seis características (um evento de liquidez, uma
+mudança de índice), não porque um copia o outro. Refazendo a detecção com $u$ centrado na média
+de todos os holders do mesmo ativo-mês antes de correlacionar (isola co-movimento
+\emph{par a par} do que é comum a todo mundo que segura aquele ativo naquele mês): o número de
+pares que passam no filtro de correlação sobe (a variância de $u$ centrado é menor, então mais
+pares cruzam o limiar de $|corr|\geq0{,}6$) e a fração positiva cai de virtualmente todos os pares
+para 85\% dos pré-filtrados e 89,3\% dos que sobrevivem à correção de Benjamini--Hochberg --- alta
+o suficiente para não ser só artefato de um fator comum, mas confirma que uma fração real (embora
+minoritária) do sinal original vinha de exposição compartilhada ao ativo, não de replicação
+par a par. O padrão central --- replicação existe e é predominantemente positiva --- sobrevive à
+checagem; a magnitude exata (1.285.366 pares) deve ser lida como limite superior, não como
+contagem livre de confundidor.
 
 \FloatBarrier
 \subsection{Sinal do robô}
@@ -1033,7 +1059,7 @@ entre todas, por ativo-mês.
 \toprule
  & Sem ajuste & Com ajuste \\
 \midrule
-RMSE (18.752 pares seguidor-ativo, 359.861 obs.) & 0,00612 & 0,00403 ($-34{,}2\%$) \\
+RMSE (19.752 pares seguidor-ativo, 374.544 obs.) & 0,00616 & 0,00409 ($-33{,}5\%$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1041,18 +1067,27 @@ RMSE (18.752 pares seguidor-ativo, 359.861 obs.) & 0,00612 & 0,00403 ($-34{,}2\%
 \begin{figure}[h]\centering
 \includegraphics[width=0.68\textwidth]{fig3_top_compra_venda.pdf}
 \caption{Top 5 maiores pressões compradoras e vendedoras líquidas (ativo-mês), em R\$ bilhões.
-Maior compra: Petrobras ON, jan/2020, $+$R\$2,03 bi (290 fundos, 19 gestoras). Maior venda:
-Petrobras Distrib., mai/2021, $-$R\$886 mi (439 fundos, 23 gestoras). Fonte: script
+Maior compra: Petrobras ON, jan/2020, $+$R\$2,02 bi (292 fundos, 20 gestoras). Maior venda:
+Petrobras Distrib., mai/2021, $-$R\$999 mi (442 fundos, 23 gestoras). Fonte: script
 \texttt{69\_figuras\_teste\_estrategia.R}.}
 \end{figure}
 
 Mediana do fluxo líquido perto de zero, distribuição bem assimétrica --- maioria neutra, poucos
 ativo-mês concentram sinal forte; R\$1--2 bi/mês para uma blue chip amplamente carregada é
 fração pequena do patrimônio total da indústria de fundos, ordem de grandeza plausível. A
-melhora de RMSE de 34,2\% é \textbf{dentro da amostra} ($\beta$ estimado e avaliado nos mesmos
+melhora de RMSE de 33,5\% é \textbf{dentro da amostra} ($\beta$ estimado e avaliado nos mesmos
 dados --- garantia matemática do MQO, não prova de generalização); e o fluxo reportado é só o
 componente ``eco do líder'' (pares com líder identificado), não a previsão de todos os fundos
-do universo --- ainda não é um sinal de demanda de mercado completo.
+do universo --- ainda não é um sinal de demanda de mercado completo. Uma segunda ressalva, mais
+séria que a anterior: $u_{\text{líder},t}$ (equação~\eqref{eq:corr-pares}) é construído a partir
+de $dw_{\text{corrigido}}$ do líder entre $t$ e $t+1$ --- ou seja, o ``eco'' atribuído ao mês $t$
+só existe, na prática, depois que o mês $t+1$ acontece. A melhora de RMSE acima usa essa
+informação contemporânea ao período sendo previsto, não uma informação disponível
+antecipadamente; não é um sinal implementável em tempo real do jeito como está construído aqui.
+Isso não invalida a seção seguinte --- o teste decisivo já rejeita justamente este sinal ``com
+eco'', então a contaminação de timing só reforça essa rejeição --- mas significa que os 33,5\% de
+melhora não devem ser lidos como evidência de um sinal operável, mesmo debaixo do resultado
+``dentro da amostra'' já sinalizado acima.
 
 \FloatBarrier
 \subsection{O teste decisivo: fluxo previsto prediz retorno?}
@@ -1079,15 +1114,16 @@ funciona bem estivesse diluindo o teste).
 \label{tab:teste-decisivo}
 \begin{tabular}{@{}lrrrr@{}}
 \toprule
- & \multicolumn{2}{c}{Amostra completa (8.383 obs.)} & \multicolumn{2}{c}{Só margem$>0$ (6.160 obs.)} \\
+ & \multicolumn{2}{c}{Amostra completa (8.395 obs.)} & \multicolumn{2}{c}{Só margem$>0$ (6.167 obs.)} \\
  & Coef.\ ($\beta_{\text{ret}}$) & $p$-valor & Coef.\ ($\beta_{\text{ret}}$) & $p$-valor \\
 \midrule
-Sinal COM eco do líder & $-5{,}6\times10^{-8}$ & 0,277 & $+1{,}9\times10^{-8}$ & 0,737 \\
-Sinal SEM eco (só $\widehat\lambda d$) & $+1{,}4\times10^{-6}$ & \textbf{0,0002} & $+1{,}1\times10^{-6}$ & \textbf{0,027} \\
+Sinal COM eco do líder & $-5{,}5\times10^{-8}$ & 0,284 & $+2{,}2\times10^{-8}$ & 0,701 \\
+Sinal SEM eco (só $\widehat\lambda d$) & $+1{,}4\times10^{-6}$ & \textbf{0,0003} & $+1{,}0\times10^{-6}$ & \textbf{0,039} \\
 \bottomrule
 \end{tabular}
-\caption*{\footnotesize $R^2$ em todos os casos: entre 0,002\% e 0,165\% --- economicamente
-irrisório em qualquer especificação.}
+\caption*{\footnotesize $R^2$ em todos os casos: entre 0,002\% e 0,154\% --- economicamente
+irrisório em qualquer especificação. $p$-valores acima são i.i.d.; ver checagem de clustering
+logo abaixo.}
 \end{table}
 
 \begin{figure}[h]\centering
@@ -1101,20 +1137,34 @@ regressão é essencialmente plana --- $R^2=0{,}014\%$. Fonte: script
 \includegraphics[width=0.85\textwidth]{fig4_quintis_retorno.pdf}
 \caption{Retorno médio subsequente por quintil de fluxo previsto (Q1 = mais vendedor, Q5 = mais
 comprador), amostra completa vs.\ restrita a ativos de margem positiva. Diferença Q5$-$Q1:
-$+0{,}50$ p.p.\ ($p=0{,}301$) na completa, $+0{,}87$ p.p.\ ($p=0{,}116$) na restrita --- nenhuma
-das duas significativa. Fonte: script \texttt{72\_figuras\_teste\_retorno.R}.}
+$+0{,}65$ p.p.\ ($p=0{,}181$) na completa, $+1{,}20$ p.p.\ ($p=0{,}029$) na restrita --- a
+diferença na subamostra restrita passa no teste $t$ simples de quintil extremo, mas não sobrevive
+à checagem de clustering do parágrafo seguinte. Fonte: script \texttt{72\_figuras\_teste\_retorno.R}.}
 \end{figure}
 
 \textbf{O teste não valida a premissa de negociar em cima do sinal.} O sinal com eco do líder
 (o produto final desta seção) sai com coeficiente \emph{negativo} e não significativo em nenhuma
-das duas amostras ($p=0{,}277$ completa, $p=0{,}737$ restrita a margem positiva) --- pior que o
+das duas amostras ($p=0{,}284$ completa, $p=0{,}701$ restrita a margem positiva) --- pior que o
 sinal mais simples (só $\widehat\lambda d$), que ao menos tem o sinal certo e é estatisticamente
-detectável nas duas amostras ($p=0{,}0002$ completa, $p=0{,}027$ restrita), mas com $R^2$ tão
-baixo (0,002--0,165\%) que não sustenta uma estratégia em nenhum caso. Restringir a ativos de
-margem positiva não resgata o sinal com eco (permanece não significativo); o sinal sem eco
-mantém --- e até reforça --- a significância estatística na subamostra restrita, mas o $R^2$
-continua irrisório (0,079\%), então a conclusão econômica não muda: significância estatística
-com esse tamanho de amostra não implica poder explicativo que sustente uma estratégia.
+detectável na amostra completa ($p=0{,}0003$), mas com $R^2$ tão baixo (0,002--0,154\%) que não
+sustenta uma estratégia em nenhum caso. Restringir a ativos de margem positiva não resgata o
+sinal com eco (permanece não significativo); o sinal sem eco permanece nominalmente significativo
+na subamostra restrita ($p=0{,}039$), mas com $R^2$ ainda mais baixo (0,069\%).
+
+\paragraph{Checagem de robustez: erro-padrão clusterizado.} As regressões acima usam MQO com
+erro-padrão i.i.d., mas o painel empilha o mesmo ativo em vários meses e o mesmo mês em vários
+ativos --- correlação plausível nas duas dimensões (um fator de mercado comum dentro do mês; uma
+característica persistente dentro do ativo). Reestimando com erro-padrão clusterizado por ativo,
+por mês, e nas duas dimensões simultaneamente, além de Fama--MacBeth (uma regressão por mês,
+teste $t$ na série de 58 coeficientes --- robusto a qualquer correlação dentro do mês): na
+amostra completa, o sinal sem eco permanece significativo a 5\% em todas as especificações
+($p$ entre $0{,}0003$ e $0{,}03$); na subamostra restrita, porém, a significância nominal
+($p=0{,}039$ i.i.d.) \textbf{não sobrevive} ao clustering por ativo ($p=0{,}05$), ao clustering
+nas duas dimensões ($p=0{,}06$) nem a Fama--MacBeth ($p=0{,}17$) --- ao contrário do que uma
+leitura só do $p$-valor i.i.d.\ sugeriria, a restrição a ativos de margem positiva \emph{não}
+reforça o sinal; ela o torna mais frágil. Em qualquer uma dessas especificações, a conclusão
+econômica não muda: significância estatística com esse tamanho de amostra e $R^2$ dessa ordem não
+implica poder explicativo que sustente uma estratégia.
 
 Isto é um resultado negativo genuíno, não uma limitação de dado a ser corrigida depois. O
 mecanismo ``fundos compram $\Rightarrow$ preço sobe'' pode existir no mercado como um todo, mas
@@ -1130,10 +1180,10 @@ sentido otimizar execução de um sinal sem poder preditivo demonstrado.
 \toprule
 Achado & Status & Evidência \\
 \midrule
-Beta do fundo generaliza entre ativos & \textbf{Validado} & 92,3\% mesmo sinal que VALE3 \\
+Beta do fundo generaliza entre ativos & \textbf{Validado, descritivo} & 92,3\% mesmo sinal que VALE3 (sem teste formal) \\
 Correção mecânica de preço melhora o ajuste & \textbf{Validado} & $R^2$ melhora com a correção \\
-Pares de fundos com erro sincronizado além das características (replicantes) & \textbf{Validado} & 1.248.772 pares, $p<0{,}05$ com Benjamini--Hochberg \\
-Relação líder$\to$seguidor melhora previsão de \emph{peso} & Validado \emph{dentro da amostra} & RMSE $-34{,}2\%$ \\
+Pares de fundos com erro sincronizado além das características (replicantes) & \textbf{Validado, com ressalva} & 1.285.366 pares, $p<0{,}05$; maioria sobrevive a controle de choque comum ao ativo \\
+Relação líder$\to$seguidor melhora previsão de \emph{peso} & Validado \emph{dentro da amostra, com viés de timing} & RMSE $-33{,}5\%$ \\
 Sinal de fluxo previsto prediz \emph{retorno} do ativo & \textbf{Rejeitado} & $R^2\approx0$, sinal inconsistente \\
 Estratégia long/short executável & \textbf{Não avaliado} (depende do item anterior) & --- \\
 \bottomrule
@@ -1160,8 +1210,9 @@ ações na carteira de fundos de investimento brasileiros: uma etapa de corte tr
 (correção logística, célula ativo-mês) que estima como seis características do fundo se associam
 ao peso observado, seguida de um ajuste parcial (equação~\eqref{eq:pa}) que modela a velocidade
 com que esse peso se move em direção ao nível implícito pelas características. A base final ---
-2.507 fundos, 41 grupos de gestora, 512 ativos, 8.212.294 observações, jan/2016 a dez/2021 ---
-cobre todo o universo CVM com posição em ações no período, não uma amostra restrita a um único
+2.507 fundos, 41 grupos de gestora, 512 ativos, 8.212.294 observações, fev/2017 a dez/2021 ---
+cobre um amplo universo de fundos CVM com posição em ações, extraído de um universo bruto ainda
+maior (3.254 fundos, 536 ativos, Seção~\ref{sec:dados}), não uma amostra restrita a um único
 ativo ou gestora.
 
 Na Etapa 1 (Seção~\ref{sec:resultados}), cotistas, beta do fundo e $\text{HHI}_{\text{resto}}$
@@ -1182,17 +1233,25 @@ Tabela~\ref{tab:regressao-variancia}).
 
 A Seção~\ref{sec:aplicacao} usa essa estrutura de erro para testar uma aplicação concreta: fundos
 de gestoras diferentes que erram de forma sincronizada, além do que as seis características
-explicam, formam pares de \textbf{replicação de carteira} --- 1.248.772 pares significativos
-($p_{\text{ajustado}}<0{,}05$, correção de Benjamini--Hochberg sobre 31,9 milhões de testes),
-79.538 deles com liderança clara o suficiente para apontar direção. Somar o "eco" do líder à
-previsão do seguidor reduz o RMSE em $34{,}2\%$ \textbf{dentro da amostra} --- mas essa melhora,
-por construção do MQO, não é evidência de que o padrão tem poder preditivo fora dela. O teste que
-de fato importa --- será que o fluxo previsto por esse sinal prediz \emph{retorno} do ativo,
-premissa de qualquer estratégia de \emph{demand-based asset pricing} --- foi feito até o fim e
-\textbf{rejeitado}: o sinal com eco do líder sai não significativo nas duas amostras testadas
-($p=0{,}277$ e $p=0{,}737$); mesmo o sinal mais simples, que é estatisticamente detectável
-($p=0{,}0002$ e $p=0{,}027$), tem $R^2$ entre $0{,}002\%$ e $0{,}165\%$ --- irrisório para
-sustentar qualquer estratégia.
+explicam, formam pares de \textbf{replicação de carteira} --- 1.285.366 pares significativos
+($p_{\text{ajustado}}<0{,}05$, correção de Benjamini--Hochberg sobre 26,7 milhões de testes),
+84.724 deles com liderança clara o suficiente para apontar direção. Uma checagem de robustez
+--- correlacionar o erro após remover a média de todos os holders daquele ativo-mês, para isolar
+co-movimento par a par de um choque comum ao ativo --- reduz a base de comparação, mas mantém a
+maioria dos pares como positivamente correlacionados (Seção~\ref{sec:aplicacao}); o padrão não é
+inteiramente artefato de um fator comum. Somar o ``eco'' do líder à previsão do seguidor reduz o
+RMSE em $33{,}5\%$ \textbf{dentro da amostra} --- mas essa melhora, por construção do MQO, não é
+evidência de que o padrão tem poder preditivo fora dela, e a auditoria também identificou que o
+próprio ``eco'' usa, na prática, informação do mesmo mês que está sendo previsto (não de meses
+anteriores), o que infla essa melhora. O teste que de fato importa --- será que o fluxo previsto
+por esse sinal prediz \emph{retorno} do ativo, premissa de qualquer estratégia de
+\emph{demand-based asset pricing} --- foi feito até o fim e \textbf{rejeitado}: o sinal com eco
+do líder sai não significativo nas duas amostras testadas ($p=0{,}284$ e $p=0{,}701$); mesmo o
+sinal mais simples, que é estatisticamente detectável na amostra completa mesmo com erro-padrão
+clusterizado por ativo e por mês ($p$ entre $0{,}0003$ e $0{,}03$), perde significância na
+subamostra restrita sob a mesma checagem ($p$ entre $0{,}04$ e $0{,}17$ conforme o cluster) --- e
+tem, em qualquer caso, $R^2$ entre $0{,}002\%$ e $0{,}154\%$ --- irrisório para sustentar
+qualquer estratégia.
 
 O resultado central deste trabalho não é um número isolado, mas a distinção entre dois achados
 que a literatura de \emph{demand-based asset pricing} frequentemente trata como um só:
@@ -1203,7 +1262,7 @@ não invalida o primeiro --- são perguntas diferentes, testadas de forma indepe
 resultado negativo com o mesmo rigor do positivo é, na visão deste trabalho, parte do que se
 propôs a fazer desde o início.
 
-Três limitações merecem registro. Primeiro, a cobertura de preço --- essencial para a correção
+Quatro limitações merecem registro. Primeiro, a cobertura de preço --- essencial para a correção
 mecânica da Seção~\ref{sec:aplicacao} --- não é completa: Yahoo Finance sozinho cobre $62{,}5\%$
 dos ativos, e mesmo somando a B3 (preço bruto) a cobertura fecha em $96{,}8\%$ dos ativos
 ($99{,}65\%$ do peso agregado), com efeito prático mensurável nos ativos só cobertos por preço
@@ -1212,9 +1271,17 @@ explicação pelas seis características observáveis --- $R^2=0{,}20$ na relaç
 beta do fundo e RMSE por fundo, e mais da metade não capturada nem pela regressão múltipla da
 Tabela~\ref{tab:regressao-variancia} --- o que sugere fatores específicos de fundo (estilo,
 restrições de mandato, liquidez da carteira) não capturados neste desenho. Terceiro, o recorte
-temporal (jan/2016--dez/2021) reflete a
-disponibilidade de dado público da CVM com qualidade suficiente para a limpeza descrita na
-Seção~\ref{sec:dados}; estender a análise a período mais recente é deixado para trabalho futuro.
+temporal da amostra final (fev/2017--dez/2021) reflete a disponibilidade de dado público da CVM
+com qualidade suficiente para a limpeza descrita na Seção~\ref{sec:dados}; estender a análise a
+período mais recente é deixado para trabalho futuro. Quarto, dois pontos de identificação
+merecem registro honesto: o beta do fundo (Etapa~1) é medido com dado até o fechamento do
+\emph{próprio} mês da observação, não do mês anterior como as demais cinco características ---
+diferente do que a Seção~\ref{sec:metodologia} sugere ao afirmar que todas são predeterminadas
+``sem exceção''; e o ajuste parcial (equação~\eqref{eq:pa}), como qualquer modelo dessa família
+(inclusive os citados na Seção~\ref{sec:revisao}), tem $d_{i,n,t}$ e $\Delta w$ compartilhando o
+termo $-w_{i,n,t}$ por construção, o que mecanicamente favorece $\widehat\lambda>0$ mesmo sob
+ruído de medição transitório em $w_{i,n,t}$, sem que este trabalho isole quanto de $0{,}069$ é
+ajuste genuíno vs.\ esse artefato.
 
 O resultado negativo da Seção~\ref{sec:teste-decisivo} é específico ao sinal construído aqui
 (ajuste parcial mais eco do líder de maior força de liderança) --- não uma afirmação geral de que

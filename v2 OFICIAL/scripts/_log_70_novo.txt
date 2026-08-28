@@ -1,30 +1,30 @@
-Ativo-mes com sinal (fluxo liquido): 8383 
-Com valor_total disponivel: 8383 de 8383 
+Ativo-mes com sinal (fluxo liquido): 8395 
+Com valor_total disponivel: 8395 de 8395 
 
-Obs finais (fluxo,retorno_fut) validas: 8383 
+Obs finais (fluxo,retorno_fut) validas: 8395 
 
 ===== (a) Regressao simples: retorno(t+1) ~ fluxo(t) =====
                  Estimate   Std. Error   t value     Pr(>|t|)
-(Intercept)  1.293824e-02 1.434601e-03  9.018704 2.326705e-19
-fluxo_pct   -5.568580e-08 5.126139e-08 -1.086311 2.773727e-01
+(Intercept)  1.298957e-02 1.431847e-03  9.071901 1.436115e-19
+fluxo_pct   -5.497225e-08 5.125927e-08 -1.072435 2.835554e-01
 R2: 0.00014 
 
 --- comparacao: sinal SEM eco do lider (so' lambda*d) ---
                      Estimate   Std. Error  t value     Pr(>|t|)
-(Intercept)      1.396090e-02 1.458344e-03 9.573120 1.337396e-21
-fluxo_normal_pct 1.432431e-06 3.847997e-07 3.722537 1.985231e-04
-R2: 0.00165 
+(Intercept)      1.396825e-02 1.455124e-03 9.599357 1.039688e-21
+fluxo_normal_pct 1.373211e-06 3.817770e-07 3.596892 3.238932e-04
+R2: 0.00154 
 
 ===== (b) Quintis por fluxo_pct, retorno medio subsequente =====
    quintil     n fluxo_pct_medio retorno_medio retorno_mediano
      <int> <int>           <num>         <num>           <num>
-1:       1  1677     -21424.3904   0.014049790     0.010100835
-2:       2  1676      -2853.7350   0.007831269     0.002660276
-3:       3  1677       -202.3169   0.011629554     0.004016064
-4:       4  1676       1476.7970   0.012234516     0.008131602
-5:       5  1677      21001.1976   0.019054066     0.017857143
+1:       1  1679     -21792.9765   0.013292345     0.010136704
+2:       2  1679      -2923.7967   0.008644804     0.002624712
+3:       3  1679       -211.5385   0.010171491     0.002202527
+4:       4  1679       1536.0180   0.013217089     0.008211673
+5:       5  1679      21270.9329   0.019738753     0.018287361
 
-Diferenca quintil 5 (mais comprado) - quintil 1 (mais vendido), retorno medio: 0.005 
-Teste t (quintil5 vs quintil1): diferenca = 0.005 | p-valor = 0.301 
+Diferenca quintil 5 (mais comprado) - quintil 1 (mais vendido), retorno medio: 0.00645 
+Teste t (quintil5 vs quintil1): diferenca = 0.00645 | p-valor = 0.181 
 
 OK - salvo em 'v2 OFICIAL/data/teste_fluxo_prediz_retorno.csv'
