@@ -862,7 +862,7 @@ acontece, e o erro se acumula a cada horizonte mais longo.
 
 % ======================================================================
 \FloatBarrier
-\section{Aplicação: robô caça-replicantes}
+\section{Aplicação: detecção de replicação de carteira}
 \label{sec:aplicacao}
 
 A estrutura do erro fora da amostra (Seção~\ref{sec:resultados}) sugere uma aplicação direta:
@@ -978,9 +978,11 @@ março) que o modelo de ajuste parcial não capta --- achado genuíno, não arte
 
 Para cada ativo, correlação (contemporânea e defasada em 1 mês) entre a série de erro de todo
 par de fundos que o carrega --- ativo por ativo, não portfólio inteiro, para não diluir um
-replicante que só copia numa posição específica:
+replicante que só copia numa posição específica. Usa-se aqui $\tilde u$, não o $u$ da
+equação~\eqref{eq:pa}: mesma lógica de erro do ajuste parcial, mas sobre $dw_{\text{corrigido}}$
+(livre do efeito mecânico de preço, equação~\eqref{eq:mecanico}) em vez do $dw$ bruto:
 \begin{equation}
-u_{i,n,t} = dw_{\text{corrigido}} - \widehat\lambda\, d_{i,n,t}, \qquad
+\tilde u_{i,n,t} = dw_{\text{corrigido}} - \widehat\lambda\, d_{i,n,t}, \qquad
 t_{\text{corr}} = r\sqrt{\frac{n-2}{1-r^2}}
 \label{eq:corr-pares}
 \end{equation}
@@ -1022,13 +1024,14 @@ menores}: Atmos $\leftrightarrow$ TNA (taxa 2,85), Squadra $\leftrightarrow$ TNA
 Julius Baer $\leftrightarrow$ SPX Capital (1,77) --- consistente com replicação entre gestoras de
 estilo próximo, não só efeito de escala.
 
-\paragraph{Checagem de robustez: choque comum ao ativo.} A correlação acima usa o erro $u$ bruto
---- dois fundos que seguram o mesmo ativo podem aparecer correlacionados só por compartilhar um
-choque daquele ativo-mês não capturado pelas seis características (um evento de liquidez, uma
-mudança de índice), não porque um copia o outro. Refazendo a detecção com $u$ centrado na média
-de todos os holders do mesmo ativo-mês antes de correlacionar (isola co-movimento
-\emph{par a par} do que é comum a todo mundo que segura aquele ativo naquele mês): o número de
-pares que passam no filtro de correlação sobe (a variância de $u$ centrado é menor, então mais
+\paragraph{Checagem de robustez: choque comum ao ativo.} A correlação acima usa o erro $\tilde u$
+bruto --- dois fundos que seguram o mesmo ativo podem aparecer correlacionados só por
+compartilhar um choque daquele ativo-mês não capturado pelas seis características (um evento de
+liquidez, uma mudança de índice), não porque um copia o outro. Refazendo a detecção com
+$\tilde u$ centrado na média de todos os holders do mesmo ativo-mês antes de correlacionar
+(isola co-movimento \emph{par a par} do que é comum a todo mundo que segura aquele ativo naquele
+mês): o número de pares que passam no filtro de correlação sobe (a variância de $\tilde u$
+centrado é menor, então mais
 pares cruzam o limiar de $|corr|\geq0{,}6$) e a fração positiva cai de virtualmente todos os pares
 para 85\% dos pré-filtrados e 89,3\% dos que sobrevivem à correção de Benjamini--Hochberg --- alta
 o suficiente para não ser só artefato de um fator comum, mas confirma que uma fração real (embora
@@ -1038,13 +1041,14 @@ checagem; a magnitude exata (1.285.366 pares) deve ser lida como limite superior
 contagem livre de confundidor.
 
 \FloatBarrier
-\subsection{Sinal do robô}
+\subsection{Construção do sinal de fluxo previsto}
 
-Para cada par líder$\to$seguidor, $\beta$ por regressão através da origem na amostra pareada
-exata (equivalente a MQO individual por par):
+Para cada par líder$\to$seguidor, $\gamma$ (não confundir com o beta do fundo, uma característica
+da Etapa~1) por regressão através da origem na amostra pareada exata (equivalente a MQO
+individual por par):
 \begin{align}
-\beta &= \frac{\sum_t u_{\text{líder},t}\, u_{\text{seguidor},t}}{\sum_t u_{\text{líder},t}^2},
-\qquad dw_{\text{ajustado}} = \widehat\lambda\, d_{\text{seguidor},t} + \beta\, u_{\text{líder},t}
+\gamma &= \frac{\sum_t \tilde u_{\text{líder},t}\, \tilde u_{\text{seguidor},t}}{\sum_t \tilde u_{\text{líder},t}^2},
+\qquad dw_{\text{ajustado}} = \widehat\lambda\, d_{\text{seguidor},t} + \gamma\, \tilde u_{\text{líder},t}
 \notag\\
 \text{fluxo}_{\text{R\$}} &= \text{AUM}_{\text{seguidor},t}\cdot dw_{\text{ajustado}}
 \label{eq:sinal}
@@ -1075,11 +1079,11 @@ Petrobras Distrib., mai/2021, $-$R\$999 mi (442 fundos, 23 gestoras). Fonte: scr
 Mediana do fluxo líquido perto de zero, distribuição bem assimétrica --- maioria neutra, poucos
 ativo-mês concentram sinal forte; R\$1--2 bi/mês para uma blue chip amplamente carregada é
 fração pequena do patrimônio total da indústria de fundos, ordem de grandeza plausível. A
-melhora de RMSE de 33,5\% é \textbf{dentro da amostra} ($\beta$ estimado e avaliado nos mesmos
+melhora de RMSE de 33,5\% é \textbf{dentro da amostra} ($\gamma$ estimado e avaliado nos mesmos
 dados --- garantia matemática do MQO, não prova de generalização); e o fluxo reportado é só o
 componente ``eco do líder'' (pares com líder identificado), não a previsão de todos os fundos
 do universo --- ainda não é um sinal de demanda de mercado completo. Uma segunda ressalva, mais
-séria que a anterior: $u_{\text{líder},t}$ (equação~\eqref{eq:corr-pares}) é construído a partir
+séria que a anterior: $\tilde u_{\text{líder},t}$ (equação~\eqref{eq:corr-pares}) é construído a partir
 de $dw_{\text{corrigido}}$ do líder entre $t$ e $t+1$ --- ou seja, o ``eco'' atribuído ao mês $t$
 só existe, na prática, depois que o mês $t+1$ acontece. A melhora de RMSE acima usa essa
 informação contemporânea ao período sendo previsto, não uma informação disponível
