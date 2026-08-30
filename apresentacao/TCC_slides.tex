@@ -1,0 +1,206 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+
+\usetheme{metropolis}
+\setbeamertemplate{caption}{\insertcaption}
+\setbeamerfont{footnote}{size=\tiny}
+
+\graphicspath{{figuras/}}
+
+\title{Peso de ações nos fundos de investimento brasileiros}
+\subtitle{Um modelo de fator dinâmico com correção logística e ajuste parcial}
+\author{João Paulo Zangrandi}
+\institute{FGV EESP \\ Orientador: Prof.\ Maurício Ferraresi Junior}
+\date{2026}
+
+\begin{document}
+
+% ---------------------------------------------------------------- 1
+\maketitle
+
+% ---------------------------------------------------------------- 2
+\begin{frame}{A pergunta, e a base para respondê-la}
+
+A carteira divulgada de um fundo é demanda revelada. Olhando todos os fundos que carregam
+a mesma ação no mesmo mês, o preço é comum a todos, e o que resta para explicar a diferença
+entre eles são características dos próprios fundos.
+
+\vspace{0.5em}
+Duas perguntas: o que explica o peso, e esse peso é previsível fora da amostra.
+
+\vspace{1.0em}
+\centering
+\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+& Fundos & Ativos & Gestoras \\
+\midrule
+Universo bruto CVM com posição em ações, 2016 a 2021 & 3.254 & 536 & 41 \\
+Amostra final, com as seis características completas & 2.507 & 512 & 41 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.9em}
+\raggedright
+\normalsize
+8.212.294 observações de fundo por ativo e por mês, em 59 meses. Dado inteiramente público
+da CVM, e o universo inteiro, não um recorte de uma gestora ou de um papel.
+
+\vspace{0.5em}
+\footnotesize
+Referência: Koijen e Yogo (2019). O trabalho fica do lado das quantidades, não dos preços.
+
+\end{frame}
+
+% ---------------------------------------------------------------- 3
+\begin{frame}{O modelo, em três etapas}
+
+\textbf{Etapa 1.} Uma regressão logística por célula de ativo e mês:
+\begin{equation*}
+\text{peso}_{i,n,t} = g\big(x_{i,n,t}'\theta_{n,t}\big) + e_{i,n,t},
+\qquad g(z)=\tfrac{1}{1+e^{-z}}
+\end{equation*}
+Seis características em $x$: tamanho, cotistas, fundo de cotas, fluxo sobre patrimônio,
+beta da cota e concentração do resto da carteira.
+
+\vspace{0.8em}
+\textbf{Etapa 2.} Ajuste parcial em direção ao alvo $w^*=g(x'\theta)$:
+\begin{equation*}
+w_{i,n,t+1}-w_{i,n,t} = \lambda\, d_{i,n,t} + u_{i,n,t+1},
+\qquad d_{i,n,t}\equiv w^*_{i,n,t}-w_{i,n,t}
+\end{equation*}
+
+\vspace{0.5em}
+\textbf{Etapa 3.} $\lambda_h$ estimado apenas antes de jan/2020, congelado e aplicado
+depois, contra a previsão ingênua de repetir o último peso.
+
+\end{frame}
+
+% ---------------------------------------------------------------- 4
+\begin{frame}{Duas respostas}
+
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+\textsc{O que explica o peso}
+
+\vspace{0.6em}
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+& Coef. & Sinal positivo \\
+\midrule
+Beta da cota & $0{,}783$ & $88{,}2\%$ \\
+Concentração do resto & $0{,}422$ & $87{,}6\%$ \\
+Cotistas & $0{,}125$ & $72{,}8\%$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+\normalsize
+Tamanho, fluxo e fundo de cotas ficam entre 44\% e 53\%, ou seja, perto do acaso.
+
+\vspace{0.5em}
+\footnotesize
+Em 13.723 células de ativo e mês.
+\end{column}
+
+\begin{column}{0.48\textwidth}
+\textsc{E o peso é previsível}
+
+\vspace{0.6em}
+$\widehat\lambda = 0{,}069$ ao mês. O fundo fecha só 7\% da distância até o alvo por mês,
+o que dá meia-vida de dez meses.
+
+\vspace{0.8em}
+\small
+Razão entre o erro do modelo e o da previsão ingênua:
+
+\vspace{0.3em}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+$h$ & 1 & 3 & 6 & 12 \\
+\midrule
+Razão & $0{,}985$ & $0{,}969$ & $0{,}952$ & $0{,}929$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.8em}
+\normalsize
+Vence nos quatro horizontes, com margem crescente, e em 23 dos 23 meses de teste.
+\end{column}
+\end{columns}
+
+\end{frame}
+
+% ---------------------------------------------------------------- 5
+\begin{frame}{O achado: a dificuldade de prever tem dono}
+
+\begin{columns}[T]
+\begin{column}{0.40\textwidth}
+Entre as 40 gestoras, o erro varia quase trinta vezes.
+
+\vspace{0.7em}
+E é persistente: dividindo o teste ao meio, cada gestora se parece consigo mesma, com
+correlação de $0{,}85$ na dispersão do erro.
+
+\vspace{0.7em}
+O que explica essa dispersão é a concentração da carteira. Numa regressão com todas as
+seis características, ela é a única significativa, a $1\%$, com $R^2=0{,}496$.
+\end{column}
+
+\begin{column}{0.28\textwidth}
+\centering
+\includegraphics[width=\linewidth]{fig_persistencia_dp_gestora.pdf}
+
+\vspace{0.2em}
+\scriptsize
+Dispersão do erro: 2020 contra 2021.
+\end{column}
+
+\begin{column}{0.32\textwidth}
+\centering
+\includegraphics[width=\linewidth]{fig_explica_variancia_gestora.pdf}
+
+\vspace{0.2em}
+\scriptsize
+Dispersão contra beta, tamanho e concentração.
+\end{column}
+\end{columns}
+
+\vspace{0.8em}
+\centering
+Prever a carteira de um fundo é, em boa medida, uma função do estilo de concentração da
+casa. Não do tamanho dela, e não do quanto ela capta.
+
+\end{frame}
+
+% ---------------------------------------------------------------- 6
+\begin{frame}{Conclusão}
+
+\begin{itemize}
+  \item Beta da cota e concentração do resto da carteira explicam o peso de forma
+        consistente. Tamanho e fluxo, quase nada.
+  \item O ajuste ao alvo é positivo mas lento, com meia-vida de dez meses, e ainda assim
+        bate a previsão ingênua nos quatro horizontes testados.
+  \item A dificuldade de prever é heterogênea, persistente e explicada pela concentração
+        da carteira. Essa é a regularidade nova do trabalho.
+\end{itemize}
+
+\vspace{1.0em}
+\textbf{Limitações}
+
+\begin{itemize}
+  \item Metade da variância do erro entre gestoras segue sem explicação.
+  \item O beta é medido no próprio mês, e não defasado como as demais características.
+  \item $d_{i,n,t}$ e $\Delta w$ compartilham $-w_{i,n,t}$, o que favorece mecanicamente
+        $\widehat\lambda>0$.
+\end{itemize}
+
+\end{frame}
+
+\end{document}
