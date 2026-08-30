@@ -2,26 +2,68 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
+\usepackage{lmodern}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 
-\usetheme{metropolis}
+% ---------------- aparência acadêmica: sóbria, serifada, sem enfeite ----------
+\usetheme{default}
+\useoutertheme{infolines}
+\usefonttheme{serif}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+
+\definecolor{azulacad}{RGB}{20,50,90}
+\definecolor{cinzafraco}{RGB}{100,100,100}
+
+\setbeamercolor{structure}{fg=azulacad}
+\setbeamercolor{frametitle}{fg=azulacad}
+\setbeamercolor{title}{fg=azulacad}
+\setbeamercolor{author}{fg=black}
+\setbeamercolor{institute}{fg=cinzafraco}
+\setbeamercolor{date}{fg=cinzafraco}
+\setbeamercolor{itemize item}{fg=azulacad}
+\setbeamercolor{itemize subitem}{fg=azulacad}
+\setbeamercolor{palette primary}{fg=white,bg=azulacad}
+\setbeamercolor{palette secondary}{fg=white,bg=azulacad}
+\setbeamercolor{palette tertiary}{fg=white,bg=azulacad}
+
+\setbeamerfont{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont{title}{series=\bfseries,size=\LARGE}
+\setbeamerfont{subtitle}{series=\mdseries,size=\normalsize,shape=\itshape}
+\setbeamerfont{footline}{size=\tiny}
+
+% título de quadro com filete fino embaixo, no lugar da barra colorida
+\setbeamertemplate{frametitle}{%
+  \vskip0.9em%
+  \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle%
+  \vskip0.25em%
+  {\color{azulacad}\hrule height0.5pt}%
+  \vskip0.2em%
+}
+
+\setbeamertemplate{itemize item}{\textbullet}
 \setbeamertemplate{caption}{\insertcaption}
-\setbeamerfont{footnote}{size=\tiny}
+\setbeamersize{text margin left=1.1em,text margin right=1.1em}
 
 \graphicspath{{figuras/}}
 
-\title{Peso de ações nos fundos de investimento brasileiros}
+\title[Peso de ações nos fundos brasileiros]%
+      {Peso de ações nos fundos de investimento brasileiros}
 \subtitle{Um modelo de fator dinâmico com correção logística e ajuste parcial}
-\author{João Paulo Zangrandi}
-\institute{FGV EESP \\ Orientador: Prof.\ Maurício Ferraresi Junior}
-\date{2026}
+\author[J. P. Zangrandi]{João Paulo Zangrandi}
+\institute[FGV EESP]{Escola de Economia de São Paulo, Fundação Getulio Vargas\\[0.4em]
+Orientador: Prof.\ Maurício Ferraresi Junior}
+\date[2026]{2026}
 
 \begin{document}
 
 % ---------------------------------------------------------------- 1
-\maketitle
+{\setbeamertemplate{footline}{}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}}
 
 % ---------------------------------------------------------------- 2
 \begin{frame}{A pergunta, e a base para respondê-la}
@@ -68,14 +110,14 @@ Referência: Koijen e Yogo (2019). O trabalho fica do lado das quantidades, não
 Seis características em $x$: tamanho, cotistas, fundo de cotas, fluxo sobre patrimônio,
 beta da cota e concentração do resto da carteira.
 
-\vspace{0.8em}
+\vspace{0.7em}
 \textbf{Etapa 2.} Ajuste parcial em direção ao alvo $w^*=g(x'\theta)$:
 \begin{equation*}
 w_{i,n,t+1}-w_{i,n,t} = \lambda\, d_{i,n,t} + u_{i,n,t+1},
 \qquad d_{i,n,t}\equiv w^*_{i,n,t}-w_{i,n,t}
 \end{equation*}
 
-\vspace{0.5em}
+\vspace{0.4em}
 \textbf{Etapa 3.} $\lambda_h$ estimado apenas antes de jan/2020, congelado e aplicado
 depois, contra a previsão ingênua de repetir o último peso.
 
@@ -86,7 +128,7 @@ depois, contra a previsão ingênua de repetir o último peso.
 
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
-\textsc{O que explica o peso}
+\textbf{O que explica o peso}
 
 \vspace{0.6em}
 \small
@@ -110,7 +152,7 @@ Em 13.723 células de ativo e mês.
 \end{column}
 
 \begin{column}{0.48\textwidth}
-\textsc{E o peso é previsível}
+\textbf{E o peso é previsível}
 
 \vspace{0.6em}
 $\widehat\lambda = 0{,}069$ ao mês. O fundo fecha só 7\% da distância até o alvo por mês,
@@ -141,41 +183,30 @@ Vence nos quatro horizontes, com margem crescente, e em 23 dos 23 meses de teste
 \begin{frame}{O achado: a dificuldade de prever tem dono}
 
 \begin{columns}[T]
-\begin{column}{0.40\textwidth}
-Entre as 40 gestoras, o erro varia quase trinta vezes.
+\begin{column}{0.57\textwidth}
+\centering
+\includegraphics[width=\linewidth]{fig_dinamica_erro_gestora_extremos.pdf}
 
-\vspace{0.7em}
-E é persistente: dividindo o teste ao meio, cada gestora se parece consigo mesma, com
-correlação de $0{,}85$ na dispersão do erro.
+\vspace{0.1em}
+\scriptsize
+Erro médio mensal fora da amostra, $h=1$. À esquerda, as três gestoras mais difíceis de
+prever; à direita, as três mais previsíveis.
+\end{column}
 
-\vspace{0.7em}
+\begin{column}{0.41\textwidth}
+\small
+Entre as 40 gestoras, o erro varia quase trinta vezes, de $0{,}00050$ a $0{,}01424$.
+
+\vspace{0.6em}
+E não é ruído. Dividindo o teste ao meio, cada gestora se parece consigo mesma, com
+correlação de $0{,}85$ na dispersão do erro. Quem é difícil em 2020 continua difícil em
+2021.
+
+\vspace{0.6em}
 O que explica essa dispersão é a concentração da carteira. Numa regressão com todas as
 seis características, ela é a única significativa, a $1\%$, com $R^2=0{,}496$.
 \end{column}
-
-\begin{column}{0.28\textwidth}
-\centering
-\includegraphics[width=\linewidth]{fig_persistencia_dp_gestora.pdf}
-
-\vspace{0.2em}
-\scriptsize
-Dispersão do erro: 2020 contra 2021.
-\end{column}
-
-\begin{column}{0.32\textwidth}
-\centering
-\includegraphics[width=\linewidth]{fig_explica_variancia_gestora.pdf}
-
-\vspace{0.2em}
-\scriptsize
-Dispersão contra beta, tamanho e concentração.
-\end{column}
 \end{columns}
-
-\vspace{0.8em}
-\centering
-Prever a carteira de um fundo é, em boa medida, uma função do estilo de concentração da
-casa. Não do tamanho dela, e não do quanto ela capta.
 
 \end{frame}
 

@@ -114,10 +114,16 @@ coisa muito mais interessante."
 
 Este é o slide que a banca vai lembrar. Não corra.
 
+O gráfico à esquerda é a Figura 2 do trabalho: à esquerda dele, as três gestoras mais
+difíceis de prever; à direita, as três mais previsíveis. **Aponte para ele no primeiro
+degrau**, porque a diferença de amplitude entre os dois painéis é visível de longe e faz o
+argumento sozinha.
+
 Construa em três degraus, um por vez:
 
-> "Entre as quarenta gestoras, o erro varia quase trinta vezes. Há casas que o modelo prevê
-> com facilidade e casas em que ele erra muito."
+> "Entre as quarenta gestoras, o erro varia quase trinta vezes. No painel da esquerda estão
+> as três mais difíceis de prever, no da direita as três mais previsíveis, e os dois estão na
+> mesma escala. A diferença de amplitude é o resultado."
 
 > "E isso não é ruído. Dividindo o período de teste ao meio, cada gestora se parece consigo
 > mesma, com correlação de 0,85 na dispersão do erro. Quem é difícil em 2020 continua
@@ -127,7 +133,8 @@ Construa em três degraus, um por vez:
 > as seis características, a concentração média da gestora é a única significativa, e o
 > modelo explica metade da variação entre casas."
 
-Feche olhando para a banca, não para o slide:
+Feche olhando para a banca, não para o slide. **Esta frase não está escrita em lugar nenhum
+do slide, é sua e só sai se você falar. Decore.**
 
 > "Ou seja: prever a carteira de um fundo é, em boa medida, uma função do estilo de
 > concentração da casa. Não do tamanho dela, e não do quanto ela capta. Essa é a
