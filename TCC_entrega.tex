@@ -262,8 +262,8 @@ variável dependente deste trabalho. O segundo é o Informe Diário, do qual vê
 líquido, o número de cotistas, a captação e os resgates, que compõem as características do
 fundo. O período coberto vai de janeiro de 2016 a dezembro de 2021. O universo de partida é
 todo fundo registrado na Comissão que tenha mantido posição em ações no período, o que
-totaliza 3.254 fundos, 41 grupos de gestora reunidos por marca controladora e 536 ativos de
-posição direta. Não há, portanto, restrição prévia a uma gestora ou a um ativo específico.
+totaliza 3.254 fundos e 41 grupos de gestora reunidos por marca controladora. Não há,
+portanto, restrição prévia a uma gestora ou a um ativo específico.
 
 Esse universo bruto já reflete uma limpeza de qualidade de dado. Trinta e quatro observações
 de fundo por mês, distribuídas em 23 fundos, apresentam soma de participações superior a
@@ -276,8 +276,11 @@ restritivo eliminaria carteiras válidas junto com os erros de reporte.
 Um mesmo ativo pode aparecer na composição sob rótulos diferentes conforme o tipo de
 posição, isto é, posição direta, posição cedida ou recebida em empréstimo, e direito de
 subscrição. Este trabalho mantém apenas a posição direta, identificada pelo sufixo numérico
-do código de negociação segundo a convenção da bolsa, o que resulta nos 536 ativos citados
-acima e em 10.818.395 linhas de fundo por ativo e por mês antes dos demais filtros.
+do código de negociação segundo a convenção da bolsa, o que resulta em 536 ativos e em
+10.818.395 linhas de fundo por ativo e por mês antes dos demais filtros. Vinte e seis dos
+3.254 fundos do universo de partida não registram nenhuma posição direta em ação no período,
+apenas posição em empréstimo ou direito de subscrição, e por isso não aparecem nessas linhas,
+de modo que o painel de posição direta reúne 3.228 fundos.
 
 Seis características de cada fundo entram no modelo, descritas na
 Tabela~\ref{tab:caracteristicas}. Cinco delas são medidas no fechamento do mês anterior ao da
@@ -330,15 +333,18 @@ Ibovespa ou o encerramento do fundo logo em seguida.
 \toprule
 Etapa & Fundos & Ativos & Gestoras \\
 \midrule
-Universo bruto com posição em ações, 2016 a 2021 & 3.254 & 536 & 41 \\
+Universo bruto com posição em ações, 2016 a 2021 & 3.254 & --- & 41 \\
+Com ao menos uma posição direta em ação & 3.228 & 536 & 41 \\
 Com as cinco características do Informe Diário completas & 2.576 & 513 & 41 \\
 Com a concentração do resto defasada disponível & 2.507 & 512 & 41 \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores
-Mobiliários. A cobertura temporal da amostra final é de 59 meses, entre fevereiro de 2017 e
-dezembro de 2021, e não os 72 meses do período bruto, porque a exigência de 252 pregões de
-histórico de cota para o cálculo do beta elimina os primeiros meses da janela.}
+Mobiliários. A contagem de ativos não se aplica à primeira linha porque um ativo só passa a
+ser identificado depois do filtro de posição direta. A cobertura temporal da amostra final é
+de 59 meses, entre fevereiro de 2017 e dezembro de 2021, e não os 72 meses do período bruto,
+porque a exigência de 252 pregões de histórico de cota para o cálculo do beta elimina os
+primeiros meses da janela.}
 \end{table}
 
 A amostra final resultante, resumida na Tabela~\ref{tab:amostra}, é a base única utilizada
@@ -475,7 +481,8 @@ ao menos uma célula estimada e 8.195.278 observações.
 O modelo da equação~\eqref{eq:cs} foi estimado em 13.723 células de ativo e mês que
 convergiram, sendo excluídas outras 17 que não convergiram. A Tabela~\ref{tab:theta} resume,
 entre essas células, o coeficiente padronizado de cada característica, o seu efeito marginal
-médio em pontos percentuais de peso, e a proporção de células em que o sinal é positivo.
+médio em pontos percentuais de peso, ambos em mediana entre as células, e a proporção de
+células em que o sinal é positivo.
 
 \begin{table}[h]\centering\small
 \caption{Coeficiente, efeito marginal médio e consistência de sinal de cada característica,
@@ -483,7 +490,8 @@ entre as 13.723 células de ativo e mês estimadas.}
 \label{tab:theta}
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-Característica & Mediana do coeficiente & Efeito marginal médio & Células com sinal positivo \\
+Característica & Mediana do & Mediana do efeito & Células com \\
+ & coeficiente & marginal médio & sinal positivo \\
 \midrule
 Tamanho & $-0{,}0283$ & $-0{,}0007$ p.p. & $44{,}5\%$ \\
 Cotistas & $0{,}1254$ & $0{,}0141$ p.p. & $72{,}8\%$ \\
@@ -494,7 +502,11 @@ Concentração do resto & $0{,}4220$ & $0{,}0562$ p.p. & $87{,}6\%$ \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores
-Mobiliários. O coeficiente é medido em log-odds sobre a característica padronizada. O
+Mobiliários. O coeficiente é medido em log-odds sobre a característica padronizada. O efeito
+marginal médio é calculado dentro de cada célula, como a média do efeito parcial sobre os
+fundos daquela célula, e a tabela reporta a mediana desses valores entre as 13.723 células,
+pela mesma razão que leva a coluna anterior a reportar a mediana e não a média: a distribuição
+entre células tem cauda longa, e algumas poucas células extremas deslocariam a média. O
 pseudo-$R^2$ de McFadden médio entre as células é de $0{,}531$, calculado com piso em $-1$
 para que células mal ajustadas não dominem a média.}
 \end{table}
@@ -598,7 +610,7 @@ em quatro horizontes.}
 \midrule
 Ajuste parcial & $0{,}004033$ & $0{,}005850$ & $0{,}007097$ & $0{,}008546$ \\
 Previsão ingênua & $0{,}004095$ & $0{,}006040$ & $0{,}007454$ & $0{,}009198$ \\
-Razão entre as duas & $0{,}9849$ & $0{,}9685$ & $0{,}9521$ & $0{,}9291$ \\
+Razão entre as duas & $0{,}9848$ & $0{,}9686$ & $0{,}9522$ & $0{,}9291$ \\
 Parâmetro de ajuste estimado & $0{,}0704$ & $0{,}1473$ & $0{,}2205$ & $0{,}3382$ \\
 \bottomrule
 \end{tabular}
@@ -651,7 +663,7 @@ Comissão de Valores Mobiliários.}
 O caso da Squadra Investimentos merece exame, porque é o único em que o ajuste parcial piora
 a previsão de forma expressiva e crescente com o horizonte. A Figura~\ref{fig:trajetoria}
 mostra a trajetória do par de fundo e ativo responsável pelo maior erro de toda a amostra,
-uma posição em Equatorial Energia que se mantém entre 97\% e 99,9\% do patrimônio ao longo de
+uma posição em Equatorial Energia que se mantém entre 96,9\% e 99,9\% do patrimônio ao longo de
 todo o período de teste. Diante de uma concentração desse tamanho, o modelo prevê
 repetidamente uma reversão em direção ao alvo que as características implicam, reversão que
 nunca acontece, e o erro se acumula a cada horizonte mais longo. O episódio ilustra bem o
@@ -725,8 +737,9 @@ do erro, que é medido apenas no período de teste:
 
 O resultado, na Tabela~\ref{tab:regressao-variancia}, é nítido. A concentração média é a
 única variável estatisticamente significativa, a 1\%, e o modelo explica praticamente metade
-da variação do erro entre gestoras. O fato de a concentração já estar formalmente na primeira
-etapa não elimina o seu poder explicativo aqui, porque as duas regressões respondem a
+da variação do erro entre gestoras, ou dois quintos dela quando o ajuste é penalizado pelo
+número de regressores. O fato de a concentração já estar formalmente na primeira etapa não
+elimina o seu poder explicativo aqui, porque as duas regressões respondem a
 perguntas distintas: a primeira etapa explica o peso de uma posição, ao passo que esta
 regressão explica o erro de gestoras inteiras.
 
@@ -747,10 +760,13 @@ Fluxo médio sobre patrimônio & $-0{,}0092$ & $-1{,}38$ & n.s. \\
 Concentração média da carteira & $0{,}0736$ & $3{,}76$ & 1\% \\
 \midrule
 $R^2$ & \multicolumn{3}{r}{$0{,}496$} \\
+$R^2$ ajustado & \multicolumn{3}{r}{$0{,}405$} \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores
-Mobiliários. A sigla n.s. indica coeficiente não significativo ao nível de 5\%.}
+Mobiliários. A sigla n.s. indica coeficiente não significativo ao nível de 5\%. Com seis
+regressores e apenas 40 gestoras, a distância entre o $R^2$ e o seu ajustado é grande, razão
+pela qual os dois são reportados.}
 \end{table}
 
 \FloatBarrier
@@ -920,8 +936,8 @@ relaciona seis características observáveis do fundo ao peso que ele carrega, e
 ajuste parcial que modela a velocidade com que esse peso converge ao nível implícito por
 essas características. A base final reúne 2.507 fundos, 41 grupos de gestora e 512 ativos, com
 8.212.294 observações entre fevereiro de 2017 e dezembro de 2021, extraídas de um universo
-bruto ainda maior de 3.254 fundos e 536 ativos, e não de um recorte restrito a uma única
-gestora ou a um único papel.
+bruto ainda maior, de 3.254 fundos e de 536 ativos em posição direta, e não de um recorte
+restrito a uma única gestora ou a um único papel.
 
 Na primeira etapa, o beta da cota, a concentração do restante da carteira e o número de
 cotistas são as características mais consistentemente associadas a maior peso, com sinal
@@ -931,7 +947,7 @@ segunda, a velocidade de ajuste estimada é de 0,069 ao mês, o que corresponde 
 de cerca de dez meses e caracteriza uma reversão lenta, porém sistemática, ao peso-alvo. Na
 terceira, o modelo estimado apenas com dados anteriores a 2020 supera a previsão ingênua de
 repetir o último peso nos quatro horizontes testados, com a razão entre as raízes dos erros
-quadráticos médios caindo de 0,9849 em um mês para 0,9291 em doze meses, e vence em todos os
+quadráticos médios caindo de 0,9848 em um mês para 0,9291 em doze meses, e vence em todos os
 23 meses do período de teste.
 
 O achado que este trabalho considera mais interessante, contudo, não é o desempenho agregado,

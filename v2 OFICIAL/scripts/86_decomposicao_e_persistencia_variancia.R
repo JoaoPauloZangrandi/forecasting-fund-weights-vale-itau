@@ -76,7 +76,11 @@ cat(sprintf("\n===== Persistencia do DESVIO-PADRAO do erro entre metades do test
 cat(sprintf("Correlacao (Pearson) = %.4f\n", corr_dp))
 cat(sprintf("Correlacao (Spearman) = %.4f\n", cor(wide$dp_primeira, wide$dp_segunda, method="spearman")))
 cat(sprintf("R2 = %.4f | p(coef) = %.4g\n", summary(fit_dp)$r.squared, summary(fit_dp)$coefficients[2,4]))
-cat(sprintf("(Para comparacao: persistencia do VIES no script 84 foi corr=0,832, R2=0,693)\n"))
+# NOTA (09/09/2026): este texto era hardcoded com corr=0,832 / R2=0,693, de uma rodada
+# antiga anterior a base 'universo completo'. Os valores atuais do script 84 sao
+# corr=0,7336 e R2=0,5382 (log _log_84_novo.txt, rodada de 23/08/2026). O TCC ja usava
+# o valor certo (0,73); so este log mentia. Se o script 84 rodar de novo, reconferir.
+cat(sprintf("(Para comparacao: persistencia do VIES no script 84 foi corr=0,7336, R2=0,5382)\n"))
 
 lim_comum <- range(c(wide$dp_primeira, wide$dp_segunda))
 pdf(file.path(FIG, "fig_persistencia_dp_gestora.pdf"), width = 6.5, height = 6.5)
