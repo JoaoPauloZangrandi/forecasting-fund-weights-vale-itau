@@ -54,7 +54,7 @@ cores_f <- c("#2E5C8A","#1E7A4D","#5DA9C7")
 ylim_comum <- range(por_mes_gestora$erro_medio, na.rm=TRUE)
 eixo_x_datas <- range(por_mes_gestora$data)
 plot(eixo_x_datas, c(0,0), type="n", xaxt="n", xlim=eixo_x_datas, ylim=ylim_comum,
-     xlab="Mês (teste, out-of-sample)",
+     xlab="Mês do período de teste",
      ylab="Erro médio mensal (h=1)",
      main="As 3 gestoras mais difíceis")
 axis.Date(1, at=seq(eixo_x_datas[1], eixo_x_datas[2], by="4 months"), format="%b/%Y")
@@ -66,7 +66,7 @@ for (i in seq_along(dificeis)) {
 legend("topleft", legend=dificeis, col=cores_d, lwd=2, bty="n", cex=0.65)
 
 plot(eixo_x_datas, c(0,0), type="n", xaxt="n", xlim=eixo_x_datas, ylim=ylim_comum,
-     xlab="Mês (teste, out-of-sample)",
+     xlab="Mês do período de teste",
      ylab="Erro médio mensal (h=1)",
      main="As 3 gestoras mais previsíveis")
 axis.Date(1, at=seq(eixo_x_datas[1], eixo_x_datas[2], by="4 months"), format="%b/%Y")
@@ -93,7 +93,7 @@ par(mfrow = c(1,2), mar = c(4,4,2.5,1))
 faz_painel <- function(p, titulo, ylim) {
   amostra <- p$dt[sample(.N, min(30000,.N))]
   plot(amostra$data, amostra$erro_oos, pch=".", col=adjustcolor("grey60",0.3),
-       ylim=ylim, xlab="Mês (teste, out-of-sample)", ylab="Erro fora da amostra", main=titulo)
+       ylim=ylim, xlab="Mês do período de teste", ylab="Erro fora da amostra", main=titulo)
   lines(p$agg$data, p$agg$media, col="#2E5C8A", lwd=2)
   lines(p$agg$data, p$agg$dp, col="#B8452E", lwd=2, lty=2)
   abline(h=0, col="grey40")

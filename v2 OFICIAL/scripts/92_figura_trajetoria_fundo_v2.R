@@ -54,7 +54,7 @@ pdf(file.path(FIG, "fig_trajetoria_fundo_pior_rmse.pdf"), width = 8, height = 5)
 par(mar = c(4,4.5,2,1))
 plot(serie_real$data, 100*serie_real$peso, type="o", pch=16, col="#2E5C8A", lwd=2,
      xlab="Mês", ylab=sprintf("Peso de %s na carteira (%%)", ticker),
-     main=sprintf("Fundo %s (%s) --- peso real vs. previsto (h=3)", alvo$cod_fundo, gestora),
+     main=sprintf("Fundo %s (%s): peso observado e peso previsto, h=3", alvo$cod_fundo, gestora),
      cex.main = 0.95,
      ylim = c(0, max(100*serie_real$peso, 100*fundo$peso_previsto)*1.15))
 points(fundo$data_fut, 100*fundo$peso_previsto, pch=17, col="#B8452E", cex=1.1)

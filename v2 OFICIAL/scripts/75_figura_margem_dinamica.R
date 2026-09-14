@@ -33,7 +33,7 @@ par(mar = c(4,4.5,1,1))
 ylim_c <- range(c(m1$margem, m3$margem))
 eixo_x <- range(c(m1$data, m3$data))
 plot(m1$data, m1$margem, type="n", xlim=eixo_x, ylim=ylim_c, xaxt="n",
-     xlab="Mês (teste, out-of-sample)", ylab="Margem do ajuste parcial sobre a ingênua (%)")
+     xlab="Mês do período de teste", ylab="Margem do ajuste parcial sobre a ingênua (%)")
 axis.Date(1, at=seq(eixo_x[1], eixo_x[2], by="4 months"), format="%b/%Y")
 abline(h=0, col="grey50", lty=2)
 lines(m1$data, m1$margem, col="#2E5C8A", lwd=2, type="o", pch=16, cex=0.6)

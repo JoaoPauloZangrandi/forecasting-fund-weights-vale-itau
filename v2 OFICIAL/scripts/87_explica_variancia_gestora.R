@@ -73,17 +73,17 @@ pdf(file.path(FIG, "fig_explica_variancia_gestora.pdf"), width = 10, height = 4.
 par(mfrow = c(1,3), mar = c(4.5,4.5,3,1), oma = c(0,0,2.2,0))
 plot(d$beta_fundo, d$dp_erro, pch=19, col=adjustcolor("#3B6E9E",0.65),
      xlab="Beta médio do fundo", ylab="Desvio-padrão do erro fora da amostra (h=1)",
-     main=sprintf("vs. Beta\ncorr=%.2f", cor(d$dp_erro,d$beta_fundo)))
+     main=sprintf("Beta médio da cota\ncorrelação = %s", sub("[.]", ",", sprintf("%.2f", cor(d$dp_erro,d$beta_fundo)))))
 abline(fit_beta, col="firebrick", lwd=2)
 plot(d$l_aum, d$dp_erro, pch=19, col=adjustcolor("#3B6E9E",0.65),
      xlab="Tamanho médio (log AUM)", ylab="",
-     main=sprintf("vs. Tamanho\ncorr=%.2f", cor(d$dp_erro,d$l_aum)))
+     main=sprintf("Tamanho médio\ncorrelação = %s", sub("[.]", ",", sprintf("%.2f", cor(d$dp_erro,d$l_aum)))))
 abline(fit_aum, col="firebrick", lwd=2)
 plot(d$hhi_medio, d$dp_erro, pch=19, col=adjustcolor("#3B6E9E",0.65),
      xlab="Concentração média da carteira (HHI)", ylab="",
-     main=sprintf("vs. Concentração\ncorr=%.2f", cor(d$dp_erro,d$hhi_medio)))
+     main=sprintf("Concentração média\ncorrelação = %s", sub("[.]", ",", sprintf("%.2f", cor(d$dp_erro,d$hhi_medio)))))
 abline(fit_hhi, col="firebrick", lwd=2)
-mtext("O que explica a dispersão do erro por gestora?", outer=TRUE, line=0.6, cex=1.05, font=2)
+mtext("Dispersão do erro fora da amostra por gestora", outer=TRUE, line=0.6, cex=1.05, font=2)
 dev.off()
 cat("\nOK - fig_explica_variancia_gestora.pdf salva\n")
 

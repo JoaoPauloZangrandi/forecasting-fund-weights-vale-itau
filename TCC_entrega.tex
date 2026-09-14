@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[brazil]{babel}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[top=3cm,left=3cm,right=2cm,bottom=2cm]{geometry}
 \usepackage{booktabs}
 \usepackage{amsmath,amssymb}
 \usepackage{caption}
@@ -22,38 +22,58 @@
 \onehalfspacing
 \setcounter{tocdepth}{2}
 
+% Paginacao conforme a NBR 14724: algarismos arabicos no canto superior direito,
+% contando a partir da folha de rosto e aparecendo a partir da parte textual.
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\footnotesize Peso de ações nos fundos de investimento brasileiros}
-\fancyhead[R]{\footnotesize J. P. Zangrandi}
-\fancyfoot[C]{\thepage}
-\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[R]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0pt}
 
 \begin{document}
 
 %==================== CAPA ====================
-\thispagestyle{empty}
+\pagestyle{empty}
 \begin{center}
 {\large FUNDAÇÃO GETÚLIO VARGAS}\\[2pt]
 {\large ESCOLA DE ECONOMIA DE SÃO PAULO}\\[16pt]
 {\normalsize Graduação em Economia}
 
-\vspace{3.5cm}
+\vspace{4.5cm}
 
 {\large João Paulo Zangrandi}
 
-\vspace{2.5cm}
+\vspace{3cm}
 
 {\Large Peso de ações nos fundos de investimento brasileiros:}\\[12pt]
 {\large um modelo de fator dinâmico com correção logística e ajuste parcial}
 
-\vspace{2.5cm}
+\vfill
+
+{\normalsize São Paulo}\\
+{\normalsize 2026}
+\end{center}
+
+\newpage
+
+%==================== FOLHA DE ROSTO ====================
+\setcounter{page}{1}
+\begin{center}
+{\large João Paulo Zangrandi}
+
+\vspace{4cm}
+
+{\Large Peso de ações nos fundos de investimento brasileiros:}\\[12pt]
+{\large um modelo de fator dinâmico com correção logística e ajuste parcial}
+
+\vspace{3cm}
 
 \begin{flushright}
 \begin{minipage}{0.62\textwidth}
 \small\setstretch{1.15}
 Monografia II apresentada à Escola de Economia de São Paulo da Fundação Getúlio
 Vargas como requisito da disciplina Monografia II.
+\\[10pt]
+Campo de conhecimento: Economia Financeira.
 \\[10pt]
 Orientador: Prof.\ Maurício Ferraresi Junior.
 \end{minipage}
@@ -68,13 +88,12 @@ Orientador: Prof.\ Maurício Ferraresi Junior.
 \newpage
 
 %==================== RESUMO ====================
-\thispagestyle{fancy}
 \begin{center}{\large Resumo}\end{center}
 \noindent
 Este trabalho propõe e testa um modelo de fator dinâmico para o peso de ações na carteira
 dos fundos de investimento brasileiros, organizado em três etapas. Na primeira, o peso de
 cada fundo em cada ativo é estimado, mês a mês e ativo a ativo, por regressão logística
-sobre seis características observáveis do fundo, a saber, o tamanho, o número de cotistas,
+sobre seis características observáveis do fundo: o tamanho, o número de cotistas,
 a condição de fundo de investimento em cotas, o fluxo de captação líquida sobre o
 patrimônio, o beta da cota e a concentração do restante da carteira. Na segunda, um
 mecanismo de ajuste parcial modela a velocidade com que a posição observada converge ao
@@ -96,10 +115,45 @@ significativa mesmo quando as demais características do modelo são controladas
 \noindent Palavras-chave: sistema de demanda; fundos de investimento; pesos de carteira;
 fator dinâmico; ajuste parcial; mercado acionário brasileiro.
 
+
 \newpage
-\thispagestyle{fancy}
+
+%==================== ABSTRACT ====================
+\begin{center}{\large Abstract}\end{center}
+
+\noindent
+This work proposes and tests a dynamic factor model for the weight of individual stocks in
+the portfolios of Brazilian investment funds, organised in three stages. In the first, the
+weight held by each fund in each stock is estimated, month by month and stock by stock, by a
+logistic regression on six observable fund characteristics: size, number of shareholders,
+fund-of-funds status, net flow over assets, the beta of the fund unit price and the
+concentration of the remainder of the portfolio. In the second, a partial adjustment
+mechanism models the speed at which the observed position converges to the target estimated
+in the first stage. In the third, the adjustment parameter is re-estimated using only the
+months prior to January 2020 and then applied, held fixed, to the subsequent period, so as to
+measure the predictive value of the model on data it did not see during estimation. The
+sample covers the entire universe of funds registered with the Brazilian Securities and
+Exchange Commission holding equity positions between 2016 and 2021, from which a final sample
+of 2,507 funds, 41 asset management groups and 512 stocks is obtained, with 8,212,294
+fund-stock-month observations. The number of shareholders, the beta of the fund unit price
+and the concentration of the remainder of the portfolio are the characteristics most
+consistently associated with the weight. The estimated adjustment speed is positive and
+small, at 0.069 per month, and the partial adjustment model outperforms the naive forecast of
+repeating the last observed weight at all four horizons tested, by a margin that grows with
+the horizon. The out-of-sample error is heterogeneous across asset managers, and this
+heterogeneity is associated above all with portfolio concentration, which remains
+statistically significant even when the remaining characteristics of the model are
+controlled for.
+
+\smallskip
+
+\noindent Keywords: demand system; mutual funds; portfolio weights; dynamic factor; partial
+adjustment; Brazilian equity market.
+
+\newpage
 \tableofcontents
 \newpage
+\pagestyle{fancy}
 
 %==================== 1. INTRODUÇÃO ====================
 \section{Introdução}
@@ -129,10 +183,9 @@ justamente o que as carteiras divulgadas dos fundos permitem observar.
 
 Este trabalho responde às duas perguntas com um modelo de três etapas, detalhado na
 Seção~\ref{sec:metodologia}. Na primeira etapa, o peso que cada fundo carrega em cada ação
-é modelado por regressão logística sobre seis características do fundo, a saber, o
-tamanho, o número de cotistas, a condição de fundo de investimento em cotas, o fluxo de
-captação líquida sobre o patrimônio, o beta da cota e a concentração do restante da
-carteira. Essa regressão é estimada célula a célula, isto é, separadamente para cada par de
+é modelado por regressão logística sobre seis características do fundo: o tamanho, o
+número de cotistas, a condição de fundo de investimento em cotas, o fluxo de captação
+líquida sobre o patrimônio, o beta da cota e a concentração do restante da carteira. Essa regressão é estimada célula a célula, isto é, separadamente para cada par de
 ativo e mês, sem nenhuma agregação temporal por cima, de modo que os coeficientes formam
 uma série de cortes transversais que pode ser lida como um fator latente que varia no
 tempo, na tradição de \citeonline{famamacbeth1973}. Na segunda etapa, um mecanismo de
@@ -149,10 +202,10 @@ observações de fundo por ativo e por mês. Não se trata, portanto, de um reco
 uma única gestora ou a uma única ação, o que permite avaliar se os padrões encontrados são
 gerais ou peculiares a um caso escolhido.
 
-Os resultados têm três lados. Para explicar o peso, as características funcionam bem, e o
-número de cotistas, o beta da cota e a concentração do restante da carteira são as mais
-consistentes em sinal ao longo das mais de treze mil células estimadas. Para prever, o
-ajuste parcial supera a previsão ingênua nos quatro horizontes testados, com margem que
+No exercício de explicação, as características funcionam bem: o número de cotistas, o
+beta da cota e a concentração do restante da carteira são as mais consistentes em sinal ao
+longo das mais de treze mil células estimadas. No de previsão, o ajuste parcial supera a
+previsão ingênua nos quatro horizontes testados, com margem que
 cresce de forma monotônica com o horizonte, ainda que a velocidade de ajuste estimada seja
 pequena, o que indica uma reversão lenta ao peso-alvo definido pelas características e
 convive com a forte persistência do peso no curto prazo. Por fim, o erro fora da amostra é
@@ -333,15 +386,15 @@ Ibovespa ou o encerramento do fundo logo em seguida.
 \toprule
 Etapa & Fundos & Ativos & Gestoras \\
 \midrule
-Universo bruto com posição em ações, 2016 a 2021 & 3.254 & --- & 41 \\
+Universo bruto com posição em ações, 2016 a 2021 & 3.254 & n.a. & 41 \\
 Com ao menos uma posição direta em ação & 3.228 & 536 & 41 \\
 Com as cinco características do Informe Diário completas & 2.576 & 513 & 41 \\
 Com a concentração do resto defasada disponível & 2.507 & 512 & 41 \\
 \bottomrule
 \end{tabular}
 \caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores
-Mobiliários. A contagem de ativos não se aplica à primeira linha porque um ativo só passa a
-ser identificado depois do filtro de posição direta. A cobertura temporal da amostra final é
+Mobiliários. A sigla n.a. indica que a contagem de ativos não se aplica à primeira
+linha, porque um ativo só passa a ser identificado depois do filtro de posição direta. A cobertura temporal da amostra final é
 de 59 meses, entre fevereiro de 2017 e dezembro de 2021, e não os 72 meses do período bruto,
 porque a exigência de 252 pregões de histórico de cota para o cálculo do beta elimina os
 primeiros meses da janela.}
@@ -418,8 +471,8 @@ o mês anterior garante a mesma disciplina de predeterminação das demais carac
 O erro dessa etapa, $e_{i,n,t} = \text{peso}_{i,n,t} - g(x_{i,n,t}'\theta_{n,t})$, mede o
 quanto a posição observada de um fundo se afasta do que as suas próprias características
 explicam, dentro do mesmo mês. Por construção da máxima verossimilhança, a média desse erro
-é mecanicamente nula em cada célula, o que não é evidência de bom ajuste e sim uma
-propriedade algébrica do estimador. O que de fato varia entre fundos, e é informativo, é a
+é mecanicamente nula em cada célula, o que constitui uma propriedade algébrica do
+estimador e nada informa sobre a qualidade do ajuste. O que de fato varia entre fundos, e é informativo, é a
 sua dispersão.
 
 \subsection{Segunda etapa: o ajuste parcial}
@@ -437,8 +490,8 @@ O parâmetro $\lambda$ é estimado por mínimos quadrados ordinários sem interc
 os pares de meses consecutivos agrupados, de modo a produzir um único coeficiente, ou seja,
 a mesma velocidade de ajuste para todo fundo e todo ativo. A meia-vida implícita desse
 processo, dada por $\ln(0{,}5)/\ln(1-\lambda)$, traduz o coeficiente em uma unidade mais
-interpretável, a saber, quantos meses um fundo leva para percorrer metade da distância até o
-seu peso-alvo.
+interpretável, que é o número de meses que um fundo leva para percorrer metade da distância
+até o seu peso-alvo.
 
 \subsection{Terceira etapa: o exercício fora da amostra}
 
@@ -511,7 +564,7 @@ pseudo-$R^2$ de McFadden médio entre as células é de $0{,}531$, calculado com
 para que células mal ajustadas não dominem a média.}
 \end{table}
 
-O padrão é claro e tem leitura econômica direta. O beta da cota e a concentração do resto da
+O padrão encontrado admite leitura econômica direta. O beta da cota e a concentração do resto da
 carteira são, com folga, as características mais consistentes, com sinal positivo em 88,2\% e
 87,6\% das células respectivamente. Um fundo mais exposto ao mercado carrega mais de qualquer
 ação dada, o que é o esperado, e um fundo que já concentrava a sua carteira no mês anterior
@@ -527,8 +580,8 @@ objetos distintos, ainda que ambos apareçam como grandes pelo patrimônio.
 
 O erro dessa etapa, resumido na Tabela~\ref{tab:erro-e}, tem média nula por construção, como
 antecipado na Seção~\ref{sec:metodologia}, e uma dispersão de 0,0117. A assimetria e a
-curtose muito altas não são um defeito do ajuste, e sim consequência de a base reunir 512
-ativos de liquidez e perfil muito diferentes numa única distribuição agregada, dominada por
+curtose muito altas decorrem de a base reunir 512 ativos de liquidez e perfil muito
+diferentes numa única distribuição agregada, dominada por
 posições pequenas e residuais e por algumas poucas concentrações extremas. Nenhuma das
 8.195.278 previsões cai fora do intervalo entre zero e um, o que confirma a adequação da
 forma funcional escolhida.
@@ -630,10 +683,10 @@ correlação de postos entre os rankings de dificuldade por gestora produzidos p
 versões é igual a um.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.75\textwidth]{fig_margem_dinamica_mensal.pdf}
-\caption{Margem do ajuste parcial sobre a previsão ingênua, mês a mês, no período de teste.
-Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
+\caption{Margem do ajuste parcial sobre a previsão ingênua, mês a mês, no período de teste.}
 \label{fig:margem-mensal}
+\includegraphics[width=0.75\textwidth]{fig_margem_dinamica_mensal.pdf}
+\caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
 \end{figure}
 
 \FloatBarrier
@@ -651,11 +704,10 @@ horizonte. A Figura~\ref{fig:erro-extremos} acompanha a evolução mensal do err
 extremos dessa distribuição.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.95\textwidth]{fig_dinamica_erro_gestora_extremos.pdf}
-\caption{Evolução mensal do erro médio fora da amostra no horizonte de um mês, para as três
-gestoras de maior e as três de menor erro. Fonte: elaboração própria a partir de dados da
-Comissão de Valores Mobiliários.}
+\caption{Evolução mensal do erro médio fora da amostra no horizonte de um mês, para as três gestoras de maior e as três de menor erro.}
 \label{fig:erro-extremos}
+\includegraphics[width=0.95\textwidth]{fig_dinamica_erro_gestora_extremos.pdf}
+\caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
 \end{figure}
 
 \FloatBarrier
@@ -671,11 +723,10 @@ limite do desenho: um mandato de fundo que é, por construção, um veículo de 
 é capturado por características que descrevem fundos diversificados.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.78\textwidth]{fig_trajetoria_fundo_pior_rmse.pdf}
-\caption{Peso observado e peso previsto no horizonte de três meses para o par de fundo e
-ativo de maior erro fora da amostra entre os que mantêm posição relevante. Fonte: elaboração
-própria a partir de dados da Comissão de Valores Mobiliários.}
+\caption{Peso observado e peso previsto no horizonte de três meses para o par de fundo e ativo de maior erro fora da amostra entre os que mantêm posição relevante.}
 \label{fig:trajetoria}
+\includegraphics[width=0.78\textwidth]{fig_trajetoria_fundo_pior_rmse.pdf}
+\caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
 \end{figure}
 
 \FloatBarrier
@@ -683,7 +734,7 @@ própria a partir de dados da Comissão de Valores Mobiliários.}
 A heterogeneidade entre gestoras é estável, e não ruído amostral. Dividindo os 23 meses de
 teste ao meio e comparando cada gestora consigo mesma nas duas metades, a correlação do viés
 médio é de 0,73, e a do desvio-padrão do erro é de 0,85, valor bem mais alto, ilustrado na
-Figura~\ref{fig:persistencia-dp}. Em outras palavras, quem é difícil de prever numa metade do
+Figura~\ref{fig:persistencia-dp}. Quem é difícil de prever numa metade do
 período de teste tende a continuar difícil na outra, e essa persistência é bastante mais
 estável na dispersão do erro do que na sua direção. Isso tem consequência prática: uma
 tentativa de correção de viés, estimando o desvio médio de cada gestora na primeira metade e
@@ -694,11 +745,10 @@ total, e por praticamente nada quando todas as observações são agrupadas. A v
 e é ela que precisa ser explicada.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.55\textwidth]{fig_persistencia_dp_gestora.pdf}
-\caption{Desvio-padrão do erro fora da amostra na primeira metade do período de teste, em
-2020, contra a segunda metade, em 2021, por gestora. A linha tracejada é a bissetriz. Fonte:
-elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
+\caption{Desvio-padrão do erro fora da amostra na primeira metade do período de teste, em 2020, contra a segunda metade, em 2021, por gestora. A linha tracejada é a bissetriz.}
 \label{fig:persistencia-dp}
+\includegraphics[width=0.55\textwidth]{fig_persistencia_dp_gestora.pdf}
+\caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
 \end{figure}
 
 \FloatBarrier
@@ -714,11 +764,10 @@ concentração média apresenta correlação de 0,65, contra 0,47 do beta médio
 médio. A Figura~\ref{fig:explica-variancia} mostra essas três relações.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.95\textwidth]{fig_explica_variancia_gestora.pdf}
-\caption{Desvio-padrão do erro fora da amostra por gestora contra o beta médio, o tamanho
-médio e a concentração média da carteira, em 40 gestoras. Fonte: elaboração própria a partir
-de dados da Comissão de Valores Mobiliários.}
+\caption{Desvio-padrão do erro fora da amostra por gestora contra o beta médio, o tamanho médio e a concentração média da carteira, em 40 gestoras.}
 \label{fig:explica-variancia}
+\includegraphics[width=0.95\textwidth]{fig_explica_variancia_gestora.pdf}
+\caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
 \end{figure}
 
 \FloatBarrier
@@ -735,7 +784,7 @@ do erro, que é medido apenas no período de teste:
 \label{eq:regressao-variancia}
 \end{align}
 
-O resultado, na Tabela~\ref{tab:regressao-variancia}, é nítido. A concentração média é a
+O resultado está na Tabela~\ref{tab:regressao-variancia}. A concentração média é a
 única variável estatisticamente significativa, a 1\%, e o modelo explica praticamente metade
 da variação do erro entre gestoras, ou dois quintos dela quando o ajuste é penalizado pelo
 número de regressores. O fato de a concentração já estar formalmente na primeira etapa não
@@ -780,18 +829,17 @@ concentração diferencia fundos entre si, e não meses de um mesmo fundo. Na me
 beta médio do fundo explica 20\% da variação do erro entre os 2.039 fundos com posição e
 histórico de teste suficientes.
 
-Por fim, o ranking de dificuldade por gestora é notavelmente estável entre horizontes, como
+Por fim, o ranking de dificuldade por gestora é estável entre horizontes, como
 mostra a Figura~\ref{fig:ranking}. As correlações de postos entre pares de horizontes vão de
 0,91, entre um e doze meses, a 0,99, entre seis e doze meses. Isso significa que a
-identificação de quais gestoras são mais difíceis de prever não é um artefato do horizonte
-escolhido, e sim uma característica estável de cada casa.
+identificação de quais gestoras são mais difíceis de prever capta uma característica estável
+de cada casa, e não um artefato do horizonte escolhido.
 
 \begin{figure}[H]\centering
-\includegraphics[width=0.75\textwidth]{fig_ranking_horizontes_slopegraph.pdf}
-\caption{Estabilidade do ranking de dificuldade por gestora entre os quatro horizontes, em 40
-gestoras com dado completo. Fonte: elaboração própria a partir de dados da Comissão de
-Valores Mobiliários.}
+\caption{Estabilidade do ranking de dificuldade por gestora entre os quatro horizontes, em 40 gestoras com dado completo.}
 \label{fig:ranking}
+\includegraphics[width=0.75\textwidth]{fig_ranking_horizontes_slopegraph.pdf}
+\caption*{\footnotesize Fonte: elaboração própria a partir de dados da Comissão de Valores Mobiliários.}
 \end{figure}
 
 \FloatBarrier
@@ -964,8 +1012,8 @@ que a previsibilidade da carteira de um fundo é, em boa medida, uma função do
 concentração: casas que concentram são estruturalmente mais difíceis de prever, e não apenas
 mais voláteis em algum período específico.
 
-Quatro limitações merecem registro. A primeira é que parte substancial da variância do erro
-fora da amostra permanece sem explicação pelas seis características observáveis, uma vez que
+O desenho tem limitações que precisam ser registradas. A primeira é que parte
+substancial da variância do erro fora da amostra permanece sem explicação pelas seis características observáveis, uma vez que
 o beta médio explica 20\% da variação do erro entre fundos e a regressão múltipla por gestora
 explica cerca de metade da variação entre gestoras, o que sugere a presença de fatores
 específicos de fundo, como estilo, restrições de mandato e liquidez da carteira, não
@@ -983,9 +1031,10 @@ mecanicamente uma estimativa positiva da velocidade de ajuste mesmo sob ruído d
 transitório, sem que este trabalho consiga isolar quanto dos 0,069 estimados é ajuste genuíno
 e quanto é esse artefato.
 
-Três extensões parecem naturais. A primeira é permitir que a velocidade de ajuste varie entre
-gestoras ou entre classes de fundo, em vez de impor um único parâmetro comum, o que os
-resultados de heterogeneidade desta seção sugerem ser empiricamente relevante. A segunda é
+Algumas extensões decorrem diretamente do que se encontrou aqui. A primeira é permitir que
+a velocidade de ajuste varie entre gestoras ou entre classes de fundo, em vez de impor um
+único parâmetro comum, o que os resultados de heterogeneidade da
+Seção~\ref{sec:resultados} sugerem ser empiricamente relevante. A segunda é
 incorporar características de mandato e de liquidez da carteira, hoje ausentes do conjunto de
 seis variáveis, com o objetivo de capturar a parcela da variância do erro que permanece sem
 explicação. A terceira é estender o painel para além de 2021, o que permitiria avaliar se os

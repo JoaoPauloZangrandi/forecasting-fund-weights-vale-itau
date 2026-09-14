@@ -87,10 +87,10 @@ pdf(file.path(FIG, "fig_persistencia_dp_gestora.pdf"), width = 6.5, height = 6.5
 plot(wide$dp_primeira, wide$dp_segunda, pch = 19, col = adjustcolor("#3B6E9E", 0.6),
      xlim = lim_comum, ylim = lim_comum, asp = 1,
      xlab = "Desvio-padrão do erro, 1ª metade do teste", ylab = "Desvio-padrão do erro, 2ª metade do teste",
-     main = sprintf("Persistência da dispersão do erro por gestora\ncorrelação = %.3f", corr_dp))
+     main = sprintf("Persistência da dispersão do erro por gestora\ncorrelação = %s", sub("[.]", ",", sprintf("%.3f", corr_dp))))
 abline(0, 1, col = "grey70", lty = 2)
 abline(fit_dp, col = "firebrick", lwd = 2)
-legend("topleft", legend = c("Ajuste linear", "Identidade (y=x)"), col = c("firebrick","grey70"),
+legend("topleft", legend = c("Ajuste linear", "Bissetriz"), col = c("firebrick","grey70"),
        lty = c(1,2), lwd = c(2,1), bty = "n", cex = 0.8)
 dev.off()
 cat("OK - fig_persistencia_dp_gestora.pdf salva\n")
