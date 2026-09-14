@@ -1,0 +1,79 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+== lendo fluxo do painel (grande) ==
+Fundo-ano final: 6931 | fundos: 2051 
+
+Distribuicao do fluxo liquido do 4o tri (sobre patrimonio):
+     5%     25%     50%     75%     95% 
+-0.2430 -0.0492  0.0000  0.0046  0.2417 
+
+
+=========== O QUE PREVE A REALOCACAO DO 4o TRIMESTRE? ===========
+Dependente: log(realocacao ativa no 4o tri / no 1o semestre)
+
+>>> (1) so' o acumulado ate junho
+OLS estimation, Dep. Var.: l_realoc_q4
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+        Estimate Std. Error t value   Pr(>|t|)    
+exc_jun 0.547359    0.12763 4.28863 1.8813e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.574968     Adj. R2: 0.040454
+                 Within R2: 0.004561
+
+>>> (2) so' o 3o trimestre
+OLS estimation, Dep. Var.: l_realoc_q4
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+       Estimate Std. Error  t value  Pr(>|t|)    
+exc_q3 -1.57293   0.164526 -9.56037 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.569828     Adj. R2: 0.057533
+                 Within R2: 0.022279
+
+>>> (3) os dois juntos -- qual carrega o efeito?
+OLS estimation, Dep. Var.: l_realoc_q4
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+         Estimate Std. Error  t value   Pr(>|t|)    
+exc_jun  0.610790   0.122525  4.98503 6.7156e-07 ***
+exc_q3  -1.613524   0.166165 -9.71040  < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.568175     Adj. R2: 0.062858
+                 Within R2: 0.027943
+
+>>> (4) A PERGUNTA: o 3o trimestre sobrevive ao controle de fluxo?
+OLS estimation, Dep. Var.: l_realoc_q4
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+            Estimate Std. Error  t value   Pr(>|t|)    
+exc_jun     0.634107   0.124299  5.10148 3.6806e-07 ***
+exc_q3     -1.579283   0.168350 -9.38097  < 2.2e-16 ***
+flow_q4    -0.056839   0.030689 -1.85208 6.4158e-02 .  
+absflow_q4 -0.055751   0.030658 -1.81852 6.9131e-02 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.568022     Adj. R2: 0.063091
+                 Within R2: 0.028466
+
+>>> (5) o 3o trimestre prediz o fluxo do 4o? (o elo da hipotese de resgate)
+OLS estimation, Dep. Var.: flow_q4
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+        Estimate Std. Error t value Pr(>|t|)    
+exc_q3  0.556643   0.217904 2.55453 0.010705 *  
+exc_jun 0.902115   0.617896 1.45998 0.144449    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 2.65031     Adj. R2: 6.052e-4
+                Within R2: 7.455e-4
+
+OK - 117 concluido

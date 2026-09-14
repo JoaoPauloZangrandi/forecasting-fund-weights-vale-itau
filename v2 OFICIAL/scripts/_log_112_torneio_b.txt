@@ -1,0 +1,196 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+== lendo erro da Etapa 1 ==
+Obs: 8195278 | fundos: 2504 
+Fundo-mes: 87806 | mediana de posicoes por carteira: 81 
+
+
+=========== B1: DESENHO SEMESTRAL (corte em junho) ===========
+Fundo-ano: 6898 | fundos: 2036 
+
+--- razao 2o/1o semestre do desvio, por grupo (mediana) ---
+   perdedor_bench_jun     n razao_AS razao_RMS
+                <int> <int>    <num>     <num>
+1:                  0  4007    1.005     0.972
+2:                  1  2891    1.018     0.936
+(0 = venceu o Ibovespa ate junho; 1 = perdeu)
+
+--- por quartil de ranking de junho (1 = pior) ---
+   quartil_rank_jun     n razao_AS razao_RMS
+              <int> <int>    <num>     <num>
+1:                1  1694    1.008     0.942
+2:                2  1761    1.026     0.960
+3:                3  1747    1.010     0.954
+4:                4  1696    0.994     0.968
+
+--- Teste formal, efeito fixo de ano, EP clusterizado por fundo ---
+
+>>> l_ratio_as ~ perdedor
+OLS estimation, Dep. Var.: l_ratio_as
+Observations: 6,898
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                   Estimate Std. Error   t value Pr(>|t|) 
+perdedor_bench_jun  -0.0068   0.008342 -0.815046  0.41514 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.293637     Adj. R2: 0.005686
+                 Within R2: 9.843e-5
+
+>>> l_ratio_as ~ excesso acumulado ate junho (continuo)
+OLS estimation, Dep. Var.: l_ratio_as
+Observations: 6,898
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value  Pr(>|t|)    
+excesso_interim_jun 0.190466   0.073592 2.58814 0.0097182 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.293325     Adj. R2: 0.007797
+                 Within R2: 0.002221
+
+>>> l_ratio_rms ~ perdedor
+OLS estimation, Dep. Var.: l_ratio_rms
+Observations: 6,898
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error  t value   Pr(>|t|)    
+perdedor_bench_jun -0.036332    0.00737 -4.92965 8.9046e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.257638     Adj. R2: 0.049663
+                 Within R2: 0.003638
+
+>>> l_ratio_rms ~ excesso acumulado ate junho (continuo)
+OLS estimation, Dep. Var.: l_ratio_rms
+Observations: 6,898
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value   Pr(>|t|)    
+excesso_interim_jun 0.340208   0.048639 6.99462 3.5947e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.256921     Adj. R2: 0.054944
+                 Within R2: 0.009174
+
+
+=========== B2: DESENHO DE LI, TIWARI E TONG (corte em setembro) ===========
+Fundo-ano: 6930 | fundos: 2049 
+
+--- razao 4o trimestre / 3 primeiros, por grupo (mediana) ---
+   perdedor_bench_set     n razao_AS razao_RMS
+                <int> <int>    <num>     <num>
+1:                  0  4049    0.995     0.964
+2:                  1  2881    1.026     0.956
+
+--- Teste formal ---
+OLS estimation, Dep. Var.: l_ratio_as
+Observations: 6,930
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                   Estimate Std. Error t value   Pr(>|t|)    
+perdedor_bench_set 0.029926   0.007762 3.85524 0.00011918 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.298197     Adj. R2: 0.021987
+                 Within R2: 0.001903
+OLS estimation, Dep. Var.: l_ratio_as
+Observations: 6,930
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                     Estimate Std. Error  t value Pr(>|t|)    
+excesso_interim_set -0.125333    0.05057 -2.47843 0.013276 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.298255     Adj. R2: 0.021608
+                 Within R2: 0.001516
+
+
+=========== B3: PAINEL MENSAL, EFEITO FIXO DE FUNDO ===========
+Fundo-mes no painel: 87795 | fundos: 2503 
+
+>>> log(AS) ~ excesso acumulado no ano | fundo + mes-calendario
+OLS estimation, Dep. Var.: l_as
+Observations: 87,733
+Fixed-effects: cod_fundo: 2,441,  ym: 59
+Standard-errors: Clustered (cod_fundo) 
+              Estimate Std. Error  t value   Pr(>|t|)    
+excesso_acum -0.216478   0.054846 -3.94701 8.1372e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.428937     Adj. R2: 0.836682
+                 Within R2: 0.001542
+
+>>> log(RMS) ~ excesso acumulado no ano | fundo + mes-calendario
+OLS estimation, Dep. Var.: l_rms
+Observations: 87,733
+Fixed-effects: cod_fundo: 2,441,  ym: 59
+Standard-errors: Clustered (cod_fundo) 
+              Estimate Std. Error  t value   Pr(>|t|)    
+excesso_acum -0.225085   0.048052 -4.68418 2.9651e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.363103     Adj. R2: 0.918384
+                 Within R2: 0.002324
+
+
+--- B3b: excesso DEFASADO (predeterminado) ---
+
+>>> log(AS) ~ excesso acumulado em t-1 | fundo + mes-calendario
+OLS estimation, Dep. Var.: l_as
+Observations: 79,450
+Fixed-effects: cod_fundo: 2,399,  ym: 54
+Standard-errors: Clustered (cod_fundo) 
+              Estimate Std. Error  t value  Pr(>|t|)    
+excesso_lag1 -0.186763   0.063168 -2.95662 0.0031407 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.424736     Adj. R2: 0.838288
+                 Within R2: 0.001039
+
+>>> log(AS) ~ excesso acumulado em t-3 | fundo + mes-calendario
+OLS estimation, Dep. Var.: l_as
+Observations: 63,320
+Fixed-effects: cod_fundo: 2,284,  ym: 44
+Standard-errors: Clustered (cod_fundo) 
+             Estimate Std. Error t value Pr(>|t|) 
+excesso_lag3 0.074324   0.069314 1.07228  0.28371 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.422897     Adj. R2: 0.836141
+                 Within R2: 1.394e-4
+
+
+=========== B4: O EFEITO CRESCE PERTO DO FIM DO ANO? ===========
+
+>>> log(AS) ~ excesso_{t-1} x trimestre | fundo + mes-calendario
+OLS estimation, Dep. Var.: l_as
+Observations: 79,450
+Fixed-effects: cod_fundo: 2,399,  ym: 54
+Standard-errors: Clustered (cod_fundo) 
+                          Estimate Std. Error  t value   Pr(>|t|)    
+excesso_lag1:trimestreT1 -0.407036   0.156875 -2.59465 9.5265e-03 ** 
+excesso_lag1:trimestreT2 -0.420124   0.099291 -4.23124 2.4115e-05 ***
+excesso_lag1:trimestreT3  0.092432   0.057096  1.61890 1.0560e-01    
+excesso_lag1:trimestreT4 -0.192405   0.068407 -2.81266 4.9533e-03 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.424475     Adj. R2: 0.83848
+                 Within R2: 0.00227
+
+>>> log(RMS) ~ excesso_{t-1} x trimestre | fundo + mes-calendario
+OLS estimation, Dep. Var.: l_rms
+Observations: 79,450
+Fixed-effects: cod_fundo: 2,399,  ym: 54
+Standard-errors: Clustered (cod_fundo) 
+                          Estimate Std. Error  t value   Pr(>|t|)    
+excesso_lag1:trimestreT1 -0.767014   0.147448 -5.20192 2.1395e-07 ***
+excesso_lag1:trimestreT2 -0.342805   0.074612 -4.59449 4.5627e-06 ***
+excesso_lag1:trimestreT3  0.158935   0.051601  3.08006 2.0931e-03 ** 
+excesso_lag1:trimestreT4 -0.205597   0.060524 -3.39695 6.9253e-04 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.359643     Adj. R2: 0.919943
+                 Within R2: 0.003569
+
+OK - 112 concluido

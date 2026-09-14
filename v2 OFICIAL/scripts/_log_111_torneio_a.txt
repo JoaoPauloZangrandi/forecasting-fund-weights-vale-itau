@@ -1,0 +1,141 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+== lendo Etapa 1 (erro_e_multiativo) ==
+Obs Etapa 1: 8195278 | fundos: 2504 | meses: 201702 a 202112 
+Pares h=1: 7444169 
+Pares com dw_corr disponivel: 7422621 (99.7%)
+
+Obs no 2o semestre com classificacao: 3364069 | fundos: 2373 
+
+
+=========== A1: VELOCIDADE DE AJUSTE (lambda) ===========
+    grupo     lambda          se meia_vida   n_obs n_fundos  medida
+   <char>      <num>       <num>     <num>   <int>    <int>  <char>
+1:      0 0.06788997 0.005818460  9.859227 1856776     2016      dw
+2:      1 0.05614191 0.004675693 11.996431 1507293     1915      dw
+3:      0 0.06899799 0.005638668  9.695202 1852545     2016 dw_corr
+4:      1 0.05822125 0.004765539 11.555359 1503723     1915 dw_corr
+                     criterio
+                       <char>
+1: perdedor vs Ibovespa (jun)
+2: perdedor vs Ibovespa (jun)
+3: perdedor vs Ibovespa (jun)
+4: perdedor vs Ibovespa (jun)
+
+(grupo 0 = venceu o Ibovespa ate junho; 1 = perdeu)
+
+--- por quartil de ranking (1 = pior 25%, 4 = melhor 25%) ---
+    grupo     lambda          se meia_vida   n_obs n_fundos  medida
+   <char>      <num>       <num>     <num>   <int>    <int>  <char>
+1:      1 0.04858733 0.005302982 13.916557  703723     1344      dw
+2:      2 0.07009266 0.003797244  9.538241 1021888     1350      dw
+3:      3 0.09255357 0.009626298  7.136963  988218     1340      dw
+4:      4 0.05892490 0.007259014 11.413150  650240     1317      dw
+5:      1 0.05125664 0.005433313 13.173459  702169     1344 dw_corr
+6:      2 0.07052448 0.003779834  9.477664 1019561     1350 dw_corr
+7:      3 0.09166230 0.007657651  7.209840  985842     1340 dw_corr
+8:      4 0.06097565 0.007635035 11.017398  648696     1317 dw_corr
+                   criterio
+                     <char>
+1: quartil de ranking (jun)
+2: quartil de ranking (jun)
+3: quartil de ranking (jun)
+4: quartil de ranking (jun)
+5: quartil de ranking (jun)
+6: quartil de ranking (jun)
+7: quartil de ranking (jun)
+8: quartil de ranking (jun)
+
+--- Interacao: dw ~ d + d:perdedor, EP clusterizado por fundo ---
+
+>>> dw
+OLS estimation, Dep. Var.: dw
+Observations: 3,364,069
+Standard-errors: Clustered (cod_fundo) 
+                      Estimate Std. Error  t value  Pr(>|t|)    
+d                     0.067890   0.005818 11.66846 < 2.2e-16 ***
+d:perdedor_bench_jun -0.011748   0.004503 -2.60921 0.0091321 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004277   Adj. R2: 0.028327
+
+>>> dw_corr
+OLS estimation, Dep. Var.: dw_corr
+Observations: 3,356,268
+Standard-errors: Clustered (cod_fundo) 
+                      Estimate Std. Error  t value  Pr(>|t|)    
+d                     0.068998   0.005638 12.23703 < 2.2e-16 ***
+d:perdedor_bench_jun -0.010777   0.004211 -2.55901  0.010558 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004094   Adj. R2: 0.032077
+
+--- PLACEBO: classificacao de junho aplicada ao 1o SEMESTRE ---
+    grupo     lambda          se meia_vida   n_obs n_fundos  medida
+   <char>      <num>       <num>     <num>   <int>    <int>  <char>
+1:      0 0.07376593 0.005583256  9.045577 1603500     1889      dw
+2:      1 0.07468592 0.006419907  8.929771 1339482     1803      dw
+3:      0 0.07115618 0.005305122  9.390372 1597416     1889 dw_corr
+4:      1 0.07184659 0.006404523  9.296720 1335097     1802 dw_corr
+              criterio
+                <char>
+1: PLACEBO 1o semestre
+2: PLACEBO 1o semestre
+3: PLACEBO 1o semestre
+4: PLACEBO 1o semestre
+
+
+=========== A2: INTENSIDADE DE REALOCACAO ===========
+Fundo-ano com RAR calculavel: 7089 | fundos: 2096 
+
+--- RAR por grupo (mediana; 1 = mexeu igual nos dois semestres) ---
+   perdedor_bench_jun     n rar_corr_mediana rar_bruto_mediana
+                <int> <int>            <num>             <num>
+1:                  0  4132            0.904             0.911
+2:                  1  2957            0.920             0.942
+
+--- RAR por quartil de ranking de junho ---
+   quartil_rank_jun     n rar_corr_mediana rar_bruto_mediana
+              <int> <int>            <num>             <num>
+1:                1  1732            0.897             0.887
+2:                2  1808            0.912             0.940
+3:                3  1805            0.937             0.943
+4:                4  1744            0.894             0.921
+
+--- Teste formal: log(RAR) ~ perdedor, com efeito fixo de ano ---
+OLS estimation, Dep. Var.: l_rar_corr
+Observations: 7,089
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error  t value Pr(>|t|)    
+perdedor_bench_jun -0.031578    0.01443 -2.18835 0.028754 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.504852     Adj. R2: 0.026928
+                 Within R2: 7.171e-4
+
+--- Versao continua: log(RAR) ~ excesso acumulado ate junho ---
+OLS estimation, Dep. Var.: l_rar_corr
+Observations: 7,089
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value Pr(>|t|)    
+excesso_interim_jun 0.256705   0.102881 2.49518 0.012666 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.504694     Adj. R2: 0.027534
+                 Within R2: 0.001339
+
+--- Mesma coisa na medida BRUTA (com efeito mecanico de preco) ---
+OLS estimation, Dep. Var.: l_rar_bruto
+Observations: 7,089
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value Pr(>|t|)    
+excesso_interim_jun 0.193502   0.081364 2.37824 0.017485 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.426725     Adj. R2: 0.05557 
+                 Within R2: 0.001065
+
+OK - 111 concluido

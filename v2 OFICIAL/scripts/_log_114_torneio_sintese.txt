@@ -1,0 +1,153 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+== montando decomposicao ativa/passiva ==
+Obs: 7422621 | fundos: 2442 
+Fundo-ano: 7089 | fundos: 2096 
+
+=========== DERIVA OU APOSTA? ===========
+
+--- medianas por grupo (razao 2o/1o semestre) ---
+   perdedor_bench_jun     n realocacao_ATIVA deriva_PASSIVA
+                <int> <int>            <num>          <num>
+1:                  0  4132            0.904          0.945
+2:                  1  2957            0.920          0.997
+   fracao_ativa_no_2sem
+                  <num>
+1:                0.767
+2:                0.757
+(0 = venceu o Ibovespa ate junho; 1 = perdeu)
+
+--- por quartil de ranking de junho (1 = pior) ---
+   quartil_rank_jun     n realocacao_ATIVA deriva_PASSIVA
+              <int> <int>            <num>          <num>
+1:                1  1732            0.897          0.937
+2:                2  1808            0.912          1.002
+3:                3  1805            0.937          0.991
+4:                4  1744            0.894          0.967
+
+--- Teste formal: parcela ATIVA ---
+OLS estimation, Dep. Var.: l_ativa
+Observations: 7,089
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value Pr(>|t|)    
+excesso_interim_jun 0.256705   0.102881 2.49518 0.012666 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.504694     Adj. R2: 0.027534
+                 Within R2: 0.001339
+
+--- Teste formal: parcela PASSIVA ---
+OLS estimation, Dep. Var.: l_passiva
+Observations: 7,089
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                     Estimate Std. Error  t value Pr(>|t|)    
+excesso_interim_jun -0.187954   0.092207 -2.03839 0.041636 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.381597     Adj. R2: 0.241998
+                 Within R2: 0.001256
+
+--- Fracao do movimento que e' decisao do gestor, no 2o semestre ---
+OLS estimation, Dep. Var.: share_ativa_h2
+Observations: 7,089
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value   Pr(>|t|)    
+excesso_interim_jun 0.084006   0.022303 3.76658 0.00017006 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.119864     Adj. R2: 0.096461
+                 Within R2: 0.002539
+
+
+=========== MEDIACAO: o desvio do perdedor e' explicado pela deriva? ===========
+Fundo-ano na mediacao: 6803 
+
+>>> (1) sem controle
+OLS estimation, Dep. Var.: l_ratio_rms
+Observations: 6,803
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value   Pr(>|t|)    
+excesso_interim_jun 0.315677   0.044099 7.15839 1.1418e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.219763     Adj. R2: 0.064352
+                 Within R2: 0.010654
+
+>>> (2) controlando pela realocacao ATIVA
+OLS estimation, Dep. Var.: l_ratio_rms
+Observations: 6,803
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error  t value   Pr(>|t|)    
+excesso_interim_jun 0.282584   0.041354  6.83329 1.0981e-11 ***
+l_ativa             0.126828   0.010133 12.51651  < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.211464     Adj. R2: 0.13356 
+                 Within R2: 0.083969
+
+>>> (3) controlando pelas duas parcelas
+OLS estimation, Dep. Var.: l_ratio_rms
+Observations: 6,803
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error  t value   Pr(>|t|)    
+excesso_interim_jun 0.324695   0.041226  7.87594 5.5032e-15 ***
+l_ativa             0.064861   0.009843  6.58950 5.6282e-11 ***
+l_passiva           0.167988   0.015310 10.97263  < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.205013     Adj. R2: 0.185498
+                 Within R2: 0.139007
+
+
+=========== O 4o TRIMESTRE: DECISAO OU DERIVA? ===========
+Fundo-ano: 7425 
+
+--- medianas por grupo (razao 4o trimestre / 3 primeiros) ---
+   perdedor_bench_set     n realocacao_ATIVA deriva_PASSIVA fracao_ativa_q4
+                <int> <int>            <num>          <num>           <num>
+1:                  0  4354            0.907          0.888           0.744
+2:                  1  3071            1.015          1.107           0.776
+
+--- parcela ATIVA no 4o trimestre ---
+OLS estimation, Dep. Var.: l_ativa_q
+Observations: 7,425
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                   Estimate Std. Error t value   Pr(>|t|)    
+perdedor_bench_set 0.089927   0.016675 5.39303 7.6538e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.589669     Adj. R2: 0.025205
+                 Within R2: 0.004386
+
+--- parcela PASSIVA no 4o trimestre ---
+OLS estimation, Dep. Var.: l_passiva_q
+Observations: 7,425
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                   Estimate Std. Error t value  Pr(>|t|)    
+perdedor_bench_set 0.098142   0.009848 9.96559 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.415103     Adj. R2: 0.171836
+                 Within R2: 0.010478
+
+--- fracao do movimento que e' decisao do gestor no 4o trimestre ---
+OLS estimation, Dep. Var.: share_ativa_q4
+Observations: 7,425
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                   Estimate Std. Error  t value Pr(>|t|) 
+perdedor_bench_set -0.00563   0.004012 -1.40326  0.16068 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.133066     Adj. R2: 0.035881
+                 Within R2: 3.39e-4 
+
+OK - 114 concluido

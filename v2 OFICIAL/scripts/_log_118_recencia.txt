@@ -1,0 +1,85 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+Fundo-ano-trimestre: 29551 | fundos: 2395 
+Amostra de estimacao: 22424 | fundos: 2378 
+
+Observacoes por trimestre medido:
+     tri     N
+   <num> <int>
+1:     2  7308
+2:     3  7516
+3:     4  7600
+
+
+=========== RECENCIA OU FIM DE ANO? ===========
+Dependente: log(realocacao ativa do trimestre)
+EF de fundo (nivel de atividade da casa) + EF de ano-trimestre (mercado)
+
+>>> (1) efeito do trimestre anterior, todos os trimestres juntos
+OLS estimation, Dep. Var.: l_realoc
+Observations: 22,311
+Fixed-effects: cod_fundo: 2,265,  anotri: 15
+Standard-errors: Clustered (cod_fundo) 
+            Estimate Std. Error   t value Pr(>|t|) 
+exc_tri_ant -0.01282   0.057955 -0.221202  0.82495 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.515906     Adj. R2: 0.880325
+                 Within R2: 2.655e-6
+
+>>> (2) separando o efeito por trimestre medido
+OLS estimation, Dep. Var.: l_realoc
+Observations: 22,311
+Fixed-effects: cod_fundo: 2,265,  anotri: 15
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error  t value   Pr(>|t|)    
+tri::2:exc_tri_ant  0.187554   0.103826  1.80642 7.0986e-02 .  
+tri::3:exc_tri_ant  0.266912   0.138791  1.92312 5.4590e-02 .  
+tri::4:exc_tri_ant -0.823360   0.160710 -5.12326 3.2568e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.515132     Adj. R2: 0.880672
+                 Within R2: 0.003003
+
+>>> (3) O TESTE: o 4o trimestre tem efeito EXTRA?
+OLS estimation, Dep. Var.: l_realoc
+Observations: 22,311
+Fixed-effects: cod_fundo: 2,265,  anotri: 15
+Standard-errors: Clustered (cod_fundo) 
+                Estimate Std. Error  t value   Pr(>|t|)    
+exc_tri_ant     0.218573   0.060099  3.63687 2.8213e-04 ***
+exc_tri_ant:t4 -1.040266   0.170400 -6.10486 1.2072e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.515136     Adj. R2: 0.880676
+                 Within R2: 0.002986
+
+>>> (4) recencia contra posicao acumulada, lado a lado
+OLS estimation, Dep. Var.: l_realoc
+Observations: 22,311
+Fixed-effects: cod_fundo: 2,265,  anotri: 15
+Standard-errors: Clustered (cod_fundo) 
+                  Estimate Std. Error  t value   Pr(>|t|)    
+exc_tri_ant      -0.273909   0.061572 -4.44859 9.0621e-06 ***
+exc_acum_ate_ant  0.343591   0.084448  4.06867 4.8901e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.515529     Adj. R2: 0.880494
+                 Within R2: 0.001464
+
+>>> (5) o mesmo, deixando o acumulado ter efeito extra no 4o trimestre
+OLS estimation, Dep. Var.: l_realoc
+Observations: 22,311
+Fixed-effects: cod_fundo: 2,265,  anotri: 15
+Standard-errors: Clustered (cod_fundo) 
+                     Estimate Std. Error   t value   Pr(>|t|)    
+exc_tri_ant          0.044144   0.081284  0.543081 5.8713e-01    
+exc_acum_ate_ant     0.277865   0.113871  2.440173 1.4756e-02 *  
+exc_tri_ant:t4      -1.538179   0.204285 -7.529578 7.3064e-14 ***
+exc_acum_ate_ant:t4  0.354202   0.132984  2.663493 7.7882e-03 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.514406     Adj. R2: 0.881002
+                 Within R2: 0.005808
+
+OK - 118 concluido

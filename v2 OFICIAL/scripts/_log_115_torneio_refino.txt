@@ -1,0 +1,137 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+== montando painel de realocacao ativa ==
+Obs: 7422621 | fundos: 2442 
+
+
+=========== (A) PERFIL TRIMESTRAL DA REALOCACAO ===========
+Base fixa = 1o semestre. Classificacao fixa = junho. So muda o trimestre medido.
+
+Fundo-ano-trimestre: 14015 
+
+--- mediana da razao trimestre / 1o semestre ---
+Chave: <trimestre>
+   trimestre     0     1
+      <char> <num> <num>
+1:        T3 0.911 0.909
+2:        T4 0.917 0.934
+(colunas: 0 = venceu o Ibovespa ate junho, 1 = perdeu)
+
+>>> T3: log(razao) ~ excesso acumulado ate junho | ano
+OLS estimation, Dep. Var.: l_ratio
+Observations: 7,084
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value Pr(>|t|)    
+excesso_interim_jun 0.274914   0.106924 2.57112 0.010205 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.525932     Adj. R2: 0.03657 
+                 Within R2: 0.001413
+
+>>> T4: log(razao) ~ excesso acumulado ate junho | ano
+OLS estimation, Dep. Var.: l_ratio
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                    Estimate Std. Error t value   Pr(>|t|)    
+excesso_interim_jun 0.547359    0.12763 4.28863 1.8813e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.574968     Adj. R2: 0.040454
+                 Within R2: 0.004561
+
+>>> teste direto da INVERSAO: interacao trimestre x excesso
+OLS estimation, Dep. Var.: l_ratio
+Observations: 14,015
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+                        Estimate Std. Error  t value   Pr(>|t|)    
+excesso_interim_jun     0.184216   0.107853  1.70803 8.7779e-02 .  
+t4                     -0.007372   0.007200 -1.02386 3.0602e-01    
+excesso_interim_jun:t4  0.457555   0.086243  5.30543 1.2424e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.552557     Adj. R2: 0.032488
+                 Within R2: 0.004084
+
+
+=========== (B) O MOVIMENTO DE DEZEMBRO REVERTE EM JANEIRO? ===========
+Pares dezembro: 455668 | pares placebo: 595897 
+Anos cobertos no teste de dezembro: 2017, 2018, 2019, 2020 -- 2021 sai porque exige janeiro de 2022
+
+>>> DEZEMBRO -> JANEIRO
+--- reversao media (todos os fundos) ---
+OLS estimation, Dep. Var.: move2
+Observations: 455,656
+Fixed-effects: cod_fundo: 1,894
+Standard-errors: Clustered (cod_fundo) 
+      Estimate Std. Error  t value  Pr(>|t|)    
+move1 -0.11887   0.012856 -9.24649 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004329     Adj. R2: 0.038001
+                 Within R2: 0.011932
+--- reversao separada por perdedor vs vencedor (setembro) ---
+OLS estimation, Dep. Var.: move2
+Observations: 455,656
+Fixed-effects: cod_fundo: 1,894
+Standard-errors: Clustered (cod_fundo) 
+                            Estimate Std. Error   t value   Pr(>|t|)    
+move1                    -0.12516380   0.019904 -6.288327 3.9744e-10 ***
+perdedor_bench_set       -0.00000598   0.000018 -0.333810 7.3856e-01    
+move1:perdedor_bench_set  0.01411244   0.023034  0.612691 5.4015e-01    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004329     Adj. R2: 0.038037
+                 Within R2: 0.011974
+
+>>> PLACEBO MEIO DO ANO
+--- reversao media (todos os fundos) ---
+OLS estimation, Dep. Var.: move2
+Observations: 595,879
+Fixed-effects: cod_fundo: 2,129
+Standard-errors: Clustered (cod_fundo) 
+       Estimate Std. Error  t value  Pr(>|t|)    
+move1 -0.137017   0.008646 -15.8475 < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004108     Adj. R2: 0.039574
+                 Within R2: 0.018496
+--- reversao separada por perdedor vs vencedor (setembro) ---
+OLS estimation, Dep. Var.: move2
+Observations: 595,879
+Fixed-effects: cod_fundo: 2,129
+Standard-errors: Clustered (cod_fundo) 
+                          Estimate Std. Error   t value  Pr(>|t|)    
+move1                    -0.118105   0.011346 -10.40947 < 2.2e-16 ***
+perdedor_bench_set       -0.000050   0.000018  -2.72070 0.0065674 ** 
+move1:perdedor_bench_set -0.040303   0.017467  -2.30729 0.0211340 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004107     Adj. R2: 0.039987
+                 Within R2: 0.018921
+
+
+=========== (C) COMOVIMENTO CONTEMPORANEO vs SEGUIR COM ATRASO ===========
+Obs: 7066906 
+
+>>> contemporaneo e defasado na MESMA regressao
+OLS estimation, Dep. Var.: dw
+Observations: 7,066,899
+Fixed-effects: cod_fundo: 2,433,  ym: 57
+Standard-errors: Clustered (ativo_ym) 
+       Estimate Std. Error    t value   Pr(>|t|)    
+d      0.090416   0.003445  26.242632  < 2.2e-16 ***
+lid_c -0.002637   0.000489  -5.392792 7.0798e-08 ***
+tod_c  0.971938   0.002752 353.147426  < 2.2e-16 ***
+lid_l  0.000325   0.000312   1.042428 2.9724e-01    
+tod_l  0.000673   0.001721   0.391021 6.9579e-01    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.004284     Adj. R2: 0.074706
+                 Within R2: 0.071028
+
+Leitura: contemporaneo grande com defasado nulo = informacao comum, nao imitacao.
+
+OK - 115 concluido

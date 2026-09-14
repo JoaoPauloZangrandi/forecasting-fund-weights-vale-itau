@@ -1,0 +1,100 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+Fundo-ano no diagnostico: 6931 | fundos: 2051 
+
+
+=========== 2 x 2: data de classificacao x denominador ===========
+Variavel dependente: log(realocacao no 4o tri / realocacao na base)
+Variavel de interesse: excesso acumulado ate a data de classificacao
+Sinal POSITIVO = vencedor realoca mais no 4o tri.
+
+>>> classificacao em JUN | base = H1
+OLS estimation, Dep. Var.: l_base_h1
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+        Estimate Std. Error t value   Pr(>|t|)    
+exc_jun 0.547359    0.12763 4.28863 1.8813e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.574968     Adj. R2: 0.040454
+                 Within R2: 0.004561
+
+>>> classificacao em JUN | base = Q13
+OLS estimation, Dep. Var.: l_base_q13
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+        Estimate Std. Error t value   Pr(>|t|)    
+exc_jun 0.452426   0.115893 3.90384 9.7736e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.492308     Adj. R2: 0.033881
+                 Within R2: 0.004252
+
+>>> classificacao em SET | base = H1
+OLS estimation, Dep. Var.: l_base_h1
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+         Estimate Std. Error  t value Pr(>|t|)    
+exc_set -0.229353   0.111589 -2.05534 0.039973 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.575898     Adj. R2: 0.037347
+                 Within R2: 0.001337
+
+>>> classificacao em SET | base = Q13
+OLS estimation, Dep. Var.: l_base_q13
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+         Estimate Std. Error  t value Pr(>|t|)    
+exc_set -0.194142   0.101271 -1.91706  0.05537 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 0.493035     Adj. R2: 0.031024
+                 Within R2: 0.001308
+
+
+=========== RESUMO ===========
+   classificacao   base   coef    se        p     n
+          <char> <char>  <num> <num>    <num> <int>
+1:           jun     h1  0.547 0.128 1.88e-05  6931
+2:           jun    q13  0.452 0.116 9.77e-05  6931
+3:           set     h1 -0.229 0.112 4.00e-02  6931
+4:           set    q13 -0.194 0.101 5.54e-02  6931
+
+--- mesma coisa com o DUMMY de perdedor (replica exata do script 114) ---
+classificacao JUN | base H1 : coef = -0.0625 (p = 4.12e-04)
+classificacao JUN | base Q13 : coef = -0.0493 (p = 1.48e-03)
+classificacao SET | base H1 : coef = +0.0846 (p = 1.74e-06)
+classificacao SET | base Q13 : coef = +0.0754 (p = 1.11e-06)
+
+--- prova direta: a base com 3o trimestre depende do desempenho? ---
+
+>>> log(base 1o semestre) ~ excesso ate junho
+OLS estimation, Dep. Var.: l_b_h1
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+        Estimate Std. Error t value Pr(>|t|) 
+exc_jun 0.084637   0.235332 0.35965  0.71915 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 1.53394     Adj. R2: 0.002193
+                Within R2: 1.539e-5
+
+>>> log(base 1o-3o tri) ~ excesso ate junho
+OLS estimation, Dep. Var.: l_b_q13
+Observations: 6,931
+Fixed-effects: ano: 5
+Standard-errors: Clustered (cod_fundo) 
+        Estimate Std. Error t value Pr(>|t|) 
+exc_jun 0.179569   0.227015   0.791  0.42904 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+RMSE: 1.50365     Adj. R2: 0.00402
+                Within R2: 7.21e-5
+
+OK - 116 concluido
