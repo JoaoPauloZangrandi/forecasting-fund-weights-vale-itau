@@ -1,0 +1,33 @@
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+=============================================================
+130 - Regressoes no nivel de fundo (DESENVOLVIMENTO)
+=============================================================
+
+Amostra de desenvolvimento: 633 fundos | 38 gestoras
+(confirmacao guardada: 604 fundos, NAO olhada aqui)
+
+
+[direta / D1]
+  A1   D1     direta   n= 633 k=20  R2=0.8036  R2aj=0.7972
+  A2   D1     direta   n= 633 k=40  R2=0.8209  R2aj=0.8088
+  A3   D1     direta   n= 633 k=20  R2=0.7499  R2aj=0.7438
+
+[direta / D2]
+  A1   D2     direta   n= 633 k=20  R2=0.5794  R2aj=0.5657
+  A2   D2     direta   n= 633 k=40  R2=0.6007  R2aj=0.5738
+  A3   D2     direta   n= 633 k=20  R2=0.5375  R2aj=0.5262
+
+[orto / D1]
+  A1   D1     orto     n= 633 k=20  R2=0.8036  R2aj=0.7972
+  A2   D1     orto     n= 633 k=40  R2=0.8209  R2aj=0.8088
+  A3   D1     orto     n= 633 k=20  R2=0.7499  R2aj=0.7438
+
+[orto / D2]
+  A1   D2     orto     n= 633 k=20  R2=0.5794  R2aj=0.5657
+  A2   D2     orto     n= 633 k=40  R2=0.6007  R2aj=0.5738
+  A3   D2     orto     n= 633 k=20  R2=0.5375  R2aj=0.5262
+Houve 50 ou mais avisos (use warnings() para ver os primeiros 50)
+Ledger: +12 linhas
+
+OK - reg_fundo_dev_coef.csv, reg_fundo_dev_blocos.csv, reg_fundo_dev_ajuste.csv

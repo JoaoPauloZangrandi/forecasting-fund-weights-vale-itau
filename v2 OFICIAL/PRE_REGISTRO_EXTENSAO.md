@@ -184,3 +184,25 @@ uma limitação do dado, não uma escolha — e passa a constar como resultado d
 
 Emenda feita antes de qualquer regressão de interesse ser estimada; o commit desta emenda
 antecede os scripts 130/131.
+
+### E2 — colinearidades não previstas (Parada 4, script 129)
+
+O diagnóstico de colinearidade revelou três pares que a Seção 9 não cobria. As regras abaixo
+são fixadas **agora, antes de estimar**, e valem para as especificações confirmatórias.
+
+| Par | r | Tratamento fixado |
+|---|---|---|
+| `flow_aum` × `sd_flow_aum` | **−0,986** | Mantém `flow_aum` (variável do TCC, comparabilidade). `sd_flow_aum` é substituída por `sd_flow_resid`, o resíduo de `sd_flow_aum` regredido em `flow_aum` — que é exatamente o teste de H2: a dispersão acrescenta algo **além** da média? |
+| `beta_fundo` × `soma_peso_medio` | **+0,937** | Entram as duas parametrizações, sempre lado a lado: (a) direta, com as duas e VIF declarado; (b) `beta_resid`, resíduo de `beta_fundo` em `soma_peso_medio`. Nenhuma das duas é descartada, porque a escolha muda a leitura do achado do TCC. |
+| `l_n_ativos` × `l_n_obs_teste` | +0,907 | `l_n_obs_teste` é **removido** da lista de controles. É mecânico (mais ativos → mais observações de teste) e não controla nada que `l_n_ativos` já não controle. |
+
+**Regra pré-especificada que disparou como previsto:** a Seção 9 mandava usar `l_n_ativos` +
+`forma_hhi` se `VIF(hhi_medio) > 10`. O VIF medido é **2,31** e `cor(l_n_ativos, hhi_medio) =
+−0,096`. Logo **usa-se a parametrização direta e `forma_hhi` sai da lista** (regressor 19
+eliminado). Registrado porque a regra foi escrita antes e o resultado a dispensou.
+
+**Observação substantiva, não uma decisão de método:** `cor(beta_fundo, soma_peso_medio) = 0,937`
+significa que o beta da cota de um fundo é, em larga medida, **uma medida da fatia em ações**, e
+não de apetite a risco — um multimercado com 3% em ações tem beta ≈ 0,03 por aritmética. O TCC
+reporta que o beta tem sinal positivo em 88,2% das células da Etapa 1. Essa leitura precisa ser
+reexaminada, e passa a ser uma pergunta do artigo, não um detalhe de colinearidade.

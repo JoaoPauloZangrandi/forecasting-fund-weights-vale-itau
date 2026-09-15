@@ -1,0 +1,58 @@
+=============================================================
+129 - Caracteristicas por fundo (Parada 4)
+=============================================================
+
+Fundo-mes: 90906 | 2576 fundos
+Fundos com dependente: 1804 
+
+S1 (treino cheio, >=12m): 1514 fundos
+S2 (ultimos 12m, >=6m)  : 1695 fundos
+Ganho de S2 sobre S1    : 181 fundos
+
+Base S1 completa: 1237 fundos, 38 gestoras
+Base S2 completa: 1317 fundos, 39 gestoras
+Com turnover em S1: 1236 (99.9%)
+
+--- Distribuicao de mandato em S1 ---
+     grupo_mandato     N
+            <char> <int>
+1: G1_multimercado   613
+2:         G2_base   323
+3:     G3_indexado   163
+4:       G4_estilo    91
+5:        G5_nicho    47
+
+--- Delta da agregacao: script 95 (por linha) vs. duas etapas ---
+cor(hhi por gestora, duas construcoes) = 0.8483 | dif media = -0.00456
+
+--- PARADA 4: colinearidade, ANTES de qualquer regressao ---
+Fundos com todas as 19 variaveis: 1236
+
+Pares com |r| > 0,7:
+             v1              v2      r
+         <char>          <char>  <num>
+1:     flow_aum     sd_flow_aum -0.986
+2:   beta_fundo soma_peso_medio  0.937
+3:   l_n_ativos   l_n_obs_teste  0.907
+4:    forma_hhi soma_peso_medio -0.839
+5: razao_poeira soma_peso_medio  0.824
+6:    forma_hhi    razao_poeira -0.781
+7:   beta_fundo    razao_poeira  0.780
+8:   beta_fundo       forma_hhi -0.776
+
+VIF (ordenado):
+    sd_flow_aum        flow_aum soma_peso_medio       forma_hhi      beta_fundo 
+          52.13           51.62           20.97           11.14            9.72 
+     l_n_ativos   l_n_obs_teste    razao_poeira dsleeve_mediano       hhi_medio 
+           7.74            6.24            4.05            2.53            2.31 
+     sd_log_hhi    turn_mediano      sd_d_l_aum        amp_beta           l_cot 
+           1.82            1.65            1.58            1.54            1.50 
+fonte_b3_pesada         pct_fic  n_meses_treino           l_aum 
+           1.38            1.34            1.26            1.18 
+
+Variaveis com VIF > 10: flow_aum, sd_flow_aum, forma_hhi, soma_peso_medio
+
+Regra dispersoes: cor(sd_flow_aum, sd_d_l_aum) = 0.399 -> as duas podem entrar
+Regra breadth: cor(l_n_ativos, hhi_medio) = -0.096 | VIF hhi = 2.31 -> parametrizacao direta ok
+
+OK - caracteristicas_fundo_treino.csv (+S2), colinearidade_diag.csv, colinearidade_vif.csv

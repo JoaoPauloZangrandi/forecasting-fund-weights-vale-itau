@@ -1,0 +1,105 @@
+=============================================================
+131 - CONFIRMACAO (roda uma vez)
+=============================================================
+
+
+### conf_S1: 604 fundos | 34 gestoras ###
+
+[direta / D1]
+  A1   D1     direta   n= 603 k=20  R2=0.8159  R2aj=0.8096
+  A2   D1     direta   n= 603 k=40  R2=0.8292  R2aj=0.8170
+  A3   D1     direta   n= 603 k=20  R2=0.7736  R2aj=0.7678
+
+[direta / D2]
+  A1   D2     direta   n= 603 k=20  R2=0.6757  R2aj=0.6645
+  A2   D2     direta   n= 603 k=40  R2=0.6989  R2aj=0.6774
+  A3   D2     direta   n= 603 k=20  R2=0.6414  R2aj=0.6323
+
+[orto / D1]
+  A1   D1     orto     n= 603 k=20  R2=0.8159  R2aj=0.8096
+  A2   D1     orto     n= 603 k=40  R2=0.8292  R2aj=0.8170
+  A3   D1     orto     n= 603 k=20  R2=0.7736  R2aj=0.7678
+
+[orto / D2]
+  A1   D2     orto     n= 603 k=20  R2=0.6757  R2aj=0.6645
+  A2   D2     orto     n= 603 k=40  R2=0.6989  R2aj=0.6774
+  A3   D2     orto     n= 603 k=20  R2=0.6414  R2aj=0.6323
+Houve 50 ou mais avisos (use warnings() para ver os primeiros 50)
+
+### conf_S2: 644 fundos | 36 gestoras ###
+
+[direta / D1]
+  A1   D1     direta   n= 632 k=20  R2=0.8256  R2aj=0.8199
+  A2   D1     direta   n= 632 k=40  R2=0.8398  R2aj=0.8289
+  A3   D1     direta   n= 632 k=20  R2=0.7905  R2aj=0.7854
+
+[direta / D2]
+  A1   D2     direta   n= 632 k=20  R2=0.6760  R2aj=0.6654
+  A2   D2     direta   n= 632 k=40  R2=0.7017  R2aj=0.6815
+  A3   D2     direta   n= 632 k=20  R2=0.6524  R2aj=0.6439
+
+[orto / D1]
+  A1   D1     orto     n= 632 k=20  R2=0.8256  R2aj=0.8199
+  A2   D1     orto     n= 632 k=40  R2=0.8398  R2aj=0.8289
+  A3   D1     orto     n= 632 k=20  R2=0.7905  R2aj=0.7854
+
+[orto / D2]
+  A1   D2     orto     n= 632 k=20  R2=0.6760  R2aj=0.6654
+  A2   D2     orto     n= 632 k=40  R2=0.7017  R2aj=0.6815
+  A3   D2     orto     n= 632 k=20  R2=0.6524  R2aj=0.6439
+Houve 50 ou mais avisos (use warnings() para ver os primeiros 50)
+Ledger: +24 linhas
+
+=============================================================
+TESTES F DE BLOCO -- confirmacao, amostra S1
+=============================================================
+       dep   spec      bloco     k      F        p   p_holm
+    <char> <char>     <char> <int>  <num>    <num>    <num>
+ 1:     D1     A1    breadth     2  23.32 4.86e-07 1.46e-06
+ 2:     D1     A1 dispersoes     3   8.75 2.06e-04 4.12e-04
+ 3:     D1     A1    mandato     4   5.54 1.59e-03 1.59e-03
+ 4:     D1     A1   turnover     2  43.64 5.40e-10 2.16e-09
+ 5:     D1     A3    breadth     2  25.63 1.92e-07 5.76e-07
+ 6:     D1     A3 dispersoes     3   9.09 1.57e-04 1.57e-04
+ 7:     D1     A3   turnover     2  18.07 5.02e-06 1.00e-05
+ 8:     D2     A1    breadth     2 135.86 1.18e-16 4.71e-16
+ 9:     D2     A1 dispersoes     3   9.98 7.89e-05 1.58e-04
+10:     D2     A1    mandato     4   6.48 5.81e-04 5.81e-04
+11:     D2     A1   turnover     2  27.36 9.88e-08 2.96e-07
+12:     D2     A3    breadth     2 137.91 9.44e-17 2.83e-16
+13:     D2     A3 dispersoes     3   3.45 2.76e-02 2.76e-02
+14:     D2     A3   turnover     2  13.76 4.51e-05 9.02e-05
+
+--- Regra de decisao H3 (mandato): tabela 2x2 COMPLETA ---
+    {D1, D2} x {com controle de soma_peso, sem controle}
+    Sobrevive nas 4 celulas -> mandato. So em {D1, sem} -> aritmetica de sleeve.
+
+      dep controle_soma_peso     k     F         p sobrevive
+   <char>             <char> <int> <num>     <num>    <lgcl>
+1:     D1                com     4  5.54 0.0015860      TRUE
+2:     D1                sem     4  5.34 0.0019850      TRUE
+3:     D2                com     4  6.48 0.0005814      TRUE
+4:     D2                sem     4  4.93 0.0031640      TRUE
+
+>>> VEREDITO H3: MANDATO (sobrevive nas 4 celulas)
+>>> A hipotese nula declarada no pre-registro era: mandato NAO acrescenta. REJEITADA.
+
+=============================================================
+AJUSTE
+=============================================================
+    amostra   spec    dep     n n_clusters     k     r2  r2_aj
+     <char> <char> <char> <int>      <int> <int>  <num>  <num>
+ 1: conf_S1     A1     D1   603         34    20 0.8159 0.8096
+ 2: conf_S1     A2     D1   603         34    40 0.8292 0.8170
+ 3: conf_S1     A3     D1   603         34    20 0.7736 0.7678
+ 4: conf_S1     A1     D2   603         34    20 0.6757 0.6645
+ 5: conf_S1     A2     D2   603         34    40 0.6989 0.6774
+ 6: conf_S1     A3     D2   603         34    20 0.6414 0.6323
+ 7: conf_S2     A1     D1   632         36    20 0.8256 0.8199
+ 8: conf_S2     A2     D1   632         36    40 0.8398 0.8289
+ 9: conf_S2     A3     D1   632         36    20 0.7905 0.7854
+10: conf_S2     A1     D2   632         36    20 0.6760 0.6654
+11: conf_S2     A2     D2   632         36    40 0.7017 0.6815
+12: conf_S2     A3     D2   632         36    20 0.6524 0.6439
+
+OK - reg_fundo_conf_*.csv
