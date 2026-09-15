@@ -82,7 +82,8 @@ Duas perguntas: o que explica o peso, e esse peso é previsível fora da amostra
 \toprule
 & Fundos & Ativos & Gestoras \\
 \midrule
-Universo bruto CVM com posição em ações, 2016 a 2021 & 3.254 & 536 & 41 \\
+Universo bruto CVM com posição em ações, 2016 a 2021 & 3.254 & n.a. & 41 \\
+Com ao menos uma posição direta em ação & 3.228 & 536 & 41 \\
 Amostra final, com as seis características completas & 2.507 & 512 & 41 \\
 \bottomrule
 \end{tabular}
@@ -167,7 +168,8 @@ A previsão ingênua é um adversário duro: peso de carteira é muito persisten
 \small
 \begin{tabular}{@{}lrrr@{}}
 \toprule
-Característica & Coeficiente & Efeito marginal & Células com sinal positivo \\
+Característica & Mediana do & Mediana do efeito & Células com \\
+ & coeficiente & marginal médio & sinal positivo \\
 \midrule
 Beta da cota & $0{,}7830$ & $0{,}1401$ p.p. & $88{,}2\%$ \\
 Concentração do resto & $0{,}4220$ & $0{,}0562$ p.p. & $87{,}6\%$ \\
@@ -208,7 +210,7 @@ o peso parecer um passeio aleatório no curto prazo.
 \midrule
 RMSE do ajuste parcial & $0{,}004033$ & $0{,}005850$ & $0{,}007097$ & $0{,}008546$ \\
 RMSE da previsão ingênua & $0{,}004095$ & $0{,}006040$ & $0{,}007454$ & $0{,}009198$ \\
-Razão entre os dois & $0{,}9849$ & $0{,}9685$ & $0{,}9521$ & $0{,}9291$ \\
+Razão entre os dois & $0{,}9848$ & $0{,}9686$ & $0{,}9522$ & $0{,}9291$ \\
 $\widehat\lambda_h$ estimado no treino & $0{,}0704$ & $0{,}1473$ & $0{,}2205$ & $0{,}3382$ \\
 \bottomrule
 \end{tabular}
@@ -228,24 +230,24 @@ mais da distância percorrida.
 \begin{columns}[T]
 \begin{column}{0.57\textwidth}
 \centering
-\includegraphics[width=\linewidth]{fig_dinamica_erro_gestora_extremos.pdf}
+\includegraphics[width=0.96\linewidth]{fig_dinamica_erro_gestora_extremos.pdf}
 
 \vspace{0.1em}
 \scriptsize
 Erro médio mensal fora da amostra, $h=1$. À esquerda, as três gestoras mais difíceis de
-prever; à direita, as três mais previsíveis. Mesma escala nos dois painéis.
+prever; à direita, as três mais previsíveis, na mesma escala.
 \end{column}
 
 \begin{column}{0.41\textwidth}
 \small
 Entre as 40 gestoras, o erro varia quase trinta vezes, de $0{,}00050$ a $0{,}01424$.
 
-\vspace{0.6em}
+\vspace{0.4em}
 E não é ruído. Dividindo o teste ao meio, cada gestora se parece consigo mesma, com
 correlação de $0{,}85$ na dispersão do erro. Quem é difícil em 2020 continua difícil em
 2021.
 
-\vspace{0.6em}
+\vspace{0.4em}
 O viés, ao contrário, quase não importa: responde por menos de $0{,}5\%$ do erro quadrático,
 e corrigi-lo melhora o RMSE em $0{,}04\%$. É a variância que precisa ser explicada.
 \end{column}
@@ -281,7 +283,7 @@ Plural & 1 & $0{,}00050$ & $0{,}00079$ & $0{,}00104$ & $0{,}00134$ & $-2{,}4$ & 
 \bottomrule
 \end{tabular}
 
-\vspace{0.8em}
+\vspace{0.55em}
 \raggedright
 \small
 As cinco mais difíceis e as cinco mais previsíveis, de 40 grupos de gestora, ordenadas por
@@ -310,6 +312,7 @@ Fluxo médio sobre patrimônio & $-0{,}0092$ & $-1{,}38$ & n.s. \\
 Concentração média da carteira & $0{,}0736$ & $3{,}76$ & $1\%$ \\
 \midrule
 $R^2$ & \multicolumn{3}{r}{$0{,}496$} \\
+$R^2$ ajustado & \multicolumn{3}{r}{$0{,}405$} \\
 \bottomrule
 \end{tabular}
 
@@ -324,7 +327,7 @@ medido só no teste. Explicativas medidas só no treino.
 Com todas as seis características juntas, a concentração é a única significativa, e o
 modelo explica metade da variação entre casas.
 
-\vspace{0.7em}
+\vspace{0.45em}
 Descendo ao nível de fundo e mês, a correlação entre concentração e erro é:
 
 \vspace{0.3em}
@@ -337,7 +340,7 @@ Dentro do mesmo fundo & $0{,}07$ \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.6em}
+\vspace{0.4em}
 \raggedright
 As duas primeiras quase iguais afastam coincidência de mesmo mês. A terceira, perto de zero,
 mostra que a concentração diferencia fundos entre si, e não meses de um mesmo fundo. É um
