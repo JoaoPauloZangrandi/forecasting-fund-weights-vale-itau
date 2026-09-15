@@ -99,8 +99,46 @@ da CVM, e o universo inteiro, não um recorte de uma gestora ou de um papel.
 Referência: Koijen e Yogo (2019). O trabalho fica do lado das quantidades, não dos preços.
 
 \end{frame}
-
 % ---------------------------------------------------------------- 3
+\begin{frame}{Onde o trabalho entra na literatura}
+
+Três correntes sustentam o desenho, e cada uma para num ponto diferente.
+
+\vspace{0.35em}
+\centering
+\footnotesize
+\begin{tabular}{@{}p{2.7cm}p{4.2cm}p{6.9cm}@{}}
+\toprule
+Corrente & Referências & Até onde ela vai \\
+\midrule
+Precificação baseada em demanda
+& Koijen e Yogo (2019); Gabaix e Koijen (2021)
+& Estima o sistema de demanda a partir de carteiras e mostra que o
+  rebalanceamento institucional move o preço. O objeto final é o preço, com
+  investidor americano. \\[0.3em]
+Fluxo e negociação institucional
+& Lakonishok, Shleifer e Vishny (1992); Coval e Stafford (2007); Lou (2012)
+& Documenta que a negociação do fundo move o preço e que o fluxo prevê retorno.
+  Mede fluxo e retorno, não o peso de cada posição. \\[0.3em]
+Ajuste parcial
+& Fama e French (2002); Flannery e Rangan (2006); Calvet, Campbell e Sodini (2009)
+& Mede a velocidade de convergência a um alvo, em alavancagem de firma e em
+  carteira de pessoa física. O alvo é tomado como dado. \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.45em}
+\raggedright
+\small
+Nenhuma delas percorre sozinha a cadeia que vai da característica do fundo ao peso previsto,
+deste à velocidade de ajuste e desta ao desempenho fora da amostra. É essa cadeia que o
+trabalho monta, com o alvo estimado dentro do próprio modelo, num painel brasileiro de base
+pública onde a evidência é escassa.
+
+\end{frame}
+
+
+% ---------------------------------------------------------------- 4
 \begin{frame}{Etapa 1: o corte transversal}
 
 Para cada ativo $n$ e cada mês $t$, uma regressão logística do peso nas características do
@@ -131,7 +169,7 @@ previsões caiu fora do intervalo.
 
 \end{frame}
 
-% ---------------------------------------------------------------- 4
+% ---------------------------------------------------------------- 5
 \begin{frame}{Etapas 2 e 3: dinâmica e teste fora da amostra}
 
 \textbf{Etapa 2.} O fundo não salta para o alvo $w^*_{i,n,t}=g(x_{i,n,t}'\theta_{n,t})$.
@@ -161,7 +199,7 @@ A previsão ingênua é um adversário duro: peso de carteira é muito persisten
 
 \end{frame}
 
-% ---------------------------------------------------------------- 5
+% ---------------------------------------------------------------- 6
 \begin{frame}{Etapa 1: o que explica o peso}
 
 \centering
@@ -194,7 +232,7 @@ casa, não uma decisão tomada ativo por ativo.
 
 \end{frame}
 
-% ---------------------------------------------------------------- 6
+% ---------------------------------------------------------------- 7
 \begin{frame}{Etapas 2 e 3: ajuste lento, mas que ajuda a prever}
 
 $\widehat\lambda = 0{,}0690$ ao mês. O fundo fecha só $6{,}9\%$ da distância até o alvo por
@@ -224,7 +262,7 @@ mais da distância percorrida.
 
 \end{frame}
 
-% ---------------------------------------------------------------- 7
+% ---------------------------------------------------------------- 8
 \begin{frame}{O achado: a dificuldade de prever tem dono}
 
 \begin{columns}[T]
@@ -255,7 +293,7 @@ e corrigi-lo melhora o RMSE em $0{,}04\%$. É a variância que precisa ser expli
 
 \end{frame}
 
-% ---------------------------------------------------------------- 8
+% ---------------------------------------------------------------- 9
 \begin{frame}{Erro e margem por gestora, nos quatro horizontes}
 
 \centering
@@ -293,7 +331,7 @@ caso em que o modelo piora de forma expressiva e crescente com o horizonte.
 
 \end{frame}
 
-% ---------------------------------------------------------------- 9
+% ---------------------------------------------------------------- 10
 \begin{frame}{O que explica a variância: concentração}
 
 \begin{columns}[T]
@@ -350,7 +388,7 @@ traço permanente, não um sinal de curto prazo.
 
 \end{frame}
 
-% ---------------------------------------------------------------- 10
+% ---------------------------------------------------------------- 11
 \begin{frame}{Conclusão}
 
 \begin{itemize}
