@@ -1,0 +1,42 @@
+=============================================================
+127 - Congelamento do hold-out
+=============================================================
+
+Commit do pre-registro: fbb244f82a3f632529d4e300424f2979c36cc28d 
+Pre-registro: 171 linhas
+
+Universo do split (amostra do plano): 1804 fundos | 40 gestoras
+  dos quais com treino >= 12m (amostra S1): 1237 
+
+--- Resultado do split ---
+    grupo     N
+   <char> <int>
+1:   conf   890
+2:    dev   914
+
+Por gestora (primeiras 10):
+Chave: <gestora_grupo>
+                gestora_grupo  conf   dev
+                       <char> <int> <int>
+ 1:         ARX Investimentos     4     5
+ 2:                  AZ Quest     9    10
+ 3:    Absolute Investimentos     3     4
+ 4:             Atmos Capital    14    14
+ 5:       BB Asset Management    51    52
+ 6:               BNP Paribas    19    20
+ 7:               BTG Pactual    62    62
+ 8:            Bogari Capital     6     7
+ 9: Bradesco Asset Management   120   121
+10:                     Caixa    12    13
+
+Gestoras presentes nos DOIS lados: 39 de 40
+Gestoras so em um lado: 1
+
+Em S1 (treino>=12m): 1237 fundos | gestoras nos dois lados: 34 de 38
+    grupo     N
+   <char> <int>
+1:   conf   604
+2:    dev   633
+
+OK - split_fundos_dev_conf.csv gravado e CONGELADO.
+A partir daqui, o lado 'conf' nao pode ser olhado ate o script 131.

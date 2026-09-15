@@ -168,4 +168,19 @@ especificação estimada, incluindo as abandonadas. O artigo reporta o número t
 
 ## Emendas
 
-*(nenhuma até aqui)*
+### E1 — redefinição da amostra S2 (antes de estimar qualquer regressão)
+
+A Seção 3 definia S2 com características na janela `t−12..t−1` **relativa à primeira observação
+de teste do fundo**. Isso é vazamento: para um fundo cuja primeira observação de teste é 2021-06,
+a janela 2020-06..2021-05 cai **dentro do período de teste**, e a dispersão do erro que se quer
+explicar é medida justamente ali.
+
+**S2 passa a ser:** características calculadas nos últimos `min(12, disponíveis)` meses
+**estritamente anteriores a 2020-01**, exigindo ao menos 6 meses.
+
+Consequência declarada: os **608 fundos sem nenhum mês de treino são irrecuperáveis** sem
+vazamento. S2 recupera apenas os fundos com 6 a 11 meses de treino, não os fundos novos. Isso é
+uma limitação do dado, não uma escolha — e passa a constar como resultado do trabalho.
+
+Emenda feita antes de qualquer regressão de interesse ser estimada; o commit desta emenda
+antecede os scripts 130/131.

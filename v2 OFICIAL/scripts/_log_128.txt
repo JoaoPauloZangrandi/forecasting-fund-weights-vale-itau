@@ -1,0 +1,36 @@
+=============================================================
+128 - Turnover com deriva passiva descontada
+=============================================================
+
+Painel: 8415673 linhas | 2576 fundos
+
+--- PL implicito: mediana(valor_mil/peso) dentro de fundo-mes ---
+Fundo-mes com PL implicito: 90864
+CV da razao valor_mil/peso dentro do fundo-mes -- mediana: 0.00000 | p90: 0.00000
+  (CV proximo de zero confirma que valor_mil/peso e' constante dentro do fundo-mes,
+   ou seja, que o PL implicito esta' bem identificado)
+
+Retornos: 47834 linhas | winsorizados em +-80%: 196 (0.410%)
+
+--- Frame balanceado por UNIAO t-1 / t (corrige o defeito 2 do script 120) ---
+Linhas no frame de uniao: 8688751 
+Saidas totais de posicao (descartadas pelo script 120): 480819
+Entradas de posicao: 572280
+
+--- Distribuicao de TURN ---
+    0%     5%    25%    50%    75%    95%   100% 
+0.0000 0.0253 0.0821 0.1244 0.1865 0.3530 1.0000 
+Fora de [0,1]: 0  (tem que ser 0)
+Fundo-mes com TURN: 86384 | com DSLEEVE: 86384
+
+Fundos com turnover no treino (>=6 meses): 1617
+    0%    10%    25%    50%    75%    90%   100% 
+0.0003 0.0697 0.1030 0.1354 0.1787 0.2326 0.8006 
+
+--- PARADA 3: TURN e' redundante com a concentracao? ---
+cor(turn_mediano, hhi_medio) = -0.2619 (Pearson) | -0.3222 (Spearman), n = 1617
+Regra do pre-registro: redundante se |r| > 0,8  ->  DISTINTO, o bloco segue
+
+fonte_b3_pesada -- mediana: 0.249 | p90: 0.338 (fracao do peso sem ajuste por provento)
+
+OK - turnover_fundo_mes.csv, turnover_fundo_treino.csv, turnover_diagnostico.csv
