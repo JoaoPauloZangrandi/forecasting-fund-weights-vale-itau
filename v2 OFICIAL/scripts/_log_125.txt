@@ -1,0 +1,114 @@
+=============================================================
+125 - Diagnostico da amostra da extensao
+=============================================================
+
+Lendo painel_multiativo_final.csv (colunas selecionadas)...
+  painel: 8415673 linhas | 2576 fundos | 60 meses
+
+Celulas (fundo x ativo): 437764 | pos-filtro poeira: 162319 (37.1%)
+
+Lendo etapa3_multiativo_h1.csv...
+  h1 bruto: 3795814 linhas | 2111 fundos
+  h1 pos-filtro poeira: 1552376 linhas | 2060 fundos
+
+--- Q1: cobertura de TREINO por fundo (o risco numero 1 do plano) ---
+Fundos com erro no teste (pos-filtro): 2060
+  com >=  0 meses de treino:  2060  (100.0%)
+  com >=  1 meses de treino:  1452  (70.5%)
+  com >=  6 meses de treino:  1374  (66.7%)
+  com >= 12 meses de treino:  1281  (62.2%)
+  com >= 24 meses de treino:  1101  (53.4%)
+  com >= 36 meses de treino:   950  (46.1%)
+
+Sem NENHUM mes de treino: 608 (29.5%) -- estes matam qualquer media/sd de treino
+Quantis de n_meses_treino:
+  0%  10%  25%  50%  75%  90% 100% 
+   0    0    0   32   36   36   36 
+
+--- Q2: fundos por corte de n_obs no teste ---
+(a ultima coluna e a amostra efetiva do Bloco B1)
+  n_obs >=   6:  2039 fundos | + n_meses_teste>=6:  1830 | + treino>=12m:  1246
+  n_obs >=  12:  2026 fundos | + n_meses_teste>=6:  1824 | + treino>=12m:  1245
+  n_obs >=  24:  1990 fundos | + n_meses_teste>=6:  1804 | + treino>=12m:  1237
+  n_obs >=  48:  1929 fundos | + n_meses_teste>=6:  1788 | + treino>=12m:  1229
+  n_obs >= 100:  1836 fundos | + n_meses_teste>=6:  1748 | + treino>=12m:  1210
+
+Media de obs por fundo no teste: 753.6 | mediana: 635
+
+AMOSTRA DO PLANO (n_obs>=24 e meses>=6): 1804 fundos, 40 gestoras
+AMOSTRA DO BLOCO B1 (+ treino>=12m):     1237 fundos, 38 gestoras
+
+--- Q3: distribuicao Anbima restrita a amostra do plano ---
+                               classe     N   pct
+                               <char> <int> <num>
+ 1:               Multimercados Livre   791  43.8
+ 2:                       Ações Livre   520  28.8
+ 3:                Ações Índice Ativo   143   7.9
+ 4:       SEM CLASSIFICACAO NO TREINO   110   6.1
+ 5:                   Ações Indexados    65   3.6
+ 6:           Ações Valor/Crescimento    59   3.3
+ 7:                  Ações Dividendos    40   2.2
+ 8:                  Ações Small Caps    32   1.8
+ 9:                   Ações Setoriais    24   1.3
+10: Ações Sustentabilidade/Governança    20   1.1
+
+Fundos que TROCAM de classe no treino: 0 (0.0% da amostra do plano)
+
+--- Q4: soma_peso (fatia de acoes) por classe -- O CONFUNDIDOR ---
+                              classe     n soma_peso_medio mediana
+                              <char> <int>           <num>   <num>
+1:               Multimercados Livre   777           0.195   0.122
+2:                       Ações Livre   516           0.800   0.814
+3:                Ações Índice Ativo   143           0.897   0.922
+4:                   Ações Indexados    64           0.811   0.815
+5:           Ações Valor/Crescimento    59           0.819   0.831
+6:                  Ações Dividendos    40           0.898   0.934
+7:                  Ações Small Caps    32           0.937   0.945
+8:                   Ações Setoriais    24           0.937   0.957
+9: Ações Sustentabilidade/Governança    20           0.866   0.955
+   pct_abaixo_20 n_ativos
+           <num>    <num>
+1:          73.1      121
+2:           0.2       43
+3:           0.0       66
+4:           0.0       63
+5:           0.0       33
+6:           0.0       30
+7:           0.0       36
+8:           0.0       17
+9:           0.0       44
+
+--- Q5: n_ativos por fundo-mes, bruto vs. pos-filtro de poeira ---
+Mediana n_ativos/mes bruto: 69 | filtrado: 32 | razao mediana: 0.63
+Quantis da razao filtrado/bruto (quanto da carteira NAO e poeira):
+  10%   25%   50%   75%   90% 
+0.156 0.258 0.631 0.960 0.998 
+
+--- Q6: cobertura de preco, ponderada por peso ---
+Tickers no painel: 513 | com preco: 501 | sem preco: 12
+Fracao do peso total SEM preco: 0.0224%
+Tickers sem preco (top 12 por peso):
+    ticker peso_total
+    <char>      <num>
+ 1:  PASS5       8.46
+ 2:  PASS6       2.08
+ 3:  CBOH3       0.01
+ 4:  VPSC4       0.01
+ 5:  VPTA4       0.01
+ 6:  HEDA3       0.00
+ 7:  LOAR4       0.00
+ 8:  GMEC4       0.00
+ 9:  MSTR3       0.00
+10:  QVQP3       0.00
+11:  SJHO4       0.00
+12:  GOLL3       0.00
+
+Fonte do preco (linhas):
+            fonte     N
+           <char> <int>
+1: yahoo_ajustado 37816
+2:       b3_bruto 10913
+
+=============================================================
+OK - gravado diag_amostra_extensao.csv e diag_fundos_extensao.csv
+=============================================================
