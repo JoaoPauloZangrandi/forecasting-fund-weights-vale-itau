@@ -334,8 +334,19 @@ caso em que o modelo piora de forma expressiva e crescente com o horizonte.
 % ---------------------------------------------------------------- 10
 \begin{frame}{O que explica a variância: concentração}
 
+Uma regressão entre as 40 gestoras, com a dependente medida só no teste e as explicativas só
+no treino:
+\begin{align*}
+\text{dp}(\text{erro})_g = {}& \alpha + \beta_1\,\overline{\text{beta}}_g
+ + \beta_2\,\overline{\log(\text{PL})}_g + \beta_3\,\overline{\log(\text{cotistas})}_g \\[-0.15em]
+ & + \beta_4\,\overline{\text{FIC}}_g + \beta_5\,\overline{\text{fluxo}}_g
+ + \beta_6\,\overline{\text{HHI}}_g + \varepsilon_g
+\end{align*}
+
+\vspace{-0.4em}
+
 \begin{columns}[T]
-\begin{column}{0.53\textwidth}
+\begin{column}{0.55\textwidth}
 \scriptsize
 \begin{tabular}{@{}lrrc@{}}
 \toprule
@@ -353,22 +364,13 @@ $R^2$ & \multicolumn{3}{r}{$0{,}496$} \\
 $R^2$ ajustado & \multicolumn{3}{r}{$0{,}405$} \\
 \bottomrule
 \end{tabular}
-
-\vspace{0.5em}
-\scriptsize
-Variável dependente: desvio-padrão do erro fora da amostra de cada uma das 40 gestoras,
-medido só no teste. Explicativas medidas só no treino.
 \end{column}
 
-\begin{column}{0.45\textwidth}
+\begin{column}{0.43\textwidth}
 \small
-Com todas as seis características juntas, a concentração é a única significativa, e o
-modelo explica metade da variação entre casas.
+Correlação entre concentração e erro, agora no nível de fundo e mês:
 
-\vspace{0.45em}
-Descendo ao nível de fundo e mês, a correlação entre concentração e erro é:
-
-\vspace{0.3em}
+\vspace{0.4em}
 \centering
 \begin{tabular}{@{}lr@{}}
 \toprule
@@ -378,11 +380,10 @@ Dentro do mesmo fundo & $0{,}07$ \\
 \bottomrule
 \end{tabular}
 
-\vspace{0.4em}
+\vspace{0.6em}
 \raggedright
-As duas primeiras quase iguais afastam coincidência de mesmo mês. A terceira, perto de zero,
-mostra que a concentração diferencia fundos entre si, e não meses de um mesmo fundo. É um
-traço permanente, não um sinal de curto prazo.
+As duas primeiras quase iguais afastam coincidência de mês. A terceira, perto de zero, mostra
+que a concentração separa fundos, e não meses de um mesmo fundo.
 \end{column}
 \end{columns}
 

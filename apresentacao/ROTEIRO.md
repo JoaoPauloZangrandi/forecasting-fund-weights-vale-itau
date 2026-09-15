@@ -16,26 +16,26 @@ O que está entre colchetes é instrução, não fala.
 
 ### Quanto tempo isso dura de verdade
 
-O texto corrido tem **1.079 palavras**. Contadas, não estimadas. O que isso vira em
+O texto corrido tem **1.085 palavras**. Contadas, não estimadas. O que isso vira em
 minutos depende só do seu ritmo:
 
 | Ritmo | Duração | Quando acontece |
 |---|---|---|
-| 130 palavras por minuto | **8 min 18 s** | pausado, com pausa nas transições |
-| 145 palavras por minuto | **7 min 26 s** | ritmo de conversa, o mais provável |
-| 160 palavras por minuto | **6 min 45 s** | acelerado, é o que a adrenalina faz |
+| 130 palavras por minuto | **8 min 21 s** | pausado, com pausa nas transições |
+| 145 palavras por minuto | **7 min 29 s** | ritmo de conversa, o mais provável |
+| 160 palavras por minuto | **6 min 47 s** | acelerado, é o que a adrenalina faz |
 
 O alvo era 7 minutos, e o slide de literatura custou 17 segundos líquidos. A fala dele são 47
 segundos, dos quais 30 foram recuperados apertando oito passagens dos outros slides, listadas
 no fim da seção Véspera. Se o seu tempo for cronometrado com rigor, os três cortes de
-emergência da Véspera valem mais 35 segundos e devolvem a apresentação para 6 min 51 s.
+emergência da Véspera valem mais 35 segundos e devolvem a apresentação para 6 min 54 s.
 
 **Por slide**, para saber se está no ritmo:
 
 | Slide | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Palavras | 33 | 119 | 114 | 88 | 105 | 86 | 124 | 107 | 105 | 102 | 96 |
-| Segundos (145 ppm) | 14 | 49 | 47 | 36 | 43 | 36 | 51 | 44 | 43 | 42 | 40 |
+| Palavras | 33 | 119 | 114 | 88 | 105 | 86 | 124 | 107 | 105 | 108 | 96 |
+| Segundos (145 ppm) | 14 | 49 | 47 | 36 | 43 | 36 | 51 | 44 | 43 | 45 | 40 |
 
 A marca que importa é uma só: **ao terminar o slide 7, você deve estar por volta de
 4 min 37 s**. Se estiver muito antes, desacelere. Se estiver muito depois, aplique os
@@ -56,7 +56,7 @@ cortes da seção Véspera.
 | 7 | λ e fora da amostra | "fecha só 7% da distância por mês" | 23 de 23 meses |
 | 8 | Heterogeneidade | "os dois painéis na mesma escala" | 30 vezes; persistência 0,85 |
 | 9 | Tabela por gestora | "erro alto não é margem baixa" | AZ Quest +15%, Squadra −45,6% |
-| 10 | A variância | "0,48 e 0,49 quase iguais, mas 0,07 dentro do fundo" | R² 0,496, ajustado 0,405 |
+| 10 | A variância | "0,48 e 0,49 quase iguais, mas 0,07 dentro do fundo" | apontar a equação; R² 0,496 e 0,405 |
 | 11 | Conclusão | "função do estilo de concentração da casa" | dizer isso de cabeça |
 
 ---
@@ -208,9 +208,12 @@ cortes da seção Véspera.
 
 ### Slide 10, o que explica a variância
 
-> Então, o que explica essa variância. Regrido a dispersão do erro de cada gestora nas
-> seis características, medidas só no treino, com a dependente medida só no teste. A
-> concentração é a única significativa, e explica metade da variação entre casas.
+[Aponte para a equação enquanto diz "essa regressão".]
+
+> Então, o que explica essa variância. É essa regressão aqui: a dispersão do erro de cada
+> gestora nas seis características médias dela. A dependente é medida só no teste, as
+> explicativas só no treino. A concentração é a única significativa, e explica metade da
+> variação entre casas.
 
 [Aponte para o quadro da direita.]
 
