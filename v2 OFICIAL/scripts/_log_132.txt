@@ -1,0 +1,149 @@
+=============================================================
+Mensagen de aviso:
+pacote 'fixest' foi compilado no R versão 4.5.3 
+132 - Decomposicao do erro em componentes (Shapley)
+=============================================================
+
+Base: 1552376 obs | 310 ativos | 23 meses | 2060 fundos | 40 gestoras
+
+Fundos com mais de uma gestora (tem que ser 0): 0
+
+Piso c = p1 dos e^2 positivos = 9.000e-11
+
+--- Shapley: log(erro^2 + c) [PRIMARIA] (ols) ---
+    [ 1/16] {vazio} R2 = 0.0000
+    [ 2/16] {ativo} R2 = 0.1112
+    [ 3/16] {ym} R2 = 0.0081
+    [ 4/16] {cod_fundo} R2 = 0.2313
+    [ 5/16] {gestora_grupo} R2 = 0.0659
+    [ 6/16] {ativo,ym} R2 = 0.1188
+    [ 7/16] {ativo,cod_fundo} R2 = 0.3695
+    [ 8/16] {ativo,gestora_grupo} R2 = 0.1738
+    [ 9/16] {ym,cod_fundo} R2 = 0.2426
+    [10/16] {ym,gestora_grupo} R2 = 0.0745
+    [11/16] {cod_fundo,gestora_grupo} R2 = 0.2313
+    [12/16] {ativo,ym,cod_fundo} R2 = 0.3791
+    [13/16] {ativo,ym,gestora_grupo} R2 = 0.1814
+    [14/16] {ativo,cod_fundo,gestora_grupo} R2 = 0.3695
+    [15/16] {ym,cod_fundo,gestora_grupo} R2 = 0.2426
+    [16/16] {ativo,ym,cod_fundo,gestora_grupo} R2 = 0.3791
+  R2 total = 0.3791 | soma dos Shapley = 0.3791 | diferenca = 0.00e+00
+           fator r2_isolado r2_marginal shapley   pct
+          <char>      <num>       <num>   <num> <num>
+1:         ativo     0.1112      0.1365  0.1234  32.6
+2:            ym     0.0081      0.0096  0.0091   2.4
+3:     cod_fundo     0.2313      0.1976  0.2141  56.5
+4: gestora_grupo     0.0659      0.0000  0.0324   8.6
+
+--- Shapley: erro^2 (quasi-Poisson, pseudo-R2) (pois) ---
+    [ 1/16] {vazio} R2 = 0.0000
+    [ 2/16] {ativo} R2 = 0.0399
+    [ 3/16] {ym} R2 = 0.0038
+    [ 4/16] {cod_fundo} R2 = 0.0894
+    [ 5/16] {gestora_grupo} R2 = 0.0172
+    [ 6/16] {ativo,ym} R2 = 0.0435
+    [ 7/16] {ativo,cod_fundo} R2 = 0.1272
+    [ 8/16] {ativo,gestora_grupo} R2 = 0.0556
+    [ 9/16] {ym,cod_fundo} R2 = 0.0935
+    [10/16] {ym,gestora_grupo} R2 = 0.0210
+    [11/16] {cod_fundo,gestora_grupo} R2 = 0.0894
+    [12/16] {ativo,ym,cod_fundo} R2 = 0.1309
+    [13/16] {ativo,ym,gestora_grupo} R2 = 0.0593
+    [14/16] {ativo,cod_fundo,gestora_grupo} R2 = 0.1272
+    [15/16] {ym,cod_fundo,gestora_grupo} R2 = 0.0935
+    [16/16] {ativo,ym,cod_fundo,gestora_grupo} R2 = 0.1309
+  R2 total = 0.1309 | soma dos Shapley = 0.1309 | diferenca = 0.00e+00
+           fator r2_isolado r2_marginal shapley   pct
+          <char>      <num>       <num>   <num> <num>
+1:         ativo     0.0399      0.0374  0.0384  29.4
+2:            ym     0.0038      0.0038  0.0038   2.9
+3:     cod_fundo     0.0894      0.0717  0.0803  61.4
+4: gestora_grupo     0.0172      0.0000  0.0084   6.4
+
+--- Shapley: |erro| (ols) ---
+    [ 1/16] {vazio} R2 = 0.0000
+    [ 2/16] {ativo} R2 = 0.0639
+    [ 3/16] {ym} R2 = 0.0050
+    [ 4/16] {cod_fundo} R2 = 0.1705
+    [ 5/16] {gestora_grupo} R2 = 0.0399
+    [ 6/16] {ativo,ym} R2 = 0.0686
+    [ 7/16] {ativo,cod_fundo} R2 = 0.2424
+    [ 8/16] {ativo,gestora_grupo} R2 = 0.1022
+    [ 9/16] {ym,cod_fundo} R2 = 0.1766
+    [10/16] {ym,gestora_grupo} R2 = 0.0451
+    [11/16] {cod_fundo,gestora_grupo} R2 = 0.1705
+    [12/16] {ativo,ym,cod_fundo} R2 = 0.2476
+    [13/16] {ativo,ym,gestora_grupo} R2 = 0.1069
+    [14/16] {ativo,cod_fundo,gestora_grupo} R2 = 0.2424
+    [15/16] {ym,cod_fundo,gestora_grupo} R2 = 0.1766
+    [16/16] {ativo,ym,cod_fundo,gestora_grupo} R2 = 0.2476
+  R2 total = 0.2476 | soma dos Shapley = 0.2476 | diferenca = 0.00e+00
+           fator r2_isolado r2_marginal shapley   pct
+          <char>      <num>       <num>   <num> <num>
+1:         ativo     0.0639      0.0710  0.0673  27.2
+2:            ym     0.0050      0.0052  0.0052   2.1
+3:     cod_fundo     0.1705      0.1407  0.1554  62.8
+4: gestora_grupo     0.0399      0.0000  0.0197   8.0
+
+--- Shapley: log(erro^2 winsorizado 99,9% + c) (ols) ---
+    [ 1/16] {vazio} R2 = 0.0000
+    [ 2/16] {ativo} R2 = 0.1111
+    [ 3/16] {ym} R2 = 0.0081
+    [ 4/16] {cod_fundo} R2 = 0.2313
+    [ 5/16] {gestora_grupo} R2 = 0.0659
+    [ 6/16] {ativo,ym} R2 = 0.1187
+    [ 7/16] {ativo,cod_fundo} R2 = 0.3694
+    [ 8/16] {ativo,gestora_grupo} R2 = 0.1737
+    [ 9/16] {ym,cod_fundo} R2 = 0.2426
+    [10/16] {ym,gestora_grupo} R2 = 0.0745
+    [11/16] {cod_fundo,gestora_grupo} R2 = 0.2313
+    [12/16] {ativo,ym,cod_fundo} R2 = 0.3790
+    [13/16] {ativo,ym,gestora_grupo} R2 = 0.1814
+    [14/16] {ativo,cod_fundo,gestora_grupo} R2 = 0.3694
+    [15/16] {ym,cod_fundo,gestora_grupo} R2 = 0.2426
+    [16/16] {ativo,ym,cod_fundo,gestora_grupo} R2 = 0.3790
+  R2 total = 0.3790 | soma dos Shapley = 0.3790 | diferenca = 0.00e+00
+           fator r2_isolado r2_marginal shapley   pct
+          <char>      <num>       <num>   <num> <num>
+1:         ativo     0.1111      0.1365  0.1234  32.6
+2:            ym     0.0081      0.0096  0.0091   2.4
+3:     cod_fundo     0.2313      0.1976  0.2141  56.5
+4: gestora_grupo     0.0659      0.0000  0.0324   8.6
+
+--- Versao CONDICIONAL a (ativo x mes): remove a media da celula ---
+--- Shapley: log(erro^2) condicional a ativo x mes (ols) ---
+    [ 1/16] {vazio} R2 = 0.0000
+    [ 2/16] {ativo} R2 = 0.0000
+    [ 3/16] {ym} R2 = 0.0000
+    [ 4/16] {cod_fundo} R2 = 0.2890
+    [ 5/16] {gestora_grupo} R2 = 0.0717
+    [ 6/16] {ativo,ym} R2 = 0.0000
+    [ 7/16] {ativo,cod_fundo} R2 = 0.3110
+    [ 8/16] {ativo,gestora_grupo} R2 = 0.0737
+    [ 9/16] {ym,cod_fundo} R2 = 0.2897
+    [10/16] {ym,gestora_grupo} R2 = 0.0717
+    [11/16] {cod_fundo,gestora_grupo} R2 = 0.2890
+    [12/16] {ativo,ym,cod_fundo} R2 = 0.3115
+    [13/16] {ativo,ym,gestora_grupo} R2 = 0.0737
+    [14/16] {ativo,cod_fundo,gestora_grupo} R2 = 0.3110
+    [15/16] {ym,cod_fundo,gestora_grupo} R2 = 0.2897
+    [16/16] {ativo,ym,cod_fundo,gestora_grupo} R2 = 0.3115
+  R2 total = 0.3115 | soma dos Shapley = 0.3115 | diferenca = 0.00e+00
+           fator r2_isolado r2_marginal shapley   pct
+          <char>      <num>       <num>   <num> <num>
+1:         ativo     0.0000      0.0218  0.0113   3.6
+2:            ym     0.0000      0.0005  0.0003   0.1
+3:     cod_fundo     0.2890      0.2378  0.2638  84.7
+4: gestora_grupo     0.0717      0.0000  0.0362  11.6
+
+--- Correcao de vies: split-sample impar/par ---
+           fator n_niveis var_bruta var_corrigida confiabilidade
+          <char>    <int>     <num>         <num>          <num>
+1:         ativo      304      2.21          1.86          0.840
+2:     cod_fundo     2016      3.58          3.43          0.958
+3: gestora_grupo       40      1.64          1.64          1.001
+  (confiabilidade = quanto da variancia do efeito fixo e sinal, nao ruido de estimacao)
+
+null device 
+          1 
+OK - decomp_shapley_erro.csv, decomp_var_componentes.csv, fig_ext_shapley_decomposicao.pdf
