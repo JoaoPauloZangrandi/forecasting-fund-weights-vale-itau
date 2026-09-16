@@ -1,0 +1,10 @@
+=============================================================
+135 - Tabelas e figuras do artigo
+=============================================================
+
+Gravado: C:/Users/joaoz/forecasting-fund-weights-vale-itau/v2 OFICIAL/tabelas_paper_ext.tex (130 linhas)
+null device 
+          1 
+OK - fig_ext_resumo.pdf
+
+Ledger: 96 especificacoes estimadas, 96 pre-registradas

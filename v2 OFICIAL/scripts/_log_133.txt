@@ -1,0 +1,60 @@
+=============================================================
+133 - Decomposicao estrutural do erro
+=============================================================
+
+Base erro_e pos-filtro: 3375037 linhas
+Teste (h=1): 1552753 obs | 2058 fundos
+
+--- Conferencia da identidade algebrica ---
+max |erro_reconstruido - (dpred + e_fut - (1-l) e_t)| = 1.561e-15
+Identidade vale? SIM
+
+Contra o erro_oos do script 99: n = 1552753 | cor = 0.999993 | max dif = 1.419e-03
+
+--- Decomposicao por fundo (n = 1994) ---
+Erro maximo da identidade de variancia: 2.082e-17
+
+Participacao mediana de cada termo na variancia do erro (%):
+   p_v_dpred p_v_efut p_v_et p_c_dpred_efut p_c_dpred_et p_c_efut_et
+       <num>    <num>  <num>          <num>        <num>       <num>
+1:      29.5    413.9  358.1           -7.3        -12.5      -668.3
+
+Persistencia do residuo da Etapa 1, cor(e_t+1, e_t) -- mediana entre fundos: 0.8797
+
+--- Leitura de dois termos: erro = deriva do alvo + inovacao do residuo ---
+Participacao mediana entre fundos (%):
+   p_v_alvo p_v_inov p_c_cruz
+      <num>    <num>    <num>
+1:     29.5     93.7    -18.3
+Fundos em que a INOVACAO responde por mais de 80% da variancia: 1653 de 1994 (82.9%)
+
+Por gestora, participacao mediana (%):
+   p_v_alvo p_v_inov p_c_cruz
+      <num>    <num>    <num>
+1:     29.1     98.4    -26.2
+
+--- Por gestora: as 5 mais dificeis e as 5 mais faceis ---
+                gestora_grupo      dp p_alvo p_e_fut p_e_t   p_cov persist
+                       <char>   <num>  <num>   <num> <num>   <num>   <num>
+ 1:    Guepardo Investimentos 0.01901   76.0   701.2 643.3 -1194.3   0.889
+ 2:      Ibiuna Investimentos 0.01342   13.5   321.6 287.5  -501.9   0.825
+ 3:                  AZ Quest 0.01235    6.7   184.0 163.8  -253.4   0.730
+ 4: Daycoval Asset Management 0.01162    8.7   217.9 185.2  -304.4   0.758
+ 5:       Truxt Investimentos 0.01120   17.6   357.4 302.5  -563.8   0.857
+ 6:                      Itau 0.00436   25.7   446.4 387.6  -737.4   0.886
+ 7:            Dahlia Capital 0.00384   24.3   463.0 405.8  -776.3   0.895
+ 8:    TNA Gestão Patrimonial 0.00244   34.7   957.5 824.5 -1678.8   0.945
+ 9:       Gávea Investimentos 0.00165   28.9   795.5 714.0 -1411.8   0.937
+10:                    Plural 0.00089  160.8   907.6 789.3 -1571.2   0.928
+
+--- Qual dos tres mecanismos separa gestora dificil de facil? ---
+  cor(dp_erro, v_dpred   ) = +0.4974 (Spearman)
+  cor(dp_erro, v_efut    ) = +0.6557 (Spearman)
+  cor(dp_erro, v_et      ) = +0.6527 (Spearman)
+  cor(dp_erro, persist_e ) = -0.5092 (Spearman)
+
+  (o termo com maior correlacao e' o mecanismo dominante)
+null device 
+          1 
+
+OK - decomp_estrutural_fundo.csv, decomp_estrutural_lambda.csv, figura
