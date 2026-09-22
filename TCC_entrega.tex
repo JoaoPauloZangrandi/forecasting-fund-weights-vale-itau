@@ -44,8 +44,7 @@
 
 \vspace{3cm}
 
-{\Large Peso de ações nos fundos de investimento brasileiros:}\\[12pt]
-{\large um modelo de fator dinâmico com correção logística e ajuste parcial}
+{\Large Um estudo de previsão de carteiras de fundos de investimento}
 
 \vfill
 
@@ -62,8 +61,7 @@
 
 \vspace{4cm}
 
-{\Large Peso de ações nos fundos de investimento brasileiros:}\\[12pt]
-{\large um modelo de fator dinâmico com correção logística e ajuste parcial}
+{\Large Um estudo de previsão de carteiras de fundos de investimento}
 
 \vspace{3cm}
 
@@ -87,8 +85,63 @@ Orientador: Prof.\ Maurício Ferraresi Junior.
 
 \newpage
 
+%==================== FOLHA DE APROVAÇÃO ====================
+% Elemento obrigatorio pela NBR 14724, item 4.2.1.3.
+\begin{center}
+{\large João Paulo Zangrandi}
+
+\vspace{2.5cm}
+
+{\Large Um estudo de previsão de carteiras de fundos de investimento}
+\end{center}
+
+\vspace{1.5cm}
+
+\begin{flushright}
+\begin{minipage}{0.62\textwidth}
+\small\setstretch{1.15}
+Monografia II apresentada à Escola de Economia de São Paulo da Fundação Getúlio
+Vargas como requisito da disciplina Monografia II.
+\\[10pt]
+Campo de conhecimento: Economia Financeira.
+\end{minipage}
+\end{flushright}
+
+\vspace{1.5cm}
+
+\noindent Data de aprovação:
+
+\vspace{0.4cm}
+
+\noindent \rule{2cm}{0.4pt}\ /\ \rule{2cm}{0.4pt}\ /\ \rule{2.4cm}{0.4pt}
+
+\vspace{1.5cm}
+
+\noindent Banca examinadora:
+
+\vspace{1.8cm}
+
+\noindent \rule{0.62\textwidth}{0.4pt}\\
+Prof.\ Maurício Ferraresi Junior (Orientador)\\
+FGV EESP
+
+\vspace{1.6cm}
+
+\noindent \rule{0.62\textwidth}{0.4pt}\\
+FGV EESP
+
+\vspace{1.6cm}
+
+\noindent \rule{0.62\textwidth}{0.4pt}\\
+FGV EESP
+
+\vfill
+
+\newpage
+
 %==================== RESUMO ====================
 \begin{center}{\large Resumo}\end{center}
+\begin{singlespace}
 \noindent
 Este trabalho propõe e testa um modelo de fator dinâmico para o peso de ações na carteira
 dos fundos de investimento brasileiros, organizado em três etapas. Na primeira, o peso de
@@ -114,13 +167,14 @@ significativa mesmo quando as demais características do modelo são controladas
 \smallskip
 \noindent Palavras-chave: sistema de demanda; fundos de investimento; pesos de carteira;
 fator dinâmico; ajuste parcial; mercado acionário brasileiro.
+\end{singlespace}
 
 
 \newpage
 
 %==================== ABSTRACT ====================
 \begin{center}{\large Abstract}\end{center}
-
+\begin{singlespace}
 \noindent
 This work proposes and tests a dynamic factor model for the weight of individual stocks in
 the portfolios of Brazilian investment funds, organised in three stages. In the first, the
@@ -149,6 +203,7 @@ controlled for.
 
 \noindent Keywords: demand system; mutual funds; portfolio weights; dynamic factor; partial
 adjustment; Brazilian equity market.
+\end{singlespace}
 
 \newpage
 \tableofcontents
@@ -229,6 +284,7 @@ Seção~\ref{sec:resultados} apresenta os resultados de cada etapa, com ênfase 
 fora da amostra e na heterogeneidade entre gestoras. A Seção~\ref{sec:conclusao} conclui e
 registra as limitações do desenho.
 
+\clearpage
 %==================== 2. REVISÃO DE LITERATURA ====================
 \section{Revisão de literatura}
 \label{sec:revisao}
@@ -304,19 +360,48 @@ preditivo fora da amostra, e menos ainda o faz para o mercado brasileiro. A evid
 nacional sobre demanda por ativos construída a partir de carteiras divulgadas de fundos é
 escassa, e é essa lacuna que o desenho descrito a seguir procura preencher.
 
+\clearpage
 %==================== 3. DADOS ====================
 \section{Dados}
 \label{sec:dados}
 
-Os dados vêm de dois registros públicos que a Comissão de Valores Mobiliários exige de todo
-fundo de investimento brasileiro. O primeiro é a Composição e Diversificação de Aplicações,
-extrato mensal do qual se extrai o peso de cada ativo na carteira de cada fundo, que é a
-variável dependente deste trabalho. O segundo é o Informe Diário, do qual vêm o patrimônio
-líquido, o número de cotistas, a captação e os resgates, que compõem as características do
-fundo. O período coberto vai de janeiro de 2016 a dezembro de 2021. O universo de partida é
-todo fundo registrado na Comissão que tenha mantido posição em ações no período, o que
-totaliza 3.254 fundos e 41 grupos de gestora reunidos por marca controladora. Não há,
-portanto, restrição prévia a uma gestora ou a um ativo específico.
+Os dados de fundos utilizados neste trabalho foram obtidos por meio da base Economatica, em
+extração repassada pelo orientador e referente ao período de janeiro de 2016 a dezembro de
+2021. A origem primária do dado é regulatória: a Economatica compila dois registros que a
+Comissão de Valores Mobiliários exige de todo fundo de investimento brasileiro. O primeiro é
+a Composição e Diversificação de Aplicações, extrato mensal do qual se extrai o peso de cada
+ativo na carteira de cada fundo, que é a variável dependente deste trabalho. O segundo é o
+Informe Diário, do qual vêm o patrimônio líquido, o número de cotistas, a captação e os
+resgates, que compõem as características do fundo. O acesso é, portanto, indireto, embora o
+conteúdo seja o do registro público.
+
+O que a base comercial acrescenta ao registro bruto é relevante para o desenho deste
+trabalho e justifica a escolha. Em primeiro lugar, a composição das carteiras vem
+consolidada, isto é, com a exposição dos fundos de investimento em cotas atribuída aos
+ativos finais em vez de às cotas dos fundos investidos. Essa consolidação não é um detalhe de
+conveniência: no mercado brasileiro a estrutura de fundo de cotas sobre fundo master é a
+regra, e uma reconstrução a partir do registro bruto mostra que, sem a atribuição aos ativos
+finais, apenas cerca de 19\% dos fundos que reportam posição em ações apresentam essa posição
+na própria carteira. Sem consolidação, a variável dependente seria nula para a maior parte da
+amostra, e as características do fundo estariam medidas num veículo distinto daquele em que a
+carteira é observada. Em segundo lugar, a base traz a identificação da gestora por marca
+controladora e a classificação da Associação Brasileira das Entidades dos Mercados Financeiro
+e de Capitais, que não constam do registro público de forma diretamente utilizável.
+
+Duas fontes complementares foram acrescentadas. O índice Bovespa, em série diária de
+fechamento, é utilizado como carteira de mercado na estimação do beta da cota de cada fundo,
+descrito adiante. E os dois registros da Comissão foram reconstruídos de forma independente,
+a partir do dado público bruto, para verificar a base recebida. Essa verificação mostra
+correspondência praticamente exata para as variáveis do Informe Diário, com 99\% ou mais de
+identidade para cota, número de cotistas e patrimônio líquido, e correspondência parcial para
+a composição de carteira, com erro mediano por fundo entre 9\% e 18\% conforme o mês testado.
+Esse resíduo decorre de procedimentos proprietários de reconciliação da base comercial que
+não são reproduzíveis a partir do dado bruto, e é registrado aqui como uma característica
+conhecida da fonte.
+
+O universo de partida é todo fundo registrado na Comissão que tenha mantido posição em ações
+no período, o que totaliza 3.254 fundos e 41 grupos de gestora reunidos por marca
+controladora. Não há, portanto, restrição prévia a uma gestora ou a um ativo específico.
 
 Esse universo bruto já reflete uma limpeza de qualidade de dado. Trinta e quatro observações
 de fundo por mês, distribuídas em 23 fundos, apresentam soma de participações superior a
@@ -421,6 +506,7 @@ Mobiliários.}
 
 \FloatBarrier
 
+\clearpage
 %==================== 4. METODOLOGIA ====================
 \section{Metodologia}
 \label{sec:metodologia}
@@ -516,6 +602,7 @@ uma previsão ingênua seria igualmente boa? O critério é exigente de propósi
 de carteira é uma variável muito persistente, e a regra de repetir o último valor observado
 é, nesse contexto, um adversário difícil de bater.
 
+\clearpage
 %==================== 5. RESULTADOS ====================
 \section{Resultados}
 \label{sec:resultados}
@@ -973,6 +1060,7 @@ Plural & $-2{,}4\%$ & $-3{,}7\%$ & $-2{,}8\%$ & $-6{,}1\%$ \\
 
 \FloatBarrier
 
+\clearpage
 %==================== 6. CONCLUSÃO ====================
 \section{Conclusão}
 \label{sec:conclusao}
@@ -1018,9 +1106,9 @@ o beta médio explica 20\% da variação do erro entre fundos e a regressão mú
 explica cerca de metade da variação entre gestoras, o que sugere a presença de fatores
 específicos de fundo, como estilo, restrições de mandato e liquidez da carteira, não
 capturados neste desenho. A segunda é que o recorte temporal da amostra final, de fevereiro
-de 2017 a dezembro de 2021, reflete a disponibilidade de dado público com qualidade
-suficiente para a limpeza descrita na Seção~\ref{sec:dados}, de modo que estender a análise a
-um período mais recente fica como trabalho futuro. A terceira diz respeito à identificação: o
+de 2017 a dezembro de 2021, corresponde à cobertura da extração utilizada e descrita na
+Seção~\ref{sec:dados}, de modo que estender a análise a um período mais recente fica como
+trabalho futuro. A terceira diz respeito à identificação: o
 beta da cota é medido com dado até o fechamento do próprio mês da observação, e não do mês
 anterior como as outras cinco características, o que não utiliza informação futura mas abre
 uma via de endogeneidade mecânica, já que o retorno da cota depende em parte das posições que
